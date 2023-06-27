@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.text.cursor.parser.ParserToken;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -50,6 +52,16 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
                           final SpreadsheetFormatter formatter,
                           final Consumer<SpreadsheetFormatter> formatters) {
         formatters.accept(formatter);
+    }
+
+    // patterns........................................................................................................
+
+    /**
+     * Attempts to break down this {@link SpreadsheetPattern} into individual patterns for each pattern between {@link #SEPARATOR}.
+     */
+    @Override
+    public List<SpreadsheetTextFormatPattern> patterns() {
+        return Lists.of(this);
     }
 
     // Object...........................................................................................................

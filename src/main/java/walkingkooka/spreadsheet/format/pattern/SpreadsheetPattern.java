@@ -725,6 +725,13 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         return this.value().text();
     }
 
+    // patterns........................................................................................................
+
+    /**
+     * Attempts to break down this {@link SpreadsheetPattern} into individual patterns for each pattern between {@link #SEPARATOR}.
+     */
+    public abstract List<? extends SpreadsheetPattern> patterns();
+
     // HasUrlFragment...................................................................................................
 
     /**

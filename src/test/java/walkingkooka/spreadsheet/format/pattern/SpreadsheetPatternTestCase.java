@@ -33,7 +33,10 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V>
         implements ClassTesting2<P>,
@@ -48,6 +51,35 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
     SpreadsheetPatternTestCase() {
         super();
     }
+
+    final void patternsAndCheck(final P pattern,
+                                final String... patterns) {
+        this.patternsAndCheck2(
+                pattern,
+                Arrays.stream(patterns)
+                        .map(this::createPattern)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    final void patternsAndCheck2(final P pattern,
+                                 final P... patterns) {
+        this.patternsAndCheck2(
+                pattern,
+                Lists.of(patterns)
+        );
+    }
+
+    final void patternsAndCheck2(final P pattern,
+                                 final List<P> patterns) {
+        this.checkEquals(
+                patterns,
+                pattern.patterns(),
+                () -> pattern + " patterns"
+        );
+    }
+
+    // token helpers....................................................................................................
 
     final SpreadsheetFormatParserToken ampm() {
         return SpreadsheetFormatParserToken.amPm("A/P", "A/P");

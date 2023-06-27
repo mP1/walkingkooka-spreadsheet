@@ -115,4 +115,14 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
      * The outer {@link List} contains an element for each pattern, with the inner {@link List} containing the components.
      */
     final List<List<SpreadsheetNumberParsePatternComponent>> patterns;
+
+    // patterns.........................................................................................................
+
+    @Override
+    public List<SpreadsheetNumberParsePattern> patterns() {
+        return SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
+                this,
+                SpreadsheetNumberParsePattern::with
+        );
+    }
 }

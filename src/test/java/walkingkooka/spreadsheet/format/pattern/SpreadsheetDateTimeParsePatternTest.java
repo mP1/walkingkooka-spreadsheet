@@ -500,6 +500,41 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
         );
     }
 
+    // patterns..........................................................................................................
+
+    @Test
+    public void testPatterns() {
+        final SpreadsheetDateTimeParsePattern pattern = this.createPattern("dd/mm/yyyy hh:mm:ss");
+
+        this.patternsAndCheck2(
+                pattern,
+                pattern
+        );
+    }
+
+    @Test
+    public void testPatternsTwo() {
+        final SpreadsheetDateTimeParsePattern pattern = this.createPattern("hh:mm:ss;hh:mm");
+
+        this.patternsAndCheck(
+                pattern,
+                "hh:mm:ss",
+                "hh:mm"
+        );
+    }
+
+    @Test
+    public void testPatternsThree() {
+        final SpreadsheetDateTimeParsePattern pattern = this.createPattern("hh:mm:ss;hh:mm;hh");
+
+        this.patternsAndCheck(
+                pattern,
+                "hh:mm:ss",
+                "hh:mm",
+                "hh"
+        );
+    }
+    
     // helpers.........................................................................................................
 
     @Override

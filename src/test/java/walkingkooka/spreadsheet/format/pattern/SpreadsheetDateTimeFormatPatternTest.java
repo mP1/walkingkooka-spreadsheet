@@ -998,6 +998,52 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         );
     }
 
+    // patterns..........................................................................................................
+
+    @Test
+    public void testPatterns() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("dd/mm/yyyy hh:mm:ss");
+
+        this.patternsAndCheck2(
+                pattern,
+                pattern
+        );
+    }
+
+    @Test
+    public void testPatternsTwo() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("hh:mm:ss;hh:mm");
+
+        this.patternsAndCheck(
+                pattern,
+                "hh:mm:ss",
+                "hh:mm"
+        );
+    }
+
+    @Test
+    public void testPatternsThree() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("hh:mm:ss;hh:mm;hh");
+
+        this.patternsAndCheck(
+                pattern,
+                "hh:mm:ss",
+                "hh:mm",
+                "hh"
+        );
+    }
+
+    @Test
+    public void testPatternsWithColor() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[red]hh:mm:ss;[yellow]hh:mm");
+
+        this.patternsAndCheck(
+                pattern,
+                "[red]hh:mm:ss",
+                "[yellow]hh:mm"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -705,6 +706,146 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
                 "number-format-pattern\n" +
                         "  \"$0.0\" ;\n" +
                         "  \"$0.00\" ;\n"
+        );
+    }
+
+    // patterns.........................................................................................................
+
+    @Test
+    public void testPatterns() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("$#");
+
+        this.patternsAndCheck2(
+                pattern,
+                Lists.of(pattern)
+        );
+    }
+
+    @Test
+    public void testPatternsTwo() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("$#.0;$#.00");
+
+        this.patternsAndCheck(
+                pattern,
+                "$#.0",
+                "$#.00"
+        );
+    }
+
+    @Test
+    public void testPatternsThree() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("$#.0;$#.00;$#.000");
+
+        this.patternsAndCheck(
+                pattern,
+                "$#.0",
+                "$#.00",
+                "$#.000"
+        );
+    }
+
+    @Test
+    public void testPatternsWithColor() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("$#.0;[RED]$#.00");
+
+        this.patternsAndCheck(
+                pattern,
+                "$#.0",
+                "[RED]$#.00"
+        );
+    }
+
+    @Test
+    public void testPatternsWithEqualsCondition() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[=10]$#.0;$#.00;$#.000");
+
+        this.patternsAndCheck(
+                pattern,
+                "[=10]$#.0",
+                "$#.00",
+                "$#.000"
+        );
+    }
+
+    @Test
+    public void testPatternsWithGreaterThanCondition() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[>10]$#.0;$#.00;$#.000");
+
+        this.patternsAndCheck(
+                pattern,
+                "[>10]$#.0",
+                "$#.00",
+                "$#.000"
+        );
+    }
+
+    @Test
+    public void testPatternsWithGreaterThanEqualsCondition() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[>=10]$#.0;$#.00;$#.000");
+
+        this.patternsAndCheck(
+                pattern,
+                "[>=10]$#.0",
+                "$#.00",
+                "$#.000"
+        );
+    }
+    
+    @Test
+    public void testPatternsWithLessThanCondition() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<10]$#.0;$#.00;$#.000");
+
+        this.patternsAndCheck(
+                pattern,
+                "[<10]$#.0",
+                "$#.00",
+                "$#.000"
+        );
+    }
+
+    @Test
+    public void testPatternsWithLessThanEqualsCondition() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<=10]$#.0;$#.00;$#.000");
+
+        this.patternsAndCheck(
+                pattern,
+                "[<=10]$#.0",
+                "$#.00",
+                "$#.000"
+        );
+    }
+
+    @Test
+    public void testPatternsWithNotEqualsCondition() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<>10]$#.0;$#.00;$#.000");
+
+        this.patternsAndCheck(
+                pattern,
+                "[<>10]$#.0",
+                "$#.00",
+                "$#.000"
+        );
+    }
+
+    @Test
+    public void testPatternsWithText() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("0.00;\"Text\"");
+
+        this.patternsAndCheck(
+                pattern,
+                "0.00",
+                "\"Text\""
+        );
+    }
+
+    @Test
+    public void testPatternsWithGeneral() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("0.00;General");
+
+        this.patternsAndCheck(
+                pattern,
+                "0.00",
+                "General"
         );
     }
 
