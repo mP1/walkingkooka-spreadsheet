@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.parser;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -718,7 +719,6 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Converts the type simple name into snake case dropping the <pre>SpreadsheetFormat</pre> and trailing <pre>Symbol</pre>
      * and <pre>ParserToken</pre>
      */
-    // https://github.com/mP1/walkingkooka/issues/2551
     // VisibleForTesting.
     static String snakeCaseParserClassSimpleName(final Class<?> type) {
         String simpleName = CharSequences.subSequence(type.getSimpleName(),
@@ -730,19 +730,10 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         }
 
         // turn name into snake case.
-        final StringBuilder b = new StringBuilder();
-        int capitalCount = 0;
-
-        for (final char c : simpleName.toCharArray()) {
-            if (Character.isUpperCase(c)) {
-                capitalCount++;
-                if (capitalCount > 1) {
-                    b.append('_');
-                }
-            }
-            b.append(Character.toUpperCase(c));
-        }
-        return b.toString();
+        return CaseKind.CAMEL.change(
+                simpleName,
+                CaseKind.SNAKE
+        );
     }
 
     /**
