@@ -17,28 +17,7 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.text.cursor.parser.FakeParserContext;
 
-public final class SpreadsheetFormatParserContexts implements PublicStaticHelper {
-
-    /**
-     * {@see BasicSpreadsheetFormatParserContext}
-     */
-    public static SpreadsheetFormatParserContext basic() {
-        return BasicSpreadsheetFormatParserContext.INSTANCE;
-    }
-
-    /**
-     * {@see FakeSpreadsheetFormatParserContext}
-     */
-    public static SpreadsheetFormatParserContext fake() {
-        return new FakeSpreadsheetFormatParserContext();
-    }
-
-    /**
-     * Stop creation.
-     */
-    private SpreadsheetFormatParserContexts() {
-        throw new UnsupportedOperationException();
-    }
+public class FakeSpreadsheetFormatParserContext extends FakeParserContext implements SpreadsheetFormatParserContext {
 }
