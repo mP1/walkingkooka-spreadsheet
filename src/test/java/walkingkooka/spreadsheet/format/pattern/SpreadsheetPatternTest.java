@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
@@ -1129,6 +1130,114 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
                 },
                 "1.5"
+        );
+    }
+
+    @Test
+    public void testParseNumberFormatPatternWithColorNameGeneral() {
+        final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(1.5);
+        final Color color = Color.parse("#123");
+
+        this.formatAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("[Black]GENERAL")
+                        .formatter(),
+                number,
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value.equals(number) && type == ExpressionNumber.class;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        this.canConvertOrFail(value, target);
+
+                        return this.successfulConversion(
+                                ExpressionNumber.class.cast(value),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL32;
+                    }
+
+                    @Override
+                    public Optional<Color> colorName(final SpreadsheetColorName name) {
+                        checkEquals(
+                                SpreadsheetColorName.BLACK,
+                                name,
+                                "colorName"
+                        );
+                        return Optional.of(color);
+                    }
+                },
+                SpreadsheetText.with("1.5")
+                        .setColor(
+                                Optional.of(color)
+                        )
+        );
+    }
+
+    @Test
+    public void testParseNumberFormatPatternWithColorNumberGeneral() {
+        final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(1.5);
+        final Color color = Color.parse("#123");
+
+        this.formatAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("[Color 45]GENERAL")
+                        .formatter(),
+                number,
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return value.equals(number) && type == ExpressionNumber.class;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        this.canConvertOrFail(value, target);
+
+                        return this.successfulConversion(
+                                ExpressionNumber.class.cast(value),
+                                target
+                        );
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL32;
+                    }
+
+                    @Override
+                    public Optional<Color> colorNumber(final int number) {
+                        checkEquals(
+                                45,
+                                number,
+                                "colorNumber"
+                        );
+                        return Optional.of(color);
+                    }
+                },
+                SpreadsheetText.with("1.5")
+                        .setColor(
+                                Optional.of(color)
+                        )
         );
     }
 
