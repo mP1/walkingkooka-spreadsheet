@@ -22,6 +22,7 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -113,6 +114,13 @@ public final class SpreadsheetFormatTextParserToken extends SpreadsheetFormatPar
             this.acceptValues(visitor);
         }
         visitor.endVisit(this);
+    }
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
+        return EMPTY_KIND;
     }
 
     // Object...........................................................................................................

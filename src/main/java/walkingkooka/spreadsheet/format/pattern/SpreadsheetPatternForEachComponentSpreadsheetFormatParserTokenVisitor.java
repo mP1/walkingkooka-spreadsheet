@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
@@ -56,6 +57,15 @@ final class SpreadsheetPatternForEachComponentSpreadsheetFormatParserTokenVisito
         return Visiting.CONTINUE;
     }
 
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+        // dont want to collect kinds for the square brackets and other contents of a color eg: [RED] or [Color 123]
+        return Visiting.SKIP;
+    }
+
+    /**
+     * Collects all the {@link SpreadsheetFormatParserTokenKind} as they are encountered.
+     */
     private final BiConsumer<SpreadsheetFormatParserTokenKind, String> consumer;
 
     @Override

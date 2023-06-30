@@ -76,7 +76,7 @@ public final class SpreadsheetFormatColorNumberParserToken extends SpreadsheetFo
 
     @Override
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
-        return SpreadsheetFormatParserTokenKind.COLOR_NUMBER.asOptional;
+        return EMPTY_KIND;
     }
 
     // equals ..........................................................................................................

@@ -138,8 +138,35 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
     // kind............................................................................................................
 
     @Test
-    public void testKind() {
-        this.kindAndCheck();
+    public void testKindColorName() {
+        this.kindAndCheck(
+                SpreadsheetFormatColorParserToken.with(
+                        Lists.of(
+                                this.bracketOpen(),
+                                SpreadsheetFormatParserToken.colorName("RED", "RED"),
+                                this.whitespace(),
+                                this.bracketClose()
+                        ),
+                        "[RED]"
+                ),
+                SpreadsheetFormatParserTokenKind.COLOR_NAME
+        );
+    }
+
+    @Test
+    public void testKindColorNumber() {
+        this.kindAndCheck(
+                SpreadsheetFormatColorParserToken.with(
+                        Lists.of(
+                                this.bracketOpen(),
+                                SpreadsheetFormatParserToken.colorNumber(12, "12"),
+                                this.whitespace(),
+                                this.bracketClose()
+                        ),
+                        "[Color 12]"
+                ),
+                SpreadsheetFormatParserTokenKind.COLOR_NUMBER
+        );
     }
 
     // helpers..........................................................................................................
