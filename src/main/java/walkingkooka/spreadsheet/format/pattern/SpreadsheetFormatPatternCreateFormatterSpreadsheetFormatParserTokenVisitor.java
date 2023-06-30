@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -43,6 +44,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetFormatParserTokenVisitor} that visits a {@link ParserToken} and creates a {@link SpreadsheetFormatter}.
@@ -125,8 +127,17 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
 
     @Override
     protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
+        final SpreadsheetFormatter generalFormatter = SpreadsheetFormatters.general();
+
+        final Optional<SpreadsheetFormatColorParserToken> color = SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorGeneralColorSpreadsheetFormatParserTokenVisitor.extractColor(token);
+
         this.saveFormatter(
-                SpreadsheetFormatters.general()
+                color.map(
+                        t -> SpreadsheetFormatters.color(
+                                t,
+                                generalFormatter
+                        )
+                ).orElse(generalFormatter)
         );
     }
 
