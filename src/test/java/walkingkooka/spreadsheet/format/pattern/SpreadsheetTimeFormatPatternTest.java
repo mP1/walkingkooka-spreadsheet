@@ -600,6 +600,52 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // patterns..........................................................................................................
+
+    @Test
+    public void testPatterns() {
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss");
+
+        this.patternsAndCheck2(
+                pattern,
+                Lists.of(pattern)
+        );
+    }
+
+    @Test
+    public void testPatternsTwo() {
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss;hh:mm");
+
+        this.patternsAndCheck(
+                pattern,
+                "hh:mm:ss",
+                "hh:mm"
+        );
+    }
+
+    @Test
+    public void testPatternsThree() {
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss;hh:mm;[red]hh");
+
+        this.patternsAndCheck(
+                pattern,
+                "hh:mm:ss",
+                "hh:mm",
+                "[red]hh"
+        );
+    }
+
+    @Test
+    public void testPatternsWithColor() {
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("[green]hh:mm:ss;[red]hh:mm");
+
+        this.patternsAndCheck(
+                pattern,
+                "[green]hh:mm:ss",
+                "[red]hh:mm"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

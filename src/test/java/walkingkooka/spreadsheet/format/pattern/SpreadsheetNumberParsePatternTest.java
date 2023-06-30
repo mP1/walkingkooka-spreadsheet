@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -518,6 +519,41 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         );
     }
 
+    // patterns.........................................................................................................
+
+    @Test
+    public void testPatterns() {
+        final SpreadsheetNumberParsePattern pattern = this.createPattern("$#");
+
+        this.patternsAndCheck2(
+                pattern,
+                Lists.of(pattern)
+        );
+    }
+
+    @Test
+    public void testPatternsTwo() {
+        final SpreadsheetNumberParsePattern pattern = this.createPattern("$#.0;$#.00");
+
+        this.patternsAndCheck(
+                pattern,
+                "$#.0",
+                "$#.00"
+        );
+    }
+
+    @Test
+    public void testPatternsThree() {
+        final SpreadsheetNumberParsePattern pattern = this.createPattern("$#.0;$#.00;$#.000");
+
+        this.patternsAndCheck(
+                pattern,
+                "$#.0",
+                "$#.00",
+                "$#.000"
+        );
+    }
+    
     // ToString........................................................................................................
 
     @Test

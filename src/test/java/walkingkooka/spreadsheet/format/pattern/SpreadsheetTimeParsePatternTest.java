@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -591,6 +592,41 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
         );
     }
 
+    // patterns..........................................................................................................
+
+    @Test
+    public void testPatterns() {
+        final SpreadsheetTimeParsePattern pattern = this.createPattern("hh:mm:ss");
+
+        this.patternsAndCheck2(
+                pattern,
+                Lists.of(pattern)
+        );
+    }
+
+    @Test
+    public void testPatternsTwo() {
+        final SpreadsheetTimeParsePattern pattern = this.createPattern("hh:mm:ss;hh:mm");
+
+        this.patternsAndCheck(
+                pattern,
+                "hh:mm:ss",
+                "hh:mm"
+        );
+    }
+
+    @Test
+    public void testPatternsThree() {
+        final SpreadsheetTimeParsePattern pattern = this.createPattern("hh:mm:ss;hh:mm;hh");
+
+        this.patternsAndCheck(
+                pattern,
+                "hh:mm:ss",
+                "hh:mm",
+                "hh"
+        );
+    }
+    
     // helpers..........................................................................................................
 
     @Override

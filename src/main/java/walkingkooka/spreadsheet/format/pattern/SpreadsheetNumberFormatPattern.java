@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -226,6 +227,16 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
                     "@"
             )
     );
+
+    // patterns.........................................................................................................
+
+    @Override
+    public List<SpreadsheetNumberFormatPattern> patterns() {
+        return SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
+                this,
+                SpreadsheetNumberFormatPattern::new
+        );
+    }
 
     // Object...........................................................................................................
 

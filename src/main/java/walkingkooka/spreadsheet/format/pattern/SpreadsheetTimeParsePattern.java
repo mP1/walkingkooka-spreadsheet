@@ -25,6 +25,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * Holds a valid {@link SpreadsheetTimeParsePattern}.
@@ -79,6 +80,16 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetNonNumberParse
                 .get()
                 .cast(SpreadsheetTimeParserToken.class)
                 .toLocalTime();
+    }
+
+    // patterns.........................................................................................................
+
+    @Override
+    public List<SpreadsheetTimeParsePattern> patterns() {
+        return SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
+                this,
+                SpreadsheetTimeParsePattern::new
+        );
     }
 
     // Object...........................................................................................................

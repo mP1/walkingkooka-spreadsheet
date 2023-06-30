@@ -220,6 +220,18 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // patterns..........................................................................................................
+
+    @Test
+    public void testPatterns() {
+        final SpreadsheetTextFormatPattern pattern = this.createPattern();
+
+        this.patternsAndCheck2(
+                pattern,
+                pattern
+        );
+    }
+
     // helpers..........................................................................................................
 
     @Override

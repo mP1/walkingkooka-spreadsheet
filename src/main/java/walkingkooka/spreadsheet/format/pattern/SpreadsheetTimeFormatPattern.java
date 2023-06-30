@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.text.cursor.parser.ParserToken;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -49,6 +50,16 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
                           final SpreadsheetFormatter formatter,
                           final Consumer<SpreadsheetFormatter> formatters) {
         formatters.accept(formatter);
+    }
+
+    // patterns.........................................................................................................
+
+    @Override
+    public List<SpreadsheetTimeFormatPattern> patterns() {
+        return SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
+                this,
+                SpreadsheetTimeFormatPattern::new
+        );
     }
 
     // Object...........................................................................................................

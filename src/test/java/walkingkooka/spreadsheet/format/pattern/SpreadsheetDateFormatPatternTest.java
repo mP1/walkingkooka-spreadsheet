@@ -629,6 +629,52 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // patterns..........................................................................................................
+
+    @Test
+    public void testPatterns() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("dd/mm/yyyy");
+
+        this.patternsAndCheck2(
+                pattern,
+                Lists.of(pattern)
+        );
+    }
+
+    @Test
+    public void testPatternsTwo() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("ddmmyyyy;ddmmyy");
+
+        this.patternsAndCheck(
+                pattern,
+                        "ddmmyyyy",
+                        "ddmmyy"
+        );
+    }
+
+    @Test
+    public void testPatternsThree() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("ddmmyyyy;ddmmyy;dd/mm/yyyy");
+
+        this.patternsAndCheck(
+                pattern,
+                        "ddmmyyyy",
+                        "ddmmyy",
+                        "dd/mm/yyyy"
+        );
+    }
+
+    @Test
+    public void testPatternsWithColor() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("[green]dd/mm/yyyy;[red]dd/mm/yyyy");
+
+        this.patternsAndCheck(
+                pattern,
+                        "[green]dd/mm/yyyy",
+                        "[red]dd/mm/yyyy"
+        );
+    }
+    
     // helpers..........................................................................................................
 
     @Override

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -416,6 +417,41 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
         );
     }
 
+    // patterns..........................................................................................................
+
+    @Test
+    public void testPatterns() {
+        final SpreadsheetDateParsePattern pattern = this.createPattern("dd/mm/yyyy");
+
+        this.patternsAndCheck2(
+                pattern,
+                Lists.of(pattern)
+        );
+    }
+
+    @Test
+    public void testPatternsTwo() {
+        final SpreadsheetDateParsePattern pattern = this.createPattern("ddmmyyyy;ddmmyy");
+
+        this.patternsAndCheck(
+                pattern,
+                "ddmmyyyy",
+                "ddmmyy"
+        );
+    }
+
+    @Test
+    public void testPatternsThree() {
+        final SpreadsheetDateParsePattern pattern = this.createPattern("ddmmyyyy;ddmmyy;dd/mm/yyyy");
+
+        this.patternsAndCheck(
+                pattern,
+                "ddmmyyyy",
+                "ddmmyy",
+                "dd/mm/yyyy"
+        );
+    }
+    
     // helpers..........................................................................................................
 
     @Override
