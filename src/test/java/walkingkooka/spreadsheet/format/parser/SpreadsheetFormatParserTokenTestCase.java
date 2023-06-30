@@ -158,6 +158,16 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
     }
 
     final void kindAndCheck(final T token,
+                            final SpreadsheetFormatParserTokenKind expected) {
+        this.kindAndCheck(
+                token,
+                Optional.of(
+                        expected
+                )
+        );
+    }
+
+    final void kindAndCheck(final T token,
                             final Optional<SpreadsheetFormatParserTokenKind> expected) {
         this.checkEquals(
                 expected,

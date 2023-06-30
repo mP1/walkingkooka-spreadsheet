@@ -133,9 +133,21 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
         visitor.endVisit(this);
     }
 
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatParserTokenKind> kind() {
+        return Optional.of(
+                this.nameOrNumber().isColorName() ?
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME :
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER
+        );
+    }
+
+    // Object...........................................................................................................
+
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetFormatColorParserToken;
     }
-
 }

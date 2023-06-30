@@ -1853,6 +1853,99 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testComponentsDateFormatColorName() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("[RED]dd/mm/yyyy"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                        "[RED]"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        "dd"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        "yyyy"
+                )
+        );
+    }
+
+    @Test
+    public void testComponentsDateFormatColorNameWhitespace() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("[RED ]dd/mm/yyyy"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                        "[RED ]"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        "dd"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        "yyyy"
+                )
+        );
+    }
+
+    @Test
+    public void testComponentsDateFormatColorNumber() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("dd[Color 2]/mm/yyyy"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        "dd"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                        "[Color 2]"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        "yyyy"
+                )
+        );
+    }
+
+    @Test
     public void testComponentsDateFormat() {
         this.componentsAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
@@ -1875,6 +1968,101 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.YEAR_FULL,
                         "yyyy"
+                )
+        );
+    }
+
+    @Test
+    public void testComponentsDateTimeFormatColorName() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("[BLUE]dd/mm/yyyy hh:mm"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                        "[BLUE]"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        "dd"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        "yyyy"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        " "
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        "hh"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        ":"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        "mm"
+                )
+        );
+    }
+
+
+    @Test
+    public void testComponentsDateTimeFormatColorNumber() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm[Color12]"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                        "dd"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "/"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.YEAR_FULL,
+                        "yyyy"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        " "
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        "hh"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        ":"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        "mm"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                        "[Color12]"
                 )
         );
     }
@@ -1950,6 +2138,68 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testComponentsNumberFormatColorName() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("$#.00[Green ]"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
+                        "$"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT,
+                        "#"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DECIMAL_PLACE,
+                        "."
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                        "0"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                        "0"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                        "[Green ]"
+                )
+        );
+    }
+
+    @Test
+    public void testComponentsNumberFormatColorNumber() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("$#.00[Color  12]"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL,
+                        "$"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT,
+                        "#"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DECIMAL_PLACE,
+                        "."
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                        "0"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.DIGIT_ZERO,
+                        "0"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                        "[Color  12]"
+                )
+        );
+    }
+
+    @Test
     public void testComponentsTextFormat() {
         this.componentsAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("@\"Hello\""),
@@ -1965,9 +2215,93 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testComponentsTextFormatColorName() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("[Yellow]@\"Hello\""),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                        "[Yellow]"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
+                        "@"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "\"Hello\""
+                )
+        );
+    }
+
+    @Test
+    public void testComponentsTextFormatColorNumber() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("[Color1]@\"Hello\""),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                        "[Color1]"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
+                        "@"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        "\"Hello\""
+                )
+        );
+    }
+
+    @Test
     public void testComponentsTimeFormat() {
         this.componentsAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("hh:mm"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        "hh"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        ":"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        "mm"
+                )
+        );
+    }
+
+    @Test
+    public void testComponentsTimeFormatColorName() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("[WHITE]hh:mm"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                        "[WHITE]"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
+                        "hh"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
+                        ":"
+                ),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO,
+                        "mm"
+                )
+        );
+    }
+
+    @Test
+    public void testComponentsTimeFormatColorNumber() {
+        this.componentsAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("[Color4]hh:mm"),
+                Map.entry(
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
+                        "[Color4]"
+                ),
                 Map.entry(
                         SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO,
                         "hh"

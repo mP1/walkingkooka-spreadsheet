@@ -61,4 +61,11 @@ abstract public class SpreadsheetFormatConditionParserToken extends SpreadsheetF
     }
 
     final SpreadsheetFormatParserToken right;
+
+    // SpreadsheetFormatParserTokenKind ................................................................................
+
+    @Override
+    public final Optional<SpreadsheetFormatParserTokenKind> kind() {
+        return SpreadsheetFormatParserTokenKind.CONDITION.asOptional;
+    }
 }

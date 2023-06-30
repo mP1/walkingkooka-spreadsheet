@@ -20,7 +20,6 @@ import walkingkooka.Value;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Base parent class for a {@link SpreadsheetFormatParserToken} that holds child tokens.
@@ -46,17 +45,5 @@ abstract public class SpreadsheetFormatParentParserToken extends SpreadsheetForm
         for (ParserToken token : this.value()) {
             visitor.accept(token);
         }
-    }
-
-    // SpreadsheetFormatParserTokenKind ................................................................................
-
-    @Override
-    public final Optional<SpreadsheetFormatParserTokenKind> kind() {
-        return this.isCondition() ?
-                SpreadsheetFormatParserTokenKind.CONDITION.asOptional :
-                this.isColorName() ?
-                        this.cast(SpreadsheetFormatColorParserToken.class).nameOrNumber()
-                                .kind() :
-                        EMPTY_KIND;
     }
 }

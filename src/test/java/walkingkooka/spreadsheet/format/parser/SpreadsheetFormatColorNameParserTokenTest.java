@@ -71,9 +71,7 @@ public final class SpreadsheetFormatColorNameParserTokenTest extends Spreadsheet
 
     @Test
     public void testKind() {
-        this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.COLOR_NAME
-        );
+        this.kindAndCheck();
     }
 
     // helpers..........................................................................................................
