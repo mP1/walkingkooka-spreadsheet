@@ -25,6 +25,7 @@ import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -52,6 +53,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -840,6 +842,22 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                 .findFirst(
                         SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorName)
                 ).map(t -> t.cast(SpreadsheetFormatColorNameParserToken.class).colorName());
+    }
+
+    /**
+     * Returns a color number if one is included in this pattern.
+     */
+    public final OptionalInt colorNumber() {
+        this.failIfMultiplePatterns("color name");
+
+        return this.value()
+                .findFirst(
+                        SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorNumber)
+                ).map(t ->
+                        OptionalInt.of(
+                                t.cast(SpreadsheetFormatColorNumberParserToken.class).value()
+                        )
+                ).orElse(OptionalInt.empty());
     }
 
     private void failIfMultiplePatterns(final String label) {
