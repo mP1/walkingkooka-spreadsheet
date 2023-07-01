@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V>
         implements ClassTesting2<P>,
         HashCodeEqualsDefinedTesting2<P>,
@@ -50,6 +52,19 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
 
     SpreadsheetPatternTestCase() {
         super();
+    }
+
+    // patterns.........................................................................................................
+
+    @Test
+    public final void testPatternsCached() {
+        final P pattern = this.createPattern();
+        final List<?> patterns = pattern.patterns();
+        assertSame(
+                patterns,
+                pattern.patterns(),
+                "patterns not cached"
+        );
     }
 
     final void patternsAndCheck(final P pattern,

@@ -56,7 +56,7 @@ final class SpreadsheetNumberParsePatternParser implements Parser<SpreadsheetPar
 
         final TextCursorSavePoint save = cursor.save();
 
-        for (final List<SpreadsheetNumberParsePatternComponent> pattern : this.pattern.patterns) {
+        for (final List<SpreadsheetNumberParsePatternComponent> pattern : this.pattern.patternComponents) {
             final SpreadsheetNumberParsePatternRequest request = SpreadsheetNumberParsePatternRequest.with(
                     pattern.iterator(),
                     this.mode,

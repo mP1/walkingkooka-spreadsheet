@@ -86,10 +86,13 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParse
 
     @Override
     public List<SpreadsheetDateParsePattern> patterns() {
-        return SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
-                this,
-                SpreadsheetDateParsePattern::new
-        );
+        if (null == this.patterns) {
+            this.patterns = SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
+                    this,
+                    SpreadsheetDateParsePattern::new
+            );
+        }
+        return this.patterns;
     }
 
     // Object...........................................................................................................

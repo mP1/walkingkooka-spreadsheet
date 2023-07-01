@@ -232,10 +232,14 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
 
     @Override
     public List<SpreadsheetNumberFormatPattern> patterns() {
-        return SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
-                this,
-                SpreadsheetNumberFormatPattern::new
-        );
+        if (null == this.patterns) {
+            this.patterns = SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
+                    this,
+                    SpreadsheetNumberFormatPattern::new
+            );
+        }
+
+        return this.patterns;
     }
 
     // Object...........................................................................................................

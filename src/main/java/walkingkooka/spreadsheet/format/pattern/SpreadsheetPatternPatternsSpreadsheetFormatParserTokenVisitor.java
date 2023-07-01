@@ -22,7 +22,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanEqualsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanParserToken;
@@ -147,17 +146,16 @@ final class SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor<T exte
     }
 
     private void createAndSavePatternIfNecessary() {
-        final List<ParserToken> pattern = this.pattern;
-        if (null != pattern && pattern.size() > 0) {
-            this.patterns.add(
-                    this.patternFactory.apply(
-                            ParserTokens.sequence(
-                                    pattern,
-                                    ParserToken.text(pattern)
-                            )
+        final List<ParserToken> tokens = this.pattern;
+        if (null != tokens && tokens.size() > 0) {
+            final T pattern = this.patternFactory.apply(
+                    ParserTokens.sequence(
+                            tokens,
+                            ParserToken.text(tokens)
                     )
             );
-
+            pattern.patterns = Lists.of(pattern);
+            this.patterns.add(pattern);
             this.pattern = null;
         }
     }

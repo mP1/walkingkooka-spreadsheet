@@ -39,7 +39,7 @@ enum SpreadsheetNumberParsePatternMode {
          */
         @Override
         void checkCompatible(final SpreadsheetNumberParsePattern patterns) {
-            patterns.patterns.forEach(this::checkCompatible0);
+            patterns.patternComponents.forEach(this::checkCompatible0);
         }
 
         private void checkCompatible0(final List<SpreadsheetNumberParsePatternComponent> patterns) {
