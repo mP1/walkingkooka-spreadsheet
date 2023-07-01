@@ -2548,6 +2548,77 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    // colorName........................................................................................................
+
+    @Test
+    public void testColorNameMultiplePatternsFails() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetPattern.parseDateFormatPattern("dd;dd/mm/yyyy")
+                        .colorName()
+        );
+        this.checkEquals(
+                "Multiple patterns cannot have a single color name=\"dd;dd/mm/yyyy\"",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testColorNameParsePattern() {
+        this.colorNameAndCheck(
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+        );
+    }
+
+    @Test
+    public void testColorNameFormatPatternWithout() {
+        this.colorNameAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("@")
+        );
+    }
+
+    @Test
+    public void testColorNameFormatPatternWith() {
+        this.colorNameAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("[Red]@"),
+                SpreadsheetColorName.with("Red")
+        );
+    }
+
+    @Test
+    public void testColorNameFormatPatternWith2() {
+        this.colorNameAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("[Red]dd;[Blue]dd")
+                        .patterns()
+                        .get(1),
+                SpreadsheetColorName.with("Blue")
+        );
+    }
+
+    private void colorNameAndCheck(final SpreadsheetPattern pattern) {
+        this.colorNameAndCheck(
+                pattern,
+                Optional.empty()
+        );
+    }
+
+    private void colorNameAndCheck(final SpreadsheetPattern pattern,
+                                   final SpreadsheetColorName expected) {
+        this.colorNameAndCheck(
+                pattern,
+                Optional.of(expected)
+        );
+    }
+
+    private void colorNameAndCheck(final SpreadsheetPattern pattern,
+                                   final Optional<SpreadsheetColorName> expected) {
+        this.checkEquals(
+                expected,
+                pattern.colorName(),
+                () -> pattern + " colorName"
+        );
+    }
+
     // Class............................................................................................................
 
     @Override
