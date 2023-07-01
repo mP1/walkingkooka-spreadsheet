@@ -68,6 +68,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -2616,6 +2617,77 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 expected,
                 pattern.colorName(),
                 () -> pattern + " colorName"
+        );
+    }
+
+    // colorNumber........................................................................................................
+
+    @Test
+    public void testColorNumberMultiplePatternsFails() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetPattern.parseDateFormatPattern("dd;dd/mm/yyyy")
+                        .colorNumber()
+        );
+        this.checkEquals(
+                "Multiple patterns cannot have a single color name=\"dd;dd/mm/yyyy\"",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testColorNumberParsePattern() {
+        this.colorNumberAndCheck(
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+        );
+    }
+
+    @Test
+    public void testColorNumberFormatPatternWithout() {
+        this.colorNumberAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("@")
+        );
+    }
+
+    @Test
+    public void testColorNumberFormatPatternWith() {
+        this.colorNumberAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("[color 1]@"),
+                1
+        );
+    }
+
+    @Test
+    public void testColorNumberFormatPatternWith2() {
+        this.colorNumberAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("[color 12]dd;[color 34]dd")
+                        .patterns()
+                        .get(1),
+                34
+        );
+    }
+
+    private void colorNumberAndCheck(final SpreadsheetPattern pattern) {
+        this.colorNumberAndCheck(
+                pattern,
+                OptionalInt.empty()
+        );
+    }
+
+    private void colorNumberAndCheck(final SpreadsheetPattern pattern,
+                                     final int expected) {
+        this.colorNumberAndCheck(
+                pattern,
+                OptionalInt.of(expected)
+        );
+    }
+
+    private void colorNumberAndCheck(final SpreadsheetPattern pattern,
+                                     final OptionalInt expected) {
+        this.checkEquals(
+                expected,
+                pattern.colorNumber(),
+                () -> pattern + " colorNumber"
         );
     }
 
