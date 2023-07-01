@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
-public final class SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetPatternComponentsSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetPatternComponentsSpreadsheetFormatParserTokenVisitor> {
     @Override
-    public SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitor(null);
+    public SpreadsheetPatternComponentsSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetPatternComponentsSpreadsheetFormatParserTokenVisitor(null);
     }
 
     @Override
@@ -33,11 +33,11 @@ public final class SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisito
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetPattern.class.getSimpleName() + "Components"
+        return SpreadsheetPattern.class.getSimpleName() + "Components";
     }
 
     @Override
-    public Class<SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetPatternComponentsSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetPatternComponentsSpreadsheetFormatParserTokenVisitor.class;
     }
 }

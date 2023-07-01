@@ -820,7 +820,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * This method will be useful when creating a UI to build a pattern.
      */
     public final void components(final BiConsumer<SpreadsheetFormatParserTokenKind, String> consumer) {
-        SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitor.traverse(
+        SpreadsheetPatternComponentsSpreadsheetFormatParserTokenVisitor.traverse(
                 this.value,
                 consumer
         );
