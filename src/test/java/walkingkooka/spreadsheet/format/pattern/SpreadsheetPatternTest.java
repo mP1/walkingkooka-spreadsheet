@@ -35,7 +35,6 @@ import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
@@ -1848,7 +1847,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testComponentsWithNullBiConsumerFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetPattern.parseTextFormatPattern("@").forEachComponent(null)
+                () -> SpreadsheetPattern.parseTextFormatPattern("@").components(null)
         );
     }
 
@@ -2437,7 +2436,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                                     final Map.Entry<SpreadsheetFormatParserTokenKind, String>... expected) {
         final List<Map.Entry<SpreadsheetFormatParserTokenKind, String>> components = Lists.array();
 
-        pattern.forEachComponent(
+        pattern.components(
                 (kind, text) -> components.add(
                         Map.entry(
                                 kind,
