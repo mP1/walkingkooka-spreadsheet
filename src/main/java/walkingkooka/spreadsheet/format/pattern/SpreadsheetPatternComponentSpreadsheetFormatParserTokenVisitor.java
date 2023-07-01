@@ -28,17 +28,17 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
-final class SpreadsheetPatternForEachComponentSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     static void traverse(final ParserToken token,
                          final BiConsumer<SpreadsheetFormatParserTokenKind, String> consumer) {
         Objects.requireNonNull(consumer, "consumer");
 
-        new SpreadsheetPatternForEachComponentSpreadsheetFormatParserTokenVisitor(consumer)
+        new SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitor(consumer)
                 .accept(token);
     }
 
-    SpreadsheetPatternForEachComponentSpreadsheetFormatParserTokenVisitor(final BiConsumer<SpreadsheetFormatParserTokenKind, String> consumer) {
+    SpreadsheetPatternComponentSpreadsheetFormatParserTokenVisitor(final BiConsumer<SpreadsheetFormatParserTokenKind, String> consumer) {
         super();
         this.consumer = consumer;
     }
