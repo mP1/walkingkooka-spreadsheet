@@ -23,8 +23,11 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.CaseKind;
@@ -48,6 +51,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -824,6 +828,25 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                 this.value,
                 consumer
         );
+    }
+
+    /**
+     * Returns a {@link SpreadsheetColorName} if one is included in this pattern.
+     */
+    public final Optional<SpreadsheetColorName> colorName() {
+        this.failIfMultiplePatterns("color name");
+
+        return this.value()
+                .findFirst(
+                        SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorName)
+                ).map(t -> t.cast(SpreadsheetFormatColorNameParserToken.class).colorName());
+    }
+
+    private void failIfMultiplePatterns(final String label) {
+        final int count = this.patterns().size();
+        if (1 != count) {
+            throw new IllegalStateException("Multiple patterns cannot have a single " + label + "=" + this);
+        }
     }
 
     // Object...........................................................................................................
