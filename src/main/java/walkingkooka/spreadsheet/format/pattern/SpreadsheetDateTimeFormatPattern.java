@@ -57,10 +57,13 @@ public final class SpreadsheetDateTimeFormatPattern extends SpreadsheetFormatPat
 
     @Override
     public List<SpreadsheetDateTimeFormatPattern> patterns() {
-        return SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
-                this,
-                SpreadsheetDateTimeFormatPattern::new
-        );
+        if (null == this.patterns) {
+            this.patterns = SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
+                    this,
+                    SpreadsheetDateTimeFormatPattern::new
+            );
+        }
+        return this.patterns;
     }
 
     // Object...........................................................................................................

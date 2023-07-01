@@ -48,7 +48,7 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
     private SpreadsheetNumberParsePattern(final ParserToken token,
                                           final List<List<SpreadsheetNumberParsePatternComponent>> patterns) {
         super(token);
-        this.patterns = patterns;
+        this.patternComponents = patterns;
     }
 
     // parse............................................................................................................
@@ -114,15 +114,19 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
     /**
      * The outer {@link List} contains an element for each pattern, with the inner {@link List} containing the components.
      */
-    final List<List<SpreadsheetNumberParsePatternComponent>> patterns;
+    final List<List<SpreadsheetNumberParsePatternComponent>> patternComponents;
 
     // patterns.........................................................................................................
 
     @Override
     public List<SpreadsheetNumberParsePattern> patterns() {
-        return SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
-                this,
-                SpreadsheetNumberParsePattern::with
-        );
+        if (null == this.patterns) {
+            this.patterns = SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
+                    this,
+                    SpreadsheetNumberParsePattern::with
+            );
+        }
+
+        return this.patterns;
     }
 }

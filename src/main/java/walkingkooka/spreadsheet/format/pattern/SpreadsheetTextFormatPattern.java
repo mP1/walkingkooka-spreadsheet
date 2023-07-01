@@ -54,14 +54,17 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
         formatters.accept(formatter);
     }
 
-    // patterns........................................................................................................
+    // patterns.........................................................................................................
 
     /**
      * Attempts to break down this {@link SpreadsheetPattern} into individual patterns for each pattern between {@link #SEPARATOR}.
      */
     @Override
     public List<SpreadsheetTextFormatPattern> patterns() {
-        return Lists.of(this);
+        if (null == this.patterns) {
+            this.patterns = Lists.of(this);
+        }
+        return this.patterns;
     }
 
     // Object...........................................................................................................

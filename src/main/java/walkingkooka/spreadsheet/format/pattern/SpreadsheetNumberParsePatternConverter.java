@@ -78,7 +78,7 @@ final class SpreadsheetNumberParsePatternConverter implements Converter<Expressi
         final TextCursorSavePoint save = cursor.save();
 
         // try all patterns until success or return failure.
-        for (final List<SpreadsheetNumberParsePatternComponent> pattern : this.pattern.patterns) {
+        for (final List<SpreadsheetNumberParsePatternComponent> pattern : this.pattern.patternComponents) {
             final SpreadsheetNumberParsePatternRequest request = SpreadsheetNumberParsePatternRequest.with(
                     pattern.iterator(),
                     SpreadsheetNumberParsePatternMode.VALUE,
