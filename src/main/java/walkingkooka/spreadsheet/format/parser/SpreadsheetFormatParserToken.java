@@ -36,11 +36,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 /**
  * Represents a token within the spreadsheet format grammar.
  */
 public abstract class SpreadsheetFormatParserToken implements ParserToken {
+
+    /**
+     * {@see SpreadsheetFormatParserTokenPredicate}
+     */
+    public static Predicate<ParserToken> predicate(final Predicate<SpreadsheetFormatParserToken> predicate) {
+        return SpreadsheetFormatParserTokenPredicate.with(predicate);
+    }
 
     /**
      * {@see SpreadsheetFormatAmPmParserToken}
