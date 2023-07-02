@@ -65,7 +65,7 @@ public final class SpreadsheetFunctionParametersParserToken extends SpreadsheetP
 
     @Override
     public SpreadsheetFunctionParametersParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveFirstIf(
+        return ParserToken.removeFirstIfParent(
                 this,
                 predicate,
                 SpreadsheetFunctionParametersParserToken.class

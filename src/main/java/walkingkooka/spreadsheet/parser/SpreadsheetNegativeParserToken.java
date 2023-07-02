@@ -69,7 +69,7 @@ public final class SpreadsheetNegativeParserToken extends SpreadsheetParentParse
 
     @Override
     public SpreadsheetNegativeParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveFirstIf(
+        return ParserToken.removeFirstIfParent(
                 this,
                 predicate,
                 SpreadsheetNegativeParserToken.class
