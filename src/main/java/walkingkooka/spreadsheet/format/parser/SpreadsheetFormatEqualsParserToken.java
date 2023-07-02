@@ -57,7 +57,7 @@ public final class SpreadsheetFormatEqualsParserToken extends SpreadsheetFormatC
 
     @Override
     public SpreadsheetFormatEqualsParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveFirstIf(
+        return ParserToken.removeFirstIfParent(
                 this,
                 predicate,
                 SpreadsheetFormatEqualsParserToken.class

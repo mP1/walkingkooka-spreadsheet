@@ -51,7 +51,7 @@ public final class SpreadsheetEqualsParserToken extends SpreadsheetBinaryParserT
 
     @Override
     public SpreadsheetEqualsParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveFirstIf(
+        return ParserToken.removeFirstIfParent(
                 this,
                 predicate,
                 SpreadsheetEqualsParserToken.class

@@ -76,7 +76,7 @@ public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryPars
 
     @Override
     public SpreadsheetCellRangeParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveFirstIf(
+        return ParserToken.removeFirstIfParent(
                 this,
                 predicate,
                 SpreadsheetCellRangeParserToken.class

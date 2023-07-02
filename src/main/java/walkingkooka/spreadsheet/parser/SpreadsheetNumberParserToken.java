@@ -62,7 +62,7 @@ public final class SpreadsheetNumberParserToken extends SpreadsheetParentParserT
 
     @Override
     public SpreadsheetNumberParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveFirstIf(
+        return ParserToken.removeFirstIfParent(
                 this,
                 predicate,
                 SpreadsheetNumberParserToken.class

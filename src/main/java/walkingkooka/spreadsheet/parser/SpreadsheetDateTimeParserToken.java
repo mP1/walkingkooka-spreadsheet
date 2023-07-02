@@ -62,7 +62,7 @@ public final class SpreadsheetDateTimeParserToken extends SpreadsheetParentParse
 
     @Override
     public SpreadsheetDateTimeParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveFirstIf(
+        return ParserToken.removeFirstIfParent(
                 this,
                 predicate,
                 SpreadsheetDateTimeParserToken.class

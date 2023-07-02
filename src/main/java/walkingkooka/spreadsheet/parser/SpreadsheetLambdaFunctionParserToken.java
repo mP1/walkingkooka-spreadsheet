@@ -107,7 +107,7 @@ public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetParen
 
     @Override
     public SpreadsheetLambdaFunctionParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveFirstIf(
+        return ParserToken.removeFirstIfParent(
                 this,
                 predicate,
                 SpreadsheetLambdaFunctionParserToken.class
