@@ -36,6 +36,17 @@ public final class SpreadsheetFormatBracketOpenSymbolParserToken extends Spreads
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatBracketOpenSymbolParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatBracketOpenSymbolParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

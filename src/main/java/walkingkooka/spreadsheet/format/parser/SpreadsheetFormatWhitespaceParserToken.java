@@ -37,6 +37,17 @@ public final class SpreadsheetFormatWhitespaceParserToken extends SpreadsheetFor
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatWhitespaceParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatWhitespaceParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

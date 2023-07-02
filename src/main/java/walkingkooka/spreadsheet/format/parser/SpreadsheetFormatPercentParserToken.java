@@ -36,6 +36,17 @@ public final class SpreadsheetFormatPercentParserToken extends SpreadsheetFormat
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatPercentParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatPercentParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

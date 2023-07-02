@@ -22,6 +22,7 @@ import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -61,7 +62,7 @@ public final class SpreadsheetNumberParserToken extends SpreadsheetParentParserT
     // removeFirstIf....................................................................................................
 
     @Override
-    public SpreadsheetNumberParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+    public Optional<SpreadsheetNumberParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeFirstIfParent(
                 this,
                 predicate,

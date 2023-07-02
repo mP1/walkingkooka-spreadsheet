@@ -36,6 +36,17 @@ public final class SpreadsheetFormatUnderscoreParserToken extends SpreadsheetFor
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatUnderscoreParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatUnderscoreParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

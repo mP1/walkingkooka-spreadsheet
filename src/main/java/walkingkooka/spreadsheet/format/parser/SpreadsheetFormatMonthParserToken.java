@@ -36,6 +36,17 @@ public final class SpreadsheetFormatMonthParserToken extends SpreadsheetFormatNo
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatMonthParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatMonthParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

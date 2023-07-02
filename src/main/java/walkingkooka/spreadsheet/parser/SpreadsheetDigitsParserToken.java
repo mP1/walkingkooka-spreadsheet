@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -36,7 +37,16 @@ public final class SpreadsheetDigitsParserToken extends SpreadsheetNonSymbolPars
     private SpreadsheetDigitsParserToken(final String value, final String text) {
         super(value, text);
     }
+    // removeFirstIf....................................................................................................
 
+    @Override
+    public Optional<SpreadsheetDigitsParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetDigitsParserToken.class
+        );
+    }
     // replaceFirstIf...................................................................................................
 
     @Override

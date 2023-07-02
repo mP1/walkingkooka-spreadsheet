@@ -39,6 +39,17 @@ public final class SpreadsheetFormatColorNumberParserToken extends SpreadsheetFo
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatColorNumberParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatColorNumberParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -46,6 +47,17 @@ public final class SpreadsheetNotEqualsSymbolParserToken extends SpreadsheetSymb
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return notEquals(tokens, text);
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetNotEqualsSymbolParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetNotEqualsSymbolParserToken.class
+        );
     }
 
     // replaceFirstIf...................................................................................................
