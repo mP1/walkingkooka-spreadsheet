@@ -392,6 +392,18 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         };
     }
 
+    // removeColor.......................................................................................................
+
+    @Test
+    public void testRemoveColor() {
+        final SpreadsheetTextFormatPattern pattern = this.createPattern("[green]@\"Hello\"");
+
+        this.removeColorAndCheck(
+                pattern,
+                this.createPattern("@\"Hello\"")
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test

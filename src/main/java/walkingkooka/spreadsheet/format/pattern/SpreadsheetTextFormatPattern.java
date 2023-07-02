@@ -67,6 +67,16 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
         return this.patterns;
     }
 
+    // remove...........................................................................................................
+
+    @Override
+    public SpreadsheetTextFormatPattern removeColor() {
+        return this.removeIf0(
+                COLOR_PREDICATE,
+                SpreadsheetTextFormatPattern::new
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override

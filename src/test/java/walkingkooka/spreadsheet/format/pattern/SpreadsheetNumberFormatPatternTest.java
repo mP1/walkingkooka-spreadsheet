@@ -849,6 +849,18 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         );
     }
 
+    // removeColor.......................................................................................................
+
+    @Test
+    public void testRemoveColor() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[green]$0.00");
+
+        this.removeColorAndCheck(
+                pattern,
+                this.createPattern("$0.00")
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

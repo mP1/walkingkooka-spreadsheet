@@ -156,6 +156,39 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
                 this.createPattern(this.parseFormatParserToken(patternText)));
     }
 
+    // removeColor..................................................................................................
+
+    @Test
+    public final void testRemoveColorNameWithout() {
+        this.removeColorAndCheck(
+                this.createPattern()
+        );
+    }
+
+    @Test
+    public final void testRemoveColorName() {
+        this.removeColorAndCheck(
+                this.createPattern("[color 1]\"Text-literal\""),
+                this.createPattern("\"Text-literal\"")
+        );
+    }
+
+    @Test
+    public final void testRemoveColorName2() {
+        this.removeColorAndCheck(
+                this.createPattern("\"Text-literal\"[color 2]"),
+                this.createPattern("\"Text-literal\"")
+        );
+    }
+
+    @Test
+    public final void testRemoveColorNameWithColorName() {
+        this.removeColorAndCheck(
+                this.createPattern("[Red]\"Text-literal\""),
+                this.createPattern("\"Text-literal\"")
+        );
+    }
+
     // IsMethodTesting..................................................................................................
 
     @Override

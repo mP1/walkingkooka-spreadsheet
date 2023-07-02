@@ -129,4 +129,11 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
 
         return this.patterns;
     }
+
+    // remove...........................................................................................................
+
+    @Override
+    public SpreadsheetNumberParsePattern removeColor() {
+        return this;
+    }
 }

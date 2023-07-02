@@ -96,6 +96,13 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetNonNumberParse
         return this.patterns;
     }
 
+    // remove...........................................................................................................
+
+    @Override
+    public SpreadsheetTimeParsePattern removeColor() {
+        return this;
+    }
+
     // Object...........................................................................................................
 
     @Override

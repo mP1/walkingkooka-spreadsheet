@@ -58,6 +58,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
@@ -839,10 +840,11 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         this.failIfMultiplePatterns("color name");
 
         return this.value()
-                .findFirst(
-                        SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorName)
-                ).map(t -> t.cast(SpreadsheetFormatColorNameParserToken.class).colorName());
+                .findFirst(COLOR_NAME_PREDICATE)
+                .map(t -> t.cast(SpreadsheetFormatColorNameParserToken.class).colorName());
     }
+
+    private final static Predicate<ParserToken> COLOR_NAME_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorName);
 
     /**
      * Returns a color number if one is included in this pattern.
@@ -866,6 +868,14 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
             throw new IllegalStateException("Multiple patterns cannot have a single " + label + "=" + this);
         }
     }
+
+    /**
+     * Removes any present color name from this pattern. Only format patterns should actually attempt a remove,
+     * parse patterns should just return this.
+     */
+    public abstract SpreadsheetPattern removeColor();
+
+    final Predicate<ParserToken> COLOR_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColor);
 
     // Object...........................................................................................................
 
@@ -897,6 +907,22 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         return CharSequences.quoteAndEscape(
                 this.value.text()
         ).toString();
+    }
+
+    /**
+     * Generalized helper that attempts to remove any token matched by the given {@link Predicate}. If a remove happened,
+     * the factory is called to create a new {@link SpreadsheetPattern} otherwise this is returned.
+     */
+    final <T extends SpreadsheetFormatPattern> T removeIf0(final Predicate<ParserToken> predicate,
+                                                           final Function<ParserToken, T> factory) {
+        final ParserToken token = this.value();
+        final Optional<?> removed = token.removeIf(predicate);
+
+        return false == removed.isPresent() || token.equals(removed.get()) ?
+                (T) this :
+                factory.apply(
+                        (ParserToken) removed.get()
+                );
     }
 
     // JsonNodeContext..................................................................................................

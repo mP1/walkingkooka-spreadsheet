@@ -242,6 +242,16 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         return this.patterns;
     }
 
+    // remove...........................................................................................................
+
+    @Override
+    public SpreadsheetNumberFormatPattern removeColor() {
+        return this.removeIf0(
+                COLOR_PREDICATE,
+                SpreadsheetNumberFormatPattern::new
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override
