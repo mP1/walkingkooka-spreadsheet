@@ -36,6 +36,17 @@ public final class SpreadsheetFormatQuotedTextParserToken extends SpreadsheetFor
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatQuotedTextParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatQuotedTextParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

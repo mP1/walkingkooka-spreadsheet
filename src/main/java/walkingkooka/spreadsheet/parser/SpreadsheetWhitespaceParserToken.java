@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -45,6 +46,17 @@ public final class SpreadsheetWhitespaceParserToken extends SpreadsheetSymbolPar
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetWhitespaceParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetWhitespaceParserToken.class
+        );
     }
 
     // replaceFirstIf...................................................................................................

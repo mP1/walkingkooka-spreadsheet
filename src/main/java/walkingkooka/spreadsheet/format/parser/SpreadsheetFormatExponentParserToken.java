@@ -58,7 +58,7 @@ public final class SpreadsheetFormatExponentParserToken extends SpreadsheetForma
     // removeFirstIf....................................................................................................
 
     @Override
-    public SpreadsheetFormatExponentParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+    public Optional<SpreadsheetFormatExponentParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeFirstIfParent(
                 this,
                 predicate,

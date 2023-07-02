@@ -37,6 +37,17 @@ public final class SpreadsheetFormatHourParserToken extends SpreadsheetFormatNon
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatHourParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatHourParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

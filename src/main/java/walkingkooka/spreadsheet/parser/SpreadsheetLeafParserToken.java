@@ -57,14 +57,6 @@ abstract class SpreadsheetLeafParserToken<T> extends SpreadsheetParserToken
         );
     }
 
-    // removeIf.........................................................................................................
-
-    @Override
-    public final ParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
-        Objects.requireNonNull(predicate, "predicate");
-        return this;
-    }
-
     // removeIf....................................................................................................
 
     @Override

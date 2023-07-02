@@ -20,6 +20,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -64,7 +65,7 @@ public final class SpreadsheetFunctionParametersParserToken extends SpreadsheetP
     // removeFirstIf....................................................................................................
 
     @Override
-    public SpreadsheetFunctionParametersParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+    public Optional<SpreadsheetFunctionParametersParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeFirstIfParent(
                 this,
                 predicate,

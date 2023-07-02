@@ -37,6 +37,17 @@ public final class SpreadsheetFormatTextLiteralParserToken extends SpreadsheetFo
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatTextLiteralParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatTextLiteralParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

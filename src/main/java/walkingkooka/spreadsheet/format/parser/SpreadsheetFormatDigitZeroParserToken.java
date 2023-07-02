@@ -37,6 +37,17 @@ public final class SpreadsheetFormatDigitZeroParserToken extends SpreadsheetForm
         super(value, text);
     }
 
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatDigitZeroParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatDigitZeroParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override
