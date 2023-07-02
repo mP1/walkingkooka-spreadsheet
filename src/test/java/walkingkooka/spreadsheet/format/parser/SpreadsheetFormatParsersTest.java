@@ -127,6 +127,26 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
+    public void testColorNameWhitespaceBeforeFails() {
+        this.colorThrows(
+                whitespace(),
+                bracketOpenSymbol(),
+                red(),
+                bracketCloseSymbol()
+        );
+    }
+
+    @Test
+    public void testColorNameWhitespaceAfterFails() {
+        this.colorThrows(
+                bracketOpenSymbol(),
+                red(),
+                bracketCloseSymbol(),
+                whitespace()
+        );
+    }
+
+    @Test
     public void testColorName() {
         this.colorParseAndCheck(
                 bracketOpenSymbol(),
@@ -142,6 +162,26 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 red(),
                 whitespace3(),
                 bracketCloseSymbol()
+        );
+    }
+
+    @Test
+    public void testColorNumberWhitespaceBeforeFails() {
+        this.colorThrows(
+                whitespace(),
+                bracketOpenSymbol(),
+                colorNumberFive(),
+                bracketCloseSymbol()
+        );
+    }
+
+    @Test
+    public void testColorNumberWhitespaceAfterFails() {
+        this.colorThrows(
+                bracketOpenSymbol(),
+                colorNumberFive(),
+                bracketCloseSymbol(),
+                whitespace()
         );
     }
 
