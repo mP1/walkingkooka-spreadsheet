@@ -47,6 +47,17 @@ public final class SpreadsheetFormatQuotedTextParserToken extends SpreadsheetFor
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatQuotedTextParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatQuotedTextParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

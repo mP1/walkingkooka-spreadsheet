@@ -48,6 +48,17 @@ public final class SpreadsheetYearParserToken extends SpreadsheetNonSymbolParser
         );
     }
 
+    // removeIf........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetYearParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetYearParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

@@ -61,7 +61,7 @@ public final class SpreadsheetLessThanEqualsParserToken extends SpreadsheetBinar
     // removeIf.........................................................................................................
 
     @Override
-    public SpreadsheetLessThanEqualsParserToken removeIf(final Predicate<ParserToken> predicate) {
+    public Optional<SpreadsheetLessThanEqualsParserToken> removeIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeIfParent(
                 this,
                 predicate,

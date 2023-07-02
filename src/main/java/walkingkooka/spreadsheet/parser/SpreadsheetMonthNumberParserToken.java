@@ -48,6 +48,17 @@ public final class SpreadsheetMonthNumberParserToken extends SpreadsheetNonSymbo
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetMonthNumberParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetMonthNumberParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

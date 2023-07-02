@@ -49,6 +49,17 @@ public final class SpreadsheetTextLiteralParserToken extends SpreadsheetNonSymbo
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetTextLiteralParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetTextLiteralParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

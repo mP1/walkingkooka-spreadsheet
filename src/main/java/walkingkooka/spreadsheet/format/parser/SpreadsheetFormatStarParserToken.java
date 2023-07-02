@@ -47,6 +47,17 @@ public final class SpreadsheetFormatStarParserToken extends SpreadsheetFormatNon
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatStarParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatStarParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

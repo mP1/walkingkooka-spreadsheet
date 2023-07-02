@@ -50,6 +50,17 @@ public final class SpreadsheetFunctionNameParserToken extends SpreadsheetNonSymb
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFunctionNameParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFunctionNameParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

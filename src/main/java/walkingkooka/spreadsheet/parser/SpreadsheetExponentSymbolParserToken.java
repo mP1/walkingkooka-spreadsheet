@@ -60,6 +60,17 @@ public final class SpreadsheetExponentSymbolParserToken extends SpreadsheetSymbo
         );
     }
 
+    // removeIf........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetExponentSymbolParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetExponentSymbolParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

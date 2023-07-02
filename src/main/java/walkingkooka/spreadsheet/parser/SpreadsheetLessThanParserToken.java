@@ -61,7 +61,7 @@ public final class SpreadsheetLessThanParserToken extends SpreadsheetBinaryParse
     // removeIf.........................................................................................................
 
     @Override
-    public SpreadsheetLessThanParserToken removeIf(final Predicate<ParserToken> predicate) {
+    public Optional<SpreadsheetLessThanParserToken> removeIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeIfParent(
                 this,
                 predicate,

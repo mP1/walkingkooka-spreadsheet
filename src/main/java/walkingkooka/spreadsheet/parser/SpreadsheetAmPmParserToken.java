@@ -48,6 +48,17 @@ public final class SpreadsheetAmPmParserToken extends SpreadsheetNonSymbolParser
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetAmPmParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetAmPmParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

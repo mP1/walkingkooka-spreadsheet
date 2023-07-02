@@ -47,6 +47,16 @@ public final class SpreadsheetFormatYearParserToken extends SpreadsheetFormatNon
                 SpreadsheetFormatYearParserToken.class
         );
     }
+    // removeIf........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatYearParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatYearParserToken.class
+        );
+    }
 
     // replaceFirstIf...................................................................................................
 

@@ -47,6 +47,16 @@ public final class SpreadsheetFormatTextLiteralParserToken extends SpreadsheetFo
                 SpreadsheetFormatTextLiteralParserToken.class
         );
     }
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatTextLiteralParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatTextLiteralParserToken.class
+        );
+    }
 
     // replaceFirstIf...................................................................................................
 

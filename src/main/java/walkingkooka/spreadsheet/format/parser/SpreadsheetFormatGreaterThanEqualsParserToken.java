@@ -68,7 +68,7 @@ public final class SpreadsheetFormatGreaterThanEqualsParserToken extends Spreads
     // removeIf.........................................................................................................
 
     @Override
-    public SpreadsheetFormatGreaterThanEqualsParserToken removeIf(final Predicate<ParserToken> predicate) {
+    public Optional<SpreadsheetFormatGreaterThanEqualsParserToken> removeIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeIfParent(
                 this,
                 predicate,

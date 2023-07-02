@@ -47,6 +47,17 @@ public final class SpreadsheetFormatCurrencyParserToken extends SpreadsheetForma
         );
     }
 
+    // removeIf........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatCurrencyParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatCurrencyParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

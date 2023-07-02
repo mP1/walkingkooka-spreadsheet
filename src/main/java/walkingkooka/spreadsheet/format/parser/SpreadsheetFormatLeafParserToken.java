@@ -21,7 +21,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 /**
  * Base class for a leaf token. A leaf has no further breakdown into more detailed tokens.
@@ -59,13 +58,5 @@ abstract class SpreadsheetFormatLeafParserToken<T> extends SpreadsheetFormatPars
                 this,
                 children
         );
-    }
-
-    // removeIf....................................................................................................
-
-    @Override
-    public final ParserToken removeIf(final Predicate<ParserToken> predicate) {
-        Objects.requireNonNull(predicate, "predicate");
-        return this;
     }
 }

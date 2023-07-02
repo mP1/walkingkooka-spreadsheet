@@ -46,6 +46,16 @@ public final class SpreadsheetFormatMonthParserToken extends SpreadsheetFormatNo
                 SpreadsheetFormatMonthParserToken.class
         );
     }
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatMonthParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatMonthParserToken.class
+        );
+    }
 
     // replaceFirstIf...................................................................................................
 

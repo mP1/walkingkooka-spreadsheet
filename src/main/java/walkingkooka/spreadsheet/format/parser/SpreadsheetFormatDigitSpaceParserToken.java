@@ -48,6 +48,17 @@ public final class SpreadsheetFormatDigitSpaceParserToken extends SpreadsheetFor
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatDigitSpaceParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatDigitSpaceParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

@@ -47,6 +47,17 @@ public final class SpreadsheetMillisecondParserToken extends SpreadsheetNonSymbo
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetMillisecondParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetMillisecondParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

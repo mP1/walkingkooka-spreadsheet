@@ -47,6 +47,18 @@ public final class SpreadsheetDigitsParserToken extends SpreadsheetNonSymbolPars
                 SpreadsheetDigitsParserToken.class
         );
     }
+
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetDigitsParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetDigitsParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override
