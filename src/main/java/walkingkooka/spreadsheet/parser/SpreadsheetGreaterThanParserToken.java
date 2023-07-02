@@ -62,7 +62,7 @@ public final class SpreadsheetGreaterThanParserToken extends SpreadsheetBinaryPa
 
     @Override
     public SpreadsheetGreaterThanParserToken removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveIf(
+        return ParserToken.removeIfParent(
                 this,
                 predicate,
                 SpreadsheetGreaterThanParserToken.class
