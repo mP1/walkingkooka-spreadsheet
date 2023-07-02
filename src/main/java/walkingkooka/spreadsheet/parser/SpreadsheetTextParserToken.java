@@ -66,7 +66,7 @@ public final class SpreadsheetTextParserToken extends SpreadsheetParentParserTok
 
     @Override
     public SpreadsheetTextParserToken removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveIf(
+        return ParserToken.removeIfParent(
                 this,
                 predicate,
                 SpreadsheetTextParserToken.class

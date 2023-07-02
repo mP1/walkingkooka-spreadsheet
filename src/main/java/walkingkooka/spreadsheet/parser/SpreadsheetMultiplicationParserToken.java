@@ -62,7 +62,7 @@ public final class SpreadsheetMultiplicationParserToken extends SpreadsheetBinar
 
     @Override
     public SpreadsheetMultiplicationParserToken removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveIf(
+        return ParserToken.removeIfParent(
                 this,
                 predicate,
                 SpreadsheetMultiplicationParserToken.class

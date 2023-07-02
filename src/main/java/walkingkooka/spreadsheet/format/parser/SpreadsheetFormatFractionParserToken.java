@@ -70,7 +70,7 @@ public final class SpreadsheetFormatFractionParserToken extends SpreadsheetForma
 
     @Override
     public SpreadsheetFormatFractionParserToken removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.parentRemoveIf(
+        return ParserToken.removeIfParent(
                 this,
                 predicate,
                 SpreadsheetFormatFractionParserToken.class
