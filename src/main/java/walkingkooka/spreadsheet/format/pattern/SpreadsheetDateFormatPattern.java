@@ -66,6 +66,16 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
         return this.patterns;
     }
 
+    // remove...........................................................................................................
+
+    @Override
+    public SpreadsheetDateFormatPattern removeColor() {
+        return this.removeIf0(
+                COLOR_PREDICATE,
+                SpreadsheetDateFormatPattern::new
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override

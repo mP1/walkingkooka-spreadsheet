@@ -313,6 +313,13 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         );
     }
 
+    // removeColor..................................................................................................
+
+    @Test
+    public final void testRemoveColorName() {
+        this.removeColorAndCheck(this.createPattern());
+    }
+
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test

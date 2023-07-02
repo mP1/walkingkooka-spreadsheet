@@ -94,6 +94,24 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
         );
     }
 
+    // removeColor......................................................................................................
+
+    final void removeColorAndCheck(final P pattern) {
+        this.removeColorAndCheck(
+                pattern,
+                pattern
+        );
+    }
+
+    final void removeColorAndCheck(final P pattern,
+                                   final P expected) {
+        this.checkEquals(
+                expected,
+                pattern.removeColor(),
+                () -> pattern + " removeColor"
+        );
+    }
+    
     // token helpers....................................................................................................
 
     final SpreadsheetFormatParserToken ampm() {

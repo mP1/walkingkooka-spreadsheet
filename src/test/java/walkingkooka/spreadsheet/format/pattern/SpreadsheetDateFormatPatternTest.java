@@ -674,7 +674,19 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
                         "[red]dd/mm/yyyy"
         );
     }
-    
+
+    // removeColor......................................................................................................
+
+    @Test
+    public void testRemoveColor() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("[green]dd/mm/yyyy");
+
+        this.removeColorAndCheck(
+                pattern,
+                this.createPattern("dd/mm/yyyy")
+        );
+    }
+
     // helpers..........................................................................................................
 
     @Override

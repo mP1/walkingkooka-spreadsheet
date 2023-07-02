@@ -1044,6 +1044,18 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         );
     }
 
+    // removeColor.......................................................................................................
+
+    @Test
+    public void testRemoveColor() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[green]dd/mm/yyyy hh:mm:ss");
+
+        this.removeColorAndCheck(
+                pattern,
+                this.createPattern("dd/mm/yyyy hh:mm:ss")
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
