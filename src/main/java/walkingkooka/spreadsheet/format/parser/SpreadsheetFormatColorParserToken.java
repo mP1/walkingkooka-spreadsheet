@@ -89,7 +89,7 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
     // removeIf.........................................................................................................
 
     @Override
-    public SpreadsheetFormatColorParserToken removeIf(final Predicate<ParserToken> predicate) {
+    public Optional<SpreadsheetFormatColorParserToken> removeIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeIfParent(
                 this,
                 predicate,

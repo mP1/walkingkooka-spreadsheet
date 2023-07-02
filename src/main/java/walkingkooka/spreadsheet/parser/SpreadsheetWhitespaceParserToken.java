@@ -59,6 +59,17 @@ public final class SpreadsheetWhitespaceParserToken extends SpreadsheetSymbolPar
         );
     }
 
+    // removeIf........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetWhitespaceParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetWhitespaceParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

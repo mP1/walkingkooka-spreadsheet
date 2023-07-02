@@ -48,6 +48,17 @@ public final class SpreadsheetFormatTextPlaceholderParserToken extends Spreadshe
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatTextPlaceholderParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatTextPlaceholderParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

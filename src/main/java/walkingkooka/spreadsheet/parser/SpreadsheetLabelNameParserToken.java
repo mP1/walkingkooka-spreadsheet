@@ -50,6 +50,17 @@ public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolP
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetLabelNameParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetLabelNameParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

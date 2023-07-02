@@ -48,6 +48,17 @@ public final class SpreadsheetHourParserToken extends SpreadsheetNonSymbolParser
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetHourParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetHourParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

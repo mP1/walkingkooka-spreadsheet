@@ -48,6 +48,17 @@ public final class SpreadsheetFormatDayParserToken extends SpreadsheetFormatNonS
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatDayParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatDayParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

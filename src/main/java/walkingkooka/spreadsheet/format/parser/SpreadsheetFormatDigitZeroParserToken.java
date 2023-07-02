@@ -48,6 +48,17 @@ public final class SpreadsheetFormatDigitZeroParserToken extends SpreadsheetForm
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatDigitZeroParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatDigitZeroParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

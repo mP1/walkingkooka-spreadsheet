@@ -59,6 +59,17 @@ public final class SpreadsheetGreaterThanEqualsSymbolParserToken extends Spreads
                 SpreadsheetGreaterThanEqualsSymbolParserToken.class
         );
     }
+
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetGreaterThanEqualsSymbolParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetGreaterThanEqualsSymbolParserToken.class
+        );
+    }
     // replaceFirstIf...................................................................................................
 
     @Override

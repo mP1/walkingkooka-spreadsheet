@@ -48,6 +48,17 @@ public final class SpreadsheetFormatSecondParserToken extends SpreadsheetFormatN
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatSecondParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatSecondParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

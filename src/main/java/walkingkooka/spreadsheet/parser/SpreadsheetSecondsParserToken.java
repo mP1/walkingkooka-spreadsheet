@@ -48,6 +48,17 @@ public final class SpreadsheetSecondsParserToken extends SpreadsheetNonSymbolPar
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetSecondsParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetSecondsParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

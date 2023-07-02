@@ -46,6 +46,16 @@ public final class SpreadsheetFormatGeneralSymbolParserToken extends Spreadsheet
                 SpreadsheetFormatGeneralSymbolParserToken.class
         );
     }
+    // removeIf........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatGeneralSymbolParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatGeneralSymbolParserToken.class
+        );
+    }
 
     // replaceFirstIf...................................................................................................
 

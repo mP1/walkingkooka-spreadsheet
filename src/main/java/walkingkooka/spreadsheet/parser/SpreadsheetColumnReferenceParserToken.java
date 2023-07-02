@@ -50,6 +50,17 @@ public final class SpreadsheetColumnReferenceParserToken extends SpreadsheetNonS
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetColumnReferenceParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetColumnReferenceParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

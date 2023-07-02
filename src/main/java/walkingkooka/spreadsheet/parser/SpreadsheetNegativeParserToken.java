@@ -80,7 +80,7 @@ public final class SpreadsheetNegativeParserToken extends SpreadsheetParentParse
     // removeIf.........................................................................................................
 
     @Override
-    public SpreadsheetNegativeParserToken removeIf(final Predicate<ParserToken> predicate) {
+    public Optional<SpreadsheetNegativeParserToken> removeIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeIfParent(
                 this,
                 predicate,

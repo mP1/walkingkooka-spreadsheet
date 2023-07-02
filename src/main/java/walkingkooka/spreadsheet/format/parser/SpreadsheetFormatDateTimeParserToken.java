@@ -69,7 +69,7 @@ public final class SpreadsheetFormatDateTimeParserToken extends SpreadsheetForma
     // removeIf.........................................................................................................
 
     @Override
-    public SpreadsheetFormatDateTimeParserToken removeIf(final Predicate<ParserToken> predicate) {
+    public Optional<SpreadsheetFormatDateTimeParserToken> removeIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeIfParent(
                 this,
                 predicate,

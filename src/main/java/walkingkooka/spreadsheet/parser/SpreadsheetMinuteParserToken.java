@@ -36,11 +36,23 @@ public final class SpreadsheetMinuteParserToken extends SpreadsheetNonSymbolPars
     private SpreadsheetMinuteParserToken(final int value, final String text) {
         super(value, text);
     }
+
     // removeFirstIf....................................................................................................
 
     @Override
     public Optional<SpreadsheetMinuteParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                SpreadsheetMinuteParserToken.class
+        );
+    }
+
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetMinuteParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
                 this,
                 predicate,
                 SpreadsheetMinuteParserToken.class

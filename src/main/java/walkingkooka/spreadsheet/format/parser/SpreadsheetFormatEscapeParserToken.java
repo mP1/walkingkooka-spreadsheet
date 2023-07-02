@@ -47,6 +47,17 @@ public final class SpreadsheetFormatEscapeParserToken extends SpreadsheetFormatN
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatEscapeParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetFormatEscapeParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

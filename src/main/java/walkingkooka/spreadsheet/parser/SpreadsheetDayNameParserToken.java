@@ -48,6 +48,17 @@ public final class SpreadsheetDayNameParserToken extends SpreadsheetNonSymbolPar
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetDayNameParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SpreadsheetDayNameParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override
