@@ -861,6 +861,30 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         );
     }
 
+    // setColorName.....................................................................................................
+
+    @Test
+    public void testSetColorName() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("$0.00");
+
+        this.setColorNameAndCheck(
+                pattern,
+                SpreadsheetColorName.RED,
+                "[Red]$0.00"
+        );
+    }
+
+    @Test
+    public void testSetColorNameRemovesPreviousColor() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[green]$0.00");
+
+        this.setColorNameAndCheck(
+                pattern,
+                SpreadsheetColorName.RED,
+                "[Red]$0.00"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

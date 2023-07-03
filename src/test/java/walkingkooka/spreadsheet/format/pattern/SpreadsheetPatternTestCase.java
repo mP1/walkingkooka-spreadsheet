@@ -39,6 +39,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V>
         implements ClassTesting2<P>,
@@ -111,7 +112,18 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
                 () -> pattern + " removeColor"
         );
     }
-    
+
+    // setColor.........................................................................................................
+
+    @Test
+    public final void testSetColorNameNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createPattern()
+                        .setColorName(null)
+        );
+    }
+
     // token helpers....................................................................................................
 
     final SpreadsheetFormatParserToken ampm() {
