@@ -41,7 +41,7 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
     public void testColorNumberZeroFails() {
         this.checkValueFails(
                 0,
-                "color number 0 < 1, but got 0 for \"color-dull\""
+                "color number 0 < 1 or > 56, but got 0 for \"color-dull\""
         );
     }
 

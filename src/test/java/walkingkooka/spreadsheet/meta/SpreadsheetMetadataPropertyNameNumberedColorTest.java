@@ -33,17 +33,17 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
     public void testWithNumberLessThanMinFails() {
         this.withFails(
                 SpreadsheetColors.MIN - 1,
-                "color number 0 < 1"
+                "color number 0 < 1 or > 56"
         );
     }
 
-//    @Test
-//    public void testWithNumberGreaterThanMaxFails() {
-//        this.withFails(
-//                SpreadsheetColors.MAX + 1,
-//                "XX"
-//        );
-//    }
+    @Test
+    public void testWithNumberGreaterThanMaxFails() {
+        this.withFails(
+                SpreadsheetColors.MAX + 1,
+                "color number 57 < 1 or > 56"
+        );
+    }
 
     private void withFails(final int value,
                            final String message) {
@@ -91,7 +91,10 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameNumberedColor.withNumber(123), "color-123");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameNumberedColor.withNumber(12),
+                "color-12"
+        );
     }
 
     @Override

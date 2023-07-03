@@ -35,26 +35,28 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
      * Retrieves a {@link SpreadsheetMetadataPropertyNameNumberedColor} for a numbered {@link Color}.
      */
     static SpreadsheetMetadataPropertyNameNumberedColor withNumber(final int number) {
-        if (number < SpreadsheetColors.MIN) {
-            throw new IllegalArgumentException("color number " + number + " < " + SpreadsheetColors.MIN);
-        }
+        SpreadsheetColors.checkNumber(number);
 
-        return number < SpreadsheetColors.MAX ?
-                NUMBER_TO_COLOR[number - SpreadsheetColors.MIN] :
-                new SpreadsheetMetadataPropertyNameNumberedColor(number);
+        return NUMBER_TO_COLOR[number - SpreadsheetColors.MIN];
     }
 
     /**
      * Cache of {@link SpreadsheetColors#MIN} to {@link SpreadsheetColors#MAX} values.
      */
-    private static final SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[SpreadsheetColors.MAX - SpreadsheetColors.MIN];
+    private static final SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[
+            SpreadsheetColors.MAX -
+                    SpreadsheetColors.MIN
+                    + 1
+            ];
 
     /*
      * Fills the cache of {@link SpreadsheetMetadataPropertyNameNumberedColor} for color numbers 0 to {@link #SpreadsheetColors.MAX}.
      */
     static {
-        IntStream.range(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
-                .forEach(SpreadsheetMetadataPropertyNameNumberedColor::registerColor);
+        IntStream.range(
+                SpreadsheetColors.MIN,
+                1 + SpreadsheetColors.MAX
+        ).forEach(SpreadsheetMetadataPropertyNameNumberedColor::registerColor);
     }
 
     private static void registerColor(final int i) {
