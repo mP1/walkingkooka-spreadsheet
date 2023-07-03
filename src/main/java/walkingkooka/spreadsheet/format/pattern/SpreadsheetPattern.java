@@ -875,7 +875,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public abstract SpreadsheetPattern removeColor();
 
-    final Predicate<ParserToken> COLOR_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColor);
+    final static Predicate<ParserToken> COLOR_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColor);
 
     // Object...........................................................................................................
 
