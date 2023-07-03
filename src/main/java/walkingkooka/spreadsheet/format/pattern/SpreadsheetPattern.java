@@ -833,6 +833,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         );
     }
 
+    // color............................................................................................................
+
     /**
      * Returns a {@link SpreadsheetColorName} if one is included in this pattern.
      */
@@ -869,6 +871,25 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     public abstract SpreadsheetPattern removeColor();
 
     final static Predicate<ParserToken> COLOR_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColor);
+
+    /**
+     * Removes any existing color and then attempts to add the given {@link SpreadsheetColorName} to the pattern.
+     * This will always fail for {@link SpreadsheetParsePattern} as colors are not allowed within parse patterns.
+     */
+    public abstract SpreadsheetPattern setColorName(final SpreadsheetColorName name);
+
+    /**
+     * Helper intended to be called by {@link SpreadsheetFormatPattern} sub-classes.
+     */
+    final <T extends SpreadsheetPattern> T setColorName0(final SpreadsheetColorName name,
+                                                         final Function<String, T> parser) {
+        Objects.requireNonNull(name, "name");
+        this.failIfMultiplePatterns("color name");
+
+        return parser.apply(
+                "[" + name + "]" + this.removeColor().text()
+        );
+    }
 
     /**
      * Throws an {@link IllegalStateException} with a fail message for the given operation if multiple patterns are present

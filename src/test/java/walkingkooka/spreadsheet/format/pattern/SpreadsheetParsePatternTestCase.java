@@ -25,6 +25,7 @@ import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
@@ -318,6 +319,16 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     @Test
     public final void testRemoveColorName() {
         this.removeColorAndCheck(this.createPattern());
+    }
+
+    // setColor.........................................................................................................
+
+    @Test
+    public final void testSetColorNameFails() {
+        assertThrows(
+                IllegalStateException.class,
+                () -> this.createPattern().setColorName(SpreadsheetColorName.BLACK)
+        );
     }
 
     // JsonNodeMarshallingTesting.......................................................................................

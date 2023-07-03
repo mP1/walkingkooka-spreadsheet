@@ -19,11 +19,14 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+
+import java.util.Objects;
 
 /**
  * Holds a {@link ParserToken} typically a date/dateime/time and possibly color or conditions.
@@ -92,4 +95,12 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
      */
     public abstract Object parse(final String text,
                                  final SpreadsheetParserContext context);
+
+    // color............................................................................................................
+
+    @Override
+    public final SpreadsheetPattern setColorName(final SpreadsheetColorName name) {
+        Objects.requireNonNull(name, "name");
+        throw new IllegalStateException("Cannot set color name " + name + " for pattern=" + this);
+    }
 }
