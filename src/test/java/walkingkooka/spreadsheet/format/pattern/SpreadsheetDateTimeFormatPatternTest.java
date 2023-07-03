@@ -1080,6 +1080,30 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         );
     }
 
+    // setColorNumber.....................................................................................................
+
+    @Test
+    public void testSetColorNumber() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("dd/mm/yyyy hh:mm:ss");
+
+        this.setColorNumberAndCheck(
+                pattern,
+                12,
+                "[color 12]dd/mm/yyyy hh:mm:ss"
+        );
+    }
+
+    @Test
+    public void testSetColorNumberRemovesPreviousColor() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[green]dd/mm/yyyy hh:mm:ss");
+
+        this.setColorNumberAndCheck(
+                pattern,
+                12,
+                "[color 12]dd/mm/yyyy hh:mm:ss"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

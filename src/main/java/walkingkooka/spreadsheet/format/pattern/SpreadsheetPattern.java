@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
@@ -888,6 +889,26 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
         return parser.apply(
                 "[" + name + "]" + this.removeColor().text()
+        );
+    }
+
+    /**
+     * Removes any existing color and then attempts to add the given color number to the pattern.
+     * This will always fail for {@link SpreadsheetParsePattern} as colors are not allowed within parse patterns.
+     */
+    public abstract SpreadsheetPattern setColorNumber(final int colorNumber);
+
+    /**
+     * Helper intended to be called by {@link SpreadsheetFormatPattern} sub-classes.
+     */
+    final <T extends SpreadsheetPattern> T setColorNumber0(final int colorNumber,
+                                                           final Function<String, T> parser) {
+        SpreadsheetColors.checkNumber(colorNumber);
+        this.failIfMultiplePatterns("color number");
+
+        return parser.apply(
+                "[color " + colorNumber + "]" + this.removeColor()
+                        .text()
         );
     }
 

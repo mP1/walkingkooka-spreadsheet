@@ -87,6 +87,14 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
         );
     }
 
+    @Override
+    public SpreadsheetTimeFormatPattern setColorNumber(final int colorNumber) {
+        return this.setColorNumber0(
+                colorNumber,
+                SpreadsheetPattern::parseTimeFormatPattern
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override

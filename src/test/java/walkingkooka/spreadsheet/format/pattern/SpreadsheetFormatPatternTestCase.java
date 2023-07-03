@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
@@ -215,6 +216,32 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
                 this.createPattern(expected),
                 pattern.setColorName(name),
                 () -> pattern + " set color name " + name
+        );
+    }
+
+    @Test
+    public final void testSetColorNumberMultiplePatternsFails() {
+        if (false == this instanceof SpreadsheetTextFormatPatternTest) {
+            final IllegalStateException thrown = assertThrows(
+                    IllegalStateException.class,
+                    () -> this.createPattern("\"Hello\";\"Hello2\"")
+                            .setColorNumber(SpreadsheetColors.MIN)
+            );
+
+            this.checkEquals(
+                    "Cannot color number for multiple patterns=\"Hello\\\";\\\"Hello2\"",
+                    thrown.getMessage()
+            );
+        }
+    }
+
+    final void setColorNumberAndCheck(final P pattern,
+                                      final int number,
+                                      final String expected) {
+        this.checkEquals(
+                this.createPattern(expected),
+                pattern.setColorNumber(number),
+                () -> pattern + " set color number " + number
         );
     }
 
