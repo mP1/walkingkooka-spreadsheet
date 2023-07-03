@@ -2559,7 +2559,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                         .colorName()
         );
         this.checkEquals(
-                "Multiple patterns cannot have a single color name=\"dd;dd/mm/yyyy\"",
+                "Cannot get color name for multiple patterns=\"dd;dd/mm/yyyy\"",
                 thrown.getMessage()
         );
     }
@@ -2630,7 +2630,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                         .colorNumber()
         );
         this.checkEquals(
-                "Multiple patterns cannot have a single color name=\"dd;dd/mm/yyyy\"",
+                "Cannot get color name for multiple patterns=\"dd;dd/mm/yyyy\"",
                 thrown.getMessage()
         );
     }

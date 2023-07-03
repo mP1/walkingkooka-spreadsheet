@@ -837,7 +837,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Returns a {@link SpreadsheetColorName} if one is included in this pattern.
      */
     public final Optional<SpreadsheetColorName> colorName() {
-        this.failIfMultiplePatterns("color name");
+        this.failIfMultiplePatterns("get color name");
 
         return this.value()
                 .findFirst(COLOR_NAME_PREDICATE)
@@ -850,7 +850,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Returns a color number if one is included in this pattern.
      */
     public final OptionalInt colorNumber() {
-        this.failIfMultiplePatterns("color name");
+        this.failIfMultiplePatterns("get color name");
 
         return this.value()
                 .findFirst(
@@ -862,13 +862,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                 ).orElse(OptionalInt.empty());
     }
 
-    private void failIfMultiplePatterns(final String label) {
-        final int count = this.patterns().size();
-        if (1 != count) {
-            throw new IllegalStateException("Multiple patterns cannot have a single " + label + "=" + this);
-        }
-    }
-
     /**
      * Removes any present color name from this pattern. Only format patterns should actually attempt a remove,
      * parse patterns should just return this.
@@ -876,6 +869,17 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     public abstract SpreadsheetPattern removeColor();
 
     final static Predicate<ParserToken> COLOR_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColor);
+
+    /**
+     * Throws an {@link IllegalStateException} with a fail message for the given operation if multiple patterns are present
+     * in this {@link SpreadsheetPattern} instance.
+     */
+    private void failIfMultiplePatterns(final String operation) {
+        final int count = this.patterns().size();
+        if (1 != count) {
+            throw new IllegalStateException("Cannot " + operation + " for multiple patterns=" + this);
+        }
+    }
 
     // Object...........................................................................................................
 
