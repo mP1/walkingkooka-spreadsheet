@@ -17,12 +17,53 @@
 
 package walkingkooka.spreadsheet;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<SpreadsheetColors> {
+
+    // checkNumber......................................................................................................
+
+    @Test
+    public void testCheckNumberZero() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkNumber(0)
+        );
+    }
+
+    @Test
+    public void testCheckNumberNegative() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkNumber(-1)
+        );
+    }
+
+    @Test
+    public void testCheckNumberMaxPlus1() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkNumber(SpreadsheetColors.MAX + 1)
+        );
+    }
+
+    @Test
+    public void testCheckNumberMin() {
+        SpreadsheetColors.checkNumber(SpreadsheetColors.MIN);
+    }
+
+    @Test
+    public void testCheckNumberMax() {
+        SpreadsheetColors.checkNumber(SpreadsheetColors.MAX);
+    }
+
+    // PublicStaticHelperTesting.......................................................................................
 
     @Override
     public Class<SpreadsheetColors> type() {

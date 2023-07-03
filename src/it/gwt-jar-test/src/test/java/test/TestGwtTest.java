@@ -172,7 +172,7 @@ public class TestGwtTest extends GWTTestCase {
                     .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31)
                     .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
 
-            for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 2; i++) {
+            for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 1; i++) {
                 m = m.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
             }
 

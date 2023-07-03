@@ -2321,8 +2321,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetSelection.parseCell("B99"));
 
-        for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 2; i++) {
-            properties.put(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
+        for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 1; i++) {
+            properties.put(
+                    SpreadsheetMetadataPropertyName.numberedColor(i),
+                    Color.fromRgb(i)
+            );
         }
 
         Stream.of("big", "small", "medium")
