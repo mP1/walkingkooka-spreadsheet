@@ -47,7 +47,7 @@ final class SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor<T exte
 
     static <T extends SpreadsheetPattern> List<T> patterns(final T parent,
                                                            final Function<ParserToken, T> patternFactory) {
-        final SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor(patternFactory);
+        final SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor<T> visitor = new SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor<>(patternFactory);
         visitor.accept(parent.value());
         visitor.createAndSavePatternIfNecessary();
 
