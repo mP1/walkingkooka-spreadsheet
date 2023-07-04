@@ -95,6 +95,16 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
         );
     }
 
+    // removeCondition.................................................................................................
+
+    @Override
+    public SpreadsheetDateFormatPattern removeCondition() {
+        return this.removeIf0(
+                CONDITION_PREDICATE,
+                SpreadsheetDateFormatPattern::new
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override

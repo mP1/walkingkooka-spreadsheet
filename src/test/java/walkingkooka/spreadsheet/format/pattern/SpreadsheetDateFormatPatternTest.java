@@ -735,6 +735,37 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // removeCondition..................................................................................................
+
+    @Test
+    public void testRemoveCondition() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("[<0]dd/mm/yyyy");
+
+        this.removeConditionAndCheck(
+                pattern,
+                this.createPattern("dd/mm/yyyy")
+        );
+    }
+
+    @Test
+    public void testRemoveConditionWithColor() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("[<0][Blue]dd/mm/yyyy");
+
+        this.removeConditionAndCheck(
+                pattern,
+                this.createPattern("[Blue]dd/mm/yyyy")
+        );
+    }
+
+    @Test
+    public void testRemoveConditionConditionMissing() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("dd/mm/yyyy");
+
+        this.removeConditionAndCheck(
+                pattern
+        );
+    }
+
     // helpers..........................................................................................................
 
     @Override

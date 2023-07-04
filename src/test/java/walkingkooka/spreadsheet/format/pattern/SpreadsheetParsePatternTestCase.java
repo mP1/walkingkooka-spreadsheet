@@ -341,6 +341,13 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         );
     }
 
+    // removeCondition..................................................................................................
+
+    @Test
+    public final void testRemoveConditionName() {
+        this.removeConditionAndCheck(this.createPattern());
+    }
+
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test

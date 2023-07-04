@@ -909,6 +909,37 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         );
     }
 
+    // removeCondition..................................................................................................
+
+    @Test
+    public void testRemoveCondition() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<0]$0.00");
+
+        this.removeConditionAndCheck(
+                pattern,
+                this.createPattern("$0.00")
+        );
+    }
+
+    @Test
+    public void testRemoveConditionWithColor() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<0][Blue]$0.00");
+
+        this.removeConditionAndCheck(
+                pattern,
+                this.createPattern("[Blue]$0.00")
+        );
+    }
+
+    @Test
+    public void testRemoveConditionMissing() {
+        final SpreadsheetNumberFormatPattern pattern = this.createPattern("$0.00");
+
+        this.removeConditionAndCheck(
+                pattern
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
