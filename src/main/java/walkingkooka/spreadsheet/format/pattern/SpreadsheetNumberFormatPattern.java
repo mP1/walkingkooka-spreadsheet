@@ -271,6 +271,16 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         );
     }
 
+    // removeCondition..................................................................................................
+
+    @Override
+    public SpreadsheetNumberFormatPattern removeCondition() {
+        return this.removeIf0(
+                CONDITION_PREDICATE,
+                SpreadsheetNumberFormatPattern::new
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override

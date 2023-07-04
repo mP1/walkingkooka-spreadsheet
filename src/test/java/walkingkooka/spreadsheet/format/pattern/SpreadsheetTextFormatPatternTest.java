@@ -452,6 +452,17 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // removeCondition.......................................................................................................
+
+    @Test
+    public void testRemoveConditionMissingCondition() {
+        final SpreadsheetTextFormatPattern pattern = this.createPattern("@\"Hello\"");
+
+        this.removeConditionAndCheck(
+                pattern
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test

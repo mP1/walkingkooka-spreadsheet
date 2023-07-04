@@ -143,6 +143,24 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
         );
     }
 
+    // removeCondition......................................................................................................
+
+    final void removeConditionAndCheck(final P pattern) {
+        this.removeConditionAndCheck(
+                pattern,
+                pattern
+        );
+    }
+
+    final void removeConditionAndCheck(final P pattern,
+                                       final P expected) {
+        this.checkEquals(
+                expected,
+                pattern.removeCondition(),
+                () -> pattern + " removeCondition"
+        );
+    }
+
     // token helpers....................................................................................................
 
     final SpreadsheetFormatParserToken ampm() {

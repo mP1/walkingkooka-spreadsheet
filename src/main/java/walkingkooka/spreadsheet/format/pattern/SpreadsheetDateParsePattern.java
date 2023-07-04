@@ -95,10 +95,17 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParse
         return this.patterns;
     }
 
-    // remove...........................................................................................................
+    // removeColor.......................................................................................................
 
     @Override
     public SpreadsheetDateParsePattern removeColor() {
+        return this;
+    }
+
+    // removeCondition..................................................................................................
+
+    @Override
+    public SpreadsheetDateParsePattern removeCondition() {
         return this;
     }
 

@@ -1104,6 +1104,37 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         );
     }
 
+    // removeCondition..................................................................................................
+
+    @Test
+    public void testRemoveCondition() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[<0]dd/mm/yyyy hh:mm:ss");
+
+        this.removeConditionAndCheck(
+                pattern,
+                this.createPattern("dd/mm/yyyy hh:mm:ss")
+        );
+    }
+
+    @Test
+    public void testRemoveConditionWithColor() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[<0][White]dd/mm/yyyy hh:mm:ss");
+
+        this.removeConditionAndCheck(
+                pattern,
+                this.createPattern("[White]dd/mm/yyyy hh:mm:ss")
+        );
+    }
+
+    @Test
+    public void testRemoveConditionConditionMissing() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("dd/mm/yyyy hh:mm:ss");
+
+        this.removeConditionAndCheck(
+                pattern
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

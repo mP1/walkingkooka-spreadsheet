@@ -923,6 +923,17 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         }
     }
 
+    // condition........................................................................................................
+
+    /**
+     * Removes any present condition from this pattern if necessary.
+     */
+    public abstract SpreadsheetPattern removeCondition();
+
+    final static Predicate<ParserToken> CONDITION_PREDICATE = SpreadsheetFormatParserToken.predicate(
+            SpreadsheetFormatParserToken::isCondition
+    );
+
     // Object...........................................................................................................
 
     @Override

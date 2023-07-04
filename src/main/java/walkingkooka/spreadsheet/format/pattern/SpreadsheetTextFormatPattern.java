@@ -96,6 +96,16 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
         );
     }
 
+    // removeCondition..................................................................................................
+
+    @Override
+    public SpreadsheetTextFormatPattern removeCondition() {
+        return this.removeIf0(
+                CONDITION_PREDICATE,
+                SpreadsheetTextFormatPattern::new
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override

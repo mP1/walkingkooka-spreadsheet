@@ -706,6 +706,37 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // removeCondition.......................................................................................................
+
+    @Test
+    public void testRemoveCondition() {
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("[<0]hh:mm:ss");
+
+        this.removeConditionAndCheck(
+                pattern,
+                this.createPattern("hh:mm:ss")
+        );
+    }
+
+    @Test
+    public void testRemoveConditionWithColor() {
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("[<0][red]hh:mm:ss");
+
+        this.removeConditionAndCheck(
+                pattern,
+                this.createPattern("[red]hh:mm:ss")
+        );
+    }
+
+    @Test
+    public void testRemoveConditionMissingCondition() {
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss");
+
+        this.removeConditionAndCheck(
+                pattern
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
