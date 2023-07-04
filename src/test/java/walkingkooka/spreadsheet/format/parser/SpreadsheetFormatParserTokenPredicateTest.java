@@ -49,7 +49,7 @@ public final class SpreadsheetFormatParserTokenPredicateTest implements Predicat
     public void testSpreadsheetFormatParserTokenFalse() {
         this.testFalse(
                 SpreadsheetFormatParserTokenPredicate.with(
-                        (t) -> t.isHour()
+                        SpreadsheetFormatParserToken::isHour
                 ),
                 SpreadsheetFormatParserToken.amPm("ampm", "ampm")
         );
@@ -59,7 +59,7 @@ public final class SpreadsheetFormatParserTokenPredicateTest implements Predicat
     public void testSpreadsheetFormatParserTokenTrue() {
         this.testTrue(
                 SpreadsheetFormatParserTokenPredicate.with(
-                        (t) -> t.isHour()
+                        SpreadsheetFormatParserToken::isHour
                 ),
                 SpreadsheetFormatParserToken.hour("h", "h")
         );
@@ -78,7 +78,7 @@ public final class SpreadsheetFormatParserTokenPredicateTest implements Predicat
     @Override
     public SpreadsheetFormatParserTokenPredicate createPredicate() {
         return SpreadsheetFormatParserTokenPredicate.with(
-                (t) -> t.isHour()
+                SpreadsheetFormatParserToken::isHour
         );
     }
 
