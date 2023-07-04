@@ -18,11 +18,8 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.tree.expression.ExpressionNumberContext;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public final class SpreadsheetParserContexts implements PublicStaticHelper {
 
