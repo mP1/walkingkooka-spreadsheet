@@ -25,6 +25,7 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
@@ -121,6 +122,24 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
                 NullPointerException.class,
                 () -> this.createPattern()
                         .setColorName(null)
+        );
+    }
+
+    @Test
+    public final void testSetColorNumberInvalidFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createPattern()
+                        .setColorNumber(SpreadsheetColors.MIN - 1)
+        );
+    }
+
+    @Test
+    public final void testSetColorNumberInvalidFails2() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createPattern()
+                        .setColorNumber(SpreadsheetColors.MAX + 1)
         );
     }
 

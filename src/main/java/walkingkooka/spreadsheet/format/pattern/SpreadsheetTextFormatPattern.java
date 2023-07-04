@@ -88,6 +88,14 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
         );
     }
 
+    @Override
+    public SpreadsheetTextFormatPattern setColorNumber(final int colorNumber) {
+        return this.setColorNumber0(
+                colorNumber,
+                SpreadsheetPattern::parseTextFormatPattern
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override

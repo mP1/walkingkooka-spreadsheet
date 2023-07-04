@@ -25,6 +25,7 @@ import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -328,6 +329,15 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         assertThrows(
                 IllegalStateException.class,
                 () -> this.createPattern().setColorName(SpreadsheetColorName.BLACK)
+        );
+    }
+
+    @Test
+    public final void testSetColorNumberFails() {
+        assertThrows(
+                IllegalStateException.class,
+                () -> this.createPattern()
+                        .setColorNumber(SpreadsheetColors.MIN)
         );
     }
 

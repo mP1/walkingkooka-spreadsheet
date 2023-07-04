@@ -428,6 +428,30 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // setColorNumber.....................................................................................................
+
+    @Test
+    public void testSetColorNumber() {
+        final SpreadsheetTextFormatPattern pattern = this.createPattern("@@@");
+
+        this.setColorNumberAndCheck(
+                pattern,
+                12,
+                "[color 12]@@@"
+        );
+    }
+
+    @Test
+    public void testSetColorNumberRemovesPreviousColor() {
+        final SpreadsheetTextFormatPattern pattern = this.createPattern("[green]@@@");
+
+        this.setColorNumberAndCheck(
+                pattern,
+                12,
+                "[color 12]@@@"
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test

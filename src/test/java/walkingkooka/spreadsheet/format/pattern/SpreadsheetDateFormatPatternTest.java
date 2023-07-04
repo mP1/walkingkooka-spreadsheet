@@ -711,6 +711,30 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // setColorNumber.....................................................................................................
+
+    @Test
+    public void testSetColorNumber() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("dd/mm/yyyy");
+
+        this.setColorNumberAndCheck(
+                pattern,
+                12,
+                "[color 12]dd/mm/yyyy"
+        );
+    }
+
+    @Test
+    public void testSetColorNumberRemovesPreviousColor() {
+        final SpreadsheetDateFormatPattern pattern = this.createPattern("[green]dd/mm/yyyy");
+
+        this.setColorNumberAndCheck(
+                pattern,
+                12,
+                "[color 12]dd/mm/yyyy"
+        );
+    }
+
     // helpers..........................................................................................................
 
     @Override

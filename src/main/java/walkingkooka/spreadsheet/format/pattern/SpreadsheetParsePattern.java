@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.HasParser;
@@ -102,5 +103,11 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     public final SpreadsheetPattern setColorName(final SpreadsheetColorName name) {
         Objects.requireNonNull(name, "name");
         throw new IllegalStateException("Cannot set color name " + name + " for pattern=" + this);
+    }
+
+    @Override
+    public final SpreadsheetPattern setColorNumber(final int number) {
+        SpreadsheetColors.checkNumber(number);
+        throw new IllegalStateException("Cannot set color number " + number + " for pattern=" + this);
     }
 }

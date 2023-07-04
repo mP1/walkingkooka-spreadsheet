@@ -682,6 +682,30 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // setColorNumber.....................................................................................................
+
+    @Test
+    public void testSetColorNumber() {
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss");
+
+        this.setColorNumberAndCheck(
+                pattern,
+                12,
+                "[color 12]hh:mm:ss"
+        );
+    }
+
+    @Test
+    public void testSetColorNumberRemovesPreviousColor() {
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("[green]hh:mm:ss");
+
+        this.setColorNumberAndCheck(
+                pattern,
+                12,
+                "[color 12]hh:mm:ss"
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
