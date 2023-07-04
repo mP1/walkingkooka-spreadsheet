@@ -387,7 +387,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
 
                     @Override
                     public List<String> weekDayNameAbbreviations() {
-                        return this.weekDayNameAbbreviations();
+                        return this.dateTimeContext.weekDayNameAbbreviations();
                     }
 
                     @Override
@@ -483,7 +483,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
 
                     @Override
                     public List<String> weekDayNameAbbreviations() {
-                        return this.weekDayNameAbbreviations();
+                        return this.dateTimeContext.weekDayNameAbbreviations();
                     }
 
                     @Override
@@ -665,7 +665,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
 
                     @Override
                     public List<String> weekDayNameAbbreviations() {
-                        return this.weekDayNameAbbreviations();
+                        return this.dateTimeContext.weekDayNameAbbreviations();
                     }
 
                     @Override
