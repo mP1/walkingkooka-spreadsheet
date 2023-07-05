@@ -67,15 +67,20 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
 
     @Test
     public void testWithEmptyText() {
-        this.createAndCheck("");
-    }
-
-    private void createAndCheck(final String text) {
-        final SpreadsheetText formatted = SpreadsheetText.with(text);
+        final String text = "";
         this.check(
-                formatted,
+                SpreadsheetText.with(text),
                 SpreadsheetText.WITHOUT_COLOR,
                 text
+        );
+    }
+
+    @Test
+    public void testWithEmptyTextConstant() {
+        final SpreadsheetText spreadsheetText = SpreadsheetText.with("");
+        assertSame(
+                spreadsheetText,
+                SpreadsheetText.with("")
         );
     }
 

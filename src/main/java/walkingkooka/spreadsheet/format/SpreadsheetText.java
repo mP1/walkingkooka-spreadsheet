@@ -51,12 +51,22 @@ public final class SpreadsheetText implements HasText,
     public final static Optional<Color> WITHOUT_COLOR = Optional.empty();
 
     /**
+     * An empty {@link SpreadsheetText}.
+     */
+    public final static SpreadsheetText EMPTY = new SpreadsheetText(
+            WITHOUT_COLOR,
+            ""
+    );
+
+    /**
      * Creates a {@link SpreadsheetText}
      */
     public static SpreadsheetText with(final String text) {
         checkText(text);
 
-        return new SpreadsheetText(WITHOUT_COLOR, text);
+        return text.length() == 0 ?
+                EMPTY :
+                new SpreadsheetText(WITHOUT_COLOR, text);
     }
 
     private static void checkColor(final Optional<Color> color) {
