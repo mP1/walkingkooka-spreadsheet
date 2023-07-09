@@ -26,15 +26,19 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserTok
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
  * Collection of static factory methods for numerous {@link SpreadsheetFormatter}.
+ * <br>
+ * It is also possible to get a default {@link SpreadsheetFormatter} using {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind#formatter(Locale)}.
  */
 public final class SpreadsheetFormatters implements PublicStaticHelper {
 
@@ -110,6 +114,14 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      */
     public static SpreadsheetFormatter number(final SpreadsheetFormatNumberParserToken token) {
         return NumberSpreadsheetFormatter.with(token);
+    }
+
+    /**
+     * {@see SpreadsheetPatternKind#formatter{java.util.Locale}
+     */
+    public static SpreadsheetFormatter spreadsheetPatternKind(final SpreadsheetPatternKind kind,
+                                                              final Locale locale) {
+        return kind.formatter(locale);
     }
 
     /**
