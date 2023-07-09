@@ -21,12 +21,29 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
+import java.util.Locale;
 
 public final class SpreadsheetFormattersTest implements ClassTesting2<SpreadsheetFormatters>,
         PublicStaticHelperTesting<SpreadsheetFormatters> {
+
+    // SpreadsheetPatternKind...........................................................................................
+
+    @Test
+    public void testSpreadsheetPatternKind() {
+        this.checkNotEquals(
+                null,
+                SpreadsheetFormatters.spreadsheetPatternKind(
+                        SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
+                        Locale.forLanguageTag("En-AU")
+                )
+        );
+    }
+
+    // PublicStaticHelperTesting........................................................................................
 
     @Test
     public void testPublicStaticMethodsWithoutMathContextParameter() {
