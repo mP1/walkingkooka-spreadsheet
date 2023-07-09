@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
@@ -223,7 +222,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public Optional<SpreadsheetText> format(final Object value,
                                             final SpreadsheetFormatter formatter) {
-        return formatter.format(Cast.to(value), this.spreadsheetFormatContext);
+        return formatter.format(
+                value,
+                this.spreadsheetFormatContext
+        );
     }
 
     private final SpreadsheetFormatterContext spreadsheetFormatContext;
