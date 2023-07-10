@@ -126,13 +126,13 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         final SpreadsheetFormatter last = new SpreadsheetFormatter() {
             @Override
             public boolean canFormat(final Object value,
-                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                     final SpreadsheetFormatterContext context) {
                 return SpreadsheetFormatterTesting2.this == value;
             }
 
             @Override
             public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                                    final SpreadsheetFormatterContext context) {
                 return Optional.of(spreadsheetText);
             }
         };

@@ -171,13 +171,13 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatPa
 
             @Override
             public boolean canFormat(final Object value,
-                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                     final SpreadsheetFormatterContext context) {
                 return value instanceof String;
             }
 
             @Override
             public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                                    final SpreadsheetFormatterContext context) {
                 return Optional.of(
                         SpreadsheetText.with(
                                 (String) value)

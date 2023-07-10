@@ -44,7 +44,7 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
 
     @Override
     public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                             final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
@@ -56,7 +56,7 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
 
     @Override
     public Optional<SpreadsheetText> format(final Object value,
-                                            final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                            final SpreadsheetFormatterContext context) {
         return this.canFormat(
                 value,
                 context

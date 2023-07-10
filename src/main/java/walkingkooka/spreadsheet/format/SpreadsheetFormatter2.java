@@ -36,7 +36,7 @@ abstract class SpreadsheetFormatter2 implements SpreadsheetFormatter {
      * Accepts a value and uses the {@link SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor} to produce the formatted text.
      */
     @Override
-    public final Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+    public final Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 

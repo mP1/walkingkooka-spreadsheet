@@ -275,7 +275,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return new SpreadsheetFormatter() {
             @Override
             public boolean canFormat(final Object value,
-                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                     final SpreadsheetFormatterContext context) {
                 return value instanceof BigDecimal;
             }
 

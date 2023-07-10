@@ -41,13 +41,13 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
 
     @Override
     public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                             final SpreadsheetFormatterContext context) {
         return this.converter.canConvert(value, String.class, context);
     }
 
     @Override
     public Optional<SpreadsheetText> format(final Object value,
-                                            final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                            final SpreadsheetFormatterContext context) {
         final Either<String, String> converted = this.converter.convert(value, String.class, context);
         return converted.isLeft() ?
                 Optional.of(

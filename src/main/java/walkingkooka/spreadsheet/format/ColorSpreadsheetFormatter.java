@@ -65,7 +65,7 @@ final class ColorSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpread
 
     @Override
     public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                             final SpreadsheetFormatterContext context) {
         return this.formatter.canFormat(value, context);
     }
 

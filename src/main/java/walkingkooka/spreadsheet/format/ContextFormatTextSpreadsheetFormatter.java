@@ -38,7 +38,7 @@ final class ContextFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 
 
     @Override
     public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                             final SpreadsheetFormatterContext context) {
         return ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor.isSpreadsheetValue(value);
     }
 
