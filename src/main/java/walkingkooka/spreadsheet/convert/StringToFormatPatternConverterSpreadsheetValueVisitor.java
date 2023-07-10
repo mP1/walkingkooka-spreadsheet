@@ -214,7 +214,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
                                       final HasSpreadsheetFormatter hasSpreadsheetFormatter) {
         this.formatText(
                 hasSpreadsheetFormatter.formatter()
-                        .format(
+                        .formatOrEmptyText(
                                 value,
                                 SpreadsheetFormatterContexts.basic(
                                         this::numberToColor,
@@ -223,8 +223,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
                                         SpreadsheetFormatters.fake(), // should never be called
                                         this.context
                                 )
-                        ).map(SpreadsheetText::text)
-                        .orElse("")
+                        ).text()
         );
     }
 
