@@ -251,6 +251,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     /**
      * Returns an equivalent {@link SpreadsheetDateParsePattern} for the given {@link SimpleDateFormat}.
+     * <br>
+     * Note the {@link SpreadsheetDateParsePattern} will only have a single pattern.
      */
     public static SpreadsheetDateParsePattern dateParsePattern(final SimpleDateFormat simpleDateFormat) {
         return parseDateParsePattern(
@@ -264,6 +266,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     /**
      * Returns an equivalent {@link SpreadsheetDateTimeParsePattern} for the given {@link SimpleDateFormat}.
+     * <br>
+     * Note the {@link SpreadsheetDateTimeParsePattern} will only have a single pattern.
      */
     public static SpreadsheetDateTimeParsePattern dateTimeParsePattern(final SimpleDateFormat simpleDateFormat) {
         return parseDateTimeParsePattern(
@@ -277,6 +281,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     /**
      * Returns an equivalent {@link SpreadsheetTimeParsePattern} for the given {@link SimpleDateFormat}.
+     * <br>
+     * Note the {@link SpreadsheetTimeParsePattern} will only have a single pattern.
      */
     public static SpreadsheetTimeParsePattern timeParsePattern(final SimpleDateFormat simpleDateFormat) {
         return parseTimeParsePattern(
@@ -334,10 +340,9 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Uses the provided {@link DateFormat} actually {@link SimpleDateFormat} visiting the pattern of each
-     * to create {@link SpreadsheetPattern} sub class instance. For sub classes of {@link SpreadsheetParsePattern}
-     * simplified forms of each pattern are also created, this means if a locale supports a pattern like <code>hh:mm:ss</code>
-     * the form <code>hh:mm</code> will also be added.
+     * Aggregates all the patterns for each and every {@link DateFormat}. The flags date and time may be used
+     * to filter or control which pattern components in each {@link DateFormat} are actually recorded in the final
+     * pattern and then used to create a {@link SpreadsheetFormatPattern} sub-class.
      */
     private static <P extends SpreadsheetPattern> P javaTextDateFormat(final Iterable<DateFormat> dateFormats,
                                                                        final boolean date,
