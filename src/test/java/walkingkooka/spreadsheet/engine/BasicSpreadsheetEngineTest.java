@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
@@ -11474,8 +11473,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public Optional<SpreadsheetText> format(final Object value,
                                                     final SpreadsheetFormatter formatter) {
-                assertFalse(value instanceof Optional, () -> "Value must not be optional" + value);
-                return formatter.format(Cast.to(value), SPREADSHEET_TEXT_FORMAT_CONTEXT);
+                assertFalse(
+                        value instanceof Optional,
+                        () -> "Value must not be optional" + value
+                );
+                return formatter.format(
+                        value,
+                        SPREADSHEET_TEXT_FORMAT_CONTEXT
+                );
             }
 
             @Override
