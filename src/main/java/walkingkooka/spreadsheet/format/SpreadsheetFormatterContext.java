@@ -48,14 +48,4 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
      * Provides a default format text.
      */
     Optional<SpreadsheetText> format(final Object value);
-
-    /**
-     * Creates a {@link SpreadsheetFormatException}
-     */
-    @Override
-    default RuntimeException convertThrowable(final String message,
-                                              final Object value,
-                                              final Class<?> type) {
-        return new SpreadsheetFormatException(message);
-    }
 }
