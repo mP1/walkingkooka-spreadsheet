@@ -54,6 +54,17 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
     Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException;
 
     /**
+     * Formats the given {@link Object value} or returns {@link SpreadsheetText#EMPTY}.
+     */
+    default SpreadsheetText formatOrEmptyText(final Object value,
+                                              final SpreadsheetFormatterContext context) {
+        return this.format(
+                value,
+                context
+        ).orElse(SpreadsheetText.EMPTY);
+    }
+
+    /**
      * {@see SpreadsheetFormatterConverter}
      */
     default Converter<SpreadsheetConverterContext> converter() {
