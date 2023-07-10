@@ -518,6 +518,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * <br>
      * Note it does not include text literals, doing so will cause failures when the {@link DecimalFormat#toPattern()}
      * is parsed.
+     * <br>
+     * The {@link SpreadsheetNumberParsePattern} returned will only contain a single pattern.
      */
     public static SpreadsheetNumberParsePattern decimalFormat(final DecimalFormat decimalFormat) {
         Objects.requireNonNull(decimalFormat, "decimalFormat");
