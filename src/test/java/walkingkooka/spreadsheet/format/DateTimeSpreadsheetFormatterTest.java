@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.color.Color;
+import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -59,7 +60,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatPar
         final LocalDateTime value = LocalDateTime.now();
 
         assertThrows(
-                SpreadsheetFormatException.class,
+                ConversionException.class,
                 () -> this.createFormatter().format(
                         value,
                         new FakeSpreadsheetFormatterContext() {
@@ -81,7 +82,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatPar
         final LocalTime time = LocalTime.now();
 
         assertThrows(
-                SpreadsheetFormatException.class,
+                ConversionException.class,
                 () -> this.createFormatter().format0(
                         time,
                         new FakeSpreadsheetFormatterContext() {

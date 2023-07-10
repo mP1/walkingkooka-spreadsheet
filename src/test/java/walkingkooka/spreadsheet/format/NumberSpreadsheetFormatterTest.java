@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -60,7 +61,7 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatParse
                 )
         );
         assertThrows(
-                SpreadsheetFormatException.class,
+                ConversionException.class,
                 () ->
                         formatter.canFormat(
                                 BigDecimal.ZERO,
