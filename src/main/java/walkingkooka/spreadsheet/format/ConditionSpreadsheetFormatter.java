@@ -52,7 +52,7 @@ final class ConditionSpreadsheetFormatter extends SpreadsheetFormatParserTokenSp
 
     @Override
     public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                             final SpreadsheetFormatterContext context) {
         return context.convert(value, BigDecimal.class)
                 .mapLeft(l -> this.predicate.test(l) && this.formatter.canFormat(value, context))
                 .orElseLeft(false);

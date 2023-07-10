@@ -55,7 +55,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatParser
         this.formatFailAndCheck(ColorSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()),
                 new FakeSpreadsheetFormatter() {
                     @Override
-                    public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                    public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
                         return Optional.empty();
                     }
                 }),
@@ -131,13 +131,13 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatParser
                                 new SpreadsheetFormatter() {
                                     @Override
                                     public boolean canFormat(final Object value,
-                                                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                                             final SpreadsheetFormatterContext context) {
                                         return true;
                                     }
 
                                     @Override
                                     public Optional<SpreadsheetText> format(final Object value,
-                                                                            final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                                                            final SpreadsheetFormatterContext context) {
                                         checkEquals(text, value, "value");
                                         return Optional.of(
                                                 SpreadsheetText.with(text + text)

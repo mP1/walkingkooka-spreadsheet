@@ -44,7 +44,7 @@ final class TextSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreads
 
     @Override
     public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                             final SpreadsheetFormatterContext context) {
         return context.canConvert(value, String.class);
     }
 

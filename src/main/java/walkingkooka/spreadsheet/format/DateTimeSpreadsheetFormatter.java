@@ -57,7 +57,7 @@ final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpr
 
     @Override
     public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                             final SpreadsheetFormatterContext context) {
         return this.typeTester.test(value) && context.canConvertOrFail(value, LocalDateTime.class);
     }
 

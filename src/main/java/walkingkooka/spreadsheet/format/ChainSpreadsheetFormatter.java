@@ -72,12 +72,12 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
 
     @Override
     public Optional<SpreadsheetText> format(final Object value,
-                                            final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                                            final SpreadsheetFormatterContext context) {
         return this.formatter(value, context)
                 .flatMap(f -> f.format(value, context));
     }
 
-    Optional<SpreadsheetFormatter> formatter(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+    Optional<SpreadsheetFormatter> formatter(final Object value, final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
                 .filter(f -> f.canFormat(value, context))
                 .findFirst();
