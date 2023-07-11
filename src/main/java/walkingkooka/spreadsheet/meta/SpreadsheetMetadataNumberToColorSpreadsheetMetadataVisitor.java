@@ -29,6 +29,7 @@ final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor extends S
 
     static Map<Integer, Color> numberToColorMap(final SpreadsheetMetadata metadata) {
         final SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor();
+        visitor.accept(metadata.defaults()); // defaults get overridden
         visitor.accept(metadata);
         return visitor.colors;
     }

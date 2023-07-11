@@ -1199,6 +1199,53 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
+    public void testNumberToColorDefaults() {
+        final Color color = Color.parse("#123456");
+        final int number = 23;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .setDefaults(
+                        SpreadsheetMetadata.EMPTY
+                                .set(
+                                        SpreadsheetMetadataPropertyName.numberedColor(number),
+                                        color
+                                )
+                );
+
+        this.numberToColorAndCheck(
+                metadata,
+                number,
+                color
+        );
+    }
+
+    @Test
+    public void testNumberToColorIgnoresDefaults() {
+        final Color color = Color.parse("#123456");
+        final int number = 23;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(number), color)
+                .setDefaults(
+                        SpreadsheetMetadata.EMPTY
+                                .set(
+                                        SpreadsheetMetadataPropertyName.numberedColor(number),
+                                        Color.parse("#999")
+                                )
+                );
+
+        this.numberToColorAndCheck(
+                metadata,
+                number,
+                color
+        );
+    }
+
+    @Test
     public void testNumberToColorCached() {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata();
         assertSame(metadata.numberToColor(), metadata.numberToColor());
