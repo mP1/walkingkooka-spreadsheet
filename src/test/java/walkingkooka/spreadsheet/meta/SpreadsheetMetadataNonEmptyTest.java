@@ -1135,6 +1135,118 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
+    public void testNameToColorBlack() {
+        final Color black = Color.BLACK;
+        final SpreadsheetColorName blackName = SpreadsheetColorName.BLACK;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(1), black)
+                .set(SpreadsheetMetadataPropertyName.namedColor(blackName), 1)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
+        this.nameToColorAndCheck(
+                metadata,
+                blackName,
+                black
+        );
+    }
+
+    @Test
+    public void testNameToColorRed() {
+        final Color red = Color.parse("#f00");
+        final SpreadsheetColorName redName = SpreadsheetColorName.RED;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(12), red)
+                .set(SpreadsheetMetadataPropertyName.namedColor(redName), 12)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
+        this.nameToColorAndCheck(
+                metadata,
+                redName,
+                red
+        );
+    }
+
+    @Test
+    public void testNameToColorUsesDefaults() {
+        final Color red = Color.parse("#f00");
+        final SpreadsheetColorName redName = SpreadsheetColorName.RED;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .setDefaults(
+                        SpreadsheetMetadata.EMPTY
+                                .set(SpreadsheetMetadataPropertyName.numberedColor(23), red)
+                                .set(SpreadsheetMetadataPropertyName.namedColor(redName), 23)
+                );
+
+        this.nameToColorAndCheck(
+                metadata,
+                redName,
+                red
+        );
+    }
+
+    @Test
+    public void testNameToColorUsesDefaults2() {
+        final Color red = Color.parse("#f00");
+        final SpreadsheetColorName redName = SpreadsheetColorName.RED;
+        final int number = 12;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(number), red)
+                .setDefaults(
+                        SpreadsheetMetadata.EMPTY
+                                .set(SpreadsheetMetadataPropertyName.namedColor(redName), number)
+                );
+
+        this.numberToColorAndCheck(
+                metadata,
+                number,
+                red
+        );
+        this.nameToColorAndCheck(
+                metadata,
+                redName,
+                red
+        );
+    }
+
+    @Test
+    public void testNameToColorIgnoresDefaults() {
+        final Color red = Color.parse("#f00");
+        final SpreadsheetColorName redName = SpreadsheetColorName.RED;
+        final int number = 23;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(number), red)
+                .setDefaults(
+                        SpreadsheetMetadata.EMPTY
+                                .set(SpreadsheetMetadataPropertyName.numberedColor(number), Color.parse("#999"))
+                                .set(SpreadsheetMetadataPropertyName.namedColor(redName), number)
+                );
+
+        this.numberToColorAndCheck(
+                metadata,
+                number,
+                red
+        );
+        this.nameToColorAndCheck(
+                metadata,
+                redName,
+                red
+        );
+    }
+
+    @Test
     public void testNameToColorDifferentCase() {
         final Color color1 = Color.fromRgb(0x111);
         final SpreadsheetColorName name1 = SpreadsheetColorName.with("title");

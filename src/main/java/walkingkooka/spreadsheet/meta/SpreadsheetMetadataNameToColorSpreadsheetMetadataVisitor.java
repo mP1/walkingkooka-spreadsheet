@@ -31,18 +31,19 @@ import java.util.Optional;
 final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     static Map<SpreadsheetColorName, Color> nameToColorMap(final SpreadsheetMetadata metadata) {
-        final SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor();
+        final SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor(metadata);
+        visitor.accept(metadata.defaults());
         visitor.accept(metadata);
         return visitor.colors;
     }
 
-    SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor() {
+    SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor(final SpreadsheetMetadata metadata) {
         super();
+        this.metadata = metadata;
     }
 
     @Override
     protected Visiting startVisit(final SpreadsheetMetadata metadata) {
-        this.metadata = metadata;
         return super.startVisit(metadata);
     }
 
@@ -60,6 +61,9 @@ final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor extends Spr
         }
     }
 
+    /**
+     * The parent {@link SpreadsheetMetadata} necessary for defaults to resolve color numbers.
+     */
     private SpreadsheetMetadata metadata;
 
     private final Map<SpreadsheetColorName, Color> colors = Maps.ordered();
