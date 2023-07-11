@@ -1135,6 +1135,38 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
+    public void testNameToColorDifferentCase() {
+        final Color color1 = Color.fromRgb(0x111);
+        final SpreadsheetColorName name1 = SpreadsheetColorName.with("title");
+
+        final Color color2 = Color.fromRgb(0x222);
+        final SpreadsheetColorName name2 = SpreadsheetColorName.with("that");
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(2), color1)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(4), color2)
+                .set(SpreadsheetMetadataPropertyName.namedColor(name1), 2)
+                .set(SpreadsheetMetadataPropertyName.namedColor(name2), 4)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
+        this.nameToColorAndCheck(
+                metadata,
+                SpreadsheetColorName.with(
+                        name1.value()
+                                .toUpperCase()
+                ),
+                color1
+        );
+
+        this.nameToColorAndCheck(
+                metadata,
+                name2,
+                color2
+        );
+    }
+
+    @Test
     public void testNameToColorCached() {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata();
         assertSame(metadata.nameToColor(), metadata.nameToColor());
