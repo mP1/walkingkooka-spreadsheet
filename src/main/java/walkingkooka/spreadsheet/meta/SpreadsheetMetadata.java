@@ -193,7 +193,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
             // try again with defaults
             final SpreadsheetMetadata defaults = this.defaults;
             if (null != defaults) {
-                value = defaults.getOrGetDefaults(propertyName);
+                value = defaults.getIgnoringDefaults(propertyName); // defaults cannot have further defaults
             }
         }
         return value;
