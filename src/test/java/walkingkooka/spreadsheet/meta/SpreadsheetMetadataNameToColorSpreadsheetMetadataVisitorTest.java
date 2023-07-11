@@ -36,16 +36,15 @@ public final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitorTest 
 
     @Test
     public void testToString() {
-        final SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor();
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
+                .set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.parse("#123456"))
+                .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.parse("#89abcd"))
+                .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), 1)
+                .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), 2);
+        final SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor(metadata);
 
-        visitor.accept(
-                SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
-                        .set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.parse("#123456"))
-                        .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.parse("#89abcd"))
-                        .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), 1)
-                        .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), 2)
-        );
+        visitor.accept(metadata);
         this.toStringAndCheck(
                 visitor,
                 "{apple=#123456, banana=#89abcd}"
@@ -54,7 +53,7 @@ public final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitorTest 
 
     @Override
     public SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor createVisitor() {
-        return new SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor();
+        return new SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor(null);
     }
 
     // ClassTesting.....................................................................................................
