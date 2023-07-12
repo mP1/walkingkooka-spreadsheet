@@ -23,6 +23,7 @@ import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
@@ -31,8 +32,10 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
@@ -1532,6 +1535,207 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                         }
                 )
         );
+    }
+
+    @Test
+    public void testDecimalFormatGetInstanceAllLocales() {
+        final SpreadsheetFormatterContext context = new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.successfulConversion(
+                        ExpressionNumber.class.cast(value),
+                        target
+                );
+            }
+
+            @Override
+            public char decimalSeparator() {
+                return '.';
+            }
+
+            @Override
+            public char groupSeparator() {
+                return ',';
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.DECIMAL128;
+            }
+        };
+        final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(12345.67);
+
+        for (final Locale locale : Locale.getAvailableLocales()) {
+            SpreadsheetPattern.decimalFormat(
+                            (DecimalFormat) DecimalFormat.getInstance(locale))
+                    .toFormat()
+                    .formatter()
+                    .format(
+                            number,
+                            context
+                    );
+        }
+    }
+
+    @Test
+    public void testDecimalFormatGetNumberInstanceAllLocales() {
+        final SpreadsheetFormatterContext context = new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.successfulConversion(
+                        ExpressionNumber.class.cast(value),
+                        target
+                );
+            }
+
+            @Override
+            public char decimalSeparator() {
+                return '.';
+            }
+
+            @Override
+            public char groupSeparator() {
+                return ',';
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.DECIMAL128;
+            }
+        };
+        final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(12345.67);
+
+        for (final Locale locale : Locale.getAvailableLocales()) {
+            SpreadsheetPattern.decimalFormat(
+                            (DecimalFormat) DecimalFormat.getNumberInstance(locale))
+                    .toFormat()
+                    .formatter()
+                    .format(
+                            number,
+                            context
+                    );
+        }
+    }
+
+    @Test
+    public void testDecimalFormatGetPercentInstanceAllLocales() {
+        final SpreadsheetFormatterContext context = new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.successfulConversion(
+                        ExpressionNumber.class.cast(value),
+                        target
+                );
+            }
+
+            @Override
+            public char decimalSeparator() {
+                return '.';
+            }
+
+            @Override
+            public char groupSeparator() {
+                return ',';
+            }
+
+            @Override
+            public char percentageSymbol() {
+                return '%';
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.DECIMAL128;
+            }
+        };
+        final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(12345.67);
+
+        for (final Locale locale : Locale.getAvailableLocales()) {
+            SpreadsheetPattern.decimalFormat(
+                            (DecimalFormat) DecimalFormat.getPercentInstance(locale))
+                    .toFormat()
+                    .formatter()
+                    .format(
+                            number,
+                            context
+                    );
+        }
+    }
+
+    @Test
+    public void testDecimalFormatGetCurrencyInstanceAllLocales() {
+        final SpreadsheetFormatterContext context = new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type) {
+                return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                );
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            private final Converter<SpreadsheetFormatterContext> converter = SpreadsheetConverters.basic();
+
+            @Override
+            public String currencySymbol() {
+                return "$";
+            }
+
+            @Override
+            public char decimalSeparator() {
+                return '.';
+            }
+
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return ExpressionNumberKind.BIG_DECIMAL;
+            }
+
+            @Override
+            public char groupSeparator() {
+                return ',';
+            }
+
+            @Override
+            public char percentageSymbol() {
+                return '%';
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.DECIMAL128;
+            }
+        };
+        final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(12345.67);
+
+        for (final Locale locale : Locale.getAvailableLocales()) {
+            SpreadsheetPattern.decimalFormat(
+                            (DecimalFormat) DecimalFormat.getCurrencyInstance(locale))
+                    .toFormat()
+                    .formatter()
+                    .format(
+                            number,
+                            context
+                    );
+        }
     }
 
     // parseTextFormatPattern..........................................................................................
