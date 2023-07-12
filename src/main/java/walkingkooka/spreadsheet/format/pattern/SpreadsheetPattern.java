@@ -527,7 +527,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         return parseNumberParsePattern(
                 decimalFormat.toPattern()
                         .replace('¤', '$') // international currency symbol
-                        .replace(" ", "\" \"") // escape spaces
+                        .replace('\u00A0', ' ') // convert NBSP to space
+                        .replace('\u2007', ' ') // convert NBSP to space
+                        .replace('\u200f', ' ') // convert NBSP to space
+                        .replace("\u200e", "") // remove Left to right mark
         );
     }
 
