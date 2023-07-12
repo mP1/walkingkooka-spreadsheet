@@ -1466,6 +1466,15 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
+    public void testDecimalFormatInternationalCurrencySymbol() throws Exception {
+        this.decimalFormatParseAndCheck(
+                "¤#.##",
+                "$1.25",
+                1.25
+        );
+    }
+
+    @Test
     public void testDecimalFormatIncludesSpaces() throws Exception {
         this.decimalFormatParseAndCheck(
                 " #.##",
