@@ -1483,6 +1483,15 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
+    @Test
+    public void testDecimalFormatIncludesDollarAndSpaces() throws Exception {
+        this.decimalFormatParseAndCheck(
+                "$ #.##",
+                "$ 1.25",
+                1.25
+        );
+    }
+
     private void decimalFormatParseAndCheck(final String pattern,
                                             final String text,
                                             final double expected) throws Exception {

@@ -527,6 +527,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         return parseNumberParsePattern(
                 decimalFormat.toPattern()
                         .replace('¤', '$') // international currency symbol
+                        .replace(" ", "\" \"") // escape spaces
         );
     }
 
