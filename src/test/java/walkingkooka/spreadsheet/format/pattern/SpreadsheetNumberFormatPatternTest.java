@@ -43,8 +43,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetNumberFormatPattern,
-        SpreadsheetFormatNumberParserToken,
-        Double> {
+        SpreadsheetFormatNumberParserToken> {
 
     private final static String TEXT = "Text123";
 

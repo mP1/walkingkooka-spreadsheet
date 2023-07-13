@@ -39,8 +39,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetTextFormatPattern,
-        SpreadsheetFormatTextParserToken,
-        String> {
+        SpreadsheetFormatTextParserToken> {
 
     @Test
     public void testWithAmpmFails() {

@@ -52,8 +52,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateTimeFormatPattern,
-        SpreadsheetFormatDateTimeParserToken,
-        LocalDateTime> {
+        SpreadsheetFormatDateTimeParserToken> {
 
     @Test
     public void testWithCurrencyFails() {
