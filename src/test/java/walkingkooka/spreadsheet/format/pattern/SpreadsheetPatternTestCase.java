@@ -26,6 +26,9 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
@@ -44,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V>
         implements ClassTesting2<P>,
+        SpreadsheetFormatterTesting,
         HashCodeEqualsDefinedTesting2<P>,
         JsonNodeMarshallingTesting<P>,
         IsMethodTesting<P>,
@@ -349,6 +353,31 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
     public final JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
     }
+
+    // format...........................................................................................................
+
+    final void formatAndCheck2(final String pattern,
+                               final Object value,
+                               final String expected) {
+        this.formatAndCheck2(
+                pattern,
+                value,
+                SpreadsheetText.with(expected)
+        );
+    }
+
+    final void formatAndCheck2(final String pattern,
+                               final Object value,
+                               final SpreadsheetText expected) {
+        this.formatAndCheck(
+                this.createPattern(pattern).formatter(),
+                value,
+                this.createContext(),
+                expected
+        );
+    }
+
+    abstract SpreadsheetFormatterContext createContext();
 
     // HashCodeEqualityDefinedTesting...................................................................................
 

@@ -18,7 +18,10 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -28,9 +31,11 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.math.MathContext;
 import java.util.List;
 
 public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
@@ -553,7 +558,67 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                 "$#.000"
         );
     }
-    
+
+    // formatter........................................................................................................
+
+    @Test
+    public void testFormatterPatternPatternPatternWithNegativeNumber() {
+        this.formatAndCheck2(
+                "$0.00",
+                -123,
+                "cn123d00"
+        );
+    }
+
+    @Override
+    SpreadsheetFormatterContext createContext() {
+        return new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public boolean canConvert(final Object value, final Class<?> target) {
+                return value instanceof Number && target == ExpressionNumber.class;
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                if (value instanceof Number && ExpressionNumber.class == target) {
+                    return this.successfulConversion(
+                            ExpressionNumberKind.DOUBLE.create(Number.class.cast(value)),
+                            target
+                    );
+                }
+
+                return this.failConversion(value, target);
+            }
+
+            @Override
+            public String currencySymbol() {
+                return "c";
+            }
+
+            @Override
+            public char decimalSeparator() {
+                return 'd';
+            }
+
+            @Override
+            public String exponentSymbol() {
+                return "x";
+            }
+
+            @Override
+            public char negativeSign() {
+                return 'n';
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.UNLIMITED;
+            }
+        };
+    }
+
     // ToString........................................................................................................
 
     @Test

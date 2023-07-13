@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -26,7 +25,7 @@ import java.util.function.Consumer;
 /**
  * Holds a {@link ParserToken} tokens and some common functionality.
  */
-public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern implements HasSpreadsheetFormatter {
+public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
 
     // ctor.............................................................................................................
 
@@ -46,25 +45,13 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern implem
         return this;
     }
 
-    // HasSpreadsheetFormatter..........................................................................................
-
-    /**
-     * Returns a {@link SpreadsheetFormatter} built from this pattern.
-     */
-    @Override
-    public final SpreadsheetFormatter formatter() {
-        if (null == this.formatter) {
-            this.formatter = this.createFormatter();
-        }
-        return this.formatter;
-    }
-
-    private SpreadsheetFormatter formatter;
+    // HasFormatter.....................................................................................................
 
     /**
      * Factory that lazily creates a {@link SpreadsheetFormatter}
      */
-    private SpreadsheetFormatter createFormatter() {
+    @Override
+    final SpreadsheetFormatter createFormatter() {
         return SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor.createFormatter(
                 this
         );

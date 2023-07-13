@@ -23,9 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -37,8 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern,
         T extends SpreadsheetFormatParentParserToken,
-        V> extends SpreadsheetPatternTestCase<P, T>
-        implements SpreadsheetFormatterTesting {
+        V> extends SpreadsheetPatternTestCase<P, T> {
 
     final static Color RED = Color.parse("#FF0000");
 
@@ -122,31 +118,6 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     }
 
     abstract T createFormatParserToken(final List<ParserToken> tokens, final String text);
-
-    // format...........................................................................................................
-
-    final void formatAndCheck2(final String pattern,
-                               final Object value,
-                               final String expected) {
-        this.formatAndCheck2(
-                pattern,
-                value,
-                SpreadsheetText.with(expected)
-        );
-    }
-
-    final void formatAndCheck2(final String pattern,
-                               final Object value,
-                               final SpreadsheetText expected) {
-        this.formatAndCheck(
-                this.createPattern(pattern).formatter(),
-                value,
-                this.createContext(),
-                expected
-        );
-    }
-
-    abstract SpreadsheetFormatterContext createContext();
 
     // Parse............................................................................................................
 

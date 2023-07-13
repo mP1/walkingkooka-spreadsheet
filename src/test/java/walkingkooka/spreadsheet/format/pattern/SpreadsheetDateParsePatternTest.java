@@ -18,7 +18,12 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -451,7 +456,46 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
                 "dd/mm/yyyy"
         );
     }
-    
+
+    // formatter........................................................................................................
+
+    @Test
+    public void testFormatterAndFormat() {
+        this.formatAndCheck2(
+                "yyyymmdd",
+                LocalDate.of(2000, 12, 31),
+                "20001231"
+        );
+    }
+
+    @Override
+    SpreadsheetFormatterContext createContext() {
+        return new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> target) {
+                return this.converter.canConvert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.localDateLocalDateTime();
+        };
+    }
+
     // helpers..........................................................................................................
 
     @Override

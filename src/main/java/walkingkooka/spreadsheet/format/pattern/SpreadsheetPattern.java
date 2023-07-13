@@ -24,7 +24,9 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -65,6 +67,7 @@ import java.util.function.Predicate;
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
 abstract public class SpreadsheetPattern implements Value<ParserToken>,
+        HasSpreadsheetFormatter,
         HasText,
         TreePrintable,
         HasUrlFragment {
@@ -757,6 +760,23 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * to enable sub classes to return the list without casting.
      */
     List patterns;
+
+    // HasSpreadsheetFormatter..........................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetFormatter} built from this pattern.
+     */
+    @Override
+    public final SpreadsheetFormatter formatter() {
+        if (null == this.formatter) {
+            this.formatter = this.createFormatter();
+        }
+        return this.formatter;
+    }
+
+    private SpreadsheetFormatter formatter;
+
+    abstract SpreadsheetFormatter createFormatter();
 
     // HasUrlFragment...................................................................................................
 

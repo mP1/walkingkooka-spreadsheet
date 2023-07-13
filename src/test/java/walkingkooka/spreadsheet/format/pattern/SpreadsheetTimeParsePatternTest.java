@@ -18,7 +18,12 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -27,6 +32,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -626,7 +632,57 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                 "hh"
         );
     }
-    
+
+    // formatter........................................................................................................
+
+    @Test
+    public void testFormatter() {
+        this.formatAndCheck2(
+                "hmmss.000;",
+                LocalTime.of(12, 58, 59, 123000000),
+                "125859D123"
+        );
+    }
+
+    @Override
+    SpreadsheetFormatterContext createContext() {
+        return new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> target) {
+                return this.converter.canConvert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
+                    Lists.of(
+                            ExpressionNumber.toConverter(
+                                    Converters.localTimeNumber()
+                            ),
+                            Converters.localTimeLocalDateTime()
+                    )
+            );
+
+            public char decimalSeparator() {
+                return 'D';
+            }
+        };
+    }
+
     // helpers..........................................................................................................
 
     @Override
