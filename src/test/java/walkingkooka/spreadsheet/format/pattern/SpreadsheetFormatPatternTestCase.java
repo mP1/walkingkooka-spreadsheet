@@ -33,8 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern,
-        T extends SpreadsheetFormatParentParserToken,
-        V> extends SpreadsheetPatternTestCase<P, T> {
+        T extends SpreadsheetFormatParentParserToken> extends SpreadsheetPatternTestCase<P, T> {
 
     final static Color RED = Color.parse("#FF0000");
 

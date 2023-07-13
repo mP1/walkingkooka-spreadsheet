@@ -45,8 +45,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetTimeFormatPattern,
-        SpreadsheetFormatTimeParserToken,
-        LocalTime> {
+        SpreadsheetFormatTimeParserToken> {
 
     @Test
     public void testWithDateFails() {

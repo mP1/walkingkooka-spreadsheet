@@ -49,8 +49,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateFormatPattern,
-        SpreadsheetFormatDateParserToken,
-        LocalDate> {
+        SpreadsheetFormatDateParserToken> {
 
     @Test
     public void testWithAmpmFails() {
