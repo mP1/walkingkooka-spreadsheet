@@ -432,7 +432,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "hhmmss;",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with("125859")
+                "125859"
         );
     }
 
@@ -441,7 +441,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[>0]hhmmss;hhmm",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with("125859")
+                "125859"
         );
     }
 
@@ -450,7 +450,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[=0]hh;hhmmss",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with("125859")
+                "125859"
         );
     }
 
@@ -459,7 +459,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "[=0]hh;hhmmss;",
                 LocalTime.of(12, 58, 59),
-                SpreadsheetText.with("125859")
+                "125859"
         );
     }
 
