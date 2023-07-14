@@ -25,7 +25,6 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.util.PropertiesPath;
 import walkingkooka.visit.Visiting;
 
 import java.util.Optional;
@@ -38,18 +37,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
 
     @Test
-    public void testWithContainsSeparatorFails() {
-        this.withFails(
-                "xyz" + PropertiesPath.SEPARATOR,
-                InvalidCharacterException.class
-        );
-    }
-
-    @Test
     public void testWithInvalidInitialFails() {
         this.withFails(
                 "1abc",
-                InvalidCharacterException.class
+                InvalidCharacterException.class,
+                "Invalid character '1' at 0 in \"1abc\""
         );
     }
 
@@ -59,6 +51,15 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
                 "abc$def",
                 InvalidCharacterException.class,
                 "Invalid character '$' at 3 in \"abc$def\""
+        );
+    }
+
+    @Test
+    public void testWithContainsBackslashFails() {
+        this.withFails(
+                "Label\\",
+                InvalidCharacterException.class,
+                "Invalid character '\\\\' at 5 in \"Label\\\""
         );
     }
 
@@ -139,6 +140,56 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testWith4() {
         this.createNameAndCheck2("A1B2C2");
+    }
+
+    @Test
+    public void testWithBeginsWithNonAsciiLetter() {
+        this.createNameAndCheck2("\u0100ZZZ1");
+    }
+
+    @Test
+    public void testWithBeginsWithBackslashAlpha() {
+        this.createNameAndCheck2("\\Label");
+    }
+
+    @Test
+    public void testWithBeginsWithUnderscoreAlpha() {
+        this.createNameAndCheck2("_Label");
+    }
+
+    @Test
+    public void testWithLetterDigits() {
+        this.createNameAndCheck2(
+                "A1234567"
+        );
+    }
+
+    @Test
+    public void testWithLetterDigitsLetters() {
+        this.createNameAndCheck2(
+                "A1B"
+        );
+    }
+
+    @Test
+    public void testWithLetterUnderscore() {
+        this.createNameAndCheck2(
+                "A_"
+        );
+    }
+
+    @Test
+    public void testWithLetterDot() {
+        this.createNameAndCheck2(
+                "A."
+        );
+    }
+
+    @Test
+    public void testWithLetterNonAsciiLetter() {
+        this.createNameAndCheck2(
+                "A\u0100"
+        );
     }
 
     @Test
@@ -543,14 +594,14 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Override
     public String possibleValidChars(final int position) {
         return 0 == position ?
-                ASCII_LETTERS :
-                ASCII_LETTERS_DIGITS + "_";
+                ASCII_LETTERS + "\\_" :
+                ASCII_LETTERS_DIGITS + "_.";
     }
 
     @Override
     public String possibleInvalidChars(final int position) {
         return 0 == position ?
-                ASCII_DIGITS + CONTROL + "_!@#$%^&*()" :
+                ASCII_DIGITS + CONTROL + "!@#$%^&*()" :
                 CONTROL + "!@#$%^&*()";
     }
 

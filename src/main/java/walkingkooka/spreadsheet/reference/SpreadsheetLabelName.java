@@ -39,7 +39,7 @@ import java.util.function.Predicate;
  * <pre>
  * A Defined Name must begin with a letter or an underscore ( _ ) and consist of only letters, numbers, or underscores.
  * Spaces are not permitted in a Defined Name. Moreover, a Defined Name may not be the same as a valid cell reference.
- * For example, the name AB11 is invalid because AB11 is a valid cell reference. Names are not case sensitive.
+ * For example, the name AB11 is invalid because AB11 is a valid cell reference. Names are not case sensitive.
  * </pre>
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
@@ -47,13 +47,32 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         implements Comparable<SpreadsheetLabelName>,
         Name {
 
-    private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
+    private final static CharPredicate LETTER = CharPredicates.letter();
 
-    private final static CharPredicate INITIAL = LETTER;
+    // https://contexturesblog.com/archives/2017/12/07/what-are-the-rules-for-excel-names/
+    //
+    // The first character of a name must be one of the following characters:
+    // letter
+    // underscore (_)
+    // backslash (\).
+    private final static CharPredicate INITIAL = LETTER.or(
+            CharPredicates.any("\\_")
+    );
 
-    private final static CharPredicate DIGIT = CharPredicates.range('0', '9');
-
-    private final static CharPredicate PART = INITIAL.or(DIGIT.or(CharPredicates.is('_')));
+    // Remaining characters in the name can be
+    // letters
+    // numbers
+    // periods
+    // underscore characters
+    // The following are not allowed:
+    // Space characters are not allowed as part of a name.
+    // Names can’t look like cell addresses, such as A$35 or R2D2
+    // C, c, R, r — can’t be used as names — Excel uses them as selection shortcuts
+    private final static CharPredicate PART = LETTER.or(
+            CharPredicates.range('0', '9') // numbers
+    ).or(
+            CharPredicates.any("._")
+    );
 
     /**
      * The maximum valid length for a label name.
