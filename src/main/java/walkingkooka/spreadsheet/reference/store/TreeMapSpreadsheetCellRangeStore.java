@@ -23,7 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.store.Store;
-import walkingkooka.store.Watchers;
+import walkingkooka.watch.Watchers;
 
 import java.util.Iterator;
 import java.util.List;

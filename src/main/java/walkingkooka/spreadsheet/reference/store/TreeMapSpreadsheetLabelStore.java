@@ -24,8 +24,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.Store;
-import walkingkooka.store.Watchers;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.watch.Watchers;
 
 import java.util.List;
 import java.util.Map;
