@@ -24,7 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.Store;
-import walkingkooka.store.Watchers;
+import walkingkooka.watch.Watchers;
 
 import java.util.List;
 import java.util.Map;

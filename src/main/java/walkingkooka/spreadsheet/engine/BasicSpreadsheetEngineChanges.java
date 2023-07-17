@@ -35,7 +35,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.store.Watchers;
+import walkingkooka.watch.Watchers;
 
 import java.util.Map;
 import java.util.Optional;
