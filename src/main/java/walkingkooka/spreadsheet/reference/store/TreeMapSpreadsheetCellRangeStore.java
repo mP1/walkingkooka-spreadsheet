@@ -280,7 +280,7 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
 
     @Override
     public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellRange> deleted) {
-        return this.deleteWatchers.addWatcher(deleted);
+        return this.deleteWatchers.add(deleted);
     }
 
     private final Watchers<SpreadsheetCellRange> deleteWatchers = Watchers.create();

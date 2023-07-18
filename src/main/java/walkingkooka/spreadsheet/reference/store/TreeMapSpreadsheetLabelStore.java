@@ -74,7 +74,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
 
     @Override
     public Runnable addSaveWatcher(final Consumer<SpreadsheetLabelMapping> saved) {
-        return this.saveWatchers.addWatcher(saved);
+        return this.saveWatchers.add(saved);
     }
 
     private final Watchers<SpreadsheetLabelMapping> saveWatchers = Watchers.create();
@@ -90,7 +90,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
 
     @Override
     public Runnable addDeleteWatcher(final Consumer<SpreadsheetLabelName> deleted) {
-        return this.deleteWatchers.addWatcher(deleted);
+        return this.deleteWatchers.add(deleted);
     }
 
     private final Watchers<SpreadsheetLabelName> deleteWatchers = Watchers.create();
