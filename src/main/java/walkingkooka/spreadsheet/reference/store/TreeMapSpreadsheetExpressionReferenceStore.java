@@ -102,7 +102,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     @Override
     public Runnable addDeleteWatcher(final Consumer<T> deleted) {
-        return this.deleteWatchers.addWatcher(deleted);
+        return this.deleteWatchers.add(deleted);
     }
 
     private final Watchers<T> deleteWatchers = Watchers.create();
@@ -197,7 +197,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     @Override
     public Runnable addAddReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
-        return this.addReferenceWatchers.addWatcher(watcher);
+        return this.addReferenceWatchers.add(watcher);
     }
 
     private final Watchers<TargetAndSpreadsheetCellReference<T>> addReferenceWatchers = Watchers.create();
@@ -238,7 +238,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     @Override
     public Runnable addRemoveReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
-        return this.removeReferenceWatchers.addWatcher(watcher);
+        return this.removeReferenceWatchers.add(watcher);
     }
 
     private final Watchers<TargetAndSpreadsheetCellReference<T>> removeReferenceWatchers = Watchers.create();
