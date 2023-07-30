@@ -1432,6 +1432,41 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsWithFormatPatternNullClears2() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY);
+
+        final Optional<SpreadsheetFormatPattern> format = Optional.of(
+                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
+        );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1.setFormatPattern(format)
+                        )
+                );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1,
+                        SpreadsheetSelection.parseCell("A2")
+                                .setFormula(SpreadsheetFormula.EMPTY)
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                SpreadsheetDelta.formatPatternPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                ),
+                after
+        );
+    }
+
+    @Test
     public void testPatchCellsWithFormatPatternAndWindow() {
         final Optional<SpreadsheetFormatPattern> beforeFormat = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
