@@ -1582,6 +1582,41 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsWithParsePatternNullClearsAbsentCell() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY);
+
+        final Optional<SpreadsheetParsePattern> format = Optional.of(
+                SpreadsheetPattern.parseNumberParsePattern("#\"should be cleared\"")
+        );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1.setParsePattern(format)
+                        )
+                );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1,
+                        SpreadsheetSelection.parseCell("A2")
+                                .setFormula(SpreadsheetFormula.EMPTY)
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                SpreadsheetDelta.parsePatternPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                ),
+                after
+        );
+    }
+
+    @Test
     public void testPatchCellAndStyleFails() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
