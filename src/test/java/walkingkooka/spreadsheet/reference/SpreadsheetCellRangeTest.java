@@ -1039,7 +1039,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 this.cellReference(5, 10), this.cellReference(5, 11), this.cellReference(5, 12));
     }
 
-    private <T> void checkStream(final SpreadsheetCellRange range, final Stream<?> stream, final Object... expected) {
+    private void checkStream(final SpreadsheetCellRange range, final Stream<?> stream, final Object... expected) {
         final List<Object> actual = stream.collect(Collectors.toList());
         this.checkEquals(Lists.of(expected), actual, range::toString);
     }
