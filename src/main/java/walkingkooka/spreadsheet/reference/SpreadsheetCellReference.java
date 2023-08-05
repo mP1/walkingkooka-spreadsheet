@@ -185,7 +185,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public int count() {
+    public long count() {
         return 1;
     }
 

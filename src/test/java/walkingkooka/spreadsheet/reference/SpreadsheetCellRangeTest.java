@@ -192,6 +192,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.countAndCheck("E5:F5", 2);
     }
 
+    @Test
+    public void testCountAllCellsConstant() {
+        this.countAndCheck(
+                SpreadsheetSelection.ALL_CELLS,
+                17179869184L
+        );
+    }
+
     // isAll..........................................................................................................
 
     @Test

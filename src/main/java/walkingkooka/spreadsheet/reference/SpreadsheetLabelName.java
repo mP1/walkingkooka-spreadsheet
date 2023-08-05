@@ -147,7 +147,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
-    public int count() {
+    public long count() {
         throw new UnsupportedOperationException();
     }
 

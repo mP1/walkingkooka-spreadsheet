@@ -49,7 +49,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     }
 
     @Override
-    public final int count() {
+    public final long count() {
         return 1;
     }
 
