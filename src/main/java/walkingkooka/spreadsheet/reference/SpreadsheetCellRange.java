@@ -38,6 +38,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 /**
@@ -334,9 +335,9 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         final int width = this.width();
         final int columnOffset = begin.column().value();
 
-        return IntStream.range(0, width * this.height())
-                .mapToObj(index -> CELL_SPREADSHEET_REFERENCE_KIND.column(columnOffset + (index % width))
-                        .setRow(CELL_SPREADSHEET_REFERENCE_KIND.row(rowOffset + (index / width)))
+        return LongStream.range(0, width * this.height())
+                .mapToObj(index -> CELL_SPREADSHEET_REFERENCE_KIND.column(columnOffset + (int)(index % width))
+                        .setRow(CELL_SPREADSHEET_REFERENCE_KIND.row(rowOffset + (int)(index / width)))
                 );
     }
 

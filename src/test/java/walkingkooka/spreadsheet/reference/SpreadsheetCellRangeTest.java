@@ -981,6 +981,18 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellStream() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("A1:A2");
+
+        this.checkStream(
+                range,
+                range.cellStream(),
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.parseCell("A2")
+        );
+    }
+
+    @Test
+    public void testCellStream2() {
         final SpreadsheetCellRange range = this.range(3, 7, 5, 10);
 
         this.checkStream(
@@ -990,6 +1002,17 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 this.cellReference(3, 8), this.cellReference(4, 8), this.cellReference(5, 8),
                 this.cellReference(3, 9), this.cellReference(4, 9), this.cellReference(5, 9),
                 this.cellReference(3, 10), this.cellReference(4, 10), this.cellReference(5, 10));
+    }
+
+    @Test
+    public void testCellStreamAllCells() {
+        final SpreadsheetCellRange range = SpreadsheetSelection.ALL_CELLS;
+
+        this.checkEquals(
+                Long.valueOf(range.width() * range.height()),
+                range.cellStream()
+                        .count()
+        );
     }
 
     @Test
