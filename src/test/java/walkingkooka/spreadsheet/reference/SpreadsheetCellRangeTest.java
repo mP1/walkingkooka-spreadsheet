@@ -1008,8 +1008,15 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testCellStreamAllCells() {
         final SpreadsheetCellRange range = SpreadsheetSelection.ALL_CELLS;
 
+        final long count = range.cellStream()
+                .count();
+        this.checkNotEquals(
+                0,
+                count
+        );
+
         this.checkEquals(
-                Long.valueOf(range.width() * range.height()),
+                Long.valueOf((long) range.width() * (long) range.height()),
                 range.cellStream()
                         .count()
         );
