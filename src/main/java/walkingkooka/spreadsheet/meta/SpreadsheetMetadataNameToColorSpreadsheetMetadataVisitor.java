@@ -64,7 +64,7 @@ final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor extends Spr
     /**
      * The parent {@link SpreadsheetMetadata} necessary for defaults to resolve color numbers.
      */
-    private SpreadsheetMetadata metadata;
+    private final SpreadsheetMetadata metadata;
 
     private final Map<SpreadsheetColorName, Color> colors = Maps.ordered();
 
