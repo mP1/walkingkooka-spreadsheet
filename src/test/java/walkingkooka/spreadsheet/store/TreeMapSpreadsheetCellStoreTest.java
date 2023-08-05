@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
@@ -177,6 +178,93 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
         this.checkEquals(
                 Sets.of(withoutParsedFormula.reference()),
+                cleared
+        );
+    }
+
+    // clearFormatted...................................................................................................
+
+    @Test
+    public void testClearFormatted() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell withoutFormatted = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("hello()")
+                                .setExpression(
+                                        Optional.of(
+                                                Expression.namedFunction(FunctionExpressionName.with("hello"))
+                                        )
+                                )
+                );
+
+        store.save(
+                withoutFormatted.setFormatted(
+                        Optional.of(
+                                TextNode.text("123")
+                        )
+                )
+        );
+
+        store.clearFormatted();
+
+        this.loadAndCheck(
+                store,
+                withoutFormatted.reference(),
+                withoutFormatted
+        );
+    }
+
+    @Test
+    public void testClearFormatted2() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell withoutFormatted = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("hello()")
+                                .setExpression(
+                                        Optional.of(
+                                                Expression.namedFunction(FunctionExpressionName.with("hello"))
+                                        )
+                                )
+                );
+
+        store.save(
+                withoutFormatted.setFormatted(
+                        Optional.of(
+                                TextNode.text("123")
+                        )
+                )
+        );
+
+        final SpreadsheetCell withoutFormatted2 = SpreadsheetSelection.parseCell("B2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("hello2()")
+                );
+
+        store.save(
+                withoutFormatted2
+        );
+
+        final Set<SpreadsheetCellReference> cleared = Sets.ordered();
+        store.addSaveWatcher(s -> cleared.add(s.reference()));
+
+        store.clearFormatted();
+
+        this.loadAndCheck(
+                store,
+                withoutFormatted.reference(),
+                withoutFormatted
+        );
+
+        this.loadAndCheck(
+                store,
+                withoutFormatted2.reference(),
+                withoutFormatted2
+        );
+
+        this.checkEquals(
+                Sets.of(withoutFormatted.reference()),
                 cleared
         );
     }

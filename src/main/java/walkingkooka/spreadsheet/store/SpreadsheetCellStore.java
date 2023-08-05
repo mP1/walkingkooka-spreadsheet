@@ -61,6 +61,18 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     }
 
     /**
+     * Clears the formatted output for all existing cells.
+     */
+    default void clearFormatted() {
+        for (final SpreadsheetCell cell : this.loadCells(SpreadsheetCellRange.ALL)) {
+            final SpreadsheetCell after = cell.setFormatted(SpreadsheetCell.NO_FORMATTED_CELL);
+            if (false == cell.equals(after)) {
+                this.save(after);
+            }
+        }
+    }
+
+    /**
      * The highest row number
      */
     int rows();
