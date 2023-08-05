@@ -70,7 +70,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void countAndCheck(final S selection,
-                             final int expected) {
+                             final long expected) {
         this.checkEquals(
                 expected,
                 selection.count(),
@@ -2350,7 +2350,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final SpreadsheetViewportSelectionAnchor anchor,
                                final SpreadsheetSelection expected) {
         this.checkEquals(
-                1,
+                1L, // count is long
                 expected.count(),
                 () -> "Expected " + expected + " count must be one"
         );

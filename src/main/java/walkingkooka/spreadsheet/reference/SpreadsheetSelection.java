@@ -572,7 +572,7 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
      * D4:E5 = 4
      * </pre>
      */
-    public abstract int count();
+    public abstract long count();
 
     // test...........................................................................................................
 

@@ -148,7 +148,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @Override
-    public int count() {
+    public long count() {
         return this.columnRange().count() *
                 this.rowRange().count();
     }
