@@ -49,15 +49,15 @@ public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentEx
     }
 
     private static String checkMessage(String message) {
-        return (String) Whitespace.failIfNullOrEmptyOrWhitespace(message, "message");
+        return Whitespace.failIfNullOrEmptyOrWhitespace(message, "message");
     }
 
     static SpreadsheetMetadataPropertyName<?> checkName(final SpreadsheetMetadataPropertyName<?> name) {
         return Objects.requireNonNull(name, "name");
     }
 
-    private static Throwable checkCause(Throwable cause) {
-        return (Throwable) Objects.requireNonNull(cause, "cause");
+    private static Throwable checkCause(final Throwable cause) {
+        return Objects.requireNonNull(cause, "cause");
     }
 
     @Override
