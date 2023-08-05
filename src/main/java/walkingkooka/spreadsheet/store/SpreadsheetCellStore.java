@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.store.Store;
 
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -44,12 +43,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     /**
      * Default implementation that deletes all the cells in the given {@link SpreadsheetCellRange}.
      */
-    default void deleteCells(final SpreadsheetCellRange range) {
-        Objects.requireNonNull(range, "ranges");
-
-        range.cellStream()
-                .forEach(this::delete);
-    }
+    void deleteCells(final SpreadsheetCellRange range);
 
     /**
      * Clears the parsed formula for all existing cells.
