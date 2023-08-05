@@ -96,6 +96,18 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
+    public void deleteCells(final SpreadsheetCellRange range) {
+        Objects.requireNonNull(range, "range");
+
+        this.store.all()
+                .stream()
+                .filter(c -> range.testCell(c.reference()))
+                .forEach(
+                        c -> this.delete(c.reference())
+                );
+    }
+
+    @Override
     public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> deleted) {
         return this.store.addDeleteWatcher(deleted);
     }

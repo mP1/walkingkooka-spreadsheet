@@ -35,6 +35,11 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     }
 
     @Override
+    public void deleteCells(final SpreadsheetCellRange range) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public int rows() {
         throw new UnsupportedOperationException();
     }

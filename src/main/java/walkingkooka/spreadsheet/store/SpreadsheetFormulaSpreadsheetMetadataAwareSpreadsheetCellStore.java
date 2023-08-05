@@ -172,6 +172,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                 .collect(Collectors.toCollection(TreeSet::new));
     }
 
+    @Override
+    public void deleteCells(final SpreadsheetCellRange range) {
+        this.store.deleteCells(range);
+    }
+
     // watchers.........................................................................................................
 
     @Override
