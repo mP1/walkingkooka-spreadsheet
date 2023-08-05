@@ -203,7 +203,7 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                         .formatter();
                 break;
             default:
-                NeverError.unhandledCase(this, this.values());
+                NeverError.unhandledCase(this, values());
                 formatter = null;
                 break;
         }
