@@ -335,9 +335,9 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         final int width = this.width();
         final int columnOffset = begin.column().value();
 
-        return LongStream.range(0, width * this.height())
-                .mapToObj(index -> CELL_SPREADSHEET_REFERENCE_KIND.column(columnOffset + (int)(index % width))
-                        .setRow(CELL_SPREADSHEET_REFERENCE_KIND.row(rowOffset + (int)(index / width)))
+        return LongStream.range(0, (long) width * this.height())
+                .mapToObj(index -> CELL_SPREADSHEET_REFERENCE_KIND.column(columnOffset + (int) (index % width))
+                        .setRow(CELL_SPREADSHEET_REFERENCE_KIND.row(rowOffset + (int) (index / width)))
                 );
     }
 
