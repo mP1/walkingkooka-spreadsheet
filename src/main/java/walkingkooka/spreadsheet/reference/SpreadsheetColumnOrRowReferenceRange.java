@@ -62,8 +62,6 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
 
     /**
      * Returns the number of columns or rows in this range.
-     *
-     * @return
      */
     @Override
     public final long count() {
