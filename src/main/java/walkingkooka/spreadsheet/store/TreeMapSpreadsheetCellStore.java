@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -34,6 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
@@ -66,6 +68,16 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public Optional<SpreadsheetCell> load(final SpreadsheetCellReference id) {
         return this.store.load(id);
+    }
+
+    @Override
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range) {
+        Objects.requireNonNull(range, "range");
+
+        return this.store.all()
+                .stream()
+                .filter(c -> range.testCell(c.reference()))
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     @Override

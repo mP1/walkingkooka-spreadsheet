@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -37,6 +38,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -160,7 +162,17 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                 .cast(SpreadsheetParserToken.class);
     }
 
-    // save end.........................................................................................................
+    // batch............................................................................................................
+
+    @Override
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range) {
+        return this.store.loadCells(range)
+                .stream()
+                .map(this::fixFormulaText)
+                .collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    // watchers.........................................................................................................
 
     @Override
     public Runnable addSaveWatcher(final Consumer<SpreadsheetCell> remover) {
