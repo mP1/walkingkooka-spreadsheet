@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -48,6 +49,21 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
 
         range.cellStream()
                 .forEach(this::delete);
+    }
+
+    /**
+     * Clears the parsed formula for all existing cells.
+     */
+    default void clearParsedFormulaExpressions() {
+        for (final SpreadsheetCell cell : this.loadCells(SpreadsheetCellRange.ALL)) {
+            final SpreadsheetFormula formulaBefore = cell.formula();
+            final SpreadsheetFormula formulaAfter = formulaBefore.setExpression(SpreadsheetFormula.NO_EXPRESSION);
+            if (false == formulaBefore.equals(formulaAfter)) {
+                this.save(
+                        cell.setFormula(formulaAfter)
+                );
+            }
+        }
     }
 
     /**

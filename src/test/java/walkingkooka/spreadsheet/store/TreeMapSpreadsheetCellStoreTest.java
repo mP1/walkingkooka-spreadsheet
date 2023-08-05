@@ -25,10 +25,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
+import java.util.Optional;
+import java.util.Set;
 import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -98,6 +102,83 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
         this.loadFailCheck(store, b2);
         this.loadFailCheck(store, c3);
+    }
+
+    // clearParsedFormulaExpressions..............................................................................................
+
+    @Test
+    public void testClearParsedFormulaExpressions() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell withoutParsedFormula = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("hello()")
+                );
+
+        store.save(
+                withoutParsedFormula.setFormula(
+                        withoutParsedFormula.formula()
+                                .setExpression(
+                                        Optional.of(
+                                                Expression.namedFunction(FunctionExpressionName.with("hello"))
+                                        )
+                                )
+                )
+        );
+
+        store.clearParsedFormulaExpressions();
+
+        this.loadAndCheck(
+                store,
+                withoutParsedFormula.reference(),
+                withoutParsedFormula
+        );
+    }
+
+    @Test
+    public void testClearParsedFormulaExpressions2() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell withoutParsedFormula = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("hello()")
+                );
+
+        store.save(
+                withoutParsedFormula.setFormula(
+                        withoutParsedFormula.formula()
+                                .setExpression(
+                                        Optional.of(
+                                                Expression.namedFunction(FunctionExpressionName.with("hello"))
+                                        )
+                                )
+                )
+        );
+
+        final SpreadsheetCell withoutParsedFormula2 = SpreadsheetSelection.parseCell("B2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("hello2()")
+                );
+
+        store.save(
+                withoutParsedFormula2
+        );
+
+        final Set<SpreadsheetCellReference> cleared = Sets.ordered();
+        store.addSaveWatcher(s -> cleared.add(s.reference()));
+
+        store.clearParsedFormulaExpressions();
+
+        this.loadAndCheck(
+                store,
+                withoutParsedFormula.reference(),
+                withoutParsedFormula
+        );
+
+        this.checkEquals(
+                Sets.of(withoutParsedFormula.reference()),
+                cleared
+        );
     }
 
     // maxColumnWidth...................................................................................................
