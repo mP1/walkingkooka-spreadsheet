@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -27,6 +28,11 @@ import walkingkooka.test.Fake;
 import java.util.Set;
 
 public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference, SpreadsheetCell> implements SpreadsheetCellStore, Fake {
+
+    @Override
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public int rows() {
