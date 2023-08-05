@@ -698,7 +698,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testMarshallWithFormatted() {
         this.marshallAndCheck(
@@ -725,7 +724,6 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testMarshallWithStyleAndFormatted() {
         final TextStyle boldAndItalics = this.boldAndItalics();
