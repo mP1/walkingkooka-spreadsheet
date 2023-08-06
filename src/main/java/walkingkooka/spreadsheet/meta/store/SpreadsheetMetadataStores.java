@@ -18,7 +18,10 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+
+import java.util.function.Function;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetMetadataStore} implementations.
@@ -43,7 +46,7 @@ public final class SpreadsheetMetadataStores implements PublicStaticHelper {
      * {@see SpreadsheetCellStoreActionSpreadsheetMetadataStore}
      */
     public static SpreadsheetMetadataStore spreadsheetCellStoreAction(final SpreadsheetMetadataStore metadataStore,
-                                                                      final SpreadsheetCellStore cellStore) {
+                                                                      final Function<SpreadsheetId, SpreadsheetCellStore> cellStore) {
         return SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
                 metadataStore,
                 cellStore
