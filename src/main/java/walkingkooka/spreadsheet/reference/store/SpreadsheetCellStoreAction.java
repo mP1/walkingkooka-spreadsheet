@@ -1,0 +1,46 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.reference.store;
+
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+
+/**
+ * The action to perform upon all cells belonging to a Spreadsheet for a given {@link SpreadsheetMetadataPropertyName}
+ * change.
+ */
+public enum SpreadsheetCellStoreAction {
+
+    /**
+     * Some {@link SpreadsheetMetadataPropertyName} changes do not require any action to be performed on the spreadsheet cells.
+     * <br>
+     * An example of this would be an update to {@link SpreadsheetMetadataPropertyName#MODIFIED_DATE_TIME}.
+     */
+    NONE,
+
+    /**
+     * Updating the global {@link SpreadsheetMetadataPropertyName#NUMBER_PARSE_PATTERN}, will require all cell formula
+     * to be parsed again because different outcomes will be produced for number literals in cells.
+     */
+    PARSE_FORMULA,
+
+    /**
+     * Updating the global {@link SpreadsheetMetadataPropertyName#NUMBER_FORMAT_PATTERN} will require all cell expressions to be re-evaluated and formatted again,
+     * because formatting numeric values with the new pattern will have different text results.
+     */
+    EVALUATE_AND_FORMAT;
+}
