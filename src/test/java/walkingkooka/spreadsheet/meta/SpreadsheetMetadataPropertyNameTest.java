@@ -28,6 +28,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellStoreAction;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
@@ -397,6 +399,216 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         );
     }
 
+    // spreadsheetCellStoreAction.......................................................................................
+
+    @Test
+    public void testSpreadsheetCellStoreActionSpreadsheetId() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionSpreadsheetName() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionCreator() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionCreateDateTime() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionModifiedBy() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionModifiedDateTime() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionFrozenColumns() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionFrozenRows() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.FROZEN_ROWS,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionSelection() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.SELECTION,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionViewportCell() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.VIEWPORT_CELL,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionCurrencySymbol() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionDecimalSeparator() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionExponentSymbol() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionGroupSeparator() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionNegativeSign() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionPercentageSymbol() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionPositiveSign() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionValueSeparator() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.VALUE_SEPARATOR,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionDateParsePattern() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionDateTimeParsePattern() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionNumberParsePattern() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionTimeParsePattern() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionNamedColor() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK),
+                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionNumberedColor() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.numberedColor(1),
+                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellStoreActionTextFormatPattern() {
+        this.spreadsheetCellStoreActionAndCheck(
+                SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
+                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
+        );
+    }
+
+    private void spreadsheetCellStoreActionAndCheck(final SpreadsheetMetadataPropertyName<?> name,
+                                                    final SpreadsheetCellStoreAction action) {
+        this.checkEquals(
+                action,
+                name.spreadsheetCellStoreAction(),
+                () -> name + " spreadsheetCellStoreAction"
+        );
+    }
 
     // JsonNodeMarshallingTesting.......................................................................................
 

@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetCellStoreAction;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -484,6 +485,62 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
     final T failParseValueUnsupported() {
         throw new UnsupportedOperationException("UrlFragment not supported for " + CharSequences.quoteAndEscape(this.value()));
+    }
+
+    // SpreadsheetCellStore.............................................................................................
+
+    /**
+     * Returns the appropriate {@link SpreadsheetCellStoreAction} for changes to this {@link SpreadsheetMetadataPropertyName}.
+     */
+    public final SpreadsheetCellStoreAction spreadsheetCellStoreAction() {
+        final SpreadsheetCellStoreAction action;
+
+        switch (this.value()) {
+            // id
+            case "spreadsheet-id":
+            case "spreadsheet-name":
+                action = SpreadsheetCellStoreAction.NONE;
+                break;
+
+            // authorship & timestamp
+            case "create-date-time":
+            case "creator":
+            case "modified-date-time":
+            case "modified-by":
+                action = SpreadsheetCellStoreAction.NONE;
+                break;
+            // viewport
+            case "frozen-columns":
+            case "frozen-rows":
+            case "selection":
+            case "viewport-cell":
+                action = SpreadsheetCellStoreAction.NONE;
+                break;
+            // number parsing characters.
+            case "currency-symbol":
+            case "decimal-separator":
+            case "exponent-symbol":
+            case "group-separator":
+            case "negative-sign":
+            case "percentage-symbol":
+            case "positive-sign":
+            case "value-separator":
+                action = SpreadsheetCellStoreAction.PARSE_FORMULA;
+                break;
+            // parse-patterns
+            case "date-parse-pattern":
+            case "date-time-parse-pattern":
+            case "number-parse-pattern":
+            case "time-parse-pattern":
+                action = SpreadsheetCellStoreAction.PARSE_FORMULA;
+                break;
+            default:
+                // all other properties require a full evaluate and format of all cells.
+                action = SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT;
+                break;
+        }
+
+        return action;
     }
 
     // Object...........................................................................................................
