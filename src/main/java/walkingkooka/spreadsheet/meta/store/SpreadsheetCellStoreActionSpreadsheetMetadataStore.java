@@ -29,6 +29,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetMetadataStore} that watches each save {@link SpreadsheetMetadata} and determines if the cells
@@ -38,7 +39,7 @@ import java.util.function.Consumer;
 final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements SpreadsheetMetadataStore {
 
     static SpreadsheetCellStoreActionSpreadsheetMetadataStore with(final SpreadsheetMetadataStore metadataStore,
-                                                                   final SpreadsheetCellStore cellStore) {
+                                                                   final Function<SpreadsheetId, SpreadsheetCellStore> cellStore) {
         Objects.requireNonNull(metadataStore, "metadataStore");
         Objects.requireNonNull(cellStore, "cellStore");
 
@@ -49,7 +50,7 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
     }
 
     private SpreadsheetCellStoreActionSpreadsheetMetadataStore(final SpreadsheetMetadataStore metadataStore,
-                                                               final SpreadsheetCellStore cellStore) {
+                                                               final Function<SpreadsheetId, SpreadsheetCellStore> cellStore) {
         super();
         this.metadataStore = metadataStore;
         this.cellStore = cellStore;
@@ -63,11 +64,12 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
     @Override
     public SpreadsheetMetadata save(final SpreadsheetMetadata metadata) {
         final SpreadsheetMetadataStore metadataStore = this.metadataStore;
-        final Optional<SpreadsheetId> id = metadata.id();
+        final Optional<SpreadsheetId> maybeId = metadata.id();
 
         final SpreadsheetMetadata saved;
-        if (id.isPresent()) {
-            final Optional<SpreadsheetMetadata> maybeBefore = metadataStore.load(id.get());
+        if (maybeId.isPresent()) {
+            final SpreadsheetId id = maybeId.get();
+            final Optional<SpreadsheetMetadata> maybeBefore = metadataStore.load(id);
 
             saved = metadataStore.save(metadata);
 
@@ -112,10 +114,12 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
                     case NONE:
                         break;
                     case PARSE_FORMULA:
-                        this.cellStore.clearParsedFormulaExpressions();
+                        this.cellStore.apply(id)
+                                .clearParsedFormulaExpressions();
                         break;
                     case EVALUATE_AND_FORMAT:
-                        this.cellStore.clearFormatted();
+                        this.cellStore.apply(id)
+                                .clearFormatted();
                         break;
                 }
             }
@@ -130,7 +134,7 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
     /**
      * Holds the cells for the same spreadsheet.
      */
-    private final SpreadsheetCellStore cellStore;
+    private final Function<SpreadsheetId, SpreadsheetCellStore> cellStore;
 
     @Override
     public Runnable addSaveWatcher(final Consumer<SpreadsheetMetadata> watcher) {

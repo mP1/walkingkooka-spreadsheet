@@ -111,7 +111,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
                 SpreadsheetMetadataStores.treeMap(),
-                new FakeSpreadsheetCellStore() {
+                (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
                         cleared.incrementAndGet();
@@ -147,7 +147,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
                 SpreadsheetMetadataStores.treeMap(),
-                new FakeSpreadsheetCellStore() {
+                (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
                         cleared.incrementAndGet();
@@ -195,7 +195,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
                 SpreadsheetMetadataStores.treeMap(),
-                new FakeSpreadsheetCellStore() {
+                (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
                         cleared.incrementAndGet();
@@ -246,7 +246,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
                 SpreadsheetMetadataStores.treeMap(),
-                new FakeSpreadsheetCellStore() {
+                (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
                         cleared.incrementAndGet();
@@ -295,7 +295,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
                 SpreadsheetMetadataStores.treeMap(),
-                new FakeSpreadsheetCellStore() {
+                (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
                         clearParsed.incrementAndGet();
@@ -361,7 +361,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
                 SpreadsheetMetadataStores.treeMap(),
-                new FakeSpreadsheetCellStore() {
+                (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
                         clearParsed.incrementAndGet();
@@ -443,7 +443,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
                 SpreadsheetMetadataStores.treeMap(),
-                new FakeSpreadsheetCellStore() {
+                (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
                         clearParsed.incrementAndGet();
@@ -548,7 +548,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
     private SpreadsheetCellStoreActionSpreadsheetMetadataStore createStore(final SpreadsheetCellStore cellStore) {
         return SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
                 SpreadsheetMetadataStores.treeMap(),
-                cellStore
+                (id) -> cellStore
         );
     }
 
