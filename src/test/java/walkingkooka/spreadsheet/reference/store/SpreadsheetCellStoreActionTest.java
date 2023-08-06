@@ -17,10 +17,76 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetCellStoreActionTest implements ClassTesting<SpreadsheetCellStoreAction> {
+
+    // max..............................................................................................................
+
+    @Test
+    public void testMaxNoneNone() {
+        this.maxAndCheck(
+                SpreadsheetCellStoreAction.NONE,
+                SpreadsheetCellStoreAction.NONE,
+                SpreadsheetCellStoreAction.NONE
+        );
+    }
+
+    @Test
+    public void testMaxNoneParseFormula() {
+        this.maxAndCheck(
+                SpreadsheetCellStoreAction.NONE,
+                SpreadsheetCellStoreAction.PARSE_FORMULA,
+                SpreadsheetCellStoreAction.PARSE_FORMULA
+        );
+    }
+
+    @Test
+    public void testMaxNoneEvaluateAndFormat() {
+        this.maxAndCheck(
+                SpreadsheetCellStoreAction.NONE,
+                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT,
+                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
+        );
+    }
+
+    @Test
+    public void testMaxParseFormulaEvaluateAndFormat() {
+        this.maxAndCheck(
+                SpreadsheetCellStoreAction.PARSE_FORMULA,
+                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT,
+                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
+        );
+    }
+
+    private void maxAndCheck(final SpreadsheetCellStoreAction first,
+                             final SpreadsheetCellStoreAction second,
+                             final SpreadsheetCellStoreAction expected) {
+        this.maxAndCheck0(
+                first,
+                second,
+                expected
+        );
+        this.maxAndCheck0(
+                second,
+                first,
+                expected
+        );
+    }
+
+    private void maxAndCheck0(final SpreadsheetCellStoreAction first,
+                              final SpreadsheetCellStoreAction second,
+                              final SpreadsheetCellStoreAction expected) {
+        this.checkEquals(
+                expected,
+                first.max(second),
+                first + " max " + second
+        );
+    }
+
+    // ClassTesting....................................................................................................
 
     @Override
     public Class<SpreadsheetCellStoreAction> type() {

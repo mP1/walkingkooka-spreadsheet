@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
+import java.util.Objects;
+
 /**
  * The action to perform upon all cells belonging to a Spreadsheet for a given {@link SpreadsheetMetadataPropertyName}
  * change.
@@ -30,17 +32,43 @@ public enum SpreadsheetCellStoreAction {
      * <br>
      * An example of this would be an update to {@link SpreadsheetMetadataPropertyName#MODIFIED_DATE_TIME}.
      */
-    NONE,
+    NONE(0),
 
     /**
      * Updating the global {@link SpreadsheetMetadataPropertyName#NUMBER_PARSE_PATTERN}, will require all cell formula
      * to be parsed again because different outcomes will be produced for number literals in cells.
      */
-    PARSE_FORMULA,
+    PARSE_FORMULA(1),
 
     /**
      * Updating the global {@link SpreadsheetMetadataPropertyName#NUMBER_FORMAT_PATTERN} will require all cell expressions to be re-evaluated and formatted again,
      * because formatting numeric values with the new pattern will have different text results.
      */
-    EVALUATE_AND_FORMAT;
+    EVALUATE_AND_FORMAT(2);
+
+    SpreadsheetCellStoreAction(final int value) {
+        this.value = value;
+    }
+
+    public SpreadsheetCellStoreAction max(final SpreadsheetCellStoreAction other) {
+        Objects.requireNonNull(other, "other");
+
+        final SpreadsheetCellStoreAction result;
+
+        switch (Math.max(this.value, other.value)) {
+            case 0:
+                result = NONE;
+                break;
+            case 1:
+                result = PARSE_FORMULA;
+                break;
+            default:
+                result = EVALUATE_AND_FORMAT;
+                break;
+        }
+
+        return result;
+    }
+
+    private final int value;
 }
