@@ -79,7 +79,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.tree.text.TextStylePropertyValueException;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -241,11 +240,11 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
 
     /**
      * Fetches the requested {@link TextStylePropertyName} searching the current {@link SpreadsheetMetadataPropertyName#STYLE}
-     * and if absent, the defaults. If it is absent from both a {@link TextStylePropertyValueException} will then be thrown.
+     * and if absent, the defaults. If it is absent from both a {@link IllegalArgumentException} will then be thrown.
      */
     public final <V> V getEffectiveStylePropertyOrFail(final TextStylePropertyName<V> propertyName) {
         return this.getEffectiveStyleProperty(propertyName)
-                .orElseThrow(() -> new TextStylePropertyValueException("Missing " + propertyName));
+                .orElseThrow(() -> new IllegalArgumentException("Missing " + propertyName));
     }
 
     /**
