@@ -110,7 +110,6 @@ import walkingkooka.tree.text.TextDecorationLine;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.tree.text.TextStylePropertyValueException;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -9079,10 +9078,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testColumnWidthDefaultMissing() {
+    public void testColumnWidthDefaultMissingFails() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("Z");
         assertThrows(
-                TextStylePropertyValueException.class,
+                IllegalArgumentException.class,
                 () -> this.createSpreadsheetEngine()
                         .columnWidth(
                                 column,
@@ -9149,7 +9148,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRowHeightDefaultMissing() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("999");
         assertThrows(
-                TextStylePropertyValueException.class,
+                IllegalArgumentException.class,
                 () -> this.createSpreadsheetEngine()
                         .rowHeight(
                                 row,

@@ -39,7 +39,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.tree.text.TextStylePropertyValueException;
 import walkingkooka.tree.text.WordWrap;
 
 import java.time.LocalDateTime;
@@ -259,7 +258,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testGetEffectiveStyleOrFailAbsent() {
         assertThrows(
-                TextStylePropertyValueException.class,
+                IllegalArgumentException.class,
                 () -> this.createObject().getEffectiveStylePropertyOrFail(TextStylePropertyName.WORD_WRAP)
         );
     }
