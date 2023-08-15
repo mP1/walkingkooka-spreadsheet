@@ -58,6 +58,13 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.checkEquals(row, cell.row(), "row");
     }
 
+    // text............................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck("123");
+    }
+
     // count............................................................................................................
 
     @Test

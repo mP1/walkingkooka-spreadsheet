@@ -255,6 +255,13 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         // test ignored because short generated names will clash with valid cell references and fail the test.
     }
 
+    // text............................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck("Label123");
+    }
+
     // toCellOrFail.....................................................................................................
 
     @Test

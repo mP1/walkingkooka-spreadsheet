@@ -60,6 +60,13 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.checkEquals(row, cell.row(), "row");
     }
 
+    // text............................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck("B");
+    }
+
     // count............................................................................................................
 
     @Test

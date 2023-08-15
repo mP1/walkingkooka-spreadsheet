@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -48,6 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelection> implements ClassTesting2<S>,
         HashCodeEqualsDefinedTesting2<S>,
+        HasTextTesting,
         JsonNodeMarshallingTesting<S>,
         IsMethodTesting<S>,
         ParseStringTesting<S>,
@@ -57,6 +59,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     SpreadsheetSelectionTestCase() {
         super();
+    }
+
+    // text.............................................................................................................
+
+    final void textAndCheck(final String text) {
+        this.textAndCheck(
+                this.parseString(text),
+                text
+        );
     }
 
     // testCellRangeAndCheck............................................................................................

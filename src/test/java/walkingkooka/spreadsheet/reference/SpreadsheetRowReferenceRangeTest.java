@@ -56,6 +56,13 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         assertSame(upper, selection.end(), "end");
     }
 
+    // text............................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck("12:34");
+    }
+
     // parse............................................................................................................
 
     @Test

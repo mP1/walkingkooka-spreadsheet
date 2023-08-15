@@ -61,6 +61,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.checkRow(cell, row);
     }
 
+    // text............................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck("A1");
+    }
+
     // setColumn..................................................................................................
 
     @Test
