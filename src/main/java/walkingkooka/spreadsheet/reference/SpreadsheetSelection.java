@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorLineInfo;
 import walkingkooka.text.cursor.TextCursors;
@@ -67,7 +68,8 @@ import java.util.stream.Collectors;
 /**
  * Base class for all selection types, including columns, rows, cells, labels and ranges.
  */
-public abstract class SpreadsheetSelection implements HasUrlFragment,
+public abstract class SpreadsheetSelection implements HasText,
+        HasUrlFragment,
         Predicate<SpreadsheetSelection>,
         TreePrintable,
         UsesToStringBuilder {
@@ -1069,6 +1071,13 @@ public abstract class SpreadsheetSelection implements HasUrlFragment,
 
     @Override
     abstract public String toString();
+
+    // HasText..........................................................................................................
+
+    @Override
+    public final String text() {
+        return this.toString();
+    }
 
     // HasUrlFragment...................................................................................................
 

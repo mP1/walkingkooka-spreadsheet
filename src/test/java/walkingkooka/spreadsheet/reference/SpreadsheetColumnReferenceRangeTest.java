@@ -58,6 +58,13 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         assertSame(upper, selection.end(), "end");
     }
 
+    // text............................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck("C:D");
+    }
+
     // parse............................................................................................................
 
     @Test

@@ -24,12 +24,14 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasTextTesting;
 
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetSelectionTest implements ClassTesting2<SpreadsheetSelection>,
+        HasTextTesting,
         ParseStringTesting<SpreadsheetExpressionReference> {
 
     @Test
@@ -929,13 +931,19 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     private void parseAndCheck(final String selection,
                                final String selectionType,
                                final SpreadsheetSelection expected) {
+        final SpreadsheetSelection spreadsheetSelection = SpreadsheetSelection.parse(
+                selection,
+                selectionType
+        );
         this.checkEquals(
                 expected,
-                SpreadsheetSelection.parse(
-                        selection,
-                        selectionType
-                ),
+                spreadsheetSelection,
                 () -> "parse " + CharSequences.quoteAndEscape(selection) + " " + CharSequences.quoteAndEscape(selectionType)
+        );
+
+        this.textAndCheck(
+                spreadsheetSelection,
+                selection
         );
     }
 

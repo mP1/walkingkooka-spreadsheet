@@ -170,6 +170,13 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.isSingleCellAndCheck(range, false);
     }
 
+    // text............................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck("A1:B2");
+    }
+
     // count............................................................................................................
 
     @Test
