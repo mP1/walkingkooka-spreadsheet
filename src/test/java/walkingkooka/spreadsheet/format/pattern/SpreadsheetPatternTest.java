@@ -79,6 +79,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern>,
         ParserTesting,
+        HasSpreadsheetPatternKindTesting,
         HasTextTesting,
         SpreadsheetFormatterTesting {
 
@@ -2675,7 +2676,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // kind.............................................................................................................
+    // kind & HasSpreadsheetPatterKind..................................................................................
 
     @Test
     public void testKindDateParsePattern() {
@@ -2715,6 +2716,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 expected,
                 pattern.kind(),
                 () -> pattern + " kind"
+        );
+        this.hasSpreadsheetPatternKindAndCheck(
+                pattern,
+                expected
         );
     }
 
