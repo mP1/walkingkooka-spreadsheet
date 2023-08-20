@@ -68,6 +68,7 @@ import java.util.function.Predicate;
  */
 abstract public class SpreadsheetPattern implements Value<ParserToken>,
         HasSpreadsheetFormatter,
+        HasSpreadsheetPatternKind,
         HasText,
         TreePrintable,
         HasUrlFragment {
@@ -777,6 +778,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     private SpreadsheetFormatter formatter;
 
     abstract SpreadsheetFormatter createFormatter();
+
+    // HasSpreadsheetPatternKind........................................................................................
+
+    @Override
+    public Optional<SpreadsheetPatternKind> patternKind() {
+        return Optional.of(
+                this.kind()
+        );
+    }
 
     // HasUrlFragment...................................................................................................
 
