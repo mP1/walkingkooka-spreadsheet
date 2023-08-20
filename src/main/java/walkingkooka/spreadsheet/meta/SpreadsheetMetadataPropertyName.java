@@ -27,6 +27,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
@@ -35,6 +36,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
@@ -67,6 +69,7 @@ import java.util.function.Predicate;
  */
 public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         Comparable<SpreadsheetMetadataPropertyName<?>>,
+        HasSpreadsheetPatternKind,
         HasUrlFragment {
 
     // constants
@@ -550,6 +553,25 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public final boolean isPattern() {
         final String name = this.value();
         return name.endsWith("format-pattern") || name.endsWith("parse-pattern");
+    }
+
+    // HasSpreadsheetPatternKind........................................................................................
+
+    // text-format-pattern -> TEXT_FORMAT_PATTERN
+    // time-format-pattern -> TIME_FORMAT_PATTERN
+    // time-parse-pattern -> TIME_PARSE_PATTERN
+    @Override
+    public final Optional<SpreadsheetPatternKind> patternKind() {
+        return this.isPattern() ?
+                Optional.of(
+                        SpreadsheetPatternKind.valueOf(
+                                CaseKind.KEBAB.change(
+                                        this.value(),
+                                        CaseKind.SNAKE
+                                )
+                        )
+                ) :
+                Optional.empty();
     }
 
     // Object...........................................................................................................
