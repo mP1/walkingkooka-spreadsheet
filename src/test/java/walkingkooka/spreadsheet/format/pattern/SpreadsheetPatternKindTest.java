@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -946,6 +947,32 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                         pattern,
                         context
                 )
+        );
+    }
+
+    // spreadsheetMetadataPropertyName..................................................................................
+
+    @Test
+    public void testSpreadsheetMetadataPropertyNameDateFormat() {
+        this.spreadsheetMetadataPropertyNameAndCheck(
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
+                SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadataPropertyNameDateTimeFormat() {
+        this.spreadsheetMetadataPropertyNameAndCheck(
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
+                SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN
+        );
+    }
+
+    private void spreadsheetMetadataPropertyNameAndCheck(final SpreadsheetPatternKind kind,
+                                                         final SpreadsheetMetadataPropertyName<? extends SpreadsheetPattern> expected) {
+        this.checkEquals(
+                expected,
+                kind.spreadsheetMetadataPropertyName()
         );
     }
 

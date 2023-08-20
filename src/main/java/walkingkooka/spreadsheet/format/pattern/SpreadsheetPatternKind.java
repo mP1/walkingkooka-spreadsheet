@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.Cast;
 import walkingkooka.NeverError;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
@@ -223,10 +224,12 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     /**
      * Returns the {@link SpreadsheetMetadataPropertyName} for this {@link SpreadsheetPatternKind}.
      */
-    public SpreadsheetMetadataPropertyName<?> spreadsheetMetadataPropertyName() {
-        return SpreadsheetMetadataPropertyName.with(
-                this.typeName()
-                        .substring("spreadsheet-".length())
+    public SpreadsheetMetadataPropertyName<SpreadsheetPattern> spreadsheetMetadataPropertyName() {
+        return Cast.to(
+                SpreadsheetMetadataPropertyName.with(
+                        this.typeName()
+                                .substring("spreadsheet-".length())
+                )
         );
     }
 
