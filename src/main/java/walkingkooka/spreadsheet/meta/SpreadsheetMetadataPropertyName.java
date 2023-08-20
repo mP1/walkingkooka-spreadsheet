@@ -543,6 +543,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         return action;
     }
 
+    /**
+     * Tests if this {@link SpreadsheetMetadataPropertyName} is for any format or parse pattern, that is the property
+     * value will be a sub-class of {@link SpreadsheetPattern}.
+     */
+    public final boolean isPattern() {
+        final String name = this.value();
+        return name.endsWith("format-pattern") || name.endsWith("parse-pattern");
+    }
+
     // Object...........................................................................................................
 
     @Override

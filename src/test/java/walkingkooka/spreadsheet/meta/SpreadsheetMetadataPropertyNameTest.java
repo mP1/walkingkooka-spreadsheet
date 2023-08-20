@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
@@ -607,6 +608,29 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 action,
                 name.spreadsheetCellStoreAction(),
                 () -> name + " spreadsheetCellStoreAction"
+        );
+    }
+
+    // isPattern........................................................................................................
+
+    @Test
+    public void testIsPattern() {
+        this.checkEquals(
+                Sets.of(
+                        SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
+                        SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
+                        SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
+                        SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN,
+                        SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN
+                ),
+                SpreadsheetMetadataPropertyName.CONSTANTS.values()
+                        .stream()
+                        .filter(SpreadsheetMetadataPropertyName::isPattern)
+                        .collect(Collectors.toSet())
         );
     }
 
