@@ -2675,37 +2675,46 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // kind............................................................................................................
+    // kind.............................................................................................................
 
     @Test
     public void testKindDateParsePattern() {
-        this.checkEquals(
-                SpreadsheetPatternKind.DATE_PARSE_PATTERN,
-                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy").kind()
+        this.kindAndCheck(
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy"),
+                SpreadsheetPatternKind.DATE_PARSE_PATTERN
         );
     }
 
     @Test
     public void testKindDateTimeParsePattern() {
-        this.checkEquals(
-                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN,
-                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss").kind()
+        this.kindAndCheck(
+                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss"),
+                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
         );
     }
 
     @Test
     public void testKindNumberFormatPattern() {
-        this.checkEquals(
-                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN,
-                SpreadsheetPattern.parseNumberFormatPattern("#.###").kind()
+        this.kindAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("#.###"),
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
         );
     }
 
     @Test
     public void testKindTextFormatPattern() {
+        this.kindAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("@"),
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+        );
+    }
+
+    private void kindAndCheck(final SpreadsheetPattern pattern,
+                              final SpreadsheetPatternKind expected) {
         this.checkEquals(
-                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
-                SpreadsheetPattern.parseTextFormatPattern("@").kind()
+                expected,
+                pattern.kind(),
+                () -> pattern + " kind"
         );
     }
 
