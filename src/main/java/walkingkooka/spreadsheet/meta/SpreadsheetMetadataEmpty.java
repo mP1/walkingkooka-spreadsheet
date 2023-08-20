@@ -72,7 +72,7 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     // get/remove.......................................................................................................
 
     @Override
-    <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
+    <V> Optional<V> getIgnoringDefaults0(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return Optional.empty();
     }
 

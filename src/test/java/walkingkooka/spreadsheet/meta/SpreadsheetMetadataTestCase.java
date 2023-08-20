@@ -86,9 +86,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testGetUnknown() {
-        this.getAndCheck(this.createObject(),
-                SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                null);
+        this.getAndCheck(
+                this.createObject(),
+                SpreadsheetMetadataPropertyName.MODIFIED_BY
+        );
     }
 
     @Test
@@ -98,19 +99,47 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadata metadata = this.createObject();
 
         final SpreadsheetMetadataPropertyName<String> unknown = SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL;
-        this.getAndCheck(metadata, unknown, null);
+        this.getAndCheck(
+                metadata,
+                unknown
+        );
 
-        this.getAndCheck(metadata.setDefaults(SpreadsheetMetadata.EMPTY.set(unknown, value)),
+        this.getAndCheck(
+                metadata.setDefaults(
+                        SpreadsheetMetadata.EMPTY.set(unknown, value)
+                ),
                 unknown,
-                value);
+                value
+        );
+    }
+
+    final <TT> void getAndCheck(final SpreadsheetMetadata metadata,
+                                final SpreadsheetMetadataPropertyName<TT> propertyName) {
+        this.getAndCheck(
+                metadata,
+                propertyName,
+                Optional.empty()
+        );
     }
 
     final <TT> void getAndCheck(final SpreadsheetMetadata metadata,
                                 final SpreadsheetMetadataPropertyName<TT> propertyName,
                                 final TT value) {
-        this.checkEquals(Optional.ofNullable(value),
+        this.getAndCheck(
+                metadata,
+                propertyName,
+                Optional.of(value)
+        );
+    }
+
+    final <TT> void getAndCheck(final SpreadsheetMetadata metadata,
+                                final SpreadsheetMetadataPropertyName<TT> propertyName,
+                                final Optional<TT> value) {
+        this.checkEquals(
+                value,
                 metadata.get(propertyName),
-                () -> metadata + " get " + propertyName);
+                () -> metadata + " get " + propertyName
+        );
     }
 
     // getOrFail........................................................................................................
@@ -124,6 +153,38 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         this.checkMessage(thrown, "Required property missing, but got null for " + CharSequences.quote(propertyName.value()));
         this.checkEquals(propertyName, thrown.name(), "property name");
         this.checkEquals(null, thrown.value(), "property value");
+    }
+
+    // getIgnoringDefaults..............................................................................................
+
+    @Test
+    public final void testGetIgnoringDefaultsNullPropertyNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .getIgnoringDefaults(null)
+        );
+    }
+
+    // getIgnoresDefaults...............................................................................................
+
+    @Test
+    public final void testGetIgnoresDefaults() {
+        final SpreadsheetMetadataPropertyName<Locale> propertyName = SpreadsheetMetadataPropertyName.LOCALE;
+        final Locale value = Locale.ENGLISH;
+
+        final SpreadsheetMetadata metadata = this.createObject()
+                .setDefaults(
+                        SpreadsheetMetadata.EMPTY.set(
+                                propertyName,
+                                value
+                        )
+                );
+        this.getAndCheck(
+                metadata,
+                propertyName,
+                value
+        );
     }
 
     // effectiveStyle...................................................................................................

@@ -147,7 +147,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testGetIgnoresDefault() {
+    public void testGetActualNotDefault() {
         final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress value = EmailAddress.parse("creator111@example.com");
 
