@@ -113,8 +113,12 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     // get..............................................................................................................
 
     @Override
-    <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
-        return Optional.ofNullable(Cast.to(this.value.get(propertyName)));
+    <V> Optional<V> getIgnoringDefaults0(final SpreadsheetMetadataPropertyName<V> propertyName) {
+        return Optional.ofNullable(
+                Cast.to(
+                        this.value.get(propertyName)
+                )
+        );
     }
 
     // set..............................................................................................................

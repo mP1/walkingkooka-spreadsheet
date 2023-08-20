@@ -187,12 +187,12 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
      * Potentially recursive fetch to find a property, trying locally and then the defaults if one is present.
      */
     final <V> Optional<V> getOrGetDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
-        Optional<V> value = this.getIgnoringDefaults(propertyName);
+        Optional<V> value = this.getIgnoringDefaults0(propertyName);
         if (false == value.isPresent()) {
             // try again with defaults
             final SpreadsheetMetadata defaults = this.defaults;
             if (null != defaults) {
-                value = defaults.getIgnoringDefaults(propertyName); // defaults cannot have further defaults
+                value = defaults.getIgnoringDefaults0(propertyName); // defaults cannot have further defaults
             }
         }
         return value;
@@ -201,7 +201,13 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     /**
      * Sub classes will fetch the property returning the value.
      */
-    abstract <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName);
+    public final <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
+        Objects.requireNonNull(propertyName, "propertyName");
+
+        return this.getIgnoringDefaults0(propertyName);
+    }
+
+    abstract <V> Optional<V> getIgnoringDefaults0(final SpreadsheetMetadataPropertyName<V> propertyName);
 
     /**
      * Fetches the required property or throws a {@link SpreadsheetMetadataPropertyValueException}.
