@@ -23,22 +23,22 @@ import java.util.Optional;
 
 public interface HasSpreadsheetPatternTesting extends Testing {
 
-    default void HasSpreadsheetPatternAndCheck(final HasSpreadsheetPattern has) {
-        this.HasSpreadsheetPatternAndCheck(
+    default void hasSpreadsheetPatternAndCheck(final HasSpreadsheetPattern has) {
+        this.hasSpreadsheetPatternAndCheck(
                 has,
                 Optional.empty()
         );
     }
 
-    default void HasSpreadsheetPatternAndCheck(final HasSpreadsheetPattern has,
+    default void hasSpreadsheetPatternAndCheck(final HasSpreadsheetPattern has,
                                                final SpreadsheetPattern expected) {
-        this.HasSpreadsheetPatternAndCheck(
+        this.hasSpreadsheetPatternAndCheck(
                 has,
                 Optional.of(expected)
         );
     }
 
-    default void HasSpreadsheetPatternAndCheck(final HasSpreadsheetPattern has,
+    default void hasSpreadsheetPatternAndCheck(final HasSpreadsheetPattern has,
                                                final Optional<SpreadsheetPattern> expected) {
         this.checkEquals(
                 expected,
