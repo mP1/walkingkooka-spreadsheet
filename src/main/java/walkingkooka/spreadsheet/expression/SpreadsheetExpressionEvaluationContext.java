@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -40,7 +41,9 @@ import java.util.function.Function;
  * Enhances {@link ExpressionEvaluationContext} adding a few extra methods required by a spreadsheet during
  * expression execution.
  */
-public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext, SpreadsheetConverterContext {
+public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
+        SpreadsheetConverterContext,
+        HasSpreadsheetMetadata {
 
     @Override
     default SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
@@ -105,6 +108,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     /**
      * Returns the {@link SpreadsheetMetadata} for the enclosing spreadsheet.
      */
+    @Override
     SpreadsheetMetadata spreadsheetMetadata();
 
     /**
