@@ -244,7 +244,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     // labels.....................................................................................................
 
     @Test
-    public final void testlabelsReadOnly() {
+    public final void testLabelsReadOnly() {
         final D delta = this.createSpreadsheetDelta();
         final Set<SpreadsheetLabelMapping> labels = delta.labels();
 
