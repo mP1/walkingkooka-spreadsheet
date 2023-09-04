@@ -57,6 +57,7 @@ import walkingkooka.tree.text.TextStyle;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -333,19 +334,25 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * The {@link Set sets} holding cells, columns, labels and rows are sorted and each class only uses its
      * {@link SpreadsheetSelection} to determine equality. This means {@link Sets#equals(Object)} will return true for
-     * entries with the same {@link SpreadsheetSelection} but different other properties.
+     * entries with the same {@link SpreadsheetSelection} but other different properties.
      */
     private static <T> boolean equals(final Set<T> left,
                                       final Set<T> right) {
-        return left.size() == right.size() &&
-                equals0(left, right);
-    }
+        boolean equals = left.size() == right.size();
 
-    private static <T> boolean equals0(final Set<T> left,
-                                       final Set<T> right) {
-        final Set<T> equality = Sets.hash();
-        equality.addAll(left);
-        return equality.equals(right);
+        if (equals) {
+            final Iterator<T> leftIterator = left.iterator();
+            final Iterator<T> rightIterator = right.iterator();
+            while (equals && leftIterator.hasNext()) {
+                equals = rightIterator.hasNext() &&
+                        leftIterator.next()
+                                .equals(
+                                        rightIterator.next()
+                                );
+            }
+        }
+
+        return equals;
     }
 
     // deletedCells............................................................................................................
