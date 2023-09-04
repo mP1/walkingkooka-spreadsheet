@@ -684,7 +684,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testMarshallCellsMaxCellWidths() {
+    public void testMarshallCellsColumnWidths() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         SpreadsheetDelta.NO_VIEWPORT_SELECTION,
@@ -726,7 +726,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testMarshallCellsMaxCellWidthsRowHeights() {
+    public void testMarshallCellsColumnWidthsRowHeights() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         SpreadsheetDelta.NO_VIEWPORT_SELECTION,
