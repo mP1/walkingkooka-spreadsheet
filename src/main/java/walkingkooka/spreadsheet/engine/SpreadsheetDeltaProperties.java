@@ -49,7 +49,14 @@ public enum SpreadsheetDeltaProperties {
 
     COLUMN_WIDTHS,
 
-    ROW_HEIGHTS;
+    ROW_HEIGHTS,
+
+    /**
+     * The {@link #MAX_COLUMNS} and {@link #MAX_ROWS} are required by the UI to compute a slider that grows to show
+     * the visible window against the maximum column/rows for the viewed spreadsheet.
+     */
+    MAX_COLUMNS,
+    MAX_ROWS;
 
     SpreadsheetDeltaProperties() {
         this.camelCase = this.name()
