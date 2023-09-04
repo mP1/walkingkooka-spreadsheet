@@ -52,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -100,6 +101,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
+
+        this.checkMaxColumn(after);
+        this.checkMaxRow(after);
 
         this.checkViewportSelection(before);
     }
@@ -901,6 +905,36 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
+    public final void testDifferentMaxColumn() {
+        final OptionalInt maxColumn = this.differentMaxColumn();
+        this.checkNotEquals(
+                this.maxColumn(),
+                maxColumn,
+                "maxColumn() and differentMaxColumn() must be un equal"
+        );
+
+        this.checkNotEquals(
+                this.createSpreadsheetDelta()
+                        .setMaxColumn(maxColumn)
+        );
+    }
+
+    @Test
+    public final void testDifferentMaxRow() {
+        final OptionalInt maxRow = this.differentMaxRow();
+        this.checkNotEquals(
+                this.maxRow(),
+                maxRow,
+                "maxRow() and differentMaxRow() must be un equal"
+        );
+
+        this.checkNotEquals(
+                this.createSpreadsheetDelta()
+                        .setMaxRow(maxRow)
+        );
+    }
+
+    @Test
     public final void testDifferentWindow() {
         final SpreadsheetViewportWindows differentWindow = this.differentWindow();
         this.checkNotEquals(this.window(), differentWindow, "window() and differentWindow() must be un equal");
@@ -1308,6 +1342,58 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 "rowHeights"
         );
     }
+
+    // maxColumn..................................................................................................
+
+    final OptionalInt maxColumn() {
+        return OptionalInt.of(88);
+    }
+
+    final static JsonNode MAX_COLUMN_JSON = JsonNode.parse("88");
+
+    final OptionalInt differentMaxColumn() {
+        return OptionalInt.empty();
+    }
+
+    final void checkMaxColumn(final SpreadsheetDelta delta) {
+        checkMaxColumn(delta, this.maxColumn());
+    }
+
+    final void checkMaxColumn(final SpreadsheetDelta delta,
+                              final OptionalInt maxColumn) {
+        this.checkEquals(
+                maxColumn,
+                delta.maxColumn(),
+                "maxColumn"
+        );
+    }
+
+    // maxRow.......................................................................................................
+
+    final OptionalInt maxRow() {
+        return OptionalInt.of(99);
+    }
+
+    final static JsonNode MAX_ROW_JSON = JsonNode.parse("99");
+
+    final OptionalInt differentMaxRow() {
+        return OptionalInt.empty();
+    }
+
+    final void checkMaxRow(final SpreadsheetDelta delta) {
+        checkMaxRow(delta, this.maxRow());
+    }
+
+    final void checkMaxRow(final SpreadsheetDelta delta,
+                           final OptionalInt maxRow) {
+        this.checkEquals(
+                maxRow,
+                delta.maxRow(),
+                "maxRow"
+        );
+    }
+
+    // window...........................................................................................................
 
     final void checkWindow(final SpreadsheetDelta delta,
                            final SpreadsheetViewportWindows window) {

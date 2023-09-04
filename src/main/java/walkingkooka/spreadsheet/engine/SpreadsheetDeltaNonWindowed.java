@@ -33,6 +33,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 
 /**
@@ -52,7 +53,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                                        final Set<SpreadsheetColumnReference> deletedColumns,
                                                        final Set<SpreadsheetRowReference> deletedRows,
                                                        final Map<SpreadsheetColumnReference, Double> columnWidths,
-                                                       final Map<SpreadsheetRowReference, Double> rowHeights) {
+                                                       final Map<SpreadsheetRowReference, Double> rowHeights,
+                                                       final OptionalInt maxColumn,
+                                                       final OptionalInt maxRow) {
         return new SpreadsheetDeltaNonWindowed(
                 viewportSelection,
                 cells,
@@ -63,7 +66,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 deletedColumns,
                 deletedRows,
                 columnWidths,
-                rowHeights
+                rowHeights,
+                maxColumn,
+                maxRow
         );
     }
 
@@ -76,7 +81,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                         final Set<SpreadsheetColumnReference> deletedColumns,
                                         final Set<SpreadsheetRowReference> deletedRows,
                                         final Map<SpreadsheetColumnReference, Double> columnWidths,
-                                        final Map<SpreadsheetRowReference, Double> rowHeights) {
+                                        final Map<SpreadsheetRowReference, Double> rowHeights,
+                                        final OptionalInt maxColumn,
+                                        final OptionalInt maxRow) {
         super(
                 viewportSelection,
                 cells,
@@ -87,7 +94,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 deletedColumns,
                 deletedRows,
                 columnWidths,
-                rowHeights
+                rowHeights,
+                maxColumn,
+                maxRow
         );
     }
 
@@ -103,7 +112,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedColumns,
                 this.deletedRows,
                 this.columnWidths,
-                this.rowHeights
+                this.rowHeights,
+                this.maxColumn,
+                this.maxRow
         );
     }
 
@@ -120,7 +131,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedColumns,
                 this.deletedRows,
                 this.columnWidths,
-                this.rowHeights
+                this.rowHeights,
+                this.maxColumn,
+                this.maxRow
         );
     }
 
@@ -141,7 +154,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedColumns,
                 this.deletedRows,
                 this.columnWidths,
-                this.rowHeights
+                this.rowHeights,
+                this.maxColumn,
+                this.maxRow
         );
     }
 
@@ -157,7 +172,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedColumns,
                 this.deletedRows,
                 this.columnWidths,
-                this.rowHeights
+                this.rowHeights,
+                this.maxColumn,
+                this.maxRow
         );
     }
 
@@ -178,7 +195,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedColumns,
                 this.deletedRows,
                 this.columnWidths,
-                this.rowHeights
+                this.rowHeights,
+                this.maxColumn,
+                this.maxRow
         );
     }
 
@@ -194,7 +213,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedColumns,
                 this.deletedRows,
                 this.columnWidths,
-                this.rowHeights
+                this.rowHeights,
+                this.maxColumn,
+                this.maxRow
         );
     }
 
@@ -210,7 +231,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 deletedColumns,
                 this.deletedRows,
                 this.columnWidths,
-                this.rowHeights
+                this.rowHeights,
+                this.maxColumn,
+                this.maxRow
         );
     }
 
@@ -226,7 +249,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedColumns,
                 deletedRows,
                 this.columnWidths,
-                this.rowHeights
+                this.rowHeights,
+                this.maxColumn,
+                this.maxRow
         );
     }
 
@@ -242,7 +267,9 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedColumns,
                 this.deletedRows,
                 columnWidths,
-                this.rowHeights
+                this.rowHeights,
+                this.maxColumn,
+                this.maxRow
         );
     }
 
@@ -258,7 +285,45 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedColumns,
                 this.deletedRows,
                 this.columnWidths,
-                rowHeights
+                rowHeights,
+                this.maxColumn,
+                this.maxRow
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceMaxColumn(final OptionalInt maxColumn) {
+        return new SpreadsheetDeltaNonWindowed(
+                this.viewportSelection,
+                this.cells,
+                this.columns,
+                this.labels,
+                this.rows,
+                this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
+                this.columnWidths,
+                this.rowHeights,
+                maxColumn,
+                this.maxRow
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceMaxRow(final OptionalInt maxRow) {
+        return new SpreadsheetDeltaNonWindowed(
+                this.viewportSelection,
+                this.cells,
+                this.columns,
+                this.labels,
+                this.rows,
+                this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
+                this.columnWidths,
+                this.rowHeights,
+                this.maxColumn,
+                maxRow
         );
     }
 
