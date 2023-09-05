@@ -34,6 +34,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 
 /**
@@ -54,6 +55,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                                  final Set<SpreadsheetRowReference> deletedRows,
                                                  final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                  final Map<SpreadsheetRowReference, Double> rowHeights,
+                                                 final OptionalInt maxColumn,
+                                                 final OptionalInt maxRow,
                                                  final SpreadsheetViewportWindows window) {
         return new SpreadsheetDeltaWindowed(
                 viewportSelection,
@@ -66,6 +69,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 deletedRows,
                 columnWidths,
                 rowHeights,
+                maxColumn,
+                maxRow,
                 window
         );
     }
@@ -80,6 +85,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                      final Set<SpreadsheetRowReference> deletedRows,
                                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                                      final Map<SpreadsheetRowReference, Double> rowHeights,
+                                     final OptionalInt maxColumn,
+                                     final OptionalInt maxRow,
                                      final SpreadsheetViewportWindows window) {
         super(
                 viewportSelection,
@@ -91,7 +98,9 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 deletedColumns,
                 deletedRows,
                 columnWidths,
-                rowHeights
+                rowHeights,
+                maxColumn,
+                maxRow
         );
         this.window = window;
     }
@@ -109,6 +118,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
+                this.maxColumn,
+                this.maxRow,
                 this.window
         );
     }
@@ -127,6 +138,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
+                this.maxColumn,
+                this.maxRow,
                 this.window
         );
     }
@@ -149,6 +162,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
+                this.maxColumn,
+                this.maxRow,
                 this.window
         );
     }
@@ -166,6 +181,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
+                this.maxColumn,
+                this.maxRow,
                 this.window
         );
     }
@@ -188,6 +205,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
+                this.maxColumn,
+                this.maxRow,
                 this.window
         );
     }
@@ -205,6 +224,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
+                this.maxColumn,
+                this.maxRow,
                 this.window
         );
     }
@@ -222,6 +243,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
+                this.maxColumn,
+                this.maxRow,
                 this.window
         );
     }
@@ -239,6 +262,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 deletedRows,
                 this.columnWidths,
                 this.rowHeights,
+                this.maxColumn,
+                this.maxRow,
                 this.window
         );
     }
@@ -256,6 +281,8 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 columnWidths,
                 this.rowHeights,
+                this.maxColumn,
+                this.maxRow,
                 this.window
         );
     }
@@ -273,6 +300,46 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 rowHeights,
+                this.maxColumn,
+                this.maxRow,
+                this.window
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceMaxColumn(final OptionalInt maxColumn) {
+        return new SpreadsheetDeltaWindowed(
+                this.viewportSelection,
+                this.cells,
+                this.columns,
+                this.labels,
+                this.rows,
+                this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
+                this.columnWidths,
+                this.rowHeights,
+                maxColumn,
+                this.maxRow,
+                this.window
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceMaxRow(final OptionalInt maxRow) {
+        return new SpreadsheetDeltaWindowed(
+                this.viewportSelection,
+                this.cells,
+                this.columns,
+                this.labels,
+                this.rows,
+                this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
+                this.columnWidths,
+                this.rowHeights,
+                this.maxColumn,
+                maxRow,
                 this.window
         );
     }
