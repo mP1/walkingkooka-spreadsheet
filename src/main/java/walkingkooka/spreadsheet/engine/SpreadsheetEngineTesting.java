@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
@@ -64,6 +65,7 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -456,10 +458,30 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetLabelMapping label,
                                    final SpreadsheetEngineContext context,
                                    final Set<SpreadsheetCell> cells) {
-        this.saveLabelAndCheck(engine,
+        final SpreadsheetDelta result = engine.saveLabel(
                 label,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(cells));
+                context
+        );
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(cells)
+                .setMaxColumn(
+                        OptionalInt.of(
+                                cellStore.columns()
+                        )
+                ).setMaxRow(
+                        OptionalInt.of(
+                                cellStore.rows()
+                        )
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "saveLabel " + label
+        );
     }
 
     default void saveLabelAndCheck(final SpreadsheetEngine engine,
@@ -492,10 +514,30 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                      final SpreadsheetLabelName label,
                                      final SpreadsheetEngineContext context,
                                      final Set<SpreadsheetCell> cells) {
-        this.removeLabelAndCheck(engine,
+        final SpreadsheetDelta result = engine.removeLabel(
                 label,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(cells));
+                context
+        );
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(cells)
+                .setMaxColumn(
+                        OptionalInt.of(
+                                cellStore.columns()
+                        )
+                ).setMaxRow(
+                        OptionalInt.of(
+                                cellStore.rows()
+                        )
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "removeLabel " + label
+        );
     }
 
     default void removeLabelAndCheck(final SpreadsheetEngine engine,
@@ -885,11 +927,29 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                        final int count,
                                        final SpreadsheetEngineContext context,
                                        final SpreadsheetCell... updated) {
-        this.deleteColumnsAndCheck(engine,
+        final SpreadsheetDelta result = engine.deleteColumns(
                 column,
                 count,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
+                context
+        );
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(updated)
+                ).setMaxColumn(
+                        OptionalInt.of(
+                                cellStore.columns()
+                        )
+                ).setMaxRow(
+                        OptionalInt.of(
+                                cellStore.rows()
+                        )
+                ),
+                result,
+                () -> "deleteColumns column: " + column + " count: " + count
+        );
     }
 
     default void deleteColumnsAndCheck(final SpreadsheetEngine engine,
@@ -909,11 +969,29 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetCell... updated) {
-        this.deleteRowsAndCheck(engine,
-                row,
-                count,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
+        final SpreadsheetDelta result = engine.deleteRows(row, count, context);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(updated)
+
+                ).setMaxColumn(
+                        OptionalInt.of(
+                                cellStore.columns()
+                        )
+                ).setMaxRow(
+                        OptionalInt.of(
+                                cellStore.rows()
+                        )
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "deleteRows row: " + row + " count: " + count
+        );
     }
 
     default void deleteRowsAndCheck(final SpreadsheetEngine engine,
@@ -933,11 +1011,33 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                        final int count,
                                        final SpreadsheetEngineContext context,
                                        final SpreadsheetCell... updated) {
-        this.insertColumnsAndCheck(engine,
+        final SpreadsheetDelta result = engine.insertColumns(
                 column,
                 count,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
+                context
+        );
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(updated)
+                ).setMaxColumn(
+                        OptionalInt.of(
+                                cellStore.columns()
+                        )
+                ).setMaxRow(
+                        OptionalInt.of(
+                                cellStore.rows()
+                        )
+                );
+
+        this.checkEquals(
+                expected,
+                result,
+                () -> "insertColumns column: " + column + " count: " + count
+        );
     }
 
     default void insertColumnsAndCheck(final SpreadsheetEngine engine,
@@ -957,11 +1057,33 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetCell... updated) {
-        this.insertRowsAndCheck(engine,
+        final SpreadsheetDelta result = engine.insertRows(
                 row,
                 count,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(Sets.of(updated)));
+                context
+        );
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(updated)
+                ).setMaxColumn(
+                        OptionalInt.of(
+                                cellStore.columns()
+                        )
+                ).setMaxRow(
+                        OptionalInt.of(
+                                cellStore.rows()
+                        )
+                );
+
+        this.checkEquals(
+                expected,
+                result,
+                () -> "insertRows row: " + row + " count: " + count
+        );
     }
 
     default void insertRowsAndCheck(final SpreadsheetEngine engine,
@@ -984,7 +1106,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetCell... updated) {
         this.loadCellsAndCheck(
                 engine,
-                SpreadsheetViewportWindows.parse(cells).cellRanges(),
+                SpreadsheetViewportWindows.parse(cells)
+                        .cellRanges(),
                 evaluation,
                 deltaProperties,
                 context,
@@ -998,18 +1121,35 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
-        this.loadCellsAndCheck(
-                engine,
+        final SpreadsheetDelta result = engine.loadCells(
                 ranges,
                 evaluation,
                 deltaProperties,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(updated)
-                        ).setWindow(
-                                SpreadsheetViewportWindows.with(ranges)
+                context
+        );
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(updated)
+
+                ).setMaxColumn(
+                        OptionalInt.of(
+                                cellStore.columns()
                         )
+                ).setMaxRow(
+                        OptionalInt.of(
+                                cellStore.rows()
+                        )
+                ).setWindow(
+                        result.window()
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "loadCells " + ranges + " " + evaluation
         );
     }
 

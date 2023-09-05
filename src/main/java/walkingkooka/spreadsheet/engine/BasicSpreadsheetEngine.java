@@ -74,6 +74,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -769,6 +770,28 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             delta = delta.setRowHeights(rowsHeights);
+        }
+
+        final boolean maxColumns = deltaProperties.contains(SpreadsheetDeltaProperties.MAX_COLUMNS);
+        final boolean maxRows = deltaProperties.contains(SpreadsheetDeltaProperties.MAX_ROWS);
+
+        if (maxColumns || maxRows) {
+            final SpreadsheetCellStore cellStore = context.storeRepository()
+                    .cells();
+            if (maxColumns) {
+                delta = delta.setMaxColumn(
+                        OptionalInt.of(
+                                cellStore.columns()
+                        )
+                );
+            }
+            if (maxRows) {
+                delta = delta.setMaxRow(
+                        OptionalInt.of(
+                                cellStore.rows()
+                        )
+                );
+            }
         }
 
         return delta;
