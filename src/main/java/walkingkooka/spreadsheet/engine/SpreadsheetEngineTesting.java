@@ -995,14 +995,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void deleteRowsAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetRowReference column,
+                                    final SpreadsheetRowReference row,
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta delta) {
         checkEquals(
                 delta,
-                engine.deleteRows(column, count, context),
-                () -> "deleteRows column: " + column + " count: " + count
+                engine.deleteRows(row, count, context),
+                () -> "deleteRows row: " + row + " count: " + count
         );
     }
 
@@ -1087,14 +1087,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void insertRowsAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetRowReference column,
+                                    final SpreadsheetRowReference row,
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta delta) {
         checkEquals(
                 delta,
-                engine.insertRows(column, count, context),
-                () -> "insertRows column: " + column + " count: " + count
+                engine.insertRows(row, count, context),
+                () -> "insertRows row: " + row + " count: " + count
         );
     }
 
