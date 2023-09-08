@@ -30,77 +30,77 @@ import java.util.Optional;
 public enum SpreadsheetViewportSelectionNavigation {
     LEFT {
         @Override
-        public Optional<SpreadsheetViewportSelection> perform(final SpreadsheetSelection selection,
-                                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                                              final SpreadsheetColumnStore columnStore,
-                                                              final SpreadsheetRowStore rowStore) {
+        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                             final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
             return selection.left(anchor, columnStore, rowStore)
                     .map(s -> s.setAnchorOrDefault(anchor));
         }
     },
     UP {
         @Override
-        public Optional<SpreadsheetViewportSelection> perform(final SpreadsheetSelection selection,
-                                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                                              final SpreadsheetColumnStore columnStore,
-                                                              final SpreadsheetRowStore rowStore) {
+        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                             final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
             return selection.up(anchor, columnStore, rowStore)
                     .map(s -> s.setAnchorOrDefault(anchor));
         }
     },
     RIGHT {
         @Override
-        public Optional<SpreadsheetViewportSelection> perform(final SpreadsheetSelection selection,
-                                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                                              final SpreadsheetColumnStore columnStore,
-                                                              final SpreadsheetRowStore rowStore) {
+        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                             final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
             return selection.right(anchor, columnStore, rowStore)
                     .map(s -> s.setAnchorOrDefault(anchor));
         }
     },
     DOWN {
         @Override
-        public Optional<SpreadsheetViewportSelection> perform(final SpreadsheetSelection selection,
-                                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                                              final SpreadsheetColumnStore columnStore,
-                                                              final SpreadsheetRowStore rowStore) {
+        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                             final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
             return selection.down(anchor, columnStore, rowStore)
                     .map(s -> s.setAnchorOrDefault(anchor));
         }
     },
     EXTEND_LEFT {
         @Override
-        public Optional<SpreadsheetViewportSelection> perform(final SpreadsheetSelection selection,
-                                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                                              final SpreadsheetColumnStore columnStore,
-                                                              final SpreadsheetRowStore rowStore) {
+        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                             final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
             return selection.extendLeft(anchor, columnStore, rowStore);
         }
     },
     EXTEND_UP {
         @Override
-        public Optional<SpreadsheetViewportSelection> perform(final SpreadsheetSelection selection,
-                                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                                              final SpreadsheetColumnStore columnStore,
-                                                              final SpreadsheetRowStore rowStore) {
+        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                             final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
             return selection.extendUp(anchor, columnStore, rowStore);
         }
     },
     EXTEND_RIGHT {
         @Override
-        public Optional<SpreadsheetViewportSelection> perform(final SpreadsheetSelection selection,
-                                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                                              final SpreadsheetColumnStore columnStore,
-                                                              final SpreadsheetRowStore rowStore) {
+        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                             final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
             return selection.extendRight(anchor, columnStore, rowStore);
         }
     },
     EXTEND_DOWN {
         @Override
-        public Optional<SpreadsheetViewportSelection> perform(final SpreadsheetSelection selection,
-                                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                                              final SpreadsheetColumnStore columnStore,
-                                                              final SpreadsheetRowStore rowStore) {
+        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                             final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
             return selection.extendDown(anchor, columnStore, rowStore);
         }
     };
@@ -118,10 +118,10 @@ public enum SpreadsheetViewportSelectionNavigation {
     /**
      * Executes this navigation on the given selection and anchor returning the updated result.
      */
-    public abstract Optional<SpreadsheetViewportSelection> perform(final SpreadsheetSelection selection,
-                                                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                                                   final SpreadsheetColumnStore columnStore,
-                                                                   final SpreadsheetRowStore rowStore);
+    public abstract Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                                                  final SpreadsheetColumnStore columnStore,
+                                                                  final SpreadsheetRowStore rowStore);
 
     /**
      * Accepts text that has a more pretty form of any {@link SpreadsheetViewportSelectionNavigation enum value}.
