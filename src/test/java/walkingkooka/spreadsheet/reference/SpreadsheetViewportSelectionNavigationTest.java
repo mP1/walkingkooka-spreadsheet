@@ -24,70 +24,44 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
-import walkingkooka.text.CharSequences;
+import walkingkooka.test.ParseStringTesting;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+public final class SpreadsheetViewportSelectionNavigationTest implements ParseStringTesting<SpreadsheetViewportSelectionNavigation>,
+        ClassTesting<SpreadsheetViewportSelectionNavigation> {
 
-public final class SpreadsheetViewportSelectionNavigationTest implements ClassTesting<SpreadsheetViewportSelectionNavigation> {
-
-    // from............................................................................................................
+    // parse............................................................................................................
 
     @Test
-    public void testFromNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetViewportSelectionNavigation.from(null)
+    public void testParseUnknownFails() {
+        this.parseStringFails(
+                "!invalid",
+                IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testFromEmptyFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetViewportSelectionNavigation.from("")
+    public void testParseUnknownFails2() {
+        this.parseStringFails(
+                "EXTEND-RIGHT",
+                IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testFromUnknownFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetViewportSelectionNavigation.from("!invalid")
-        );
-    }
-
-    @Test
-    public void testFromUnknownFails2() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetViewportSelectionNavigation.from("EXTEND-RIGHT")
-        );
-    }
-
-    @Test
-    public void testFromLeft() {
-        this.fromAndCheck(
+    public void testParseLeft() {
+        this.parseStringAndCheck(
                 "left",
                 SpreadsheetViewportSelectionNavigation.LEFT
         );
     }
 
     @Test
-    public void testFromExtendRight() {
-        this.fromAndCheck(
+    public void testParseExtendRight() {
+        this.parseStringAndCheck(
                 "extend-right",
                 SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
-        );
-    }
-
-    private void fromAndCheck(final String text,
-                              final SpreadsheetViewportSelectionNavigation expected) {
-        this.checkEquals(
-                expected,
-                SpreadsheetViewportSelectionNavigation.from(text),
-                () -> "from " + CharSequences.quoteAndEscape(text)
         );
     }
 
@@ -366,6 +340,23 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
                 navigation.update(selection, anchor, columnStore, rowStore),
                 () -> navigation + " update " + selection + " " + anchor
         );
+    }
+
+    // ParseStringTesting...............................................................................................
+
+    @Override
+    public SpreadsheetViewportSelectionNavigation parseString(final String text) {
+        return SpreadsheetViewportSelectionNavigation.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
+        return type;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
+        return cause;
     }
 
     // ClassTesting.....................................................................................................

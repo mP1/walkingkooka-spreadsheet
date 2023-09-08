@@ -129,7 +129,7 @@ public enum SpreadsheetViewportSelectionNavigation {
      * <br>
      * {@link #EXTEND_LEFT} = <pre>extend-left</pre>.
      */
-    public static SpreadsheetViewportSelectionNavigation from(final String text) {
+    public static SpreadsheetViewportSelectionNavigation parse(final String text) {
         CharSequences.failIfNullOrEmpty(text, "navigation");
 
         for (final SpreadsheetViewportSelectionNavigation navigation : values()) {
