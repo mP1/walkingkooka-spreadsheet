@@ -183,7 +183,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     }
 
     static void init() {
-        // nop. Used by SpreadsheetExpressionReference to forget JsonNodeContext.register above
+        // nop. Used by SpreadsheetExpressionReference to force JsonNodeContext.register above
     }
 
     // HashCodeEqualsDefined..........................................................................................
