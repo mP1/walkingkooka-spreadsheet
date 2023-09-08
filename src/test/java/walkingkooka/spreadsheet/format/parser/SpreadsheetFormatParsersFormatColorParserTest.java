@@ -50,7 +50,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
         );
         this.parseAndCheck(
                 SpreadsheetFormatParsersFormatColorParser.with(
-                        new Parser<SpreadsheetFormatParserContext>() {
+                        new Parser<>() {
                             @Override
                             public Optional<ParserToken> parse(final TextCursor cursor,
                                                                final SpreadsheetFormatParserContext context) {
@@ -87,7 +87,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
         );
         this.parseAndCheck(
                 SpreadsheetFormatParsersFormatColorParser.with(
-                        new Parser<SpreadsheetFormatParserContext>() {
+                        new Parser<>() {
                             @Override
                             public Optional<ParserToken> parse(final TextCursor cursor,
                                                                final SpreadsheetFormatParserContext context) {
@@ -117,7 +117,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
 
         this.parseFailAndCheck(
                 SpreadsheetFormatParsersFormatColorParser.with(
-                        new Parser<SpreadsheetFormatParserContext>() {
+                        new Parser<>() {
                             @Override
                             public Optional<ParserToken> parse(final TextCursor cursor,
                                                                final SpreadsheetFormatParserContext context) {
@@ -175,7 +175,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
 
         this.parseAndCheck(
                 SpreadsheetFormatParsersFormatColorParser.with(
-                        new Parser<SpreadsheetFormatParserContext>() {
+                        new Parser<>() {
                             @Override
                             public Optional<ParserToken> parse(final TextCursor cursor,
                                                                final SpreadsheetFormatParserContext context) {
