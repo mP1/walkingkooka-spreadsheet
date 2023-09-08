@@ -1762,7 +1762,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                                            final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        return navigation.perform(
+        return navigation.update(
                 selection,
                 anchor,
                 repository.columns(),

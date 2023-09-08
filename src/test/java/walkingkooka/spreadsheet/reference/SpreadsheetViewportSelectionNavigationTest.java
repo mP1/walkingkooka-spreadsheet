@@ -91,11 +91,11 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
         );
     }
 
-    // perform..........................................................................................................
+    // update..........................................................................................................
 
     @Test
-    public void testPerformColumnLeft() {
-        this.performAndCheck(
+    public void testUpdateColumnLeft() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.LEFT,
                 SpreadsheetSelection.parseColumn("C"),
                 SpreadsheetSelection.parseColumn("B")
@@ -104,16 +104,16 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformRowLeft() {
-        this.performAndCheck(
+    public void testUpdateRowLeft() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.LEFT,
                 SpreadsheetSelection.parseRow("12")
         );
     }
 
     @Test
-    public void testPerformRowDown() {
-        this.performAndCheck(
+    public void testUpdateRowDown() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.DOWN,
                 SpreadsheetSelection.parseRow("12"),
                 SpreadsheetSelection.parseRow("13")
@@ -122,8 +122,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformCellUp() {
-        this.performAndCheck(
+    public void testUpdateCellUp() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.UP,
                 SpreadsheetSelection.parseCell("C3"),
                 SpreadsheetSelection.parseCell("C2")
@@ -132,16 +132,16 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformColumnRangeUp() {
-        this.performAndCheck(
+    public void testUpdateColumnRangeUp() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.UP,
                 SpreadsheetSelection.parseColumnRange("B:C")
         );
     }
 
     @Test
-    public void testPerformColumnRangeAnchorLeftNavigateLeft() {
-        this.performAndCheck(
+    public void testUpdateColumnRangeAnchorLeftNavigateLeft() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.LEFT,
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
@@ -150,12 +150,12 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformColumnRangeAnchorExtendRightNavigateLeftSkipHidden() {
+    public void testUpdateColumnRangeAnchorExtendRightNavigateLeftSkipHidden() {
         final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
         columnStore.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
         columnStore.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
 
-        this.performAndCheck(
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
@@ -165,8 +165,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformColumnRangeAnchorRightNavigateLeft() {
-        this.performAndCheck(
+    public void testUpdateColumnRangeAnchorRightNavigateLeft() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.LEFT,
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.RIGHT,
@@ -175,8 +175,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformColumnRangeAnchorLeftNavigateRight() {
-        this.performAndCheck(
+    public void testUpdateColumnRangeAnchorLeftNavigateRight() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.RIGHT,
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
@@ -185,12 +185,12 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformColumnRangeAnchorLeftNavigateExtendRightSkipHidden() {
+    public void testUpdateColumnRangeAnchorLeftNavigateExtendRightSkipHidden() {
         final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
         columnStore.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
         columnStore.save(SpreadsheetSelection.parseColumn("E").column().setHidden(true));
 
-        this.performAndCheck(
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
@@ -200,8 +200,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformColumnExtendLeft() {
-        this.performAndCheck(
+    public void testUpdateColumnExtendLeft() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.EXTEND_LEFT,
                 SpreadsheetSelection.parseColumn("C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
@@ -210,20 +210,20 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformColumnExtendUp() {
-        this.performAndCheck(
+    public void testUpdateColumnExtendUp() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.EXTEND_UP,
                 SpreadsheetSelection.parseColumn("C")
         );
     }
 
     @Test
-    public void testPerformRowRangeExtendUp() {
+    public void testUpdateRowRangeExtendUp() {
         final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
         rowStore.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
         rowStore.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
 
-        this.performAndCheck(
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.EXTEND_UP,
                 SpreadsheetSelection.parseRowRange("5:6"),
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
@@ -233,16 +233,16 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformRowExtendRight() {
-        this.performAndCheck(
+    public void testUpdateRowExtendRight() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
                 SpreadsheetSelection.parseRow("3")
         );
     }
 
     @Test
-    public void testPerformRowRangeExtendDown() {
-        this.performAndCheck(
+    public void testUpdateRowRangeExtendDown() {
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.EXTEND_DOWN,
                 SpreadsheetSelection.parseRowRange("3:4"),
                 SpreadsheetViewportSelectionAnchor.TOP,
@@ -251,12 +251,12 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
     }
 
     @Test
-    public void testPerformRowRangeExtendDownSkipsHiddenRows() {
+    public void testUpdateRowRangeExtendDownSkipsHiddenRows() {
         final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
         rowStore.save(SpreadsheetSelection.parseRow("5").row().setHidden(true));
         rowStore.save(SpreadsheetSelection.parseRow("6").row().setHidden(true));
 
-        this.performAndCheck(
+        this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.EXTEND_DOWN,
                 SpreadsheetSelection.parseRowRange("3:4"),
                 SpreadsheetViewportSelectionAnchor.TOP,
@@ -265,32 +265,29 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
         );
     }
 
-    private void performAndCheck(
-            final SpreadsheetViewportSelectionNavigation navigation,
-            final SpreadsheetSelection selection) {
-        this.performAndCheck(
+    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                                final SpreadsheetSelection selection) {
+        this.updateAndCheck(
                 navigation,
                 selection,
                 selection
         );
     }
 
-    private void performAndCheck(
-            final SpreadsheetViewportSelectionNavigation navigation,
-            final SpreadsheetSelection selection,
-            final SpreadsheetSelection expected) {
-        this.performAndCheck(
+    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                                final SpreadsheetSelection selection,
+                                final SpreadsheetSelection expected) {
+        this.updateAndCheck(
                 navigation,
                 selection,
                 expected.setAnchor(expected.defaultAnchor())
         );
     }
 
-    private void performAndCheck(
-            final SpreadsheetViewportSelectionNavigation navigation,
-            final SpreadsheetSelection selection,
-            final SpreadsheetViewportSelection expected) {
-        this.performAndCheck(
+    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                                final SpreadsheetSelection selection,
+                                final SpreadsheetViewportSelection expected) {
+        this.updateAndCheck(
                 navigation,
                 selection,
                 selection.defaultAnchor(),
@@ -298,12 +295,11 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
         );
     }
 
-    private void performAndCheck(
-            final SpreadsheetViewportSelectionNavigation navigation,
-            final SpreadsheetSelection selection,
-            final SpreadsheetViewportSelectionAnchor anchor,
-            final SpreadsheetViewportSelection expected) {
-        this.performAndCheck(
+    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                                final SpreadsheetSelection selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetViewportSelection expected) {
+        this.updateAndCheck(
                 navigation,
                 selection,
                 anchor,
@@ -313,13 +309,12 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
         );
     }
 
-    private void performAndCheck(
-            final SpreadsheetViewportSelectionNavigation navigation,
-            final SpreadsheetSelection selection,
-            final SpreadsheetViewportSelectionAnchor anchor,
-            final SpreadsheetColumnStore columnStore,
-            final SpreadsheetViewportSelection expected) {
-        this.performAndCheck(
+    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                                final SpreadsheetSelection selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetColumnStore columnStore,
+                                final SpreadsheetViewportSelection expected) {
+        this.updateAndCheck(
                 navigation,
                 selection,
                 anchor,
@@ -329,14 +324,13 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
         );
     }
 
-    private void performAndCheck(
-            final SpreadsheetViewportSelectionNavigation navigation,
-            final SpreadsheetSelection selection,
-            final SpreadsheetViewportSelectionAnchor anchor,
-            final SpreadsheetRowStore rowStore,
-            final SpreadsheetViewportSelection expected) {
-        this.performAndCheck(
-               navigation,
+    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                                final SpreadsheetSelection selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetRowStore rowStore,
+                                final SpreadsheetViewportSelection expected) {
+        this.updateAndCheck(
+                navigation,
                 selection,
                 anchor,
                 SpreadsheetColumnStores.fake(),
@@ -345,14 +339,13 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
         );
     }
 
-    private void performAndCheck(
-            final SpreadsheetViewportSelectionNavigation navigation,
-            final SpreadsheetSelection selection,
-            final SpreadsheetViewportSelectionAnchor anchor,
-            final SpreadsheetColumnStore columnStore,
-            final SpreadsheetRowStore rowStore,
-            final SpreadsheetViewportSelection expected) {
-        this.performAndCheck(
+    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                                final SpreadsheetSelection selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetColumnStore columnStore,
+                                final SpreadsheetRowStore rowStore,
+                                final SpreadsheetViewportSelection expected) {
+        this.updateAndCheck(
                 navigation,
                 selection,
                 anchor,
@@ -362,17 +355,16 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ClassTe
         );
     }
 
-    private void performAndCheck(
-            final SpreadsheetViewportSelectionNavigation navigation,
-            final SpreadsheetSelection selection,
-            final SpreadsheetViewportSelectionAnchor anchor,
-            final SpreadsheetColumnStore columnStore,
-            final SpreadsheetRowStore rowStore,
-            final Optional<SpreadsheetViewportSelection> expected) {
+    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                                final SpreadsheetSelection selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetColumnStore columnStore,
+                                final SpreadsheetRowStore rowStore,
+                                final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                navigation.perform(selection, anchor, columnStore, rowStore),
-                () -> navigation + " perform " + selection + " " + anchor
+                navigation.update(selection, anchor, columnStore, rowStore),
+                () -> navigation + " update " + selection + " " + anchor
         );
     }
 
