@@ -104,8 +104,9 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
 
     @Override
     public String toString() {
-        return this.formatters.stream()
-                .map(SpreadsheetFormatter::toString)
-                .collect(Collectors.joining(SpreadsheetPattern.SEPARATOR));
+        return SpreadsheetPattern.SEPARATOR.toSeparatedString(
+                this.formatters,
+                SpreadsheetFormatter::toString
+        );
     }
 }
