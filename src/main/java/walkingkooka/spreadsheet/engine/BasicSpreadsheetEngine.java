@@ -71,6 +71,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -1702,17 +1703,25 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(selection, "selection");
         checkContext(context);
 
-        final Optional<SpreadsheetViewportSelectionNavigation> maybeNavigation = selection.navigation();
-        return maybeNavigation.isPresent() ?
-                this.navigateWithNavigation(
+        Optional<SpreadsheetViewportSelection> result = Optional.empty();
+
+        final List<SpreadsheetViewportSelectionNavigation> navigations = selection.navigation();
+        if (navigations.isEmpty()) {
+            result = this.navigateWithoutNavigation(
+                    selection,
+                    context
+            );
+        } else {
+            for (final SpreadsheetViewportSelectionNavigation navigation : navigations) {
+                result = this.navigateWithNavigation(
                         selection,
-                        maybeNavigation.get(),
-                        context
-                ) :
-                this.navigateWithoutNavigation(
-                        selection,
+                        navigation,
                         context
                 );
+            }
+        }
+
+        return result;
     }
 
     private Optional<SpreadsheetViewportSelection> navigateWithNavigation(final SpreadsheetViewportSelection viewportSelection,

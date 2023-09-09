@@ -19,8 +19,10 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -30,8 +32,8 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Represents a selection within a viewport. Non ranges must not have an anchor, while ranges must have an anchor.
@@ -51,24 +53,26 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
     /**
      * Constant representing no anchor.
      */
-    public final static Optional<SpreadsheetViewportSelectionNavigation> NO_NAVIGATION = Optional.empty();
+    public final static List<SpreadsheetViewportSelectionNavigation> NO_NAVIGATION = Lists.empty();
+
+    public final static CharacterConstant SEPARATOR = CharacterConstant.COMMA;
 
     static SpreadsheetViewportSelection with(final SpreadsheetSelection selection,
                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                             final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
+                                             final List<SpreadsheetViewportSelectionNavigation> navigation) {
         selection.checkAnchor(anchor);
         Objects.requireNonNull(navigation, "navigation");
 
         return new SpreadsheetViewportSelection(
                 selection,
                 anchor,
-                navigation
+                Lists.immutable(navigation)
         );
     }
 
     private SpreadsheetViewportSelection(final SpreadsheetSelection selection,
                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                         final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
+                                         final List<SpreadsheetViewportSelectionNavigation> navigation) {
         super();
         this.selection = selection;
         this.anchor = anchor;
@@ -99,11 +103,11 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
 
     private final SpreadsheetViewportSelectionAnchor anchor;
 
-    public Optional<SpreadsheetViewportSelectionNavigation> navigation() {
+    public List<SpreadsheetViewportSelectionNavigation> navigation() {
         return this.navigation;
     }
 
-    public SpreadsheetViewportSelection setNavigation(final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
+    public SpreadsheetViewportSelection setNavigation(final List<SpreadsheetViewportSelectionNavigation> navigation) {
         Objects.requireNonNull(navigation, "navigation");
 
         return this.navigation.equals(navigation) ?
@@ -111,7 +115,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
                 new SpreadsheetViewportSelection(this.selection, this.anchor, navigation);
     }
 
-    private final Optional<SpreadsheetViewportSelectionNavigation> navigation;
+    private final List<SpreadsheetViewportSelectionNavigation> navigation;
 
     // TreePrintable....................................................................................................
 
@@ -125,10 +129,15 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
             printer.print(anchor.toString());
         }
 
-        final Optional<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();
-        if (navigation.isPresent()) {
+        final List<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();
+        if (false == navigation.isEmpty()) {
             printer.print(" ");
-            printer.print(navigation.get().toString());
+            printer.print(
+                    SEPARATOR.toSeparatedString(
+                            navigation,
+                            SpreadsheetViewportSelectionNavigation::kebabText
+                    )
+            );
         }
 
         printer.println();
@@ -202,7 +211,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
                                                    final JsonNodeUnmarshallContext context) {
         SpreadsheetSelection selection = null;
         SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NONE;
-        SpreadsheetViewportSelectionNavigation navigation = null;
+        List<SpreadsheetViewportSelectionNavigation> navigation = Lists.empty();
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -216,7 +225,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
                     );
                     break;
                 case NAVIGATION_PROPERTY_STRING:
-                    navigation = SpreadsheetViewportSelectionNavigation.valueOf(
+                    navigation = SpreadsheetViewportSelectionNavigation.parse(
                             child.stringOrFail()
                     );
                     break;
@@ -229,7 +238,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
         return new SpreadsheetViewportSelection(
                 selection,
                 anchor,
-                Optional.ofNullable(navigation)
+                navigation
         );
     }
 
@@ -249,9 +258,17 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
             );
         }
 
-        final Optional<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();
-        if (navigation.isPresent()) {
-            object = object.set(NAVIGATION_PROPERTY, JsonNode.string(navigation.get().toString()));
+        final List<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();
+        if (false == navigation.isEmpty()) {
+            object = object.set(
+                    NAVIGATION_PROPERTY,
+                    JsonNode.string(
+                            SEPARATOR.toSeparatedString(
+                                    navigation,
+                                    SpreadsheetViewportSelectionNavigation::kebabText
+                            )
+                    )
+            );
         }
 
         return object;

@@ -656,6 +656,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);
         SpreadsheetName.with("Untitled");
-        SpreadsheetViewportSelection.NO_NAVIGATION.isPresent();
+        SpreadsheetViewportSelection.NO_NAVIGATION.isEmpty();
     }
 }
