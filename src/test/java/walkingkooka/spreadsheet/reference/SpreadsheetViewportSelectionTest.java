@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -28,7 +29,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Optional;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -52,7 +53,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
 
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final SpreadsheetViewportSelectionAnchor ANCHOR = SpreadsheetViewportSelectionAnchor.TOP_LEFT;
-    private static final Optional<SpreadsheetViewportSelectionNavigation> NAVIGATION = Optional.of(
+    private static final List<SpreadsheetViewportSelectionNavigation> NAVIGATION = Lists.of(
             SpreadsheetViewportSelectionNavigation.LEFT
     );
 
@@ -143,7 +144,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
 
     private void withNonRangeAndCheck(final SpreadsheetSelection selection) {
         final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NONE;
-        final Optional<SpreadsheetViewportSelectionNavigation> navigation = Optional.of(
+        final List<SpreadsheetViewportSelectionNavigation> navigation = Lists.of(
                 SpreadsheetViewportSelectionNavigation.LEFT
         );
 
@@ -326,7 +327,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
 
     private void withFails(final SpreadsheetSelection selection,
                            final SpreadsheetViewportSelectionAnchor anchor,
-                           final Optional<SpreadsheetViewportSelectionNavigation> navigation,
+                           final List<SpreadsheetViewportSelectionNavigation> navigation,
                            final String message) {
 
         final IllegalArgumentException thrown = assertThrows(
@@ -442,7 +443,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     @Test
     public void testSetNavigationDifferent() {
         final SpreadsheetViewportSelection selection = this.createObject();
-        final Optional<SpreadsheetViewportSelectionNavigation> navigation = Optional.of(
+        final List<SpreadsheetViewportSelectionNavigation> navigation = Lists.of(
                 SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
         );
         this.checkNotEquals(
@@ -489,7 +490,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     }
 
     private void checkNavigation(final SpreadsheetViewportSelection viewportSelection,
-                                 final Optional<SpreadsheetViewportSelectionNavigation> navigation) {
+                                 final List<SpreadsheetViewportSelectionNavigation> navigation) {
         this.checkEquals(
                 navigation,
                 viewportSelection.navigation(),
@@ -527,7 +528,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 SpreadsheetViewportSelection.with(
                         SELECTION,
                         SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                        Optional.of(
+                        Lists.of(
                                 SpreadsheetViewportSelectionNavigation.RIGHT
                         )
                 )
@@ -569,11 +570,26 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 SpreadsheetViewportSelection.with(
                         SpreadsheetSelection.A1,
                         SpreadsheetViewportSelectionAnchor.NONE,
-                        Optional.of(
+                        Lists.of(
                                 SpreadsheetViewportSelectionNavigation.LEFT
                         )
                 ),
-                "cell A1 LEFT" + EOL
+                "cell A1 left" + EOL
+        );
+    }
+
+    @Test
+    public void testTreePrintNonRangeAndNavigation2() {
+        this.treePrintAndCheck(
+                SpreadsheetViewportSelection.with(
+                        SpreadsheetSelection.A1,
+                        SpreadsheetViewportSelectionAnchor.NONE,
+                        Lists.of(
+                                SpreadsheetViewportSelectionNavigation.LEFT,
+                                SpreadsheetViewportSelectionNavigation.UP
+                        )
+                ),
+                "cell A1 left,up" + EOL
         );
     }
 
@@ -583,11 +599,11 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 SpreadsheetViewportSelection.with(
                         SpreadsheetSelection.parseRowRange("12:34"),
                         SpreadsheetViewportSelectionAnchor.TOP,
-                        Optional.of(
+                        Lists.of(
                                 SpreadsheetViewportSelectionNavigation.LEFT
                         )
                 ),
-                "row-range 12:34 TOP LEFT" + EOL
+                "row-range 12:34 TOP left" + EOL
         );
     }
 
@@ -748,7 +764,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                         ANCHOR,
                         NAVIGATION
                 ),
-                CELL_RANGE + " " + ANCHOR + " " + NAVIGATION.get()
+                CELL_RANGE + " " + ANCHOR + " " + NAVIGATION.iterator().next()
         );
     }
 

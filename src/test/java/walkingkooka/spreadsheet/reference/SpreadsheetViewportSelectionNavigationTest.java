@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
@@ -26,12 +27,18 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.test.ParseStringTesting;
 
+import java.util.List;
 import java.util.Optional;
 
-public final class SpreadsheetViewportSelectionNavigationTest implements ParseStringTesting<SpreadsheetViewportSelectionNavigation>,
+public final class SpreadsheetViewportSelectionNavigationTest implements ParseStringTesting<List<SpreadsheetViewportSelectionNavigation>>,
         ClassTesting<SpreadsheetViewportSelectionNavigation> {
 
     // parse............................................................................................................
+
+    @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
 
     @Test
     public void testParseUnknownFails() {
@@ -53,7 +60,9 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testParseLeft() {
         this.parseStringAndCheck(
                 "left",
-                SpreadsheetViewportSelectionNavigation.LEFT
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.LEFT
+                )
         );
     }
 
@@ -61,7 +70,22 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testParseExtendRight() {
         this.parseStringAndCheck(
                 "extend-right",
-                SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
+                )
+        );
+    }
+
+    @Test
+    public void testParseLeftRightUpExtendDown() {
+        this.parseStringAndCheck(
+                "left,right,up,extend-down",
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.UP,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_DOWN
+                )
         );
     }
 
@@ -345,7 +369,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetViewportSelectionNavigation parseString(final String text) {
+    public List<SpreadsheetViewportSelectionNavigation> parseString(final String text) {
         return SpreadsheetViewportSelectionNavigation.parse(text);
     }
 

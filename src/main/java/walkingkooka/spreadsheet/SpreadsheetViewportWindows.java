@@ -34,12 +34,12 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Captures one or more windows that define the cells within a viewport.
@@ -74,11 +74,11 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
         return windows.length() == 0 ?
                 EMPTY :
                 new SpreadsheetViewportWindows(
-                        overlapCheckAndCreate(
-                                Arrays.stream(
-                                                windows.split(SEPARATOR.string())
-                                        ).map(SpreadsheetSelection::parseCellRange)
-                                        .toArray(SpreadsheetCellRange[]::new)
+                        copy(
+                                SEPARATOR.parse(
+                                        windows,
+                                        SpreadsheetSelection::parseCellRange
+                                )
                         )
                 );
     }
@@ -93,10 +93,11 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
     }
 
     /**
-     * While taking a copy of the given {@link Set} test if there are any overlapping {@link SpreadsheetCellRange}.
+     * While taking a copy of the given {@link Collection} test if there are any overlapping {@link SpreadsheetCellRange}.
      */
-    private static Set<SpreadsheetCellRange> copy(final Set<SpreadsheetCellRange> cellRanges) {
-        return overlapCheckAndCreate(cellRanges.toArray(
+    private static Set<SpreadsheetCellRange> copy(final Collection<SpreadsheetCellRange> cellRanges) {
+        return overlapCheckAndCreate(
+                cellRanges.toArray(
                         new SpreadsheetCellRange[
                                 cellRanges.size()
                                 ]
@@ -282,9 +283,10 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
 
     @Override
     public String toString() {
-        return this.cellRanges.stream()
-                .map(SpreadsheetCellRange::toString)
-                .collect(Collectors.joining(SEPARATOR.string()));
+        return SEPARATOR.toSeparatedString(
+                this.cellRanges,
+                SpreadsheetCellRange::toString
+        );
     }
 
     // Json.............................................................................................................

@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -129,9 +130,14 @@ public enum SpreadsheetViewportSelectionNavigation {
      * <br>
      * {@link #EXTEND_LEFT} = <pre>extend-left</pre>.
      */
-    public static SpreadsheetViewportSelectionNavigation parse(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "navigation");
+    public static List<SpreadsheetViewportSelectionNavigation> parse(final String text) {
+        return SpreadsheetViewportSelection.SEPARATOR.parse(
+                text,
+                SpreadsheetViewportSelectionNavigation::parse0
+        );
+    }
 
+    private static SpreadsheetViewportSelectionNavigation parse0(final String text) {
         for (final SpreadsheetViewportSelectionNavigation navigation : values()) {
             if (navigation.kebabText.equals(text)) {
                 return navigation;
