@@ -11615,7 +11615,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCell("B2")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
-                        .setNavigation(
+                        .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.RIGHT
                                 )
@@ -11641,7 +11641,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.navigateAndCheck(
                 engine,
-                viewportSelection.setNavigation(
+                viewportSelection.setNavigations(
                         Lists.of(
                                 SpreadsheetViewportSelectionNavigation.LEFT
                         )
@@ -11665,7 +11665,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.navigateAndCheck(
                 engine,
                 selection.setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
-                        .setNavigation(
+                        .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.RIGHT
                                 )
@@ -11690,7 +11690,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.navigateAndCheck(
                 engine,
                 selection.setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
-                        .setNavigation(
+                        .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
                                 )
@@ -11725,7 +11725,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseColumn("B")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
-                        .setNavigation(
+                        .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.LEFT
                                 )
@@ -11752,7 +11752,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseColumn("A")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
-                        .setNavigation(
+                        .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.RIGHT
                                 )
@@ -11779,7 +11779,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseRow("2")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
-                        .setNavigation(
+                        .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.DOWN
                                 )

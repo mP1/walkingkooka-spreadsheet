@@ -42,7 +42,7 @@ import java.util.Objects;
  * {
  *      "selection": "A1:B2",
  *      "anchor": "TOP_LEFT",
- *      "navigation": "DOWN"
+ *      "navigations": "DOWN"
  * }
  * </pre>
  */
@@ -59,24 +59,24 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
 
     static SpreadsheetViewportSelection with(final SpreadsheetSelection selection,
                                              final SpreadsheetViewportSelectionAnchor anchor,
-                                             final List<SpreadsheetViewportSelectionNavigation> navigation) {
+                                             final List<SpreadsheetViewportSelectionNavigation> navigations) {
         selection.checkAnchor(anchor);
-        Objects.requireNonNull(navigation, "navigation");
+        Objects.requireNonNull(navigations, "navigations");
 
         return new SpreadsheetViewportSelection(
                 selection,
                 anchor,
-                Lists.immutable(navigation)
+                Lists.immutable(navigations)
         );
     }
 
     private SpreadsheetViewportSelection(final SpreadsheetSelection selection,
                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                         final List<SpreadsheetViewportSelectionNavigation> navigation) {
+                                         final List<SpreadsheetViewportSelectionNavigation> navigations) {
         super();
         this.selection = selection;
         this.anchor = anchor;
-        this.navigation = navigation;
+        this.navigations = navigations;
     }
 
     public SpreadsheetSelection selection() {
@@ -91,7 +91,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
                 new SpreadsheetViewportSelection(
                         selection,
                         this.anchor,
-                        this.navigation
+                        this.navigations
                 );
     }
 
@@ -103,19 +103,19 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
 
     private final SpreadsheetViewportSelectionAnchor anchor;
 
-    public List<SpreadsheetViewportSelectionNavigation> navigation() {
-        return this.navigation;
+    public List<SpreadsheetViewportSelectionNavigation> navigations() {
+        return this.navigations;
     }
 
-    public SpreadsheetViewportSelection setNavigation(final List<SpreadsheetViewportSelectionNavigation> navigation) {
-        Objects.requireNonNull(navigation, "navigation");
+    public SpreadsheetViewportSelection setNavigations(final List<SpreadsheetViewportSelectionNavigation> navigations) {
+        Objects.requireNonNull(navigations, "navigations");
 
-        return this.navigation.equals(navigation) ?
+        return this.navigations.equals(navigations) ?
                 this :
-                new SpreadsheetViewportSelection(this.selection, this.anchor, navigation);
+                new SpreadsheetViewportSelection(this.selection, this.anchor, navigations);
     }
 
-    private final List<SpreadsheetViewportSelectionNavigation> navigation;
+    private final List<SpreadsheetViewportSelectionNavigation> navigations;
 
     // TreePrintable....................................................................................................
 
@@ -129,12 +129,12 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
             printer.print(anchor.toString());
         }
 
-        final List<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();
-        if (false == navigation.isEmpty()) {
+        final List<SpreadsheetViewportSelectionNavigation> navigations = this.navigations();
+        if (false == navigations.isEmpty()) {
             printer.print(" ");
             printer.print(
                     SEPARATOR.toSeparatedString(
-                            navigation,
+                            navigations,
                             SpreadsheetViewportSelectionNavigation::kebabText
                     )
             );
@@ -164,7 +164,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
         return Objects.hash(
                 this.selection,
                 this.anchor,
-                this.navigation
+                this.navigations
         );
     }
 
@@ -176,7 +176,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
     private boolean equals0(final SpreadsheetViewportSelection other) {
         return this.selection.equals(other.selection) &&
                 this.anchor.equals(other.anchor) &&
-                this.navigation.equals(other.navigation);
+                this.navigations.equals(other.navigations);
     }
 
     @Override
@@ -190,7 +190,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
 
         builder.value(this.selection)
                 .value(SpreadsheetViewportSelectionAnchor.NONE == anchor ? null : anchor)
-                .value(this.navigation);
+                .value(this.navigations);
     }
 
     // Json.............................................................................................................
@@ -211,7 +211,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
                                                    final JsonNodeUnmarshallContext context) {
         SpreadsheetSelection selection = null;
         SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NONE;
-        List<SpreadsheetViewportSelectionNavigation> navigation = Lists.empty();
+        List<SpreadsheetViewportSelectionNavigation> navigations = Lists.empty();
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -225,7 +225,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
                     );
                     break;
                 case NAVIGATION_PROPERTY_STRING:
-                    navigation = SpreadsheetViewportSelectionNavigation.parse(
+                    navigations = SpreadsheetViewportSelectionNavigation.parse(
                             child.stringOrFail()
                     );
                     break;
@@ -238,7 +238,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
         return new SpreadsheetViewportSelection(
                 selection,
                 anchor,
-                navigation
+                navigations
         );
     }
 
@@ -258,13 +258,13 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
             );
         }
 
-        final List<SpreadsheetViewportSelectionNavigation> navigation = this.navigation();
-        if (false == navigation.isEmpty()) {
+        final List<SpreadsheetViewportSelectionNavigation> navigations = this.navigations();
+        if (false == navigations.isEmpty()) {
             object = object.set(
                     NAVIGATION_PROPERTY,
                     JsonNode.string(
                             SEPARATOR.toSeparatedString(
-                                    navigation,
+                                    navigations,
                                     SpreadsheetViewportSelectionNavigation::kebabText
                             )
                     )
@@ -276,7 +276,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
 
     private final static String SELECTION_PROPERTY_STRING = "selection";
     private final static String ANCHOR_PROPERTY_STRING = "anchor";
-    private final static String NAVIGATION_PROPERTY_STRING = "navigation";
+    private final static String NAVIGATION_PROPERTY_STRING = "navigations";
 
     // @VisibleForTesting
 
