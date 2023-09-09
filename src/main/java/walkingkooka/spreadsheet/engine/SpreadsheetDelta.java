@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -1641,9 +1642,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private <T extends TreePrintable> void printTreeCollectionCsv(final Collection<T> collection,
                                                                   final IndentingPrinter printer) {
         printer.println(
-                collection.stream()
-                        .map(Object::toString)
-                        .collect(Collectors.joining(","))
+                CharacterConstant.COMMA.toSeparatedString(
+                        collection,
+                        Object::toString
+                )
         );
     }
 
