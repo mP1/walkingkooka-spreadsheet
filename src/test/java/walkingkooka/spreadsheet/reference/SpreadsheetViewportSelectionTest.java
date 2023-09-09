@@ -53,7 +53,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
 
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final SpreadsheetViewportSelectionAnchor ANCHOR = SpreadsheetViewportSelectionAnchor.TOP_LEFT;
-    private static final List<SpreadsheetViewportSelectionNavigation> NAVIGATION = Lists.of(
+    private static final List<SpreadsheetViewportSelectionNavigation> NAVIGATIONS = Lists.of(
             SpreadsheetViewportSelectionNavigation.LEFT
     );
 
@@ -82,7 +82,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     }
 
     @Test
-    public void testWithNullNavigationFails() {
+    public void testWithNullNavigationsFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetViewportSelection.with(
@@ -144,14 +144,14 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
 
     private void withNonRangeAndCheck(final SpreadsheetSelection selection) {
         final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NONE;
-        final List<SpreadsheetViewportSelectionNavigation> navigation = Lists.of(
+        final List<SpreadsheetViewportSelectionNavigation> navigations = Lists.of(
                 SpreadsheetViewportSelectionNavigation.LEFT
         );
 
         final SpreadsheetViewportSelection viewportSelection = SpreadsheetViewportSelection.with(
                 selection,
                 anchor,
-                navigation
+                navigations
         );
         this.checkSelection(
                 viewportSelection,
@@ -161,9 +161,9 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 viewportSelection,
                 anchor
         );
-        this.checkNavigation(
+        this.checkNavigations(
                 viewportSelection,
-                navigation
+                navigations
         );
     }
 
@@ -327,7 +327,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
 
     private void withFails(final SpreadsheetSelection selection,
                            final SpreadsheetViewportSelectionAnchor anchor,
-                           final List<SpreadsheetViewportSelectionNavigation> navigation,
+                           final List<SpreadsheetViewportSelectionNavigation> navigations,
                            final String message) {
 
         final IllegalArgumentException thrown = assertThrows(
@@ -342,7 +342,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 () -> SpreadsheetViewportSelection.with(
                         selection,
                         anchor,
-                        navigation
+                        navigations
                 )
         );
         if (null != message) {
@@ -364,7 +364,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 viewportSelection,
                 anchor
         );
-        this.checkNavigation(
+        this.checkNavigations(
                 viewportSelection,
                 SpreadsheetViewportSelection.NO_NAVIGATION
         );
@@ -414,45 +414,45 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 different,
                 viewportSelection.anchor()
         );
-        this.checkNavigation(
+        this.checkNavigations(
                 different,
-                viewportSelection.navigation()
+                viewportSelection.navigations()
         );
     }
 
-    // setNavigation.....................................................................................................
+    // setNavigations....................................................................................................
 
     @Test
-    public void testSetNavigationNullFails() {
+    public void testSetNavigationsNullFails() {
         final SpreadsheetViewportSelection selection = this.createObject();
         assertThrows(
                 NullPointerException.class,
-                () -> selection.setNavigation(null)
+                () -> selection.setNavigations(null)
         );
     }
 
     @Test
-    public void testSetNavigationSame() {
+    public void testSetNavigationsSame() {
         final SpreadsheetViewportSelection selection = this.createObject();
         assertSame(
                 selection,
-                selection.setNavigation(selection.navigation())
+                selection.setNavigations(selection.navigations())
         );
     }
 
     @Test
-    public void testSetNavigationDifferent() {
+    public void testSetNavigationsDifferent() {
         final SpreadsheetViewportSelection selection = this.createObject();
-        final List<SpreadsheetViewportSelectionNavigation> navigation = Lists.of(
+        final List<SpreadsheetViewportSelectionNavigation> navigations = Lists.of(
                 SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
         );
         this.checkNotEquals(
-                NAVIGATION,
-                navigation,
-                "different navigation"
+                NAVIGATIONS,
+                navigations,
+                "different navigations"
         );
 
-        final SpreadsheetViewportSelection differentSelection = selection.setNavigation(navigation);
+        final SpreadsheetViewportSelection differentSelection = selection.setNavigations(navigations);
         assertNotSame(
                 selection,
                 differentSelection
@@ -465,9 +465,9 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 differentSelection,
                 selection.anchor()
         );
-        this.checkNavigation(
+        this.checkNavigations(
                 differentSelection,
-                navigation
+                navigations
         );
     }
 
@@ -489,12 +489,12 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
         );
     }
 
-    private void checkNavigation(final SpreadsheetViewportSelection viewportSelection,
-                                 final List<SpreadsheetViewportSelectionNavigation> navigation) {
+    private void checkNavigations(final SpreadsheetViewportSelection viewportSelection,
+                                  final List<SpreadsheetViewportSelectionNavigation> navigations) {
         this.checkEquals(
-                navigation,
-                viewportSelection.navigation(),
-                "navigation"
+                navigations,
+                viewportSelection.navigations(),
+                "navigations"
         );
     }
 
@@ -506,7 +506,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 SpreadsheetViewportSelection.with(
                         SpreadsheetSelection.parseCellRange("X1:Y99"),
                         ANCHOR,
-                        NAVIGATION
+                        NAVIGATIONS
                 )
         );
     }
@@ -517,13 +517,13 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                 SpreadsheetViewportSelection.with(
                         SELECTION,
                         SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                        NAVIGATION
+                        NAVIGATIONS
                 )
         );
     }
 
     @Test
-    public void testDifferentNavigation() {
+    public void testDifferentNavigations() {
         this.checkNotEquals(
                 SpreadsheetViewportSelection.with(
                         SELECTION,
@@ -565,7 +565,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     }
 
     @Test
-    public void testTreePrintNonRangeAndNavigation() {
+    public void testTreePrintNonRangeAndNavigations() {
         this.treePrintAndCheck(
                 SpreadsheetViewportSelection.with(
                         SpreadsheetSelection.A1,
@@ -579,7 +579,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     }
 
     @Test
-    public void testTreePrintNonRangeAndNavigation2() {
+    public void testTreePrintNonRangeAndNavigations2() {
         this.treePrintAndCheck(
                 SpreadsheetViewportSelection.with(
                         SpreadsheetSelection.A1,
@@ -594,7 +594,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     }
 
     @Test
-    public void testTreePrintRangeWithAnchorAndNavigation() {
+    public void testTreePrintRangeWithAnchorAndNavigations() {
         this.treePrintAndCheck(
                 SpreadsheetViewportSelection.with(
                         SpreadsheetSelection.parseRowRange("12:34"),
@@ -757,14 +757,14 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     }
 
     @Test
-    public void testToStringWithNavigation() {
+    public void testToStringWithNavigations() {
         this.toStringAndCheck(
                 SpreadsheetViewportSelection.with(
                         CELL_RANGE,
                         ANCHOR,
-                        NAVIGATION
+                        NAVIGATIONS
                 ),
-                CELL_RANGE + " " + ANCHOR + " " + NAVIGATION.iterator().next()
+                CELL_RANGE + " " + ANCHOR + " " + NAVIGATIONS.iterator().next()
         );
     }
 
@@ -785,7 +785,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
         return SpreadsheetViewportSelection.with(
                 SELECTION,
                 ANCHOR,
-                NAVIGATION
+                NAVIGATIONS
         );
     }
 

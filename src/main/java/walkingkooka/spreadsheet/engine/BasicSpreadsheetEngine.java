@@ -1705,7 +1705,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         Optional<SpreadsheetViewportSelection> result = Optional.empty();
 
-        final List<SpreadsheetViewportSelectionNavigation> navigations = selection.navigation();
+        final List<SpreadsheetViewportSelectionNavigation> navigations = selection.navigations();
         if (navigations.isEmpty()) {
             result = this.navigateWithoutNavigation(
                     selection,
