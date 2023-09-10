@@ -30,6 +30,8 @@ import walkingkooka.test.ParseStringTesting;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetViewportSelectionNavigationTest implements ParseStringTesting<List<SpreadsheetViewportSelectionNavigation>>,
         ClassTesting<SpreadsheetViewportSelectionNavigation> {
 
@@ -363,6 +365,304 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
                 expected,
                 navigation.update(selection, anchor, columnStore, rowStore),
                 () -> navigation + " update " + selection + " " + anchor
+        );
+    }
+
+    // compact..........................................................................................................
+
+    @Test
+    public void testCompactNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetViewportSelectionNavigation.compact(null)
+        );
+    }
+
+    @Test
+    public void testCompactEmpty() {
+        this.compactAndCheck(
+                Lists.empty()
+        );
+    }
+
+    @Test
+    public void testCompactOne() {
+        this.compactAndCheck(
+                SpreadsheetViewportSelectionNavigation.UP
+        );
+    }
+
+    @Test
+    public void testCompactOne2() {
+        this.compactAndCheck(
+                SpreadsheetViewportSelectionNavigation.RIGHT
+        );
+    }
+
+    @Test
+    public void testCompactManyNoOpposites() {
+        this.compactAndCheck(
+                SpreadsheetViewportSelectionNavigation.LEFT
+        );
+    }
+
+    @Test
+    public void testCompactManyNoOpposites2() {
+        this.compactAndCheck(
+                SpreadsheetViewportSelectionNavigation.RIGHT,
+                SpreadsheetViewportSelectionNavigation.RIGHT
+        );
+    }
+
+    @Test
+    public void testCompactManyNoOpposites3() {
+        this.compactAndCheck(
+                SpreadsheetViewportSelectionNavigation.UP,
+                SpreadsheetViewportSelectionNavigation.EXTEND_UP
+        );
+    }
+
+    @Test
+    public void testCompactManyNoOpposites4() {
+        this.compactAndCheck(
+                SpreadsheetViewportSelectionNavigation.DOWN,
+                SpreadsheetViewportSelectionNavigation.EXTEND_UP
+        );
+    }
+
+    @Test
+    public void testCompactManyNoOpposites5() {
+        this.compactAndCheck(
+                SpreadsheetViewportSelectionNavigation.LEFT,
+                SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
+                SpreadsheetViewportSelectionNavigation.UP,
+                SpreadsheetViewportSelectionNavigation.EXTEND_DOWN
+        );
+    }
+
+    @Test
+    public void testCompactLeftRight() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT
+                )
+        );
+    }
+
+    @Test
+    public void testCompactUpDown() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.UP,
+                        SpreadsheetViewportSelectionNavigation.DOWN
+                )
+        );
+    }
+
+    @Test
+    public void testCompactRightLeft() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.LEFT
+                )
+        );
+    }
+
+    @Test
+    public void testCompactDownUp() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.DOWN,
+                        SpreadsheetViewportSelectionNavigation.UP
+                )
+        );
+    }
+
+
+    @Test
+    public void testCompactExtendLeftExtendRight() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.EXTEND_LEFT,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
+                )
+        );
+    }
+
+    @Test
+    public void testCompactExtendUpExtendDown() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.EXTEND_UP,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_DOWN
+                )
+        );
+    }
+
+    @Test
+    public void testCompactExtendRightExtendLeft() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_LEFT
+                )
+        );
+    }
+
+    @Test
+    public void testCompactExtendDownExtendUp() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.EXTEND_DOWN,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_UP
+                )
+        );
+    }
+
+    @Test
+    public void testCompactLeftRightLeftRight() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT
+                )
+        );
+    }
+
+    @Test
+    public void testCompactLeftRightLeftRightLeft() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.LEFT
+                ),
+                SpreadsheetViewportSelectionNavigation.LEFT
+        );
+    }
+
+    @Test
+    public void testCompactLeftRightLeftRightRight() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT
+                ),
+                SpreadsheetViewportSelectionNavigation.RIGHT
+        );
+    }
+
+    @Test
+    public void testCompactLeftRightLeftRightUp() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.UP
+                ),
+                SpreadsheetViewportSelectionNavigation.UP
+        );
+    }
+
+    @Test
+    public void testCompactLeftUpRightDown() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.LEFT,
+                        SpreadsheetViewportSelectionNavigation.UP,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.DOWN
+                )
+        );
+    }
+
+    @Test
+    public void testCompactExtendLeftExtendUpExtendRightExtendDown() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.EXTEND_LEFT,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_UP,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_DOWN
+                )
+        );
+    }
+
+    @Test
+    public void testCompactExtendLeftUpExtendRightDown() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.EXTEND_LEFT,
+                        SpreadsheetViewportSelectionNavigation.UP,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
+                        SpreadsheetViewportSelectionNavigation.DOWN
+                )
+        );
+    }
+
+    @Test
+    public void testCompactExtendLeftUpExtendRightDownDown() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.EXTEND_LEFT,
+                        SpreadsheetViewportSelectionNavigation.UP,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
+                        SpreadsheetViewportSelectionNavigation.DOWN,
+                        SpreadsheetViewportSelectionNavigation.DOWN
+                ),
+                SpreadsheetViewportSelectionNavigation.DOWN
+        );
+    }
+
+    @Test
+    public void testCompactExtendLeftUpExtendRightDownRightExtendLeft() {
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.EXTEND_LEFT,
+                        SpreadsheetViewportSelectionNavigation.UP,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT,
+                        SpreadsheetViewportSelectionNavigation.DOWN,
+                        SpreadsheetViewportSelectionNavigation.RIGHT,
+                        SpreadsheetViewportSelectionNavigation.EXTEND_LEFT
+                ),
+                SpreadsheetViewportSelectionNavigation.RIGHT,
+                SpreadsheetViewportSelectionNavigation.EXTEND_LEFT
+        );
+    }
+
+    private void compactAndCheck(final SpreadsheetViewportSelectionNavigation... expected) {
+        this.compactAndCheck(
+                Lists.of(expected),
+                expected
+        );
+    }
+
+
+    private void compactAndCheck(final List<SpreadsheetViewportSelectionNavigation> in,
+                                 final SpreadsheetViewportSelectionNavigation... expected) {
+        this.compactAndCheck(
+                in,
+                Lists.of(expected)
+        );
+    }
+
+    private void compactAndCheck(final List<SpreadsheetViewportSelectionNavigation> in,
+                                 final List<SpreadsheetViewportSelectionNavigation> expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetViewportSelectionNavigation.compact(in),
+                () -> "compact " + in
         );
     }
 
