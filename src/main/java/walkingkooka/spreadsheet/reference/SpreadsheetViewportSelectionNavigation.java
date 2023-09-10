@@ -17,19 +17,21 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
  * Captures a users input movement relative to a selection, such as a cursor-left from a selection in the viewport.
  */
 public enum SpreadsheetViewportSelectionNavigation {
-    LEFT {
+    LEFT(0, 2) {
         @Override
         public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                              final SpreadsheetViewportSelectionAnchor anchor,
@@ -39,7 +41,7 @@ public enum SpreadsheetViewportSelectionNavigation {
                     .map(s -> s.setAnchorOrDefault(anchor));
         }
     },
-    UP {
+    UP(1, 3) {
         @Override
         public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                              final SpreadsheetViewportSelectionAnchor anchor,
@@ -49,7 +51,7 @@ public enum SpreadsheetViewportSelectionNavigation {
                     .map(s -> s.setAnchorOrDefault(anchor));
         }
     },
-    RIGHT {
+    RIGHT(2, 0) {
         @Override
         public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                              final SpreadsheetViewportSelectionAnchor anchor,
@@ -59,7 +61,7 @@ public enum SpreadsheetViewportSelectionNavigation {
                     .map(s -> s.setAnchorOrDefault(anchor));
         }
     },
-    DOWN {
+    DOWN(3, 1) {
         @Override
         public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                              final SpreadsheetViewportSelectionAnchor anchor,
@@ -69,7 +71,7 @@ public enum SpreadsheetViewportSelectionNavigation {
                     .map(s -> s.setAnchorOrDefault(anchor));
         }
     },
-    EXTEND_LEFT {
+    EXTEND_LEFT(4, 6) {
         @Override
         public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                              final SpreadsheetViewportSelectionAnchor anchor,
@@ -78,7 +80,7 @@ public enum SpreadsheetViewportSelectionNavigation {
             return selection.extendLeft(anchor, columnStore, rowStore);
         }
     },
-    EXTEND_UP {
+    EXTEND_UP(5, 7) {
         @Override
         public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                              final SpreadsheetViewportSelectionAnchor anchor,
@@ -87,7 +89,7 @@ public enum SpreadsheetViewportSelectionNavigation {
             return selection.extendUp(anchor, columnStore, rowStore);
         }
     },
-    EXTEND_RIGHT {
+    EXTEND_RIGHT(6, 4) {
         @Override
         public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                              final SpreadsheetViewportSelectionAnchor anchor,
@@ -96,7 +98,7 @@ public enum SpreadsheetViewportSelectionNavigation {
             return selection.extendRight(anchor, columnStore, rowStore);
         }
     },
-    EXTEND_DOWN {
+    EXTEND_DOWN(7, 5) {
         @Override
         public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                              final SpreadsheetViewportSelectionAnchor anchor,
@@ -106,11 +108,14 @@ public enum SpreadsheetViewportSelectionNavigation {
         }
     };
 
-    SpreadsheetViewportSelectionNavigation() {
+    SpreadsheetViewportSelectionNavigation(final int value,
+                                           final int opposite) {
         this.kebabText = CaseKind.kebabEnumName(this);
+        this.value = value;
+        this.opposite = opposite;
     }
 
-    public String kebabText() {
+    public final String kebabText() {
         return this.kebabText;
     }
 
@@ -123,6 +128,13 @@ public enum SpreadsheetViewportSelectionNavigation {
                                                                   final SpreadsheetViewportSelectionAnchor anchor,
                                                                   final SpreadsheetColumnStore columnStore,
                                                                   final SpreadsheetRowStore rowStore);
+
+    private boolean isOpposite(final SpreadsheetViewportSelectionNavigation other) {
+        return null != other && this.opposite == other.value;
+    }
+
+    private final int value;
+    private final int opposite;
 
     /**
      * Accepts text that has a more pretty form of any {@link SpreadsheetViewportSelectionNavigation enum value}.
@@ -145,5 +157,73 @@ public enum SpreadsheetViewportSelectionNavigation {
         }
 
         throw new IllegalArgumentException("Invalid text=" + CharSequences.quoteAndEscape(text));
+    }
+
+    /**
+     * Accepts some navigations and removes opposites returning the result.
+     */
+    public static List<SpreadsheetViewportSelectionNavigation> compact(final List<SpreadsheetViewportSelectionNavigation> navigations) {
+        Objects.requireNonNull(navigations, "navigations");
+
+        final List<SpreadsheetViewportSelectionNavigation> copy = Lists.immutable(navigations);
+        final int size = copy.size();
+
+        List<SpreadsheetViewportSelectionNavigation> result = null;
+
+        switch (size) {
+            case 0:
+            case 1:
+                result = copy;
+                break;
+            default:
+                final SpreadsheetViewportSelectionNavigation[] temp = new SpreadsheetViewportSelectionNavigation[size];
+                copy.toArray(temp);
+
+                int compactSize = size;
+
+                Exit:
+                for (int i = 0; i < size; i++) {
+                    final SpreadsheetViewportSelectionNavigation left = temp[i];
+                    if (null == left) {
+                        continue;
+                    }
+
+                    // try and find an opposite
+                    for (int j = i + 1; j < size; j++) {
+                        if (left.isOpposite(temp[j])) {
+                            temp[i] = null;
+                            temp[j] = null;
+
+                            compactSize = compactSize - 2;
+
+                            // all navigations cancelled themselves out
+                            if (0 == compactSize) {
+                                result = Lists.empty();
+                                i = Integer.MAX_VALUE - 1; // because i++ will increment before i < size test.
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // fill an array with non-null navigations.
+                if (null == result) {
+                    final SpreadsheetViewportSelectionNavigation[] compact = new SpreadsheetViewportSelectionNavigation[compactSize];
+
+                    int i = 0;
+                    for (SpreadsheetViewportSelectionNavigation item : temp) {
+                        if (null != item) {
+                            compact[i] = item;
+                            i++;
+                        }
+                    }
+
+                    result = Lists.of(compact);
+                }
+
+                break;
+        }
+
+        return result;
     }
 }
