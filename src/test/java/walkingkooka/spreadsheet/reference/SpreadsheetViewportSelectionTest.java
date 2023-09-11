@@ -54,7 +54,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final SpreadsheetViewportSelectionAnchor ANCHOR = SpreadsheetViewportSelectionAnchor.TOP_LEFT;
     private static final List<SpreadsheetViewportSelectionNavigation> NAVIGATIONS = Lists.of(
-            SpreadsheetViewportSelectionNavigation.LEFT
+            SpreadsheetViewportSelectionNavigation.left()
     );
 
     @Test
@@ -145,7 +145,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     private void withNonRangeAndCheck(final SpreadsheetSelection selection) {
         final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NONE;
         final List<SpreadsheetViewportSelectionNavigation> navigations = Lists.of(
-                SpreadsheetViewportSelectionNavigation.LEFT
+                SpreadsheetViewportSelectionNavigation.left()
         );
 
         final SpreadsheetViewportSelection viewportSelection = SpreadsheetViewportSelection.with(
@@ -444,7 +444,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
     public void testSetNavigationsDifferent() {
         final SpreadsheetViewportSelection selection = this.createObject();
         final List<SpreadsheetViewportSelectionNavigation> navigations = Lists.of(
-                SpreadsheetViewportSelectionNavigation.EXTEND_RIGHT
+                SpreadsheetViewportSelectionNavigation.extendRight()
         );
         this.checkNotEquals(
                 NAVIGATIONS,
@@ -529,7 +529,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                         SELECTION,
                         SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                         Lists.of(
-                                SpreadsheetViewportSelectionNavigation.RIGHT
+                                SpreadsheetViewportSelectionNavigation.right()
                         )
                 )
         );
@@ -571,7 +571,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                         SpreadsheetSelection.A1,
                         SpreadsheetViewportSelectionAnchor.NONE,
                         Lists.of(
-                                SpreadsheetViewportSelectionNavigation.LEFT
+                                SpreadsheetViewportSelectionNavigation.left()
                         )
                 ),
                 "cell A1 left" + EOL
@@ -585,8 +585,8 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                         SpreadsheetSelection.A1,
                         SpreadsheetViewportSelectionAnchor.NONE,
                         Lists.of(
-                                SpreadsheetViewportSelectionNavigation.LEFT,
-                                SpreadsheetViewportSelectionNavigation.UP
+                                SpreadsheetViewportSelectionNavigation.left(),
+                                SpreadsheetViewportSelectionNavigation.up()
                         )
                 ),
                 "cell A1 left,up" + EOL
@@ -600,7 +600,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                         SpreadsheetSelection.parseRowRange("12:34"),
                         SpreadsheetViewportSelectionAnchor.TOP,
                         Lists.of(
-                                SpreadsheetViewportSelectionNavigation.LEFT
+                                SpreadsheetViewportSelectionNavigation.left()
                         )
                 ),
                 "row-range 12:34 TOP left" + EOL

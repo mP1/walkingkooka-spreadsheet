@@ -53,7 +53,6 @@ public final class EnumJavaScriptSourceTool {
         generateSpreadsheetErrorKind(Paths.get(reactSrc.toString(), "spreadsheet"));
         generateSpreadsheetReferenceKind(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
         generateSpreadsheetViewportSelectionAnchor(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
-        generateSpreadsheetViewportSelectionNavigation(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
         generateTextStylePropertyNames(Paths.get(reactSrc.toString(), "text"));
     }
 
@@ -96,14 +95,6 @@ public final class EnumJavaScriptSourceTool {
         generateEnums(
                 SpreadsheetViewportSelectionAnchor.class,
                 "anchor",
-                dest
-        );
-    }
-
-    private static void generateSpreadsheetViewportSelectionNavigation(final Path dest) throws Exception {
-        generateEnums(
-                SpreadsheetViewportSelectionNavigation.class,
-                "navigation",
                 dest
         );
     }
