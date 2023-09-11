@@ -135,7 +135,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
             printer.print(
                     SEPARATOR.toSeparatedString(
                             navigations,
-                            SpreadsheetViewportSelectionNavigation::kebabText
+                            SpreadsheetViewportSelectionNavigation::text
                     )
             );
         }
@@ -265,7 +265,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
                     JsonNode.string(
                             SEPARATOR.toSeparatedString(
                                     navigations,
-                                    SpreadsheetViewportSelectionNavigation::kebabText
+                                    SpreadsheetViewportSelectionNavigation::text
                             )
                     )
             );

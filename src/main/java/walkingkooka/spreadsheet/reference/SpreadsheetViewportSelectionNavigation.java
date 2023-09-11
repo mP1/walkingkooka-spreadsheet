@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasText;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,96 +30,66 @@ import java.util.Optional;
 /**
  * Captures a users input movement relative to a selection, such as a cursor-left from a selection in the viewport.
  */
-public enum SpreadsheetViewportSelectionNavigation {
-    LEFT(0, 2) {
-        @Override
-        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                             final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
-            return selection.left(anchor, columnStore, rowStore)
-                    .map(s -> s.setAnchorOrDefault(anchor));
-        }
-    },
-    UP(1, 3) {
-        @Override
-        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                             final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
-            return selection.up(anchor, columnStore, rowStore)
-                    .map(s -> s.setAnchorOrDefault(anchor));
-        }
-    },
-    RIGHT(2, 0) {
-        @Override
-        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                             final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
-            return selection.right(anchor, columnStore, rowStore)
-                    .map(s -> s.setAnchorOrDefault(anchor));
-        }
-    },
-    DOWN(3, 1) {
-        @Override
-        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                             final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
-            return selection.down(anchor, columnStore, rowStore)
-                    .map(s -> s.setAnchorOrDefault(anchor));
-        }
-    },
-    EXTEND_LEFT(4, 6) {
-        @Override
-        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                             final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
-            return selection.extendLeft(anchor, columnStore, rowStore);
-        }
-    },
-    EXTEND_UP(5, 7) {
-        @Override
-        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                             final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
-            return selection.extendUp(anchor, columnStore, rowStore);
-        }
-    },
-    EXTEND_RIGHT(6, 4) {
-        @Override
-        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                             final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
-            return selection.extendRight(anchor, columnStore, rowStore);
-        }
-    },
-    EXTEND_DOWN(7, 5) {
-        @Override
-        public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                             final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
-            return selection.extendDown(anchor, columnStore, rowStore);
-        }
-    };
+public abstract class SpreadsheetViewportSelectionNavigation implements HasText {
 
-    SpreadsheetViewportSelectionNavigation(final int value,
-                                           final int opposite) {
-        this.kebabText = CaseKind.kebabEnumName(this);
-        this.value = value;
-        this.opposite = opposite;
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationDown}
+     */
+    public static SpreadsheetViewportSelectionNavigation extendDown() {
+        return SpreadsheetViewportSelectionNavigationExtendDown.INSTANCE;
     }
 
-    public final String kebabText() {
-        return this.kebabText;
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationExtendLeft}
+     */
+    public static SpreadsheetViewportSelectionNavigation extendLeft() {
+        return SpreadsheetViewportSelectionNavigationExtendLeft.INSTANCE;
     }
 
-    private final String kebabText;
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationExtendRight}
+     */
+    public static SpreadsheetViewportSelectionNavigation extendRight() {
+        return SpreadsheetViewportSelectionNavigationExtendRight.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationExtendUp}
+     */
+    public static SpreadsheetViewportSelectionNavigation extendUp() {
+        return SpreadsheetViewportSelectionNavigationExtendUp.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationDown}
+     */
+    public static SpreadsheetViewportSelectionNavigation down() {
+        return SpreadsheetViewportSelectionNavigationDown.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationLeft}
+     */
+    public static SpreadsheetViewportSelectionNavigation left() {
+        return SpreadsheetViewportSelectionNavigationLeft.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationRight}
+     */
+    public static SpreadsheetViewportSelectionNavigation right() {
+        return SpreadsheetViewportSelectionNavigationRight.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationUp}
+     */
+    public static SpreadsheetViewportSelectionNavigation up() {
+        return SpreadsheetViewportSelectionNavigationUp.INSTANCE;
+    }
+
+    SpreadsheetViewportSelectionNavigation() {
+    }
 
     /**
      * Executes this navigation on the given selection and anchor returning the updated result.
@@ -129,18 +99,18 @@ public enum SpreadsheetViewportSelectionNavigation {
                                                                   final SpreadsheetColumnStore columnStore,
                                                                   final SpreadsheetRowStore rowStore);
 
-    private boolean isOpposite(final SpreadsheetViewportSelectionNavigation other) {
-        return null != other && this.opposite == other.value;
-    }
+    abstract boolean isOpposite(final SpreadsheetViewportSelectionNavigation other);
 
-    private final int value;
-    private final int opposite;
+    @Override
+    public final String toString() {
+        return this.text();
+    }
 
     /**
      * Accepts text that has a more pretty form of any {@link SpreadsheetViewportSelectionNavigation enum value}.
      * The text is identical to the enum name but in lower case and underscore replaced with dash.
      * <br>
-     * {@link #EXTEND_LEFT} = <pre>extend-left</pre>.
+     * {@link #extendLeft()} = <pre>extend-left</pre>.
      */
     public static List<SpreadsheetViewportSelectionNavigation> parse(final String text) {
         return SpreadsheetViewportSelection.SEPARATOR.parse(
@@ -150,14 +120,25 @@ public enum SpreadsheetViewportSelectionNavigation {
     }
 
     private static SpreadsheetViewportSelectionNavigation parse0(final String text) {
-        for (final SpreadsheetViewportSelectionNavigation navigation : values()) {
-            if (navigation.kebabText.equals(text)) {
+        for (final SpreadsheetViewportSelectionNavigation navigation : VALUES) {
+            if (navigation.text().equals(text)) {
                 return navigation;
             }
         }
 
         throw new IllegalArgumentException("Invalid text=" + CharSequences.quoteAndEscape(text));
     }
+
+    private final static SpreadsheetViewportSelectionNavigation[] VALUES = new SpreadsheetViewportSelectionNavigation[]{
+            down(),
+            left(),
+            right(),
+            up(),
+            extendDown(),
+            extendLeft(),
+            extendRight(),
+            extendUp()
+    };
 
     /**
      * Accepts some navigations and removes opposites returning the result.
