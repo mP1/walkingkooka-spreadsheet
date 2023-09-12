@@ -63,7 +63,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
         this.parseStringAndCheck(
                 "left",
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.left()
+                        SpreadsheetViewportSelectionNavigation.leftColumn()
                 )
         );
     }
@@ -73,7 +73,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
         this.parseStringAndCheck(
                 "extend-right",
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendRight()
+                        SpreadsheetViewportSelectionNavigation.extendRightColumn()
                 )
         );
     }
@@ -83,10 +83,10 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
         this.parseStringAndCheck(
                 "left,right,up,extend-down",
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.up(),
-                        SpreadsheetViewportSelectionNavigation.extendDown()
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.upRow(),
+                        SpreadsheetViewportSelectionNavigation.extendDownRow()
                 )
         );
     }
@@ -96,7 +96,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateColumnLeft() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.left(),
+                SpreadsheetViewportSelectionNavigation.leftColumn(),
                 SpreadsheetSelection.parseColumn("C"),
                 SpreadsheetSelection.parseColumn("B")
 
@@ -106,7 +106,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateRowLeft() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.left(),
+                SpreadsheetViewportSelectionNavigation.leftColumn(),
                 SpreadsheetSelection.parseRow("12")
         );
     }
@@ -114,7 +114,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateRowDown() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.down(),
+                SpreadsheetViewportSelectionNavigation.downRow(),
                 SpreadsheetSelection.parseRow("12"),
                 SpreadsheetSelection.parseRow("13")
 
@@ -124,7 +124,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateCellUp() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.up(),
+                SpreadsheetViewportSelectionNavigation.upRow(),
                 SpreadsheetSelection.parseCell("C3"),
                 SpreadsheetSelection.parseCell("C2")
 
@@ -134,7 +134,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateColumnRangeUp() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.up(),
+                SpreadsheetViewportSelectionNavigation.upRow(),
                 SpreadsheetSelection.parseColumnRange("B:C")
         );
     }
@@ -142,7 +142,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateColumnRangeAnchorLeftNavigateLeft() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.left(),
+                SpreadsheetViewportSelectionNavigation.leftColumn(),
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
                 SpreadsheetSelection.parseColumn("B").setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
@@ -156,7 +156,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
         columnStore.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
 
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.extendRight(),
+                SpreadsheetViewportSelectionNavigation.extendRightColumn(),
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
                 columnStore,
@@ -167,7 +167,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateColumnRangeAnchorRightNavigateLeft() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.left(),
+                SpreadsheetViewportSelectionNavigation.leftColumn(),
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.RIGHT,
                 SpreadsheetSelection.parseColumn("A").setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
@@ -177,7 +177,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateColumnRangeAnchorLeftNavigateRight() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.right(),
+                SpreadsheetViewportSelectionNavigation.rightColumn(),
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
                 SpreadsheetSelection.parseColumn("D").setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
@@ -191,7 +191,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
         columnStore.save(SpreadsheetSelection.parseColumn("E").column().setHidden(true));
 
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.extendRight(),
+                SpreadsheetViewportSelectionNavigation.extendRightColumn(),
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
                 columnStore,
@@ -202,7 +202,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateColumnExtendLeft() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.extendLeft(),
+                SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
                 SpreadsheetSelection.parseColumn("C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
                 SpreadsheetSelection.parseColumnRange("B:C").setAnchor(SpreadsheetViewportSelectionAnchor.RIGHT)
@@ -212,7 +212,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateColumnExtendUp() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.extendUp(),
+                SpreadsheetViewportSelectionNavigation.extendUpRow(),
                 SpreadsheetSelection.parseColumn("C")
         );
     }
@@ -224,7 +224,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
         rowStore.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
 
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.extendUp(),
+                SpreadsheetViewportSelectionNavigation.extendUpRow(),
                 SpreadsheetSelection.parseRowRange("5:6"),
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
                 rowStore,
@@ -235,7 +235,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateRowExtendRight() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.extendRight(),
+                SpreadsheetViewportSelectionNavigation.extendRightColumn(),
                 SpreadsheetSelection.parseRow("3")
         );
     }
@@ -243,7 +243,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testUpdateRowRangeExtendDown() {
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.extendDown(),
+                SpreadsheetViewportSelectionNavigation.extendDownRow(),
                 SpreadsheetSelection.parseRowRange("3:4"),
                 SpreadsheetViewportSelectionAnchor.TOP,
                 SpreadsheetSelection.parseRowRange("3:5").setAnchor(SpreadsheetViewportSelectionAnchor.TOP)
@@ -257,7 +257,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
         rowStore.save(SpreadsheetSelection.parseRow("6").row().setHidden(true));
 
         this.updateAndCheck(
-                SpreadsheetViewportSelectionNavigation.extendDown(),
+                SpreadsheetViewportSelectionNavigation.extendDownRow(),
                 SpreadsheetSelection.parseRowRange("3:4"),
                 SpreadsheetViewportSelectionAnchor.TOP,
                 rowStore,
@@ -388,55 +388,55 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testCompactOne() {
         this.compactAndCheck(
-                SpreadsheetViewportSelectionNavigation.up()
+                SpreadsheetViewportSelectionNavigation.upRow()
         );
     }
 
     @Test
     public void testCompactOne2() {
         this.compactAndCheck(
-                SpreadsheetViewportSelectionNavigation.right()
+                SpreadsheetViewportSelectionNavigation.rightColumn()
         );
     }
 
     @Test
     public void testCompactManyNoOpposites() {
         this.compactAndCheck(
-                SpreadsheetViewportSelectionNavigation.left()
+                SpreadsheetViewportSelectionNavigation.leftColumn()
         );
     }
 
     @Test
     public void testCompactManyNoOpposites2() {
         this.compactAndCheck(
-                SpreadsheetViewportSelectionNavigation.right(),
-                SpreadsheetViewportSelectionNavigation.right()
+                SpreadsheetViewportSelectionNavigation.rightColumn(),
+                SpreadsheetViewportSelectionNavigation.rightColumn()
         );
     }
 
     @Test
     public void testCompactManyNoOpposites3() {
         this.compactAndCheck(
-                SpreadsheetViewportSelectionNavigation.up(),
-                SpreadsheetViewportSelectionNavigation.extendUp()
+                SpreadsheetViewportSelectionNavigation.upRow(),
+                SpreadsheetViewportSelectionNavigation.extendUpRow()
         );
     }
 
     @Test
     public void testCompactManyNoOpposites4() {
         this.compactAndCheck(
-                SpreadsheetViewportSelectionNavigation.down(),
-                SpreadsheetViewportSelectionNavigation.extendUp()
+                SpreadsheetViewportSelectionNavigation.downRow(),
+                SpreadsheetViewportSelectionNavigation.extendUpRow()
         );
     }
 
     @Test
     public void testCompactManyNoOpposites5() {
         this.compactAndCheck(
-                SpreadsheetViewportSelectionNavigation.left(),
-                SpreadsheetViewportSelectionNavigation.extendRight(),
-                SpreadsheetViewportSelectionNavigation.up(),
-                SpreadsheetViewportSelectionNavigation.extendDown()
+                SpreadsheetViewportSelectionNavigation.leftColumn(),
+                SpreadsheetViewportSelectionNavigation.extendRightColumn(),
+                SpreadsheetViewportSelectionNavigation.upRow(),
+                SpreadsheetViewportSelectionNavigation.extendDownRow()
         );
     }
 
@@ -444,8 +444,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactLeftRight() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right()
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn()
                 )
         );
     }
@@ -454,8 +454,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactUpDown() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.up(),
-                        SpreadsheetViewportSelectionNavigation.down()
+                        SpreadsheetViewportSelectionNavigation.upRow(),
+                        SpreadsheetViewportSelectionNavigation.downRow()
                 )
         );
     }
@@ -464,8 +464,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactRightLeft() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.left()
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.leftColumn()
                 )
         );
     }
@@ -474,8 +474,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactDownUp() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.down(),
-                        SpreadsheetViewportSelectionNavigation.up()
+                        SpreadsheetViewportSelectionNavigation.downRow(),
+                        SpreadsheetViewportSelectionNavigation.upRow()
                 )
         );
     }
@@ -485,8 +485,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactExtendLeftExtendRight() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendLeft(),
-                        SpreadsheetViewportSelectionNavigation.extendRight()
+                        SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
+                        SpreadsheetViewportSelectionNavigation.extendRightColumn()
                 )
         );
     }
@@ -495,8 +495,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactExtendUpExtendDown() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendUp(),
-                        SpreadsheetViewportSelectionNavigation.extendDown()
+                        SpreadsheetViewportSelectionNavigation.extendUpRow(),
+                        SpreadsheetViewportSelectionNavigation.extendDownRow()
                 )
         );
     }
@@ -505,8 +505,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactExtendRightExtendLeft() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendRight(),
-                        SpreadsheetViewportSelectionNavigation.extendLeft()
+                        SpreadsheetViewportSelectionNavigation.extendRightColumn(),
+                        SpreadsheetViewportSelectionNavigation.extendLeftColumn()
                 )
         );
     }
@@ -515,8 +515,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactExtendDownExtendUp() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendDown(),
-                        SpreadsheetViewportSelectionNavigation.extendUp()
+                        SpreadsheetViewportSelectionNavigation.extendDownRow(),
+                        SpreadsheetViewportSelectionNavigation.extendUpRow()
                 )
         );
     }
@@ -525,10 +525,10 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactLeftRightLeftRight() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right()
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn()
                 )
         );
     }
@@ -537,13 +537,13 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactLeftRightLeftRightLeft() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.left()
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.leftColumn()
                 ),
-                SpreadsheetViewportSelectionNavigation.left()
+                SpreadsheetViewportSelectionNavigation.leftColumn()
         );
     }
 
@@ -551,13 +551,13 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactLeftRightLeftRightRight() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.right()
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn()
                 ),
-                SpreadsheetViewportSelectionNavigation.right()
+                SpreadsheetViewportSelectionNavigation.rightColumn()
         );
     }
 
@@ -565,13 +565,13 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactLeftRightLeftRightUp() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.up()
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.upRow()
                 ),
-                SpreadsheetViewportSelectionNavigation.up()
+                SpreadsheetViewportSelectionNavigation.upRow()
         );
     }
 
@@ -579,10 +579,10 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactLeftUpRightDown() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.left(),
-                        SpreadsheetViewportSelectionNavigation.up(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.down()
+                        SpreadsheetViewportSelectionNavigation.leftColumn(),
+                        SpreadsheetViewportSelectionNavigation.upRow(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.downRow()
                 )
         );
     }
@@ -591,10 +591,10 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactExtendLeftExtendUpExtendRightExtendDown() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendLeft(),
-                        SpreadsheetViewportSelectionNavigation.extendUp(),
-                        SpreadsheetViewportSelectionNavigation.extendRight(),
-                        SpreadsheetViewportSelectionNavigation.extendDown()
+                        SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
+                        SpreadsheetViewportSelectionNavigation.extendUpRow(),
+                        SpreadsheetViewportSelectionNavigation.extendRightColumn(),
+                        SpreadsheetViewportSelectionNavigation.extendDownRow()
                 )
         );
     }
@@ -603,10 +603,10 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactExtendLeftUpExtendRightDown() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendLeft(),
-                        SpreadsheetViewportSelectionNavigation.up(),
-                        SpreadsheetViewportSelectionNavigation.extendRight(),
-                        SpreadsheetViewportSelectionNavigation.down()
+                        SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
+                        SpreadsheetViewportSelectionNavigation.upRow(),
+                        SpreadsheetViewportSelectionNavigation.extendRightColumn(),
+                        SpreadsheetViewportSelectionNavigation.downRow()
                 )
         );
     }
@@ -615,13 +615,13 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactExtendLeftUpExtendRightDownDown() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendLeft(),
-                        SpreadsheetViewportSelectionNavigation.up(),
-                        SpreadsheetViewportSelectionNavigation.extendRight(),
-                        SpreadsheetViewportSelectionNavigation.down(),
-                        SpreadsheetViewportSelectionNavigation.down()
+                        SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
+                        SpreadsheetViewportSelectionNavigation.upRow(),
+                        SpreadsheetViewportSelectionNavigation.extendRightColumn(),
+                        SpreadsheetViewportSelectionNavigation.downRow(),
+                        SpreadsheetViewportSelectionNavigation.downRow()
                 ),
-                SpreadsheetViewportSelectionNavigation.down()
+                SpreadsheetViewportSelectionNavigation.downRow()
         );
     }
 
@@ -629,15 +629,15 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     public void testCompactExtendLeftUpExtendRightDownRightExtendLeft() {
         this.compactAndCheck(
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendLeft(),
-                        SpreadsheetViewportSelectionNavigation.up(),
-                        SpreadsheetViewportSelectionNavigation.extendRight(),
-                        SpreadsheetViewportSelectionNavigation.down(),
-                        SpreadsheetViewportSelectionNavigation.right(),
-                        SpreadsheetViewportSelectionNavigation.extendLeft()
+                        SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
+                        SpreadsheetViewportSelectionNavigation.upRow(),
+                        SpreadsheetViewportSelectionNavigation.extendRightColumn(),
+                        SpreadsheetViewportSelectionNavigation.downRow(),
+                        SpreadsheetViewportSelectionNavigation.rightColumn(),
+                        SpreadsheetViewportSelectionNavigation.extendLeftColumn()
                 ),
-                SpreadsheetViewportSelectionNavigation.right(),
-                SpreadsheetViewportSelectionNavigation.extendLeft()
+                SpreadsheetViewportSelectionNavigation.rightColumn(),
+                SpreadsheetViewportSelectionNavigation.extendLeftColumn()
         );
     }
 

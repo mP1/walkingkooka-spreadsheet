@@ -24,22 +24,22 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportSelectionNavigationDown extends SpreadsheetViewportSelectionNavigation {
+final class SpreadsheetViewportSelectionNavigationExtendUpRow extends SpreadsheetViewportSelectionNavigation {
 
-    final static SpreadsheetViewportSelectionNavigationDown INSTANCE = new SpreadsheetViewportSelectionNavigationDown();
+    final static SpreadsheetViewportSelectionNavigationExtendUpRow INSTANCE = new SpreadsheetViewportSelectionNavigationExtendUpRow();
 
-    private SpreadsheetViewportSelectionNavigationDown() {
+    private SpreadsheetViewportSelectionNavigationExtendUpRow() {
         super();
     }
 
     @Override
     public String text() {
-        return "down";
+        return "extend-up";
     }
 
     @Override
     boolean isOpposite(final SpreadsheetViewportSelectionNavigation other) {
-        return other instanceof SpreadsheetViewportSelectionNavigationUp;
+        return other instanceof SpreadsheetViewportSelectionNavigationExtendDownRow;
     }
 
     @Override
@@ -47,10 +47,10 @@ final class SpreadsheetViewportSelectionNavigationDown extends SpreadsheetViewpo
                                                          final SpreadsheetViewportSelectionAnchor anchor,
                                                          final SpreadsheetColumnStore columnStore,
                                                          final SpreadsheetRowStore rowStore) {
-        return selection.down(
+        return selection.extendUp(
                 anchor,
                 columnStore,
                 rowStore
-        ).map(s -> s.setAnchorOrDefault(anchor));
+        );
     }
 }

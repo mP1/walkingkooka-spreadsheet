@@ -23,22 +23,22 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportSelectionNavigationRight extends SpreadsheetViewportSelectionNavigation {
+final class SpreadsheetViewportSelectionNavigationExtendRightColumn extends SpreadsheetViewportSelectionNavigation {
 
-    final static SpreadsheetViewportSelectionNavigationRight INSTANCE = new SpreadsheetViewportSelectionNavigationRight();
+    final static SpreadsheetViewportSelectionNavigationExtendRightColumn INSTANCE = new SpreadsheetViewportSelectionNavigationExtendRightColumn();
 
-    private SpreadsheetViewportSelectionNavigationRight() {
+    private SpreadsheetViewportSelectionNavigationExtendRightColumn() {
         super();
     }
 
     @Override
     public String text() {
-        return "right";
+        return "extend-right";
     }
 
     @Override
     boolean isOpposite(final SpreadsheetViewportSelectionNavigation other) {
-        return other instanceof SpreadsheetViewportSelectionNavigationLeft;
+        return other instanceof SpreadsheetViewportSelectionNavigationExtendLeftColumn;
     }
 
     @Override
@@ -46,10 +46,10 @@ final class SpreadsheetViewportSelectionNavigationRight extends SpreadsheetViewp
                                                          final SpreadsheetViewportSelectionAnchor anchor,
                                                          final SpreadsheetColumnStore columnStore,
                                                          final SpreadsheetRowStore rowStore) {
-        return selection.right(
+        return selection.extendRight(
                 anchor,
                 columnStore,
                 rowStore
-        ).map(s -> s.setAnchorOrDefault(anchor));
+        );
     }
 }
