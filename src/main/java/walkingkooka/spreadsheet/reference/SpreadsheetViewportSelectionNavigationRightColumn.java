@@ -46,7 +46,7 @@ final class SpreadsheetViewportSelectionNavigationRightColumn extends Spreadshee
                                                          final SpreadsheetViewportSelectionAnchor anchor,
                                                          final SpreadsheetColumnStore columnStore,
                                                          final SpreadsheetRowStore rowStore) {
-        return selection.right(
+        return selection.rightColumn(
                 anchor,
                 columnStore,
                 rowStore

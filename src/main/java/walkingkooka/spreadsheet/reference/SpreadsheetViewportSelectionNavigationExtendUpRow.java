@@ -47,7 +47,7 @@ final class SpreadsheetViewportSelectionNavigationExtendUpRow extends Spreadshee
                                                          final SpreadsheetViewportSelectionAnchor anchor,
                                                          final SpreadsheetColumnStore columnStore,
                                                          final SpreadsheetRowStore rowStore) {
-        return selection.extendUp(
+        return selection.extendUpRow(
                 anchor,
                 columnStore,
                 rowStore

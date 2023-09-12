@@ -45,7 +45,7 @@ final class SpreadsheetViewportSelectionNavigationExtendLeftColumn extends Sprea
                                                          final SpreadsheetViewportSelectionAnchor anchor,
                                                          final SpreadsheetColumnStore columnStore,
                                                          final SpreadsheetRowStore rowStore) {
-        return selection.extendLeft(
+        return selection.extendLeftColumn(
                 anchor,
                 columnStore,
                 rowStore

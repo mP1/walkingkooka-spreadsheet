@@ -682,8 +682,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // navigate.........................................................................................................
 
     @Test
-    public void testLeft() {
-        this.leftAndCheck(
+    public void testLeftColumn() {
+        this.leftColumnAndCheck(
                 "1",
                 "1"
         );
@@ -696,15 +696,15 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
         store.save(row.row().setHidden(true));
 
-        this.leftAndCheck(
+        this.leftColumnAndCheck(
                 row,
                 store
         );
     }
 
     @Test
-    public void testUp() {
-        this.upAndCheck(
+    public void testUpRow() {
+        this.upRowAndCheck(
                 "2",
                 "1"
         );
@@ -712,18 +712,18 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testUpFirstRow() {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 "1",
                 "1"
         );
     }
 
     @Test
-    public void testUpSkipsHidden() {
+    public void testUpSkipsHiddenRow() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.upAndCheck(
+        this.upRowAndCheck(
                 "4",
                 store,
                 "2"
@@ -734,15 +734,15 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testUpLastRow() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
-        this.upAndCheck(
+        this.upRowAndCheck(
                 row,
                 row.add(-1)
         );
     }
 
     @Test
-    public void testRight() {
-        this.rightAndCheck(
+    public void testRightColumn() {
+        this.rightColumnAndCheck(
                 "2",
                 "2"
         );
@@ -755,15 +755,15 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
         store.save(row.row().setHidden(true));
 
-        this.rightAndCheck(
+        this.rightColumnAndCheck(
                 row,
                 store
         );
     }
 
     @Test
-    public void testDown() {
-        this.downAndCheck(
+    public void testDownRow() {
+        this.downRowAndCheck(
                 "2",
                 "3"
         );
@@ -771,7 +771,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testDownFirstRow() {
-        this.downAndCheck(
+        this.downRowAndCheck(
                 "1",
                 "2"
         );
@@ -781,18 +781,18 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testDownLastRow() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
-        this.downAndCheck(
+        this.downRowAndCheck(
                 row,
                 row
         );
     }
 
     @Test
-    public void testDownSkipsHidden() {
+    public void testDownSkipsHiddenRow() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.downAndCheck(
+        this.downRowAndCheck(
                 "2",
                 store,
                 "4"
@@ -845,8 +845,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // extendXXXX.......................................................................................................
 
     @Test
-    public void testExtendUp() {
-        this.extendUpAndCheck(
+    public void testExtendUpRow() {
+        this.extendUpRowAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
                 "2:3",
@@ -858,18 +858,18 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testExtendUpFirstRow() {
         final String row = "1";
 
-        this.extendUpAndCheck(
+        this.extendUpRowAndCheck(
                 row,
                 row
         );
     }
 
     @Test
-    public void testExtendUpSkipsHiddenColumn() {
+    public void testExtendUpSkipsHiddenRow() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.extendUpAndCheck(
+        this.extendUpRowAndCheck(
                 "4",
                 SpreadsheetViewportSelectionAnchor.NONE,
                 store,
@@ -879,8 +879,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testExtendDown() {
-        this.extendDownAndCheck(
+    public void testExtendDownRow() {
+        this.extendDownRowAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
                 "3:4",
@@ -892,18 +892,18 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testExtendDownLastRow() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
-        this.extendDownAndCheck(
+        this.extendDownRowAndCheck(
                 row,
                 row
         );
     }
 
     @Test
-    public void testExtendDownSkipsHiddenColumn() {
+    public void testExtendDownSkipsHiddenRow() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.extendDownAndCheck(
+        this.extendDownRowAndCheck(
                 "2",
                 SpreadsheetViewportSelectionAnchor.NONE,
                 store,
@@ -913,21 +913,21 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testExtendLeft() {
+    public void testExtendLeftColumn() {
         final String row = "2";
 
-        this.extendLeftAndCheck(
+        this.extendLeftColumnAndCheck(
                 row,
                 row
         );
     }
 
     @Test
-    public void testExtendLeftHiddenRow() {
+    public void testExtendLeftHiddenColumn() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.extendLeftAndCheck(
+        this.extendLeftColumnAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
                 store
@@ -935,21 +935,21 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testExtendRight() {
+    public void testExtendRightColumn() {
         final String row = "2";
 
-        this.extendRightAndCheck(
+        this.extendRightColumnAndCheck(
                 row,
                 row
         );
     }
 
     @Test
-    public void testExtendRightHiddenRow() {
+    public void testExtendRightHiddenColumn() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.extendRightAndCheck(
+        this.extendRightColumnAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
                 store
