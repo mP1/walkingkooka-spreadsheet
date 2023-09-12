@@ -33,59 +33,59 @@ import java.util.Optional;
 public abstract class SpreadsheetViewportSelectionNavigation implements HasText {
 
     /**
-     * {@see SpreadsheetViewportSelectionNavigationDown}
+     * {@see SpreadsheetViewportSelectionNavigationDownRow}
      */
-    public static SpreadsheetViewportSelectionNavigation extendDown() {
-        return SpreadsheetViewportSelectionNavigationExtendDown.INSTANCE;
+    public static SpreadsheetViewportSelectionNavigation extendDownRow() {
+        return SpreadsheetViewportSelectionNavigationExtendDownRow.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetViewportSelectionNavigationExtendLeft}
+     * {@see SpreadsheetViewportSelectionNavigationExtendLeftColumn}
      */
-    public static SpreadsheetViewportSelectionNavigation extendLeft() {
-        return SpreadsheetViewportSelectionNavigationExtendLeft.INSTANCE;
+    public static SpreadsheetViewportSelectionNavigation extendLeftColumn() {
+        return SpreadsheetViewportSelectionNavigationExtendLeftColumn.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetViewportSelectionNavigationExtendRight}
+     * {@see SpreadsheetViewportSelectionNavigationExtendRightColumn}
      */
-    public static SpreadsheetViewportSelectionNavigation extendRight() {
-        return SpreadsheetViewportSelectionNavigationExtendRight.INSTANCE;
+    public static SpreadsheetViewportSelectionNavigation extendRightColumn() {
+        return SpreadsheetViewportSelectionNavigationExtendRightColumn.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetViewportSelectionNavigationExtendUp}
+     * {@see SpreadsheetViewportSelectionNavigationExtendUpRow}
      */
-    public static SpreadsheetViewportSelectionNavigation extendUp() {
-        return SpreadsheetViewportSelectionNavigationExtendUp.INSTANCE;
+    public static SpreadsheetViewportSelectionNavigation extendUpRow() {
+        return SpreadsheetViewportSelectionNavigationExtendUpRow.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetViewportSelectionNavigationDown}
+     * {@see SpreadsheetViewportSelectionNavigationDownRow}
      */
-    public static SpreadsheetViewportSelectionNavigation down() {
-        return SpreadsheetViewportSelectionNavigationDown.INSTANCE;
+    public static SpreadsheetViewportSelectionNavigation downRow() {
+        return SpreadsheetViewportSelectionNavigationDownRow.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetViewportSelectionNavigationLeft}
+     * {@see SpreadsheetViewportSelectionNavigationLeftColumn}
      */
-    public static SpreadsheetViewportSelectionNavigation left() {
-        return SpreadsheetViewportSelectionNavigationLeft.INSTANCE;
+    public static SpreadsheetViewportSelectionNavigation leftColumn() {
+        return SpreadsheetViewportSelectionNavigationLeftColumn.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetViewportSelectionNavigationRight}
+     * {@see SpreadsheetViewportSelectionNavigationRightColumn}
      */
-    public static SpreadsheetViewportSelectionNavigation right() {
-        return SpreadsheetViewportSelectionNavigationRight.INSTANCE;
+    public static SpreadsheetViewportSelectionNavigation rightColumn() {
+        return SpreadsheetViewportSelectionNavigationRightColumn.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetViewportSelectionNavigationUp}
+     * {@see SpreadsheetViewportSelectionNavigationUpRow}
      */
-    public static SpreadsheetViewportSelectionNavigation up() {
-        return SpreadsheetViewportSelectionNavigationUp.INSTANCE;
+    public static SpreadsheetViewportSelectionNavigation upRow() {
+        return SpreadsheetViewportSelectionNavigationUpRow.INSTANCE;
     }
 
     SpreadsheetViewportSelectionNavigation() {
@@ -110,7 +110,7 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
      * Accepts text that has a more pretty form of any {@link SpreadsheetViewportSelectionNavigation enum value}.
      * The text is identical to the enum name but in lower case and underscore replaced with dash.
      * <br>
-     * {@link #extendLeft()} = <pre>extend-left</pre>.
+     * {@link #extendLeftColumn()} = <pre>extend-left</pre>.
      */
     public static List<SpreadsheetViewportSelectionNavigation> parse(final String text) {
         return SpreadsheetViewportSelection.SEPARATOR.parse(
@@ -130,14 +130,14 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
     }
 
     private final static SpreadsheetViewportSelectionNavigation[] VALUES = new SpreadsheetViewportSelectionNavigation[]{
-            down(),
-            left(),
-            right(),
-            up(),
-            extendDown(),
-            extendLeft(),
-            extendRight(),
-            extendUp()
+            downRow(),
+            leftColumn(),
+            rightColumn(),
+            upRow(),
+            extendDownRow(),
+            extendLeftColumn(),
+            extendRightColumn(),
+            extendUpRow()
     };
 
     /**

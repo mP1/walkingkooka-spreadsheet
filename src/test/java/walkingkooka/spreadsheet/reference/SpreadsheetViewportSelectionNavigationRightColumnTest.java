@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -18,9 +17,9 @@
 
 package walkingkooka.spreadsheet.reference;
 
-public final class SpreadsheetViewportSelectionNavigationExtendLeftTest extends SpreadsheetViewportSelectionNavigationTestCase<SpreadsheetViewportSelectionNavigationExtendLeft> {
+public final class SpreadsheetViewportSelectionNavigationRightColumnTest extends SpreadsheetViewportSelectionNavigationTestCase<SpreadsheetViewportSelectionNavigationRightColumn> {
     @Override
-    public Class<SpreadsheetViewportSelectionNavigationExtendLeft> type() {
-        return SpreadsheetViewportSelectionNavigationExtendLeft.class;
+    public Class<SpreadsheetViewportSelectionNavigationRightColumn> type() {
+        return SpreadsheetViewportSelectionNavigationRightColumn.class;
     }
 }

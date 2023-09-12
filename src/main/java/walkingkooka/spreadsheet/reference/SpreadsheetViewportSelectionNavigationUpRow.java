@@ -1,6 +1,4 @@
 
-
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -25,22 +23,22 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportSelectionNavigationExtendDown extends SpreadsheetViewportSelectionNavigation {
+final class SpreadsheetViewportSelectionNavigationUpRow extends SpreadsheetViewportSelectionNavigation {
 
-    final static SpreadsheetViewportSelectionNavigationExtendDown INSTANCE = new SpreadsheetViewportSelectionNavigationExtendDown();
+    final static SpreadsheetViewportSelectionNavigationUpRow INSTANCE = new SpreadsheetViewportSelectionNavigationUpRow();
 
-    private SpreadsheetViewportSelectionNavigationExtendDown() {
+    private SpreadsheetViewportSelectionNavigationUpRow() {
         super();
     }
 
     @Override
     public String text() {
-        return "extend-down";
+        return "up";
     }
 
     @Override
     boolean isOpposite(final SpreadsheetViewportSelectionNavigation other) {
-        return other instanceof SpreadsheetViewportSelectionNavigationExtendUp;
+        return other instanceof SpreadsheetViewportSelectionNavigationDownRow;
     }
 
     @Override
@@ -48,10 +46,10 @@ final class SpreadsheetViewportSelectionNavigationExtendDown extends Spreadsheet
                                                          final SpreadsheetViewportSelectionAnchor anchor,
                                                          final SpreadsheetColumnStore columnStore,
                                                          final SpreadsheetRowStore rowStore) {
-        return selection.extendDown(
+        return selection.up(
                 anchor,
                 columnStore,
                 rowStore
-        );
+        ).map(s -> s.setAnchorOrDefault(anchor));
     }
 }
