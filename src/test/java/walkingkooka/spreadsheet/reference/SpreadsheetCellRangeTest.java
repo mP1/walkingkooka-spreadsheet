@@ -1415,8 +1415,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // B4 C4 D4
 
     @Test
-    public void testLeftAnchorTopLeft() {
-        this.leftAndCheck(
+    public void testLeftColumnAnchorTopLeft() {
+        this.leftColumnAndCheck(
                 "B2:D4",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "C4"
@@ -1424,8 +1424,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testLeftAnchorTopRight() {
-        this.leftAndCheck(
+    public void testLeftColumnAnchorTopRight() {
+        this.leftColumnAndCheck(
                 "B2:D4",
                 SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
                 "A4"
@@ -1436,8 +1436,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // A2 B2 C2
     // A3 B3 C3
     @Test
-    public void testLeftAnchorBottomLeft() {
-        this.leftAndCheck(
+    public void testLeftColumnAnchorBottomLeft() {
+        this.leftColumnAndCheck(
                 "A1:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "A1"
@@ -1445,8 +1445,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testRightAnchorTopLeft() {
-        this.rightAndCheck(
+    public void testRightColumnAnchorTopLeft() {
+        this.rightColumnAndCheck(
                 "A1:C3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "D3"
@@ -1454,8 +1454,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testRightAnchorTopRight() {
-        this.rightAndCheck(
+    public void testRightColumnAnchorTopRight() {
+        this.rightColumnAndCheck(
                 "A1:C3",
                 SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
                 "B3"
@@ -1463,8 +1463,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testRightAnchorBottomRight() {
-        this.rightAndCheck(
+    public void testRightColumnAnchorBottomRight() {
+        this.rightColumnAndCheck(
                 "A1:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "B1"
@@ -1476,8 +1476,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // B3 C3 D3
 
     @Test
-    public void testUpAnchorBottomRight() {
-        this.upAndCheck(
+    public void testUpRowAnchorBottomRight() {
+        this.upRowAndCheck(
                 "B1:D3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
                 "D1"
@@ -1485,8 +1485,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testDownAnchorBottomRight() {
-        this.downAndCheck(
+    public void testDownRowAnchorBottomRight() {
+        this.downRowAndCheck(
                 "B1:D3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
                 "D2"
@@ -1570,8 +1570,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // extendLeft.......................................................................................................
 
     @Test
-    public void testExtendLeftAnchorBottomRight() {
-        this.extendLeftAndCheck(
+    public void testExtendLeftColumnAnchorBottomRight() {
+        this.extendLeftColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "B3:D4",
@@ -1583,8 +1583,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     //           C4 D4
 
     @Test
-    public void testExtendLeftAnchorTopLeft() {
-        this.extendLeftAndCheck(
+    public void testExtendLeftColumnAnchorTopLeft() {
+        this.extendLeftColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "C3:C4",
@@ -1593,8 +1593,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testExtendLeftAnchorTopLeft2() {
-        this.extendLeftAndCheck(
+    public void testExtendLeftColumnAnchorTopLeft2() {
+        this.extendLeftColumnAndCheck(
                 "C3:D3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "C3",
@@ -1603,11 +1603,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testExtendLeftAnchorTopRightFirstColumn() {
+    public void testExtendLeftColumnAnchorTopRightFirstColumn() {
         final String range = "A1:A2";
         final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.TOP_RIGHT;
 
-        this.extendLeftAndCheck(
+        this.extendLeftColumnAndCheck(
                 range,
                 anchor,
                 range,
@@ -1619,8 +1619,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     //  C4           B4  C4
     // bottom-left  bottom-right
     @Test
-    public void testExtendLeftSingleColumnBottomLeft() {
-        this.extendLeftAndCheck(
+    public void testExtendLeftColumnSingleColumnBottomLeft() {
+        this.extendLeftColumnAndCheck(
                 "C3:C4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
                 "B3:C4",
@@ -1632,8 +1632,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     //  C4           B4  C4
     // bottom-right  bottom-right
     @Test
-    public void testExtendLeftSingleColumnBottomRight() {
-        this.extendLeftAndCheck(
+    public void testExtendLeftColumnSingleColumnBottomRight() {
+        this.extendLeftColumnAndCheck(
                 "C3:C4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "B3:C4",
@@ -1646,7 +1646,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
         store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
 
-        this.extendLeftAndCheck(
+        this.extendLeftColumnAndCheck(
                 "D4:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store,
@@ -1656,11 +1656,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testExtendLeftHiddenRow() {
+    public void testExtendLeftColumnIgnoresHiddenRow() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.extendLeftAndCheck(
+        this.extendLeftColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store
@@ -1668,11 +1668,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testExtendLeftHiddenRow2() {
+    public void testExtendLeftColumnIgnoresHiddenRow2() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
 
-        this.extendLeftAndCheck(
+        this.extendLeftColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store
@@ -1682,8 +1682,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // extendRight......................................................................................................
 
     @Test
-    public void testExtendRightAnchorTopLeft() {
-        this.extendRightAndCheck(
+    public void testExtendRightColumnAnchorTopLeft() {
+        this.extendRightColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "C3:E4",
@@ -1692,8 +1692,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testExtendRightAnchorBottomRight() {
-        this.extendRightAndCheck(
+    public void testExtendRightColumnAnchorBottomRight() {
+        this.extendRightColumnAndCheck(
                 "C3:D3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "D3",
@@ -1705,8 +1705,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // C4 D4 <-- anchor
 
     @Test
-    public void testExtendRightAnchorBottomRight2() {
-        this.extendRightAndCheck(
+    public void testExtendRightColumnAnchorBottomRight2() {
+        this.extendRightColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "D3:D4",
@@ -1715,12 +1715,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testExtendRightAnchorBottomLeftLastColumn() {
+    public void testExtendRightAnchorColumnBottomLeftLastColumn() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
-final String cell = column.add(-1) + "1:" + column + "1";
-final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT;
+        final String cell = column.add(-1) + "1:" + column + "1";
+        final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT;
 
-        this.extendRightAndCheck(
+        this.extendRightColumnAndCheck(
                 cell,
                 anchor,
                 cell,
@@ -1729,10 +1729,10 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendRightAnchorTopRightLastColumn2() {
+    public void testExtendRightColumnAnchorTopRightLastColumn2() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
-        this.extendRightAndCheck(
+        this.extendRightColumnAndCheck(
                 column.add(-1) + "1:" + column + "1",
                 SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
                 column + "1",
@@ -1744,8 +1744,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     //  C4          C4 D4
     // bottom-right bottom-left
     @Test
-    public void testExtendRightAnchorFlipsAnchor() {
-        this.extendRightAndCheck(
+    public void testExtendRightColumnAnchorFlipsAnchor() {
+        this.extendRightColumnAndCheck(
                 "C3:C4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "C3:D4",
@@ -1757,8 +1757,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     //  C4          C4  D4
     // bottom-left  bottom-left
     @Test
-    public void testExtendRightSingleColumnBottomLeft() {
-        this.extendRightAndCheck(
+    public void testExtendRightColumnSingleColumnBottomLeft() {
+        this.extendRightColumnAndCheck(
                 "C3:C4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
                 "C3:D4",
@@ -1770,8 +1770,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     //  C4          C4  D4
     // bottom-right bottom-left
     @Test
-    public void testExtendRightSingleColumnBottomRight() {
-        this.extendRightAndCheck(
+    public void testExtendRightColumnSingleColumnBottomRight() {
+        this.extendRightColumnAndCheck(
                 "C3:C4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "C3:D4",
@@ -1780,11 +1780,11 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendRightSkipsHiddenColumn() {
+    public void testExtendRightColumnSkipsHiddenColumn() {
         final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
         store.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
 
-        this.extendRightAndCheck(
+        this.extendRightColumnAndCheck(
                 "B2:C3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 store,
@@ -1794,11 +1794,11 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendRightHiddenRow() {
+    public void testExtendRightColumnIgnoresHiddenRow() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.extendRightAndCheck(
+        this.extendRightColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store
@@ -1806,11 +1806,11 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendRightHiddenRow2() {
+    public void testExtendRightColumnIgnoresHiddenRow2() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
 
-        this.extendRightAndCheck(
+        this.extendRightColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store
@@ -1820,8 +1820,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     // extendUp.......................................................................................................
 
     @Test
-    public void testExtendUpAnchorTopLeft() {
-        this.extendUpAndCheck(
+    public void testExtendUpRowAnchorTopLeft() {
+        this.extendUpRowAndCheck(
                 "C3:E5",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "C3:E4",
@@ -1830,8 +1830,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendUpAnchorTopLeft2() {
-        this.extendUpAndCheck(
+    public void testExtendUpRowAnchorTopLeft2() {
+        this.extendUpRowAndCheck(
                 "C3:C4",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "C3",
@@ -1844,8 +1844,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     // C5 D5 E5
 
     @Test
-    public void testExtendUpAnchorBottomRight() {
-        this.extendUpAndCheck(
+    public void testExtendUpRowAnchorBottomRight() {
+        this.extendUpRowAndCheck(
                 "C3:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "C2:E5",
@@ -1857,8 +1857,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     //           A2 B2
 
     @Test
-    public void testExtendUpAnchorTopLeftFirstRow() {
-        this.extendUpAndCheck(
+    public void testExtendUpRowAnchorTopLeftFirstRow() {
+        this.extendUpRowAndCheck(
                 "A1:B2",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "A1:B1",
@@ -1871,8 +1871,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     //
     // bottom-left  bottom-left
     @Test
-    public void testExtendUpSingleColumnBottomLeft() {
-        this.extendUpAndCheck(
+    public void testExtendUpRowSingleColumnBottomLeft() {
+        this.extendUpRowAndCheck(
                 "C3:D3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
                 "C2:D3",
@@ -1885,8 +1885,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     //
     // top-left  bottom-left
     @Test
-    public void testExtendUpSingleColumnTopLeft() {
-        this.extendUpAndCheck(
+    public void testExtendUpRowSingleColumnTopLeft() {
+        this.extendUpRowAndCheck(
                 "C3:D3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "C2:D3",
@@ -1895,11 +1895,11 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendUpSkipsHiddenRow() {
+    public void testExtendUpRowSkipsHiddenRow() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.extendUpAndCheck(
+        this.extendUpRowAndCheck(
                 "D4:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store,
@@ -1909,11 +1909,11 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendUpHiddenColumn() {
+    public void testExtendUpRowIgnoresHiddenColumn() {
         final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
         store.save(SpreadsheetSelection.parseColumn("B").column().setHidden(true));
 
-        this.extendUpAndCheck(
+        this.extendUpRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store
@@ -1921,22 +1921,22 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendUpHiddenColumn2() {
+    public void testExtendUpRowIgnoresHiddenColumn2() {
         final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
         store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
 
-        this.extendUpAndCheck(
+        this.extendUpRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store
         );
     }
 
-    // extendDown.......................................................................................................
+    // extendDownRow....................................................................................................
 
     @Test
-    public void testExtendDownAnchorTopLeft() {
-        this.extendDownAndCheck(
+    public void testExtendDownRowAnchorTopLeft() {
+        this.extendDownRowAndCheck(
                 "C3:E5",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "C3:E6",
@@ -1945,8 +1945,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendDownAnchorBottomRight() {
-        this.extendDownAndCheck(
+    public void testExtendDownRowAnchorBottomRight() {
+        this.extendDownRowAndCheck(
                 "C3:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "C4:E5",
@@ -1955,8 +1955,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendDownAnchorBottomRight2() {
-        this.extendDownAndCheck(
+    public void testExtendDownRowAnchorBottomRight2() {
+        this.extendDownRowAndCheck(
                 "C3:C4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "C4",
@@ -1965,13 +1965,13 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendDownAnchorTopLeftLastRow() {
+    public void testExtendDownRowAnchorTopLeftLastRow() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
         final String cell = "A" + row + ":B" + row;
-final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.TOP_LEFT;
+        final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.TOP_LEFT;
 
-        this.extendDownAndCheck(
-               cell,
+        this.extendDownRowAndCheck(
+                cell,
                 anchor,
                 cell,
                 anchor
@@ -1979,10 +1979,10 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendDownAnchorBottomRightLastRow2() {
+    public void testExtendDownRowAnchorBottomRightLastRow2() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
-        this.extendDownAndCheck(
+        this.extendDownRowAndCheck(
                 "A" + row.add(-1) + ":A" + row,
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 "A" + row,
@@ -1995,8 +1995,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     //
     // bottom-left  top-left
     @Test
-    public void testExtendDownSingleColumnBottomLeft() {
-        this.extendDownAndCheck(
+    public void testExtendDownRowSingleColumnBottomLeft() {
+        this.extendDownRowAndCheck(
                 "C3:D3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
                 "C3:D4",
@@ -2009,8 +2009,8 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     //
     // top-left  top-left
     @Test
-    public void testExtendDownSingleColumnTopLeft() {
-        this.extendDownAndCheck(
+    public void testExtendDownRowSingleColumnTopLeft() {
+        this.extendDownRowAndCheck(
                 "C3:D3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 "C3:D4",
@@ -2019,11 +2019,11 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendDownSkipsHiddenRow() {
+    public void testExtendDownRowSkipsHiddenRow() {
         final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
         store.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
 
-        this.extendDownAndCheck(
+        this.extendDownRowAndCheck(
                 "B2:C3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
                 store,
@@ -2033,11 +2033,11 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendDownHiddenColumn() {
+    public void testExtendDownRowIgnoresHiddenColumn() {
         final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
         store.save(SpreadsheetSelection.parseColumn("B").column().setHidden(true));
 
-        this.extendDownAndCheck(
+        this.extendDownRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store
@@ -2045,11 +2045,11 @@ final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAn
     }
 
     @Test
-    public void testExtendDownHiddenColumn2() {
+    public void testExtendDownRowIgnoresHiddenColumn2() {
         final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
         store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
 
-        this.extendDownAndCheck(
+        this.extendDownRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 store

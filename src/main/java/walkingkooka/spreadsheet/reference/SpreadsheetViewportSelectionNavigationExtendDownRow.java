@@ -48,7 +48,7 @@ final class SpreadsheetViewportSelectionNavigationExtendDownRow extends Spreadsh
                                                          final SpreadsheetViewportSelectionAnchor anchor,
                                                          final SpreadsheetColumnStore columnStore,
                                                          final SpreadsheetRowStore rowStore) {
-        return selection.extendDown(
+        return selection.extendDownRow(
                 anchor,
                 columnStore,
                 rowStore

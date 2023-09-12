@@ -46,7 +46,7 @@ final class SpreadsheetViewportSelectionNavigationUpRow extends SpreadsheetViewp
                                                          final SpreadsheetViewportSelectionAnchor anchor,
                                                          final SpreadsheetColumnStore columnStore,
                                                          final SpreadsheetRowStore rowStore) {
-        return selection.up(
+        return selection.upRow(
                 anchor,
                 columnStore,
                 rowStore

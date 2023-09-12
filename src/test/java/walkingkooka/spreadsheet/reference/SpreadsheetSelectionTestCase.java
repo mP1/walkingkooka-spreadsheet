@@ -597,40 +597,40 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // left.............................................................................................................
+    // leftColumn.......................................................................................................
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetColumnStore columnStore) {
+        this.leftColumnAndCheck(
                 selection,
                 columnStore,
                 this.rowStore()
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetRowStore rowStore) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetRowStore rowStore) {
+        this.leftColumnAndCheck(
                 selection,
                 this.columnStore(),
                 rowStore
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore) {
+        this.leftColumnAndCheck(
                 this.parseString(selection),
                 columnStore,
                 rowStore
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore) {
+        this.leftColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -639,29 +639,29 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final String expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final String expected) {
+        this.leftColumnAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
                 this.parseString(expected)
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final String expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final String expected) {
+        this.leftColumnAndCheck(
                 this.parseString(selection),
                 anchor,
                 this.parseString(expected)
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final String expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final String expected) {
+        this.leftColumnAndCheck(
                 selection,
                 columnStore,
                 this.rowStore(),
@@ -669,10 +669,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetRowStore rowStore,
+                                  final String expected) {
+        this.leftColumnAndCheck(
                 selection,
                 this.columnStore(),
                 rowStore,
@@ -680,11 +680,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final String expected) {
+        this.leftColumnAndCheck(
                 this.parseString(selection),
                 columnStore,
                 rowStore,
@@ -692,11 +692,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final String expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final String expected) {
+        this.leftColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -705,11 +705,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetRowStore rowStore,
+                                  final String expected) {
+        this.leftColumnAndCheck(
                 selection,
                 anchor,
                 this.columnStore(),
@@ -718,12 +718,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final String expected) {
+        this.leftColumnAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -732,19 +732,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetSelection expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetSelection expected) {
+        this.leftColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 expected
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetSelection expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetSelection expected) {
+        this.leftColumnAndCheck(
                 selection,
                 anchor,
                 columnStore(),
@@ -752,18 +752,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetColumnStore columnStore) {
+        this.leftColumnAndCheck(
                 selection,
                 columnStore,
                 Optional.empty()
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetRowStore rowStore) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetRowStore rowStore) {
+        this.leftColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 this.columnStore(),
@@ -772,21 +772,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetSelection expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetSelection expected) {
+        this.leftColumnAndCheck(
                 selection,
                 columnStore,
                 Optional.of(expected)
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final SpreadsheetSelection expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final SpreadsheetSelection expected) {
+        this.leftColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -795,12 +795,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final SpreadsheetSelection expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final SpreadsheetSelection expected) {
+        this.leftColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -809,10 +809,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final Optional<SpreadsheetSelection> expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final Optional<SpreadsheetSelection> expected) {
+        this.leftColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -820,11 +820,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetSelection expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetSelection expected) {
+        this.leftColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -832,11 +832,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final Optional<SpreadsheetSelection> expected) {
-        this.leftAndCheck(
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final Optional<SpreadsheetSelection> expected) {
+        this.leftColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -845,51 +845,51 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void leftAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final Optional<SpreadsheetSelection> expected) {
+    final void leftColumnAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetColumnStore columnStore,
+                                  final SpreadsheetRowStore rowStore,
+                                  final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::simplify),
-                selection.left(anchor, columnStore, rowStore),
-                () -> selection + " anchor=" + anchor + " navigate left"
+                selection.leftColumn(anchor, columnStore, rowStore),
+                () -> selection + " anchor=" + anchor + " navigate leftColumn"
         );
     }
 
-    // up.............................................................................................................
-    final void upAndCheck(final String selection,
+    // upRow............................................................................................................
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetColumnStore columnStore) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 columnStore,
                 this.rowStore()
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetRowStore rowStore) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 this.columnStore(),
                 rowStore
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetColumnStore columnStore,
                              final SpreadsheetRowStore rowStore) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 this.parseString(selection),
                 columnStore,
                 rowStore
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetColumnStore columnStore,
                              final SpreadsheetRowStore rowStore) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -898,29 +898,29 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final String expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
                 this.parseString(expected)
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final String expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 this.parseString(selection),
                 anchor,
                 this.parseString(expected)
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetColumnStore columnStore,
                              final String expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 columnStore,
                 this.rowStore(),
@@ -928,10 +928,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetRowStore rowStore,
                              final String expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 this.columnStore(),
                 rowStore,
@@ -939,11 +939,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetColumnStore columnStore,
                              final SpreadsheetRowStore rowStore,
                              final String expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 this.parseString(selection),
                 columnStore,
                 rowStore,
@@ -951,11 +951,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final SpreadsheetColumnStore columnStore,
                              final String expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -964,11 +964,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final SpreadsheetRowStore rowStore,
                              final String expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 anchor,
                 this.columnStore(),
@@ -977,12 +977,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final String selection,
+    final void upRowAndCheck(final String selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final SpreadsheetColumnStore columnStore,
                              final SpreadsheetRowStore rowStore,
                              final String expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -991,19 +991,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetSelection expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 expected
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final SpreadsheetSelection expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 anchor,
                 columnStore(),
@@ -1011,18 +1011,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetColumnStore columnStore) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 columnStore,
                 Optional.empty()
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetRowStore rowStore) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 this.columnStore(),
@@ -1031,21 +1031,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetColumnStore columnStore,
                              final SpreadsheetSelection expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 columnStore,
                 Optional.of(expected)
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetColumnStore columnStore,
                              final SpreadsheetRowStore rowStore,
                              final SpreadsheetSelection expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1054,12 +1054,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final SpreadsheetColumnStore columnStore,
                              final SpreadsheetRowStore rowStore,
                              final SpreadsheetSelection expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1068,10 +1068,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetColumnStore columnStore,
                              final Optional<SpreadsheetSelection> expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1079,11 +1079,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final SpreadsheetColumnStore columnStore,
                              final SpreadsheetSelection expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1091,11 +1091,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final SpreadsheetColumnStore columnStore,
                              final Optional<SpreadsheetSelection> expected) {
-        this.upAndCheck(
+        this.upRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1104,51 +1104,51 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upAndCheck(final S selection,
+    final void upRowAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
                              final SpreadsheetColumnStore columnStore,
                              final SpreadsheetRowStore rowStore,
                              final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::simplify),
-                selection.up(anchor, columnStore, rowStore),
-                () -> selection + " anchor=" + anchor + " navigate up"
+                selection.upRow(anchor, columnStore, rowStore),
+                () -> selection + " anchor=" + anchor + " navigate upRow"
         );
     }
-    // right.............................................................................................................
+    // rightColumn......................................................................................................
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetColumnStore columnStore) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetColumnStore columnStore) {
+        this.rightColumnAndCheck(
                 selection,
                 columnStore,
                 this.rowStore()
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetRowStore rowStore) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetRowStore rowStore) {
+        this.rightColumnAndCheck(
                 selection,
                 this.columnStore(),
                 rowStore
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetRowStore rowStore) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore) {
+        this.rightColumnAndCheck(
                 this.parseString(selection),
                 columnStore,
                 rowStore
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetRowStore rowStore) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore) {
+        this.rightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1157,29 +1157,29 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final String expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final String expected) {
+        this.rightColumnAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
                 this.parseString(expected)
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final String expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final String expected) {
+        this.rightColumnAndCheck(
                 this.parseString(selection),
                 anchor,
                 this.parseString(expected)
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetColumnStore columnStore,
-                            final String expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final String expected) {
+        this.rightColumnAndCheck(
                 selection,
                 columnStore,
                 this.rowStore(),
@@ -1187,10 +1187,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetRowStore rowStore,
-                            final String expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetRowStore rowStore,
+                                   final String expected) {
+        this.rightColumnAndCheck(
                 selection,
                 this.columnStore(),
                 rowStore,
@@ -1198,11 +1198,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetRowStore rowStore,
-                            final String expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final String expected) {
+        this.rightColumnAndCheck(
                 this.parseString(selection),
                 columnStore,
                 rowStore,
@@ -1210,11 +1210,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetColumnStore columnStore,
-                            final String expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final String expected) {
+        this.rightColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1223,11 +1223,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetRowStore rowStore,
-                            final String expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetRowStore rowStore,
+                                   final String expected) {
+        this.rightColumnAndCheck(
                 selection,
                 anchor,
                 this.columnStore(),
@@ -1236,12 +1236,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final String selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetRowStore rowStore,
-                            final String expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final String expected) {
+        this.rightColumnAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -1250,19 +1250,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetSelection expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetSelection expected) {
+        this.rightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 expected
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetSelection expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetSelection expected) {
+        this.rightColumnAndCheck(
                 selection,
                 anchor,
                 columnStore(),
@@ -1270,18 +1270,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetColumnStore columnStore) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetColumnStore columnStore) {
+        this.rightColumnAndCheck(
                 selection,
                 columnStore,
                 Optional.empty()
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetRowStore rowStore) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetRowStore rowStore) {
+        this.rightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 this.columnStore(),
@@ -1290,21 +1290,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetSelection expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetSelection expected) {
+        this.rightColumnAndCheck(
                 selection,
                 columnStore,
                 Optional.of(expected)
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetRowStore rowStore,
-                            final SpreadsheetSelection expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final SpreadsheetSelection expected) {
+        this.rightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1313,12 +1313,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetRowStore rowStore,
-                            final SpreadsheetSelection expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final SpreadsheetSelection expected) {
+        this.rightColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1327,10 +1327,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetColumnStore columnStore,
-                            final Optional<SpreadsheetSelection> expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final Optional<SpreadsheetSelection> expected) {
+        this.rightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1338,11 +1338,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetSelection expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetSelection expected) {
+        this.rightColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1350,11 +1350,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetColumnStore columnStore,
-                            final Optional<SpreadsheetSelection> expected) {
-        this.rightAndCheck(
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final Optional<SpreadsheetSelection> expected) {
+        this.rightColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1363,50 +1363,51 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightAndCheck(final S selection,
-                            final SpreadsheetViewportSelectionAnchor anchor,
-                            final SpreadsheetColumnStore columnStore,
-                            final SpreadsheetRowStore rowStore,
-                            final Optional<SpreadsheetSelection> expected) {
+    final void rightColumnAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::simplify),
-                selection.right(anchor, columnStore, rowStore),
+                selection.rightColumn(anchor, columnStore, rowStore),
                 () -> selection + " anchor=" + anchor + " navigate right"
         );
     }
-    // down.............................................................................................................
-    final void downAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore) {
-        this.downAndCheck(
+    // downRow..........................................................................................................
+
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetColumnStore columnStore) {
+        this.downRowAndCheck(
                 selection,
                 columnStore,
                 this.rowStore()
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final SpreadsheetRowStore rowStore) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetRowStore rowStore) {
+        this.downRowAndCheck(
                 selection,
                 this.columnStore(),
                 rowStore
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetRowStore rowStore) {
+        this.downRowAndCheck(
                 this.parseString(selection),
                 columnStore,
                 rowStore
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetRowStore rowStore) {
+        this.downRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1415,29 +1416,29 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final String expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final String expected) {
+        this.downRowAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
                 this.parseString(expected)
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final String expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final String expected) {
+        this.downRowAndCheck(
                 this.parseString(selection),
                 anchor,
                 this.parseString(expected)
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final String expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetColumnStore columnStore,
+                               final String expected) {
+        this.downRowAndCheck(
                 selection,
                 columnStore,
                 this.rowStore(),
@@ -1445,10 +1446,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetRowStore rowStore,
+                               final String expected) {
+        this.downRowAndCheck(
                 selection,
                 this.columnStore(),
                 rowStore,
@@ -1456,11 +1457,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetRowStore rowStore,
+                               final String expected) {
+        this.downRowAndCheck(
                 this.parseString(selection),
                 columnStore,
                 rowStore,
@@ -1468,11 +1469,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final String expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetColumnStore columnStore,
+                               final String expected) {
+        this.downRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1481,11 +1482,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetRowStore rowStore,
+                               final String expected) {
+        this.downRowAndCheck(
                 selection,
                 anchor,
                 this.columnStore(),
@@ -1494,12 +1495,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final String selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetRowStore rowStore,
+                               final String expected) {
+        this.downRowAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -1508,19 +1509,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetSelection expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetSelection expected) {
+        this.downRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 expected
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetSelection expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetSelection expected) {
+        this.downRowAndCheck(
                 selection,
                 anchor,
                 columnStore(),
@@ -1528,18 +1529,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetColumnStore columnStore) {
+        this.downRowAndCheck(
                 selection,
                 columnStore,
                 Optional.empty()
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetRowStore rowStore) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetRowStore rowStore) {
+        this.downRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 this.columnStore(),
@@ -1548,21 +1549,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetSelection expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetSelection expected) {
+        this.downRowAndCheck(
                 selection,
                 columnStore,
                 Optional.of(expected)
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final SpreadsheetSelection expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetRowStore rowStore,
+                               final SpreadsheetSelection expected) {
+        this.downRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1571,12 +1572,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final SpreadsheetSelection expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetRowStore rowStore,
+                               final SpreadsheetSelection expected) {
+        this.downRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1585,10 +1586,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final Optional<SpreadsheetSelection> expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetColumnStore columnStore,
+                               final Optional<SpreadsheetSelection> expected) {
+        this.downRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1596,11 +1597,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetSelection expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetSelection expected) {
+        this.downRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1608,11 +1609,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final Optional<SpreadsheetSelection> expected) {
-        this.downAndCheck(
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetColumnStore columnStore,
+                               final Optional<SpreadsheetSelection> expected) {
+        this.downRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1621,15 +1622,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downAndCheck(final S selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
-                             final Optional<SpreadsheetSelection> expected) {
+    final void downRowAndCheck(final S selection,
+                               final SpreadsheetViewportSelectionAnchor anchor,
+                               final SpreadsheetColumnStore columnStore,
+                               final SpreadsheetRowStore rowStore,
+                               final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::simplify),
-                selection.down(anchor, columnStore, rowStore),
-                () -> selection + " anchor=" + anchor + " navigate down"
+                selection.downRow(anchor, columnStore, rowStore),
+                () -> selection + " anchor=" + anchor + " navigate downRow"
         );
     }
 
@@ -1720,12 +1721,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     abstract SpreadsheetSelection parseRange(final String range);
 
-    // extendLeft.......................................................................................................
+    // extendLeftColumn.................................................................................................
 
-    final void extendLeftAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetRowStore rowStore) {
-        this.extendLeftAndCheck(
+    final void extendLeftColumnAndCheck(final String selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final SpreadsheetRowStore rowStore) {
+        this.extendLeftColumnAndCheck(
                 selection,
                 anchor,
                 this.columnStore(),
@@ -1733,11 +1734,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendLeftAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore) {
-        this.extendLeftAndCheck(
+    final void extendLeftColumnAndCheck(final String selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final SpreadsheetColumnStore columnStore,
+                                        final SpreadsheetRowStore rowStore) {
+        this.extendLeftColumnAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -1746,9 +1747,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendLeftAndCheck(final String selection,
-                                  final String expectedSelection) {
-        this.extendLeftAndCheck(
+    final void extendLeftColumnAndCheck(final String selection,
+                                        final String expectedSelection) {
+        this.extendLeftColumnAndCheck(
                 selection,
                 this.columnStore(),
                 this.rowStore(),
@@ -1756,11 +1757,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendLeftAndCheck(final String selection,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
-                                  final String expectedSelection) {
-        this.extendLeftAndCheck(
+    final void extendLeftColumnAndCheck(final String selection,
+                                        final SpreadsheetColumnStore columnStore,
+                                        final SpreadsheetRowStore rowStore,
+                                        final String expectedSelection) {
+        this.extendLeftColumnAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1770,11 +1771,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendLeftAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final String expectedSelection,
-                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendLeftAndCheck(
+    final void extendLeftColumnAndCheck(final String selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final String expectedSelection,
+                                        final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendLeftColumnAndCheck(
                 selection,
                 anchor,
                 this.columnStore(),
@@ -1784,12 +1785,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendLeftAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final String expectedSelection,
-                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendLeftAndCheck(
+    final void extendLeftColumnAndCheck(final String selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final SpreadsheetColumnStore columnStore,
+                                        final String expectedSelection,
+                                        final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendLeftColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1799,13 +1800,13 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendLeftAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
-                                  final String expectedSelection,
-                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendLeftAndCheck(
+    final void extendLeftColumnAndCheck(final String selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final SpreadsheetColumnStore columnStore,
+                                        final SpreadsheetRowStore rowStore,
+                                        final String expectedSelection,
+                                        final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendLeftColumnAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -1816,12 +1817,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendLeftAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
-                                  final SpreadsheetViewportSelection expected) {
-        this.extendLeftAndCheck(
+    final void extendLeftColumnAndCheck(final S selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final SpreadsheetColumnStore columnStore,
+                                        final SpreadsheetRowStore rowStore,
+                                        final SpreadsheetViewportSelection expected) {
+        this.extendLeftColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1830,24 +1831,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendLeftAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
-                                  final Optional<SpreadsheetViewportSelection> expected) {
+    final void extendLeftColumnAndCheck(final S selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final SpreadsheetColumnStore columnStore,
+                                        final SpreadsheetRowStore rowStore,
+                                        final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendLeft(anchor, columnStore, rowStore),
-                () -> selection + " anchor=" + anchor + " navigate extendLeft"
+                selection.extendLeftColumn(anchor, columnStore, rowStore),
+                () -> selection + " anchor=" + anchor + " navigate extendLeftColumn"
         );
     }
 
-    // extendUp.......................................................................................................
+    // extendUpRow......................................................................................................
 
-    final void extendUpAndCheck(final String selection,
-                                final SpreadsheetColumnStore columnStore,
-                                final SpreadsheetRowStore rowStore) {
-        this.extendUpAndCheck(
+    final void extendUpRowAndCheck(final String selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore) {
+        this.extendUpRowAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1856,10 +1857,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendUpAndCheck(final String selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetColumnStore columnStore) {
-        this.extendUpAndCheck(
+    final void extendUpRowAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore) {
+        this.extendUpRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1867,11 +1868,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendUpAndCheck(final String selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetColumnStore columnStore,
-                                final SpreadsheetRowStore rowStore) {
-        this.extendUpAndCheck(
+    final void extendUpRowAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore) {
+        this.extendUpRowAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -1880,9 +1881,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendUpAndCheck(final String selection,
-                                final String expectedSelection) {
-        this.extendUpAndCheck(
+    final void extendUpRowAndCheck(final String selection,
+                                   final String expectedSelection) {
+        this.extendUpRowAndCheck(
                 selection,
                 this.columnStore(),
                 this.rowStore(),
@@ -1890,11 +1891,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendUpAndCheck(final String selection,
-                                final SpreadsheetColumnStore columnStore,
-                                final SpreadsheetRowStore rowStore,
-                                final String expectedSelection) {
-        this.extendUpAndCheck(
+    final void extendUpRowAndCheck(final String selection,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final String expectedSelection) {
+        this.extendUpRowAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -1904,11 +1905,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendUpAndCheck(final String selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
-                                final String expectedSelection,
-                                final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendUpAndCheck(
+    final void extendUpRowAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final String expectedSelection,
+                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendUpRowAndCheck(
                 selection,
                 anchor,
                 this.columnStore(),
@@ -1918,12 +1919,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendUpAndCheck(final String selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetRowStore rowStore,
-                                final String expectedSelection,
-                                final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendUpAndCheck(
+    final void extendUpRowAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetRowStore rowStore,
+                                   final String expectedSelection,
+                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendUpRowAndCheck(
                 selection,
                 anchor,
                 this.columnStore(),
@@ -1933,13 +1934,13 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendUpAndCheck(final String selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetColumnStore columnStore,
-                                final SpreadsheetRowStore rowStore,
-                                final String expectedSelection,
-                                final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendUpAndCheck(
+    final void extendUpRowAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final String expectedSelection,
+                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendUpRowAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -1950,12 +1951,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendUpAndCheck(final S selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetColumnStore columnStore,
-                                final SpreadsheetRowStore rowStore,
-                                final SpreadsheetViewportSelection expected) {
-        this.extendUpAndCheck(
+    final void extendUpRowAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetColumnStore columnStore,
+                                   final SpreadsheetRowStore rowStore,
+                                   final SpreadsheetViewportSelection expected) {
+        this.extendUpRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -1964,202 +1965,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendUpAndCheck(final S selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetColumnStore columnStore,
-                                final SpreadsheetRowStore rowStore,
-                                final Optional<SpreadsheetViewportSelection> expected) {
-        this.checkEquals(
-                expected,
-                selection.extendUp(anchor, columnStore, rowStore),
-                () -> selection + " anchor=" + anchor + " navigate extendUp"
-        );
-    }
-
-    // extendRight.......................................................................................................
-
-    final void extendRightAndCheck(final String selection,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore) {
-        this.extendRightAndCheck(
-                this.parseString(selection),
-                SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
-                Optional.empty()
-        );
-    }
-
-    final void extendRightAndCheck(final String selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetRowStore rowStore) {
-        this.extendRightAndCheck(
-                selection,
-                anchor,
-                this.columnStore(),
-                rowStore
-        );
-    }
-
-    final void extendRightAndCheck(final String selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore) {
-        this.extendRightAndCheck(
-                this.parseString(selection),
-                anchor,
-                columnStore,
-                rowStore,
-                Optional.empty()
-        );
-    }
-
-    final void extendRightAndCheck(final String selection,
-                                   final String expectedSelection) {
-        this.extendRightAndCheck(
-                selection,
-                this.columnStore(),
-                this.rowStore(),
-                expectedSelection
-        );
-    }
-
-    final void extendRightAndCheck(final String selection,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
-                                   final String expectedSelection) {
-        this.extendRightAndCheck(
-                this.parseString(selection),
-                SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
-                this.parseString(expectedSelection)
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
-        );
-    }
-
-    final void extendRightAndCheck(final String selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final String expectedSelection,
-                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendRightAndCheck(
-                selection,
-                anchor,
-                this.columnStore(),
-                this.rowStore(),
-                expectedSelection,
-                expectedAnchor
-        );
-    }
-
-    final void extendRightAndCheck(final String selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final String expectedSelection,
-                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendRightAndCheck(
-                selection,
-                anchor,
-                columnStore,
-                this.rowStore(),
-                expectedSelection,
-                expectedAnchor
-        );
-    }
-
-    final void extendRightAndCheck(final String selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
-                                   final String expectedSelection,
-                                   final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendRightAndCheck(
-                this.parseString(selection),
-                anchor,
-                columnStore,
-                rowStore,
-                this.parseRange(expectedSelection)
-                        .simplify()
-                        .setAnchor(expectedAnchor)
-        );
-    }
-
-    final void extendRightAndCheck(final S selection,
-                                   final SpreadsheetSelection expectedSelection) {
-        this.extendRightAndCheck(
-                selection,
-                SpreadsheetViewportSelectionAnchor.NONE,
-                this.columnStore(),
-                this.rowStore(),
-                expectedSelection.simplify()
-                        .setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.NONE)
-        );
-    }
-
-    final void extendRightAndCheck(final S selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetViewportSelection expected) {
-        this.extendRightAndCheck(
-                selection,
-                anchor,
-                columnStore(),
-                expected
-        );
-    }
-
-    final void extendRightAndCheck(final S selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetViewportSelection expected) {
-        this.extendRightAndCheck(
-                selection,
-                anchor,
-                columnStore,
-                this.rowStore(),
-                expected
-        );
-    }
-
-    final void extendRightAndCheck(final S selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
-                                   final SpreadsheetViewportSelection expected) {
-        this.extendRightAndCheck(
-                selection,
-                anchor,
-                columnStore,
-                rowStore,
-                Optional.of(expected)
-        );
-    }
-
-    final void extendRightAndCheck(final S selection,
+    final void extendUpRowAndCheck(final S selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
                                    final SpreadsheetColumnStore columnStore,
                                    final SpreadsheetRowStore rowStore,
                                    final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendRight(anchor, columnStore, rowStore),
-                () -> selection + " anchor=" + anchor + " navigate extendRight"
+                selection.extendUpRow(anchor, columnStore, rowStore),
+                () -> selection + " anchor=" + anchor + " navigate extendUp"
         );
     }
 
-    // extendDown.......................................................................................................
+    // extendRightColumn................................................................................................
 
-    final void extendDownAndCheck(final String selection) {
-        this.extendDownAndCheck(
-                selection,
-                this.columnStore(),
-                this.rowStore()
-        );
-    }
-
-    final void extendDownAndCheck(final String selection,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final String selection,
+                                         final SpreadsheetColumnStore columnStore,
+                                         final SpreadsheetRowStore rowStore) {
+        this.extendRightColumnAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -2168,22 +1991,22 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final String selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final SpreadsheetRowStore rowStore) {
+        this.extendRightColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore()
+                this.columnStore(),
+                rowStore
         );
     }
 
-    final void extendDownAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final String selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final SpreadsheetColumnStore columnStore,
+                                         final SpreadsheetRowStore rowStore) {
+        this.extendRightColumnAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -2192,9 +2015,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final String selection,
-                                  final String expectedSelection) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final String selection,
+                                         final String expectedSelection) {
+        this.extendRightColumnAndCheck(
                 selection,
                 this.columnStore(),
                 this.rowStore(),
@@ -2202,11 +2025,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final String selection,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
-                                  final String expectedSelection) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final String selection,
+                                         final SpreadsheetColumnStore columnStore,
+                                         final SpreadsheetRowStore rowStore,
+                                         final String expectedSelection) {
+        this.extendRightColumnAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
                 columnStore,
@@ -2216,11 +2039,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final String expectedSelection,
-                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final String selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final String expectedSelection,
+                                         final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendRightColumnAndCheck(
                 selection,
                 anchor,
                 this.columnStore(),
@@ -2230,28 +2053,28 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetRowStore rowStore,
-                                  final String expectedSelection,
-                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final String selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final SpreadsheetColumnStore columnStore,
+                                         final String expectedSelection,
+                                         final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendRightColumnAndCheck(
                 selection,
                 anchor,
-                this.columnStore(),
-                rowStore,
+                columnStore,
+                this.rowStore(),
                 expectedSelection,
                 expectedAnchor
         );
     }
 
-    final void extendDownAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
-                                  final String expectedSelection,
-                                  final SpreadsheetViewportSelectionAnchor expectedAnchor) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final String selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final SpreadsheetColumnStore columnStore,
+                                         final SpreadsheetRowStore rowStore,
+                                         final String expectedSelection,
+                                         final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendRightColumnAndCheck(
                 this.parseString(selection),
                 anchor,
                 columnStore,
@@ -2262,9 +2085,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final S selection,
-                                  final SpreadsheetSelection expectedSelection) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final S selection,
+                                         final SpreadsheetSelection expectedSelection) {
+        this.extendRightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
                 this.columnStore(),
@@ -2274,10 +2097,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetViewportSelection expected) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final S selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final SpreadsheetViewportSelection expected) {
+        this.extendRightColumnAndCheck(
                 selection,
                 anchor,
                 columnStore(),
@@ -2285,11 +2108,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetViewportSelection expected) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final S selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final SpreadsheetColumnStore columnStore,
+                                         final SpreadsheetViewportSelection expected) {
+        this.extendRightColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -2298,12 +2121,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
-                                  final SpreadsheetViewportSelection expected) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final S selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final SpreadsheetColumnStore columnStore,
+                                         final SpreadsheetRowStore rowStore,
+                                         final SpreadsheetViewportSelection expected) {
+        this.extendRightColumnAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -2312,11 +2135,162 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final Optional<SpreadsheetViewportSelection> expected) {
-        this.extendDownAndCheck(
+    final void extendRightColumnAndCheck(final S selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final SpreadsheetColumnStore columnStore,
+                                         final SpreadsheetRowStore rowStore,
+                                         final Optional<SpreadsheetViewportSelection> expected) {
+        this.checkEquals(
+                expected,
+                selection.extendRightColumn(anchor, columnStore, rowStore),
+                () -> selection + " anchor=" + anchor + " navigate extendRightColumn"
+        );
+    }
+
+    // extendDownRow....................................................................................................
+
+    final void extendDownRowAndCheck(final String selection) {
+        this.extendDownRowAndCheck(
+                selection,
+                this.columnStore(),
+                this.rowStore()
+        );
+    }
+
+    final void extendDownRowAndCheck(final String selection,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final SpreadsheetRowStore rowStore) {
+        this.extendDownRowAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void extendDownRowAndCheck(final String selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetColumnStore columnStore) {
+        this.extendDownRowAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore()
+        );
+    }
+
+    final void extendDownRowAndCheck(final String selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final SpreadsheetRowStore rowStore) {
+        this.extendDownRowAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.empty()
+        );
+    }
+
+    final void extendDownRowAndCheck(final String selection,
+                                     final String expectedSelection) {
+        this.extendDownRowAndCheck(
+                selection,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection
+        );
+    }
+
+    final void extendDownRowAndCheck(final String selection,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final SpreadsheetRowStore rowStore,
+                                     final String expectedSelection) {
+        this.extendDownRowAndCheck(
+                this.parseString(selection),
+                SpreadsheetViewportSelectionAnchor.NONE,
+                columnStore,
+                rowStore,
+                this.parseString(expectedSelection)
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    final void extendDownRowAndCheck(final String selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final String expectedSelection,
+                                     final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendDownRowAndCheck(
+                selection,
+                anchor,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection,
+                expectedAnchor
+        );
+    }
+
+    final void extendDownRowAndCheck(final String selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetRowStore rowStore,
+                                     final String expectedSelection,
+                                     final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendDownRowAndCheck(
+                selection,
+                anchor,
+                this.columnStore(),
+                rowStore,
+                expectedSelection,
+                expectedAnchor
+        );
+    }
+
+    final void extendDownRowAndCheck(final String selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final SpreadsheetRowStore rowStore,
+                                     final String expectedSelection,
+                                     final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendDownRowAndCheck(
+                this.parseString(selection),
+                anchor,
+                columnStore,
+                rowStore,
+                this.parseRange(expectedSelection)
+                        .simplify()
+                        .setAnchor(expectedAnchor)
+        );
+    }
+
+    final void extendDownRowAndCheck(final S selection,
+                                     final SpreadsheetSelection expectedSelection) {
+        this.extendDownRowAndCheck(
+                selection,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                this.columnStore(),
+                this.rowStore(),
+                expectedSelection.simplify()
+                        .setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    final void extendDownRowAndCheck(final S selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetViewportSelection expected) {
+        this.extendDownRowAndCheck(
+                selection,
+                anchor,
+                columnStore(),
+                expected
+        );
+    }
+
+    final void extendDownRowAndCheck(final S selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final SpreadsheetViewportSelection expected) {
+        this.extendDownRowAndCheck(
                 selection,
                 anchor,
                 columnStore,
@@ -2325,15 +2299,42 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void extendDownAndCheck(final S selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
-                                  final Optional<SpreadsheetViewportSelection> expected) {
+    final void extendDownRowAndCheck(final S selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final SpreadsheetRowStore rowStore,
+                                     final SpreadsheetViewportSelection expected) {
+        this.extendDownRowAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                rowStore,
+                Optional.of(expected)
+        );
+    }
+
+    final void extendDownRowAndCheck(final S selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final Optional<SpreadsheetViewportSelection> expected) {
+        this.extendDownRowAndCheck(
+                selection,
+                anchor,
+                columnStore,
+                this.rowStore(),
+                expected
+        );
+    }
+
+    final void extendDownRowAndCheck(final S selection,
+                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetColumnStore columnStore,
+                                     final SpreadsheetRowStore rowStore,
+                                     final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendDown(anchor, columnStore, rowStore),
-                () -> selection + " anchor=" + anchor + " navigate extendDown"
+                selection.extendDownRow(anchor, columnStore, rowStore),
+                () -> selection + " anchor=" + anchor + " navigate extendDownRow"
         );
     }
 

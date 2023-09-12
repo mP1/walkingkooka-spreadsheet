@@ -359,9 +359,9 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    Optional<SpreadsheetSelection> left(final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                              final SpreadsheetColumnStore columnStore,
+                                              final SpreadsheetRowStore rowStore) {
         return this.leftOrRight(
                 columnStore,
                 rowStore,
@@ -370,9 +370,9 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    Optional<SpreadsheetSelection> right(final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetColumnStore columnStore,
-                                         final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                               final SpreadsheetColumnStore columnStore,
+                                               final SpreadsheetRowStore rowStore) {
         return this.leftOrRight(
                 columnStore,
                 rowStore,
@@ -392,9 +392,9 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    Optional<SpreadsheetSelection> up(final SpreadsheetViewportSelectionAnchor anchor,
-                                      final SpreadsheetColumnStore columnStore,
-                                      final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                         final SpreadsheetColumnStore columnStore,
+                                         final SpreadsheetRowStore rowStore) {
         return this.upOrDown(
                 columnStore,
                 rowStore,
@@ -403,9 +403,9 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    Optional<SpreadsheetSelection> down(final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                           final SpreadsheetColumnStore columnStore,
+                                           final SpreadsheetRowStore rowStore) {
         return this.upOrDown(
                 columnStore,
                 rowStore,
@@ -425,21 +425,21 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    Optional<SpreadsheetViewportSelection> extendLeft(final SpreadsheetViewportSelectionAnchor anchor,
-                                                      final SpreadsheetColumnStore columnStore,
-                                                      final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetViewportSelection> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                            final SpreadsheetColumnStore columnStore,
+                                                            final SpreadsheetRowStore rowStore) {
         return this.extendRange(
-                this.left(anchor, columnStore, rowStore),
+                this.leftColumn(anchor, columnStore, rowStore),
                 anchor
         ).map(this::setAnchorOrDefaultBottomRight);
     }
 
     @Override
-    Optional<SpreadsheetViewportSelection> extendUp(final SpreadsheetViewportSelectionAnchor anchor,
-                                                    final SpreadsheetColumnStore columnStore,
-                                                    final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                                       final SpreadsheetColumnStore columnStore,
+                                                       final SpreadsheetRowStore rowStore) {
         return this.extendRange(
-                this.up(anchor, columnStore, rowStore),
+                this.upRow(anchor, columnStore, rowStore),
                 anchor
         ).map(this::setAnchorOrDefaultBottomRight);
     }
@@ -449,21 +449,21 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    Optional<SpreadsheetViewportSelection> extendRight(final SpreadsheetViewportSelectionAnchor anchor,
-                                                       final SpreadsheetColumnStore columnStore,
-                                                       final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetViewportSelection> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
         return this.extendRange(
-                this.right(anchor, columnStore, rowStore),
+                this.rightColumn(anchor, columnStore, rowStore),
                 anchor
         ).map(this::setAnchorOrDefaultTopLeft);
     }
 
     @Override
-    Optional<SpreadsheetViewportSelection> extendDown(final SpreadsheetViewportSelectionAnchor anchor,
-                                                      final SpreadsheetColumnStore columnStore,
-                                                      final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetViewportSelection> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                                         final SpreadsheetColumnStore columnStore,
+                                                         final SpreadsheetRowStore rowStore) {
         return this.extendRange(
-                this.down(anchor, columnStore, rowStore),
+                this.downRow(anchor, columnStore, rowStore),
                 anchor
         ).map(this::setAnchorOrDefaultTopLeft);
     }

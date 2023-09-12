@@ -881,37 +881,37 @@ public abstract class SpreadsheetSelection implements HasText,
                         end.isHidden(hiddenColumnTester, hiddenRowTester));
     }
 
-    abstract Optional<SpreadsheetSelection> left(final SpreadsheetViewportSelectionAnchor anchor,
-                                                 final SpreadsheetColumnStore columnStore,
-                                                 final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                       final SpreadsheetColumnStore columnStore,
+                                                       final SpreadsheetRowStore rowStore);
 
-    abstract Optional<SpreadsheetSelection> up(final SpreadsheetViewportSelectionAnchor anchor,
-                                               final SpreadsheetColumnStore columnStore,
-                                               final SpreadsheetRowStore rowStore);
-
-    abstract Optional<SpreadsheetSelection> right(final SpreadsheetViewportSelectionAnchor anchor,
+    abstract Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                   final SpreadsheetColumnStore columnStore,
                                                   final SpreadsheetRowStore rowStore);
 
-    abstract Optional<SpreadsheetSelection> down(final SpreadsheetViewportSelectionAnchor anchor,
-                                                 final SpreadsheetColumnStore columnStore,
-                                                 final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                        final SpreadsheetColumnStore columnStore,
+                                                        final SpreadsheetRowStore rowStore);
 
-    abstract Optional<SpreadsheetViewportSelection> extendLeft(final SpreadsheetViewportSelectionAnchor anchor,
-                                                               final SpreadsheetColumnStore columnStore,
-                                                               final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                                    final SpreadsheetColumnStore columnStore,
+                                                    final SpreadsheetRowStore rowStore);
 
-    abstract Optional<SpreadsheetViewportSelection> extendUp(final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetViewportSelection> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                                     final SpreadsheetColumnStore columnStore,
+                                                                     final SpreadsheetRowStore rowStore);
 
-    abstract Optional<SpreadsheetViewportSelection> extendRight(final SpreadsheetViewportSelectionAnchor anchor,
+    abstract Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                                 final SpreadsheetColumnStore columnStore,
                                                                 final SpreadsheetRowStore rowStore);
 
-    abstract Optional<SpreadsheetViewportSelection> extendDown(final SpreadsheetViewportSelectionAnchor anchor,
-                                                               final SpreadsheetColumnStore columnStore,
-                                                               final SpreadsheetRowStore rowStore);
+    abstract Optional<SpreadsheetViewportSelection> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                                      final SpreadsheetColumnStore columnStore,
+                                                                      final SpreadsheetRowStore rowStore);
+
+    abstract Optional<SpreadsheetViewportSelection> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                                                  final SpreadsheetColumnStore columnStore,
+                                                                  final SpreadsheetRowStore rowStore);
 
     /**
      * Factory that creates or extends a {@link SpreadsheetSelection} into a range. Note the other is either a

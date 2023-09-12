@@ -182,25 +182,25 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    Optional<SpreadsheetSelection> left(final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                              final SpreadsheetColumnStore columnStore,
+                                              final SpreadsheetRowStore rowStore) {
         return anchor.column(this)
-                .left(anchor, columnStore, rowStore);
+                .leftColumn(anchor, columnStore, rowStore);
     }
 
     @Override
-    Optional<SpreadsheetSelection> right(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                               final SpreadsheetColumnStore columnStore,
+                                               final SpreadsheetRowStore rowStore) {
+        return anchor.column(this)
+                .rightColumn(anchor, columnStore, rowStore);
+    }
+
+    @Override
+    Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
                                          final SpreadsheetColumnStore columnStore,
                                          final SpreadsheetRowStore rowStore) {
-        return anchor.column(this)
-                .right(anchor, columnStore, rowStore);
-    }
-
-    @Override
-    Optional<SpreadsheetSelection> up(final SpreadsheetViewportSelectionAnchor anchor,
-                                      final SpreadsheetColumnStore columnStore,
-                                      final SpreadsheetRowStore rowStore) {
         return this.emptyIfHidden(
                 columnStore,
                 rowStore
@@ -208,9 +208,9 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    Optional<SpreadsheetSelection> down(final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                           final SpreadsheetColumnStore columnStore,
+                                           final SpreadsheetRowStore rowStore) {
         return this.emptyIfHidden(
                 columnStore,
                 rowStore
@@ -218,9 +218,9 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    Optional<SpreadsheetViewportSelection> extendLeft(final SpreadsheetViewportSelectionAnchor anchor,
-                                                      final SpreadsheetColumnStore columnStore,
-                                                      final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetViewportSelection> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                            final SpreadsheetColumnStore columnStore,
+                                                            final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
                 this.isSingle() ? SpreadsheetViewportSelectionAnchor.RIGHT : anchor,
                 columnStore::leftSkipHidden
@@ -228,9 +228,9 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    Optional<SpreadsheetViewportSelection> extendRight(final SpreadsheetViewportSelectionAnchor anchor,
-                                                       final SpreadsheetColumnStore columnStore,
-                                                       final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetViewportSelection> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetColumnStore columnStore,
+                                                             final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
                 this.isSingle() ? SpreadsheetViewportSelectionAnchor.LEFT : anchor,
                 columnStore::rightSkipHidden
@@ -256,9 +256,9 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    Optional<SpreadsheetViewportSelection> extendUp(final SpreadsheetViewportSelectionAnchor anchor,
-                                                    final SpreadsheetColumnStore columnStore,
-                                                    final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                                       final SpreadsheetColumnStore columnStore,
+                                                       final SpreadsheetRowStore rowStore) {
         return this.setAnchorEmptyIfHidden(
                 anchor,
                 columnStore,
@@ -267,9 +267,9 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    Optional<SpreadsheetViewportSelection> extendDown(final SpreadsheetViewportSelectionAnchor anchor,
-                                                      final SpreadsheetColumnStore columnStore,
-                                                      final SpreadsheetRowStore rowStore) {
+    Optional<SpreadsheetViewportSelection> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                                         final SpreadsheetColumnStore columnStore,
+                                                         final SpreadsheetRowStore rowStore) {
         return this.setAnchorEmptyIfHidden(
                 anchor,
                 columnStore,
