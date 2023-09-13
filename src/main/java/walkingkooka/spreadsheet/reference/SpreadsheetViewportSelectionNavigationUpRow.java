@@ -33,7 +33,7 @@ final class SpreadsheetViewportSelectionNavigationUpRow extends SpreadsheetViewp
 
     @Override
     public String text() {
-        return "up";
+        return "up row";
     }
 
     @Override

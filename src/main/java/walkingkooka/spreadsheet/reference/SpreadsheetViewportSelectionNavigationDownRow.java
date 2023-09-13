@@ -34,7 +34,7 @@ final class SpreadsheetViewportSelectionNavigationDownRow extends SpreadsheetVie
 
     @Override
     public String text() {
-        return "down";
+        return "down row";
     }
 
     @Override
