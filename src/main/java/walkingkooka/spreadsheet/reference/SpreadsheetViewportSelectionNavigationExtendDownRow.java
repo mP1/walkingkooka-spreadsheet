@@ -35,7 +35,7 @@ final class SpreadsheetViewportSelectionNavigationExtendDownRow extends Spreadsh
 
     @Override
     public String text() {
-        return "extend-down";
+        return "extend-down row";
     }
 
     @Override

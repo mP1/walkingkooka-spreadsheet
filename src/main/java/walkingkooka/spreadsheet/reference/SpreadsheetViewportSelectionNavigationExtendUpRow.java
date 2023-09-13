@@ -34,7 +34,7 @@ final class SpreadsheetViewportSelectionNavigationExtendUpRow extends Spreadshee
 
     @Override
     public String text() {
-        return "extend-up";
+        return "extend-up row";
     }
 
     @Override

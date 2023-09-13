@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -59,29 +60,90 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     }
 
     @Test
-    public void testParseLeft() {
+    public void testParseUnknownFails3() {
+        this.parseStringFails(
+                "right row",
+                InvalidCharacterException.class
+        );
+    }
+
+    @Test
+    public void testParseEmpty() {
         this.parseStringAndCheck(
-                "left",
+                "",
+                Lists.empty()
+        );
+    }
+
+    @Test
+    public void testParseLeftColumn() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportSelectionNavigation.leftColumn()
+        );
+    }
+
+    @Test
+    public void testParseRightColumn() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportSelectionNavigation.rightColumn()
+        );
+    }
+
+    @Test
+    public void testParseUpRow() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportSelectionNavigation.upRow()
+        );
+    }
+
+    @Test
+    public void testParseDownRow() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportSelectionNavigation.downRow()
+        );
+    }
+
+    @Test
+    public void testParseExtendLeftColumn() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportSelectionNavigation.extendLeftColumn()
+        );
+    }
+
+    @Test
+    public void testParseExtendRightColumn() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportSelectionNavigation.extendRightColumn()
+        );
+    }
+
+    @Test
+    public void testParseExtendUpRow() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportSelectionNavigation.extendUpRow()
+        );
+    }
+
+    @Test
+    public void testParseExtendDownRow() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportSelectionNavigation.extendDownRow()
+        );
+    }
+
+    private void parseStringAndCheck0(final SpreadsheetViewportSelectionNavigation navigation) {
+        this.parseStringAndCheck(
+                navigation.text(),
                 Lists.of(
-                        SpreadsheetViewportSelectionNavigation.leftColumn()
+                        navigation
                 )
         );
     }
 
     @Test
-    public void testParseExtendRight() {
+    public void testParseLeftColumnRightColumnUpRowExtendDownRow() {
         this.parseStringAndCheck(
-                "extend-right",
-                Lists.of(
-                        SpreadsheetViewportSelectionNavigation.extendRightColumn()
-                )
-        );
-    }
-
-    @Test
-    public void testParseLeftRightUpExtendDown() {
-        this.parseStringAndCheck(
-                "left,right,up,extend-down",
+                "left column,right column,up row,extend-down row",
                 Lists.of(
                         SpreadsheetViewportSelectionNavigation.leftColumn(),
                         SpreadsheetViewportSelectionNavigation.rightColumn(),

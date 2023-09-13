@@ -17,11 +17,21 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-import walkingkooka.text.CharSequences;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.HasText;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserContexts;
+import walkingkooka.text.cursor.parser.ParserReporter;
+import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.Parsers;
 
 import java.util.List;
 import java.util.Objects;
@@ -113,32 +123,147 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
      * {@link #extendLeftColumn()} = <pre>extend-left</pre>.
      */
     public static List<SpreadsheetViewportSelectionNavigation> parse(final String text) {
-        return SpreadsheetViewportSelection.SEPARATOR.parse(
-                text,
-                SpreadsheetViewportSelectionNavigation::parse0
-        );
-    }
+        Objects.requireNonNull(text, "text");
 
-    private static SpreadsheetViewportSelectionNavigation parse0(final String text) {
-        for (final SpreadsheetViewportSelectionNavigation navigation : VALUES) {
-            if (navigation.text().equals(text)) {
-                return navigation;
+        final List<SpreadsheetViewportSelectionNavigation> navigations = Lists.array();
+
+        final TextCursor cursor = TextCursors.charSequence(text);
+        while (false == cursor.isEmpty()) {
+
+            for (; ; ) {
+                if (LEFT.parse(cursor, CONTEXT).isPresent()) {
+                    SPACE.parse(cursor, CONTEXT);
+                    COLUMN.parse(cursor, CONTEXT);
+
+                    navigations.add(
+                            SpreadsheetViewportSelectionNavigation.leftColumn()
+                    );
+                    break;
+                }
+                if (RIGHT.parse(cursor, CONTEXT).isPresent()) {
+                    SPACE.parse(cursor, CONTEXT);
+                    COLUMN.parse(cursor, CONTEXT);
+
+                    navigations.add(
+                            SpreadsheetViewportSelectionNavigation.rightColumn()
+                    );
+                    break;
+                }
+                if (UP.parse(cursor, CONTEXT).isPresent()) {
+                    SPACE.parse(cursor, CONTEXT);
+                    ROW.parse(cursor, CONTEXT);
+
+                    navigations.add(
+                            SpreadsheetViewportSelectionNavigation.upRow()
+                    );
+                    break;
+                }
+                if (DOWN.parse(cursor, CONTEXT).isPresent()) {
+                    SPACE.parse(cursor, CONTEXT);
+                    ROW.parse(cursor, CONTEXT);
+
+                    navigations.add(
+                            SpreadsheetViewportSelectionNavigation.downRow()
+                    );
+                    break;
+                }
+
+                if (EXTEND_LEFT.parse(cursor, CONTEXT).isPresent()) {
+                    SPACE.parse(cursor, CONTEXT);
+                    COLUMN.parse(cursor, CONTEXT);
+
+                    navigations.add(
+                            SpreadsheetViewportSelectionNavigation.extendLeftColumn()
+                    );
+                    break;
+                }
+                if (EXTEND_RIGHT.parse(cursor, CONTEXT).isPresent()) {
+                    SPACE.parse(cursor, CONTEXT);
+                    COLUMN.parse(cursor, CONTEXT);
+
+                    navigations.add(
+                            SpreadsheetViewportSelectionNavigation.extendRightColumn()
+                    );
+                    break;
+                }
+                if (EXTEND_UP.parse(cursor, CONTEXT).isPresent()) {
+                    SPACE.parse(cursor, CONTEXT);
+                    ROW.parse(cursor, CONTEXT);
+
+                    navigations.add(
+                            SpreadsheetViewportSelectionNavigation.extendUpRow()
+                    );
+                    break;
+                }
+                if (EXTEND_DOWN.parse(cursor, CONTEXT).isPresent()) {
+                    SPACE.parse(cursor, CONTEXT);
+                    ROW.parse(cursor, CONTEXT);
+
+                    navigations.add(
+                            SpreadsheetViewportSelectionNavigation.extendDownRow()
+                    );
+                    break;
+                }
+                throw new InvalidCharacterException(
+                        text,
+                        cursor.lineInfo()
+                                .textOffset()
+                );
             }
+
+            if (cursor.isEmpty()) {
+                break;
+            }
+
+            SEPARATOR.parse(cursor, CONTEXT);
         }
 
-        throw new IllegalArgumentException("Invalid text=" + CharSequences.quoteAndEscape(text));
+        return Lists.immutable(navigations);
     }
 
-    private final static SpreadsheetViewportSelectionNavigation[] VALUES = new SpreadsheetViewportSelectionNavigation[]{
-            downRow(),
-            leftColumn(),
-            rightColumn(),
-            upRow(),
-            extendDownRow(),
-            extendLeftColumn(),
-            extendRightColumn(),
-            extendUpRow()
-    };
+    private final static ParserReporter<ParserContext> REPORTER = ParserReporters.invalidCharacterException();
+
+    private final static Parser<ParserContext> LEFT = stringParser("left");
+
+    private final static Parser<ParserContext> RIGHT = stringParser("right");
+
+    private final static Parser<ParserContext> UP = stringParser("up");
+
+    private final static Parser<ParserContext> DOWN = stringParser("down");
+
+    private final static Parser<ParserContext> EXTEND_LEFT = stringParser("extend-left");
+
+    private final static Parser<ParserContext> EXTEND_RIGHT = stringParser("extend-right");
+
+    private final static Parser<ParserContext> EXTEND_UP = stringParser("extend-up");
+
+    private final static Parser<ParserContext> EXTEND_DOWN = stringParser("extend-down");
+
+    private final static Parser<ParserContext> SPACE = Parsers.character(
+            CharPredicates.is(' ')
+    ).orReport(REPORTER);
+
+    private final static Parser<ParserContext> COLUMN = stringParser("column")
+            .orReport(REPORTER);
+
+    private final static Parser<ParserContext> ROW = stringParser("row")
+            .orReport(REPORTER);
+
+    private final static Parser<ParserContext> SEPARATOR = Parsers.character(
+            CharPredicates.is(SpreadsheetViewportSelection.SEPARATOR.character())
+    ).orReport(REPORTER);
+
+    private final static ParserContext CONTEXT = ParserContexts.fake();
+
+    /**
+     * Factory that creates a {@link Parsers#string(String, CaseSensitivity)}.
+     */
+    private static Parser<ParserContext> stringParser(final String token) {
+        return Parsers.string(
+                token,
+                CaseSensitivity.SENSITIVE
+        );
+    }
 
     /**
      * Accepts some navigations and removes opposites returning the result.

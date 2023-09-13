@@ -574,7 +574,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                                 SpreadsheetViewportSelectionNavigation.leftColumn()
                         )
                 ),
-                "cell A1 left" + EOL
+                "cell A1 left column" + EOL
         );
     }
 
@@ -589,7 +589,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                                 SpreadsheetViewportSelectionNavigation.upRow()
                         )
                 ),
-                "cell A1 left,up" + EOL
+                "cell A1 left column,up row" + EOL
         );
     }
 
@@ -603,7 +603,7 @@ public final class SpreadsheetViewportSelectionTest implements ClassTesting<Spre
                                 SpreadsheetViewportSelectionNavigation.leftColumn()
                         )
                 ),
-                "row-range 12:34 TOP left" + EOL
+                "row-range 12:34 TOP left column" + EOL
         );
     }
 

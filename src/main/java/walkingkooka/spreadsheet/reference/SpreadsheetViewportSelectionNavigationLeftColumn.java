@@ -32,7 +32,7 @@ final class SpreadsheetViewportSelectionNavigationLeftColumn extends Spreadsheet
 
     @Override
     public String text() {
-        return "left";
+        return "left column";
     }
 
     @Override
