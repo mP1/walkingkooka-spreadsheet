@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +35,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportSelectionNavigationTest implements ParseStringTesting<List<SpreadsheetViewportSelectionNavigation>>,
+        TreePrintableTesting,
         ClassTesting<SpreadsheetViewportSelectionNavigation> {
 
     // parse............................................................................................................
@@ -53,17 +55,40 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
 
     @Test
     public void testParseUnknownFails2() {
+        final String text = "EXTEND-RIGHT";
+
         this.parseStringFails(
-                "EXTEND-RIGHT",
-                IllegalArgumentException.class
+                text,
+                new InvalidCharacterException(
+                        text,
+                        0
+                )
         );
     }
 
     @Test
     public void testParseUnknownFails3() {
+        final String text = "right row";
+
         this.parseStringFails(
-                "right row",
-                InvalidCharacterException.class
+                text,
+                new InvalidCharacterException(
+                        text,
+                        "right ".length()
+                )
+        );
+    }
+
+    @Test
+    public void testParseInvalidValue() {
+        final String text = "right 123A";
+
+        this.parseStringFails(
+                text,
+                new InvalidCharacterException(
+                        text,
+                        "right 123".length()
+                )
         );
     }
 
@@ -141,14 +166,53 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     }
 
     @Test
-    public void testParseLeftColumnRightColumnUpRowExtendDownRow() {
+    public void testParseLeftColumnRightColumnUpRowDownRow() {
         this.parseStringAndCheck(
-                "left column,right column,up row,extend-down row",
+                "left column,right column,up row,down row",
                 Lists.of(
                         SpreadsheetViewportSelectionNavigation.leftColumn(),
                         SpreadsheetViewportSelectionNavigation.rightColumn(),
                         SpreadsheetViewportSelectionNavigation.upRow(),
+                        SpreadsheetViewportSelectionNavigation.downRow()
+                )
+        );
+    }
+
+    @Test
+    public void testParseExtendLeftColumnExtendRightColumnExtendUpRowExtendDownRow() {
+        this.parseStringAndCheck(
+                "extend-left column,extend-right column,extend-up row,extend-down row",
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
+                        SpreadsheetViewportSelectionNavigation.extendRightColumn(),
+                        SpreadsheetViewportSelectionNavigation.extendUpRow(),
                         SpreadsheetViewportSelectionNavigation.extendDownRow()
+                )
+        );
+    }
+
+    @Test
+    public void testParseLeftPixelRightPixelUpPixelDownPixel() {
+        this.parseStringAndCheck(
+                "left 10,right 20,up 30,down 40",
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.leftPixel(10),
+                        SpreadsheetViewportSelectionNavigation.rightPixel(20),
+                        SpreadsheetViewportSelectionNavigation.upPixel(30),
+                        SpreadsheetViewportSelectionNavigation.downPixel(40)
+                )
+        );
+    }
+
+    @Test
+    public void testParseExtendLeftPixelExtendRightPixelExtendUpPixelExtendDownPixel() {
+        this.parseStringAndCheck(
+                "extend-left 10,extend-right 20,extend-up 30,extend-down 40",
+                Lists.of(
+                        SpreadsheetViewportSelectionNavigation.extendLeftPixel(10),
+                        SpreadsheetViewportSelectionNavigation.extendRightPixel(20),
+                        SpreadsheetViewportSelectionNavigation.extendUpPixel(30),
+                        SpreadsheetViewportSelectionNavigation.extendDownPixel(40)
                 )
         );
     }
