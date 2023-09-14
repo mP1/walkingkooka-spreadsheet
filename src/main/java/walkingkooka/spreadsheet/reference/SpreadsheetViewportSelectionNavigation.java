@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
@@ -26,6 +28,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.LongParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserContexts;
@@ -33,14 +36,24 @@ import walkingkooka.text.cursor.parser.ParserReporter;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.Parsers;
 
+import java.math.MathContext;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.IntFunction;
+import java.util.function.Supplier;
 
 /**
  * Captures a users input movement relative to a selection, such as a cursor-left from a selection in the viewport.
  */
 public abstract class SpreadsheetViewportSelectionNavigation implements HasText {
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationExtendDownPixel}
+     */
+    public static SpreadsheetViewportSelectionNavigation extendDownPixel(final int value) {
+        return SpreadsheetViewportSelectionNavigationExtendDownPixel.with(value);
+    }
 
     /**
      * {@see SpreadsheetViewportSelectionNavigationDownRow}
@@ -57,6 +70,13 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
     }
 
     /**
+     * {@see SpreadsheetViewportSelectionNavigationExtendLeftPixel}
+     */
+    public static SpreadsheetViewportSelectionNavigation extendLeftPixel(final int value) {
+        return SpreadsheetViewportSelectionNavigationExtendLeftPixel.with(value);
+    }
+
+    /**
      * {@see SpreadsheetViewportSelectionNavigationExtendRightColumn}
      */
     public static SpreadsheetViewportSelectionNavigation extendRightColumn() {
@@ -64,10 +84,31 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
     }
 
     /**
+     * {@see SpreadsheetViewportSelectionNavigationExtendRightPixel}
+     */
+    public static SpreadsheetViewportSelectionNavigation extendRightPixel(final int value) {
+        return SpreadsheetViewportSelectionNavigationExtendRightPixel.with(value);
+    }
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationExtendUpPixel}
+     */
+    public static SpreadsheetViewportSelectionNavigation extendUpPixel(final int value) {
+        return SpreadsheetViewportSelectionNavigationExtendUpPixel.with(value);
+    }
+
+    /**
      * {@see SpreadsheetViewportSelectionNavigationExtendUpRow}
      */
     public static SpreadsheetViewportSelectionNavigation extendUpRow() {
         return SpreadsheetViewportSelectionNavigationExtendUpRow.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationDownPixel}
+     */
+    public static SpreadsheetViewportSelectionNavigation downPixel(final int value) {
+        return SpreadsheetViewportSelectionNavigationDownPixel.with(value);
     }
 
     /**
@@ -85,10 +126,31 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
     }
 
     /**
+     * {@see SpreadsheetViewportSelectionNavigationLeftPixel}
+     */
+    public static SpreadsheetViewportSelectionNavigation leftPixel(final int value) {
+        return SpreadsheetViewportSelectionNavigationLeftPixel.with(value);
+    }
+
+    /**
      * {@see SpreadsheetViewportSelectionNavigationRightColumn}
      */
     public static SpreadsheetViewportSelectionNavigation rightColumn() {
         return SpreadsheetViewportSelectionNavigationRightColumn.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationRightPixel}
+     */
+    public static SpreadsheetViewportSelectionNavigation rightPixel(final int value) {
+        return SpreadsheetViewportSelectionNavigationRightPixel.with(value);
+    }
+
+    /**
+     * {@see SpreadsheetViewportSelectionNavigationUpPixel}
+     */
+    public static SpreadsheetViewportSelectionNavigation upPixel(final int value) {
+        return SpreadsheetViewportSelectionNavigationUpPixel.with(value);
     }
 
     /**
@@ -129,87 +191,87 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
 
         final TextCursor cursor = TextCursors.charSequence(text);
         while (false == cursor.isEmpty()) {
+            final SpreadsheetViewportSelectionNavigation navigation;
 
-            for (; ; ) {
-                if (LEFT.parse(cursor, CONTEXT).isPresent()) {
-                    SPACE.parse(cursor, CONTEXT);
-                    COLUMN.parse(cursor, CONTEXT);
-
-                    navigations.add(
-                            SpreadsheetViewportSelectionNavigation.leftColumn()
-                    );
-                    break;
-                }
-                if (RIGHT.parse(cursor, CONTEXT).isPresent()) {
-                    SPACE.parse(cursor, CONTEXT);
-                    COLUMN.parse(cursor, CONTEXT);
-
-                    navigations.add(
-                            SpreadsheetViewportSelectionNavigation.rightColumn()
-                    );
-                    break;
-                }
-                if (UP.parse(cursor, CONTEXT).isPresent()) {
-                    SPACE.parse(cursor, CONTEXT);
-                    ROW.parse(cursor, CONTEXT);
-
-                    navigations.add(
-                            SpreadsheetViewportSelectionNavigation.upRow()
-                    );
-                    break;
-                }
-                if (DOWN.parse(cursor, CONTEXT).isPresent()) {
-                    SPACE.parse(cursor, CONTEXT);
-                    ROW.parse(cursor, CONTEXT);
-
-                    navigations.add(
-                            SpreadsheetViewportSelectionNavigation.downRow()
-                    );
-                    break;
-                }
-
-                if (EXTEND_LEFT.parse(cursor, CONTEXT).isPresent()) {
-                    SPACE.parse(cursor, CONTEXT);
-                    COLUMN.parse(cursor, CONTEXT);
-
-                    navigations.add(
-                            SpreadsheetViewportSelectionNavigation.extendLeftColumn()
-                    );
-                    break;
-                }
-                if (EXTEND_RIGHT.parse(cursor, CONTEXT).isPresent()) {
-                    SPACE.parse(cursor, CONTEXT);
-                    COLUMN.parse(cursor, CONTEXT);
-
-                    navigations.add(
-                            SpreadsheetViewportSelectionNavigation.extendRightColumn()
-                    );
-                    break;
-                }
-                if (EXTEND_UP.parse(cursor, CONTEXT).isPresent()) {
-                    SPACE.parse(cursor, CONTEXT);
-                    ROW.parse(cursor, CONTEXT);
-
-                    navigations.add(
-                            SpreadsheetViewportSelectionNavigation.extendUpRow()
-                    );
-                    break;
-                }
-                if (EXTEND_DOWN.parse(cursor, CONTEXT).isPresent()) {
-                    SPACE.parse(cursor, CONTEXT);
-                    ROW.parse(cursor, CONTEXT);
-
-                    navigations.add(
-                            SpreadsheetViewportSelectionNavigation.extendDownRow()
-                    );
-                    break;
-                }
-                throw new InvalidCharacterException(
-                        text,
-                        cursor.lineInfo()
-                                .textOffset()
+            if (LEFT.parse(cursor, CONTEXT).isPresent()) {
+                navigation = parse(
+                        cursor,
+                        COLUMN,
+                        SpreadsheetViewportSelectionNavigation::leftColumn,
+                        SpreadsheetViewportSelectionNavigation::leftPixel
                 );
+            } else {
+                if (RIGHT.parse(cursor, CONTEXT).isPresent()) {
+                    navigation = parse(
+                            cursor,
+                            COLUMN,
+                            SpreadsheetViewportSelectionNavigation::rightColumn,
+                            SpreadsheetViewportSelectionNavigation::rightPixel
+                    );
+                } else {
+                    if (UP.parse(cursor, CONTEXT).isPresent()) {
+                        navigation = parse(
+                                cursor,
+                                ROW,
+                                SpreadsheetViewportSelectionNavigation::upRow,
+                                SpreadsheetViewportSelectionNavigation::upPixel
+                        );
+                    } else {
+                        if (DOWN.parse(cursor, CONTEXT).isPresent()) {
+                            navigation = parse(
+                                    cursor,
+                                    ROW,
+                                    SpreadsheetViewportSelectionNavigation::downRow,
+                                    SpreadsheetViewportSelectionNavigation::downPixel
+                            );
+                        } else {
+                            if (EXTEND_LEFT.parse(cursor, CONTEXT).isPresent()) {
+                                navigation = parse(
+                                        cursor,
+                                        COLUMN,
+                                        SpreadsheetViewportSelectionNavigation::extendLeftColumn,
+                                        SpreadsheetViewportSelectionNavigation::extendLeftPixel
+                                );
+                            } else {
+                                if (EXTEND_RIGHT.parse(cursor, CONTEXT).isPresent()) {
+                                    navigation = parse(
+                                            cursor,
+                                            COLUMN,
+                                            SpreadsheetViewportSelectionNavigation::extendRightColumn,
+                                            SpreadsheetViewportSelectionNavigation::extendRightPixel
+                                    );
+                                } else {
+                                    if (EXTEND_UP.parse(cursor, CONTEXT).isPresent()) {
+                                        navigation = parse(
+                                                cursor,
+                                                ROW,
+                                                SpreadsheetViewportSelectionNavigation::extendUpRow,
+                                                SpreadsheetViewportSelectionNavigation::extendUpPixel
+                                        );
+                                    } else {
+                                        if (EXTEND_DOWN.parse(cursor, CONTEXT).isPresent()) {
+                                            navigation = parse(
+                                                    cursor,
+                                                    ROW,
+                                                    SpreadsheetViewportSelectionNavigation::extendDownRow,
+                                                    SpreadsheetViewportSelectionNavigation::extendDownPixel
+                                            );
+                                        } else {
+                                            throw new InvalidCharacterException(
+                                                    text,
+                                                    cursor.lineInfo()
+                                                            .textOffset()
+                                            );
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
+
+            navigations.add(navigation);
 
             if (cursor.isEmpty()) {
                 break;
@@ -221,7 +283,24 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
         return Lists.immutable(navigations);
     }
 
-    private final static ParserReporter<ParserContext> REPORTER = ParserReporters.invalidCharacterException();
+    private static SpreadsheetViewportSelectionNavigation parse(final TextCursor cursor,
+                                                                final Parser<ParserContext> columnOrRowParser,
+                                                                final Supplier<SpreadsheetViewportSelectionNavigation> columnOrRowNavigation,
+                                                                final IntFunction<SpreadsheetViewportSelectionNavigation> columnOrRowPixel) {
+        SPACE.parse(cursor, CONTEXT);
+
+        return columnOrRowParser.parse(cursor, CONTEXT).isPresent() ?
+                columnOrRowNavigation.get() :
+                columnOrRowPixel.apply(
+                        VALUE.parse(cursor, CONTEXT)
+                                .get()
+                                .cast(LongParserToken.class)
+                                .value()
+                                .intValue()
+                );
+    }
+
+    private final static ParserReporter<ParserContext> INVALID_CHARACTER_EXCEPTION = ParserReporters.invalidCharacterException();
 
     private final static Parser<ParserContext> LEFT = stringParser("left");
 
@@ -241,19 +320,23 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
 
     private final static Parser<ParserContext> SPACE = Parsers.character(
             CharPredicates.is(' ')
-    ).orReport(REPORTER);
+    ).orReport(INVALID_CHARACTER_EXCEPTION);
 
-    private final static Parser<ParserContext> COLUMN = stringParser("column")
-            .orReport(REPORTER);
+    private final static Parser<ParserContext> VALUE = Parsers.longParser(10)
+            .orReport(INVALID_CHARACTER_EXCEPTION);
 
-    private final static Parser<ParserContext> ROW = stringParser("row")
-            .orReport(REPORTER);
+    private final static Parser<ParserContext> COLUMN = stringParser("column");
+
+    private final static Parser<ParserContext> ROW = stringParser("row");
 
     private final static Parser<ParserContext> SEPARATOR = Parsers.character(
             CharPredicates.is(SpreadsheetViewportSelection.SEPARATOR.character())
-    ).orReport(REPORTER);
+    ).orReport(INVALID_CHARACTER_EXCEPTION);
 
-    private final static ParserContext CONTEXT = ParserContexts.fake();
+    private final static ParserContext CONTEXT = ParserContexts.basic(
+            DateTimeContexts.fake(),
+            DecimalNumberContexts.american(MathContext.DECIMAL32)
+    );
 
     /**
      * Factory that creates a {@link Parsers#string(String, CaseSensitivity)}.
