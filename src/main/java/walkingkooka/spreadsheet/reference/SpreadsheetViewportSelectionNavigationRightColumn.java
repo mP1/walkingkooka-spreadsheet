@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportSelectionNavigationRightColumn extends SpreadsheetViewportSelectionNavigation {
+final class SpreadsheetViewportSelectionNavigationRightColumn extends SpreadsheetViewportSelectionNavigationColumnOrRow {
 
     final static SpreadsheetViewportSelectionNavigationRightColumn INSTANCE = new SpreadsheetViewportSelectionNavigationRightColumn();
 
