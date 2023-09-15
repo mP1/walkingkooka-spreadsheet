@@ -65,57 +65,57 @@ public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> exten
     default void testUpSkipHiddenFirstRow() {
         final SpreadsheetRowReference first = SpreadsheetReferenceKind.RELATIVE.firstRow();
 
-        this.upSkipHiddenAndCheck(
+        this.upRowSkipHiddenAndCheck(
                 this.createStore(),
                 first,
                 first
         );
     }
 
-    default void upSkipHiddenAndCheck(final S store,
-                                      final String reference) {
-        this.upSkipHiddenAndCheck(
+    default void upRowSkipHiddenAndCheck(final S store,
+                                         final String reference) {
+        this.upRowSkipHiddenAndCheck(
                 store,
                 SpreadsheetSelection.parseRow(reference)
         );
     }
 
-    default void upSkipHiddenAndCheck(final S store,
-                                      final String reference,
-                                      final String expected) {
-        this.upSkipHiddenAndCheck(
+    default void upRowSkipHiddenAndCheck(final S store,
+                                         final String reference,
+                                         final String expected) {
+        this.upRowSkipHiddenAndCheck(
                 store,
                 SpreadsheetSelection.parseRow(reference),
                 SpreadsheetSelection.parseRow(expected)
         );
     }
 
-    default void upSkipHiddenAndCheck(final S store,
-                                      final SpreadsheetRowReference reference) {
-        this.upSkipHiddenAndCheck(
+    default void upRowSkipHiddenAndCheck(final S store,
+                                         final SpreadsheetRowReference reference) {
+        this.upRowSkipHiddenAndCheck(
                 store,
                 reference,
                 Optional.empty()
         );
     }
 
-    default void upSkipHiddenAndCheck(final S store,
-                                      final SpreadsheetRowReference reference,
-                                      final SpreadsheetRowReference expected) {
-        this.upSkipHiddenAndCheck(
+    default void upRowSkipHiddenAndCheck(final S store,
+                                         final SpreadsheetRowReference reference,
+                                         final SpreadsheetRowReference expected) {
+        this.upRowSkipHiddenAndCheck(
                 store,
                 reference,
                 Optional.of(expected)
         );
     }
 
-    default void upSkipHiddenAndCheck(final S store,
-                                      final SpreadsheetRowReference reference,
-                                      final Optional<SpreadsheetRowReference> expected) {
+    default void upRowSkipHiddenAndCheck(final S store,
+                                         final SpreadsheetRowReference reference,
+                                         final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
                 expected,
-                store.upSkipHidden(reference),
-                () -> reference + " upSkipHidden " + store
+                store.upRowSkipHidden(reference),
+                () -> reference + " upRowSkipHidden " + store
         );
     }
 

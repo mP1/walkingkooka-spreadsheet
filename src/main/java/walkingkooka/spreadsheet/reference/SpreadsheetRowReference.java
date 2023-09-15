@@ -265,7 +265,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     Optional<SpreadsheetRowReference> up(final SpreadsheetRowStore store) {
-        return store.upSkipHidden(this);
+        return store.upRowSkipHidden(this);
     }
 
     Optional<SpreadsheetRowReference> down(final SpreadsheetRowStore store) {
