@@ -34,4 +34,9 @@ public class FakeSpreadsheetViewportSelectionNavigationContext implements Spread
     public Optional<SpreadsheetColumnReference> leftColumnSkipHidden(final SpreadsheetColumnReference reference) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Optional<SpreadsheetColumnReference> rightColumnSkipHidden(final SpreadsheetColumnReference reference) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -203,6 +203,101 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         );
     }
 
+    // rightColumnSkipHidden...................................................................................................
+
+    @Test
+    public void testRightLastColumnHidden() {
+        final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.rightColumnSkipHiddenAndCheck(
+                last.toString(),
+                last.toString()
+        );
+    }
+
+    @Test
+    public void testRightAllColumnsHiddenIncludingGiven() {
+        final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.rightColumnSkipHiddenAndCheck(
+                last.add(-2) + "," + last.add(-1) + "," + last,
+                last.add(-2).toString()
+        );
+    }
+
+    @Test
+    public void testRightColumnSkipHidden() {
+        this.rightColumnSkipHiddenAndCheck(
+                "B",
+                "B",
+                "C"
+        );
+    }
+
+    @Test
+    public void testRightColumnSkipHidden2() {
+        this.rightColumnSkipHiddenAndCheck(
+                "C",
+                "B",
+                "D"
+        );
+    }
+
+    @Test
+    public void testRightColumnSkipHiddenSkips() {
+        this.rightColumnSkipHiddenAndCheck(
+                "B,C",
+                "B",
+                "D"
+        );
+    }
+
+    @Test
+    public void testRightColumnSkipHiddenSkipsLastColumn() {
+        final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.rightColumnSkipHiddenAndCheck(
+                last.add(-2) + "," + last.add(-1),
+                last.add(-3).toString(),
+                last.toString()
+        );
+    }
+
+    @Test
+    public void testRightColumnSkipHiddenAllRightHidden() {
+        final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        this.rightColumnSkipHiddenAndCheck(
+                last.add(-1) + "," + last,
+                last.add(-2).toString(),
+                last.add(-2).toString()
+        );
+    }
+
+    private void rightColumnSkipHiddenAndCheck(final String columnHidden,
+                                               final String column) {
+        this.rightColumnSkipHiddenAndCheck(
+                BasicSpreadsheetViewportSelectionNavigationContext.with(
+                        columnHidden(columnHidden),
+                        Predicates.fake()
+                ),
+                column
+        );
+    }
+
+    private void rightColumnSkipHiddenAndCheck(final String columnHidden,
+                                               final String column,
+                                               final String expected) {
+        this.rightColumnSkipHiddenAndCheck(
+                BasicSpreadsheetViewportSelectionNavigationContext.with(
+                        columnHidden(columnHidden),
+                        Predicates.fake()
+                ),
+                column,
+                expected
+        );
+    }
+
     private Predicate<SpreadsheetColumnReference> columnHidden(final String columns) {
         return Predicates.setContains(
                 new TreeSet<>(
@@ -213,7 +308,6 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                 )
         );
     }
-
     // Object...........................................................................................................
 
     @Test

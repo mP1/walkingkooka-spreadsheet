@@ -91,6 +91,53 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
         );
     }
 
+    default void rightColumnSkipHiddenAndCheck(final C context,
+                                               final String reference) {
+        this.rightColumnSkipHiddenAndCheck(
+                context,
+                SpreadsheetSelection.parseColumn(reference)
+        );
+    }
+
+    default void rightColumnSkipHiddenAndCheck(final C context,
+                                               final String reference,
+                                               final String expected) {
+        this.rightColumnSkipHiddenAndCheck(
+                context,
+                SpreadsheetSelection.parseColumn(reference),
+                SpreadsheetSelection.parseColumn(expected)
+        );
+    }
+
+    default void rightColumnSkipHiddenAndCheck(final C context,
+                                               final SpreadsheetColumnReference reference) {
+        this.rightColumnSkipHiddenAndCheck(
+                context,
+                reference,
+                Optional.empty()
+        );
+    }
+
+    default void rightColumnSkipHiddenAndCheck(final C context,
+                                               final SpreadsheetColumnReference reference,
+                                               final SpreadsheetColumnReference expected) {
+        this.rightColumnSkipHiddenAndCheck(
+                context,
+                reference,
+                Optional.of(expected)
+        );
+    }
+
+    default void rightColumnSkipHiddenAndCheck(final C context,
+                                               final SpreadsheetColumnReference reference,
+                                               final Optional<SpreadsheetColumnReference> expected) {
+        this.checkEquals(
+                expected,
+                context.rightColumnSkipHidden(reference),
+                () -> reference + " rightColumnSkipHidden " + context
+        );
+    }
+
     @Override
     default String typeNameSuffix() {
         return SpreadsheetViewportSelectionNavigationContext.class.getSimpleName();
