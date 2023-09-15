@@ -65,7 +65,7 @@ public interface SpreadsheetColumnStore extends SpreadsheetColumnOrRowStore<Spre
      * If all columns to the left are hidden, the original {@link SpreadsheetColumnReference}, if this is hidden an
      * {@link Optional#empty()}.
      */
-    Optional<SpreadsheetColumnReference> leftSkipHidden(final SpreadsheetColumnReference reference);
+    Optional<SpreadsheetColumnReference> leftColumnSkipHidden(final SpreadsheetColumnReference reference);
 
     /**
      * Returns the first column moving right from the given starting point that is not hidden.
