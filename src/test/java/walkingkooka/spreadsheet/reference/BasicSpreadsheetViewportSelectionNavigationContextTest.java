@@ -308,6 +308,123 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                 )
         );
     }
+
+    // upRowSkipHidden...................................................................................................
+
+    @Test
+    public void testUpFirstRowNotHidden() {
+        this.upRowSkipHiddenAndCheck(
+                "",
+                "1",
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpFirstRowHidden() {
+        this.upRowSkipHiddenAndCheck(
+                "1",
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpAllRowsHiddenIncludingGiven() {
+        this.upRowSkipHiddenAndCheck(
+                "1,2,3",
+                "3"
+        );
+    }
+
+    @Test
+    public void testUpRowSkipHidden() {
+        this.upRowSkipHiddenAndCheck(
+                "",
+                "2",
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpRowSkipHidden2() {
+        this.upRowSkipHiddenAndCheck(
+                "",
+                "4",
+                "3"
+        );
+    }
+
+    @Test
+    public void testUpRowSkipHiddenFirstRow() {
+        this.upRowSkipHiddenAndCheck(
+                "",
+                "1",
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpRowSkipHiddenSkips() {
+        this.upRowSkipHiddenAndCheck(
+                "3,4",
+                "5",
+                "2"
+        );
+    }
+
+    @Test
+    public void testUpRowSkipHiddenSkipsFirstRow() {
+        this.upRowSkipHiddenAndCheck(
+                "2,3",
+                "4",
+                "1"
+        );
+    }
+
+    @Test
+    public void testUpRowSkipHiddenAllUpHidden() {
+        this.upRowSkipHiddenAndCheck(
+                "1,2",
+                "3",
+                "3"
+        );
+    }
+
+    private void upRowSkipHiddenAndCheck(final String rowHidden,
+                                         final String row) {
+        this.upRowSkipHiddenAndCheck(
+                BasicSpreadsheetViewportSelectionNavigationContext.with(
+                        Predicates.fake(),
+                        this.rowHidden(rowHidden)
+                ),
+                row
+        );
+    }
+
+    private void upRowSkipHiddenAndCheck(final String rowHidden,
+                                         final String row,
+                                         final String expected) {
+        this.upRowSkipHiddenAndCheck(
+                BasicSpreadsheetViewportSelectionNavigationContext.with(
+                        Predicates.fake(),
+                        this.rowHidden(rowHidden)
+                ),
+                row,
+                expected
+        );
+    }
+
+    private Predicate<SpreadsheetRowReference> rowHidden(final String rows) {
+        return Predicates.setContains(
+                new TreeSet<>(
+                        CharacterConstant.COMMA.parse(
+                                rows,
+                                SpreadsheetSelection::parseRow
+                        )
+                )
+        );
+    }
+
     // Object...........................................................................................................
 
     @Test
