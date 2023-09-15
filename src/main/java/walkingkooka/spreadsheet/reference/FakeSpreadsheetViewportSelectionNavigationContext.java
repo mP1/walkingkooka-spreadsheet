@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import java.util.Optional;
+
 public class FakeSpreadsheetViewportSelectionNavigationContext implements SpreadsheetViewportSelectionNavigationContext {
     @Override
     public boolean isColumnHidden(final SpreadsheetColumnReference column) {
@@ -25,6 +27,11 @@ public class FakeSpreadsheetViewportSelectionNavigationContext implements Spread
 
     @Override
     public boolean isRowHidden(final SpreadsheetRowReference row) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetColumnReference> leftColumnSkipHidden(final SpreadsheetColumnReference reference) {
         throw new UnsupportedOperationException();
     }
 }

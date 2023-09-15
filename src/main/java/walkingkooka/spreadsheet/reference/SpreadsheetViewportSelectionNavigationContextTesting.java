@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.test.Testing;
+import walkingkooka.ContextTesting;
 
-public interface SpreadsheetViewportSelectionNavigationContextTesting extends Testing {
+import java.util.Optional;
+
+public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends SpreadsheetViewportSelectionNavigationContext> extends ContextTesting<C> {
 
     default void isColumnHiddenAndCheck(final SpreadsheetViewportSelectionNavigationContext context,
                                         final SpreadsheetColumnReference column,
@@ -39,5 +41,58 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting extends Te
                 context.isRowHidden(row),
                 () -> "isRowHidden " + row
         );
+    }
+
+    default void leftColumnSkipHiddenAndCheck(final C context,
+                                              final String reference) {
+        this.leftColumnSkipHiddenAndCheck(
+                context,
+                SpreadsheetSelection.parseColumn(reference),
+                Optional.empty()
+        );
+    }
+
+    default void leftColumnSkipHiddenAndCheck(final C context,
+                                              final String reference,
+                                              final String expected) {
+        this.leftColumnSkipHiddenAndCheck(
+                context,
+                SpreadsheetSelection.parseColumn(reference),
+                SpreadsheetSelection.parseColumn(expected)
+        );
+    }
+
+    default void leftColumnSkipHiddenAndCheck(final C context,
+                                              final SpreadsheetColumnReference reference) {
+        this.leftColumnSkipHiddenAndCheck(
+                context,
+                reference,
+                Optional.empty()
+        );
+    }
+
+    default void leftColumnSkipHiddenAndCheck(final C context,
+                                              final SpreadsheetColumnReference reference,
+                                              final SpreadsheetColumnReference expected) {
+        this.leftColumnSkipHiddenAndCheck(
+                context,
+                reference,
+                Optional.of(expected)
+        );
+    }
+
+    default void leftColumnSkipHiddenAndCheck(final C context,
+                                              final SpreadsheetColumnReference reference,
+                                              final Optional<SpreadsheetColumnReference> expected) {
+        this.checkEquals(
+                expected,
+                context.leftColumnSkipHidden(reference),
+                () -> reference + " leftColumnSkipHidden " + context
+        );
+    }
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetViewportSelectionNavigationContext.class.getSimpleName();
     }
 }
