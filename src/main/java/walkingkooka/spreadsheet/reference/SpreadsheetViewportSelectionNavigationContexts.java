@@ -19,7 +19,20 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
+import java.util.function.Predicate;
+
 public final class SpreadsheetViewportSelectionNavigationContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetViewportSelectionNavigationContext}
+     */
+    public static SpreadsheetViewportSelectionNavigationContext basic(final Predicate<SpreadsheetColumnReference> columnHidden,
+                                                                      final Predicate<SpreadsheetRowReference> rowHidden) {
+        return BasicSpreadsheetViewportSelectionNavigationContext.with(
+                columnHidden,
+                rowHidden
+        );
+    }
 
     /**
      * {@see FakeSpreadsheetViewportSelectionNavigationContext}
