@@ -175,23 +175,23 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
         );
     }
 
-    // downSkipHidden...................................................................................................
+    // downRowSkipHidden...................................................................................................
 
     @Test
-    public void testDownSkipHiddenLastHidden() {
+    public void testDownRowSkipHiddenLastHidden() {
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         final TreeMapSpreadsheetRowStore store = this.createStore();
         store.save(last.row().setHidden(true));
 
-        this.downSkipHiddenAndCheck(
+        this.downRowSkipHiddenAndCheck(
                 store,
                 last
         );
     }
 
     @Test
-    public void testDownSkipHiddenLastAllHidden() {
+    public void testDownRowSkipHiddenLastAllHidden() {
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         final TreeMapSpreadsheetRowStore store = this.createStore();
@@ -199,15 +199,15 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
         store.save(last.add(-1).row().setHidden(true));
         store.save(last.add(-2).row().setHidden(true));
 
-        this.downSkipHiddenAndCheck(
+        this.downRowSkipHiddenAndCheck(
                 store,
                 last.add(-2)
         );
     }
 
     @Test
-    public void testDownSkipHidden() {
-        this.downSkipHiddenAndCheck(
+    public void testDownRowSkipHidden() {
+        this.downRowSkipHiddenAndCheck(
                 this.createStore(),
                 "2",
                 "3"
@@ -215,11 +215,11 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
     }
 
     @Test
-    public void testDownSkipHidden2() {
+    public void testDownRowSkipHidden2() {
         final TreeMapSpreadsheetRowStore store = this.createStore();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
 
-        this.downSkipHiddenAndCheck(
+        this.downRowSkipHiddenAndCheck(
                 store,
                 "2",
                 "4"
@@ -227,12 +227,12 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
     }
 
     @Test
-    public void testDownSkipHiddenSkips() {
+    public void testDownRowSkipHiddenSkips() {
         final TreeMapSpreadsheetRowStore store = this.createStore();
         store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
         store.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
 
-        this.downSkipHiddenAndCheck(
+        this.downRowSkipHiddenAndCheck(
                 store,
                 "2",
                 "5"
@@ -240,7 +240,7 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
     }
 
     @Test
-    public void testDownSkipHiddenSkipsLastRow() {
+    public void testDownRowSkipHiddenSkipsLastRow() {
         final TreeMapSpreadsheetRowStore store = this.createStore();
 
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
@@ -248,7 +248,7 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
         store.save(last.add(-2).row().setHidden(true));
         store.save(last.add(-1).row().setHidden(true));
 
-        this.downSkipHiddenAndCheck(
+        this.downRowSkipHiddenAndCheck(
                 store,
                 last.add(-3),
                 last
@@ -256,7 +256,7 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
     }
 
     @Test
-    public void testDownSkipHiddenAllDownHidden() {
+    public void testDownRowSkipHiddenAllDownHidden() {
         final TreeMapSpreadsheetRowStore store = this.createStore();
 
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
@@ -265,7 +265,7 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
         store.save(last.add(-1).row().setHidden(true));
         store.save(last.row().setHidden(true));
 
-        this.downSkipHiddenAndCheck(
+        this.downRowSkipHiddenAndCheck(
                 store,
                 last.add(-2),
                 last.add(-2)

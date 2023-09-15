@@ -269,7 +269,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     Optional<SpreadsheetRowReference> down(final SpreadsheetRowStore store) {
-        return store.downSkipHidden(this);
+        return store.downRowSkipHidden(this);
     }
 
     @Override

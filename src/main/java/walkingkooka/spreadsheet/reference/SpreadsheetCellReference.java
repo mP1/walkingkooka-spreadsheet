@@ -409,7 +409,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         return this.upOrDown(
                 columnStore,
                 rowStore,
-                rowStore::downSkipHidden
+                rowStore::downRowSkipHidden
         );
     }
 

@@ -120,7 +120,7 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
     }
 
     @Override
-    public Optional<SpreadsheetRowReference> downSkipHidden(final SpreadsheetRowReference reference) {
+    public Optional<SpreadsheetRowReference> downRowSkipHidden(final SpreadsheetRowReference reference) {
         SpreadsheetRowReference down = reference;
 
         for (; ; ) {
