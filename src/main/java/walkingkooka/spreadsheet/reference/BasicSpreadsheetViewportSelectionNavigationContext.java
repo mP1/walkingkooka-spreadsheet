@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 final class BasicSpreadsheetViewportSelectionNavigationContext implements SpreadsheetViewportSelectionNavigationContext {
@@ -49,6 +50,28 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     }
 
     private Predicate<SpreadsheetRowReference> rowHidden;
+
+    @Override
+    public Optional<SpreadsheetColumnReference> leftColumnSkipHidden(final SpreadsheetColumnReference reference) {
+        SpreadsheetColumnReference left = reference;
+
+        for (; ; ) {
+            if (left.isFirst()) {
+                left = this.isColumnHidden(reference) ?
+                        null :
+                        reference;
+                break;
+            }
+
+            left = left.addSaturated(-1);
+
+            if (!this.isColumnHidden(left)) {
+                break;
+            }
+        }
+
+        return Optional.ofNullable(left);
+    }
 
     @Override
     public String toString() {

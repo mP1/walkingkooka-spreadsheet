@@ -22,13 +22,15 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CharacterConstant;
 
+import java.util.TreeSet;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetViewportSelectionNavigationContextTest implements ClassTesting<BasicSpreadsheetViewportSelectionNavigationContext>,
-        SpreadsheetViewportSelectionNavigationContextTesting,
+        SpreadsheetViewportSelectionNavigationContextTesting<BasicSpreadsheetViewportSelectionNavigationContext>,
         ToStringTesting<BasicSpreadsheetViewportSelectionNavigationContext> {
 
     @Test
@@ -96,6 +98,124 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         );
     }
 
+    // leftColumnSkipHidden...................................................................................................
+
+    @Test
+    public void testLeftFirstColumnNotHidden() {
+        this.leftColumnSkipHiddenAndCheck(
+                "",
+                "A",
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftFirstColumnHidden() {
+        this.leftColumnSkipHiddenAndCheck(
+                "A",
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftAllColumnsHiddenIncludingGiven() {
+        this.leftColumnSkipHiddenAndCheck(
+                "A,B,C",
+                "C"
+        );
+    }
+
+    @Test
+    public void testLeftColumnSkipHidden() {
+        this.leftColumnSkipHiddenAndCheck(
+                "",
+                "B",
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftColumnSkipHidden2() {
+        this.leftColumnSkipHiddenAndCheck(
+                "",
+                "D",
+                "C"
+        );
+    }
+
+    @Test
+    public void testLeftColumnSkipHiddenFirstColumn() {
+        this.leftColumnSkipHiddenAndCheck(
+                "",
+                "A",
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftColumnSkipHiddenSkips() {
+        this.leftColumnSkipHiddenAndCheck(
+                "C,D",
+                "E",
+                "B"
+        );
+    }
+
+    @Test
+    public void testLeftColumnSkipHiddenSkipsFirstColumn() {
+        this.leftColumnSkipHiddenAndCheck(
+                "B,C",
+                "D",
+                "A"
+        );
+    }
+
+    @Test
+    public void testLeftColumnSkipHiddenAllLeftHidden() {
+        this.leftColumnSkipHiddenAndCheck(
+                "A,B",
+                "C",
+                "C"
+        );
+    }
+
+    private void leftColumnSkipHiddenAndCheck(final String columnHidden,
+                                              final String column) {
+        this.leftColumnSkipHiddenAndCheck(
+                BasicSpreadsheetViewportSelectionNavigationContext.with(
+                        columnHidden(columnHidden),
+                        Predicates.fake()
+                ),
+                column
+        );
+    }
+
+    private void leftColumnSkipHiddenAndCheck(final String columnHidden,
+                                              final String column,
+                                              final String expected) {
+        this.leftColumnSkipHiddenAndCheck(
+                BasicSpreadsheetViewportSelectionNavigationContext.with(
+                        columnHidden(columnHidden),
+                        Predicates.fake()
+                ),
+                column,
+                expected
+        );
+    }
+
+    private Predicate<SpreadsheetColumnReference> columnHidden(final String columns) {
+        return Predicates.setContains(
+                new TreeSet<>(
+                        CharacterConstant.COMMA.parse(
+                                columns,
+                                SpreadsheetSelection::parseColumn
+                        )
+                )
+        );
+    }
+
+    // Object...........................................................................................................
+
     @Test
     public void testToString() {
         final Predicate<SpreadsheetColumnReference> column = Predicates.fake();
@@ -107,6 +227,14 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                         row
                 ),
                 column + " " + row
+        );
+    }
+
+    @Override
+    public BasicSpreadsheetViewportSelectionNavigationContext createContext() {
+        return BasicSpreadsheetViewportSelectionNavigationContext.with(
+                Predicates.fake(),
+                Predicates.fake()
         );
     }
 

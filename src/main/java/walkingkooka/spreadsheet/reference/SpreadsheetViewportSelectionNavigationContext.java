@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Context;
 
+import java.util.Optional;
+
 /**
  * The {@link Context} that accompanies a {@link SpreadsheetViewportSelectionNavigation#update(SpreadsheetSelection, SpreadsheetViewportSelectionAnchor, SpreadsheetViewportSelectionNavigationContext)}
  */
@@ -33,4 +35,13 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
      * Returns true if the {@link SpreadsheetRowReference} is hidden.
      */
     boolean isRowHidden(SpreadsheetRowReference row);
+
+    /**
+     * Returns the first column moving left from the given starting point that is not hidden.
+     * If all columns to the left are hidden the original {@link SpreadsheetColumnReference} is returned,
+     * providing it is also not hidden or {@link Optional#empty()}.
+     * <br>
+     * This method is used to support keyboard navigation.
+     */
+    Optional<SpreadsheetColumnReference> leftColumnSkipHidden(final SpreadsheetColumnReference reference);
 }
