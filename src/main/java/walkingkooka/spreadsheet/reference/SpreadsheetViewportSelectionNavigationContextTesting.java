@@ -21,8 +21,8 @@ import walkingkooka.test.Testing;
 
 public interface SpreadsheetViewportSelectionNavigationContextTesting extends Testing {
 
-    default void isColumnHiddenAndCheck(final SpreadsheetColumnReference column,
-                                        final SpreadsheetViewportSelectionNavigationContext context,
+    default void isColumnHiddenAndCheck(final SpreadsheetViewportSelectionNavigationContext context,
+                                        final SpreadsheetColumnReference column,
                                         final boolean expected) {
         this.checkEquals(
                 expected,
@@ -31,8 +31,8 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting extends Te
         );
     }
 
-    default void isRowHiddenAndCheck(final SpreadsheetRowReference row,
-                                     final SpreadsheetViewportSelectionNavigationContext context,
+    default void isRowHiddenAndCheck(final SpreadsheetViewportSelectionNavigationContext context,
+                                     final SpreadsheetRowReference row,
                                      final boolean expected) {
         this.checkEquals(
                 expected,

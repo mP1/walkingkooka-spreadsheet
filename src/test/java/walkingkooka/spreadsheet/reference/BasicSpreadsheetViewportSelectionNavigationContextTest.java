@@ -62,14 +62,14 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                 Predicates.fake()
         );
         this.isColumnHiddenAndCheck(
-                column,
                 context,
+                column,
                 true
         );
 
         this.isColumnHiddenAndCheck(
-                column.add(1),
                 context,
+                column.add(1),
                 false
         );
     }
@@ -84,14 +84,14 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         );
 
         this.isRowHiddenAndCheck(
-                row,
                 context,
+                row,
                 true
         );
 
         this.isRowHiddenAndCheck(
-                row.add(1),
                 context,
+                row.add(1),
                 false
         );
     }
