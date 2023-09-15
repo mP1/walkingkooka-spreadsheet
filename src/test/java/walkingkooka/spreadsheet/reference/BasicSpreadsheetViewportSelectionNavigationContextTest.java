@@ -414,6 +414,101 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         );
     }
 
+    // downRowSkipHidden...................................................................................................
+
+    @Test
+    public void testDownLastRowHidden() {
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.downRowSkipHiddenAndCheck(
+                last.toString(),
+                last.toString()
+        );
+    }
+
+    @Test
+    public void testDownAllRowsHiddenIncludingGiven() {
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.downRowSkipHiddenAndCheck(
+                last.add(-2) + "," + last.add(-1) + "," + last,
+                last.add(-2).toString()
+        );
+    }
+
+    @Test
+    public void testDownRowSkipHidden() {
+        this.downRowSkipHiddenAndCheck(
+                "2",
+                "2",
+                "3"
+        );
+    }
+
+    @Test
+    public void testDownRowSkipHidden2() {
+        this.downRowSkipHiddenAndCheck(
+                "3",
+                "2",
+                "4"
+        );
+    }
+
+    @Test
+    public void testDownRowSkipHiddenSkips() {
+        this.downRowSkipHiddenAndCheck(
+                "2,3",
+                "2",
+                "4"
+        );
+    }
+
+    @Test
+    public void testDownRowSkipHiddenSkipsLastRow() {
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.downRowSkipHiddenAndCheck(
+                last.add(-2) + "," + last.add(-1),
+                last.add(-3).toString(),
+                last.toString()
+        );
+    }
+
+    @Test
+    public void testDownRowSkipHiddenAllDownHidden() {
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        this.downRowSkipHiddenAndCheck(
+                last.add(-1) + "," + last,
+                last.add(-2).toString(),
+                last.add(-2).toString()
+        );
+    }
+
+    private void downRowSkipHiddenAndCheck(final String rowHidden,
+                                           final String row) {
+        this.downRowSkipHiddenAndCheck(
+                BasicSpreadsheetViewportSelectionNavigationContext.with(
+                        Predicates.fake(),
+                        rowHidden(rowHidden)
+                ),
+                row
+        );
+    }
+
+    private void downRowSkipHiddenAndCheck(final String rowHidden,
+                                           final String row,
+                                           final String expected) {
+        this.downRowSkipHiddenAndCheck(
+                BasicSpreadsheetViewportSelectionNavigationContext.with(
+                        Predicates.fake(),
+                        rowHidden(rowHidden)
+                ),
+                row,
+                expected
+        );
+    }
+
     private Predicate<SpreadsheetRowReference> rowHidden(final String rows) {
         return Predicates.setContains(
                 new TreeSet<>(
