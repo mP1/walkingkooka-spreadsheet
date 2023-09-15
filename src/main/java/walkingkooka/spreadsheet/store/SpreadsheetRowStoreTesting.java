@@ -119,63 +119,63 @@ public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> exten
         );
     }
 
-    // downSkipHidden...................................................................................................
+    // downRowSkipHidden...................................................................................................
 
     @Test
     default void testDownSkipHiddenLastRow() {
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
-        this.downSkipHiddenAndCheck(
+        this.downRowSkipHiddenAndCheck(
                 this.createStore(),
                 last,
                 last
         );
     }
 
-    default void downSkipHiddenAndCheck(final S store,
-                                        final String reference) {
-        this.downSkipHiddenAndCheck(
+    default void downRowSkipHiddenAndCheck(final S store,
+                                           final String reference) {
+        this.downRowSkipHiddenAndCheck(
                 store,
                 SpreadsheetSelection.parseRow(reference)
         );
     }
 
-    default void downSkipHiddenAndCheck(final S store,
-                                        final String reference,
-                                        final String expected) {
-        this.downSkipHiddenAndCheck(
+    default void downRowSkipHiddenAndCheck(final S store,
+                                           final String reference,
+                                           final String expected) {
+        this.downRowSkipHiddenAndCheck(
                 store,
                 SpreadsheetSelection.parseRow(reference),
                 SpreadsheetSelection.parseRow(expected)
         );
     }
 
-    default void downSkipHiddenAndCheck(final S store,
-                                        final SpreadsheetRowReference reference) {
-        this.downSkipHiddenAndCheck(
+    default void downRowSkipHiddenAndCheck(final S store,
+                                           final SpreadsheetRowReference reference) {
+        this.downRowSkipHiddenAndCheck(
                 store,
                 reference,
                 Optional.empty()
         );
     }
 
-    default void downSkipHiddenAndCheck(final S store,
-                                        final SpreadsheetRowReference reference,
-                                        final SpreadsheetRowReference expected) {
-        this.downSkipHiddenAndCheck(
+    default void downRowSkipHiddenAndCheck(final S store,
+                                           final SpreadsheetRowReference reference,
+                                           final SpreadsheetRowReference expected) {
+        this.downRowSkipHiddenAndCheck(
                 store,
                 reference,
                 Optional.of(expected)
         );
     }
 
-    default void downSkipHiddenAndCheck(final S store,
-                                        final SpreadsheetRowReference reference,
-                                        final Optional<SpreadsheetRowReference> expected) {
+    default void downRowSkipHiddenAndCheck(final S store,
+                                           final SpreadsheetRowReference reference,
+                                           final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
                 expected,
-                store.downSkipHidden(reference),
-                () -> reference + " downSkipHidden " + store
+                store.downRowSkipHidden(reference),
+                () -> reference + " downRowSkipHidden " + store
         );
     }
 }
