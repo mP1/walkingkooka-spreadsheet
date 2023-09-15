@@ -98,7 +98,7 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
     }
 
     @Override
-    public Optional<SpreadsheetColumnReference> leftSkipHidden(final SpreadsheetColumnReference reference) {
+    public Optional<SpreadsheetColumnReference> leftColumnSkipHidden(final SpreadsheetColumnReference reference) {
         SpreadsheetColumnReference left = reference;
 
         for (; ; ) {

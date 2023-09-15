@@ -365,7 +365,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         return this.leftOrRight(
                 columnStore,
                 rowStore,
-                columnStore::leftSkipHidden
+                columnStore::leftColumnSkipHidden
         );
     }
 

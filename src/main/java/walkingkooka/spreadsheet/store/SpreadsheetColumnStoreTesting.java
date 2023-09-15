@@ -71,58 +71,58 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
 
     @Test
     default void testLeftSkipHiddenFirstColumn() {
-        this.leftSkipHiddenAndCheck(
+        this.leftColumnSkipHiddenAndCheck(
                 this.createStore(),
                 "A",
                 "A"
         );
     }
 
-    default void leftSkipHiddenAndCheck(final S store,
-                                        final String reference) {
-        this.leftSkipHiddenAndCheck(
+    default void leftColumnSkipHiddenAndCheck(final S store,
+                                              final String reference) {
+        this.leftColumnSkipHiddenAndCheck(
                 store,
                 SpreadsheetSelection.parseColumn(reference),
                 Optional.empty()
         );
     }
 
-    default void leftSkipHiddenAndCheck(final S store,
-                                        final String reference,
-                                        final String expected) {
-        this.leftSkipHiddenAndCheck(
+    default void leftColumnSkipHiddenAndCheck(final S store,
+                                              final String reference,
+                                              final String expected) {
+        this.leftColumnSkipHiddenAndCheck(
                 store,
                 SpreadsheetSelection.parseColumn(reference),
                 SpreadsheetSelection.parseColumn(expected)
         );
     }
 
-    default void leftSkipHiddenAndCheck(final S store,
-                                        final SpreadsheetColumnReference reference) {
-        this.leftSkipHiddenAndCheck(
+    default void leftColumnSkipHiddenAndCheck(final S store,
+                                              final SpreadsheetColumnReference reference) {
+        this.leftColumnSkipHiddenAndCheck(
                 store,
                 reference,
                 Optional.empty()
         );
     }
 
-    default void leftSkipHiddenAndCheck(final S store,
-                                        final SpreadsheetColumnReference reference,
-                                        final SpreadsheetColumnReference expected) {
-        this.leftSkipHiddenAndCheck(
+    default void leftColumnSkipHiddenAndCheck(final S store,
+                                              final SpreadsheetColumnReference reference,
+                                              final SpreadsheetColumnReference expected) {
+        this.leftColumnSkipHiddenAndCheck(
                 store,
                 reference,
                 Optional.of(expected)
         );
     }
 
-    default void leftSkipHiddenAndCheck(final S store,
-                                        final SpreadsheetColumnReference reference,
-                                        final Optional<SpreadsheetColumnReference> expected) {
+    default void leftColumnSkipHiddenAndCheck(final S store,
+                                              final SpreadsheetColumnReference reference,
+                                              final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
                 expected,
-                store.leftSkipHidden(reference),
-                () -> reference + " leftSkipHidden " + store
+                store.leftColumnSkipHidden(reference),
+                () -> reference + " leftColumnSkipHidden " + store
         );
     }
 
