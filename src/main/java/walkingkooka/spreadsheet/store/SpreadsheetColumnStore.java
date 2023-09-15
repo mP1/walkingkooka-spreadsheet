@@ -72,5 +72,5 @@ public interface SpreadsheetColumnStore extends SpreadsheetColumnOrRowStore<Spre
      * If all columns to the right are hidden, the original {@link SpreadsheetColumnReference}, if this is hidden an
      * {@link Optional#empty()}.
      */
-    Optional<SpreadsheetColumnReference> rightSkipHidden(final SpreadsheetColumnReference reference);
+    Optional<SpreadsheetColumnReference> rightColumnSkipHidden(final SpreadsheetColumnReference reference);
 }

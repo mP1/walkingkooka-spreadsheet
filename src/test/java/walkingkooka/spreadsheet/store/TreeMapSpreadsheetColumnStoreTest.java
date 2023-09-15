@@ -178,7 +178,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         );
     }
 
-    // rightSkipHidden...................................................................................................
+    // rightColumnSkipHidden...................................................................................................
 
     @Test
     public void testRightLastColumnHidden() {
@@ -187,7 +187,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         final TreeMapSpreadsheetColumnStore store = this.createStore();
         store.save(last.column().setHidden(true));
 
-        this.rightSkipHiddenAndCheck(
+        this.rightColumnSkipHiddenAndCheck(
                 store,
                 last
         );
@@ -203,7 +203,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         store.save(last.add(-1).column().setHidden(true));
         store.save(last.column().setHidden(true));
 
-        this.rightSkipHiddenAndCheck(
+        this.rightColumnSkipHiddenAndCheck(
                 store,
                 last.add(-2)
         );
@@ -211,7 +211,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
 
     @Test
     public void testRightSkipHidden() {
-        this.rightSkipHiddenAndCheck(
+        this.rightColumnSkipHiddenAndCheck(
                 this.createStore(),
                 "B",
                 "C"
@@ -223,7 +223,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         final TreeMapSpreadsheetColumnStore store = this.createStore();
         store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
 
-        this.rightSkipHiddenAndCheck(
+        this.rightColumnSkipHiddenAndCheck(
                 store,
                 "B",
                 "D"
@@ -236,7 +236,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
         store.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
 
-        this.rightSkipHiddenAndCheck(
+        this.rightColumnSkipHiddenAndCheck(
                 store,
                 "B",
                 "E"
@@ -252,7 +252,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         store.save(last.add(-2).column().setHidden(true));
         store.save(last.add(-1).column().setHidden(true));
 
-        this.rightSkipHiddenAndCheck(
+        this.rightColumnSkipHiddenAndCheck(
                 store,
                 last.add(-3),
                 last
@@ -268,7 +268,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         store.save(last.add(-1).column().setHidden(true));
         store.save(last.column().setHidden(true));
 
-        this.rightSkipHiddenAndCheck(
+        this.rightColumnSkipHiddenAndCheck(
                 store,
                 last.add(-2),
                 last.add(-2)

@@ -233,7 +233,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
                                                              final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
                 this.isSingle() ? SpreadsheetViewportSelectionAnchor.LEFT : anchor,
-                columnStore::rightSkipHidden
+                columnStore::rightColumnSkipHidden
         );
     }
 

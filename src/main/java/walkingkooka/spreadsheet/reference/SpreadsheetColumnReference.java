@@ -288,7 +288,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                                                final SpreadsheetColumnStore columnStore,
                                                final SpreadsheetRowStore rowStore) {
         return Cast.to(
-                columnStore.rightSkipHidden(this)
+                columnStore.rightColumnSkipHidden(this)
         );
     }
 

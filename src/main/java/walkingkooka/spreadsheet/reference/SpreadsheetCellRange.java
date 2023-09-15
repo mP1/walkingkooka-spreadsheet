@@ -435,7 +435,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                                              final SpreadsheetRowStore rowStore) {
         return this.extendColumn(
                 anchor,
-                columnStore::rightSkipHidden,
+                columnStore::rightColumnSkipHidden,
                 anchor::setLeft,
                 columnStore,
                 rowStore
