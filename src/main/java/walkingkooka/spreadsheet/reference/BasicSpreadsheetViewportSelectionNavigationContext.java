@@ -96,6 +96,28 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     }
 
     @Override
+    public Optional<SpreadsheetRowReference> upRowSkipHidden(final SpreadsheetRowReference reference) {
+        SpreadsheetRowReference up = reference;
+
+        for (; ; ) {
+            if (up.isFirst()) {
+                up = this.isRowHidden(reference) ?
+                        null :
+                        reference;
+                break;
+            }
+
+            up = up.addSaturated(-1);
+
+            if (!this.isRowHidden(up)) {
+                break;
+            }
+        }
+
+        return Optional.ofNullable(up);
+    }
+
+    @Override
     public String toString() {
         return this.columnHidden + " " + this.rowHidden;
     }

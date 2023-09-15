@@ -138,6 +138,54 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
         );
     }
 
+    default void upRowSkipHiddenAndCheck(final C context,
+                                         final String reference) {
+        this.upRowSkipHiddenAndCheck(
+                context,
+                SpreadsheetSelection.parseRow(reference),
+                Optional.empty()
+        );
+    }
+
+    default void upRowSkipHiddenAndCheck(final C context,
+                                         final String reference,
+                                         final String expected) {
+        this.upRowSkipHiddenAndCheck(
+                context,
+                SpreadsheetSelection.parseRow(reference),
+                SpreadsheetSelection.parseRow(expected)
+        );
+    }
+
+    default void upRowSkipHiddenAndCheck(final C context,
+                                         final SpreadsheetRowReference reference) {
+        this.upRowSkipHiddenAndCheck(
+                context,
+                reference,
+                Optional.empty()
+        );
+    }
+
+    default void upRowSkipHiddenAndCheck(final C context,
+                                         final SpreadsheetRowReference reference,
+                                         final SpreadsheetRowReference expected) {
+        this.upRowSkipHiddenAndCheck(
+                context,
+                reference,
+                Optional.of(expected)
+        );
+    }
+
+    default void upRowSkipHiddenAndCheck(final C context,
+                                         final SpreadsheetRowReference reference,
+                                         final Optional<SpreadsheetRowReference> expected) {
+        this.checkEquals(
+                expected,
+                context.upRowSkipHidden(reference),
+                () -> reference + " upRowSkipHidden " + context
+        );
+    }
+
     @Override
     default String typeNameSuffix() {
         return SpreadsheetViewportSelectionNavigationContext.class.getSimpleName();

@@ -53,4 +53,13 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
      * This method is used to support keyboard navigation.
      */
     Optional<SpreadsheetColumnReference> rightColumnSkipHidden(final SpreadsheetColumnReference reference);
+
+    /**
+     * Returns the first row moving up from the given starting point that is not hidden.
+     * If all rows above are hidden the original {@link SpreadsheetRowReference} is returned,
+     * providing it is also not hidden or {@link Optional#empty()}.
+     * <br>
+     * This method is used to support keyboard navigation.
+     */
+    Optional<SpreadsheetRowReference> upRowSkipHidden(final SpreadsheetRowReference reference);
 }
