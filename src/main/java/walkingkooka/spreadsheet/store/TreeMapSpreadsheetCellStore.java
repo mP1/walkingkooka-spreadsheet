@@ -26,9 +26,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
 import walkingkooka.tree.text.Length;
-import walkingkooka.tree.text.PixelLength;
 import walkingkooka.tree.text.TextStylePropertyName;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -173,24 +173,10 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
      */
     @Override
     public double maxColumnWidth(final SpreadsheetColumnReference column) {
-        Objects.requireNonNull(column, "column");
-
-        return this.all().stream()
-                .filter(c -> c.reference().column().equalsIgnoreReferenceKind(column))
-                .mapToDouble(c -> {
-                    double pixels = 0;
-
-                    final Optional<Length<?>> length = c.style()
-                            .get(TextStylePropertyName.WIDTH);
-                    if (length.isPresent()) {
-                        final PixelLength pixelLength = (PixelLength) length.get();
-                        pixels = pixelLength.value();
-                    }
-
-                    return pixels;
-                })
-                .max()
-                .orElse(0.0);
+        return this.maxWidthOrHeight(
+                this.column(column),
+                TextStylePropertyName.WIDTH
+        );
     }
 
     /**
@@ -198,23 +184,20 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
      */
     @Override
     public double maxRowHeight(final SpreadsheetRowReference row) {
-        Objects.requireNonNull(row, "row");
+        return this.maxWidthOrHeight(
+                this.row(row),
+                TextStylePropertyName.HEIGHT
+        );
+    }
 
-        return this.all().stream()
-                .filter(c -> c.reference().row().equalsIgnoreReferenceKind(row))
-                .mapToDouble(c -> {
-                    double pixels = 0;
-
-                    final Optional<Length<?>> length = c.style()
-                            .get(TextStylePropertyName.HEIGHT);
-                    if (length.isPresent()) {
-                        final PixelLength pixelLength = (PixelLength) length.get();
-                        pixels = pixelLength.value();
-                    }
-
-                    return pixels;
-                })
-                .max()
+    private double maxWidthOrHeight(final Collection<SpreadsheetCell> cells,
+                                    final TextStylePropertyName<Length<?>> widthOrHeight) {
+        return cells.stream()
+                .mapToDouble(c -> c.style()
+                        .get(widthOrHeight)
+                        .map(Length::pixelValue)
+                        .orElse(0.0)
+                ).max()
                 .orElse(0.0);
     }
 
