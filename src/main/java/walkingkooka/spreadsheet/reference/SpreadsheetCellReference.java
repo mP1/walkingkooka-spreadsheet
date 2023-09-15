@@ -66,8 +66,8 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     // Used by SpreadsheetSelection
     static final Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.cell()
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .orReport(ParserReporters.basic());
+            .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
+            .orReport(ParserReporters.invalidCharacterException());
 
     /**
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.

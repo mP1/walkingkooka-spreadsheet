@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
@@ -988,9 +989,14 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testParseCellReferenceRangeFails() {
+        final String text = "A1:B2";
+
         this.parseStringFails(
-                "A1:B2",
-                new IllegalArgumentException("Invalid character ':' at (3,1) \"A1:B2\" expected cell")
+                text,
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf(':')
+                )
         );
     }
 
