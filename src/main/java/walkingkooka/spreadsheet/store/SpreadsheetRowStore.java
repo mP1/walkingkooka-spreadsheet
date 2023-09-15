@@ -67,7 +67,7 @@ public interface SpreadsheetRowStore extends SpreadsheetColumnOrRowStore<Spreads
      * <br>
      * If the return row is hidden an {@link Optional#empty()} will be returned instead.
      */
-    Optional<SpreadsheetRowReference> upSkipHidden(final SpreadsheetRowReference reference);
+    Optional<SpreadsheetRowReference> upRowSkipHidden(final SpreadsheetRowReference reference);
 
     /**
      * Returns the last row moving down from the given starting point that is not hidden.
