@@ -266,9 +266,32 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
 
         this.checkEquals(
-                new InvalidCharacterException(text, 0).getMessage(),
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf('!')
+                ).getMessage(),
                 thrown.getMessage(),
                 () -> thrown.getClass().getName()
+        );
+    }
+
+    // parseCellRange...................................................................................................
+
+    @Test
+    public void testParseCellRangeFails() {
+        final String text = "A1:B!Hello";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseCellRange(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf("!")
+                ).getMessage(),
+                thrown.getMessage()
         );
     }
 
@@ -287,6 +310,24 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetSelection.parseCellRangeOrLabel("")
+        );
+    }
+
+    @Test
+    public void testParseCellRangeOrLabelWithInvalidFails() {
+        final String text = "A1:B!Hello";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseCellRange(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf("!")
+                ).getMessage(),
+                thrown.getMessage()
         );
     }
 
@@ -674,12 +715,17 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseCellOrCellRangeInvalidCellFails() {
+        final String text = "A@@@";
+
         final InvalidCharacterException thrown = assertThrows(
                 InvalidCharacterException.class,
-                () -> SpreadsheetSelection.parseCellOrCellRange("A@@@")
+                () -> SpreadsheetSelection.parseCellOrCellRange(text)
         );
         this.checkEquals(
-                "Invalid character 'A' at 0 in \"A@@@\"",
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf('@')
+                ).getMessage(),
                 thrown.getMessage(),
                 "message"
         );

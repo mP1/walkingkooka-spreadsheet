@@ -39,7 +39,7 @@ import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
-import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.MaxPositionTextCursor;
 import walkingkooka.text.cursor.TextCursorLineInfo;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -473,7 +473,9 @@ public abstract class SpreadsheetSelection implements HasText,
                                                                                                                  final Function<Range<S>, R> rangeFactory) {
         checkText(text);
 
-        final TextCursor cursor = TextCursors.charSequence(text);
+        final MaxPositionTextCursor cursor = TextCursors.maxPosition(
+                TextCursors.charSequence(text)
+        );
         final SpreadsheetParserContext context = SpreadsheetParserContexts.fake();
 
         ParserToken lower = parser.parse(cursor, context)
@@ -490,8 +492,10 @@ public abstract class SpreadsheetSelection implements HasText,
         if (!cursor.isEmpty()) {
             final char separator = cursor.at();
             if (SEPARATOR.character() != separator) {
-                final TextCursorLineInfo lineInfo = cursor.lineInfo();
-                throw new InvalidCharacterException(text, lineInfo.column() - 1);
+                throw new InvalidCharacterException(
+                        text,
+                        cursor.max()
+                );
             }
             cursor.next();
 
@@ -502,14 +506,18 @@ public abstract class SpreadsheetSelection implements HasText,
             upper = parser.parse(cursor, context)
                     .orElse(null);
             if (null == upper) {
-                final TextCursorLineInfo lineInfo = cursor.lineInfo();
-                throw new InvalidCharacterException(text, lineInfo.column() - 1);
+                throw new InvalidCharacterException(
+                        text,
+                        cursor.max()
+                );
             }
             upperSelection = parserTokenToSelection.apply(upper);
 
             if (false == cursor.isEmpty()) {
-                final TextCursorLineInfo lineInfo = cursor.lineInfo();
-                throw new InvalidCharacterException(text, lineInfo.column() - 1);
+                throw new InvalidCharacterException(
+                        text,
+                        cursor.max()
+                );
             }
         }
 

@@ -16,6 +16,7 @@
  */
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
 import walkingkooka.net.http.server.hateos.HateosResource;
@@ -26,10 +27,11 @@ import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.text.cursor.MaxPositionTextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
-import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.EnumSet;
 import java.util.Objects;
@@ -52,11 +54,20 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
      */
     static SpreadsheetCellReference parseCell0(final String text) {
         try {
-            return PARSER.parse(
-                            TextCursors.charSequence(text),
-                            SpreadsheetParserContexts.fake()
-                    )
-                    .get()
+            final MaxPositionTextCursor textCursor = TextCursors.maxPosition(
+                    TextCursors.charSequence(text)
+            );
+            final Optional<ParserToken> token = PARSER.parse(
+                    textCursor,
+                    SpreadsheetParserContexts.fake()
+            );
+            if (false == token.isPresent() || false == textCursor.isEmpty()) {
+                throw new InvalidCharacterException(
+                        text,
+                        textCursor.max()
+                );
+            }
+            return token.get()
                     .cast(SpreadsheetCellReferenceParserToken.class)
                     .cell();
         } catch (final ParserException cause) {
@@ -65,9 +76,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     // Used by SpreadsheetSelection
-    static final Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.cell()
-            .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
-            .orReport(ParserReporters.invalidCharacterException());
+    static final Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.cell();
 
     /**
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.
