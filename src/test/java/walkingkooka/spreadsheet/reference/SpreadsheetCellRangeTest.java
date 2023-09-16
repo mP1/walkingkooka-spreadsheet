@@ -1643,13 +1643,10 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testExtendLeftSkipsHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
-
         this.extendLeftColumnAndCheck(
                 "D4:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store,
+                SpreadsheetSelection.parseColumn("C")::testColumn,
                 "B4:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
         );
@@ -1657,25 +1654,21 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testExtendLeftColumnIgnoresHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.extendLeftColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store
+                Predicates.never(), // no hidden columns
+                SpreadsheetSelection.parseRow("3")::testRow
         );
     }
 
     @Test
     public void testExtendLeftColumnIgnoresHiddenRow2() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
-
         this.extendLeftColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store
+                Predicates.never(), // no hidden columns
+                SpreadsheetSelection.parseRow("4")::testRow
         );
     }
 
@@ -1781,13 +1774,10 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testExtendRightColumnSkipsHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
-
         this.extendRightColumnAndCheck(
                 "B2:C3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
-                store,
+                SpreadsheetSelection.parseColumn("D")::testColumn,
                 "B2:E3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
@@ -1795,25 +1785,21 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testExtendRightColumnIgnoresHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.extendRightColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store
+                Predicates.never(), // no hidden columns
+                SpreadsheetSelection.parseRow("3")::testRow
         );
     }
 
     @Test
     public void testExtendRightColumnIgnoresHiddenRow2() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
-
         this.extendRightColumnAndCheck(
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store
+                Predicates.never(), // no hidden columns
+                SpreadsheetSelection.parseRow("4")::testRow
         );
     }
 
@@ -1896,13 +1882,10 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testExtendUpRowSkipsHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.extendUpRowAndCheck(
                 "D4:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store,
+                SpreadsheetSelection.parseRow("3")::testRow,
                 "D2:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
         );
@@ -1910,25 +1893,21 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testExtendUpRowIgnoresHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("B").column().setHidden(true));
-
         this.extendUpRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store
+                SpreadsheetSelection.parseColumn("B")::testColumn,
+                Predicates.never() // no hidden row
         );
     }
 
     @Test
     public void testExtendUpRowIgnoresHiddenColumn2() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
-
         this.extendUpRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store
+                SpreadsheetSelection.parseColumn("C")::testColumn,
+                Predicates.never() // no hidden row
         );
     }
 
@@ -2020,13 +1999,10 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testExtendDownRowSkipsHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
-
         this.extendDownRowAndCheck(
                 "B2:C3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
-                store,
+                SpreadsheetSelection.parseRow("4")::testRow,
                 "B2:C5",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
@@ -2034,25 +2010,21 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testExtendDownRowIgnoresHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("B").column().setHidden(true));
-
         this.extendDownRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store
+                SpreadsheetSelection.parseColumn("B")::testColumn,
+                Predicates.never() // no hidden row
         );
     }
 
     @Test
     public void testExtendDownRowIgnoresHiddenColumn2() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
-
         this.extendDownRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                store
+                SpreadsheetSelection.parseColumn("C")::testColumn,
+                Predicates.never() // no hidden rows
         );
     }
 

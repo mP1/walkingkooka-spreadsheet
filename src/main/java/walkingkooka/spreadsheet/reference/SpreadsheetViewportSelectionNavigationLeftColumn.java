@@ -17,9 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-
 import java.util.Optional;
 
 final class SpreadsheetViewportSelectionNavigationLeftColumn extends SpreadsheetViewportSelectionNavigationColumnOrRow {
@@ -43,12 +40,10 @@ final class SpreadsheetViewportSelectionNavigationLeftColumn extends Spreadsheet
     @Override
     public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                                         final SpreadsheetColumnStore columnStore,
-                                                         final SpreadsheetRowStore rowStore) {
+                                                         final SpreadsheetViewportSelectionNavigationContext context) {
         return selection.leftColumn(
                 anchor,
-                columnStore,
-                rowStore
+                context
         ).map(s -> s.setAnchorOrDefault(anchor));
     }
 }

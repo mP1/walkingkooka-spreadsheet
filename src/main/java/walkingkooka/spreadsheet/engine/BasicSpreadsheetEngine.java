@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigationContexts;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -1776,8 +1777,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return navigation.update(
                 selection,
                 anchor,
-                repository.columns(),
-                repository.rows()
+                SpreadsheetViewportSelectionNavigationContexts.basic(
+                        repository.columns()::isHidden,
+                        repository.rows()::isHidden
+                )
         );
     }
 

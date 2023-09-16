@@ -18,9 +18,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-
 import java.util.Optional;
 
 final class SpreadsheetViewportSelectionNavigationUpRow extends SpreadsheetViewportSelectionNavigationColumnOrRow {
@@ -44,12 +41,10 @@ final class SpreadsheetViewportSelectionNavigationUpRow extends SpreadsheetViewp
     @Override
     public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                                         final SpreadsheetColumnStore columnStore,
-                                                         final SpreadsheetRowStore rowStore) {
+                                                         final SpreadsheetViewportSelectionNavigationContext context) {
         return selection.upRow(
                 anchor,
-                columnStore,
-                rowStore
+                context
         ).map(s -> s.setAnchorOrDefault(anchor));
     }
 }

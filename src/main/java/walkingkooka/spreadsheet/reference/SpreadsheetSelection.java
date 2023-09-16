@@ -35,8 +35,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -859,11 +857,10 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
                                      final Predicate<SpreadsheetRowReference> hiddenRowTester);
 
-    final boolean isHidden(final SpreadsheetColumnStore columnStore,
-                           final SpreadsheetRowStore rowStore) {
+    final boolean isHidden(final SpreadsheetViewportSelectionNavigationContext context) {
         return this.isHidden(
-                columnStore::isHidden,
-                rowStore::isHidden
+                context::isColumnHidden,
+                context::isRowHidden
         );
     }
 
@@ -882,36 +879,28 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     abstract Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                       final SpreadsheetColumnStore columnStore,
-                                                       final SpreadsheetRowStore rowStore);
+                                                       final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                  final SpreadsheetColumnStore columnStore,
-                                                  final SpreadsheetRowStore rowStore);
+                                                  final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                        final SpreadsheetColumnStore columnStore,
-                                                        final SpreadsheetRowStore rowStore);
+                                                        final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                    final SpreadsheetColumnStore columnStore,
-                                                    final SpreadsheetRowStore rowStore);
+                                                    final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetViewportSelection> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                     final SpreadsheetColumnStore columnStore,
-                                                                     final SpreadsheetRowStore rowStore);
+                                                                     final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                final SpreadsheetColumnStore columnStore,
-                                                                final SpreadsheetRowStore rowStore);
+                                                                final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetViewportSelection> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                      final SpreadsheetColumnStore columnStore,
-                                                                      final SpreadsheetRowStore rowStore);
+                                                                      final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetViewportSelection> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                  final SpreadsheetColumnStore columnStore,
-                                                                  final SpreadsheetRowStore rowStore);
+                                                                  final SpreadsheetViewportSelectionNavigationContext context);
 
     /**
      * Factory that creates or extends a {@link SpreadsheetSelection} into a range. Note the other is either a
@@ -922,20 +911,15 @@ public abstract class SpreadsheetSelection implements HasText,
     abstract Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
                                                         final SpreadsheetViewportSelectionAnchor anchor);
 
-    final Optional<SpreadsheetSelection> emptyIfHidden(final SpreadsheetColumnStore columnStore,
-                                                       final SpreadsheetRowStore rowStore) {
-        return this.isHidden(
-                columnStore,
-                rowStore
-        ) ?
+    final Optional<SpreadsheetSelection> emptyIfHidden(final SpreadsheetViewportSelectionNavigationContext context) {
+        return this.isHidden(context) ?
                 Optional.empty() :
                 Optional.of(this);
     }
 
     final Optional<SpreadsheetViewportSelection> setAnchorEmptyIfHidden(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                        final SpreadsheetColumnStore columnStore,
-                                                                        final SpreadsheetRowStore rowStore) {
-        return this.isHidden(columnStore, rowStore) ?
+                                                                        final SpreadsheetViewportSelectionNavigationContext context) {
+        return this.isHidden(context) ?
                 Optional.empty() :
                 Optional.of(this.setAnchor(anchor));
     }

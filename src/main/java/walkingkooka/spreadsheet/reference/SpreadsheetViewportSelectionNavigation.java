@@ -22,8 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
@@ -168,8 +166,7 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
      */
     public abstract Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                                                  final SpreadsheetColumnStore columnStore,
-                                                                  final SpreadsheetRowStore rowStore);
+                                                                  final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract boolean isOpposite(final SpreadsheetViewportSelectionNavigation other);
 

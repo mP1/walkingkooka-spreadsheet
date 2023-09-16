@@ -20,17 +20,16 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -277,15 +276,12 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
 
     @Test
     public void testUpdateColumnRangeAnchorExtendRightNavigateLeftSkipHidden() {
-        final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
-        columnStore.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
-        columnStore.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
-
         this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.extendRightColumn(),
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
-                columnStore,
+                SpreadsheetSelection.parseColumnRange("C:D")::testColumn,
+                Predicates.never(), // hidden rows
                 SpreadsheetSelection.parseColumnRange("B:E").setAnchor(SpreadsheetViewportSelectionAnchor.LEFT)
         );
     }
@@ -312,15 +308,12 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
 
     @Test
     public void testUpdateColumnRangeAnchorLeftNavigateExtendRightSkipHidden() {
-        final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
-        columnStore.save(SpreadsheetSelection.parseColumn("D").column().setHidden(true));
-        columnStore.save(SpreadsheetSelection.parseColumn("E").column().setHidden(true));
-
         this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.extendRightColumn(),
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 SpreadsheetViewportSelectionAnchor.LEFT,
-                columnStore,
+                SpreadsheetSelection.parseColumnRange("D:E")::testColumn,
+                Predicates.never(), // hidden rows
                 SpreadsheetSelection.parseColumnRange("B:F").setAnchor(SpreadsheetViewportSelectionAnchor.LEFT)
         );
     }
@@ -345,15 +338,17 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
 
     @Test
     public void testUpdateRowRangeExtendUp() {
-        final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
-        rowStore.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-        rowStore.save(SpreadsheetSelection.parseRow("4").row().setHidden(true));
-
         this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.extendUpRow(),
                 SpreadsheetSelection.parseRowRange("5:6"),
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
-                rowStore,
+                Predicates.never(), // hidden columns
+                Predicates.setContains(
+                        Sets.of(
+                                SpreadsheetSelection.parseRow("3"),
+                                SpreadsheetSelection.parseRow("4")
+                        )
+                ),
                 SpreadsheetSelection.parseRowRange("2:6").setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM)
         );
     }
@@ -378,15 +373,17 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
 
     @Test
     public void testUpdateRowRangeExtendDownSkipsHiddenRows() {
-        final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
-        rowStore.save(SpreadsheetSelection.parseRow("5").row().setHidden(true));
-        rowStore.save(SpreadsheetSelection.parseRow("6").row().setHidden(true));
-
         this.updateAndCheck(
                 SpreadsheetViewportSelectionNavigation.extendDownRow(),
                 SpreadsheetSelection.parseRowRange("3:4"),
                 SpreadsheetViewportSelectionAnchor.TOP,
-                rowStore,
+                Predicates.never(), // hidden columns
+                Predicates.setContains(
+                        Sets.of(
+                                SpreadsheetSelection.parseRow("5"),
+                                SpreadsheetSelection.parseRow("6")
+                        )
+                ),
                 SpreadsheetSelection.parseRowRange("3:7").setAnchor(SpreadsheetViewportSelectionAnchor.TOP)
         );
     }
@@ -429,8 +426,8 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
                 navigation,
                 selection,
                 anchor,
-                SpreadsheetColumnStores.treeMap(),
-                SpreadsheetRowStores.treeMap(),
+                Predicates.never(),
+                Predicates.never(),
                 expected
         );
     }
@@ -438,45 +435,15 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
                                 final SpreadsheetSelection selection,
                                 final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetColumnStore columnStore,
+                                final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                final Predicate<SpreadsheetRowReference> hiddenRows,
                                 final SpreadsheetViewportSelection expected) {
         this.updateAndCheck(
                 navigation,
                 selection,
                 anchor,
-                columnStore,
-                SpreadsheetRowStores.fake(),
-                expected
-        );
-    }
-
-    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
-                                final SpreadsheetSelection selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetRowStore rowStore,
-                                final SpreadsheetViewportSelection expected) {
-        this.updateAndCheck(
-                navigation,
-                selection,
-                anchor,
-                SpreadsheetColumnStores.fake(),
-                rowStore,
-                expected
-        );
-    }
-
-    private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
-                                final SpreadsheetSelection selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetColumnStore columnStore,
-                                final SpreadsheetRowStore rowStore,
-                                final SpreadsheetViewportSelection expected) {
-        this.updateAndCheck(
-                navigation,
-                selection,
-                anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.of(expected)
         );
     }
@@ -484,12 +451,19 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     private void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
                                 final SpreadsheetSelection selection,
                                 final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetColumnStore columnStore,
-                                final SpreadsheetRowStore rowStore,
+                                final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                final Predicate<SpreadsheetRowReference> hiddenRows,
                                 final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                navigation.update(selection, anchor, columnStore, rowStore),
+                navigation.update(
+                        selection,
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                hiddenRows
+                        )
+                ),
                 () -> navigation + " update " + selection + " " + anchor
         );
     }

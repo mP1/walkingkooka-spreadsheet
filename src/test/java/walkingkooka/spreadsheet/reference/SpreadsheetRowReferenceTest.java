@@ -691,14 +691,12 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testLeftHiddenColumn() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
-        store.save(row.row().setHidden(true));
 
         this.leftColumnAndCheck(
                 row,
-                store
+                Predicates.never(), // no hidden columns
+                row::testRow
         );
     }
 
@@ -720,12 +718,9 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testUpSkipsHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.upRowAndCheck(
                 "4",
-                store,
+                SpreadsheetSelection.parseRow("3")::testRow,
                 "2"
         );
     }
@@ -750,14 +745,12 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testRightHiddenColumn() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
-        store.save(row.row().setHidden(true));
 
         this.rightColumnAndCheck(
                 row,
-                store
+                Predicates.never(), // no hidden columns
+                row::testRow
         );
     }
 
@@ -789,12 +782,9 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testDownSkipsHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.downRowAndCheck(
                 "2",
-                store,
+                SpreadsheetSelection.parseRow("3")::testRow,
                 "4"
         );
     }
@@ -866,13 +856,10 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testExtendUpSkipsHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.extendUpRowAndCheck(
                 "4",
                 SpreadsheetViewportSelectionAnchor.NONE,
-                store,
+                SpreadsheetSelection.parseRow("3")::testRow,
                 "2:4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM
         );
@@ -900,13 +887,11 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testExtendDownSkipsHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.extendDownRowAndCheck(
                 "2",
                 SpreadsheetViewportSelectionAnchor.NONE,
-                store,
+                Predicates.never(), // no hidden columns
+                SpreadsheetSelection.parseRow("3")::testRow,
                 "2:4",
                 SpreadsheetViewportSelectionAnchor.TOP
         );
@@ -924,13 +909,11 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testExtendLeftHiddenColumn() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.extendLeftColumnAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
-                store
+                Predicates.never(), // no hidden columns
+                SpreadsheetSelection.parseRow("3")::testRow
         );
     }
 
@@ -946,13 +929,11 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testExtendRightHiddenColumn() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.extendRightColumnAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
-                store
+                Predicates.never(), // no hidden columns
+                SpreadsheetSelection.parseRow("3")::testRow
         );
     }
 
