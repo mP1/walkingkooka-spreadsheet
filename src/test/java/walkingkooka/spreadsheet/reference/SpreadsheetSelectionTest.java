@@ -247,9 +247,29 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseCell() {
-        this.checkEquals(SpreadsheetSelection.A1,
-                SpreadsheetSelection.cell(SpreadsheetSelection.parseColumn("A"),
-                        SpreadsheetSelection.parseRow("1")));
+        this.checkEquals(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.cell(
+                        SpreadsheetSelection.parseColumn("A"),
+                        SpreadsheetSelection.parseRow("1")
+                )
+        );
+    }
+
+    @Test
+    public void testParseCellFails() {
+        final String text = "ABC!123";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseCell(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(text, 0).getMessage(),
+                thrown.getMessage(),
+                () -> thrown.getClass().getName()
+        );
     }
 
     // parseCellRangeOrLabel............................................................................................
@@ -636,12 +656,12 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseCellOrCellRangeInvalidCellFails() {
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
                 () -> SpreadsheetSelection.parseCellOrCellRange("A@@@")
         );
         this.checkEquals(
-                "Invalid character 'A' at (1,1) \"A@@@\" expected cell",
+                "Invalid character 'A' at 0 in \"A@@@\"",
                 thrown.getMessage(),
                 "message"
         );
