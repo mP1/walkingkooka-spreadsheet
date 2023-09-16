@@ -42,6 +42,40 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     final static String MAX_TOSTRING = toString0(MAX_VALUE + 1, SpreadsheetReferenceKind.RELATIVE);
 
+    static final SpreadsheetColumnReference[] ABSOLUTE = fillCache(
+            i -> new SpreadsheetColumnReference(
+                    i,
+                    SpreadsheetReferenceKind.ABSOLUTE
+            ),
+            new SpreadsheetColumnReference[CACHE_SIZE]
+    );
+
+    static final SpreadsheetColumnReference[] RELATIVE = fillCache(
+            i -> new SpreadsheetColumnReference(
+                    i,
+                    SpreadsheetReferenceKind.RELATIVE
+            ),
+            new SpreadsheetColumnReference[CACHE_SIZE]
+    );
+
+    // both MIN & MAX constants must appear after ABSOLUTE & RELATIVE to avoid nulls in j2cl...........................
+
+    /**
+     * The left most possible column
+     */
+    public final static SpreadsheetColumnReference MIN = with(
+            0,
+            SpreadsheetReferenceKind.RELATIVE
+    );
+
+    /**
+     * The right most possible column
+     */
+    public final static SpreadsheetColumnReference MAX = with(
+            MAX_VALUE,
+            SpreadsheetReferenceKind.RELATIVE
+    );
+
     /**
      * Factory that creates a new column.
      */
@@ -53,23 +87,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                 referenceKind.columnFromCache(value) :
                 new SpreadsheetColumnReference(value, referenceKind);
     }
-
-    static final SpreadsheetColumnReference[] ABSOLUTE = fillCache(i -> new SpreadsheetColumnReference(i, SpreadsheetReferenceKind.ABSOLUTE),
-            new SpreadsheetColumnReference[CACHE_SIZE]);
-    static final SpreadsheetColumnReference[] RELATIVE = fillCache(i -> new SpreadsheetColumnReference(i, SpreadsheetReferenceKind.RELATIVE),
-            new SpreadsheetColumnReference[CACHE_SIZE]);
-
-    // both MIN & MAX constants must appear after ABSOLUTE & RELATIVE to avoid nulls in j2cl...........................
-
-    /**
-     * The left most possible column
-     */
-    public final static SpreadsheetColumnReference MIN = with(0, SpreadsheetReferenceKind.RELATIVE);
-
-    /**
-     * The right most possible column
-     */
-    public final static SpreadsheetColumnReference MAX = with(MAX_VALUE, SpreadsheetReferenceKind.RELATIVE);
 
     /**
      * Private ctor use factory
