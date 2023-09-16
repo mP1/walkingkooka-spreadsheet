@@ -186,6 +186,54 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
         );
     }
 
+    default void downRowSkipHiddenAndCheck(final C context,
+                                           final String reference) {
+        this.downRowSkipHiddenAndCheck(
+                context,
+                SpreadsheetSelection.parseRow(reference),
+                Optional.empty()
+        );
+    }
+
+    default void downRowSkipHiddenAndCheck(final C context,
+                                           final String reference,
+                                           final String expected) {
+        this.downRowSkipHiddenAndCheck(
+                context,
+                SpreadsheetSelection.parseRow(reference),
+                SpreadsheetSelection.parseRow(expected)
+        );
+    }
+
+    default void downRowSkipHiddenAndCheck(final C context,
+                                           final SpreadsheetRowReference reference) {
+        this.downRowSkipHiddenAndCheck(
+                context,
+                reference,
+                Optional.empty()
+        );
+    }
+
+    default void downRowSkipHiddenAndCheck(final C context,
+                                           final SpreadsheetRowReference reference,
+                                           final SpreadsheetRowReference expected) {
+        this.downRowSkipHiddenAndCheck(
+                context,
+                reference,
+                Optional.of(expected)
+        );
+    }
+
+    default void downRowSkipHiddenAndCheck(final C context,
+                                           final SpreadsheetRowReference reference,
+                                           final Optional<SpreadsheetRowReference> expected) {
+        this.checkEquals(
+                expected,
+                context.downRowSkipHidden(reference),
+                () -> reference + " downRowSkipHidden " + context
+        );
+    }
+
     @Override
     default String typeNameSuffix() {
         return SpreadsheetViewportSelectionNavigationContext.class.getSimpleName();
