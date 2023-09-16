@@ -24,10 +24,6 @@ import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -1098,24 +1094,20 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testLeftSkipsHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
-
         this.leftColumnAndCheck(
                 "D1",
-                store,
+                SpreadsheetSelection.parseColumn("C")::testColumn,
+                Predicates.never(), // NO hidden rows
                 "B1"
         );
     }
 
     @Test
     public void testLeftColumnHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("1").row().setHidden(true));
-
         this.leftColumnAndCheck(
                 "D1",
-                store
+                Predicates.never(), // no hidden columns
+                SpreadsheetSelection.parseRow("1")::testRow
         );
     }
 
@@ -1147,24 +1139,18 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testUpSkipsHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.upRowAndCheck(
                 "B4",
-                store,
+                SpreadsheetSelection.parseRow("3")::testRow,
                 "B2"
         );
     }
 
     @Test
     public void testUpRowIgnoresHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("B").column().setHidden(true));
-
         this.upRowAndCheck(
                 "B2",
-                store
+                SpreadsheetSelection.parseColumn("B")::testColumn
         );
     }
 
@@ -1196,24 +1182,20 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testRightSkipsHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
-
         this.rightColumnAndCheck(
                 "B1",
-                store,
+                SpreadsheetSelection.parseColumn("C")::testColumn,
+                Predicates.never(), // No hidden rows
                 "D1"
         );
     }
 
     @Test
     public void testRightColumnIgnoresHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("1").row().setHidden(true));
-
         this.rightColumnAndCheck(
                 "D1",
-                store
+                Predicates.never(), // no hidden columns
+                SpreadsheetSelection.parseRow("1")::testRow
         );
     }
 
@@ -1245,24 +1227,19 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testDownSkipsHiddenRow() {
-        final SpreadsheetRowStore store = SpreadsheetRowStores.treeMap();
-        store.save(SpreadsheetSelection.parseRow("3").row().setHidden(true));
-
         this.downRowAndCheck(
                 "B2",
-                store,
+                SpreadsheetSelection.parseRow("3")::testRow,
                 "B4"
         );
     }
 
     @Test
     public void testDownRowIgnoresHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("B").column().setHidden(true));
-
         this.downRowAndCheck(
                 "B2",
-                store
+                SpreadsheetSelection.parseColumn("B")::testColumn,
+                Predicates.never() // no hidden rows
         );
     }
 

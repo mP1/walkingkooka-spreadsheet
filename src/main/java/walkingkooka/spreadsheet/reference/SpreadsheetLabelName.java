@@ -23,8 +23,6 @@ import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
@@ -247,57 +245,49 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
 
     @Override
     Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                              final SpreadsheetColumnStore columnStore,
-                                              final SpreadsheetRowStore rowStore) {
+                                              final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetColumnStore columnStore,
-                                         final SpreadsheetRowStore rowStore) {
+                                         final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                               final SpreadsheetColumnStore columnStore,
-                                               final SpreadsheetRowStore rowStore) {
+                                               final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                           final SpreadsheetColumnStore columnStore,
-                                           final SpreadsheetRowStore rowStore) {
+                                           final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     Optional<SpreadsheetViewportSelection> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                            final SpreadsheetColumnStore columnStore,
-                                                            final SpreadsheetRowStore rowStore) {
+                                                            final SpreadsheetViewportSelectionNavigationContext contexte) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                       final SpreadsheetColumnStore columnStore,
-                                                       final SpreadsheetRowStore rowStore) {
+                                                       final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     Optional<SpreadsheetViewportSelection> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
+                                                             final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     Optional<SpreadsheetViewportSelection> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                         final SpreadsheetColumnStore columnStore,
-                                                         final SpreadsheetRowStore rowStore) {
+                                                         final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 

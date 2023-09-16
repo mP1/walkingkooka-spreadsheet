@@ -17,9 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-
 import java.util.Optional;
 
 /**
@@ -51,8 +48,7 @@ abstract class SpreadsheetViewportSelectionNavigationPixel extends SpreadsheetVi
     @Override
     public final Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
                                                                final SpreadsheetViewportSelectionAnchor anchor,
-                                                               final SpreadsheetColumnStore columnStore,
-                                                               final SpreadsheetRowStore rowStore) {
+                                                               final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 

@@ -28,10 +28,6 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -600,41 +596,23 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // leftColumn.......................................................................................................
 
     final void leftColumnAndCheck(final String selection,
-                                  final SpreadsheetColumnStore columnStore) {
-        this.leftColumnAndCheck(
-                selection,
-                columnStore,
-                this.rowStore()
-        );
-    }
-
-    final void leftColumnAndCheck(final String selection,
-                                  final SpreadsheetRowStore rowStore) {
-        this.leftColumnAndCheck(
-                selection,
-                this.columnStore(),
-                rowStore
-        );
-    }
-
-    final void leftColumnAndCheck(final String selection,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore) {
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.leftColumnAndCheck(
                 this.parseString(selection),
-                columnStore,
-                rowStore
+                hiddenColumns,
+                hiddenRows
         );
     }
 
     final void leftColumnAndCheck(final S selection,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore) {
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.leftColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
@@ -659,75 +637,27 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void leftColumnAndCheck(final String selection,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final String expected) {
-        this.leftColumnAndCheck(
-                selection,
-                columnStore,
-                this.rowStore(),
-                expected
-        );
-    }
-
-    final void leftColumnAndCheck(final String selection,
-                                  final SpreadsheetRowStore rowStore,
-                                  final String expected) {
-        this.leftColumnAndCheck(
-                selection,
-                this.columnStore(),
-                rowStore,
-                expected
-        );
-    }
-
-    final void leftColumnAndCheck(final String selection,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows,
                                   final String expected) {
         this.leftColumnAndCheck(
                 this.parseString(selection),
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expected)
         );
     }
 
     final void leftColumnAndCheck(final String selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final String expected) {
-        this.leftColumnAndCheck(
-                selection,
-                anchor,
-                columnStore,
-                this.rowStore(),
-                expected
-        );
-    }
-
-    final void leftColumnAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetRowStore rowStore,
-                                  final String expected) {
-        this.leftColumnAndCheck(
-                selection,
-                anchor,
-                this.columnStore(),
-                rowStore,
-                expected
-        );
-    }
-
-    final void leftColumnAndCheck(final String selection,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows,
                                   final String expected) {
         this.leftColumnAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expected)
         );
     }
@@ -747,153 +677,140 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.leftColumnAndCheck(
                 selection,
                 anchor,
-                columnStore(),
+                Predicates.never(),
                 expected
         );
     }
 
     final void leftColumnAndCheck(final S selection,
-                                  final SpreadsheetColumnStore columnStore) {
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns) {
         this.leftColumnAndCheck(
                 selection,
-                columnStore,
+                hiddenColumns,
                 Optional.empty()
         );
     }
 
     final void leftColumnAndCheck(final S selection,
-                                  final SpreadsheetRowStore rowStore) {
-        this.leftColumnAndCheck(
-                selection,
-                SpreadsheetViewportSelectionAnchor.NONE,
-                this.columnStore(),
-                rowStore,
-                Optional.empty()
-        );
-    }
-
-    final void leftColumnAndCheck(final S selection,
-                                  final SpreadsheetColumnStore columnStore,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                   final SpreadsheetSelection expected) {
         this.leftColumnAndCheck(
                 selection,
-                columnStore,
+                hiddenColumns,
                 Optional.of(expected)
         );
     }
 
     final void leftColumnAndCheck(final S selection,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows,
                                   final SpreadsheetSelection expected) {
         this.leftColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 expected
         );
     }
 
     final void leftColumnAndCheck(final S selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows,
                                   final SpreadsheetSelection expected) {
         this.leftColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.of(expected)
         );
     }
 
     final void leftColumnAndCheck(final S selection,
-                                  final SpreadsheetColumnStore columnStore,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                   final Optional<SpreadsheetSelection> expected) {
         this.leftColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
+                hiddenColumns,
                 expected
         );
     }
 
     final void leftColumnAndCheck(final S selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                   final SpreadsheetSelection expected) {
         this.leftColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
+                hiddenColumns,
                 Optional.of(expected)
         );
     }
 
     final void leftColumnAndCheck(final S selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                   final Optional<SpreadsheetSelection> expected) {
         this.leftColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                hiddenColumns,
+                Predicates.never(), // hidden rows NONE
                 expected
         );
     }
 
     final void leftColumnAndCheck(final S selection,
                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetColumnStore columnStore,
-                                  final SpreadsheetRowStore rowStore,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::simplify),
-                selection.leftColumn(anchor, columnStore, rowStore),
+                selection.leftColumn(
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                hiddenRows
+                        )
+                ),
                 () -> selection + " anchor=" + anchor + " navigate leftColumn"
         );
     }
 
     // upRow............................................................................................................
+
     final void upRowAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore) {
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns) {
         this.upRowAndCheck(
                 selection,
-                columnStore,
-                this.rowStore()
+                hiddenColumns,
+                Predicates.never()
         );
     }
 
     final void upRowAndCheck(final String selection,
-                             final SpreadsheetRowStore rowStore) {
-        this.upRowAndCheck(
-                selection,
-                this.columnStore(),
-                rowStore
-        );
-    }
-
-    final void upRowAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore) {
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                             final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.upRowAndCheck(
                 this.parseString(selection),
-                columnStore,
-                rowStore
+                hiddenColumns,
+                hiddenRows
         );
     }
 
     final void upRowAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore) {
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                             final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.upRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
@@ -918,75 +835,51 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void upRowAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore,
+                             final Predicate<SpreadsheetRowReference> hiddenRows,
                              final String expected) {
         this.upRowAndCheck(
                 selection,
-                columnStore,
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                hiddenRows,
                 expected
         );
     }
 
     final void upRowAndCheck(final String selection,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.upRowAndCheck(
-                selection,
-                this.columnStore(),
-                rowStore,
-                expected
-        );
-    }
-
-    final void upRowAndCheck(final String selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                             final Predicate<SpreadsheetRowReference> hiddenRows,
                              final String expected) {
         this.upRowAndCheck(
                 this.parseString(selection),
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expected)
         );
     }
 
     final void upRowAndCheck(final String selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
+                             final Predicate<SpreadsheetRowReference> hiddenRows,
                              final String expected) {
         this.upRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                hiddenRows,
                 expected
         );
     }
 
     final void upRowAndCheck(final String selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetRowStore rowStore,
-                             final String expected) {
-        this.upRowAndCheck(
-                selection,
-                anchor,
-                this.columnStore(),
-                rowStore,
-                expected
-        );
-    }
-
-    final void upRowAndCheck(final String selection,
-                             final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                             final Predicate<SpreadsheetRowReference> hiddenRows,
                              final String expected) {
         this.upRowAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expected)
         );
     }
@@ -1006,153 +899,132 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.upRowAndCheck(
                 selection,
                 anchor,
-                columnStore(),
+                Predicates.never(), // no hidden rows
                 expected
         );
     }
 
     final void upRowAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore) {
+                             final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.upRowAndCheck(
                 selection,
-                columnStore,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                Predicates.never(), // NO hidden columns,
+                hiddenRows,
                 Optional.empty()
         );
     }
 
     final void upRowAndCheck(final S selection,
-                             final SpreadsheetRowStore rowStore) {
-        this.upRowAndCheck(
-                selection,
-                SpreadsheetViewportSelectionAnchor.NONE,
-                this.columnStore(),
-                rowStore,
-                Optional.empty()
-        );
-    }
-
-    final void upRowAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
                              final SpreadsheetSelection expected) {
         this.upRowAndCheck(
                 selection,
-                columnStore,
+                hiddenColumns,
                 Optional.of(expected)
         );
     }
 
     final void upRowAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                             final Predicate<SpreadsheetRowReference> hiddenRows,
                              final SpreadsheetSelection expected) {
         this.upRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 expected
         );
     }
 
     final void upRowAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                             final Predicate<SpreadsheetRowReference> hiddenRows,
                              final SpreadsheetSelection expected) {
         this.upRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.of(expected)
         );
     }
 
     final void upRowAndCheck(final S selection,
-                             final SpreadsheetColumnStore columnStore,
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
                              final Optional<SpreadsheetSelection> expected) {
         this.upRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
+                hiddenColumns,
                 expected
         );
     }
 
     final void upRowAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
                              final SpreadsheetSelection expected) {
         this.upRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
+                hiddenColumns,
                 Optional.of(expected)
         );
     }
 
     final void upRowAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
                              final Optional<SpreadsheetSelection> expected) {
         this.upRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                hiddenColumns,
+                Predicates.never(),
                 expected
         );
     }
 
     final void upRowAndCheck(final S selection,
                              final SpreadsheetViewportSelectionAnchor anchor,
-                             final SpreadsheetColumnStore columnStore,
-                             final SpreadsheetRowStore rowStore,
+                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                             final Predicate<SpreadsheetRowReference> hiddenRows,
                              final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::simplify),
-                selection.upRow(anchor, columnStore, rowStore),
+                selection.upRow(
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                hiddenRows
+                        )
+                ),
                 () -> selection + " anchor=" + anchor + " navigate upRow"
         );
     }
-    // rightColumn......................................................................................................
+    // rightColumn.......................................................................................................
 
     final void rightColumnAndCheck(final String selection,
-                                   final SpreadsheetColumnStore columnStore) {
-        this.rightColumnAndCheck(
-                selection,
-                columnStore,
-                this.rowStore()
-        );
-    }
-
-    final void rightColumnAndCheck(final String selection,
-                                   final SpreadsheetRowStore rowStore) {
-        this.rightColumnAndCheck(
-                selection,
-                this.columnStore(),
-                rowStore
-        );
-    }
-
-    final void rightColumnAndCheck(final String selection,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore) {
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.rightColumnAndCheck(
                 this.parseString(selection),
-                columnStore,
-                rowStore
+                hiddenColumns,
+                hiddenRows
         );
     }
 
     final void rightColumnAndCheck(final S selection,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore) {
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.rightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
@@ -1177,75 +1049,27 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void rightColumnAndCheck(final String selection,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final String expected) {
-        this.rightColumnAndCheck(
-                selection,
-                columnStore,
-                this.rowStore(),
-                expected
-        );
-    }
-
-    final void rightColumnAndCheck(final String selection,
-                                   final SpreadsheetRowStore rowStore,
-                                   final String expected) {
-        this.rightColumnAndCheck(
-                selection,
-                this.columnStore(),
-                rowStore,
-                expected
-        );
-    }
-
-    final void rightColumnAndCheck(final String selection,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final String expected) {
         this.rightColumnAndCheck(
                 this.parseString(selection),
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expected)
         );
     }
 
     final void rightColumnAndCheck(final String selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final String expected) {
-        this.rightColumnAndCheck(
-                selection,
-                anchor,
-                columnStore,
-                this.rowStore(),
-                expected
-        );
-    }
-
-    final void rightColumnAndCheck(final String selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetRowStore rowStore,
-                                   final String expected) {
-        this.rightColumnAndCheck(
-                selection,
-                anchor,
-                this.columnStore(),
-                rowStore,
-                expected
-        );
-    }
-
-    final void rightColumnAndCheck(final String selection,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final String expected) {
         this.rightColumnAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expected)
         );
     }
@@ -1265,153 +1089,139 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.rightColumnAndCheck(
                 selection,
                 anchor,
-                columnStore(),
+                Predicates.never(),
                 expected
         );
     }
 
     final void rightColumnAndCheck(final S selection,
-                                   final SpreadsheetColumnStore columnStore) {
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns) {
         this.rightColumnAndCheck(
                 selection,
-                columnStore,
+                hiddenColumns,
                 Optional.empty()
         );
     }
 
     final void rightColumnAndCheck(final S selection,
-                                   final SpreadsheetRowStore rowStore) {
-        this.rightColumnAndCheck(
-                selection,
-                SpreadsheetViewportSelectionAnchor.NONE,
-                this.columnStore(),
-                rowStore,
-                Optional.empty()
-        );
-    }
-
-    final void rightColumnAndCheck(final S selection,
-                                   final SpreadsheetColumnStore columnStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                    final SpreadsheetSelection expected) {
         this.rightColumnAndCheck(
                 selection,
-                columnStore,
+                hiddenColumns,
                 Optional.of(expected)
         );
     }
 
     final void rightColumnAndCheck(final S selection,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final SpreadsheetSelection expected) {
         this.rightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 expected
         );
     }
 
     final void rightColumnAndCheck(final S selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final SpreadsheetSelection expected) {
         this.rightColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.of(expected)
         );
     }
 
     final void rightColumnAndCheck(final S selection,
-                                   final SpreadsheetColumnStore columnStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                    final Optional<SpreadsheetSelection> expected) {
         this.rightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
+                hiddenColumns,
                 expected
         );
     }
 
     final void rightColumnAndCheck(final S selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                    final SpreadsheetSelection expected) {
         this.rightColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
+                hiddenColumns,
                 Optional.of(expected)
         );
     }
 
     final void rightColumnAndCheck(final S selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                    final Optional<SpreadsheetSelection> expected) {
         this.rightColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                hiddenColumns,
+                Predicates.never(), // hidden rows NONE
                 expected
         );
     }
 
     final void rightColumnAndCheck(final S selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::simplify),
-                selection.rightColumn(anchor, columnStore, rowStore),
-                () -> selection + " anchor=" + anchor + " navigate right"
+                selection.rightColumn(
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                hiddenRows
+                        )
+                ),
+                () -> selection + " anchor=" + anchor + " navigate rightColumn"
         );
     }
     // downRow..........................................................................................................
 
     final void downRowAndCheck(final String selection,
-                               final SpreadsheetColumnStore columnStore) {
+                               final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.downRowAndCheck(
                 selection,
-                columnStore,
-                this.rowStore()
+                Predicates.never(), // NO hidden columns,
+                hiddenRows
         );
     }
 
     final void downRowAndCheck(final String selection,
-                               final SpreadsheetRowStore rowStore) {
-        this.downRowAndCheck(
-                selection,
-                this.columnStore(),
-                rowStore
-        );
-    }
-
-    final void downRowAndCheck(final String selection,
-                               final SpreadsheetColumnStore columnStore,
-                               final SpreadsheetRowStore rowStore) {
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                               final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.downRowAndCheck(
                 this.parseString(selection),
-                columnStore,
-                rowStore
+                hiddenColumns,
+                hiddenRows
         );
     }
 
     final void downRowAndCheck(final S selection,
-                               final SpreadsheetColumnStore columnStore,
-                               final SpreadsheetRowStore rowStore) {
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                               final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.downRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
@@ -1436,75 +1246,38 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void downRowAndCheck(final String selection,
-                               final SpreadsheetColumnStore columnStore,
+                               final Predicate<SpreadsheetRowReference> hiddenRows,
                                final String expected) {
         this.downRowAndCheck(
                 selection,
-                columnStore,
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                hiddenRows,
                 expected
         );
     }
 
     final void downRowAndCheck(final String selection,
-                               final SpreadsheetRowStore rowStore,
-                               final String expected) {
-        this.downRowAndCheck(
-                selection,
-                this.columnStore(),
-                rowStore,
-                expected
-        );
-    }
-
-    final void downRowAndCheck(final String selection,
-                               final SpreadsheetColumnStore columnStore,
-                               final SpreadsheetRowStore rowStore,
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                               final Predicate<SpreadsheetRowReference> hiddenRows,
                                final String expected) {
         this.downRowAndCheck(
                 this.parseString(selection),
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expected)
         );
     }
 
     final void downRowAndCheck(final String selection,
                                final SpreadsheetViewportSelectionAnchor anchor,
-                               final SpreadsheetColumnStore columnStore,
-                               final String expected) {
-        this.downRowAndCheck(
-                selection,
-                anchor,
-                columnStore,
-                this.rowStore(),
-                expected
-        );
-    }
-
-    final void downRowAndCheck(final String selection,
-                               final SpreadsheetViewportSelectionAnchor anchor,
-                               final SpreadsheetRowStore rowStore,
-                               final String expected) {
-        this.downRowAndCheck(
-                selection,
-                anchor,
-                this.columnStore(),
-                rowStore,
-                expected
-        );
-    }
-
-    final void downRowAndCheck(final String selection,
-                               final SpreadsheetViewportSelectionAnchor anchor,
-                               final SpreadsheetColumnStore columnStore,
-                               final SpreadsheetRowStore rowStore,
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                               final Predicate<SpreadsheetRowReference> hiddenRows,
                                final String expected) {
         this.downRowAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expected)
         );
     }
@@ -1524,122 +1297,102 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.downRowAndCheck(
                 selection,
                 anchor,
-                columnStore(),
+                Predicates.never(), // no hidden columns
+                Predicates.never(), // no hidden rows
                 expected
         );
     }
 
     final void downRowAndCheck(final S selection,
-                               final SpreadsheetColumnStore columnStore) {
+                               final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.downRowAndCheck(
                 selection,
-                columnStore,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                Predicates.never(), // NO hidden columns,
+                hiddenRows,
                 Optional.empty()
         );
     }
 
     final void downRowAndCheck(final S selection,
-                               final SpreadsheetRowStore rowStore) {
-        this.downRowAndCheck(
-                selection,
-                SpreadsheetViewportSelectionAnchor.NONE,
-                this.columnStore(),
-                rowStore,
-                Optional.empty()
-        );
-    }
-
-    final void downRowAndCheck(final S selection,
-                               final SpreadsheetColumnStore columnStore,
-                               final SpreadsheetSelection expected) {
-        this.downRowAndCheck(
-                selection,
-                columnStore,
-                Optional.of(expected)
-        );
-    }
-
-    final void downRowAndCheck(final S selection,
-                               final SpreadsheetColumnStore columnStore,
-                               final SpreadsheetRowStore rowStore,
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                               final Predicate<SpreadsheetRowReference> hiddenRows,
                                final SpreadsheetSelection expected) {
         this.downRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 expected
         );
     }
 
     final void downRowAndCheck(final S selection,
                                final SpreadsheetViewportSelectionAnchor anchor,
-                               final SpreadsheetColumnStore columnStore,
-                               final SpreadsheetRowStore rowStore,
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                               final Predicate<SpreadsheetRowReference> hiddenRows,
                                final SpreadsheetSelection expected) {
         this.downRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.of(expected)
         );
     }
 
     final void downRowAndCheck(final S selection,
-                               final SpreadsheetColumnStore columnStore,
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                final Optional<SpreadsheetSelection> expected) {
         this.downRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
+                hiddenColumns,
                 expected
         );
     }
 
     final void downRowAndCheck(final S selection,
                                final SpreadsheetViewportSelectionAnchor anchor,
-                               final SpreadsheetColumnStore columnStore,
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                final SpreadsheetSelection expected) {
         this.downRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
+                hiddenColumns,
                 Optional.of(expected)
         );
     }
 
     final void downRowAndCheck(final S selection,
                                final SpreadsheetViewportSelectionAnchor anchor,
-                               final SpreadsheetColumnStore columnStore,
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                final Optional<SpreadsheetSelection> expected) {
         this.downRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                hiddenColumns,
+                Predicates.never(),
                 expected
         );
     }
 
     final void downRowAndCheck(final S selection,
                                final SpreadsheetViewportSelectionAnchor anchor,
-                               final SpreadsheetColumnStore columnStore,
-                               final SpreadsheetRowStore rowStore,
+                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                               final Predicate<SpreadsheetRowReference> hiddenRows,
                                final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::simplify),
-                selection.downRow(anchor, columnStore, rowStore),
+                selection.downRow(
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                hiddenRows
+                        )
+                ),
                 () -> selection + " anchor=" + anchor + " navigate downRow"
         );
-    }
-
-    private SpreadsheetColumnStore columnStore() {
-        return SpreadsheetColumnStores.treeMap();
-    }
-
-    private SpreadsheetRowStore rowStore() {
-        return SpreadsheetRowStores.treeMap();
     }
 
     // extendRange......................................................................................................
@@ -1725,24 +1478,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendLeftColumnAndCheck(final String selection,
                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetRowStore rowStore) {
+                                        final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.extendLeftColumnAndCheck(
                 selection,
                 anchor,
-                this.columnStore(),
-                rowStore
+                Predicates.never(), // NO hidden columns,
+                hiddenRows
         );
     }
 
     final void extendLeftColumnAndCheck(final String selection,
                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore) {
+                                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                        final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.extendLeftColumnAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
@@ -1751,21 +1504,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final String expectedSelection) {
         this.extendLeftColumnAndCheck(
                 selection,
-                this.columnStore(),
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                Predicates.never(),
                 expectedSelection
         );
     }
 
     final void extendLeftColumnAndCheck(final String selection,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore,
+                                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                        final Predicate<SpreadsheetRowReference> hiddenRows,
                                         final String expectedSelection) {
         this.extendLeftColumnAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseString(expectedSelection)
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
@@ -1778,8 +1531,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendLeftColumnAndCheck(
                 selection,
                 anchor,
-                this.columnStore(),
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                Predicates.never(),
                 expectedSelection,
                 expectedAnchor
         );
@@ -1787,14 +1540,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendLeftColumnAndCheck(final String selection,
                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
+                                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                         final String expectedSelection,
                                         final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendLeftColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                hiddenColumns,
+                Predicates.never(),
                 expectedSelection,
                 expectedAnchor
         );
@@ -1802,15 +1555,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendLeftColumnAndCheck(final String selection,
                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore,
+                                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                        final Predicate<SpreadsheetRowReference> hiddenRows,
                                         final String expectedSelection,
                                         final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendLeftColumnAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expectedSelection)
                         .simplify()
                         .setAnchor(expectedAnchor)
@@ -1819,26 +1572,32 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendLeftColumnAndCheck(final S selection,
                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore,
+                                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                        final Predicate<SpreadsheetRowReference> hiddenRows,
                                         final SpreadsheetViewportSelection expected) {
         this.extendLeftColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.of(expected)
         );
     }
 
     final void extendLeftColumnAndCheck(final S selection,
                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                        final SpreadsheetColumnStore columnStore,
-                                        final SpreadsheetRowStore rowStore,
+                                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                        final Predicate<SpreadsheetRowReference> hiddenRows,
                                         final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendLeftColumn(anchor, columnStore, rowStore),
+                selection.extendLeftColumn(
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                hiddenRows
+                        )
+                ),
                 () -> selection + " anchor=" + anchor + " navigate extendLeftColumn"
         );
     }
@@ -1846,37 +1605,37 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // extendUpRow......................................................................................................
 
     final void extendUpRowAndCheck(final String selection,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore) {
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.extendUpRowAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
 
     final void extendUpRowAndCheck(final String selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore) {
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns) {
         this.extendUpRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore()
+                hiddenColumns,
+                Predicates.never()
         );
     }
 
     final void extendUpRowAndCheck(final String selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore) {
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.extendUpRowAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
@@ -1885,21 +1644,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final String expectedSelection) {
         this.extendUpRowAndCheck(
                 selection,
-                this.columnStore(),
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                Predicates.never(),
                 expectedSelection
         );
     }
 
     final void extendUpRowAndCheck(final String selection,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final String expectedSelection) {
         this.extendUpRowAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseString(expectedSelection)
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
@@ -1912,8 +1671,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendUpRowAndCheck(
                 selection,
                 anchor,
-                this.columnStore(),
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                Predicates.never(),
                 expectedSelection,
                 expectedAnchor
         );
@@ -1921,14 +1680,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendUpRowAndCheck(final String selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final String expectedSelection,
                                    final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendUpRowAndCheck(
                 selection,
                 anchor,
-                this.columnStore(),
-                rowStore,
+                Predicates.never(), // NO hidden columns,
+                hiddenRows,
                 expectedSelection,
                 expectedAnchor
         );
@@ -1936,15 +1695,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendUpRowAndCheck(final String selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final String expectedSelection,
                                    final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendUpRowAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expectedSelection)
                         .simplify()
                         .setAnchor(expectedAnchor)
@@ -1953,26 +1712,32 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendUpRowAndCheck(final S selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final SpreadsheetViewportSelection expected) {
         this.extendUpRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.of(expected)
         );
     }
 
     final void extendUpRowAndCheck(final S selection,
                                    final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetColumnStore columnStore,
-                                   final SpreadsheetRowStore rowStore,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendUpRow(anchor, columnStore, rowStore),
+                selection.extendUpRow(
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                hiddenRows
+                        )
+                ),
                 () -> selection + " anchor=" + anchor + " navigate extendUp"
         );
     }
@@ -1980,37 +1745,37 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // extendRightColumn................................................................................................
 
     final void extendRightColumnAndCheck(final String selection,
-                                         final SpreadsheetColumnStore columnStore,
-                                         final SpreadsheetRowStore rowStore) {
+                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                         final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.extendRightColumnAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
 
     final void extendRightColumnAndCheck(final String selection,
                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetRowStore rowStore) {
+                                         final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.extendRightColumnAndCheck(
                 selection,
                 anchor,
-                this.columnStore(),
-                rowStore
+                Predicates.never(), // NO hidden columns,
+                hiddenRows
         );
     }
 
     final void extendRightColumnAndCheck(final String selection,
                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetColumnStore columnStore,
-                                         final SpreadsheetRowStore rowStore) {
+                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                         final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.extendRightColumnAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
@@ -2019,21 +1784,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                          final String expectedSelection) {
         this.extendRightColumnAndCheck(
                 selection,
-                this.columnStore(),
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                Predicates.never(),
                 expectedSelection
         );
     }
 
     final void extendRightColumnAndCheck(final String selection,
-                                         final SpreadsheetColumnStore columnStore,
-                                         final SpreadsheetRowStore rowStore,
+                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                         final Predicate<SpreadsheetRowReference> hiddenRows,
                                          final String expectedSelection) {
         this.extendRightColumnAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseString(expectedSelection)
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
@@ -2046,8 +1811,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendRightColumnAndCheck(
                 selection,
                 anchor,
-                this.columnStore(),
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                Predicates.never(),
                 expectedSelection,
                 expectedAnchor
         );
@@ -2055,14 +1820,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendRightColumnAndCheck(final String selection,
                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetColumnStore columnStore,
+                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                          final String expectedSelection,
                                          final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendRightColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                hiddenColumns,
+                Predicates.never(),
                 expectedSelection,
                 expectedAnchor
         );
@@ -2070,15 +1835,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendRightColumnAndCheck(final String selection,
                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetColumnStore columnStore,
-                                         final SpreadsheetRowStore rowStore,
+                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                         final Predicate<SpreadsheetRowReference> hiddenRows,
                                          final String expectedSelection,
                                          final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendRightColumnAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expectedSelection)
                         .simplify()
                         .setAnchor(expectedAnchor)
@@ -2090,8 +1855,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendRightColumnAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                this.columnStore(),
-                this.rowStore(),
                 expectedSelection.simplify()
                         .setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.NONE)
         );
@@ -2103,46 +1866,52 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendRightColumnAndCheck(
                 selection,
                 anchor,
-                columnStore(),
+                Predicates.never(), // no hidden columns
                 expected
         );
     }
 
     final void extendRightColumnAndCheck(final S selection,
                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetColumnStore columnStore,
+                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                          final SpreadsheetViewportSelection expected) {
         this.extendRightColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                hiddenColumns,
+                Predicates.never(),
                 expected
         );
     }
 
     final void extendRightColumnAndCheck(final S selection,
                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetColumnStore columnStore,
-                                         final SpreadsheetRowStore rowStore,
+                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                         final Predicate<SpreadsheetRowReference> hiddenRows,
                                          final SpreadsheetViewportSelection expected) {
         this.extendRightColumnAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.of(expected)
         );
     }
 
     final void extendRightColumnAndCheck(final S selection,
                                          final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetColumnStore columnStore,
-                                         final SpreadsheetRowStore rowStore,
+                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                         final Predicate<SpreadsheetRowReference> hiddenRows,
                                          final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendRightColumn(anchor, columnStore, rowStore),
+                selection.extendRightColumn(
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                hiddenRows
+                        )
+                ),
                 () -> selection + " anchor=" + anchor + " navigate extendRightColumn"
         );
     }
@@ -2152,43 +1921,43 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendDownRowAndCheck(final String selection) {
         this.extendDownRowAndCheck(
                 selection,
-                this.columnStore(),
-                this.rowStore()
+                Predicates.never(), // NO hidden columns,
+                Predicates.never()
         );
     }
 
     final void extendDownRowAndCheck(final String selection,
-                                     final SpreadsheetColumnStore columnStore,
-                                     final SpreadsheetRowStore rowStore) {
+                                     final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                     final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.extendDownRowAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
 
     final void extendDownRowAndCheck(final String selection,
                                      final SpreadsheetViewportSelectionAnchor anchor,
-                                     final SpreadsheetColumnStore columnStore) {
+                                     final Predicate<SpreadsheetColumnReference> hiddenColumns) {
         this.extendDownRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore()
+                hiddenColumns,
+                Predicates.never()
         );
     }
 
     final void extendDownRowAndCheck(final String selection,
                                      final SpreadsheetViewportSelectionAnchor anchor,
-                                     final SpreadsheetColumnStore columnStore,
-                                     final SpreadsheetRowStore rowStore) {
+                                     final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                     final Predicate<SpreadsheetRowReference> hiddenRows) {
         this.extendDownRowAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.empty()
         );
     }
@@ -2197,21 +1966,21 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                      final String expectedSelection) {
         this.extendDownRowAndCheck(
                 selection,
-                this.columnStore(),
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                Predicates.never(),
                 expectedSelection
         );
     }
 
     final void extendDownRowAndCheck(final String selection,
-                                     final SpreadsheetColumnStore columnStore,
-                                     final SpreadsheetRowStore rowStore,
+                                     final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                     final Predicate<SpreadsheetRowReference> hiddenRows,
                                      final String expectedSelection) {
         this.extendDownRowAndCheck(
                 this.parseString(selection),
                 SpreadsheetViewportSelectionAnchor.NONE,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseString(expectedSelection)
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
@@ -2224,8 +1993,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendDownRowAndCheck(
                 selection,
                 anchor,
-                this.columnStore(),
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                Predicates.never(),
                 expectedSelection,
                 expectedAnchor
         );
@@ -2233,14 +2002,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendDownRowAndCheck(final String selection,
                                      final SpreadsheetViewportSelectionAnchor anchor,
-                                     final SpreadsheetRowStore rowStore,
+                                     final Predicate<SpreadsheetRowReference> hiddenRows,
                                      final String expectedSelection,
                                      final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendDownRowAndCheck(
                 selection,
                 anchor,
-                this.columnStore(),
-                rowStore,
+                Predicates.never(), // NO hidden columns,
+                hiddenRows,
                 expectedSelection,
                 expectedAnchor
         );
@@ -2248,15 +2017,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void extendDownRowAndCheck(final String selection,
                                      final SpreadsheetViewportSelectionAnchor anchor,
-                                     final SpreadsheetColumnStore columnStore,
-                                     final SpreadsheetRowStore rowStore,
+                                     final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                     final Predicate<SpreadsheetRowReference> hiddenRows,
                                      final String expectedSelection,
                                      final SpreadsheetViewportSelectionAnchor expectedAnchor) {
         this.extendDownRowAndCheck(
                 this.parseString(selection),
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 this.parseRange(expectedSelection)
                         .simplify()
                         .setAnchor(expectedAnchor)
@@ -2268,8 +2037,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendDownRowAndCheck(
                 selection,
                 SpreadsheetViewportSelectionAnchor.NONE,
-                this.columnStore(),
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns,
+                Predicates.never(),
                 expectedSelection.simplify()
                         .setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.NONE)
         );
@@ -2281,59 +2050,65 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.extendDownRowAndCheck(
                 selection,
                 anchor,
-                columnStore(),
+                Predicates.never(), // NO hidden columns
                 expected
         );
     }
 
     final void extendDownRowAndCheck(final S selection,
                                      final SpreadsheetViewportSelectionAnchor anchor,
-                                     final SpreadsheetColumnStore columnStore,
+                                     final Predicate<SpreadsheetRowReference> hiddenRows,
                                      final SpreadsheetViewportSelection expected) {
         this.extendDownRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                Predicates.never(), // NO hidden columns
+                hiddenRows,
                 expected
         );
     }
 
     final void extendDownRowAndCheck(final S selection,
                                      final SpreadsheetViewportSelectionAnchor anchor,
-                                     final SpreadsheetColumnStore columnStore,
-                                     final SpreadsheetRowStore rowStore,
+                                     final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                     final Predicate<SpreadsheetRowReference> hiddenRows,
                                      final SpreadsheetViewportSelection expected) {
         this.extendDownRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                rowStore,
+                hiddenColumns,
+                hiddenRows,
                 Optional.of(expected)
         );
     }
 
     final void extendDownRowAndCheck(final S selection,
                                      final SpreadsheetViewportSelectionAnchor anchor,
-                                     final SpreadsheetColumnStore columnStore,
+                                     final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                      final Optional<SpreadsheetViewportSelection> expected) {
         this.extendDownRowAndCheck(
                 selection,
                 anchor,
-                columnStore,
-                this.rowStore(),
+                hiddenColumns,
+                Predicates.never(),
                 expected
         );
     }
 
     final void extendDownRowAndCheck(final S selection,
                                      final SpreadsheetViewportSelectionAnchor anchor,
-                                     final SpreadsheetColumnStore columnStore,
-                                     final SpreadsheetRowStore rowStore,
+                                     final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                     final Predicate<SpreadsheetRowReference> hiddenRows,
                                      final Optional<SpreadsheetViewportSelection> expected) {
         this.checkEquals(
                 expected,
-                selection.extendDownRow(anchor, columnStore, rowStore),
+                selection.extendDownRow(
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                hiddenRows
+                        )
+                ),
                 () -> selection + " anchor=" + anchor + " navigate extendDownRow"
         );
     }

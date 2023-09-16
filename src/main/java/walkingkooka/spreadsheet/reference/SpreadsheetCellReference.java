@@ -26,8 +26,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
@@ -360,32 +358,27 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     @Override
     Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                              final SpreadsheetColumnStore columnStore,
-                                              final SpreadsheetRowStore rowStore) {
+                                              final SpreadsheetViewportSelectionNavigationContext context) {
         return this.leftOrRight(
-                columnStore,
-                rowStore,
-                columnStore::leftColumnSkipHidden
+                context,
+                context::leftColumnSkipHidden
         );
     }
 
     @Override
     Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                               final SpreadsheetColumnStore columnStore,
-                                               final SpreadsheetRowStore rowStore) {
+                                               final SpreadsheetViewportSelectionNavigationContext context) {
         return this.leftOrRight(
-                columnStore,
-                rowStore,
-                columnStore::rightColumnSkipHidden
+                context,
+                context::rightColumnSkipHidden
         );
     }
 
-    private Optional<SpreadsheetSelection> leftOrRight(final SpreadsheetColumnStore columnStore,
-                                                       final SpreadsheetRowStore rowStore,
+    private Optional<SpreadsheetSelection> leftOrRight(final SpreadsheetViewportSelectionNavigationContext context,
                                                        final Function<SpreadsheetColumnReference, Optional<SpreadsheetColumnReference>> leftOrRight) {
         final SpreadsheetRowReference row = this.row();
 
-        return row.isHidden(columnStore, rowStore) ?
+        return context.isRowHidden(row) ?
                 Optional.empty() :
                 leftOrRight.apply(this.column())
                         .map(c -> c.setRow(row));
@@ -393,32 +386,27 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     @Override
     Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                         final SpreadsheetColumnStore columnStore,
-                                         final SpreadsheetRowStore rowStore) {
+                                         final SpreadsheetViewportSelectionNavigationContext context) {
         return this.upOrDown(
-                columnStore,
-                rowStore,
-                rowStore::upRowSkipHidden
+                context,
+                context::upRowSkipHidden
         );
     }
 
     @Override
     Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                           final SpreadsheetColumnStore columnStore,
-                                           final SpreadsheetRowStore rowStore) {
+                                           final SpreadsheetViewportSelectionNavigationContext context) {
         return this.upOrDown(
-                columnStore,
-                rowStore,
-                rowStore::downRowSkipHidden
+                context,
+                context::downRowSkipHidden
         );
     }
 
-    private Optional<SpreadsheetSelection> upOrDown(final SpreadsheetColumnStore columnStore,
-                                                    final SpreadsheetRowStore rowStore,
+    private Optional<SpreadsheetSelection> upOrDown(final SpreadsheetViewportSelectionNavigationContext context,
                                                     final Function<SpreadsheetRowReference, Optional<SpreadsheetRowReference>> upOrDown) {
         final SpreadsheetColumnReference column = this.column();
 
-        return column.isHidden(columnStore, rowStore) ?
+        return context.isColumnHidden(column) ?
                 Optional.empty() :
                 upOrDown.apply(this.row())
                         .map(c -> c.setColumn(column));
@@ -426,20 +414,24 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     @Override
     Optional<SpreadsheetViewportSelection> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                            final SpreadsheetColumnStore columnStore,
-                                                            final SpreadsheetRowStore rowStore) {
+                                                            final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendRange(
-                this.leftColumn(anchor, columnStore, rowStore),
+                this.leftColumn(
+                        anchor,
+                        context
+                ),
                 anchor
         ).map(this::setAnchorOrDefaultBottomRight);
     }
 
     @Override
     Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                       final SpreadsheetColumnStore columnStore,
-                                                       final SpreadsheetRowStore rowStore) {
+                                                       final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendRange(
-                this.upRow(anchor, columnStore, rowStore),
+                this.upRow(
+                        anchor,
+                        context
+                ),
                 anchor
         ).map(this::setAnchorOrDefaultBottomRight);
     }
@@ -450,20 +442,24 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     @Override
     Optional<SpreadsheetViewportSelection> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                             final SpreadsheetColumnStore columnStore,
-                                                             final SpreadsheetRowStore rowStore) {
+                                                             final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendRange(
-                this.rightColumn(anchor, columnStore, rowStore),
+                this.rightColumn(
+                        anchor,
+                        context
+                ),
                 anchor
         ).map(this::setAnchorOrDefaultTopLeft);
     }
 
     @Override
     Optional<SpreadsheetViewportSelection> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                         final SpreadsheetColumnStore columnStore,
-                                                         final SpreadsheetRowStore rowStore) {
+                                                         final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendRange(
-                this.downRow(anchor, columnStore, rowStore),
+                this.downRow(
+                        anchor,
+                        context
+                ),
                 anchor
         ).map(this::setAnchorOrDefaultTopLeft);
     }

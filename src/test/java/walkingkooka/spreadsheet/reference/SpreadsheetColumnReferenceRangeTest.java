@@ -594,13 +594,11 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testLeftSkipsHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
-
         this.leftColumnAndCheck(
                 "D:E",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
-                store,
+                SpreadsheetSelection.parseColumn("C")::testColumn,
+                Predicates.never(), // no hidden rows
                 "B"
         );
     }
@@ -618,12 +616,10 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testUpRowHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
-
         this.upRowAndCheck(
                 "C:D",
-                store
+                SpreadsheetSelection.parseColumn("C")::testColumn,
+                Predicates.never() // no hidden rows
         );
     }
 
@@ -665,13 +661,11 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testRightColumnSkipsHidden() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("E").column().setHidden(true));
-
         this.rightColumnAndCheck(
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.LEFT,
-                store,
+                SpreadsheetSelection.parseColumn("E")::testColumn,
+                Predicates.never(),
                 "F"
         );
     }
@@ -689,12 +683,10 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testDownRowHiddenColumn() {
-        final SpreadsheetColumnStore store = SpreadsheetColumnStores.treeMap();
-        store.save(SpreadsheetSelection.parseColumn("C").column().setHidden(true));
-
         this.downRowAndCheck(
                 "C:D",
-                store
+                SpreadsheetSelection.parseColumn("C")::testColumn,
+                Predicates.never() // no hidden rows
         );
     }
 
