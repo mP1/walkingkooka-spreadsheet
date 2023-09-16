@@ -35,7 +35,41 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
 
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
     public final static int MAX_VALUE = 1_048_576 - 1; // max value inclusive
+
     public final static int RADIX = 10;
+
+    static final SpreadsheetRowReference[] ABSOLUTE = fillCache(
+            i -> new SpreadsheetRowReference(
+                    i,
+                    SpreadsheetReferenceKind.ABSOLUTE
+            ),
+            new SpreadsheetRowReference[CACHE_SIZE]
+    );
+    static final SpreadsheetRowReference[] RELATIVE = fillCache(
+            i -> new SpreadsheetRowReference(
+                    i,
+                    SpreadsheetReferenceKind.RELATIVE
+            ),
+            new SpreadsheetRowReference[CACHE_SIZE]
+    );
+
+    // both MIN & MAX constants must appear after ABSOLUTE & RELATIVE to avoid nulls in j2cl...........................
+
+    /**
+     * The left most possible Row
+     */
+    public final static SpreadsheetRowReference MIN = with(
+            0,
+            SpreadsheetReferenceKind.RELATIVE
+    );
+
+    /**
+     * The right most possible Row
+     */
+    public final static SpreadsheetRowReference MAX = with(
+            MAX_VALUE,
+            SpreadsheetReferenceKind.RELATIVE
+    );
 
     /**
      * Factory that creates a new row.
@@ -49,26 +83,9 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
                 new SpreadsheetRowReference(value, referenceKind);
     }
 
-    static final SpreadsheetRowReference[] ABSOLUTE = fillCache(i -> new SpreadsheetRowReference(i, SpreadsheetReferenceKind.ABSOLUTE),
-            new SpreadsheetRowReference[CACHE_SIZE]);
-    static final SpreadsheetRowReference[] RELATIVE = fillCache(i -> new SpreadsheetRowReference(i, SpreadsheetReferenceKind.RELATIVE),
-            new SpreadsheetRowReference[CACHE_SIZE]);
-
     private static String invalidRowValue(final int value) {
         return "Invalid row value " + value + " expected between 0 and " + (MAX_VALUE + 1);
     }
-
-    // both MIN & MAX constants must appear after ABSOLUTE & RELATIVE to avoid nulls in j2cl...........................
-
-    /**
-     * The left most possible Row
-     */
-    public final static SpreadsheetRowReference MIN = with(0, SpreadsheetReferenceKind.RELATIVE);
-
-    /**
-     * The right most possible Row
-     */
-    public final static SpreadsheetRowReference MAX = with(MAX_VALUE, SpreadsheetReferenceKind.RELATIVE);
 
     private SpreadsheetRowReference(final int value, final SpreadsheetReferenceKind referenceKind) {
         super(value, referenceKind);
