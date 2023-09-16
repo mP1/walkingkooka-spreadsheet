@@ -354,22 +354,71 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     // parseColumnRange.................................................................................................
 
     @Test
-    public void testParseColumnRangeWithRowFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetSelection.parseColumnRange("1")
+    public void testParseColumnRangeWithCellFails() {
+        final String text = "XY12";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseColumn(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(
+                        text,
+                        2
+                ).getMessage(),
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testParseColumnRangeWithInvalidFails() {
+        final String text = "BC!:9";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseColumn(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf('!')
+                ).getMessage(),
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testParseColumnRangeWithInvalidFails2() {
+        final String text = "B:9";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseColumn(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(text, 1)
+                        .getMessage(),
+                thrown.getMessage()
         );
     }
 
     @Test
     public void testParseColumnRangeWithExtraComponentFails() {
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetSelection.parseColumnRange("A:B:C")
+        final String text = "A:BC:DE";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseColumnRange(text)
         );
 
         this.checkEquals(
-                "Invalid character ':' at 3 in \"A:B:C\"",
+                new InvalidCharacterException(
+                        text,
+                        text.lastIndexOf(':')
+                ).getMessage(),
                 thrown.getMessage()
         );
     }
@@ -714,21 +763,66 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseRowRangeWithColumnFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetSelection.parseRowRange("C")
+        final String text = "C";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseRow(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(text, 0)
+                        .getMessage(),
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testParseRowRangeWithInvalidFails() {
+        final String text = "23X:Y";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseRow(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(text, 2)
+                        .getMessage(),
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testParseRowRangeWithInvalidFails2() {
+        final String text = "23:X";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseRow(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(text, 2)
+                        .getMessage(),
+                thrown.getMessage()
         );
     }
 
     @Test
     public void testParseRowRangeWithExtraComponentFails() {
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetSelection.parseRowRange("1:2:3")
+        final String text = "1:2:3";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseRowRange(text)
         );
 
         this.checkEquals(
-                "Invalid character ':' at 3 in \"1:2:3\"",
+                new InvalidCharacterException(
+                        text,
+                        text.lastIndexOf(':')
+                ).getMessage(),
                 thrown.getMessage()
         );
     }
