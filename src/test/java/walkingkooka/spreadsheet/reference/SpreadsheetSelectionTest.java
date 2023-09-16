@@ -563,6 +563,24 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
+    public void testParseStringLabelFails() {
+        final String text = "Label1 2";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.labelName(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf(' ')
+                ).getMessage(),
+                thrown.getMessage()
+        );
+    }
+
+    @Test
     public void testParseStringLabel() {
         final String label = "label123";
         this.parseStringAndCheck(label, SpreadsheetSelection.labelName(label));
