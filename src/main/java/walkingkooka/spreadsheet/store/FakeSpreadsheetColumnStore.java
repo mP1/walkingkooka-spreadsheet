@@ -21,8 +21,6 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.store.FakeStore;
 
-import java.util.Optional;
-
 public class FakeSpreadsheetColumnStore extends FakeStore<SpreadsheetColumnReference, SpreadsheetColumn> implements SpreadsheetColumnStore {
 
     public FakeSpreadsheetColumnStore() {
@@ -31,16 +29,6 @@ public class FakeSpreadsheetColumnStore extends FakeStore<SpreadsheetColumnRefer
 
     @Override
     public boolean isHidden(SpreadsheetColumnReference reference) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetColumnReference> leftColumnSkipHidden(final SpreadsheetColumnReference reference) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetColumnReference> rightColumnSkipHidden(final SpreadsheetColumnReference reference) {
         throw new UnsupportedOperationException();
     }
 }
