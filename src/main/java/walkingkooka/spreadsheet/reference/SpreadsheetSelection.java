@@ -412,15 +412,19 @@ public abstract class SpreadsheetSelection implements HasText,
      * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
      */
     public static SpreadsheetRowReference parseRow(final String text) {
-        return parseColumnOrRow(text, ROW_PARSER, SpreadsheetRowReferenceParserToken.class).value();
+        return parseColumnOrRow(
+                text,
+                ROW_PARSER,
+                SpreadsheetRowReferenceParserToken.class)
+                .value();
     }
 
     /**
      * Leverages the {@link SpreadsheetParsers#row()} combined with an error reporter.
      */
     private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetParsers.row()
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .orReport(ParserReporters.basic());
+            .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
+            .orReport(ParserReporters.invalidCharacterException());
 
     /**
      * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
