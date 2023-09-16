@@ -97,50 +97,6 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
         return this.store.values(from, count);
     }
 
-    @Override
-    public Optional<SpreadsheetRowReference> upRowSkipHidden(final SpreadsheetRowReference reference) {
-        SpreadsheetRowReference up = reference;
-
-        for (; ; ) {
-            if (up.isFirst()) {
-                up = this.isHidden(reference) ?
-                        null :
-                        reference;
-                break;
-            }
-
-            up = up.addSaturated(-1);
-
-            if (!this.isHidden(up)) {
-                break;
-            }
-        }
-
-        return Optional.ofNullable(up);
-    }
-
-    @Override
-    public Optional<SpreadsheetRowReference> downRowSkipHidden(final SpreadsheetRowReference reference) {
-        SpreadsheetRowReference down = reference;
-
-        for (; ; ) {
-            if (down.isLast()) {
-                down = this.isHidden(reference) ?
-                        null :
-                        reference;
-                break;
-            }
-
-            down = down.addSaturated(+1);
-
-            if (!this.isHidden(down)) {
-                break;
-            }
-        }
-
-        return Optional.ofNullable(down);
-    }
-
     // VisibleForTesting
     private final Store<SpreadsheetRowReference, SpreadsheetRow> store;
 
