@@ -383,8 +383,8 @@ public abstract class SpreadsheetSelection implements HasText,
      * Leverages the {@link SpreadsheetParsers#column()} combined with an error reporter.
      */
     private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetParsers.column()
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .orReport(ParserReporters.basic());
+            .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
+            .orReport(ParserReporters.invalidCharacterException());
 
     /**
      * Parses the text into a {@link SpreadsheetColumnReference} or {@link SpreadsheetColumnReferenceRange}.

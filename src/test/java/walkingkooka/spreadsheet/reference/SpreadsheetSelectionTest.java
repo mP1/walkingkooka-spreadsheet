@@ -306,17 +306,39 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     // parseColumn......................................................................................................
 
     @Test
+    public void testParseColumnWithCellails() {
+        final String text = "ZY99";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseColumn(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(text, 2).getMessage(),
+                thrown.getMessage()
+        );
+    }
+
+    @Test
     public void testParseColumnWithRangeFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetSelection.parseColumn("B:C")
+        final String text = "B:C";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseColumn(text)
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(text, 1).getMessage(),
+                thrown.getMessage()
         );
     }
 
     @Test
     public void testParseColumnWithRowFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                InvalidCharacterException.class,
                 () -> SpreadsheetSelection.parseColumn("1")
         );
     }
