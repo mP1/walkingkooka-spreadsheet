@@ -31,22 +31,22 @@ public class FakeSpreadsheetViewportSelectionNavigationContext implements Spread
     }
 
     @Override
-    public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference reference) {
+    public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference reference) {
+    public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference reference) {
+    public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference row) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference reference) {
+    public Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference row) {
         throw new UnsupportedOperationException();
     }
 }
