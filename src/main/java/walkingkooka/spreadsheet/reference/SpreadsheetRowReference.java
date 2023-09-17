@@ -295,7 +295,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
                                          final SpreadsheetViewportSelectionNavigationContext context) {
         return Cast.to(
-                context.upRowSkipHidden(this)
+                context.upRow(this)
         );
     }
 
@@ -303,7 +303,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
                                            final SpreadsheetViewportSelectionNavigationContext context) {
         return Cast.to(
-                context.downRowSkipHidden(this)
+                context.downRow(this)
         );
     }
 

@@ -43,194 +43,194 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
         );
     }
 
-    default void leftColumnSkipHiddenAndCheck(final C context,
-                                              final String reference) {
-        this.leftColumnSkipHiddenAndCheck(
+    default void leftColumnAndCheck(final C context,
+                                    final String reference) {
+        this.leftColumnAndCheck(
                 context,
                 SpreadsheetSelection.parseColumn(reference),
                 Optional.empty()
         );
     }
 
-    default void leftColumnSkipHiddenAndCheck(final C context,
-                                              final String reference,
-                                              final String expected) {
-        this.leftColumnSkipHiddenAndCheck(
+    default void leftColumnAndCheck(final C context,
+                                    final String reference,
+                                    final String expected) {
+        this.leftColumnAndCheck(
                 context,
                 SpreadsheetSelection.parseColumn(reference),
                 SpreadsheetSelection.parseColumn(expected)
         );
     }
 
-    default void leftColumnSkipHiddenAndCheck(final C context,
-                                              final SpreadsheetColumnReference reference) {
-        this.leftColumnSkipHiddenAndCheck(
+    default void leftColumnAndCheck(final C context,
+                                    final SpreadsheetColumnReference reference) {
+        this.leftColumnAndCheck(
                 context,
                 reference,
                 Optional.empty()
         );
     }
 
-    default void leftColumnSkipHiddenAndCheck(final C context,
-                                              final SpreadsheetColumnReference reference,
-                                              final SpreadsheetColumnReference expected) {
-        this.leftColumnSkipHiddenAndCheck(
+    default void leftColumnAndCheck(final C context,
+                                    final SpreadsheetColumnReference reference,
+                                    final SpreadsheetColumnReference expected) {
+        this.leftColumnAndCheck(
                 context,
                 reference,
                 Optional.of(expected)
         );
     }
 
-    default void leftColumnSkipHiddenAndCheck(final C context,
-                                              final SpreadsheetColumnReference reference,
-                                              final Optional<SpreadsheetColumnReference> expected) {
+    default void leftColumnAndCheck(final C context,
+                                    final SpreadsheetColumnReference reference,
+                                    final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
                 expected,
-                context.leftColumnSkipHidden(reference),
-                () -> reference + " leftColumnSkipHidden " + context
+                context.leftColumn(reference),
+                () -> reference + " leftColumn " + context
         );
     }
 
-    default void rightColumnSkipHiddenAndCheck(final C context,
-                                               final String reference) {
-        this.rightColumnSkipHiddenAndCheck(
+    default void rightColumnAndCheck(final C context,
+                                     final String reference) {
+        this.rightColumnAndCheck(
                 context,
                 SpreadsheetSelection.parseColumn(reference)
         );
     }
 
-    default void rightColumnSkipHiddenAndCheck(final C context,
-                                               final String reference,
-                                               final String expected) {
-        this.rightColumnSkipHiddenAndCheck(
+    default void rightColumnAndCheck(final C context,
+                                     final String reference,
+                                     final String expected) {
+        this.rightColumnAndCheck(
                 context,
                 SpreadsheetSelection.parseColumn(reference),
                 SpreadsheetSelection.parseColumn(expected)
         );
     }
 
-    default void rightColumnSkipHiddenAndCheck(final C context,
-                                               final SpreadsheetColumnReference reference) {
-        this.rightColumnSkipHiddenAndCheck(
+    default void rightColumnAndCheck(final C context,
+                                     final SpreadsheetColumnReference reference) {
+        this.rightColumnAndCheck(
                 context,
                 reference,
                 Optional.empty()
         );
     }
 
-    default void rightColumnSkipHiddenAndCheck(final C context,
-                                               final SpreadsheetColumnReference reference,
-                                               final SpreadsheetColumnReference expected) {
-        this.rightColumnSkipHiddenAndCheck(
+    default void rightColumnAndCheck(final C context,
+                                     final SpreadsheetColumnReference reference,
+                                     final SpreadsheetColumnReference expected) {
+        this.rightColumnAndCheck(
                 context,
                 reference,
                 Optional.of(expected)
         );
     }
 
-    default void rightColumnSkipHiddenAndCheck(final C context,
-                                               final SpreadsheetColumnReference reference,
-                                               final Optional<SpreadsheetColumnReference> expected) {
+    default void rightColumnAndCheck(final C context,
+                                     final SpreadsheetColumnReference reference,
+                                     final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
                 expected,
-                context.rightColumnSkipHidden(reference),
-                () -> reference + " rightColumnSkipHidden " + context
+                context.rightColumn(reference),
+                () -> reference + " rightColumn " + context
         );
     }
 
-    default void upRowSkipHiddenAndCheck(final C context,
-                                         final String reference) {
-        this.upRowSkipHiddenAndCheck(
+    default void upRowAndCheck(final C context,
+                               final String reference) {
+        this.upRowAndCheck(
                 context,
                 SpreadsheetSelection.parseRow(reference),
                 Optional.empty()
         );
     }
 
-    default void upRowSkipHiddenAndCheck(final C context,
-                                         final String reference,
-                                         final String expected) {
-        this.upRowSkipHiddenAndCheck(
+    default void upRowAndCheck(final C context,
+                               final String reference,
+                               final String expected) {
+        this.upRowAndCheck(
                 context,
                 SpreadsheetSelection.parseRow(reference),
                 SpreadsheetSelection.parseRow(expected)
         );
     }
 
-    default void upRowSkipHiddenAndCheck(final C context,
-                                         final SpreadsheetRowReference reference) {
-        this.upRowSkipHiddenAndCheck(
+    default void upRowAndCheck(final C context,
+                               final SpreadsheetRowReference reference) {
+        this.upRowAndCheck(
                 context,
                 reference,
                 Optional.empty()
         );
     }
 
-    default void upRowSkipHiddenAndCheck(final C context,
-                                         final SpreadsheetRowReference reference,
-                                         final SpreadsheetRowReference expected) {
-        this.upRowSkipHiddenAndCheck(
+    default void upRowAndCheck(final C context,
+                               final SpreadsheetRowReference reference,
+                               final SpreadsheetRowReference expected) {
+        this.upRowAndCheck(
                 context,
                 reference,
                 Optional.of(expected)
         );
     }
 
-    default void upRowSkipHiddenAndCheck(final C context,
-                                         final SpreadsheetRowReference reference,
-                                         final Optional<SpreadsheetRowReference> expected) {
+    default void upRowAndCheck(final C context,
+                               final SpreadsheetRowReference reference,
+                               final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
                 expected,
-                context.upRowSkipHidden(reference),
-                () -> reference + " upRowSkipHidden " + context
+                context.upRow(reference),
+                () -> reference + " upRow " + context
         );
     }
 
-    default void downRowSkipHiddenAndCheck(final C context,
-                                           final String reference) {
-        this.downRowSkipHiddenAndCheck(
+    default void downRowAndCheck(final C context,
+                                 final String reference) {
+        this.downRowAndCheck(
                 context,
                 SpreadsheetSelection.parseRow(reference),
                 Optional.empty()
         );
     }
 
-    default void downRowSkipHiddenAndCheck(final C context,
-                                           final String reference,
-                                           final String expected) {
-        this.downRowSkipHiddenAndCheck(
+    default void downRowAndCheck(final C context,
+                                 final String reference,
+                                 final String expected) {
+        this.downRowAndCheck(
                 context,
                 SpreadsheetSelection.parseRow(reference),
                 SpreadsheetSelection.parseRow(expected)
         );
     }
 
-    default void downRowSkipHiddenAndCheck(final C context,
-                                           final SpreadsheetRowReference reference) {
-        this.downRowSkipHiddenAndCheck(
+    default void downRowAndCheck(final C context,
+                                 final SpreadsheetRowReference reference) {
+        this.downRowAndCheck(
                 context,
                 reference,
                 Optional.empty()
         );
     }
 
-    default void downRowSkipHiddenAndCheck(final C context,
-                                           final SpreadsheetRowReference reference,
-                                           final SpreadsheetRowReference expected) {
-        this.downRowSkipHiddenAndCheck(
+    default void downRowAndCheck(final C context,
+                                 final SpreadsheetRowReference reference,
+                                 final SpreadsheetRowReference expected) {
+        this.downRowAndCheck(
                 context,
                 reference,
                 Optional.of(expected)
         );
     }
 
-    default void downRowSkipHiddenAndCheck(final C context,
-                                           final SpreadsheetRowReference reference,
-                                           final Optional<SpreadsheetRowReference> expected) {
+    default void downRowAndCheck(final C context,
+                                 final SpreadsheetRowReference reference,
+                                 final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
                 expected,
-                context.downRowSkipHidden(reference),
-                () -> reference + " downRowSkipHidden " + context
+                context.downRow(reference),
+                () -> reference + " downRow " + context
         );
     }
 

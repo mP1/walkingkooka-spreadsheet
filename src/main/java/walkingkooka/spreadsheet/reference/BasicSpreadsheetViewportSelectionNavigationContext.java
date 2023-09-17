@@ -52,7 +52,7 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     private Predicate<SpreadsheetRowReference> rowHidden;
 
     @Override
-    public Optional<SpreadsheetColumnReference> leftColumnSkipHidden(final SpreadsheetColumnReference reference) {
+    public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference reference) {
         SpreadsheetColumnReference left = reference;
 
         for (; ; ) {
@@ -74,7 +74,7 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     }
 
     @Override
-    public Optional<SpreadsheetColumnReference> rightColumnSkipHidden(final SpreadsheetColumnReference reference) {
+    public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference reference) {
         SpreadsheetColumnReference right = reference;
 
         for (; ; ) {
@@ -96,7 +96,7 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     }
 
     @Override
-    public Optional<SpreadsheetRowReference> upRowSkipHidden(final SpreadsheetRowReference reference) {
+    public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference reference) {
         SpreadsheetRowReference up = reference;
 
         for (; ; ) {
@@ -118,7 +118,7 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     }
 
     @Override
-    public Optional<SpreadsheetRowReference> downRowSkipHidden(final SpreadsheetRowReference reference) {
+    public Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference reference) {
         SpreadsheetRowReference down = reference;
 
         for (; ; ) {

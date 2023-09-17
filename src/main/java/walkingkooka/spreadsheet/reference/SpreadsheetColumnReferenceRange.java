@@ -216,7 +216,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
                                                             final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendColumn(
                 this.isSingle() ? SpreadsheetViewportSelectionAnchor.RIGHT : anchor,
-                context::leftColumnSkipHidden
+                context::leftColumn
         );
     }
 
@@ -225,7 +225,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
                                                              final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendColumn(
                 this.isSingle() ? SpreadsheetViewportSelectionAnchor.LEFT : anchor,
-                context::rightColumnSkipHidden
+                context::rightColumn
         );
     }
 

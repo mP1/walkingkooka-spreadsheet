@@ -370,7 +370,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         return this.leftOrRight(
                 context,
-                context::leftColumnSkipHidden
+                context::leftColumn
         );
     }
 
@@ -379,7 +379,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                                final SpreadsheetViewportSelectionNavigationContext context) {
         return this.leftOrRight(
                 context,
-                context::rightColumnSkipHidden
+                context::rightColumn
         );
     }
 
@@ -398,7 +398,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                          final SpreadsheetViewportSelectionNavigationContext context) {
         return this.upOrDown(
                 context,
-                context::upRowSkipHidden
+                context::upRow
         );
     }
 
@@ -407,7 +407,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                            final SpreadsheetViewportSelectionNavigationContext context) {
         return this.upOrDown(
                 context,
-                context::downRowSkipHidden
+                context::downRow
         );
     }
 
