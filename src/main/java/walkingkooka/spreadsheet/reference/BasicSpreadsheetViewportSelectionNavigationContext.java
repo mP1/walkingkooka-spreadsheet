@@ -39,6 +39,8 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
 
     @Override
     public boolean isColumnHidden(final SpreadsheetColumnReference column) {
+        checkColumn(column);
+
         return this.columnHidden.test(column);
     }
 
@@ -46,6 +48,8 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
 
     @Override
     public boolean isRowHidden(final SpreadsheetRowReference row) {
+        checkRow(row);
+
         return this.rowHidden.test(row);
     }
 
@@ -53,6 +57,8 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
 
     @Override
     public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference column) {
+        checkColumn(column);
+
         SpreadsheetColumnReference left = column;
 
         for (; ; ) {
@@ -75,6 +81,8 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
 
     @Override
     public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference column) {
+        checkColumn(column);
+
         SpreadsheetColumnReference right = column;
 
         for (; ; ) {
@@ -97,6 +105,8 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
 
     @Override
     public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference row) {
+        checkRow(row);
+
         SpreadsheetRowReference up = row;
 
         for (; ; ) {
@@ -119,6 +129,8 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
 
     @Override
     public Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference row) {
+        checkRow(row);
+
         SpreadsheetRowReference down = row;
 
         for (; ; ) {
@@ -137,6 +149,14 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
         }
 
         return Optional.ofNullable(down);
+    }
+
+    private static void checkColumn(final SpreadsheetColumnReference column) {
+        Objects.requireNonNull(column, "column");
+    }
+
+    private static void checkRow(final SpreadsheetRowReference row) {
+        Objects.requireNonNull(row, "row");
     }
 
     @Override
