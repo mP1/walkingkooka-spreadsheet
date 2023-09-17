@@ -52,14 +52,14 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     private Predicate<SpreadsheetRowReference> rowHidden;
 
     @Override
-    public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference reference) {
-        SpreadsheetColumnReference left = reference;
+    public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference column) {
+        SpreadsheetColumnReference left = column;
 
         for (; ; ) {
             if (left.isFirst()) {
-                left = this.isColumnHidden(reference) ?
+                left = this.isColumnHidden(column) ?
                         null :
-                        reference;
+                        column;
                 break;
             }
 
@@ -74,14 +74,14 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     }
 
     @Override
-    public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference reference) {
-        SpreadsheetColumnReference right = reference;
+    public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference column) {
+        SpreadsheetColumnReference right = column;
 
         for (; ; ) {
             if (right.isLast()) {
-                right = this.isColumnHidden(reference) ?
+                right = this.isColumnHidden(column) ?
                         null :
-                        reference;
+                        column;
                 break;
             }
 
@@ -96,14 +96,14 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     }
 
     @Override
-    public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference reference) {
-        SpreadsheetRowReference up = reference;
+    public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference row) {
+        SpreadsheetRowReference up = row;
 
         for (; ; ) {
             if (up.isFirst()) {
-                up = this.isRowHidden(reference) ?
+                up = this.isRowHidden(row) ?
                         null :
-                        reference;
+                        row;
                 break;
             }
 
@@ -118,14 +118,14 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     }
 
     @Override
-    public Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference reference) {
-        SpreadsheetRowReference down = reference;
+    public Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference row) {
+        SpreadsheetRowReference down = row;
 
         for (; ; ) {
             if (down.isLast()) {
-                down = this.isRowHidden(reference) ?
+                down = this.isRowHidden(row) ?
                         null :
-                        reference;
+                        row;
                 break;
             }
 
