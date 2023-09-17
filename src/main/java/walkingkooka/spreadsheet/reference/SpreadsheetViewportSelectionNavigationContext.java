@@ -43,7 +43,7 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
      * <br>
      * This method is used to support keyboard navigation.
      */
-    Optional<SpreadsheetColumnReference> leftColumnSkipHidden(final SpreadsheetColumnReference reference);
+    Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference reference);
 
     /**
      * Returns the first column moving right from the given starting point that is not hidden.
@@ -52,7 +52,7 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
      * <br>
      * This method is used to support keyboard navigation.
      */
-    Optional<SpreadsheetColumnReference> rightColumnSkipHidden(final SpreadsheetColumnReference reference);
+    Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference reference);
 
     /**
      * Returns the first row moving up from the given starting point that is not hidden.
@@ -61,7 +61,7 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
      * <br>
      * This method is used to support keyboard navigation.
      */
-    Optional<SpreadsheetRowReference> upRowSkipHidden(final SpreadsheetRowReference reference);
+    Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference reference);
 
     /**
      * Returns the last row moving down from the given starting point that is not hidden.
@@ -70,5 +70,5 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
      * <br>
      * This method is used to support keyboard navigation.
      */
-    Optional<SpreadsheetRowReference> downRowSkipHidden(final SpreadsheetRowReference reference);
+    Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference reference);
 }

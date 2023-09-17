@@ -428,7 +428,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                                             final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendColumn(
                 anchor,
-                context::leftColumnSkipHidden,
+                context::leftColumn,
                 anchor::setRight,
                 context
         );
@@ -439,7 +439,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                                              final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendColumn(
                 anchor,
-                context::rightColumnSkipHidden,
+                context::rightColumn,
                 anchor::setLeft,
                 context
         );

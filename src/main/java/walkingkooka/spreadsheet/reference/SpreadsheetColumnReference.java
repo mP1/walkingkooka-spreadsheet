@@ -293,7 +293,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         return Cast.to(
-                context.leftColumnSkipHidden(this)
+                context.leftColumn(this)
         );
     }
 
@@ -301,7 +301,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                                final SpreadsheetViewportSelectionNavigationContext context) {
         return Cast.to(
-                context.rightColumnSkipHidden(this)
+                context.rightColumn(this)
         );
     }
 
