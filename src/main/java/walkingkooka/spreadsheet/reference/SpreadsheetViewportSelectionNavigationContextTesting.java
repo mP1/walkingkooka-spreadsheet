@@ -17,11 +17,22 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends SpreadsheetViewportSelectionNavigationContext> extends ContextTesting<C> {
+
+    @Test
+    default void isColumnHiddenWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().isColumnHidden(null)
+        );
+    }
 
     default void isColumnHiddenAndCheck(final SpreadsheetViewportSelectionNavigationContext context,
                                         final SpreadsheetColumnReference column,
@@ -33,6 +44,14 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
         );
     }
 
+    @Test
+    default void isRowHiddenWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().isRowHidden(null)
+        );
+    }
+
     default void isRowHiddenAndCheck(final SpreadsheetViewportSelectionNavigationContext context,
                                      final SpreadsheetRowReference row,
                                      final boolean expected) {
@@ -40,6 +59,14 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
                 expected,
                 context.isRowHidden(row),
                 () -> "isRowHidden " + row
+        );
+    }
+
+    @Test
+    default void leftColumnWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().leftColumn(null)
         );
     }
 
@@ -91,6 +118,14 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
         );
     }
 
+    @Test
+    default void rightColumnWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().rightColumn(null)
+        );
+    }
+
     default void rightColumnAndCheck(final C context,
                                      final String reference) {
         this.rightColumnAndCheck(
@@ -135,6 +170,14 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
                 expected,
                 context.rightColumn(reference),
                 () -> reference + " rightColumn " + context
+        );
+    }
+
+    @Test
+    default void upRowWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().upRow(null)
         );
     }
 
@@ -183,6 +226,14 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
                 expected,
                 context.upRow(reference),
                 () -> reference + " upRow " + context
+        );
+    }
+
+    @Test
+    default void downRowWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().downRow(null)
         );
     }
 
