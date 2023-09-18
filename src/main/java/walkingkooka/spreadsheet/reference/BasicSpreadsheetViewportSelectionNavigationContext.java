@@ -59,96 +59,69 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
     public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference column) {
         checkColumn(column);
 
-        SpreadsheetColumnReference left = column;
-
-        for (; ; ) {
-            if (left.isFirst()) {
-                left = this.isColumnHidden(column) ?
-                        null :
-                        column;
-                break;
-            }
-
-            left = left.addSaturated(-1);
-
-            if (!this.isColumnHidden(left)) {
-                break;
-            }
-        }
-
-        return Optional.ofNullable(left);
+        return move(
+                column,
+                SpreadsheetColumnReference::isFirst,
+                this.columnHidden,
+                -1
+        );
     }
 
     @Override
     public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference column) {
         checkColumn(column);
 
-        SpreadsheetColumnReference right = column;
-
-        for (; ; ) {
-            if (right.isLast()) {
-                right = this.isColumnHidden(column) ?
-                        null :
-                        column;
-                break;
-            }
-
-            right = right.addSaturated(+1);
-
-            if (!this.isColumnHidden(right)) {
-                break;
-            }
-        }
-
-        return Optional.ofNullable(right);
+        return move(
+                column,
+                SpreadsheetColumnReference::isLast,
+                this.columnHidden,
+                +1
+        );
     }
 
     @Override
     public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference row) {
         checkRow(row);
 
-        SpreadsheetRowReference up = row;
-
-        for (; ; ) {
-            if (up.isFirst()) {
-                up = this.isRowHidden(row) ?
-                        null :
-                        row;
-                break;
-            }
-
-            up = up.addSaturated(-1);
-
-            if (!this.isRowHidden(up)) {
-                break;
-            }
-        }
-
-        return Optional.ofNullable(up);
+        return move(
+                row,
+                SpreadsheetRowReference::isFirst,
+                this.rowHidden,
+                -1
+        );
     }
 
     @Override
     public Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference row) {
         checkRow(row);
 
-        SpreadsheetRowReference down = row;
+        return move(
+                row,
+                SpreadsheetRowReference::isLast,
+                this.rowHidden,
+                +1
+        );
+    }
 
-        for (; ; ) {
-            if (down.isLast()) {
-                down = this.isRowHidden(row) ?
+    private static <T extends SpreadsheetColumnOrRowReference> Optional<T> move(final T start,
+                                                                                final Predicate<T> stop,
+                                                                                final Predicate<T> hidden,
+                                                                                final int delta) {
+        T result = start;
+
+        do {
+            if (stop.test(result)) {
+                result = hidden.test(start) ?
                         null :
-                        row;
+                        start;
                 break;
             }
 
-            down = down.addSaturated(+1);
+            result = (T) result.addSaturated(delta);
 
-            if (!this.isRowHidden(down)) {
-                break;
-            }
-        }
+        } while (hidden.test(result));
 
-        return Optional.ofNullable(down);
+        return Optional.ofNullable(result);
     }
 
     private static void checkColumn(final SpreadsheetColumnReference column) {
