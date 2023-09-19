@@ -23,6 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharacterConstant;
@@ -163,11 +164,11 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
     private Optional<SpreadsheetCellRange> bounds;
 
     private Optional<SpreadsheetCellRange> boundsNotEmpty() {
-        SpreadsheetColumnReference left = SpreadsheetColumnReference.MAX;
-        SpreadsheetRowReference top = SpreadsheetRowReference.MAX;
+        SpreadsheetColumnReference left = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+        SpreadsheetRowReference top = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
-        SpreadsheetColumnReference right = SpreadsheetColumnReference.MIN;
-        SpreadsheetRowReference bottom = SpreadsheetRowReference.MIN;
+        SpreadsheetColumnReference right = SpreadsheetReferenceKind.RELATIVE.firstColumn();
+        SpreadsheetRowReference bottom = SpreadsheetReferenceKind.RELATIVE.firstRow();
 
         for (final SpreadsheetCellRange range : this.cellRanges()) {
             final SpreadsheetCellReference begin = range.begin();
