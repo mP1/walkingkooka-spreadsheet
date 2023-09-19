@@ -86,24 +86,44 @@ public enum SpreadsheetReferenceKind {
     };
 
     public final SpreadsheetColumnReference firstColumn() {
-        return SpreadsheetColumnReference.MIN.setReferenceKind(this);
+        if (null == this.firstColumn) {
+            this.firstColumn = SpreadsheetColumnReference.MIN.setReferenceKind(this);
+        }
+        return this.firstColumn;
     }
 
+    private SpreadsheetColumnReference firstColumn;
+
     public final SpreadsheetColumnReference lastColumn() {
-        return SpreadsheetColumnReference.MAX.setReferenceKind(this);
+        if (null == this.lastColumn) {
+            this.lastColumn = SpreadsheetColumnReference.MAX.setReferenceKind(this);
+        }
+        return this.lastColumn;
     }
+
+    private SpreadsheetColumnReference lastColumn;
 
     public abstract SpreadsheetColumnReference column(final int column);
 
     abstract SpreadsheetColumnReference columnFromCache(final int column);
 
     public final SpreadsheetRowReference firstRow() {
-        return SpreadsheetRowReference.MIN.setReferenceKind(this);
+        if (null == this.firstRow) {
+            this.firstRow = SpreadsheetRowReference.MIN.setReferenceKind(this);
+        }
+        return this.firstRow;
     }
 
+    private SpreadsheetRowReference firstRow;
+
     public final SpreadsheetRowReference lastRow() {
-        return SpreadsheetRowReference.MAX.setReferenceKind(this);
+        if (null == this.lastRow) {
+            this.lastRow = SpreadsheetRowReference.MAX.setReferenceKind(this);
+        }
+        return this.lastRow;
     }
+
+    private SpreadsheetRowReference lastRow;
 
     public abstract SpreadsheetRowReference row(final int row);
 
