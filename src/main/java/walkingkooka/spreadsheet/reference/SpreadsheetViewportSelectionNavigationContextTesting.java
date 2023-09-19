@@ -26,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends SpreadsheetViewportSelectionNavigationContext> extends ContextTesting<C> {
 
+    // isColumnHidden..................................................................................................
+
     @Test
     default void isColumnHiddenWithNullFails() {
         assertThrows(
@@ -44,6 +46,8 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
         );
     }
 
+    // isRowHidden......................................................................................................
+
     @Test
     default void isRowHiddenWithNullFails() {
         assertThrows(
@@ -61,6 +65,8 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
                 () -> "isRowHidden " + row
         );
     }
+
+    // leftColumn.......................................................................................................
 
     @Test
     default void leftColumnWithNullFails() {
@@ -118,6 +124,8 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
         );
     }
 
+    // rightColumn......................................................................................................
+
     @Test
     default void rightColumnWithNullFails() {
         assertThrows(
@@ -172,6 +180,8 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
                 () -> reference + " rightColumn " + context
         );
     }
+
+    // upRow............................................................................................................
 
     @Test
     default void upRowWithNullFails() {
@@ -229,6 +239,8 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
         );
     }
 
+    // downRow..........................................................................................................
+    
     @Test
     default void downRowWithNullFails() {
         assertThrows(
