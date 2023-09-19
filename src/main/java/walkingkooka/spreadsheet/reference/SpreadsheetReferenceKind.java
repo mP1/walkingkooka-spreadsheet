@@ -26,12 +26,12 @@ public enum SpreadsheetReferenceKind {
 
         @Override
         SpreadsheetColumnReference columnFromCache(final int column) {
-            return SpreadsheetColumnReference.ABSOLUTE[column];
+            return SpreadsheetColumnReference.absoluteCache()[column];
         }
 
         @Override
         SpreadsheetRowReference rowFromCache(final int column) {
-            return SpreadsheetRowReference.ABSOLUTE[column];
+            return SpreadsheetRowReference.absoluteCache()[column];
         }
 
         @Override
@@ -48,12 +48,12 @@ public enum SpreadsheetReferenceKind {
 
         @Override
         SpreadsheetColumnReference columnFromCache(final int column) {
-            return SpreadsheetColumnReference.RELATIVE[column];
+            return SpreadsheetColumnReference.relativeCache()[column];
         }
 
         @Override
         SpreadsheetRowReference rowFromCache(final int column) {
-            return SpreadsheetRowReference.RELATIVE[column];
+            return SpreadsheetRowReference.relativeCache()[column];
         }
 
         @Override
@@ -69,7 +69,10 @@ public enum SpreadsheetReferenceKind {
 
     public final SpreadsheetColumnReference firstColumn() {
         if (null == this.firstColumn) {
-            this.firstColumn = SpreadsheetColumnReference.MIN.setReferenceKind(this);
+            this.firstColumn = SpreadsheetColumnReference.with(
+                    0,
+                    this
+            );
         }
         return this.firstColumn;
     }
@@ -78,7 +81,10 @@ public enum SpreadsheetReferenceKind {
 
     public final SpreadsheetColumnReference lastColumn() {
         if (null == this.lastColumn) {
-            this.lastColumn = SpreadsheetColumnReference.MAX.setReferenceKind(this);
+            this.lastColumn = SpreadsheetColumnReference.with(
+                    SpreadsheetColumnReference.MAX_VALUE,
+                    this
+            );
         }
         return this.lastColumn;
     }
@@ -93,7 +99,10 @@ public enum SpreadsheetReferenceKind {
 
     public final SpreadsheetRowReference firstRow() {
         if (null == this.firstRow) {
-            this.firstRow = SpreadsheetRowReference.MIN.setReferenceKind(this);
+            this.firstRow = SpreadsheetRowReference.with(
+                    0,
+                    this
+            );
         }
         return this.firstRow;
     }
@@ -102,7 +111,10 @@ public enum SpreadsheetReferenceKind {
 
     public final SpreadsheetRowReference lastRow() {
         if (null == this.lastRow) {
-            this.lastRow = SpreadsheetRowReference.MAX.setReferenceKind(this);
+            this.lastRow = SpreadsheetRowReference.with(
+                    SpreadsheetRowReference.MAX_VALUE,
+                    this
+            );
         }
         return this.lastRow;
     }
@@ -124,7 +136,7 @@ public enum SpreadsheetReferenceKind {
 
     // Force static initialization of column and row to avoid NPE when calling methods like #firstColumn
     static {
-        SpreadsheetColumnReference.MAX.toString();
-        SpreadsheetRowReference.MAX.toString();
+//        SpreadsheetColumnReference.MAX.toString();
+//        SpreadsheetRowReference.MAX.toString();
     }
 }

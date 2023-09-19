@@ -1246,9 +1246,9 @@ public abstract class SpreadsheetSelection implements HasText,
         );
 
         SpreadsheetCell.NO_FORMATTED_CELL.isPresent();
-        SpreadsheetColumnReference.MIN.column();
+        SpreadsheetReferenceKind.ABSOLUTE.firstColumn();
         SpreadsheetLabelMapping.init();
-        SpreadsheetRowReference.MIN.row();
+        SpreadsheetReferenceKind.ABSOLUTE.firstRow();
     }
 
     private static <T extends SpreadsheetSelection> void register(final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,

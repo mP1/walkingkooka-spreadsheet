@@ -20,28 +20,12 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowReferenceTestCase<SpreadsheetRowReference> {
-
-    @Test
-    public void testMin() {
-        final SpreadsheetRowReference min = SpreadsheetRowReference.MIN;
-        this.checkEquals(0, min.value(), "value");
-        this.checkEquals(SpreadsheetReferenceKind.RELATIVE, min.referenceKind(), "referenceKind");
-    }
-
-    @Test
-    public void testMax() {
-        final SpreadsheetRowReference max = SpreadsheetRowReference.MAX;
-        this.checkEquals(SpreadsheetRowReference.MAX_VALUE, max.value(), "value");
-        this.checkEquals(SpreadsheetReferenceKind.RELATIVE, max.referenceKind(), "referenceKind");
-    }
 
     @Test
     public void testSetColumnNullFails() {

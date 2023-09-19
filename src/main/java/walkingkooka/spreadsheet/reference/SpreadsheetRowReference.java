@@ -36,38 +36,38 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
 
     public final static int RADIX = 10;
 
-    static final SpreadsheetRowReference[] ABSOLUTE = fillCache(
-            i -> new SpreadsheetRowReference(
-                    i,
-                    SpreadsheetReferenceKind.ABSOLUTE
-            ),
-            new SpreadsheetRowReference[CACHE_SIZE]
-    );
-    static final SpreadsheetRowReference[] RELATIVE = fillCache(
-            i -> new SpreadsheetRowReference(
-                    i,
-                    SpreadsheetReferenceKind.RELATIVE
-            ),
-            new SpreadsheetRowReference[CACHE_SIZE]
-    );
-
-    // both MIN & MAX constants must appear after ABSOLUTE & RELATIVE to avoid nulls in j2cl...........................
+    static SpreadsheetRowReference[] absoluteCache() {
+        if (null == ABSOLUTE_CACHE) {
+            ABSOLUTE_CACHE = fillCache(
+                    i -> new SpreadsheetRowReference(
+                            i,
+                            SpreadsheetReferenceKind.ABSOLUTE
+                    ),
+                    new SpreadsheetRowReference[CACHE_SIZE]
+            );
+        }
+        return ABSOLUTE_CACHE;
+    }
 
     /**
-     * The left most possible Row
+     * Lazy cache to help prevent NPE from very early {@link SpreadsheetReferenceKind#firstColumn()}
      */
-    public final static SpreadsheetRowReference MIN = with(
-            0,
-            SpreadsheetReferenceKind.RELATIVE
-    );
+    private static SpreadsheetRowReference[] ABSOLUTE_CACHE;
 
-    /**
-     * The right most possible Row
-     */
-    public final static SpreadsheetRowReference MAX = with(
-            MAX_VALUE,
-            SpreadsheetReferenceKind.RELATIVE
-    );
+    static SpreadsheetRowReference[] relativeCache() {
+        if (null == RELATIVE_CACHE) {
+            RELATIVE_CACHE = fillCache(
+                    i -> new SpreadsheetRowReference(
+                            i,
+                            SpreadsheetReferenceKind.RELATIVE
+                    ),
+                    new SpreadsheetRowReference[CACHE_SIZE]
+            );
+        }
+        return RELATIVE_CACHE;
+    }
+
+    private static SpreadsheetRowReference[] RELATIVE_CACHE;
 
     /**
      * Factory that creates a new row.

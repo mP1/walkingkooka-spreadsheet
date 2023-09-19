@@ -40,39 +40,38 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     final static String MAX_TOSTRING = toString0(MAX_VALUE + 1, SpreadsheetReferenceKind.RELATIVE);
 
-    static final SpreadsheetColumnReference[] ABSOLUTE = fillCache(
-            i -> new SpreadsheetColumnReference(
-                    i,
-                    SpreadsheetReferenceKind.ABSOLUTE
-            ),
-            new SpreadsheetColumnReference[CACHE_SIZE]
-    );
-
-    static final SpreadsheetColumnReference[] RELATIVE = fillCache(
-            i -> new SpreadsheetColumnReference(
-                    i,
-                    SpreadsheetReferenceKind.RELATIVE
-            ),
-            new SpreadsheetColumnReference[CACHE_SIZE]
-    );
-
-    // both MIN & MAX constants must appear after ABSOLUTE & RELATIVE to avoid nulls in j2cl...........................
+    static SpreadsheetColumnReference[] absoluteCache() {
+        if (null == ABSOLUTE_CACHE) {
+            ABSOLUTE_CACHE = fillCache(
+                    i -> new SpreadsheetColumnReference(
+                            i,
+                            SpreadsheetReferenceKind.ABSOLUTE
+                    ),
+                    new SpreadsheetColumnReference[CACHE_SIZE]
+            );
+        }
+        return ABSOLUTE_CACHE;
+    }
 
     /**
-     * The left most possible column
+     * Lazy cache to help prevent NPE from very early {@link SpreadsheetReferenceKind#firstColumn()}
      */
-    public final static SpreadsheetColumnReference MIN = with(
-            0,
-            SpreadsheetReferenceKind.RELATIVE
-    );
+    private static SpreadsheetColumnReference[] ABSOLUTE_CACHE;
 
-    /**
-     * The right most possible column
-     */
-    public final static SpreadsheetColumnReference MAX = with(
-            MAX_VALUE,
-            SpreadsheetReferenceKind.RELATIVE
-    );
+    static SpreadsheetColumnReference[] relativeCache() {
+        if (null == RELATIVE_CACHE) {
+            RELATIVE_CACHE = fillCache(
+                    i -> new SpreadsheetColumnReference(
+                            i,
+                            SpreadsheetReferenceKind.RELATIVE
+                    ),
+                    new SpreadsheetColumnReference[CACHE_SIZE]
+            );
+        }
+        return RELATIVE_CACHE;
+    }
+
+    private static SpreadsheetColumnReference[] RELATIVE_CACHE;
 
     /**
      * Factory that creates a new column.
