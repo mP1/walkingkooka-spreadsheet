@@ -23,19 +23,10 @@ package walkingkooka.spreadsheet.reference;
 public enum SpreadsheetReferenceKind {
 
     ABSOLUTE {
-        @Override
-        public SpreadsheetColumnReference column(final int value) {
-            return SpreadsheetColumnOrRowReference.column(value, this);
-        }
 
         @Override
         SpreadsheetColumnReference columnFromCache(final int column) {
             return SpreadsheetColumnReference.ABSOLUTE[column];
-        }
-
-        @Override
-        public SpreadsheetRowReference row(final int value) {
-            return SpreadsheetColumnOrRowReference.row(value, this);
         }
 
         @Override
@@ -54,19 +45,10 @@ public enum SpreadsheetReferenceKind {
         }
     },
     RELATIVE {
-        @Override
-        public SpreadsheetColumnReference column(final int value) {
-            return SpreadsheetColumnOrRowReference.column(value, this);
-        }
 
         @Override
         SpreadsheetColumnReference columnFromCache(final int column) {
             return SpreadsheetColumnReference.RELATIVE[column];
-        }
-
-        @Override
-        public SpreadsheetRowReference row(final int value) {
-            return SpreadsheetColumnOrRowReference.row(value, this);
         }
 
         @Override
@@ -103,7 +85,9 @@ public enum SpreadsheetReferenceKind {
 
     private SpreadsheetColumnReference lastColumn;
 
-    public abstract SpreadsheetColumnReference column(final int column);
+    public final SpreadsheetColumnReference column(final int value) {
+        return SpreadsheetColumnOrRowReference.column(value, this);
+    }
 
     abstract SpreadsheetColumnReference columnFromCache(final int column);
 
@@ -125,7 +109,9 @@ public enum SpreadsheetReferenceKind {
 
     private SpreadsheetRowReference lastRow;
 
-    public abstract SpreadsheetRowReference row(final int row);
+    public final SpreadsheetRowReference row(final int value) {
+        return SpreadsheetColumnOrRowReference.row(value, this);
+    }
 
     abstract SpreadsheetRowReference rowFromCache(final int column);
 
