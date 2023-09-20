@@ -1081,7 +1081,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testLeftFirstColumn() {
+    public void testLeftColumnFirst() {
         this.leftColumnAndCheck(
                 "A2",
                 "A2"
@@ -1089,7 +1089,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testLeftLastColumn() {
+    public void testLeftColumnLast() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.leftColumnAndCheck(
@@ -1099,7 +1099,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testLeftSkipsHiddenColumn() {
+    public void testLeftColumnSkipsHidden() {
         this.leftColumnAndCheck(
                 "D1",
                 SpreadsheetSelection.parseColumn("C")::testColumn,
@@ -1126,7 +1126,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testUpFirstRow() {
+    public void testUpRowFirst() {
         this.upRowAndCheck(
                 "B1",
                 "B1"
@@ -1134,7 +1134,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testUpLastRow() {
+    public void testUpRowLast() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.upRowAndCheck(
@@ -1144,7 +1144,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testUpSkipsHiddenRow() {
+    public void testUpRowSkipsHidden() {
         this.upRowAndCheck(
                 "B4",
                 SpreadsheetSelection.parseRow("3")::testRow,
@@ -1169,7 +1169,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testRightFirstColumn() {
+    public void testRightColumnFirst() {
         this.rightColumnAndCheck(
                 "A2",
                 "B2"
@@ -1177,7 +1177,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testRightLastColumn() {
+    public void testRightColumnLast() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.rightColumnAndCheck(
@@ -1187,7 +1187,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testRightSkipsHiddenColumn() {
+    public void testRightColumnSkipsHidden() {
         this.rightColumnAndCheck(
                 "B1",
                 SpreadsheetSelection.parseColumn("C")::testColumn,
@@ -1214,7 +1214,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testDownFirstRow() {
+    public void testDownRowFirst() {
         this.downRowAndCheck(
                 "B1",
                 "B2"
@@ -1222,7 +1222,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testDownLastRow() {
+    public void testDownRowLast() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.downRowAndCheck(
@@ -1232,7 +1232,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testDownSkipsHiddenRow() {
+    public void testDownRowSkipsHidden() {
         this.downRowAndCheck(
                 "B2",
                 SpreadsheetSelection.parseRow("3")::testRow,
@@ -1303,7 +1303,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testExtendLeftFirstColumn() {
+    public void testExtendLeftColumnFirst() {
         final String cell = "A1";
 
         this.extendLeftColumnAndCheck(
@@ -1313,8 +1313,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testExtendLeftFirstColumn2() {
-        final String cell =  "A2";
+    public void testExtendLeftColumnFirst2() {
+        final String cell = "A2";
 
         this.extendLeftColumnAndCheck(
                 cell,
@@ -1333,8 +1333,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testExtendUpFirstRow() {
-        final String cell =  "A1";
+    public void testExtendUpRowFirst() {
+        final String cell = "A1";
 
         this.extendUpRowAndCheck(
                 cell,
@@ -1343,7 +1343,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testExtendUpFirstRow2() {
+    public void testExtendUpRowFirstRow() {
         final String cell = "B1";
 
         this.extendUpRowAndCheck(
@@ -1363,7 +1363,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testExtendRightLastColumn() {
+    public void testExtendRightColumnLast() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseRow("1")
                 .setColumn(
                         SpreadsheetReferenceKind.RELATIVE.lastColumn()
@@ -1376,8 +1376,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testExtendRightLastColumn2() {
-        final SpreadsheetCellReference cell =  SpreadsheetSelection.parseRow("2")
+    public void testExtendRightColumnLast2() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseRow("2")
                 .setColumn(
                         SpreadsheetReferenceKind.RELATIVE.lastColumn()
                 );
@@ -1399,7 +1399,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testExtendDownLastRow() {
+    public void testExtendDownRowLast() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseColumn("A")
                 .setRow(
                         SpreadsheetReferenceKind.RELATIVE.lastRow()
@@ -1412,7 +1412,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testExtendDownLastRow2() {
+    public void testExtendDownRowLast2() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseColumn("B")
                 .setRow(
                         SpreadsheetReferenceKind.RELATIVE.lastRow()

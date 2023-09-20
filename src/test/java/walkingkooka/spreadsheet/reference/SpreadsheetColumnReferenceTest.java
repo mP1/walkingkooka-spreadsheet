@@ -737,7 +737,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testLeftFirstColumn() {
+    public void testLeftColumnFirst() {
         this.leftColumnAndCheck(
                 "A",
                 "A"
@@ -745,7 +745,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testLeftLastColumn() {
+    public void testLeftColumnLast() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.leftColumnAndCheck(
@@ -755,7 +755,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testLeftSkipsHiddenColumn() {
+    public void testLeftColumnSkipsHidden() {
         this.leftColumnAndCheck(
                 "D",
                 SpreadsheetSelection.parseColumn("C")::testColumn,
@@ -765,7 +765,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testUpColumnHidden() {
+    public void testUpRowHidden() {
         this.upRowAndCheck(
                 "C",
                 SpreadsheetSelection.parseColumn("C")::testColumn
@@ -789,7 +789,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testRightFirstColumn() {
+    public void testRightColumnFirst() {
         this.rightColumnAndCheck(
                 "A",
                 "B"
@@ -797,7 +797,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testRightLastColumn() {
+    public void testRightColumnLast() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.rightColumnAndCheck(
@@ -807,7 +807,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testRightSkipsHiddenColumn() {
+    public void testRightColumnSkipsHidden() {
         this.rightColumnAndCheck(
                 "B",
                 SpreadsheetSelection.parseColumn("C")::testColumn,
@@ -825,7 +825,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testDownHiddenRow() {
+    public void testDownRowHidden() {
         this.downRowAndCheck(
                 "C",
                 SpreadsheetSelection.parseColumn("C")::testColumn,
@@ -879,8 +879,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testExtendLeftFirstColumn() {
-        final String column =     "A";
+    public void testExtendLeftColumnFirst() {
+        final String column = "A";
 
         this.extendLeftColumnAndCheck(
                 column,
@@ -889,7 +889,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testExtendLeftSkipsHiddenColumn() {
+    public void testExtendLeftColumnSkipsHidden() {
         this.extendLeftColumnAndCheck(
                 "D",
                 SpreadsheetViewportSelectionAnchor.NONE,
@@ -910,7 +910,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testExtendRightLastColumn() {
+    public void testExtendRightColumnLast() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.extendRightColumnAndCheck(
@@ -920,7 +920,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testExtendRightSkipsHiddenColumn() {
+    public void testExtendRightColumnSkipsHidden() {
         this.extendRightColumnAndCheck(
                 "B",
                 SpreadsheetViewportSelectionAnchor.NONE,
@@ -941,7 +941,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testExtendUpRowHiddenColumn() {
+    public void testExtendUpRowColumnHidden() {
         this.extendUpRowAndCheck(
                 "C",
                 SpreadsheetViewportSelectionAnchor.NONE,

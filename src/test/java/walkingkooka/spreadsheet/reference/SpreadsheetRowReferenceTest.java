@@ -674,7 +674,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testLeftHiddenColumn() {
+    public void testLeftColumnHidden() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
 
         this.leftColumnAndCheck(
@@ -693,7 +693,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testUpFirstRow() {
+    public void testUpRowFirst() {
         this.upRowAndCheck(
                 "1",
                 "1"
@@ -701,7 +701,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testUpSkipsHiddenRow() {
+    public void testUpRowSkipsHidden() {
         this.upRowAndCheck(
                 "4",
                 SpreadsheetSelection.parseRow("3")::testRow,
@@ -710,7 +710,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testUpLastRow() {
+    public void testUpRowLast() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.upRowAndCheck(
@@ -728,7 +728,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testRightHiddenColumn() {
+    public void testRightColumnHidden() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("2");
 
         this.rightColumnAndCheck(
@@ -747,7 +747,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testDownFirstRow() {
+    public void testDownRowFirst() {
         this.downRowAndCheck(
                 "1",
                 "2"
@@ -755,7 +755,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testDownLastRow() {
+    public void testDownRowLast() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.downRowAndCheck(
@@ -765,7 +765,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testDownSkipsHiddenRow() {
+    public void testDownRowSkipsHidden() {
         this.downRowAndCheck(
                 "2",
                 SpreadsheetSelection.parseRow("3")::testRow,
@@ -839,7 +839,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testExtendUpSkipsHiddenRow() {
+    public void testExtendUpRowSkipsHidden() {
         this.extendUpRowAndCheck(
                 "4",
                 SpreadsheetViewportSelectionAnchor.NONE,
@@ -860,7 +860,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testExtendDownLastRow() {
+    public void testExtendDownRowLast() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.extendDownRowAndCheck(
@@ -870,7 +870,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testExtendDownSkipsHiddenRow() {
+    public void testExtendDownRowSkipsHidden() {
         this.extendDownRowAndCheck(
                 "2",
                 SpreadsheetViewportSelectionAnchor.NONE,
@@ -892,7 +892,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testExtendLeftHiddenColumn() {
+    public void testExtendLeftColumnHidden() {
         this.extendLeftColumnAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
@@ -912,7 +912,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testExtendRightHiddenColumn() {
+    public void testExtendRightColumnHidden() {
         this.extendRightColumnAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
