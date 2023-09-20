@@ -19,22 +19,31 @@ package walkingkooka.spreadsheet.reference;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 final class BasicSpreadsheetViewportSelectionNavigationContext implements SpreadsheetViewportSelectionNavigationContext {
 
     static BasicSpreadsheetViewportSelectionNavigationContext with(final Predicate<SpreadsheetColumnReference> columnHidden,
-                                                                   final Predicate<SpreadsheetRowReference> rowHidden) {
+                                                                   final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                                                   final Predicate<SpreadsheetRowReference> rowHidden,
+                                                                   final Function<SpreadsheetRowReference, Double> rowHeights) {
         return new BasicSpreadsheetViewportSelectionNavigationContext(
                 Objects.requireNonNull(columnHidden, "columnHidden"),
-                Objects.requireNonNull(rowHidden, "rowHidden")
+                Objects.requireNonNull(columnWidths, "columnWidths"),
+                Objects.requireNonNull(rowHidden, "rowHidden"),
+                Objects.requireNonNull(rowHeights, "rowHeights")
         );
     }
 
     private BasicSpreadsheetViewportSelectionNavigationContext(final Predicate<SpreadsheetColumnReference> columnHidden,
-                                                               final Predicate<SpreadsheetRowReference> rowHidden) {
+                                                               final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                                               final Predicate<SpreadsheetRowReference> rowHidden,
+                                                               final Function<SpreadsheetRowReference, Double> rowHeights) {
         this.columnHidden = columnHidden;
+        this.columnWidths = columnWidths;
         this.rowHidden = rowHidden;
+        this.rowHeights = rowHeights;
     }
 
     @Override
@@ -124,6 +133,116 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
         return Optional.ofNullable(result);
     }
 
+    @Override
+    public Optional<SpreadsheetColumnReference> leftPixels(final SpreadsheetColumnReference column,
+                                                           final int pixels) {
+        checkColumn(column);
+
+        return movePixels(
+                column,
+                SpreadsheetColumnReference::isFirst,
+                this.columnHidden,
+                -1,
+                this.columnWidths,
+                pixels
+        );
+    }
+
+    @Override
+    public Optional<SpreadsheetColumnReference> rightPixels(final SpreadsheetColumnReference column,
+                                                            final int pixels) {
+        checkColumn(column);
+
+        return movePixels(
+                column,
+                SpreadsheetColumnReference::isLast,
+                this.columnHidden,
+                +1,
+                this.columnWidths,
+                pixels
+        );
+    }
+
+    private final Function<SpreadsheetColumnReference, Double> columnWidths;
+
+    @Override
+    public Optional<SpreadsheetRowReference> upPixels(final SpreadsheetRowReference row,
+                                                      final int pixels) {
+        checkRow(row);
+
+        return movePixels(
+                row,
+                SpreadsheetRowReference::isFirst,
+                this.rowHidden,
+                -1,
+                this.rowHeights,
+                pixels
+        );
+    }
+
+    @Override
+    public Optional<SpreadsheetRowReference> downPixels(final SpreadsheetRowReference row,
+                                                        final int pixels) {
+        checkRow(row);
+
+        return movePixels(
+                row,
+                SpreadsheetRowReference::isLast,
+                this.rowHidden,
+                +1,
+                this.rowHeights,
+                pixels
+        );
+    }
+
+    private final Function<SpreadsheetRowReference, Double> rowHeights;
+
+
+    private static <T extends SpreadsheetColumnOrRowReference> Optional<T> movePixels(final T start,
+                                                                                      final Predicate<T> stop,
+                                                                                      final Predicate<T> hidden,
+                                                                                      final int delta,
+                                                                                      final Function<T, Double> widthOrHeight,
+                                                                                      final int pixels) {
+        if(pixels < 0) {
+            throw new IllegalArgumentException("Invalid pixels " + pixels + " <= 0");
+        }
+
+        T moved = start;
+        T lastNotHidden = start;
+
+        double pixelCountdown = pixels;
+
+        do {
+            // might have reached first or last
+            if (stop.test(moved)) {
+                lastNotHidden = moved.equals(start) && hidden.test(moved) ?
+                        null : // cant move and is hidden return nothing.
+                        moved; // must have already been hidden tested so return it.
+                break;
+            }
+
+            // advance moved
+            moved = (T) moved.addSaturated(delta);
+            if (hidden.test(moved)) {
+                if(stop.test(moved)) {
+                    break;
+                }
+                continue; // skip hidden result
+            }
+            lastNotHidden = moved;
+
+            final double length = widthOrHeight.apply(moved);
+            pixelCountdown = pixelCountdown - length;
+            if(pixelCountdown < 0) {
+                break; // moved enuff
+            }
+
+        } while (true);
+
+        return Optional.ofNullable(lastNotHidden);
+    }
+
     private static void checkColumn(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
     }
@@ -134,6 +253,6 @@ final class BasicSpreadsheetViewportSelectionNavigationContext implements Spread
 
     @Override
     public String toString() {
-        return this.columnHidden + " " + this.rowHidden;
+        return this.columnHidden + " " + this.columnWidths + " " + this.rowHidden + " " + this.rowHeights;
     }
 }

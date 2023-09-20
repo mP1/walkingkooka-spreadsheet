@@ -29,6 +29,7 @@ import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -461,12 +462,22 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                hiddenRows
+                                COLUMN_WIDTH,
+                                hiddenRows,
+                                ROW_HEIGHT
                         )
                 ),
                 () -> navigation + " update " + selection + " " + anchor
         );
     }
+
+    private final static Function<SpreadsheetColumnReference, Double> COLUMN_WIDTH = (c) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    private final static Function<SpreadsheetRowReference, Double> ROW_HEIGHT = (c) -> {
+        throw new UnsupportedOperationException();
+    };
 
     // compact..........................................................................................................
 

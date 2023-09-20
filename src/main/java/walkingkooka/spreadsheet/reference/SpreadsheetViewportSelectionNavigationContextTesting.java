@@ -240,7 +240,7 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
     }
 
     // downRow..........................................................................................................
-    
+
     @Test
     default void downRowWithNullFails() {
         assertThrows(
@@ -294,6 +294,206 @@ public interface SpreadsheetViewportSelectionNavigationContextTesting<C extends 
                 expected,
                 context.downRow(reference),
                 () -> reference + " downRow " + context
+        );
+    }
+
+    // leftPixels.......................................................................................................
+
+    @Test
+    default void leftPixelsWithNullColumnFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().leftPixels(null, 1)
+        );
+    }
+
+    @Test
+    default void leftPixelsWithNegativePixelsFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                        .leftPixels(
+                                SpreadsheetReferenceKind.RELATIVE.firstColumn(),
+                                -1
+                        )
+        );
+    }
+
+    default void leftPixelsAndCheck(final String start,
+                                    final int pixels,
+                                    final C context,
+                                    final String expected) {
+        this.leftPixelsAndCheck(
+                SpreadsheetSelection.parseColumn(start),
+                pixels,
+                context,
+                Optional.of(
+                        SpreadsheetSelection.parseColumn(expected)
+                )
+        );
+    }
+
+    default void leftPixelsAndCheck(final SpreadsheetColumnReference start,
+                                    final int pixels,
+                                    final C context,
+                                    final Optional<SpreadsheetColumnReference> expected) {
+        this.checkEquals(
+                expected,
+                context.leftPixels(
+                        start,
+                        pixels
+                ),
+                () -> "leftPixels " + start + " " + pixels
+        );
+    }
+
+    // rightPixels......................................................................................................
+
+    @Test
+    default void rightPixelsWithNullColumnFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().rightPixels(null, 1)
+        );
+    }
+
+    @Test
+    default void rightPixelsWithNegativePixelsFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                        .rightPixels(
+                                SpreadsheetReferenceKind.RELATIVE.firstColumn(),
+                                -1
+                        )
+        );
+    }
+
+    default void rightPixelsAndCheck(final String start,
+                                     final int pixels,
+                                     final C context,
+                                     final String expected) {
+        this.rightPixelsAndCheck(
+                SpreadsheetSelection.parseColumn(start),
+                pixels,
+                context,
+                Optional.of(
+                        SpreadsheetSelection.parseColumn(expected)
+                )
+        );
+    }
+
+    default void rightPixelsAndCheck(final SpreadsheetColumnReference start,
+                                     final int pixels,
+                                     final C context,
+                                     final Optional<SpreadsheetColumnReference> expected) {
+        this.checkEquals(
+                expected,
+                context.rightPixels(
+                        start,
+                        pixels
+                ),
+                () -> "rightPixels " + start + " " + pixels
+        );
+    }
+
+    // upPixels.........................................................................................................
+
+    @Test
+    default void upPixelsWithNullRowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().upPixels(null, 1)
+        );
+    }
+
+    @Test
+    default void upPixelsWithNegativePixelsFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                        .upPixels(
+                                SpreadsheetReferenceKind.RELATIVE.firstRow(),
+                                -1
+                        )
+        );
+    }
+
+    default void upPixelsAndCheck(final String start,
+                                  final int pixels,
+                                  final C context,
+                                  final String expected) {
+        this.upPixelsAndCheck(
+                SpreadsheetSelection.parseRow(start),
+                pixels,
+                context,
+                Optional.of(
+                        SpreadsheetSelection.parseRow(expected)
+                )
+        );
+    }
+
+    default void upPixelsAndCheck(final SpreadsheetRowReference start,
+                                  final int pixels,
+                                  final C context,
+                                  final Optional<SpreadsheetRowReference> expected) {
+        this.checkEquals(
+                expected,
+                context.upPixels(
+                        start,
+                        pixels
+                ),
+                () -> "upPixels " + start + " " + pixels
+        );
+    }
+
+    // downPixels.......................................................................................................
+
+    @Test
+    default void downPixelsWithNullRowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().downPixels(null, 1)
+        );
+    }
+
+    @Test
+    default void downPixelsWithNegativePixelsFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                        .downPixels(
+                                SpreadsheetReferenceKind.RELATIVE.firstRow(),
+                                -1
+                        )
+        );
+    }
+
+    default void downPixelsAndCheck(final String start,
+                                    final int pixels,
+                                    final C context,
+                                    final String expected) {
+        this.downPixelsAndCheck(
+                SpreadsheetSelection.parseRow(start),
+                pixels,
+                context,
+                Optional.of(
+                        SpreadsheetSelection.parseRow(expected)
+                )
+        );
+    }
+
+    default void downPixelsAndCheck(final SpreadsheetRowReference start,
+                                    final int pixels,
+                                    final C context,
+                                    final Optional<SpreadsheetRowReference> expected) {
+        this.checkEquals(
+                expected,
+                context.downPixels(
+                        start,
+                        pixels
+                ),
+                () -> "downPixels " + start + " " + pixels
         );
     }
 

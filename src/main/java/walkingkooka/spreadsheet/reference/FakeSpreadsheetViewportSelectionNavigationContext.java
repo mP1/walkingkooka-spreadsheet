@@ -49,4 +49,28 @@ public class FakeSpreadsheetViewportSelectionNavigationContext implements Spread
     public Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference row) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Optional<SpreadsheetColumnReference> leftPixels(final SpreadsheetColumnReference column,
+                                                           final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetColumnReference> rightPixels(final SpreadsheetColumnReference column,
+                                                            final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetRowReference> upPixels(final SpreadsheetRowReference row,
+                                                      final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetRowReference> downPixels(final SpreadsheetRowReference row,
+                                                        final int count) {
+        throw new UnsupportedOperationException();
+    }
 }
