@@ -250,8 +250,22 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
+    Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                              final int count,
+                                              final SpreadsheetViewportSelectionNavigationContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
                                          final SpreadsheetViewportSelectionNavigationContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                            final int count,
+                                            final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
@@ -262,8 +276,22 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
+    Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                               final int count,
+                                               final SpreadsheetViewportSelectionNavigationContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
                                            final SpreadsheetViewportSelectionNavigationContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                              final int count,
+                                              final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 

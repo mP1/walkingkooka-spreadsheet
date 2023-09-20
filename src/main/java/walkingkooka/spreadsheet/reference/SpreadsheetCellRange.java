@@ -394,11 +394,35 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @Override
+    Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                              final int count,
+                                              final SpreadsheetViewportSelectionNavigationContext context) {
+        return anchor.cell(this)
+                .leftPixels(
+                        anchor,
+                        count,
+                        context
+                );
+    }
+
+    @Override
     Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
                                          final SpreadsheetViewportSelectionNavigationContext context) {
         return anchor.cell(this)
                 .upRow(
                         anchor,
+                        context
+                );
+    }
+
+    @Override
+    Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                            final int count,
+                                            final SpreadsheetViewportSelectionNavigationContext context) {
+        return anchor.cell(this)
+                .upPixels(
+                        anchor,
+                        count,
                         context
                 );
     }
@@ -414,11 +438,35 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @Override
+    Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                               final int count,
+                                               final SpreadsheetViewportSelectionNavigationContext context) {
+        return anchor.cell(this)
+                .rightPixels(
+                        anchor,
+                        count,
+                        context
+                );
+    }
+
+    @Override
     Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
                                            final SpreadsheetViewportSelectionNavigationContext context) {
         return anchor.cell(this)
                 .downRow(
                         anchor,
+                        context
+                );
+    }
+
+    @Override
+    Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                              final int count,
+                                              final SpreadsheetViewportSelectionNavigationContext context) {
+        return anchor.cell(this)
+                .downPixels(
+                        anchor,
+                        count,
                         context
                 );
     }

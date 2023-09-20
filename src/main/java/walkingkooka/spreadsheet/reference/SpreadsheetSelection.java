@@ -893,14 +893,33 @@ public abstract class SpreadsheetSelection implements HasText,
     abstract Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                                        final SpreadsheetViewportSelectionNavigationContext context);
 
+    abstract Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                       final int count,
+                                                       final SpreadsheetViewportSelectionNavigationContext context);
+
     abstract Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                   final SpreadsheetViewportSelectionNavigationContext context);
+
+
+    abstract Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                     final int count,
+                                                     final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                                         final SpreadsheetViewportSelectionNavigationContext context);
 
+
+    abstract Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                        final int count,
+                                                        final SpreadsheetViewportSelectionNavigationContext context);
+
     abstract Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                     final SpreadsheetViewportSelectionNavigationContext context);
+
+
+    abstract Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                       final int count,
+                                                       final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetViewportSelection> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                                                      final SpreadsheetViewportSelectionNavigationContext context);

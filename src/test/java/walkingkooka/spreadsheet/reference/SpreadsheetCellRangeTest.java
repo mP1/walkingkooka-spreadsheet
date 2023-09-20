@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -30,6 +31,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -1447,6 +1449,20 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
+    public void testLeftPixels() {
+        this.leftPixelsAndCheck(
+                "D2:E2",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                50,
+                "C",
+                Maps.of("A", 5.0, "B", 50.0, "D", 50.0),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "B2"
+        );
+    }
+
+    @Test
     public void testRightColumnAnchorTopLeft() {
         this.rightColumnAndCheck(
                 "A1:C3",
@@ -1479,6 +1495,20 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    @Test
+    public void testRightPixels() {
+        this.rightPixelsAndCheck(
+                "D1:E2",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                50,
+                "F",
+                Maps.of("E", 5.0, "G", 50.0, "H", 50.0),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "H2"
+        );
+    }
+
     // B1 C1 D1
     // B2 C2 D2
     // B3 C3 D3
@@ -1495,6 +1525,20 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
+    public void testUpPixels() {
+        this.upPixelsAndCheck(
+                "E5:F6",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "3",
+                Map.of("4", 50.0, "2", 50.0),
+                "E2"
+        );
+    }
+
+    @Test
     public void testDownRowAnchorBottomRight() {
         this.downRowAndCheck(
                 "B1:D3",
@@ -1502,6 +1546,20 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "D2"
+        );
+    }
+
+    @Test
+    public void testDownPixels() {
+        this.downPixelsAndCheck(
+                "B2:C3",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "4",
+                Map.of("5", 50.0, "6", 50.0),
+                "C6"
         );
     }
 
