@@ -27,7 +27,6 @@ import walkingkooka.text.CharacterConstant;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -356,17 +355,6 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         );
     }
 
-    private Predicate<SpreadsheetColumnReference> columnHidden(final String columns) {
-        return Predicates.setContains(
-                new TreeSet<>(
-                        CharacterConstant.COMMA.parse(
-                                columns,
-                                SpreadsheetSelection::parseColumn
-                        )
-                )
-        );
-    }
-
     // upRow...................................................................................................
 
     @Test
@@ -674,14 +662,8 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         this.leftPixelsAndCheck(
                 SpreadsheetSelection.parseColumn(start),
                 pixels,
-                CharacterConstant.COMMA.parse(
-                        columnsHidden,
-                        SpreadsheetSelection::parseColumn
-                )::contains,
-                this.widthOrHeight(
-                        columnWidths,
-                        SpreadsheetSelection::parseColumn
-                ),
+                this.columnHidden(columnsHidden),
+                this.columnToWidth(columnWidths),
                 expected.map(SpreadsheetSelection::parseColumn)
         );
     }
@@ -826,14 +808,8 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         this.rightPixelsAndCheck(
                 SpreadsheetSelection.parseColumn(start),
                 pixels,
-                CharacterConstant.COMMA.parse(
-                        columnsHidden,
-                        SpreadsheetSelection::parseColumn
-                )::contains,
-                this.widthOrHeight(
-                        columnWidths,
-                        SpreadsheetSelection::parseColumn
-                ),
+                this.columnHidden(columnsHidden),
+                this.columnToWidth(columnWidths),
                 expected.map(SpreadsheetSelection::parseColumn)
         );
     }
@@ -970,14 +946,8 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         this.upPixelsAndCheck(
                 SpreadsheetSelection.parseRow(start),
                 pixels,
-                CharacterConstant.COMMA.parse(
-                        rowsHidden,
-                        SpreadsheetSelection::parseRow
-                )::contains,
-                this.widthOrHeight(
-                        rowHeights,
-                        SpreadsheetSelection::parseRow
-                ),
+                this.rowHidden(rowsHidden),
+                this.rowToHeight(rowHeights),
                 expected.map(SpreadsheetSelection::parseRow)
         );
     }
@@ -1132,19 +1102,13 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
     private void downPixelsAndCheck(final String start,
                                     final int pixels,
                                     final String rowsHidden,
-                                    final Map<String, Double> rowWidths,
+                                    final Map<String, Double> rowHeights,
                                     final Optional<String> expected) {
         this.downPixelsAndCheck(
                 SpreadsheetSelection.parseRow(start),
                 pixels,
-                CharacterConstant.COMMA.parse(
-                        rowsHidden,
-                        SpreadsheetSelection::parseRow
-                )::contains,
-                this.widthOrHeight(
-                        rowWidths,
-                        SpreadsheetSelection::parseRow
-                ),
+                this.rowHidden(rowsHidden),
+                this.rowToHeight(rowHeights),
                 expected.map(SpreadsheetSelection::parseRow)
         );
     }
@@ -1152,7 +1116,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
     private void downPixelsAndCheck(final SpreadsheetRowReference start,
                                     final int pixels,
                                     final Predicate<SpreadsheetRowReference> rowsHidden,
-                                    final Function<SpreadsheetRowReference, Double> rowWidths,
+                                    final Function<SpreadsheetRowReference, Double> rowHeights,
                                     final Optional<SpreadsheetRowReference> expected) {
         this.downPixelsAndCheck(
                 start,
@@ -1161,7 +1125,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                         Predicates.fake(), // hidden columns
                         COLUMN_TO_WIDTH,
                         rowsHidden,
-                        rowWidths::apply
+                        rowHeights::apply
                 ),
                 expected
         );
@@ -1169,20 +1133,45 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
 
     // helpers.........................................................................................................
 
-    private Predicate<SpreadsheetRowReference> rowHidden(final String rows) {
-        return Predicates.setContains(
-                new TreeSet<>(
-                        CharacterConstant.COMMA.parse(
-                                rows,
-                                SpreadsheetSelection::parseRow
-                        )
-                )
+    private Predicate<SpreadsheetColumnReference> columnHidden(final String columns) {
+        return hiddenPredicate(
+                columns,
+                SpreadsheetSelection::parseColumn
         );
     }
 
-    private <T extends SpreadsheetColumnOrRowReference> Function<T, Double> widthOrHeight(final Map<String, Double> widthsOrHeights,
-                                                                                          final Function<String, T> parser) {
-        final Map<T, Double> map = widthsOrHeights.entrySet()
+    private Predicate<SpreadsheetRowReference> rowHidden(final String rows) {
+        return hiddenPredicate(
+                rows,
+                SpreadsheetSelection::parseRow
+        );
+    }
+
+    private static <T extends SpreadsheetColumnOrRowReference> Predicate<T> hiddenPredicate(final String columnOrRows,
+                                                                                            final Function<String, T> parser) {
+        return (columnOrRow) -> CharacterConstant.COMMA.parse(
+                columnOrRows,
+                parser
+        ).contains(columnOrRow);
+    }
+
+    private Function<SpreadsheetColumnReference, Double> columnToWidth(final Map<String, Double> columnToWidths) {
+        return columnOrRowToWidthOrHeight(
+                columnToWidths,
+                SpreadsheetSelection::parseColumn
+        );
+    }
+
+    private Function<SpreadsheetRowReference, Double> rowToHeight(final Map<String, Double> rowToHeights) {
+        return columnOrRowToWidthOrHeight(
+                rowToHeights,
+                SpreadsheetSelection::parseRow
+        );
+    }
+
+    private <T extends SpreadsheetColumnOrRowReference> Function<T, Double> columnOrRowToWidthOrHeight(final Map<String, Double> columnOrRowToWidthOrHeight,
+                                                                                                       final Function<String, T> parser) {
+        final Map<T, Double> map = columnOrRowToWidthOrHeight.entrySet()
                 .stream()
                 .collect(
                         Collectors.toMap(
@@ -1195,7 +1184,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
             this.checkNotEquals(
                     null,
                     length,
-                    () -> "Missing " + columnOrRow + " from " + widthsOrHeights
+                    () -> "Missing " + columnOrRow + " from " + columnOrRowToWidthOrHeight
             );
             return length;
         };
