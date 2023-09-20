@@ -775,20 +775,20 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                COLUMN_WIDTH,
+                                COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_HEIGHT
+                                ROW_TO_HEIGHT
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate leftColumn"
         );
     }
 
-    private final static Function<SpreadsheetColumnReference, Double> COLUMN_WIDTH = (c) -> {
+    private final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> {
         throw new UnsupportedOperationException();
     };
 
-    private final static Function<SpreadsheetRowReference, Double> ROW_HEIGHT = (c) -> {
+    private final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> {
         throw new UnsupportedOperationException();
     };
 
@@ -1009,9 +1009,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                COLUMN_WIDTH,
+                                COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_HEIGHT
+                                ROW_TO_HEIGHT
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate upRow"
@@ -1199,9 +1199,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                COLUMN_WIDTH,
+                                COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_HEIGHT
+                                ROW_TO_HEIGHT
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate rightColumn"
@@ -1402,9 +1402,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                COLUMN_WIDTH,
+                                COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_HEIGHT
+                                ROW_TO_HEIGHT
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate downRow"
@@ -1611,9 +1611,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                COLUMN_WIDTH,
+                                COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_HEIGHT
+                                ROW_TO_HEIGHT
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendLeftColumn"
@@ -1753,9 +1753,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                COLUMN_WIDTH,
+                                COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_HEIGHT
+                                ROW_TO_HEIGHT
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendUp"
@@ -1929,9 +1929,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                COLUMN_WIDTH,
+                                COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_HEIGHT
+                                ROW_TO_HEIGHT
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendRightColumn"
@@ -2128,9 +2128,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                COLUMN_WIDTH,
+                                COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_HEIGHT
+                                ROW_TO_HEIGHT
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendDownRow"
