@@ -784,14 +784,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    private final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> {
-        throw new UnsupportedOperationException();
-    };
-
-    private final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> {
-        throw new UnsupportedOperationException();
-    };
-
     // upRow............................................................................................................
 
     final void upRowAndCheck(final String selection,
@@ -1410,6 +1402,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 () -> selection + " anchor=" + anchor + " navigate downRow"
         );
     }
+
+    // helpers..........................................................................................................
+
+    private final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    private final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> {
+        throw new UnsupportedOperationException();
+    };
 
     // extendRange......................................................................................................
 
