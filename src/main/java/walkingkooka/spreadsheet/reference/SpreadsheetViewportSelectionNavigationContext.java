@@ -71,4 +71,44 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
      * This method is used to support keyboard navigation.
      */
     Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference row);
+
+    /**
+     * Uses the pixel count to advance left skipping hidden columns.
+     * If all columns to the left are hidden the original {@link SpreadsheetColumnReference} is returned,
+     * providing it is also not hidden or {@link Optional#empty()}.
+     * <br>
+     * This method is used to support scrollbar navigation.
+     */
+    Optional<SpreadsheetColumnReference> leftPixels(final SpreadsheetColumnReference reference,
+                                                    final int count);
+
+    /**
+     * Uses the pixel count to advance right skipping hidden columns.
+     * If all columns to the right are hidden the original {@link SpreadsheetColumnReference} is returned,
+     * providing it is also not hidden or {@link Optional#empty()}.
+     * <br>
+     * This method is used to support scrollbar navigation.
+     */
+    Optional<SpreadsheetColumnReference> rightPixels(final SpreadsheetColumnReference reference,
+                                                     final int count);
+
+    /**
+     * Uses the pixel count to advance up skipping hidden rows.
+     * If all rows to the up are hidden the original {@link SpreadsheetRowReference} is returned,
+     * providing it is also not hidden or {@link Optional#empty()}.
+     * <br>
+     * This method is used to support scrollbar navigation.
+     */
+    Optional<SpreadsheetRowReference> upPixels(final SpreadsheetRowReference reference,
+                                               final int count);
+
+    /**
+     * Uses the pixel count to advance down skipping hidden rows.
+     * If all rows to the down are hidden the original {@link SpreadsheetRowReference} is returned,
+     * providing it is also not hidden or {@link Optional#empty()}.
+     * <br>
+     * This method is used to support scrollbar navigation.
+     */
+    Optional<SpreadsheetRowReference> downPixels(final SpreadsheetRowReference reference,
+                                                 final int count);
 }
