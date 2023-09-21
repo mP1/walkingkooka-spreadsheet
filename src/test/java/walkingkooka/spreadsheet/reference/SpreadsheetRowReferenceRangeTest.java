@@ -570,6 +570,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.leftColumnAndCheck(
                 "2:3",
                 SpreadsheetViewportSelectionAnchor.TOP,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "2:3"
         );
     }
@@ -579,6 +581,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.upRowAndCheck(
                 "2:3",
                 SpreadsheetViewportSelectionAnchor.TOP,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "2"
         );
     }
@@ -588,6 +592,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.upRowAndCheck(
                 "2:4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "1"
         );
     }
@@ -597,6 +603,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.upRowAndCheck(
                 "1:3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "1"
         );
     }
@@ -606,6 +614,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.upRowAndCheck(
                 "1:3",
                 SpreadsheetViewportSelectionAnchor.TOP,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "2"
         );
     }
@@ -615,6 +625,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.upRowAndCheck(
                 "1:2",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "1"
         );
     }
@@ -624,6 +636,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.downRowAndCheck(
                 "2:4",
                 SpreadsheetViewportSelectionAnchor.TOP,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "5"
         );
     }
@@ -633,6 +647,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.downRowAndCheck(
                 "2:4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "3"
         );
     }
@@ -642,6 +658,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.downRowAndCheck(
                 "1:3",
                 SpreadsheetViewportSelectionAnchor.TOP,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "4"
         );
     }
@@ -651,17 +669,22 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.downRowAndCheck(
                 "1:3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "2"
         );
     }
 
     @Test
     public void testDownLastRowAnchorTop() {
-        final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
+        final String row = SpreadsheetReferenceKind.RELATIVE.lastRow()
+                .toString();
 
         this.downRowAndCheck(
-                SpreadsheetSelection.parseRowRange("1:" + row),
+                "1:" + row,
                 SpreadsheetViewportSelectionAnchor.TOP,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 row
         );
     }
@@ -673,6 +696,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.downRowAndCheck(
                 "1:" + row,
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "2"
         );
     }
@@ -746,6 +771,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendUpRowAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.TOP,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "2:3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM
         );
@@ -756,6 +783,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendUpRowAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "2:3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM
         );
@@ -766,6 +795,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendDownRowAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.TOP,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "3:4",
                 SpreadsheetViewportSelectionAnchor.TOP
         );
@@ -776,6 +807,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendDownRowAndCheck(
                 "3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "3:4",
                 SpreadsheetViewportSelectionAnchor.TOP
         );
@@ -793,6 +826,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendUpRowAndCheck(
                 "3:4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "2:4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM
         );
@@ -803,6 +838,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendUpRowAndCheck(
                 "3:4",
                 SpreadsheetViewportSelectionAnchor.TOP,
+                "",
+                "",
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE
         );
@@ -816,6 +853,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendUpRowAndCheck(
                 row,
                 anchor,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 row,
                 anchor
         );
@@ -826,6 +865,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendDownRowAndCheck(
                 "3:4",
                 SpreadsheetViewportSelectionAnchor.TOP,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "3:5",
                 SpreadsheetViewportSelectionAnchor.TOP
         );
@@ -836,6 +877,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendDownRowAndCheck(
                 "3:4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "4",
                 SpreadsheetViewportSelectionAnchor.NONE
         );
@@ -847,9 +890,12 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
         this.extendDownRowAndCheck(
                 row.add(-1)
-                        .rowRange(row),
+                        .rowRange(row).toString(),
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
-                row.setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
+                row.toString(),
+                SpreadsheetViewportSelectionAnchor.NONE
         );
     }
 
@@ -860,6 +906,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendLeftColumnAndCheck(
                 range,
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 range,
                 SpreadsheetViewportSelectionAnchor.BOTTOM
         );
@@ -872,6 +920,8 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.extendRightColumnAndCheck(
                 range,
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 range,
                 SpreadsheetViewportSelectionAnchor.BOTTOM
         );
