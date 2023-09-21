@@ -25,10 +25,6 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -1646,7 +1642,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendLeftColumnAndCheck(
                 "D4:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                SpreadsheetSelection.parseColumn("C")::testColumn,
+                this.hiddenColumns("C"),
                 "B4:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
         );
@@ -1658,7 +1654,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 Predicates.never(), // no hidden columns
-                SpreadsheetSelection.parseRow("3")::testRow
+                this.hiddenRows("3")
         );
     }
 
@@ -1668,7 +1664,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 Predicates.never(), // no hidden columns
-                SpreadsheetSelection.parseRow("4")::testRow
+                this.hiddenRows("4")
         );
     }
 
@@ -1777,7 +1773,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendRightColumnAndCheck(
                 "B2:C3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
-                SpreadsheetSelection.parseColumn("D")::testColumn,
+                this.hiddenColumns("D"),
                 "B2:E3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
@@ -1789,7 +1785,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 Predicates.never(), // no hidden columns
-                SpreadsheetSelection.parseRow("3")::testRow
+                this.hiddenRows("3")
         );
     }
 
@@ -1799,7 +1795,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 "C3:D4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
                 Predicates.never(), // no hidden columns
-                SpreadsheetSelection.parseRow("4")::testRow
+                this.hiddenRows("4")
         );
     }
 
@@ -1885,7 +1881,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendUpRowAndCheck(
                 "D4:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                SpreadsheetSelection.parseRow("3")::testRow,
+                this.hiddenRows("3"),
                 "D2:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
         );
@@ -1896,7 +1892,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendUpRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                SpreadsheetSelection.parseColumn("B")::testColumn,
+                this.hiddenColumns("B"),
                 Predicates.never() // no hidden row
         );
     }
@@ -1906,7 +1902,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendUpRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                SpreadsheetSelection.parseColumn("C")::testColumn,
+                this.hiddenColumns("C"),
                 Predicates.never() // no hidden row
         );
     }
@@ -2002,7 +1998,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendDownRowAndCheck(
                 "B2:C3",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT,
-                SpreadsheetSelection.parseRow("4")::testRow,
+                this.hiddenRows("4"),
                 "B2:C5",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
@@ -2013,7 +2009,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendDownRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                SpreadsheetSelection.parseColumn("B")::testColumn,
+                this.hiddenColumns("B"),
                 Predicates.never() // no hidden row
         );
     }
@@ -2023,7 +2019,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendDownRowAndCheck(
                 "B3:C3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                SpreadsheetSelection.parseColumn("C")::testColumn,
+                this.hiddenColumns("C"),
                 Predicates.never() // no hidden rows
         );
     }
