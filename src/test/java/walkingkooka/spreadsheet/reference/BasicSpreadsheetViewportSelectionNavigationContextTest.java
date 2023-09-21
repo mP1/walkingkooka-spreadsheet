@@ -232,7 +232,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                                     final String column) {
         this.leftColumnAndCheck(
                 BasicSpreadsheetViewportSelectionNavigationContext.with(
-                        columnHidden(columnHidden),
+                        hiddenColumns(columnHidden),
                         COLUMN_TO_WIDTH,
                         Predicates.fake(),
                         ROW_TO_HEIGHT
@@ -246,7 +246,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                                     final String expected) {
         this.leftColumnAndCheck(
                 BasicSpreadsheetViewportSelectionNavigationContext.with(
-                        columnHidden(columnHidden),
+                        hiddenColumns(columnHidden),
                         COLUMN_TO_WIDTH,
                         Predicates.fake(),
                         ROW_TO_HEIGHT
@@ -331,7 +331,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                                      final String column) {
         this.rightColumnAndCheck(
                 BasicSpreadsheetViewportSelectionNavigationContext.with(
-                        columnHidden(columnHidden),
+                        hiddenColumns(columnHidden),
                         COLUMN_TO_WIDTH,
                         Predicates.fake(),
                         ROW_TO_HEIGHT
@@ -345,7 +345,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                                      final String expected) {
         this.rightColumnAndCheck(
                 BasicSpreadsheetViewportSelectionNavigationContext.with(
-                        columnHidden(columnHidden),
+                        hiddenColumns(columnHidden),
                         COLUMN_TO_WIDTH,
                         Predicates.fake(),
                         ROW_TO_HEIGHT
@@ -442,7 +442,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                 BasicSpreadsheetViewportSelectionNavigationContext.with(
                         Predicates.fake(),
                         COLUMN_TO_WIDTH,
-                        this.rowHidden(rowHidden),
+                        this.hiddenRows(rowHidden),
                         ROW_TO_HEIGHT
                 ),
                 row
@@ -456,7 +456,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                 BasicSpreadsheetViewportSelectionNavigationContext.with(
                         Predicates.fake(),
                         COLUMN_TO_WIDTH,
-                        this.rowHidden(rowHidden),
+                        this.hiddenRows(rowHidden),
                         ROW_TO_HEIGHT
                 ),
                 row,
@@ -541,7 +541,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                 BasicSpreadsheetViewportSelectionNavigationContext.with(
                         Predicates.fake(),
                         COLUMN_TO_WIDTH,
-                        rowHidden(rowHidden),
+                        hiddenRows(rowHidden),
                         ROW_TO_HEIGHT
                 ),
                 row
@@ -662,7 +662,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         this.leftPixelsAndCheck(
                 SpreadsheetSelection.parseColumn(start),
                 pixels,
-                this.columnHidden(columnsHidden),
+                this.hiddenColumns(columnsHidden),
                 this.columnToWidth(columnWidths),
                 expected.map(SpreadsheetSelection::parseColumn)
         );
@@ -808,7 +808,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         this.rightPixelsAndCheck(
                 SpreadsheetSelection.parseColumn(start),
                 pixels,
-                this.columnHidden(columnsHidden),
+                this.hiddenColumns(columnsHidden),
                 this.columnToWidth(columnWidths),
                 expected.map(SpreadsheetSelection::parseColumn)
         );
@@ -946,7 +946,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         this.upPixelsAndCheck(
                 SpreadsheetSelection.parseRow(start),
                 pixels,
-                this.rowHidden(rowsHidden),
+                this.hiddenRows(rowsHidden),
                 this.rowToHeight(rowHeights),
                 expected.map(SpreadsheetSelection::parseRow)
         );
@@ -1064,7 +1064,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
                 BasicSpreadsheetViewportSelectionNavigationContext.with(
                         Predicates.fake(),
                         COLUMN_TO_WIDTH,
-                        rowHidden(rowHidden),
+                        hiddenRows(rowHidden),
                         ROW_TO_HEIGHT
                 ),
                 row,
@@ -1107,7 +1107,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
         this.downPixelsAndCheck(
                 SpreadsheetSelection.parseRow(start),
                 pixels,
-                this.rowHidden(rowsHidden),
+                this.hiddenRows(rowsHidden),
                 this.rowToHeight(rowHeights),
                 expected.map(SpreadsheetSelection::parseRow)
         );
@@ -1133,14 +1133,14 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
 
     // helpers.........................................................................................................
 
-    private Predicate<SpreadsheetColumnReference> columnHidden(final String columns) {
+    private Predicate<SpreadsheetColumnReference> hiddenColumns(final String columns) {
         return hiddenPredicate(
                 columns,
                 SpreadsheetSelection::parseColumn
         );
     }
 
-    private Predicate<SpreadsheetRowReference> rowHidden(final String rows) {
+    private Predicate<SpreadsheetRowReference> hiddenRows(final String rows) {
         return hiddenPredicate(
                 rows,
                 SpreadsheetSelection::parseRow
