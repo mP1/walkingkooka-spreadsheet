@@ -29,6 +29,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -1403,16 +1404,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // helpers..........................................................................................................
-
-    private final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> {
-        throw new UnsupportedOperationException();
-    };
-
-    private final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> {
-        throw new UnsupportedOperationException();
-    };
-
     // extendRange......................................................................................................
 
     final void extendRangeAndCheck(final String selection,
@@ -2137,6 +2128,38 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendDownRow"
         );
+    }
+
+    // helpers..........................................................................................................
+
+    final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    final Predicate<SpreadsheetColumnReference> hiddenColumns(final String columns) {
+        return hiddenPredicate(
+                columns,
+                SpreadsheetSelection::parseColumn
+        );
+    }
+
+    final Predicate<SpreadsheetRowReference> hiddenRows(final String rows) {
+        return hiddenPredicate(
+                rows,
+                SpreadsheetSelection::parseRow
+        );
+    }
+
+    private static <T extends SpreadsheetColumnOrRowReference> Predicate<T> hiddenPredicate(final String columnOrRows,
+                                                                                            final Function<String, T> parser) {
+        return (columnOrRow) -> CharacterConstant.COMMA.parse(
+                columnOrRows,
+                parser
+        ).contains(columnOrRow);
     }
 
     // focused.........................................................................................................
