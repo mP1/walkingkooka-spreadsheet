@@ -610,7 +610,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testUpFirstRowAnchorTop() {
+    public void testUpRowFirstAnchorTop() {
         this.upRowAndCheck(
                 "1:3",
                 SpreadsheetViewportSelectionAnchor.TOP,
@@ -621,7 +621,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testUpFirstRowAnchorBottom() {
+    public void testUpRowFirstAnchorBottom() {
         this.upRowAndCheck(
                 "1:2",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
@@ -654,7 +654,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownFirstRowAnchorTop() {
+    public void testDownRowFirstAnchorTop() {
         this.downRowAndCheck(
                 "1:3",
                 SpreadsheetViewportSelectionAnchor.TOP,
@@ -665,7 +665,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownFirstRowAnchorBottom() {
+    public void testDownRowFirstAnchorBottom() {
         this.downRowAndCheck(
                 "1:3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM,
@@ -676,7 +676,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownLastRowAnchorTop() {
+    public void testDownRowLastAnchorTop() {
         final String row = SpreadsheetReferenceKind.RELATIVE.lastRow()
                 .toString();
 
@@ -690,7 +690,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownLastRowAnchorBottom() {
+    public void testDownRowLastAnchorBottom() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.downRowAndCheck(
