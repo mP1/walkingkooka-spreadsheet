@@ -24,6 +24,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -732,6 +734,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testLeftColumn() {
         this.leftColumnAndCheck(
                 "B",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "A"
         );
     }
@@ -740,6 +745,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testLeftColumnFirst() {
         this.leftColumnAndCheck(
                 "A",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "A"
         );
     }
@@ -750,7 +758,12 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
         this.leftColumnAndCheck(
                 column,
-                column.add(-1)
+                SpreadsheetViewportSelectionAnchor.NONE,
+                NO_HIDDEN_COLUMNS_PREDICATE,
+                NO_HIDDEN_ROWS_PREDICATE,
+                Optional.of(
+                        column.add(-1)
+                )
         );
     }
 
@@ -758,8 +771,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testLeftColumnSkipsHidden() {
         this.leftColumnAndCheck(
                 "D",
-                SpreadsheetSelection.parseColumn("C")::testColumn,
-                Predicates.never(), // no hidden rows
+                SpreadsheetViewportSelectionAnchor.NONE,
+                "C",
+                NO_HIDDEN_ROWS,
                 "B"
         );
     }
@@ -768,7 +782,10 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testUpRowHidden() {
         this.upRowAndCheck(
                 "C",
-                SpreadsheetSelection.parseColumn("C")::testColumn
+                SpreadsheetViewportSelectionAnchor.NONE,
+                "C",
+                NO_HIDDEN_ROWS,
+                ""
         );
     }
 
@@ -776,6 +793,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testUpRow() {
         this.upRowAndCheck(
                 "B",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B"
         );
     }
@@ -784,6 +804,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testRightColumn() {
         this.rightColumnAndCheck(
                 "B",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "C"
         );
     }
@@ -792,16 +815,23 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testRightColumnFirst() {
         this.rightColumnAndCheck(
                 "A",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B"
         );
     }
 
     @Test
     public void testRightColumnLast() {
-        final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+        final String column = SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                .toString();
 
         this.rightColumnAndCheck(
                 column,
+                SpreadsheetViewportSelectionAnchor.NONE,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 column
         );
     }
@@ -810,8 +840,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testRightColumnSkipsHidden() {
         this.rightColumnAndCheck(
                 "B",
-                SpreadsheetSelection.parseColumn("C")::testColumn,
-                Predicates.never(), // no hidden rows
+                SpreadsheetViewportSelectionAnchor.NONE,
+                "C",
+                NO_HIDDEN_ROWS,
                 "D"
         );
     }
@@ -820,6 +851,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testDownRow() {
         this.downRowAndCheck(
                 "B",
+                SpreadsheetViewportSelectionAnchor.NONE,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B"
         );
     }
@@ -828,8 +862,10 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testDownRowHidden() {
         this.downRowAndCheck(
                 "C",
-                SpreadsheetSelection.parseColumn("C")::testColumn,
-                Predicates.never() // no hidden rows
+                SpreadsheetViewportSelectionAnchor.NONE,
+                "C",
+                NO_HIDDEN_ROWS,
+                ""
         );
     }
 
@@ -872,7 +908,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testExtendLeftColumn() {
         this.extendLeftColumnAndCheck(
                 "C",
-                SpreadsheetViewportSelectionAnchor.NONE,
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B:C",
                 SpreadsheetViewportSelectionAnchor.RIGHT
         );
@@ -884,7 +922,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
         this.extendLeftColumnAndCheck(
                 column,
-                column
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
+                column,
+                SpreadsheetViewportSelectionAnchor.COLUMN
         );
     }
 
@@ -892,8 +934,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testExtendLeftColumnSkipsHidden() {
         this.extendLeftColumnAndCheck(
                 "D",
-                SpreadsheetViewportSelectionAnchor.NONE,
-                SpreadsheetSelection.parseColumn("C")::testColumn,
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                "C",
+                NO_HIDDEN_ROWS,
                 "B:D",
                 SpreadsheetViewportSelectionAnchor.RIGHT
         );
@@ -904,6 +947,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.extendRightColumnAndCheck(
                 "C",
                 SpreadsheetViewportSelectionAnchor.NONE,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.LEFT
         );
@@ -911,11 +956,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testExtendRightColumnLast() {
-        final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+        final String column = SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                .toString();
 
         this.extendRightColumnAndCheck(
                 column,
-                column
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
+                column,
+                SpreadsheetViewportSelectionAnchor.COLUMN
         );
     }
 
@@ -924,7 +974,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.extendRightColumnAndCheck(
                 "B",
                 SpreadsheetViewportSelectionAnchor.NONE,
-                SpreadsheetSelection.parseColumn("C")::testColumn,
+                "C",
+                NO_HIDDEN_ROWS,
                 "B:D",
                 SpreadsheetViewportSelectionAnchor.LEFT
         );
@@ -936,7 +987,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
         this.extendUpRowAndCheck(
                 column,
-                column
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
+                column,
+                SpreadsheetViewportSelectionAnchor.COLUMN
         );
     }
 
@@ -944,8 +999,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testExtendUpRowColumnHidden() {
         this.extendUpRowAndCheck(
                 "C",
-                SpreadsheetViewportSelectionAnchor.NONE,
-                SpreadsheetSelection.parseColumn("C")::testColumn
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                "C",
+                NO_HIDDEN_ROWS,
+                "",
+                SpreadsheetViewportSelectionAnchor.NONE
         );
     }
 
@@ -955,7 +1013,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
         this.extendDownRowAndCheck(
                 column,
-                column
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
+                column,
+                SpreadsheetViewportSelectionAnchor.COLUMN
         );
     }
 
@@ -963,9 +1025,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testExtendDownRowHiddenColumn() {
         this.extendDownRowAndCheck(
                 "C",
-                SpreadsheetViewportSelectionAnchor.NONE,
-                SpreadsheetSelection.parseColumn("C")::testColumn,
-                Predicates.never() // no hidden rows
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                "C",
+                NO_HIDDEN_ROWS,
+                "",
+                SpreadsheetViewportSelectionAnchor.NONE
         );
     }
 

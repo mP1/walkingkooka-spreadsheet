@@ -22,8 +22,6 @@ import walkingkooka.collect.Range;
 import walkingkooka.collect.RangeBound;
 import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -561,6 +559,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.leftColumnAndCheck(
                 "B:C",
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B"
         );
     }
@@ -570,6 +570,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.leftColumnAndCheck(
                 "B:C",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "A"
         );
     }
@@ -579,6 +581,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.leftColumnAndCheck(
                 "A:C",
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B"
         );
     }
@@ -588,6 +592,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.leftColumnAndCheck(
                 "A:C",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "A"
         );
     }
@@ -597,8 +603,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.leftColumnAndCheck(
                 "D:E",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
-                SpreadsheetSelection.parseColumn("C")::testColumn,
-                Predicates.never(), // no hidden rows
+                "C",
+                "",
                 "B"
         );
     }
@@ -610,6 +616,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.upRowAndCheck(
                 range,
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 range
         );
     }
@@ -618,8 +626,10 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testUpRowHiddenColumn() {
         this.upRowAndCheck(
                 "C:D",
-                SpreadsheetSelection.parseColumn("C")::testColumn,
-                Predicates.never() // no hidden rows
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                "C",
+                NO_HIDDEN_ROWS,
+                ""
         );
     }
 
@@ -628,6 +638,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.rightColumnAndCheck(
                 "B:C",
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "D"
         );
     }
@@ -637,6 +649,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.rightColumnAndCheck(
                 "B:C",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "C"
         );
     }
@@ -646,6 +660,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.rightColumnAndCheck(
                 "A:C",
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "D"
         );
     }
@@ -655,6 +671,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.rightColumnAndCheck(
                 "A:C",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B"
         );
     }
@@ -664,8 +682,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.rightColumnAndCheck(
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.LEFT,
-                SpreadsheetSelection.parseColumn("E")::testColumn,
-                Predicates.never(),
+                "E",
+                NO_HIDDEN_ROWS,
                 "F"
         );
     }
@@ -677,6 +695,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.downRowAndCheck(
                 range,
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 range
         );
     }
@@ -685,8 +705,10 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testDownRowHiddenColumn() {
         this.downRowAndCheck(
                 "C:D",
-                SpreadsheetSelection.parseColumn("C")::testColumn,
-                Predicates.never() // no hidden rows
+                SpreadsheetViewportSelectionAnchor.COLUMN,
+                "C",
+                NO_HIDDEN_ROWS,
+                ""
         );
     }
 
@@ -766,6 +788,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendLeftColumnAndCheck(
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B:D",
                 SpreadsheetViewportSelectionAnchor.RIGHT
         );
@@ -776,6 +800,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendLeftColumnAndCheck(
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "C",
                 SpreadsheetViewportSelectionAnchor.NONE
         );
@@ -788,6 +814,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendLeftColumnAndCheck(
                 range,
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 range,
                 SpreadsheetViewportSelectionAnchor.RIGHT
         );
@@ -798,6 +826,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendRightColumnAndCheck(
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "C:E",
                 SpreadsheetViewportSelectionAnchor.LEFT
         );
@@ -808,6 +838,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendRightColumnAndCheck(
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "D",
                 SpreadsheetViewportSelectionAnchor.NONE
         );
@@ -818,9 +850,12 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.extendRightColumnAndCheck(
-                column.add(-1).columnRange(column),
+                column.add(-1).columnRange(column).toString(),
                 SpreadsheetViewportSelectionAnchor.RIGHT,
-                column.setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
+                column.toString(),
+                SpreadsheetViewportSelectionAnchor.NONE
         );
     }
 
@@ -829,6 +864,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendLeftColumnAndCheck(
                 "C",
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B:C",
                 SpreadsheetViewportSelectionAnchor.RIGHT
         );
@@ -839,6 +876,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendLeftColumnAndCheck(
                 "C",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "B:C",
                 SpreadsheetViewportSelectionAnchor.RIGHT
         );
@@ -849,6 +888,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendRightColumnAndCheck(
                 "C",
                 SpreadsheetViewportSelectionAnchor.LEFT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.LEFT
         );
@@ -859,6 +900,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendRightColumnAndCheck(
                 "C",
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 "C:D",
                 SpreadsheetViewportSelectionAnchor.LEFT
         );
@@ -871,6 +914,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendUpRowAndCheck(
                 row,
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 row,
                 SpreadsheetViewportSelectionAnchor.RIGHT
         );
@@ -883,6 +928,8 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         this.extendDownRowAndCheck(
                 row,
                 SpreadsheetViewportSelectionAnchor.RIGHT,
+                NO_HIDDEN_COLUMNS,
+                NO_HIDDEN_ROWS,
                 row,
                 SpreadsheetViewportSelectionAnchor.RIGHT
         );
