@@ -704,7 +704,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testUpRowSkipsHidden() {
         this.upRowAndCheck(
                 "4",
-                SpreadsheetSelection.parseRow("3")::testRow,
+                this.hiddenRows("3"),
                 "2"
         );
     }
@@ -768,7 +768,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testDownRowSkipsHidden() {
         this.downRowAndCheck(
                 "2",
-                SpreadsheetSelection.parseRow("3")::testRow,
+                this.hiddenRows("3"),
                 "4"
         );
     }
@@ -843,7 +843,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.extendUpRowAndCheck(
                 "4",
                 SpreadsheetViewportSelectionAnchor.NONE,
-                SpreadsheetSelection.parseRow("3")::testRow,
+                this.hiddenRows("3"),
                 "2:4",
                 SpreadsheetViewportSelectionAnchor.BOTTOM
         );
@@ -875,7 +875,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 "2",
                 SpreadsheetViewportSelectionAnchor.NONE,
                 Predicates.never(), // no hidden columns
-                SpreadsheetSelection.parseRow("3")::testRow,
+                this.hiddenRows("3"),
                 "2:4",
                 SpreadsheetViewportSelectionAnchor.TOP
         );
@@ -897,7 +897,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
                 Predicates.never(), // no hidden columns
-                SpreadsheetSelection.parseRow("3")::testRow
+                this.hiddenRows("3")
         );
     }
 
@@ -917,7 +917,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 "3",
                 SpreadsheetViewportSelectionAnchor.NONE,
                 Predicates.never(), // no hidden columns
-                SpreadsheetSelection.parseRow("3")::testRow
+                this.hiddenRows("3")
         );
     }
 

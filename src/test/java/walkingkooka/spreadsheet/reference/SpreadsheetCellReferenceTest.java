@@ -1102,7 +1102,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testLeftColumnSkipsHidden() {
         this.leftColumnAndCheck(
                 "D1",
-                SpreadsheetSelection.parseColumn("C")::testColumn,
+                this.hiddenColumns("C"),
                 Predicates.never(), // NO hidden rows
                 "B1"
         );
@@ -1113,7 +1113,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.leftColumnAndCheck(
                 "D1",
                 Predicates.never(), // no hidden columns
-                SpreadsheetSelection.parseRow("1")::testRow
+                this.hiddenRows("1")
         );
     }
 
@@ -1147,7 +1147,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testUpRowSkipsHidden() {
         this.upRowAndCheck(
                 "B4",
-                SpreadsheetSelection.parseRow("3")::testRow,
+                this.hiddenRows("3"),
                 "B2"
         );
     }
@@ -1156,7 +1156,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testUpRowIgnoresHiddenColumn() {
         this.upRowAndCheck(
                 "B2",
-                SpreadsheetSelection.parseColumn("B")::testColumn
+                this.hiddenColumns("B")
         );
     }
 
@@ -1190,7 +1190,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testRightColumnSkipsHidden() {
         this.rightColumnAndCheck(
                 "B1",
-                SpreadsheetSelection.parseColumn("C")::testColumn,
+                this.hiddenColumns("C"),
                 Predicates.never(), // No hidden rows
                 "D1"
         );
@@ -1201,7 +1201,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.rightColumnAndCheck(
                 "D1",
                 Predicates.never(), // no hidden columns
-                SpreadsheetSelection.parseRow("1")::testRow
+                this.hiddenRows("1")
         );
     }
 
@@ -1235,7 +1235,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testDownRowSkipsHidden() {
         this.downRowAndCheck(
                 "B2",
-                SpreadsheetSelection.parseRow("3")::testRow,
+                this.hiddenRows("3"),
                 "B4"
         );
     }
@@ -1244,7 +1244,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testDownRowIgnoresHiddenColumn() {
         this.downRowAndCheck(
                 "B2",
-                SpreadsheetSelection.parseColumn("B")::testColumn,
+                this.hiddenColumns("B"),
                 Predicates.never() // no hidden rows
         );
     }
