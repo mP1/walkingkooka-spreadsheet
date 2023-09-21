@@ -37,6 +37,7 @@ import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -368,7 +369,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     @Override
     Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
-        return this.leftOrRight(
+        return this.leftOrRightColumn(
                 context,
                 context::leftColumn
         );
@@ -377,14 +378,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     @Override
     Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                                final SpreadsheetViewportSelectionNavigationContext context) {
-        return this.leftOrRight(
+        return this.leftOrRightColumn(
                 context,
                 context::rightColumn
         );
     }
 
-    private Optional<SpreadsheetSelection> leftOrRight(final SpreadsheetViewportSelectionNavigationContext context,
-                                                       final Function<SpreadsheetColumnReference, Optional<SpreadsheetColumnReference>> leftOrRight) {
+    private Optional<SpreadsheetSelection> leftOrRightColumn(final SpreadsheetViewportSelectionNavigationContext context,
+                                                             final Function<SpreadsheetColumnReference, Optional<SpreadsheetColumnReference>> leftOrRight) {
         final SpreadsheetRowReference row = this.row();
 
         return context.isRowHidden(row) ?
@@ -394,9 +395,42 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
+    Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                              final int count,
+                                              final SpreadsheetViewportSelectionNavigationContext context) {
+        return this.leftOrRightPixels(
+                context,
+                count,
+                context::leftPixels
+        );
+    }
+
+    @Override
+    Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                               final int count,
+                                               final SpreadsheetViewportSelectionNavigationContext context) {
+        return this.leftOrRightPixels(
+                context,
+                count,
+                context::rightPixels
+        );
+    }
+
+    private Optional<SpreadsheetSelection> leftOrRightPixels(final SpreadsheetViewportSelectionNavigationContext context,
+                                                             final int count,
+                                                             final BiFunction<SpreadsheetColumnReference, Integer, Optional<SpreadsheetColumnReference>> leftOrRight) {
+        final SpreadsheetRowReference row = this.row();
+
+        return context.isRowHidden(row) ?
+                Optional.empty() :
+                leftOrRight.apply(this.column(), count)
+                        .map(c -> c.setRow(row));
+    }
+
+    @Override
     Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
                                          final SpreadsheetViewportSelectionNavigationContext context) {
-        return this.upOrDown(
+        return this.upOrDownRow(
                 context,
                 context::upRow
         );
@@ -405,19 +439,52 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     @Override
     Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
                                            final SpreadsheetViewportSelectionNavigationContext context) {
-        return this.upOrDown(
+        return this.upOrDownRow(
                 context,
                 context::downRow
         );
     }
 
-    private Optional<SpreadsheetSelection> upOrDown(final SpreadsheetViewportSelectionNavigationContext context,
-                                                    final Function<SpreadsheetRowReference, Optional<SpreadsheetRowReference>> upOrDown) {
+    private Optional<SpreadsheetSelection> upOrDownRow(final SpreadsheetViewportSelectionNavigationContext context,
+                                                       final Function<SpreadsheetRowReference, Optional<SpreadsheetRowReference>> upOrDown) {
         final SpreadsheetColumnReference column = this.column();
 
         return context.isColumnHidden(column) ?
                 Optional.empty() :
                 upOrDown.apply(this.row())
+                        .map(c -> c.setColumn(column));
+    }
+
+    @Override
+    Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                            final int count,
+                                            final SpreadsheetViewportSelectionNavigationContext context) {
+        return this.upOrDownPixels(
+                context,
+                count,
+                context::upPixels
+        );
+    }
+
+    @Override
+    Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                              final int count,
+                                              final SpreadsheetViewportSelectionNavigationContext context) {
+        return this.upOrDownPixels(
+                context,
+                count,
+                context::downPixels
+        );
+    }
+
+    private Optional<SpreadsheetSelection> upOrDownPixels(final SpreadsheetViewportSelectionNavigationContext context,
+                                                          final int count,
+                                                          final BiFunction<SpreadsheetRowReference, Integer, Optional<SpreadsheetRowReference>> upOrDown) {
+        final SpreadsheetColumnReference column = this.column();
+
+        return context.isColumnHidden(column) ?
+                Optional.empty() :
+                upOrDown.apply(this.row(), count)
                         .map(c -> c.setColumn(column));
     }
 

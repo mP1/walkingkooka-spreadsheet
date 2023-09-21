@@ -36,6 +36,7 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -631,6 +632,52 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // leftPixels.......................................................................................................
+
+    final void leftPixelsAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final int count,
+                                  final String hiddenColumns,
+                                  final Map<String, Double> columnWidths,
+                                  final String hiddenRows,
+                                  final Map<String, Double> rowHeights,
+                                  final String expected) {
+        this.leftPixelsAndCheck(
+                this.parseString(selection),
+                anchor,
+                count,
+                this.hiddenColumns(hiddenColumns),
+                this.columnToWidth(columnWidths),
+                this.hiddenRows(hiddenRows),
+                this.rowToHeight(rowHeights),
+                this.parseStringOrEmpty(expected)
+        );
+    }
+
+    final void leftPixelsAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final int count,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows,
+                                  final Function<SpreadsheetRowReference, Double> rowHeight,
+                                  final Optional<SpreadsheetSelection> expected) {
+        this.checkEquals(
+                expected.map(SpreadsheetSelection::simplify),
+                selection.leftPixels(
+                        anchor,
+                        count,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                columnWidths,
+                                hiddenRows,
+                                rowHeight
+                        )
+                ),
+                () -> selection + " anchor=" + anchor + " navigate " + count + " leftPixels"
+        );
+    }
+
     // upRow............................................................................................................
 
     final void upRowAndCheck(final String selection,
@@ -666,6 +713,53 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 () -> selection + " anchor=" + anchor + " navigate upRow"
         );
     }
+
+    // upPixels.......................................................................................................
+
+    final void upPixelsAndCheck(final String selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final int count,
+                                final String hiddenColumns,
+                                final Map<String, Double> columnWidths,
+                                final String hiddenRows,
+                                final Map<String, Double> rowHeights,
+                                final String expected) {
+        this.upPixelsAndCheck(
+                this.parseString(selection),
+                anchor,
+                count,
+                this.hiddenColumns(hiddenColumns),
+                this.columnToWidth(columnWidths),
+                this.hiddenRows(hiddenRows),
+                this.rowToHeight(rowHeights),
+                this.parseStringOrEmpty(expected)
+        );
+    }
+
+    final void upPixelsAndCheck(final S selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final int count,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
+                                   final Function<SpreadsheetRowReference, Double> rowHeight,
+                                   final Optional<SpreadsheetSelection> expected) {
+        this.checkEquals(
+                expected.map(SpreadsheetSelection::simplify),
+                selection.upPixels(
+                        anchor,
+                        count,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                columnWidths,
+                                hiddenRows,
+                                rowHeight
+                        )
+                ),
+                () -> selection + " anchor=" + anchor + " navigate " + count + " upPixels"
+        );
+    }
+
     // rightColumn.......................................................................................................
 
     final void rightColumnAndCheck(final String selection,
@@ -701,6 +795,53 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 () -> selection + " anchor=" + anchor + " navigate rightColumn"
         );
     }
+
+    // rightPixels.....................................................................................................
+
+    final void rightPixelsAndCheck(final String selection,
+                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final int count,
+                                   final String hiddenColumns,
+                                   final Map<String, Double> columnWidths,
+                                   final String hiddenRows,
+                                   final Map<String, Double> rowHeights,
+                                   final String expected) {
+        this.rightPixelsAndCheck(
+                this.parseString(selection),
+                anchor,
+                count,
+                this.hiddenColumns(hiddenColumns),
+                this.columnToWidth(columnWidths),
+                this.hiddenRows(hiddenRows),
+                this.rowToHeight(rowHeights),
+                this.parseStringOrEmpty(expected)
+        );
+    }
+
+    final void rightPixelsAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final int count,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows,
+                                  final Function<SpreadsheetRowReference, Double> rowHeight,
+                                  final Optional<SpreadsheetSelection> expected) {
+        this.checkEquals(
+                expected.map(SpreadsheetSelection::simplify),
+                selection.rightPixels(
+                        anchor,
+                        count,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                columnWidths,
+                                hiddenRows,
+                                rowHeight
+                        )
+                ),
+                () -> selection + " anchor=" + anchor + " navigate " + count + " rightPixels"
+        );
+    }
+
     // downRow..........................................................................................................
 
     final void downRowAndCheck(final String selection,
@@ -734,6 +875,52 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate downRow"
+        );
+    }
+
+    // downPixels......................................................................................................
+
+    final void downPixelsAndCheck(final String selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final int count,
+                                  final String hiddenColumns,
+                                  final Map<String, Double> columnWidths,
+                                  final String hiddenRows,
+                                  final Map<String, Double> rowHeights,
+                                  final String expected) {
+        this.downPixelsAndCheck(
+                this.parseString(selection),
+                anchor,
+                count,
+                this.hiddenColumns(hiddenColumns),
+                this.columnToWidth(columnWidths),
+                this.hiddenRows(hiddenRows),
+                this.rowToHeight(rowHeights),
+                this.parseStringOrEmpty(expected)
+        );
+    }
+
+    final void downPixelsAndCheck(final S selection,
+                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final int count,
+                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                  final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows,
+                                  final Function<SpreadsheetRowReference, Double> rowHeight,
+                                  final Optional<SpreadsheetSelection> expected) {
+        this.checkEquals(
+                expected.map(SpreadsheetSelection::simplify),
+                selection.downPixels(
+                        anchor,
+                        count,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                columnWidths,
+                                hiddenRows,
+                                rowHeight
+                        )
+                ),
+                () -> selection + " anchor=" + anchor + " navigate " + count + " downPixels"
         );
     }
 
@@ -1019,6 +1206,41 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 columnOrRows,
                 parser
         ).contains(columnOrRow);
+    }
+
+    private Function<SpreadsheetColumnReference, Double> columnToWidth(final Map<String, Double> columnToWidths) {
+        return columnOrRowToWidthOrHeight(
+                columnToWidths,
+                SpreadsheetSelection::parseColumn
+        );
+    }
+
+    private Function<SpreadsheetRowReference, Double> rowToHeight(final Map<String, Double> rowToHeights) {
+        return columnOrRowToWidthOrHeight(
+                rowToHeights,
+                SpreadsheetSelection::parseRow
+        );
+    }
+
+    private <T extends SpreadsheetColumnOrRowReference> Function<T, Double> columnOrRowToWidthOrHeight(final Map<String, Double> columnOrRowToWidthOrHeight,
+                                                                                                       final Function<String, T> parser) {
+        final Map<T, Double> map = columnOrRowToWidthOrHeight.entrySet()
+                .stream()
+                .collect(
+                        Collectors.toMap(
+                                e -> parser.apply(e.getKey()),
+                                e -> e.getValue()
+                        )
+                );
+        return (columnOrRow) -> {
+            final Double length = map.get(columnOrRow);
+            this.checkNotEquals(
+                    null,
+                    length,
+                    () -> "Missing " + columnOrRow + " from " + columnOrRowToWidthOrHeight
+            );
+            return length;
+        };
     }
 
     // focused.........................................................................................................

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.predicate.Predicates;
@@ -28,6 +29,8 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -1130,6 +1133,20 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
+    public void testLeftPixels() {
+        this.leftPixelsAndCheck(
+                "E4",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                "D",
+                Maps.of("B", 50.0, "C", 50.0),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "B4"
+        );
+    }
+
+    @Test
     public void testUpRow() {
         this.upRowAndCheck(
                 "B2",
@@ -1183,6 +1200,20 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 "B",
                 NO_HIDDEN_ROWS,
                 ""
+        );
+    }
+
+    @Test
+    public void testUpPixels() {
+        this.upPixelsAndCheck(
+                "E5",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "4",
+                Map.of("3", 50.0, "2", 50.0),
+                "E2"
         );
     }
 
@@ -1244,6 +1275,20 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
+    public void testRightPixels() {
+        this.rightPixelsAndCheck(
+                "E2",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                "F",
+                Maps.of("E", 5.0, "G", 50.0, "H", 50.0),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "H2"
+        );
+    }
+
+    @Test
     public void testDownRow() {
         this.downRowAndCheck(
                 "B2",
@@ -1286,6 +1331,20 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 NO_HIDDEN_COLUMNS,
                 "3",
                 "B4"
+        );
+    }
+
+    @Test
+    public void testDownPixels() {
+        this.downPixelsAndCheck(
+                "B2",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "3",
+                Maps.of("4", 50.0, "5", 5.0),
+                "B5"
         );
     }
 

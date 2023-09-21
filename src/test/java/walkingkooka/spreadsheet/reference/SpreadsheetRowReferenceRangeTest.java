@@ -21,10 +21,13 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.RangeBound;
 import walkingkooka.collect.iterable.IterableTesting;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -577,6 +580,20 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
+    public void testLeftPixels() {
+        this.rightPixelsAndCheck(
+                "3:4",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "3:4"
+        );
+    }
+
+    @Test
     public void testUpRowAnchorTop() {
         this.upRowAndCheck(
                 "2:3",
@@ -628,6 +645,34 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "1"
+        );
+    }
+
+    @Test
+    public void testUpPixels() {
+        this.upPixelsAndCheck(
+                "4:5",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "3",
+                Map.of("4", 50.0, "2", 50.0),
+                "2"
+        );
+    }
+
+    @Test
+    public void testRightPixels() {
+        this.rightPixelsAndCheck(
+                "3:4",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "3:4"
         );
     }
 
@@ -699,6 +744,20 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "2"
+        );
+    }
+
+    @Test
+    public void testDownPixels() {
+        this.downPixelsAndCheck(
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "4",
+                Map.of("5", 50.0, "6", 50.0),
+                "6"
         );
     }
 

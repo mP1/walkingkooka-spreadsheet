@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -779,6 +780,20 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
+    public void testLeftPixels() {
+        this.leftPixelsAndCheck(
+                "E",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                "C",
+                Maps.of("A", 5.0, "B", 50.0, "D", 50.0),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "B"
+        );
+    }
+
+    @Test
     public void testUpRowHidden() {
         this.upRowAndCheck(
                 "C",
@@ -797,6 +812,20 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "B"
+        );
+    }
+
+    @Test
+    public void testUpPixels() {
+        this.upPixelsAndCheck(
+                "D",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "D"
         );
     }
 
@@ -848,6 +877,20 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
+    public void testRightPixels() {
+        this.rightPixelsAndCheck(
+                "E",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                "F",
+                Maps.of("X", 5.0, "E", 5.0, "G", 50.0, "H", 50.0),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "H"
+        );
+    }
+
+    @Test
     public void testDownRow() {
         this.downRowAndCheck(
                 "B",
@@ -866,6 +909,20 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                 "C",
                 NO_HIDDEN_ROWS,
                 ""
+        );
+    }
+
+    @Test
+    public void testDownPixels() {
+        this.downPixelsAndCheck(
+                "B",
+                SpreadsheetViewportSelectionAnchor.LEFT,
+                50,
+                "",
+                Maps.empty(),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "B"
         );
     }
 
