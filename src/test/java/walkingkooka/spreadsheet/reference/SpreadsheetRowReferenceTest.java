@@ -944,6 +944,21 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
+    public void testExtendUpPixels() {
+        this.extendUpPixelsAndCheck(
+                "6",
+                SpreadsheetViewportSelectionAnchor.ROW,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "5",
+                Maps.of("4", 50.0, "3", 50.0),
+                "3:6",
+                SpreadsheetViewportSelectionAnchor.BOTTOM
+        );
+    }
+
+    @Test
     public void testExtendDownRow() {
         this.extendDownRowAndCheck(
                 "3",
@@ -983,6 +998,21 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
+    public void testExtendDownPixels() {
+        this.extendDownPixelsAndCheck(
+                "2",
+                SpreadsheetViewportSelectionAnchor.ROW,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "3",
+                Maps.of("4", 50.0, "5", 50.0),
+                "2:5",
+                SpreadsheetViewportSelectionAnchor.TOP
+        );
+    }
+
+    @Test
     public void testExtendLeftColumn() {
         final String row = "2";
 
@@ -1004,6 +1034,21 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 NO_HIDDEN_COLUMNS,
                 "3",
                 "",
+                SpreadsheetViewportSelectionAnchor.ROW
+        );
+    }
+
+    @Test
+    public void testExtendLeftPixels() {
+        this.extendLeftPixelsAndCheck(
+                "2",
+                SpreadsheetViewportSelectionAnchor.ROW,
+                50,
+                "",
+                Maps.empty(),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "2",
                 SpreadsheetViewportSelectionAnchor.ROW
         );
     }
@@ -1031,6 +1076,21 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 "3",
                 "",
                 SpreadsheetViewportSelectionAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testExtendRightPixels() {
+        this.extendRightPixelsAndCheck(
+                "2",
+                SpreadsheetViewportSelectionAnchor.ROW,
+                50,
+                "",
+                Maps.empty(),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "2",
+                SpreadsheetViewportSelectionAnchor.ROW
         );
     }
 
