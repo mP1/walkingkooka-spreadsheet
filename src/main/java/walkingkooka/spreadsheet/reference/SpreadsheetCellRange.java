@@ -476,7 +476,12 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                                             final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendColumn(
                 anchor,
-                context::leftColumn,
+                (c) -> Cast.to(
+                        c.leftColumn(
+                                anchor,
+                                context
+                        )
+                ),
                 anchor::setRight,
                 context
         );
@@ -487,7 +492,12 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                                              final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendColumn(
                 anchor,
-                context::rightColumn,
+                (c) -> Cast.to(
+                        c.rightColumn(
+                                anchor,
+                                context
+                        )
+                ),
                 anchor::setLeft,
                 context
         );
@@ -517,22 +527,15 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @Override
-    Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
-                                               final SpreadsheetViewportSelectionAnchor anchor) {
-        return other.map(
-                s -> anchor.fixedCell(this)
-                        .cellRange((SpreadsheetCellReference) s)
-                        .simplify()
-        );
-    }
-
-    @Override
     Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                        final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendRow(
                 anchor,
                 (r) -> Cast.to(
-                        r.upRow(anchor, context)
+                        r.upRow(
+                                anchor,
+                                context
+                        )
                 ),
                 anchor::setBottom,
                 context
@@ -545,7 +548,10 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         return this.extendRow(
                 anchor,
                 (r) -> Cast.to(
-                        r.downRow(anchor, context)
+                        r.downRow(
+                                anchor,
+                                context
+                        )
                 ),
                 anchor::setTop,
                 context
@@ -573,6 +579,16 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                 singleRowAnchor.get() :
                                 anchor
                 ));
+    }
+
+    @Override
+    Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
+                                               final SpreadsheetViewportSelectionAnchor anchor) {
+        return other.map(
+                s -> anchor.fixedCell(this)
+                        .cellRange((SpreadsheetCellReference) s)
+                        .simplify()
+        );
     }
 
     // focused...........................................................................................................
