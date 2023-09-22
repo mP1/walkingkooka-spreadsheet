@@ -920,6 +920,21 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
+    public void testExtendUpPixels() {
+        this.extendUpPixelsAndCheck(
+                "6:7",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "5",
+                Maps.of("4", 50.0, "3", 50.0),
+                "3:7",
+                SpreadsheetViewportSelectionAnchor.BOTTOM
+        );
+    }
+
+    @Test
     public void testExtendDownAnchorTop() {
         this.extendDownRowAndCheck(
                 "3:4",
@@ -959,6 +974,21 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
+    public void testExtendDownPixels() {
+        this.extendDownPixelsAndCheck(
+                "1:2",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "3",
+                Maps.of("4", 50.0, "5", 50.0),
+                "1:5",
+                SpreadsheetViewportSelectionAnchor.TOP
+        );
+    }
+
+    @Test
     public void testExtendLeftColumn() {
         final String range = "2:3";
 
@@ -968,6 +998,21 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 range,
+                SpreadsheetViewportSelectionAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testExtendLeftPixels() {
+        this.extendLeftPixelsAndCheck(
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                50,
+                "",
+                Maps.empty(),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "2:3",
                 SpreadsheetViewportSelectionAnchor.BOTTOM
         );
     }
@@ -983,6 +1028,21 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                 NO_HIDDEN_ROWS,
                 range,
                 SpreadsheetViewportSelectionAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testExtendRightPixels() {
+        this.extendRightPixelsAndCheck(
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.TOP,
+                50,
+                "",
+                Maps.empty(),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "2:3",
+                SpreadsheetViewportSelectionAnchor.TOP
         );
     }
 

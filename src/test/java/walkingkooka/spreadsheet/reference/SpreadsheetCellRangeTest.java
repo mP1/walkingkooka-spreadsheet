@@ -1759,6 +1759,23 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    // extendLeftPixels.................................................................................................
+
+    @Test
+    public void testExtendLeftPixels() {
+        this.extendLeftPixelsAndCheck(
+                "E5:F5",
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                50,
+                "D",
+                Maps.of("C", 50.0, "B", 50.0),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "B5:F5",
+                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+        );
+    }
+
     // extendRight......................................................................................................
 
     @Test
@@ -1911,7 +1928,24 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    // extendUp.......................................................................................................
+    // extendRightPixels...............................................................................................
+
+    @Test
+    public void testExtendRightPixels() {
+        this.extendRightPixelsAndCheck(
+                "A2:B2",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                50,
+                "C",
+                Maps.of("D", 50.0, "E", 50.0),
+                NO_HIDDEN_ROWS,
+                Maps.empty(),
+                "A2:E2",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+        );
+    }
+
+    // extendUpRow....................................................................................................
 
     @Test
     public void testExtendUpRowAnchorTopLeft() {
@@ -2033,6 +2067,23 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 NO_HIDDEN_ROWS,
                 "",
                 SpreadsheetViewportSelectionAnchor.NONE
+        );
+    }
+
+    // extendUpPixel...................................................................................................
+
+    @Test
+    public void testExtendUpPixels() {
+        this.extendUpPixelsAndCheck(
+                "E6:F6",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "5",
+                Maps.of("4", 50.0, "3", 50.0),
+                "E3:F6",
+                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
         );
     }
 
@@ -2169,6 +2220,23 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 NO_HIDDEN_ROWS,
                 "",
                 SpreadsheetViewportSelectionAnchor.NONE
+        );
+    }
+
+    // extendDownPixels.................................................................................................
+
+    @Test
+    public void testExtendDownPixels() {
+        this.extendDownPixelsAndCheck(
+                "B2:C2",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                50,
+                NO_HIDDEN_COLUMNS,
+                Maps.empty(),
+                "3",
+                Maps.of("4", 50.0, "5", 50.0),
+                "B2:C5",
+                SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
     }
 

@@ -1042,6 +1042,55 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // extendLeftPixels.................................................................................................
+
+    final void extendLeftPixelsAndCheck(final String selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final int count,
+                                        final String hiddenColumns,
+                                        final Map<String, Double> columnWidths,
+                                        final String hiddenRows,
+                                        final Map<String, Double> rowHeights,
+                                        final String expectedSelection,
+                                        final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendLeftPixelsAndCheck(
+                this.parseString(selection),
+                anchor,
+                count,
+                this.hiddenColumns(hiddenColumns),
+                this.columnToWidth(columnWidths),
+                this.hiddenRows(hiddenRows),
+                this.rowToHeight(rowHeights),
+                this.parseStringOrEmpty(expectedSelection).map(
+                        s -> s.setAnchor(expectedAnchor)
+                )
+        );
+    }
+
+    final void extendLeftPixelsAndCheck(final S selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final int count,
+                                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                        final Function<SpreadsheetColumnReference, Double> columnToWidths,
+                                        final Predicate<SpreadsheetRowReference> hiddenRows,
+                                        final Function<SpreadsheetRowReference, Double> rowToHeights,
+                                        final Optional<SpreadsheetViewportSelection> expected) {
+        this.checkEquals(
+                expected,
+                selection.extendLeftPixels(
+                        anchor,
+                        count,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                columnToWidths,
+                                hiddenRows,
+                                rowToHeights
+                        )
+                ),
+                () -> selection + " anchor=" + anchor + " navigate extendLeftPixels"
+        );
+    }
+
     // extendUpRow......................................................................................................
 
     final void extendUpRowAndCheck(final String selection,
@@ -1079,6 +1128,55 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendUpRow"
+        );
+    }
+
+    // extendUpPixels..................................................................................................
+
+    final void extendUpPixelsAndCheck(final String selection,
+                                      final SpreadsheetViewportSelectionAnchor anchor,
+                                      final int count,
+                                      final String hiddenColumns,
+                                      final Map<String, Double> columnWidths,
+                                      final String hiddenRows,
+                                      final Map<String, Double> rowHeights,
+                                      final String expectedSelection,
+                                      final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendUpPixelsAndCheck(
+                this.parseString(selection),
+                anchor,
+                count,
+                this.hiddenColumns(hiddenColumns),
+                this.columnToWidth(columnWidths),
+                this.hiddenRows(hiddenRows),
+                this.rowToHeight(rowHeights),
+                this.parseStringOrEmpty(expectedSelection).map(
+                        s -> s.setAnchor(expectedAnchor)
+                )
+        );
+    }
+
+    final void extendUpPixelsAndCheck(final S selection,
+                                      final SpreadsheetViewportSelectionAnchor anchor,
+                                      final int count,
+                                      final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                      final Function<SpreadsheetColumnReference, Double> columnToWidths,
+                                      final Predicate<SpreadsheetRowReference> hiddenRows,
+                                      final Function<SpreadsheetRowReference, Double> rowToHeights,
+                                      final Optional<SpreadsheetViewportSelection> expected) {
+        this.checkEquals(
+                expected,
+                selection.extendUpPixels(
+                        anchor,
+                        count,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                columnToWidths,
+                                hiddenRows,
+                                rowToHeights
+                        )
+                ),
+                () -> selection + " anchor=" + anchor + " navigate extendUpPixels"
         );
     }
 
@@ -1121,6 +1219,55 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // extendRightPixels.................................................................................................
+
+    final void extendRightPixelsAndCheck(final String selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final int count,
+                                         final String hiddenColumns,
+                                         final Map<String, Double> columnWidths,
+                                         final String hiddenRows,
+                                         final Map<String, Double> rowHeights,
+                                         final String expectedSelection,
+                                         final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendRightPixelsAndCheck(
+                this.parseString(selection),
+                anchor,
+                count,
+                this.hiddenColumns(hiddenColumns),
+                this.columnToWidth(columnWidths),
+                this.hiddenRows(hiddenRows),
+                this.rowToHeight(rowHeights),
+                this.parseStringOrEmpty(expectedSelection).map(
+                        s -> s.setAnchor(expectedAnchor)
+                )
+        );
+    }
+
+    final void extendRightPixelsAndCheck(final S selection,
+                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                         final int count,
+                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                         final Function<SpreadsheetColumnReference, Double> columnToWidths,
+                                         final Predicate<SpreadsheetRowReference> hiddenRows,
+                                         final Function<SpreadsheetRowReference, Double> rowToHeights,
+                                         final Optional<SpreadsheetViewportSelection> expected) {
+        this.checkEquals(
+                expected,
+                selection.extendRightPixels(
+                        anchor,
+                        count,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                columnToWidths,
+                                hiddenRows,
+                                rowToHeights
+                        )
+                ),
+                () -> selection + " anchor=" + anchor + " navigate extendRightPixels"
+        );
+    }
+
     // extendDownRow...................................................................................................
 
     final void extendDownRowAndCheck(final String selection,
@@ -1157,6 +1304,55 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendDownRow"
+        );
+    }
+
+    // extendDownPixels.................................................................................................
+
+    final void extendDownPixelsAndCheck(final String selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final int count,
+                                        final String hiddenColumns,
+                                        final Map<String, Double> columnWidths,
+                                        final String hiddenRows,
+                                        final Map<String, Double> rowHeights,
+                                        final String expectedSelection,
+                                        final SpreadsheetViewportSelectionAnchor expectedAnchor) {
+        this.extendDownPixelsAndCheck(
+                this.parseString(selection),
+                anchor,
+                count,
+                this.hiddenColumns(hiddenColumns),
+                this.columnToWidth(columnWidths),
+                this.hiddenRows(hiddenRows),
+                this.rowToHeight(rowHeights),
+                this.parseStringOrEmpty(expectedSelection).map(
+                        s -> s.setAnchor(expectedAnchor)
+                )
+        );
+    }
+
+    final void extendDownPixelsAndCheck(final S selection,
+                                        final SpreadsheetViewportSelectionAnchor anchor,
+                                        final int count,
+                                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                        final Function<SpreadsheetColumnReference, Double> columnToWidths,
+                                        final Predicate<SpreadsheetRowReference> hiddenRows,
+                                        final Function<SpreadsheetRowReference, Double> rowToHeights,
+                                        final Optional<SpreadsheetViewportSelection> expected) {
+        this.checkEquals(
+                expected,
+                selection.extendDownPixels(
+                        anchor,
+                        count,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                columnToWidths,
+                                hiddenRows,
+                                rowToHeights
+                        )
+                ),
+                () -> selection + " anchor=" + anchor + " navigate extendDownPixels"
         );
     }
 

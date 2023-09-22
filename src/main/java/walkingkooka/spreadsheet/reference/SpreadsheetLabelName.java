@@ -302,8 +302,22 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
+    Optional<SpreadsheetViewportSelection> extendLeftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                            final int count,
+                                                            final SpreadsheetViewportSelectionNavigationContext contexte) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                        final SpreadsheetViewportSelectionNavigationContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    Optional<SpreadsheetViewportSelection> extendUpPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                          final int count,
+                                                          final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
@@ -314,8 +328,22 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
+    Optional<SpreadsheetViewportSelection> extendRightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final int count,
+                                                             final SpreadsheetViewportSelectionNavigationContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     Optional<SpreadsheetViewportSelection> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                          final SpreadsheetViewportSelectionNavigationContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    Optional<SpreadsheetViewportSelection> extendDownPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                            final int count,
+                                                            final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 

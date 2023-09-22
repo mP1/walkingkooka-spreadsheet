@@ -924,14 +924,30 @@ public abstract class SpreadsheetSelection implements HasText,
     abstract Optional<SpreadsheetViewportSelection> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                                                      final SpreadsheetViewportSelectionNavigationContext context);
 
+    abstract Optional<SpreadsheetViewportSelection> extendLeftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                                     final int count,
+                                                                     final SpreadsheetViewportSelectionNavigationContext context);
+
     abstract Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                                 final SpreadsheetViewportSelectionNavigationContext context);
+
+    abstract Optional<SpreadsheetViewportSelection> extendUpPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                                   final int count,
+                                                                   final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract Optional<SpreadsheetViewportSelection> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
                                                                       final SpreadsheetViewportSelectionNavigationContext context);
 
+    abstract Optional<SpreadsheetViewportSelection> extendRightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                                      final int count,
+                                                                      final SpreadsheetViewportSelectionNavigationContext context);
+
     abstract Optional<SpreadsheetViewportSelection> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
                                                                   final SpreadsheetViewportSelectionNavigationContext context);
+
+    abstract Optional<SpreadsheetViewportSelection> extendDownPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                                     final int count,
+                                                                     final SpreadsheetViewportSelectionNavigationContext context);
 
     /**
      * Factory that creates or extends a {@link SpreadsheetSelection} into a range. Note the other is either a
