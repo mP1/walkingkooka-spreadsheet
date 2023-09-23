@@ -1724,7 +1724,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testExtendLeftSkipsHiddenColumn() {
+    public void testExtendLeftColumnSkipsHidden() {
         this.extendLeftColumnAndCheck(
                 "D4:E5",
                 SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
@@ -1818,7 +1818,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testExtendRightAnchorColumnBottomLeftLastColumn() {
+    public void testExtendRightColumnAnchorBottomLeftLastColumn() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
         final String cell = column.add(-1) + "1:" + column + "1";
         final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT;
