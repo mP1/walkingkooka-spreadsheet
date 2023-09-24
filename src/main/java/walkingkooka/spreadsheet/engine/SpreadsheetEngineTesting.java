@@ -598,6 +598,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // allRowsHeight....................................................................................................
+
+    @Test
+    default void testAllRowsHeightNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .allRowsHeight(null)
+        );
+    }
+
     // navigate.........................................................................................................
 
     @Test
@@ -1264,6 +1275,27 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 expected,
                 engine.allColumnsWidth(context),
                 () -> "allColumnsWidth of " + engine
+        );
+    }
+
+    // allRowsHeightAndCheck.........................................................................................
+
+    default void allRowsHeightAndCheck(final SpreadsheetEngineContext context,
+                                       final double expected) {
+        this.allRowsHeightAndCheck(
+                this.createSpreadsheetEngine(),
+                context,
+                expected
+        );
+    }
+
+    default void allRowsHeightAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetEngineContext context,
+                                       final double expected) {
+        this.checkEquals(
+                expected,
+                engine.allRowsHeight(context),
+                () -> "allRowsHeight of " + engine
         );
     }
 

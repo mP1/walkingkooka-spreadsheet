@@ -1313,6 +1313,30 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return sum;
     }
 
+    @Override
+    public double allRowsHeight(final SpreadsheetEngineContext context) {
+        checkContext(context);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.row(
+                cellStore.rows()
+        );
+
+        double sum = 0;
+
+        for (SpreadsheetRowReference c = last.referenceKind().firstRow(); c.compareTo(last) <= 0; ) {
+            sum += this.rowHeight(
+                    c,
+                    context
+            );
+            c = c.addSaturated(1);
+        }
+
+        return sum;
+    }
+
     // WINDOW...........................................................................................................
 
     @Override
