@@ -208,8 +208,8 @@ public interface SpreadsheetEngine {
     Optional<SpreadsheetViewportSelection> NO_VIEWPORT_SELECTION = Optional.empty();
 
     /**
-     * Performs the given {@link SpreadsheetViewportSelection}, honouring any present {@link SpreadsheetViewportSelection#navigation()},
-     * skipping hidden columns and rows. If no {@link SpreadsheetViewportSelection#navigation()} is present, the
+     * Performs the given {@link SpreadsheetViewportSelection}, honouring any present {@link SpreadsheetViewportSelection#navigations()},
+     * skipping hidden columns and rows. If no {@link SpreadsheetViewportSelection#navigations()} is present, the
      * available {@link SpreadsheetViewportSelection#selection()} if hidden is replaced with {@link #NO_VIEWPORT_SELECTION}.
      */
     Optional<SpreadsheetViewportSelection> navigate(final SpreadsheetViewportSelection selection,
