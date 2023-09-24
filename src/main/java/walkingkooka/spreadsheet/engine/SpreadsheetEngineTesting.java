@@ -52,9 +52,6 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -67,7 +64,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -1354,19 +1350,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.american(MathContext.DECIMAL32);
-    }
-
-    default void checkEquals(final TreePrintable expected,
-                             final TreePrintable actual,
-                             final Supplier<String> message) {
-        final Indentation indentation = Indentation.SPACES2;
-        final LineEnding eol = LineEnding.SYSTEM;
-
-        this.checkEquals(
-                expected.treeToString(indentation, eol),
-                actual.treeToString(indentation, eol),
-                message
-        );
     }
 
     @Override
