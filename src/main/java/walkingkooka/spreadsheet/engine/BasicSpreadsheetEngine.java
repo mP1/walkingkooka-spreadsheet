@@ -1288,6 +1288,31 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .pixelValue();
     }
 
+
+    @Override
+    public double allColumnsWidth(final SpreadsheetEngineContext context) {
+        checkContext(context);
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+
+        final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.column(
+                cellStore.columns()
+        );
+
+        double sum = 0;
+
+        for (SpreadsheetColumnReference c = last.referenceKind().firstColumn(); c.compareTo(last) <= 0; ) {
+            sum += this.columnWidth(
+                    c,
+                    context
+            );
+            c = c.addSaturated(1);
+        }
+
+        return sum;
+    }
+
     // WINDOW...........................................................................................................
 
     @Override

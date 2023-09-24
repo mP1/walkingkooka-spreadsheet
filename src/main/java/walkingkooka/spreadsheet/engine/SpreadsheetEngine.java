@@ -182,6 +182,11 @@ public interface SpreadsheetEngine {
                      final SpreadsheetEngineContext context);
 
     /**
+     * Returns the total width of all visible columns.
+     */
+    double allColumnsWidth(final SpreadsheetEngineContext context);
+
+    /**
      * An absent {@link SpreadsheetSelection}.
      */
     Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();

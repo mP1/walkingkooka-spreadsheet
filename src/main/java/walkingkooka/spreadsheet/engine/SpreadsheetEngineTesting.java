@@ -587,6 +587,19 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().rowHeight(SpreadsheetRowReference.parseRow("1"), null));
     }
 
+    // allColumnsWidth..................................................................................................
+
+    @Test
+    default void testAllColumnsWidthNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .allColumnsWidth(null)
+        );
+    }
+
+    // navigate.........................................................................................................
+
     @Test
     default void testNavigateNullSelectionFails() {
         assertThrows(
@@ -1231,6 +1244,27 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(expected,
                 engine.rowHeight(row, context),
                 () -> "rowHeight " + row + " of " + engine);
+    }
+
+    // allColumnsWidthAndCheck.........................................................................................
+
+    default void allColumnsWidthAndCheck(final SpreadsheetEngineContext context,
+                                         final double expected) {
+        this.allColumnsWidthAndCheck(
+                this.createSpreadsheetEngine(),
+                context,
+                expected
+        );
+    }
+
+    default void allColumnsWidthAndCheck(final SpreadsheetEngine engine,
+                                         final SpreadsheetEngineContext context,
+                                         final double expected) {
+        this.checkEquals(
+                expected,
+                engine.allColumnsWidth(context),
+                () -> "allColumnsWidth of " + engine
+        );
     }
 
     // window...........................................................................................................

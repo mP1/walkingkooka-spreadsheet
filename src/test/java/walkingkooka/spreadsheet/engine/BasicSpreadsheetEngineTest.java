@@ -27,6 +27,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
@@ -9781,7 +9782,78 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                             }
                                         }
                                 )
-                )
+                        )
+        );
+    }
+
+    // allColumnWidths .................................................................................................
+
+    @Test
+    public void testAllColumnWidths() {
+        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
+
+        final SpreadsheetEngineContext context = this.createContext(
+                this.metadata()
+                        .set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.WIDTH,
+                                        Length.pixel(COLUMN_WIDTH)
+                                )
+                        ),
+                cellStore
+        );
+
+        final SpreadsheetStoreRepository repo = context.storeRepository();
+
+        repo.columns()
+                .saveColumns(
+                        Sets.of(
+                                SpreadsheetColumn.with(
+                                        SpreadsheetSelection.parseColumn("A")
+                                ).setHidden(true),
+                                SpreadsheetColumn.with(
+                                        SpreadsheetSelection.parseColumn("B")
+                                ).setHidden(false)
+                        )
+                );
+
+        final double aWidth = 100;
+
+        cellStore.save(
+                SpreadsheetSelection.parseCell("A1")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("'HiddenColumn")
+                        ).setStyle(
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.WIDTH,
+                                        Length.pixel(aWidth)
+                                )
+                        )
+        );
+
+        final double cWidth = 300;
+        cellStore.save(
+                SpreadsheetSelection.parseCell("C3")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("'Hello")
+                        ).setStyle(
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.WIDTH,
+                                        Length.pixel(cWidth)
+                                )
+                        )
+        );
+        cellStore.save(
+                SpreadsheetSelection.parseCell("D4")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("'Hello2")
+                        )
+        );
+
+        this.allColumnsWidthAndCheck(
+                context,
+                COLUMN_WIDTH + cWidth + COLUMN_WIDTH
         );
     }
 
@@ -12282,9 +12354,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .loadFromLocale()
+                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
+                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+                .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("user@example.com"))
+                .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now())
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
