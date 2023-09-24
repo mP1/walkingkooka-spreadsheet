@@ -1249,7 +1249,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context
                 );
             }
-            return columnWidth;
         }
 
         return columnWidth;
@@ -1274,7 +1273,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context
                 );
             }
-            return rowHeight;
         }
 
         return rowHeight;
