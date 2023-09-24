@@ -9857,6 +9857,77 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // allRowHeights ...................................................................................................
+
+    @Test
+    public void testAllRowHeights() {
+        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
+
+        final SpreadsheetEngineContext context = this.createContext(
+                this.metadata()
+                        .set(
+                                SpreadsheetMetadataPropertyName.STYLE,
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.HEIGHT,
+                                        Length.pixel(ROW_HEIGHT)
+                                )
+                        ),
+                cellStore
+        );
+
+        final SpreadsheetStoreRepository repo = context.storeRepository();
+
+        repo.rows()
+                .saveRows(
+                        Sets.of(
+                                SpreadsheetRow.with(
+                                        SpreadsheetSelection.parseRow("1")
+                                ).setHidden(true),
+                                SpreadsheetRow.with(
+                                        SpreadsheetSelection.parseRow("2")
+                                ).setHidden(false)
+                        )
+                );
+
+        final double aHeight = 100;
+
+        cellStore.save(
+                SpreadsheetSelection.parseCell("A1")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("'HiddenRow")
+                        ).setStyle(
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.HEIGHT,
+                                        Length.pixel(aHeight)
+                                )
+                        )
+        );
+
+        final double cHeight = 300;
+        cellStore.save(
+                SpreadsheetSelection.parseCell("C3")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("'Hello")
+                        ).setStyle(
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.HEIGHT,
+                                        Length.pixel(cHeight)
+                                )
+                        )
+        );
+        cellStore.save(
+                SpreadsheetSelection.parseCell("D4")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("'Hello2")
+                        )
+        );
+
+        this.allRowsHeightAndCheck(
+                context,
+                ROW_HEIGHT + cHeight + ROW_HEIGHT
+        );
+    }
+
     // widths top left .................................................................................................
 
     @Test

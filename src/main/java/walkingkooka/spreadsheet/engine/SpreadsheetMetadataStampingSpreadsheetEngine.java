@@ -246,6 +246,11 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public double allRowsHeight(final SpreadsheetEngineContext context) {
+        return this.engine.allColumnsWidth(context);
+    }
+
+    @Override
     public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
                                              final boolean includeFrozenColumnsRows,
                                              final Optional<SpreadsheetSelection> selection,
