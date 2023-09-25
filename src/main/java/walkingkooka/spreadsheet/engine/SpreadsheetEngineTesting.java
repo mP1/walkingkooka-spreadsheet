@@ -626,6 +626,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    @Test
+    default void testAllRowsHeightWhenNoCells() {
+        this.allRowsHeightAndCheck(
+                this.createContext(),
+                0
+        );
+    }
+
     // navigate.........................................................................................................
 
     @Test
