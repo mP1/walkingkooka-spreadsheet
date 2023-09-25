@@ -73,12 +73,12 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     }
 
     /**
-     * The highest row number
+     * The highest row number or -1 when none.
      */
     int rows();
 
     /**
-     * The highest column number
+     * The highest column number or -1 when none.
      */
     int columns();
 

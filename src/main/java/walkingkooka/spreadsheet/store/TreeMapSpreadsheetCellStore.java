@@ -144,7 +144,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 .stream()
                 .mapToInt(value)
                 .max()
-                .orElse(0);
+                .orElse(-1);
     }
 
     @Override

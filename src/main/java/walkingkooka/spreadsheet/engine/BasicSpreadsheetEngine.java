@@ -781,17 +781,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetCellStore cellStore = context.storeRepository()
                     .cells();
             if (maxColumns) {
+                final int maxColumn = cellStore.columns();
                 delta = delta.setMaxColumn(
-                        OptionalInt.of(
-                                cellStore.columns()
-                        )
+                        -1 != maxColumn ?
+                                OptionalInt.of(
+                                        maxColumn
+                                ) :
+                                OptionalInt.empty()
                 );
             }
             if (maxRows) {
+                final int maxRow = cellStore.rows();
                 delta = delta.setMaxRow(
-                        OptionalInt.of(
-                                cellStore.rows()
-                        )
+                        -1 != maxRow ?
+                                OptionalInt.of(
+                                        maxRow
+                                ) :
+                                OptionalInt.empty()
                 );
             }
         }
