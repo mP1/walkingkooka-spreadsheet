@@ -135,19 +135,20 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         this.columnsAndCheck(
                 store,
-                0
+                -1
         );
     }
 
     @Test
-    public final void testColumnsWithOnlyCellA2() {
+    public final void testColumnsWithOnlyCellA24() {
         final S store = this.createStore();
 
-        store.save(this.cell(1, 2));
+        store.save(this.cell(0, 2));
+        store.save(this.cell(0, 23));
 
         this.columnsAndCheck(
                 store,
-                1
+                0
         );
     }
 
@@ -171,21 +172,24 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         this.rowsAndCheck(
                 store,
-                0
+                -1
         );
     }
 
     @Test
-    public final void testRowsWithA2() {
+    public final void testRowsWithA24() {
         final S store = this.createStore();
 
         store.save(
-                this.cell(1, 2)
+                this.cell(0, 2)
+        );
+        store.save(
+                this.cell(0, 23)
         );
 
         this.rowsAndCheck(
                 store,
-                2
+                23
         );
     }
 
@@ -197,7 +201,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(this.cell(1, 99));
         store.save(this.cell(1, 5));
 
-        this.rowsAndCheck(store, 99);
+        this.rowsAndCheck(
+                store,
+                99
+        );
     }
 
     @Test

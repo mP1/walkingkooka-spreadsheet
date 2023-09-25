@@ -462,16 +462,23 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
 
+        final int columns = cellStore.columns();
+        final int rows = cellStore.rows();
+
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(cells)
                 .setMaxColumn(
-                        OptionalInt.of(
-                                cellStore.columns()
-                        )
+                        -1 == columns ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(
+                                        columns
+                                )
                 ).setMaxRow(
-                        OptionalInt.of(
-                                cellStore.rows()
-                        )
+                        -1 == rows ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(
+                                        rows
+                                )
                 );
         this.checkEquals(
                 expected,
@@ -518,16 +525,18 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
 
+        final int columns = cellStore.columns();
+        final int rows = cellStore.rows();
+
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setCells(cells)
                 .setMaxColumn(
-                        OptionalInt.of(
-                                cellStore.columns()
-                        )
+                        -1 == columns ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(columns)
                 ).setMaxRow(
-                        OptionalInt.of(
-                                cellStore.rows()
-                        )
+                        -1 == rows ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(rows)
                 );
         this.checkEquals(
                 expected,
@@ -955,17 +964,20 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
 
+        final int columns = cellStore.columns();
+        final int rows = cellStore.rows();
+
         this.checkEquals(
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(updated)
                 ).setMaxColumn(
-                        OptionalInt.of(
-                                cellStore.columns()
-                        )
+                        -1 == columns ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(columns)
                 ).setMaxRow(
-                        OptionalInt.of(
-                                cellStore.rows()
-                        )
+                        -1 == rows ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(rows)
                 ),
                 result,
                 () -> "deleteColumns column: " + column + " count: " + count
@@ -994,18 +1006,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
 
+        final int columns = cellStore.columns();
+        final int rows = cellStore.rows();
+
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(updated)
 
                 ).setMaxColumn(
-                        OptionalInt.of(
-                                cellStore.columns()
-                        )
+                        -1 == columns ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(columns)
                 ).setMaxRow(
-                        OptionalInt.of(
-                                cellStore.rows()
-                        )
+                        -1 == rows ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(rows)
                 );
         this.checkEquals(
                 expected,
@@ -1151,18 +1166,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
 
+        final int columns = cellStore.columns();
+        final int rows = cellStore.rows();
+
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(updated)
 
                 ).setMaxColumn(
-                        OptionalInt.of(
-                                cellStore.columns()
-                        )
+                        -1 == columns ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(columns)
                 ).setMaxRow(
-                        OptionalInt.of(
-                                cellStore.rows()
-                        )
+                        -1 == rows ?
+                                OptionalInt.empty() :
+                                OptionalInt.of(rows)
                 ).setWindow(
                         result.window()
                 );
