@@ -52,7 +52,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -102,8 +102,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
 
-        this.checkMaxColumn(after);
-        this.checkMaxRow(after);
+        this.checkTotalWidth(after);
+        this.checkTotalHeight(after);
 
         this.checkViewportSelection(before);
     }
@@ -905,32 +905,32 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentMaxColumn() {
-        final OptionalInt maxColumn = this.differentMaxColumn();
+    public final void testDifferentTotalWidth() {
+        final OptionalDouble totalWidth = this.differentTotalWidth();
         this.checkNotEquals(
-                this.maxColumn(),
-                maxColumn,
-                "maxColumn() and differentMaxColumn() must be un equal"
+                this.totalWidth(),
+                totalWidth,
+                "totalWidth() and differentTotalWidth() must be un equal"
         );
 
         this.checkNotEquals(
                 this.createSpreadsheetDelta()
-                        .setMaxColumn(maxColumn)
+                        .setTotalWidth(totalWidth)
         );
     }
 
     @Test
-    public final void testDifferentMaxRow() {
-        final OptionalInt maxRow = this.differentMaxRow();
+    public final void testDifferentTotalHeight() {
+        final OptionalDouble totalHeight = this.differentTotalHeight();
         this.checkNotEquals(
-                this.maxRow(),
-                maxRow,
-                "maxRow() and differentMaxRow() must be un equal"
+                this.totalHeight(),
+                totalHeight,
+                "totalHeight() and differentTotalHeight() must be un equal"
         );
 
         this.checkNotEquals(
                 this.createSpreadsheetDelta()
-                        .setMaxRow(maxRow)
+                        .setTotalHeight(totalHeight)
         );
     }
 
@@ -1343,53 +1343,53 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    // maxColumn..................................................................................................
+    // totalWidth..................................................................................................
 
-    final OptionalInt maxColumn() {
-        return OptionalInt.of(88);
+    final OptionalDouble totalWidth() {
+        return OptionalDouble.of(88);
     }
 
     final static JsonNode MAX_COLUMN_JSON = JsonNode.parse("88");
 
-    final OptionalInt differentMaxColumn() {
-        return OptionalInt.empty();
+    final OptionalDouble differentTotalWidth() {
+        return OptionalDouble.empty();
     }
 
-    final void checkMaxColumn(final SpreadsheetDelta delta) {
-        checkMaxColumn(delta, this.maxColumn());
+    final void checkTotalWidth(final SpreadsheetDelta delta) {
+        checkTotalWidth(delta, this.totalWidth());
     }
 
-    final void checkMaxColumn(final SpreadsheetDelta delta,
-                              final OptionalInt maxColumn) {
+    final void checkTotalWidth(final SpreadsheetDelta delta,
+                               final OptionalDouble totalWidth) {
         this.checkEquals(
-                maxColumn,
-                delta.maxColumn(),
-                "maxColumn"
+                totalWidth,
+                delta.totalWidth(),
+                "totalWidth"
         );
     }
 
-    // maxRow.......................................................................................................
+    // totalHeight.......................................................................................................
 
-    final OptionalInt maxRow() {
-        return OptionalInt.of(99);
+    final OptionalDouble totalHeight() {
+        return OptionalDouble.of(99);
     }
 
     final static JsonNode MAX_ROW_JSON = JsonNode.parse("99");
 
-    final OptionalInt differentMaxRow() {
-        return OptionalInt.empty();
+    final OptionalDouble differentTotalHeight() {
+        return OptionalDouble.empty();
     }
 
-    final void checkMaxRow(final SpreadsheetDelta delta) {
-        checkMaxRow(delta, this.maxRow());
+    final void checkTotalHeight(final SpreadsheetDelta delta) {
+        checkTotalHeight(delta, this.totalHeight());
     }
 
-    final void checkMaxRow(final SpreadsheetDelta delta,
-                           final OptionalInt maxRow) {
+    final void checkTotalHeight(final SpreadsheetDelta delta,
+                                final OptionalDouble totalHeight) {
         this.checkEquals(
-                maxRow,
-                delta.maxRow(),
-                "maxRow"
+                totalHeight,
+                delta.totalHeight(),
+                "totalHeight"
         );
     }
 

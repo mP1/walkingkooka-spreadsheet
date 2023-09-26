@@ -123,7 +123,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -400,10 +400,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(LABEL_CELL)
                         ).setLabels(
                                 Sets.of(LABEL.mapping(LABEL_CELL))
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         ),
                 engine.loadCells(
                         LABEL_CELL,
@@ -492,10 +492,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                         .setLabels(
                                 Sets.of(labelMapping)
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         ),
                 engine.loadCells(
                         LABEL,
@@ -1010,10 +1010,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C,D")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
     }
@@ -1312,10 +1312,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         ),
                 engine.loadCells(
                         SpreadsheetSelection.parseCellRange("B2:C3"),
@@ -1346,10 +1346,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -1381,10 +1381,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -1408,10 +1408,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
     }
@@ -1466,10 +1466,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -1503,10 +1503,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -1549,10 +1549,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -1600,10 +1600,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
     }
@@ -1639,10 +1639,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -1669,10 +1669,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
     }
@@ -1701,10 +1701,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -1724,10 +1724,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
                 );
 
@@ -1745,10 +1745,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
                 );
 
@@ -1791,10 +1791,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -1835,10 +1835,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -1880,10 +1880,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B,C")
                         ).setRowHeights(
                                 rowHeights("1,2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
                 );
     }
@@ -1912,10 +1912,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -1932,10 +1932,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
     }
@@ -1964,10 +1964,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -2007,10 +2007,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
                 );
     }
@@ -2058,10 +2058,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         columnWidths("A,B")
                 ).setRowHeights(
                         rowHeights("1,2")
-                ).setMaxColumn(
-                        OptionalInt.of(1)
-                ).setMaxRow(
-                        OptionalInt.of(1)
+                ).setTotalWidth(
+                        OptionalDouble.of(2 * COLUMN_WIDTH)
+                ).setTotalHeight(
+                        OptionalDouble.of(2 * ROW_HEIGHT)
                 )
         );
     }
@@ -2093,10 +2093,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(4)
-                        ).setMaxRow(
-                                OptionalInt.of(4)
+                        ).setTotalWidth(
+                                OptionalDouble.of(5 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(5 * ROW_HEIGHT)
                         )
                 );
 
@@ -2146,10 +2146,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         )
                 );
 
@@ -2204,10 +2204,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(4)
-                        ).setMaxRow(
-                                OptionalInt.of(4)
+                        ).setTotalWidth(
+                                OptionalDouble.of(5 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(5 * ROW_HEIGHT)
                         )
                 );
 
@@ -2371,13 +2371,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         columnWidths("A")
                 ).setRowHeights(
                         rowHeights("1")
-                ).setMaxColumn(
-                        OptionalInt.of(
-                                cellStore.columns()
+                ).setTotalWidth(
+                        OptionalDouble.of(
+                                engine.allColumnsWidth(context)
                         )
-                ).setMaxRow(
-                        OptionalInt.of(
-                                cellStore.rows()
+                ).setTotalHeight(
+                        OptionalDouble.of(
+                                engine.allRowsHeight(context)
                         )
                 );
         this.checkEquals(
@@ -2412,10 +2412,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         columnWidths("A")
                 ).setRowHeights(
                         rowHeights("1")
-                ).setMaxColumn(
-                        OptionalInt.of(0)
-                ).setMaxRow(
-                        OptionalInt.of(0)
+                ).setTotalWidth(
+                        OptionalDouble.of(1 * COLUMN_WIDTH)
+                ).setTotalHeight(
+                        OptionalDouble.of(1 * ROW_HEIGHT)
                 );
 
         this.saveCellAndCheck(
@@ -2480,10 +2480,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -2534,10 +2534,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -2588,10 +2588,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -2649,10 +2649,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B,C")
                         ).setRowHeights(
                                 rowHeights("1,2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
 
@@ -2693,10 +2693,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         )
         );
     }
@@ -2734,10 +2734,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         )
         );
     }
@@ -2784,10 +2784,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(150)
+                        ).setTotalHeight(
+                                OptionalDouble.of(90)
                         )
         );
     }
@@ -2813,10 +2813,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         )
         );
 
@@ -2862,10 +2862,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(50)
+                        ).setTotalHeight(
+                                OptionalDouble.of(30)
                         )
         );
 
@@ -2911,10 +2911,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         )
         );
     }
@@ -2948,10 +2948,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -3009,10 +3009,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -3057,10 +3057,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         )
         );
     }
@@ -3209,10 +3209,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         column
                                 )
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         ),
                 engine.saveColumn(
                         column.setHidden(false),
@@ -3278,10 +3278,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -3317,10 +3317,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
 
@@ -3476,10 +3476,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
 
@@ -3519,10 +3519,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C,Y,Z")
                         ).setRowHeights(
                                 rowHeights("2,3,99")
-                        ).setMaxColumn(
-                                OptionalInt.of(24)
-                        ).setMaxRow(
-                                OptionalInt.of(98)
+                        ).setTotalWidth(
+                                OptionalDouble.of(25 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(99 * ROW_HEIGHT)
                         )
         );
 
@@ -3562,10 +3562,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("D,E")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -3621,10 +3621,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B,C,M,N,O")
                         ).setRowHeights(
                                 rowHeights("1,9,10")
-                        ).setMaxColumn(
-                                OptionalInt.of(13)
-                        ).setMaxRow(
-                                OptionalInt.of(9)
+                        ).setTotalWidth(
+                                OptionalDouble.of(14 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(10 * ROW_HEIGHT)
                         )
         ); // old $b delete, $c,$d columns -1.
 
@@ -3654,10 +3654,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                SpreadsheetDelta.EMPTY.setMaxColumn(
-                        OptionalInt.of(0)
-                ).setMaxRow(
-                        OptionalInt.of(0)
+                SpreadsheetDelta.EMPTY.setTotalWidth(
+                        OptionalDouble.of(1 * COLUMN_WIDTH)
+                ).setTotalHeight(
+                        OptionalDouble.of(1 * ROW_HEIGHT)
                 )
         ); // $b delete, $c columns -1.
 
@@ -3702,10 +3702,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,K,M,N,O")
                         ).setRowHeights(
                                 rowHeights("1,9,10")
-                        ).setMaxColumn(
-                                OptionalInt.of(13)
-                        ).setMaxRow(
-                                OptionalInt.of(9)
+                        ).setTotalWidth(
+                                OptionalDouble.of(14 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(10 * ROW_HEIGHT)
                         )
         ); // $c delete
 
@@ -3748,10 +3748,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,K,L,M,N,O")
                         ).setRowHeights(
                                 rowHeights("1,9,10")
-                        ).setMaxColumn(
-                                OptionalInt.of(12)
-                        ).setMaxRow(
-                                OptionalInt.of(9)
+                        ).setTotalWidth(
+                                OptionalDouble.of(13 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(10 * ROW_HEIGHT)
                         )
         ); // $c deleted, old-d & old-e refreshed
 
@@ -3790,10 +3790,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // $b delete
 
@@ -3838,10 +3838,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("H,K,L,M,P,Q,U,V")
                         ).setRowHeights(
                                 rowHeights("1,3,4,5")
-                        ).setMaxColumn(
-                                OptionalInt.of(16)
-                        ).setMaxRow(
-                                OptionalInt.of(4)
+                        ).setTotalWidth(
+                                OptionalDouble.of(17 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(5 * ROW_HEIGHT)
                         )
         ); // $b & $c
 
@@ -3992,10 +3992,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         row
                                 )
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         ),
                 engine.saveRow(
                         row.setHidden(false),
@@ -4062,10 +4062,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -4112,10 +4112,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B")
                         ).setRowHeights(
                                 rowHeights("2,3,9,10")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(8)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(9 * ROW_HEIGHT)
                         )
         ); // $b delete
 
@@ -4160,10 +4160,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B")
                         ).setRowHeights(
                                 rowHeights("2,3,8,10")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(7)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(8 * ROW_HEIGHT)
                         )
         );
 
@@ -4222,10 +4222,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("4,6")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         )
         ); // $c moved, $b unmodified label refs $a also unmodified.
 
@@ -4292,10 +4292,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1,4,6")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         )
         ); // $b moved
 
@@ -4349,10 +4349,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1,6")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -4404,10 +4404,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,I,J")
                         ).setRowHeights(
                                 rowHeights("1,11,13,14,15")
-                        ).setMaxColumn(
-                                OptionalInt.of(9)
-                        ).setMaxRow(
-                                OptionalInt.of(13)
+                        ).setTotalWidth(
+                                OptionalDouble.of(10 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(14 * ROW_HEIGHT)
                         )
         ); // $c delete
 
@@ -4478,10 +4478,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,I,J")
                         ).setRowHeights(
                                 rowHeights("1,11,12,13,14,15")
-                        ).setMaxColumn(
-                                OptionalInt.of(9)
-                        ).setMaxRow(
-                                OptionalInt.of(12)
+                        ).setTotalWidth(
+                                OptionalDouble.of(10 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(13 * ROW_HEIGHT)
                         )
         ); // $c delete
 
@@ -4555,10 +4555,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("16")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(10)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(11 * ROW_HEIGHT)
                         )
         );
 
@@ -4654,10 +4654,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("15,21")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(14)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(15 * ROW_HEIGHT)
                         )
         ); // b..c deleted, d moved
 
@@ -4719,10 +4719,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1,6")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // b..c deleted
 
@@ -4784,10 +4784,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1,10,16")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(9)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(10 * ROW_HEIGHT)
                         )
         ); // b..c deleted, d moved
 
@@ -4951,10 +4951,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -5009,10 +5009,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C,I,J")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(8)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(9 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         ); // $b delete
 
@@ -5071,10 +5071,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C,H,J")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(7)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(8 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
                 ); // $b, $c deleted
 
@@ -5132,10 +5132,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("D,F")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -5204,10 +5204,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,C,E")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // $b moved
 
@@ -5261,10 +5261,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,E")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // $v delete
 
@@ -5316,10 +5316,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,K,M,N,O")
                         ).setRowHeights(
                                 rowHeights("1,9,10")
-                        ).setMaxColumn(
-                                OptionalInt.of(13)
-                        ).setMaxRow(
-                                OptionalInt.of(9)
+                        ).setTotalWidth(
+                                OptionalDouble.of(14 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(10 * ROW_HEIGHT)
                         )
         ); // $c delete
 
@@ -5393,10 +5393,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,K,L,M,N,O")
                         ).setRowHeights(
                                 rowHeights("1,9,10")
-                        ).setMaxColumn(
-                                OptionalInt.of(12)
-                        ).setMaxRow(
-                                OptionalInt.of(9)
+                        ).setTotalWidth(
+                                OptionalDouble.of(13 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(10 * ROW_HEIGHT)
                         )
         ); // $c delete
 
@@ -5467,10 +5467,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("P")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(10)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(11 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // $d moved
 
@@ -5566,10 +5566,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("O,U")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(14)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(15 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // b..c deleted, d moved
 
@@ -5624,10 +5624,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,F")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // b..c deleted
 
@@ -5688,10 +5688,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,J,P")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(9)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(10 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // b..c deleted, d moved
 
@@ -5862,10 +5862,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C,D")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -5910,10 +5910,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C,D")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // $b insert
 
@@ -5974,10 +5974,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("E,F")
                         ).setRowHeights(
                                 rowHeights("4")
-                        ).setMaxColumn(
-                                OptionalInt.of(5)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(6 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         )
         ); // $b insert
 
@@ -6044,10 +6044,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B,C,D,N,O")
                         ).setRowHeights(
                                 rowHeights("1,9")
-                        ).setMaxColumn(
-                                OptionalInt.of(14)
-                        ).setMaxRow(
-                                OptionalInt.of(8)
+                        ).setTotalWidth(
+                                OptionalDouble.of(15 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(9 * ROW_HEIGHT)
                         )
         ); // $b insert
 
@@ -6118,10 +6118,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("F,G")
                         ).setRowHeights(
                                 rowHeights("6")
-                        ).setMaxColumn(
-                                OptionalInt.of(6)
-                        ).setMaxRow(
-                                OptionalInt.of(5)
+                        ).setTotalWidth(
+                                OptionalDouble.of(7 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(6 * ROW_HEIGHT)
                         )
         ); // $b insert
 
@@ -6189,10 +6189,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,K,P")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(15)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(16 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         ); // $b insert
 
@@ -6249,10 +6249,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,K,L,N,O")
                         ).setRowHeights(
                                 rowHeights("1,9")
-                        ).setMaxColumn(
-                                OptionalInt.of(14)
-                        ).setMaxRow(
-                                OptionalInt.of(8)
+                        ).setTotalWidth(
+                                OptionalDouble.of(15 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(9 * ROW_HEIGHT)
                         )
         ); // $c insert
 
@@ -6321,10 +6321,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,K,M,N,P")
                         ).setRowHeights(
                                 rowHeights("1,9")
-                        ).setMaxColumn(
-                                OptionalInt.of(15)
-                        ).setMaxRow(
-                                OptionalInt.of(8)
+                        ).setTotalWidth(
+                                OptionalDouble.of(16 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(9 * ROW_HEIGHT)
                         )
         ); // $c insert
 
@@ -6395,10 +6395,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("K,L,M,P,Q,R,U,Z")
                         ).setRowHeights(
                                 rowHeights("1,3,4")
-                        ).setMaxColumn(
-                                OptionalInt.of(25)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(26 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         )
         ); // $b & $c
 
@@ -6480,10 +6480,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -6530,10 +6530,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
         );
 
@@ -6607,10 +6607,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("2,3,4")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         )
         );
 
@@ -6671,10 +6671,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("2,3,4")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         )
         ); // $b insert
 
@@ -6736,10 +6736,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("D")
                         ).setRowHeights(
                                 rowHeights("5,6")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(5)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(6 * ROW_HEIGHT)
                         )
         ); // $b insert
 
@@ -6807,10 +6807,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,I")
                         ).setRowHeights(
                                 rowHeights("1,2,3,4,14,15")
-                        ).setMaxColumn(
-                                OptionalInt.of(8)
-                        ).setMaxRow(
-                                OptionalInt.of(14)
+                        ).setTotalWidth(
+                                OptionalDouble.of(9 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(15 * ROW_HEIGHT)
                         )
         );
 
@@ -6882,10 +6882,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("F")
                         ).setRowHeights(
                                 rowHeights("6,7")
-                        ).setMaxColumn(
-                                OptionalInt.of(5)
-                        ).setMaxRow(
-                                OptionalInt.of(6)
+                        ).setTotalWidth(
+                                OptionalDouble.of(6 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(7 * ROW_HEIGHT)
                         )
         );
 
@@ -6953,10 +6953,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1,11,16")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(15)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(16 * ROW_HEIGHT)
                         )
         );
 
@@ -7014,10 +7014,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,I")
                         ).setRowHeights(
                                 rowHeights("1,11,12,14,15")
-                        ).setMaxColumn(
-                                OptionalInt.of(8)
-                        ).setMaxRow(
-                                OptionalInt.of(14)
+                        ).setTotalWidth(
+                                OptionalDouble.of(9 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(15 * ROW_HEIGHT)
                         )
         );
 
@@ -7086,10 +7086,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,I")
                         ).setRowHeights(
                                 rowHeights("1,11,13,14,16")
-                        ).setMaxColumn(
-                                OptionalInt.of(8)
-                        ).setMaxRow(
-                                OptionalInt.of(15)
+                        ).setTotalWidth(
+                                OptionalDouble.of(9 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(16 * ROW_HEIGHT)
                         )
         );
 
@@ -7161,10 +7161,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,C,D")
                         ).setRowHeights(
                                 rowHeights("11,12,13,16,17,18,21,26")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(25)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(26 * ROW_HEIGHT)
                         )
         ); // $b & $c
 
@@ -7239,10 +7239,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -7298,10 +7298,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1,2")
-                        ).setMaxColumn(
-                                OptionalInt.of(0)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(1 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -7369,10 +7369,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,D")
                         ).setRowHeights(
                                 rowHeights("1,4")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         ).setWindow(window)
         );
     }
@@ -7411,10 +7411,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(SpreadsheetDelta.NO_CELLS)
                         .setColumns(
                                 Sets.of(c)
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         ).setWindow(window)
         );
     }
@@ -7446,10 +7446,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         label.mapping(b2)
                                 )
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         ).setWindow(window)
         );
     }
@@ -7488,10 +7488,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(SpreadsheetDelta.NO_CELLS)
                         .setRows(
                                 Sets.of(c)
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         ).setWindow(window)
         );
     }
@@ -7527,10 +7527,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("Z")
                         ).setRowHeights(
                                 rowHeights("9")
-                        ).setMaxColumn(
-                                OptionalInt.of(25)
-                        ).setMaxRow(
-                                OptionalInt.of(8)
+                        ).setTotalWidth(
+                                OptionalDouble.of(26 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(9 * ROW_HEIGHT)
                         ).setWindow(window)
         );
     }
@@ -7567,10 +7567,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         ).setWindow(window)
         );
     }
@@ -7607,10 +7607,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         ).setWindow(window)
         );
     }
@@ -7651,10 +7651,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B,C")
                         ).setRowHeights(
                                 rowHeights("1,2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         ).setWindow(window)
         );
     }
@@ -7695,10 +7695,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,B,C")
                         ).setRowHeights(
                                 rowHeights("1,2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         ).setWindow(window)
         );
     }
@@ -7748,10 +7748,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C,D")
                         ).setRowHeights(
                                 rowHeights("3,4")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         )
         );
     }
@@ -7777,12 +7777,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
-                        .setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
-                        ).setWindow(window)
-                        .setLabels(
+                        .setWindow(window)
+                        .setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
+                        ).setLabels(
                                 Sets.of(mapping)
                         )
         );
@@ -7809,14 +7809,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
-                        .setWindow(window)
                         .setLabels(
                                 Sets.of(mappingC3d4)
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
-                        )
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
+                        ).setWindow(window)
         );
     }
 
@@ -7845,17 +7844,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
-                        .setWindow(window)
                         .setLabels(
                                 Sets.of(
                                         mappingC3,
                                         mappingC3d4
                                 )
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
-                        )
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
+                        ).setWindow(window)
         );
     }
 
@@ -7898,10 +7896,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         ).setWindow(window)
         );
     }
@@ -7967,10 +7965,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C")
                         ).setRowHeights(
                                 rowHeights("2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(4 * ROW_HEIGHT)
                         ).setWindow(window)
         );
     }
@@ -8036,10 +8034,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(3)
-                        ).setMaxRow(
-                                OptionalInt.of(3)
+                        ).setTotalWidth(
+                                OptionalDouble.of(4 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         ).setWindow(window)
         );
     }
@@ -8076,10 +8074,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("F")
                         ).setRowHeights(
                                 rowHeights("6")
-                        ).setMaxColumn(
-                                OptionalInt.empty()
-                        ).setMaxRow(
-                                OptionalInt.empty()
+                        ).setTotalWidth(
+                                OptionalDouble.of(0)
+                        ).setTotalHeight(
+                                OptionalDouble.of(0)
                         )
         );
 
@@ -8117,10 +8115,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("F")
                         ).setRowHeights(
                                 rowHeights("6")
-                        ).setMaxColumn(
-                                OptionalInt.of(10)
-                        ).setMaxRow(
-                                OptionalInt.of(10)
+                        ).setTotalWidth(
+                                OptionalDouble.of(11 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(11 * ROW_HEIGHT)
                         )
         );
 
@@ -8141,10 +8139,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("K")
                         ).setRowHeights(
                                 rowHeights("11")
-                        ).setMaxColumn(
-                                OptionalInt.of(10)
-                        ).setMaxRow(
-                                OptionalInt.of(10)
+                        ).setTotalWidth(
+                                OptionalDouble.of(11 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(11 * ROW_HEIGHT)
                         )
         );
     }
@@ -8179,10 +8177,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         columnWidths("F,G")
                 ).setRowHeights(
                         rowHeights("6,7")
-                ).setMaxColumn(
-                        OptionalInt.empty()
-                ).setMaxRow(
-                        OptionalInt.empty()
+                ).setTotalWidth(
+                        OptionalDouble.of(0)
+                ).setTotalHeight(
+                        OptionalDouble.of(0)
                 )
         );
 
@@ -8224,10 +8222,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("F,G")
                         ).setRowHeights(
                                 rowHeights("6,7")
-                        ).setMaxColumn(
-                                OptionalInt.of(10)
-                        ).setMaxRow(
-                                OptionalInt.of(10)
+                        ).setTotalWidth(
+                                OptionalDouble.of(11 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(11 * ROW_HEIGHT)
                         )
         );
 
@@ -8248,10 +8246,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("K")
                         ).setRowHeights(
                                 rowHeights("11")
-                        ).setMaxColumn(
-                                OptionalInt.of(10)
-                        ).setMaxRow(
-                                OptionalInt.of(10)
+                        ).setTotalWidth(
+                                OptionalDouble.of(11 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(11 * ROW_HEIGHT)
                         )
         );
     }
@@ -8287,10 +8285,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
                );
 
@@ -8311,10 +8309,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
 
@@ -8333,10 +8331,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
     }
@@ -8377,10 +8375,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("2,3")
-                        ).setMaxColumn(
-                                OptionalInt.of(10)
-                        ).setMaxRow(
-                                OptionalInt.of(10)
+                        ).setTotalWidth(
+                                OptionalDouble.of(11 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(11 * ROW_HEIGHT)
                         )
                 );
 
@@ -8401,10 +8399,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(10)
-                        ).setMaxRow(
-                                OptionalInt.of(10)
+                        ).setTotalWidth(
+                                OptionalDouble.of(11 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(11 * ROW_HEIGHT)
                         )
         ); // fill should have evaluated.
 
@@ -8423,10 +8421,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(10)
-                        ).setMaxRow(
-                                OptionalInt.of(10)
+                        ).setTotalWidth(
+                                OptionalDouble.of(11 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(11 * ROW_HEIGHT)
                         )
         );
 
@@ -8445,10 +8443,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("K")
                         ).setRowHeights(
                                 rowHeights("11")
-                        ).setMaxColumn(
-                                OptionalInt.of(10)
-                        ).setMaxRow(
-                                OptionalInt.of(10)
+                        ).setTotalWidth(
+                                OptionalDouble.of(11 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(11 * ROW_HEIGHT)
                         )
         );
     }
@@ -8488,10 +8486,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
 
@@ -8512,10 +8510,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
 
@@ -8534,10 +8532,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
     }
@@ -8575,10 +8573,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("2")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
 
@@ -8599,10 +8597,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("B")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         );
     }
@@ -8765,10 +8763,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("AE")
                         ).setRowHeights(
                                 rowHeights("41")
-                        ).setMaxColumn(
-                                OptionalInt.of(30)
-                        ).setMaxRow(
-                                OptionalInt.of(40)
+                        ).setTotalWidth(
+                                OptionalDouble.of(31 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(41 * ROW_HEIGHT)
                         )
         );
 
@@ -8813,10 +8811,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("AE,AF")
                         ).setRowHeights(
                                 rowHeights("41,42")
-                        ).setMaxColumn(
-                                OptionalInt.of(31)
-                        ).setMaxRow(
-                                OptionalInt.of(41)
+                        ).setTotalWidth(
+                                OptionalDouble.of(32 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(42 * ROW_HEIGHT)
                         )
         );
 
@@ -8861,10 +8859,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("AE,AF")
                         ).setRowHeights(
                                 rowHeights("41,42")
-                        ).setMaxColumn(
-                                OptionalInt.of(31)
-                        ).setMaxRow(
-                                OptionalInt.of(41)
+                        ).setTotalWidth(
+                                OptionalDouble.of(32 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(42 * ROW_HEIGHT)
                         )
         );
 
@@ -8909,10 +8907,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("AE,AF")
                         ).setRowHeights(
                                 rowHeights("41,42")
-                        ).setMaxColumn(
-                                OptionalInt.of(31)
-                        ).setMaxRow(
-                                OptionalInt.of(41)
+                        ).setTotalWidth(
+                                OptionalDouble.of(32 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(42 * ROW_HEIGHT)
                         )
         );
 
@@ -8961,10 +8959,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("AE,AF,AG,AH,AI,AJ")
                         ).setRowHeights(
                                 rowHeights("41,42")
-                        ).setMaxColumn(
-                                OptionalInt.of(35)
-                        ).setMaxRow(
-                                OptionalInt.of(41)
+                        ).setTotalWidth(
+                                OptionalDouble.of(36 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(42 * ROW_HEIGHT)
                         )
         );
 
@@ -9013,10 +9011,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("AE,AF")
                         ).setRowHeights(
                                 rowHeights("41,42,43,44,45,46")
-                        ).setMaxColumn(
-                                OptionalInt.of(31)
-                        ).setMaxRow(
-                                OptionalInt.of(45)
+                        ).setTotalWidth(
+                                OptionalDouble.of(32 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(46 * ROW_HEIGHT)
                         )
         );
 
@@ -9058,10 +9056,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("K,AE")
                         ).setRowHeights(
                                 rowHeights("21,41")
-                        ).setMaxColumn(
-                                OptionalInt.of(30)
-                        ).setMaxRow(
-                                OptionalInt.of(40)
+                        ).setTotalWidth(
+                                OptionalDouble.of(31 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(41 * ROW_HEIGHT)
                         )
                 );
 
@@ -9098,10 +9096,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("E,F")
                         ).setRowHeights(
                                 rowHeights("5,6")
-                        ).setMaxColumn(
-                                OptionalInt.of(5)
-                        ).setMaxRow(
-                                OptionalInt.of(5)
+                        ).setTotalWidth(
+                                OptionalDouble.of(6 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(6 * ROW_HEIGHT)
                         )
         );
 
@@ -9140,10 +9138,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A,C")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(0)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(1 * ROW_HEIGHT)
                         )
                 ); // copied
 
@@ -9196,10 +9194,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         ); // copied
 
@@ -9252,10 +9250,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("C")
                         ).setRowHeights(
                                 rowHeights("3")
-                        ).setMaxColumn(
-                                OptionalInt.of(2)
-                        ).setMaxRow(
-                                OptionalInt.of(2)
+                        ).setTotalWidth(
+                                OptionalDouble.of(3 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(3 * ROW_HEIGHT)
                         )
         ); // copied
 
@@ -9361,10 +9359,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
                 );
     }
@@ -9407,10 +9405,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
     }
@@ -9453,10 +9451,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 COLUMN_A_WIDTH
                         ).setRowHeights(
                                 ROW_1_HEIGHT
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
     }
@@ -9512,10 +9510,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -9571,10 +9569,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 
@@ -9633,10 +9631,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 columnWidths("A")
                         ).setRowHeights(
                                 rowHeights("1")
-                        ).setMaxColumn(
-                                OptionalInt.of(1)
-                        ).setMaxRow(
-                                OptionalInt.of(1)
+                        ).setTotalWidth(
+                                OptionalDouble.of(2 * COLUMN_WIDTH)
+                        ).setTotalHeight(
+                                OptionalDouble.of(2 * ROW_HEIGHT)
                         )
         );
 

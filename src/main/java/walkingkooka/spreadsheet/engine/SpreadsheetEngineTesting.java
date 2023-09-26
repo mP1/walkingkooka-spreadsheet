@@ -62,7 +62,7 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.OptionalDouble;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -459,26 +459,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context
         );
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
-        final int columns = cellStore.columns();
-        final int rows = cellStore.rows();
-
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(cells)
-                .setMaxColumn(
-                        -1 == columns ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(
-                                        columns
-                                )
-                ).setMaxRow(
-                        -1 == rows ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(
-                                        rows
-                                )
+                .setTotalWidth(
+                        OptionalDouble.of(
+                                engine.allColumnsWidth(context)
+                        )
+                )
+                .setTotalHeight(
+                        OptionalDouble.of(
+                                engine.allRowsHeight(context)
+                        )
                 );
         this.checkEquals(
                 expected,
@@ -522,22 +513,19 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context
         );
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
-        final int columns = cellStore.columns();
-        final int rows = cellStore.rows();
 
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setMaxColumn(
-                        -1 == columns ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(columns)
-                ).setMaxRow(
-                        -1 == rows ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(rows)
+                .setTotalWidth(
+                        OptionalDouble.of(
+                                engine.allColumnsWidth(context)
+                        )
+                )
+                .setTotalHeight(
+                        OptionalDouble.of(
+                                engine.allRowsHeight(context)
+                        )
                 );
+        ;
         this.checkEquals(
                 expected,
                 result,
@@ -977,24 +965,20 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 count,
                 context
         );
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
-        final int columns = cellStore.columns();
-        final int rows = cellStore.rows();
 
         this.checkEquals(
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(updated)
-                ).setMaxColumn(
-                        -1 == columns ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(columns)
-                ).setMaxRow(
-                        -1 == rows ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(rows)
-                ),
+                                Sets.of(updated)
+                        ).setTotalWidth(
+                                OptionalDouble.of(
+                                        engine.allColumnsWidth(context)
+                                )
+                        )
+                        .setTotalHeight(
+                                OptionalDouble.of(
+                                        engine.allRowsHeight(context)
+                                )
+                        ),
                 result,
                 () -> "deleteColumns column: " + column + " count: " + count
         );
@@ -1019,25 +1003,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final SpreadsheetCell... updated) {
         final SpreadsheetDelta result = engine.deleteRows(row, count, context);
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
-        final int columns = cellStore.columns();
-        final int rows = cellStore.rows();
-
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(updated)
 
-                ).setMaxColumn(
-                        -1 == columns ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(columns)
-                ).setMaxRow(
-                        -1 == rows ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(rows)
+                ).setTotalWidth(
+                        OptionalDouble.of(
+                                engine.allColumnsWidth(context)
+                        )
+                )
+                .setTotalHeight(
+                        OptionalDouble.of(
+                                engine.allRowsHeight(context)
+                        )
                 );
+        ;
         this.checkEquals(
                 expected,
                 result,
@@ -1068,19 +1048,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context
         );
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(updated)
-                ).setMaxColumn(
-                        OptionalInt.of(
-                                cellStore.columns()
+                ).setTotalWidth(
+                        OptionalDouble.of(
+                                engine.allColumnsWidth(context)
                         )
-                ).setMaxRow(
-                        OptionalInt.of(
-                                cellStore.rows()
+                )
+                .setTotalHeight(
+                        OptionalDouble.of(
+                                engine.allRowsHeight(context)
                         )
                 );
 
@@ -1120,13 +1098,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(updated)
-                ).setMaxColumn(
-                        OptionalInt.of(
-                                cellStore.columns()
+                ).setTotalWidth(
+                        OptionalDouble.of(
+                                engine.allColumnsWidth(context)
                         )
-                ).setMaxRow(
-                        OptionalInt.of(
-                                cellStore.rows()
+                )
+                .setTotalHeight(
+                        OptionalDouble.of(
+                                engine.allRowsHeight(context)
                         )
                 );
 
@@ -1179,24 +1158,18 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context
         );
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
-        final int columns = cellStore.columns();
-        final int rows = cellStore.rows();
-
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(updated)
-
-                ).setMaxColumn(
-                        -1 == columns ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(columns)
-                ).setMaxRow(
-                        -1 == rows ?
-                                OptionalInt.empty() :
-                                OptionalInt.of(rows)
+                ).setTotalWidth(
+                        OptionalDouble.of(
+                                engine.allColumnsWidth(context)
+                        )
+                )
+                .setTotalHeight(
+                        OptionalDouble.of(
+                                engine.allRowsHeight(context)
+                        )
                 ).setWindow(
                         result.window()
                 );

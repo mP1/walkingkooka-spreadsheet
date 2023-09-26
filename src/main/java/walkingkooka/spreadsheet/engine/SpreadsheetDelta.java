@@ -63,7 +63,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -91,8 +91,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final static Map<SpreadsheetColumnReference, Double> NO_COLUMN_WIDTHS = Maps.empty();
     public final static Map<SpreadsheetRowReference, Double> NO_ROW_HEIGHTS = Maps.empty();
 
-    public final static OptionalInt NO_MAX_COLUMN = OptionalInt.empty();
-    public final static OptionalInt NO_MAX_ROW = OptionalInt.empty();
+    public final static OptionalDouble NO_TOTAL_WIDTH = OptionalDouble.empty();
+    public final static OptionalDouble NO_TOTAL_HEIGHT = OptionalDouble.empty();
 
     public final static SpreadsheetViewportWindows NO_WINDOW = SpreadsheetViewportWindows.EMPTY;
 
@@ -110,8 +110,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             NO_DELETED_ROWS,
             NO_COLUMN_WIDTHS,
             NO_ROW_HEIGHTS,
-            NO_MAX_COLUMN,
-            NO_MAX_ROW
+            NO_TOTAL_WIDTH,
+            NO_TOTAL_HEIGHT
     );
 
     /**
@@ -127,8 +127,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                      final Set<SpreadsheetRowReference> deletedRows,
                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                      final Map<SpreadsheetRowReference, Double> rowHeights,
-                     final OptionalInt maxColumn,
-                     final OptionalInt maxRow) {
+                     final OptionalDouble totalWidth,
+                     final OptionalDouble totalHeight) {
         super();
 
         this.viewportSelection = viewportSelection;
@@ -144,8 +144,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         this.columnWidths = columnWidths;
         this.rowHeights = rowHeights;
 
-        this.maxColumn = maxColumn;
-        this.maxRow = maxRow;
+        this.totalWidth = totalWidth;
+        this.totalHeight = totalHeight;
     }
 
     // viewportSelection................................................................................................
@@ -522,43 +522,43 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // max..............................................................................................................
 
-    public final OptionalInt maxColumn() {
-        return this.maxColumn;
+    public final OptionalDouble totalWidth() {
+        return this.totalWidth;
     }
 
-    public SpreadsheetDelta setMaxColumn(final OptionalInt maxColumn) {
-        checkMax(maxColumn, "maxColumn");
+    public SpreadsheetDelta setTotalWidth(final OptionalDouble totalWidth) {
+        checkTotal(totalWidth, "totalWidth");
 
-        return this.maxColumn.equals(maxColumn) ?
+        return this.totalWidth.equals(totalWidth) ?
                 this :
-                this.replaceMaxColumn(maxColumn);
+                this.replaceTotalWidth(totalWidth);
     }
 
-    abstract SpreadsheetDelta replaceMaxColumn(final OptionalInt maxColumn);
+    abstract SpreadsheetDelta replaceTotalWidth(final OptionalDouble totalWidth);
 
-    final OptionalInt maxColumn;
+    final OptionalDouble totalWidth;
 
-    public final OptionalInt maxRow() {
-        return this.maxRow;
+    public final OptionalDouble totalHeight() {
+        return this.totalHeight;
     }
 
-    final OptionalInt maxRow;
+    final OptionalDouble totalHeight;
 
-    public SpreadsheetDelta setMaxRow(final OptionalInt maxRow) {
-        checkMax(maxRow, "maxRow");
+    public SpreadsheetDelta setTotalHeight(final OptionalDouble totalHeight) {
+        checkTotal(totalHeight, "totalHeight");
 
-        return this.maxRow.equals(maxRow) ?
+        return this.totalHeight.equals(totalHeight) ?
                 this :
-                this.replaceMaxRow(maxRow);
+                this.replaceTotalHeight(totalHeight);
     }
 
-    abstract SpreadsheetDelta replaceMaxRow(final OptionalInt maxRow);
+    abstract SpreadsheetDelta replaceTotalHeight(final OptionalDouble totalHeight);
 
-    private void checkMax(final OptionalInt maybeValue,
-                          final String label) {
+    private void checkTotal(final OptionalDouble maybeValue,
+                            final String label) {
         Objects.requireNonNull(maybeValue, label);
         if (maybeValue.isPresent()) {
-            final int value = maybeValue.getAsInt();
+            final double value = maybeValue.getAsDouble();
             if (value < 0) {
                 throw new IllegalArgumentException("Invalid " + label + " = " + value + " < 0");
             }
@@ -606,8 +606,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 window
         );
 
-        final OptionalInt maxColumn = this.maxColumn;
-        final OptionalInt maxRow = this.maxRow;
+        final OptionalDouble totalWidth = this.totalWidth;
+        final OptionalDouble totalHeight = this.totalHeight;
 
         final SpreadsheetDelta delta;
         if (false == window.isEmpty()) {
@@ -622,8 +622,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     filterDeletedRows0(deletedRows, window),
                     filterColumnWidths0(columnWidths, window),
                     filterRowHeights0(rowHeights, window),
-                    maxColumn,
-                    maxRow,
+                    totalWidth,
+                    totalHeight,
                     window
             );
         } else {
@@ -638,8 +638,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     deletedRows,
                     columnWidths,
                     rowHeights,
-                    maxColumn,
-                    maxRow
+                    totalWidth,
+                    totalHeight
             );
         }
 
@@ -1579,15 +1579,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     printer
             );
 
-            this.printTreeOptionalInt(
-                    "maxColumn",
-                    this.maxColumn(),
+            this.printTreeOptionalDouble(
+                    "totalWidth",
+                    this.totalWidth(),
                     printer
             );
 
-            this.printTreeOptionalInt(
-                    "maxRow",
-                    this.maxRow(),
+            this.printTreeOptionalDouble(
+                    "totalHeight",
+                    this.totalHeight(),
                     printer
             );
 
@@ -1664,11 +1664,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
     }
 
-    private void printTreeOptionalInt(final String label,
-                                      final OptionalInt value,
-                                      final IndentingPrinter printer) {
+    private void printTreeOptionalDouble(final String label,
+                                         final OptionalDouble value,
+                                         final IndentingPrinter printer) {
         if (value.isPresent()) {
-            printer.println(label + ": " + value.getAsInt());
+            printer.println(label + ": " + value.getAsDouble());
         }
     }
 
@@ -1773,8 +1773,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
 
                 case MAX_COLUMN_PROPERTY_STRING:
-                    unmarshalled = unmarshalled.setMaxColumn(
-                            OptionalInt.of(
+                    unmarshalled = unmarshalled.setTotalWidth(
+                            OptionalDouble.of(
                                     context.unmarshall(
                                             child,
                                             Integer.class
@@ -1783,8 +1783,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case MAX_ROW_PROPERTY_STRING:
-                    unmarshalled = unmarshalled.setMaxRow(
-                            OptionalInt.of(
+                    unmarshalled = unmarshalled.setTotalHeight(
+                            OptionalDouble.of(
                                     context.unmarshall(
                                             child,
                                             Integer.class
@@ -1963,18 +1963,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             );
         }
 
-        final OptionalInt maxColumn = this.maxColumn;
-        if (maxColumn.isPresent()) {
+        final OptionalDouble totalWidth = this.totalWidth;
+        if (totalWidth.isPresent()) {
             children.add(
-                    context.marshall(maxColumn.getAsInt())
+                    context.marshall(totalWidth.getAsDouble())
                             .setName(MAX_COLUMN_PROPERTY)
             );
         }
 
-        final OptionalInt maxRow = this.maxRow;
-        if (maxRow.isPresent()) {
+        final OptionalDouble totalHeight = this.totalHeight;
+        if (totalHeight.isPresent()) {
             children.add(
-                    context.marshall(maxRow.getAsInt())
+                    context.marshall(totalHeight.getAsDouble())
                             .setName(MAX_ROW_PROPERTY)
             );
         }
@@ -2045,8 +2045,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String COLUMN_WIDTHS_PROPERTY_STRING = "columnWidths";
     private final static String ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
 
-    private final static String MAX_COLUMN_PROPERTY_STRING = "maxColumn";
-    private final static String MAX_ROW_PROPERTY_STRING = "maxRow";
+    private final static String MAX_COLUMN_PROPERTY_STRING = "totalWidth";
+    private final static String MAX_ROW_PROPERTY_STRING = "totalHeight";
 
     private final static String WINDOW_PROPERTY_STRING = "window";
 
@@ -2112,8 +2112,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.deletedCells,
                 this.columnWidths,
                 this.rowHeights,
-                this.maxColumn,
-                this.maxRow,
+                this.totalWidth,
+                this.totalHeight,
                 this.window().hashCode()
         );
     }
@@ -2134,8 +2134,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.deletedCells.equals(other.deletedCells) &&
                 this.columnWidths.equals(other.columnWidths) &&
                 this.rowHeights.equals(other.rowHeights) &&
-                this.maxColumn.equals(other.maxColumn) &&
-                this.maxRow.equals(other.maxRow) &&
+                this.totalWidth.equals(other.totalWidth) &&
+                this.totalHeight.equals(other.totalHeight) &&
                 this.window().equals(other.window());
     }
 
@@ -2182,8 +2182,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             b.value(rowHeights);
         }
 
-        b.label("maxColumn").value(this.maxColumn);
-        b.label("maxRow").value(this.maxRow);
+        b.label("totalWidth").value(this.totalWidth);
+        b.label("totalHeight").value(this.totalHeight);
 
         this.toStringWindow(b);
 
