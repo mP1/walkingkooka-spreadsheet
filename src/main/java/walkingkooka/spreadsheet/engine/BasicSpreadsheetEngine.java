@@ -76,7 +76,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -774,30 +774,22 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             delta = delta.setRowHeights(rowsHeights);
         }
 
-        final boolean maxColumns = deltaProperties.contains(SpreadsheetDeltaProperties.MAX_COLUMNS);
-        final boolean maxRows = deltaProperties.contains(SpreadsheetDeltaProperties.MAX_ROWS);
+        final boolean hasTotalWidth = deltaProperties.contains(SpreadsheetDeltaProperties.TOTAL_WIDTH);
+        final boolean hasTotalHeight = deltaProperties.contains(SpreadsheetDeltaProperties.TOTAL_HEIGHT);
 
-        if (maxColumns || maxRows) {
-            final SpreadsheetCellStore cellStore = context.storeRepository()
-                    .cells();
-            if (maxColumns) {
-                final int maxColumn = cellStore.columns();
-                delta = delta.setMaxColumn(
-                        -1 != maxColumn ?
-                                OptionalInt.of(
-                                        maxColumn
-                                ) :
-                                OptionalInt.empty()
+        if (hasTotalWidth || hasTotalHeight) {
+            if (hasTotalWidth) {
+                delta = delta.setTotalWidth(
+                        OptionalDouble.of(
+                                this.allColumnsWidth(context)
+                        )
                 );
             }
-            if (maxRows) {
-                final int maxRow = cellStore.rows();
-                delta = delta.setMaxRow(
-                        -1 != maxRow ?
-                                OptionalInt.of(
-                                        maxRow
-                                ) :
-                                OptionalInt.empty()
+            if (hasTotalHeight) {
+                delta = delta.setTotalHeight(
+                        OptionalDouble.of(
+                                this.allRowsHeight(context)
+                        )
                 );
             }
         }
