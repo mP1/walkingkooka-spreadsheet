@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
@@ -61,6 +62,15 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
         super();
         this.engine = engine;
         this.stamper = stamper;
+    }
+
+    @Override
+    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id,
+                                                      final SpreadsheetEngineContext context) {
+        return this.engine.loadMetadata(
+                id,
+                context
+        );
     }
 
     @Override

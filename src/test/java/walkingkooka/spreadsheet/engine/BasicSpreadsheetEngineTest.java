@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -260,6 +261,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
+
+    // loadMetadata.....................................................................................................
+
+    @Test
+    public void testLoadMetadata() {
+        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+
+        final SpreadsheetMetadata metadata = store.save(
+                this.metadata()
+        );
+
+        this.loadMetadataAndCheck(
+                this.createSpreadsheetEngine(),
+                metadata.id().get(),
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public SpreadsheetStoreRepository storeRepository() {
+                        return new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public SpreadsheetMetadataStore metadatas() {
+                                return store;
+                            }
+                        };
+                    }
+                },
+                metadata
+        );
+    }
 
     // loadCells........................................................................................................
 
