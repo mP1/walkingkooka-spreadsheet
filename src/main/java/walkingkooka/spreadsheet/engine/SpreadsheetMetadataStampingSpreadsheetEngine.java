@@ -74,6 +74,15 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata,
+                                            final SpreadsheetEngineContext context) {
+        return this.engine.saveMetadata(
+                metadata,
+                context
+        );
+    }
+
+    @Override
     public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,

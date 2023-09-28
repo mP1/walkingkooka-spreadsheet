@@ -49,6 +49,12 @@ public interface SpreadsheetEngine {
                                                final SpreadsheetEngineContext context);
 
     /**
+     * Saves the given {@link SpreadsheetMetadata}
+     */
+    SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata,
+                                     final SpreadsheetEngineContext context);
+
+    /**
      * Loads the requested {@link SpreadsheetColumnReference} which may include parsing the formula as necessary and then
      * evaluating the value of the requested cells.<br>
      * <ul>
