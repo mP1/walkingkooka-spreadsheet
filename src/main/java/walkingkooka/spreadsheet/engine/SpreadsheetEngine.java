@@ -19,11 +19,9 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -41,18 +39,6 @@ import java.util.Set;
  * The engine or host for the active spreadsheet.
  */
 public interface SpreadsheetEngine {
-
-    /**
-     * Loads the requested {@link SpreadsheetMetadata}
-     */
-    Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id,
-                                               final SpreadsheetEngineContext context);
-
-    /**
-     * Saves the given {@link SpreadsheetMetadata}
-     */
-    SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata,
-                                     final SpreadsheetEngineContext context);
 
     /**
      * Loads the requested {@link SpreadsheetColumnReference} which may include parsing the formula as necessary and then

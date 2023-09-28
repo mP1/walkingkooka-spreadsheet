@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
@@ -97,30 +96,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private BasicSpreadsheetEngine() {
         super();
-    }
-
-    // METADATA.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id,
-                                                      final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(id, "id");
-        checkContext(context);
-
-        return context.storeRepository()
-                .metadatas()
-                .load(id);
-    }
-
-    @Override
-    public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata,
-                                            final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(metadata, "metadata");
-        checkContext(context);
-
-        return context.storeRepository()
-                .metadatas()
-                .save(metadata);
     }
 
     // LOAD CELL........................................................................................................
