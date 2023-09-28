@@ -35,8 +35,10 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetViewport;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -76,6 +78,73 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     SpreadsheetRowReference ROW = SpreadsheetReferenceKind.ABSOLUTE.row(2);
     SpreadsheetCellReference CELL_REFERENCE = COLUMN.setRow(ROW);
     SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("LABEL123");
+
+    // metadata.........................................................................................................
+
+    @Test
+    default void testLoadMetadataWithNullIdFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadMetadata(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadMetadataWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadMetadata(
+                                SpreadsheetId.with(1),
+                                null
+                        )
+        );
+    }
+
+    default void loadMetadataAndCheck(final SpreadsheetEngine engine,
+                                      final SpreadsheetId id,
+                                      final SpreadsheetEngineContext context) {
+        this.loadMetadataAndCheck(
+                engine,
+                id,
+                context,
+                Optional.empty()
+        );
+    }
+
+    default void loadMetadataAndCheck(final SpreadsheetEngine engine,
+                                      final SpreadsheetId id,
+                                      final SpreadsheetEngineContext context,
+                                      final SpreadsheetMetadata expected) {
+        this.loadMetadataAndCheck(
+                engine,
+                id,
+                context,
+                Optional.of(
+                        expected
+                )
+        );
+    }
+
+    default void loadMetadataAndCheck(final SpreadsheetEngine engine,
+                                      final SpreadsheetId id,
+                                      final SpreadsheetEngineContext context,
+                                      final Optional<SpreadsheetMetadata> expected) {
+        this.checkEquals(
+                expected,
+                engine.loadMetadata(
+                        id,
+                        context
+                ),
+                () -> "loadMetadata " + id
+        );
+    }
+
+    // cells............................................................................................................
 
     @Test
     default void testLoadCellsNullSelectionFails() {
