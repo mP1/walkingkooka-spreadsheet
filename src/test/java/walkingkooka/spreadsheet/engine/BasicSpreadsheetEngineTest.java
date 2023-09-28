@@ -290,6 +290,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // saveMetadata.....................................................................................................
+
+    @Test
+    public void testSaveMetadata() {
+        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+
+        final SpreadsheetMetadata metadata = store.save(
+                this.metadata()
+        );
+
+        this.saveMetadataAndCheck(
+                this.createSpreadsheetEngine(),
+                metadata,
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public SpreadsheetStoreRepository storeRepository() {
+                        return new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public SpreadsheetMetadataStore metadatas() {
+                                return store;
+                            }
+                        };
+                    }
+                },
+                metadata
+        );
+    }
+
     // loadCells........................................................................................................
 
     @Test

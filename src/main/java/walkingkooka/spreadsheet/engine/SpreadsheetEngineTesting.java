@@ -144,6 +144,44 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    @Test
+    default void testSaveMetadataWithNullSpreadsheetMetadataFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveMetadata(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testSaveMetadataWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveMetadata(
+                                SpreadsheetMetadata.EMPTY,
+                                null
+                        )
+        );
+    }
+
+    default void saveMetadataAndCheck(final SpreadsheetEngine engine,
+                                      final SpreadsheetMetadata metadata,
+                                      final SpreadsheetEngineContext context,
+                                      final SpreadsheetMetadata expected) {
+        this.checkEquals(
+                expected,
+                engine.saveMetadata(
+                        metadata,
+                        context
+                ),
+                () -> "saveMetadata " + metadata
+        );
+    }
+
     // cells............................................................................................................
 
     @Test

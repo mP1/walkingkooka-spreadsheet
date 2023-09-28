@@ -112,6 +112,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .load(id);
     }
 
+    @Override
+    public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata,
+                                            final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(metadata, "metadata");
+        checkContext(context);
+
+        return context.storeRepository()
+                .metadatas()
+                .save(metadata);
+    }
+
     // LOAD CELL........................................................................................................
 
     /**
