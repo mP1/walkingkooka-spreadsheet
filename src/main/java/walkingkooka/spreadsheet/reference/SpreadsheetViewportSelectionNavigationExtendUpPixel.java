@@ -31,6 +31,6 @@ final class SpreadsheetViewportSelectionNavigationExtendUpPixel extends Spreadsh
 
     @Override
     public String text() {
-        return "extend-top " + this.value + "px";
+        return "extend-up " + this.value + "px";
     }
 }
