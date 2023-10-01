@@ -56,6 +56,10 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
 
     // update...........................................................................................................
 
+    final static int COLUMN_WIDTH = 100;
+
+    final static int ROW_HEIGHT = 30;
+
     void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
                         final SpreadsheetSelection selection) {
         this.updateAndCheck(
@@ -138,13 +142,9 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
         );
     }
 
-    final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> {
-        throw new UnsupportedOperationException();
-    };
+    final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> 1.0 * COLUMN_WIDTH;
 
-    final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> {
-        throw new UnsupportedOperationException();
-    };
+    final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> 1.0 * ROW_HEIGHT;
 
     abstract T createSpreadsheetViewportSelectionNavigation();
 

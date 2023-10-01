@@ -19,6 +19,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import java.util.Optional;
+
 final class SpreadsheetViewportSelectionNavigationDownPixel extends SpreadsheetViewportSelectionNavigationPixel {
 
     static SpreadsheetViewportSelectionNavigationDownPixel with(final int value) {
@@ -27,6 +29,17 @@ final class SpreadsheetViewportSelectionNavigationDownPixel extends SpreadsheetV
 
     private SpreadsheetViewportSelectionNavigationDownPixel(final int value) {
         super(value);
+    }
+
+    @Override
+    public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                                         final SpreadsheetViewportSelectionNavigationContext context) {
+        return selection.downPixels(
+                anchor,
+                this.value,
+                context
+        ).map(s -> s.setAnchorOrDefault(anchor));
     }
 
     @Override

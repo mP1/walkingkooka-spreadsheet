@@ -17,12 +17,39 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
+
 public final class SpreadsheetViewportSelectionNavigationDownPixelTest extends SpreadsheetViewportSelectionNavigationTestCase2<SpreadsheetViewportSelectionNavigationDownPixel> {
 
+    @Test
+    public void testUpdateCell() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportSelectionNavigation(),
+                SpreadsheetSelection.parseCell("E5"),
+                SpreadsheetSelection.parseCell("E7")
+        );
+    }
+
+    @Test
+    public void testUpdateColumn() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportSelectionNavigation(),
+                SpreadsheetSelection.parseColumn("E")
+        );
+    }
+
+    @Test
+    public void testUpdateRow() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportSelectionNavigation(),
+                SpreadsheetSelection.parseRow("5"),
+                SpreadsheetSelection.parseRow("7")
+        );
+    }
     @Override
     SpreadsheetViewportSelectionNavigationDownPixel createSpreadsheetViewportSelectionNavigation() {
         return SpreadsheetViewportSelectionNavigationDownPixel.with(
-                999
+                2 * ROW_HEIGHT - 1
         );
     }
 
