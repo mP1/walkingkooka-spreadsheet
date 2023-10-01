@@ -18,7 +18,13 @@
 
 package walkingkooka.spreadsheet.reference;
 
-public final class SpreadsheetViewportSelectionNavigationExtendDownRowTest extends SpreadsheetViewportSelectionNavigationTestCase<SpreadsheetViewportSelectionNavigationExtendDownRow> {
+public final class SpreadsheetViewportSelectionNavigationExtendDownRowTest extends SpreadsheetViewportSelectionNavigationTestCase2<SpreadsheetViewportSelectionNavigationExtendDownRow> {
+
+    @Override
+    SpreadsheetViewportSelectionNavigationExtendDownRow createSpreadsheetViewportSelectionNavigation() {
+        return SpreadsheetViewportSelectionNavigationExtendDownRow.INSTANCE;
+    }
+
     @Override
     public Class<SpreadsheetViewportSelectionNavigationExtendDownRow> type() {
         return SpreadsheetViewportSelectionNavigationExtendDownRow.class;
