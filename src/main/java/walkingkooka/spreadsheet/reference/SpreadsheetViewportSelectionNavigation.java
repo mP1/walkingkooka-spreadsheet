@@ -32,6 +32,7 @@ import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserReporter;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 
 import java.math.MathContext;
@@ -280,21 +281,42 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
         return Lists.immutable(navigations);
     }
 
+    /**
+     * Attempts to match the column or row suffix and if that fails expects a pixel value followed by px.
+     * <pre>
+     * left column
+     * left 123px
+     * </pre>
+     */
     private static SpreadsheetViewportSelectionNavigation parse(final TextCursor cursor,
                                                                 final Parser<ParserContext> columnOrRowParser,
                                                                 final Supplier<SpreadsheetViewportSelectionNavigation> columnOrRowNavigation,
                                                                 final IntFunction<SpreadsheetViewportSelectionNavigation> columnOrRowPixel) {
         SPACE.parse(cursor, CONTEXT);
 
-        return columnOrRowParser.parse(cursor, CONTEXT).isPresent() ?
-                columnOrRowNavigation.get() :
-                columnOrRowPixel.apply(
-                        VALUE.parse(cursor, CONTEXT)
-                                .get()
-                                .cast(LongParserToken.class)
-                                .value()
-                                .intValue()
-                );
+        final SpreadsheetViewportSelectionNavigation navigation;
+
+        final Optional<ParserToken> maybeColumnOrRow = columnOrRowParser.parse(cursor, CONTEXT);
+        if (maybeColumnOrRow.isPresent()) {
+            navigation = columnOrRowNavigation.get();
+        } else {
+            navigation = columnOrRowPixel.apply(
+                    VALUE.parse(
+                                    cursor,
+                                    CONTEXT
+                            ).get()
+                            .cast(LongParserToken.class)
+                            .value()
+                            .intValue()
+            );
+
+            PX.parse(
+                    cursor,
+                    CONTEXT
+            );
+        }
+
+        return navigation;
     }
 
     private final static ParserReporter<ParserContext> INVALID_CHARACTER_EXCEPTION = ParserReporters.invalidCharacterException();
@@ -325,6 +347,9 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
     private final static Parser<ParserContext> COLUMN = stringParser("column");
 
     private final static Parser<ParserContext> ROW = stringParser("row");
+
+    private final static Parser<ParserContext> PX = stringParser("px")
+            .orReport(INVALID_CHARACTER_EXCEPTION);
 
     private final static Parser<ParserContext> SEPARATOR = Parsers.character(
             CharPredicates.is(SpreadsheetViewportSelection.SEPARATOR.character())

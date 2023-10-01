@@ -93,6 +93,32 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     }
 
     @Test
+    public void testParseMissingPxSuffix() {
+        final String text = "down 123";
+
+        this.parseStringFails(
+                text,
+                new InvalidCharacterException(
+                        text,
+                        0
+                )
+        );
+    }
+
+    @Test
+    public void testParseIncompletePxSuffix() {
+        final String text = "extend-left 45p";
+
+        this.parseStringFails(
+                text,
+                new InvalidCharacterException(
+                        text,
+                        text.length() - 1
+                )
+        );
+    }
+
+    @Test
     public void testParseEmpty() {
         this.parseStringAndCheck(
                 "",
@@ -194,7 +220,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testParseLeftPixelRightPixelUpPixelDownPixel() {
         this.parseStringAndCheck(
-                "left 10,right 20,up 30,down 40",
+                "left 10px,right 20px,up 30px,down 40px",
                 Lists.of(
                         SpreadsheetViewportSelectionNavigation.leftPixel(10),
                         SpreadsheetViewportSelectionNavigation.rightPixel(20),
@@ -207,7 +233,7 @@ public final class SpreadsheetViewportSelectionNavigationTest implements ParseSt
     @Test
     public void testParseExtendLeftPixelExtendRightPixelExtendUpPixelExtendDownPixel() {
         this.parseStringAndCheck(
-                "extend-left 10,extend-right 20,extend-up 30,extend-down 40",
+                "extend-left 10px,extend-right 20px,extend-up 30px,extend-down 40px",
                 Lists.of(
                         SpreadsheetViewportSelectionNavigation.extendLeftPixel(10),
                         SpreadsheetViewportSelectionNavigation.extendRightPixel(20),
