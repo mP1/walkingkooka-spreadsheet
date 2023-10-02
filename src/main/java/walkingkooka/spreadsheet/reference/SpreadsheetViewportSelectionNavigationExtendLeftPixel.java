@@ -18,6 +18,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import java.util.Optional;
+
 final class SpreadsheetViewportSelectionNavigationExtendLeftPixel extends SpreadsheetViewportSelectionNavigationPixel {
 
     static SpreadsheetViewportSelectionNavigationExtendLeftPixel with(final int value) {
@@ -26,6 +28,17 @@ final class SpreadsheetViewportSelectionNavigationExtendLeftPixel extends Spread
 
     private SpreadsheetViewportSelectionNavigationExtendLeftPixel(final int value) {
         super(value);
+    }
+
+    @Override
+    public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
+                                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                                         final SpreadsheetViewportSelectionNavigationContext context) {
+        return selection.extendLeftPixels(
+                anchor,
+                this.value,
+                context
+        );
     }
 
     @Override

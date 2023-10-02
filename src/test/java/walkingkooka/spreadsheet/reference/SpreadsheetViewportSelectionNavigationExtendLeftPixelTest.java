@@ -18,11 +18,40 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
+
 public final class SpreadsheetViewportSelectionNavigationExtendLeftPixelTest extends SpreadsheetViewportSelectionNavigationTestCase2<SpreadsheetViewportSelectionNavigationExtendLeftPixel> {
 
+    @Test
+    public void testUpdateCell() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportSelectionNavigation(),
+                SpreadsheetSelection.parseCell("E5"),
+                SpreadsheetSelection.parseCellRange("C5:E5")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+        );
+    }
+
+    @Test
+    public void testUpdateColumn() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportSelectionNavigation(),
+                SpreadsheetSelection.parseColumn("E"),
+                SpreadsheetSelection.parseColumnRange("C:E")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.RIGHT)
+        );
+    }
+
+    @Test
+    public void testUpdateRow() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportSelectionNavigation(),
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
     @Override
     SpreadsheetViewportSelectionNavigationExtendLeftPixel createSpreadsheetViewportSelectionNavigation() {
-        return SpreadsheetViewportSelectionNavigationExtendLeftPixel.with(456);
+        return SpreadsheetViewportSelectionNavigationExtendLeftPixel.with(2 * COLUMN_WIDTH - 1);
     }
 
     @Override

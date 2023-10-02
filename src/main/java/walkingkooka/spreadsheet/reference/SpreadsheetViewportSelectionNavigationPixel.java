@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import java.util.Optional;
-
 /**
  * Sub-classes represent scrolling of the viewport in either the horizontal or vertical directions. These are measured
  * in pixels, which will be used to skip non hidden columns or rows.
@@ -43,13 +41,6 @@ abstract class SpreadsheetViewportSelectionNavigationPixel extends SpreadsheetVi
     @Override
     final boolean isOpposite(final SpreadsheetViewportSelectionNavigation other) {
         return false;
-    }
-
-    @Override
-    public final Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                               final SpreadsheetViewportSelectionAnchor anchor,
-                                                               final SpreadsheetViewportSelectionNavigationContext context) {
-        throw new UnsupportedOperationException();
     }
 
     // Object...........................................................................................................
