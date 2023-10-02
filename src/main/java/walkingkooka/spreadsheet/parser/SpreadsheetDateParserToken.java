@@ -39,7 +39,7 @@ public final class SpreadsheetDateParserToken extends SpreadsheetParentParserTok
     }
 
     /**
-     * Creates a {@link LocalDate} from the components in this {@link SpreadsheetDateParserToken}.
+     * Creates a {@link LocalDate} parse the components in this {@link SpreadsheetDateParserToken}.
      */
     public LocalDate toLocalDate(final DateTimeContext context) {
         return SpreadsheetParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(

@@ -1433,7 +1433,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             this.checkNotEquals(
                     null,
                     length,
-                    () -> "Missing " + columnOrRow + " from " + columnOrRowToWidthOrHeight
+                    () -> "Missing " + columnOrRow + " parse " + columnOrRowToWidthOrHeight
             );
             return length;
         };

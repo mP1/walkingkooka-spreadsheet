@@ -39,7 +39,7 @@ public final class SpreadsheetNumberParserToken extends SpreadsheetParentParserT
     }
 
     /**
-     * Creates a {@link ExpressionNumber} from the components in this {@link SpreadsheetNumberParserToken}.
+     * Creates a {@link ExpressionNumber} parse the components in this {@link SpreadsheetNumberParserToken}.
      */
     public ExpressionNumber toNumber(final ExpressionNumberContext context) {
         return SpreadsheetParserTokenVisitorExpressionNumber.toExpressionNumber(

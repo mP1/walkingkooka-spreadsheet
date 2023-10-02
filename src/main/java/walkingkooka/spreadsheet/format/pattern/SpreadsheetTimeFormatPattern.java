@@ -30,7 +30,7 @@ import java.util.function.Consumer;
 public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern {
 
     /**
-     * Factory that creates a {@link ParserToken} from the given token.
+     * Factory that creates a {@link ParserToken} parse the given token.
      */
     static SpreadsheetTimeFormatPattern with(final ParserToken token) {
         SpreadsheetTimeFormatPatternSpreadsheetFormatParserTokenVisitor.with().startAccept(token);

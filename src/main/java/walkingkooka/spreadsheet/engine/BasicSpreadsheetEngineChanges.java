@@ -44,7 +44,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * Aggregates all the updated cells that result from an operation by {@link BasicSpreadsheetEngine}.
+ * Aggregates all the updated cells that result parse an operation by {@link BasicSpreadsheetEngine}.
  */
 final class BasicSpreadsheetEngineChanges implements AutoCloseable {
 

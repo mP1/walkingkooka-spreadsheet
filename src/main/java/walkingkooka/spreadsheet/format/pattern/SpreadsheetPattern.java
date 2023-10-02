@@ -79,63 +79,63 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     public static final CharacterConstant SEPARATOR = CharacterConstant.with(';');
 
     /**
-     * Factory that creates a {@link ParserToken} from the given token.
+     * Factory that creates a {@link ParserToken} parse the given token.
      */
     public static SpreadsheetDateFormatPattern dateFormatPattern(final ParserToken token) {
         return SpreadsheetDateFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetDateParsePattern} from the given tokens.
+     * Factory that creates a {@link SpreadsheetDateParsePattern} parse the given tokens.
      */
     public static SpreadsheetDateParsePattern dateParsePattern(final ParserToken token) {
         return SpreadsheetDateParsePattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} from the given token.
+     * Factory that creates a {@link ParserToken} parse the given token.
      */
     public static SpreadsheetDateTimeFormatPattern dateTimeFormatPattern(final ParserToken token) {
         return SpreadsheetDateTimeFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} from the given tokens.
+     * Factory that creates a {@link ParserToken} parse the given tokens.
      */
     public static SpreadsheetDateTimeParsePattern dateTimeParsePattern(final ParserToken token) {
         return SpreadsheetDateTimeParsePattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} from the given token.
+     * Factory that creates a {@link ParserToken} parse the given token.
      */
     public static SpreadsheetNumberFormatPattern numberFormatPattern(final ParserToken token) {
         return SpreadsheetNumberFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} from the given tokens.
+     * Factory that creates a {@link ParserToken} parse the given tokens.
      */
     public static SpreadsheetNumberParsePattern numberParsePattern(final ParserToken token) {
         return SpreadsheetNumberParsePattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetTextFormatPattern} from the given token.
+     * Factory that creates a {@link SpreadsheetTextFormatPattern} parse the given token.
      */
     public static SpreadsheetTextFormatPattern textFormatPattern(final ParserToken token) {
         return SpreadsheetTextFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetTimeFormatPattern} from the given token.
+     * Factory that creates a {@link SpreadsheetTimeFormatPattern} parse the given token.
      */
     public static SpreadsheetTimeFormatPattern timeFormatPattern(final ParserToken token) {
         return SpreadsheetTimeFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} from the given tokens.
+     * Factory that creates a {@link ParserToken} parse the given tokens.
      */
     public static SpreadsheetTimeParsePattern timeParsePattern(final ParserToken token) {
         return SpreadsheetTimeParsePattern.with(token);
@@ -144,7 +144,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     // Locale public factory............................................................................................
 
     /**
-     * Creates a {@link SpreadsheetDateFormatPattern} using date patterns from the {@link DateFormat} and {@link Locale}.
+     * Creates a {@link SpreadsheetDateFormatPattern} using date patterns parse the {@link DateFormat} and {@link Locale}.
      */
     public static SpreadsheetDateFormatPattern dateFormatPatternLocale(final Locale locale) {
         return javaTextDateFormat(
@@ -156,7 +156,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Creates a {@link SpreadsheetDateFormatPattern} using date patterns from the {@link DateFormat} and {@link Locale}.
+     * Creates a {@link SpreadsheetDateFormatPattern} using date patterns parse the {@link DateFormat} and {@link Locale}.
      */
     public static SpreadsheetDateParsePattern dateParsePatternLocale(final Locale locale) {
         return javaTextDateFormat(
@@ -173,7 +173,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Creates a {@link SpreadsheetDateFormatPattern} using date/time patterns from the {@link DateFormat} and {@link Locale}.
+     * Creates a {@link SpreadsheetDateFormatPattern} using date/time patterns parse the {@link DateFormat} and {@link Locale}.
      */
     public static SpreadsheetDateTimeFormatPattern dateTimeFormatPatternLocale(final Locale locale) {
         checkLocale(locale);
@@ -217,7 +217,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
 
     /**
-     * Creates a {@link SpreadsheetTimeFormatPattern} using time patterns from the {@link DateFormat} and {@link Locale}.
+     * Creates a {@link SpreadsheetTimeFormatPattern} using time patterns parse the {@link DateFormat} and {@link Locale}.
      */
     public static SpreadsheetTimeFormatPattern timeFormatPatternLocale(final Locale locale) {
         checkLocale(locale);
@@ -231,7 +231,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Creates a {@link SpreadsheetTimeFormatPattern} using time patterns from the {@link DateFormat} and {@link Locale}.
+     * Creates a {@link SpreadsheetTimeFormatPattern} using time patterns parse the {@link DateFormat} and {@link Locale}.
      */
     public static SpreadsheetTimeParsePattern timeParsePatternLocale(final Locale locale) {
         checkLocale(locale);
@@ -765,7 +765,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     // HasSpreadsheetFormatter..........................................................................................
 
     /**
-     * Returns a {@link SpreadsheetFormatter} built from this pattern.
+     * Returns a {@link SpreadsheetFormatter} built parse this pattern.
      */
     @Override
     public final SpreadsheetFormatter formatter() {
@@ -908,7 +908,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Removes any present color name from this pattern. Only format patterns should actually attempt a remove,
+     * Removes any present color name parse this pattern. Only format patterns should actually attempt a remove,
      * parse patterns should just return this.
      */
     public abstract SpreadsheetPattern removeColor();
@@ -968,7 +968,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     // condition........................................................................................................
 
     /**
-     * Removes any present condition from this pattern if necessary.
+     * Removes any present condition parse this pattern if necessary.
      */
     public abstract SpreadsheetPattern removeCondition();
 
@@ -1027,7 +1027,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     // JsonNodeContext..................................................................................................
 
     /**
-     * Factory that creates a {@link SpreadsheetDateFormatPattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetDateFormatPattern} parse a {@link JsonNode}.
      */
     static SpreadsheetDateFormatPattern unmarshallDateFormatPattern(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
@@ -1037,7 +1037,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetDateParsePattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetDateParsePattern} parse a {@link JsonNode}.
      */
     static SpreadsheetDateParsePattern unmarshallDateParsePattern(final JsonNode node,
                                                                   final JsonNodeUnmarshallContext context) {
@@ -1047,7 +1047,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetDateTimeFormatPattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetDateTimeFormatPattern} parse a {@link JsonNode}.
      */
     static SpreadsheetDateTimeFormatPattern unmarshallDateTimeFormatPattern(final JsonNode node,
                                                                             final JsonNodeUnmarshallContext context) {
@@ -1057,7 +1057,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetDateTimeParsePattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetDateTimeParsePattern} parse a {@link JsonNode}.
      */
     static SpreadsheetDateTimeParsePattern unmarshallDateTimeParsePattern(final JsonNode node,
                                                                           final JsonNodeUnmarshallContext context) {
@@ -1067,7 +1067,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberFormatPattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetNumberFormatPattern} parse a {@link JsonNode}.
      */
     static SpreadsheetNumberFormatPattern unmarshallNumberFormatPattern(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
@@ -1077,7 +1077,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberParsePattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetNumberParsePattern} parse a {@link JsonNode}.
      */
     static SpreadsheetNumberParsePattern unmarshallNumberParsePattern(final JsonNode node,
                                                                       final JsonNodeUnmarshallContext context) {
@@ -1087,7 +1087,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetTextFormatPattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetTextFormatPattern} parse a {@link JsonNode}.
      */
     static SpreadsheetTextFormatPattern unmarshallTextFormatPattern(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
@@ -1097,7 +1097,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetTimeFormatPattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetTimeFormatPattern} parse a {@link JsonNode}.
      */
     static SpreadsheetTimeFormatPattern unmarshallTimeFormatPattern(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
@@ -1107,7 +1107,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetTimeParsePattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetTimeParsePattern} parse a {@link JsonNode}.
      */
     static SpreadsheetTimeParsePattern unmarshallTimeParsePattern(final JsonNode node,
                                                                   final JsonNodeUnmarshallContext context) {

@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 
 /**
- * Unconditionally inserts the currency symbol from the {@link SpreadsheetFormatterContext}.
+ * Unconditionally inserts the currency symbol parse the {@link SpreadsheetFormatterContext}.
  */
 final class FractionSpreadsheetFormatterComponentCurrencySymbol extends FractionSpreadsheetFormatterComponent {
 

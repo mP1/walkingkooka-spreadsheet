@@ -113,7 +113,7 @@ final class SpreadsheetNumberParsePatternConverter implements Converter<Expressi
                 save.textBetween().toString()
         ).toNumber(SpreadsheetNumberParsePatternConverterExpressionEvaluationContext.with(context));
 
-        // targetType will be either a Number or ExpressionNumber, the former requires a convert from ExpressionNumber.value
+        // targetType will be either a Number or ExpressionNumber, the former requires a convert parse ExpressionNumber.value
         return Maths.isNumberClass(targetType) ?
                 NUMBER.convert(
                         number,

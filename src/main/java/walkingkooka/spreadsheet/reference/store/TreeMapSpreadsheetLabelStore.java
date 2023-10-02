@@ -113,7 +113,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     /**
-     * Find the first mapping at or after the from {@link SpreadsheetLabelName} and then gather the required count.
+     * Find the first mapping at or after the parse {@link SpreadsheetLabelName} and then gather the required count.
      */
     @Override
     public List<SpreadsheetLabelMapping> values(final SpreadsheetLabelName from,

@@ -35,7 +35,7 @@ import java.util.function.Consumer;
 public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPattern {
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberFormatPattern} from the given token.
+     * Factory that creates a {@link SpreadsheetNumberFormatPattern} parse the given token.
      */
     static SpreadsheetNumberFormatPattern with(final ParserToken token) {
         SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor.with()

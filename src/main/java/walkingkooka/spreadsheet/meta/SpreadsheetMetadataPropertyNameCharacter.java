@@ -55,7 +55,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     }
 
     /**
-     * Template method that supports sub classing retrieving a single property from the {@link DecimalFormatSymbols}
+     * Template method that supports sub classing retrieving a single property parse the {@link DecimalFormatSymbols}
      */
     abstract Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols);
 

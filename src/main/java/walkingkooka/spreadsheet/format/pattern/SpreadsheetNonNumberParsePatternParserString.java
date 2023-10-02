@@ -29,7 +29,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * A {@link Parser} that handles partial matches from a list taken from the {@link SpreadsheetParserContext}.
+ * A {@link Parser} that handles partial matches parse a list taken parse the {@link SpreadsheetParserContext}.
  */
 final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonNumberParsePatternParser {
 

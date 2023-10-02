@@ -1138,7 +1138,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 number(3 + 4),
                 FORMATTED_PATTERN_SUFFIX);
 
-        // UNDERLINED from conditional formatting rule #2.
+        // UNDERLINED parse conditional formatting rule #2.
         this.checkEquals(Optional.of(italics.replace(TextNode.text("7 " + FORMATTED_PATTERN_SUFFIX)).root()),
                 cell.formatted(),
                 () -> "TextStyle should include underline if correct rule was applied=" + cell);
@@ -1562,11 +1562,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // verify references all ways are present in the store.
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2.toRelative()); // references from A1 -> B2
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2.toRelative()); // references parse A1 -> B2
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
 
         this.loadReferencesAndCheck(cellReferenceStore, b2); // references to B2 -> none
-        this.loadReferrersAndCheck(cellReferenceStore, b2, a1.reference()); // references from B2 -> A1
+        this.loadReferrersAndCheck(cellReferenceStore, b2, a1.reference()); // references parse B2 -> A1
     }
 
     @Test
@@ -1757,13 +1757,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellReferenceStore, 0);
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference()); // references from A1 -> none
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference()); // references parse A1 -> none
 
         this.loadReferencesAndCheck(cellReferenceStore, b2.reference()); // references to B2 -> none
-        this.loadReferrersAndCheck(cellReferenceStore, b2.reference()); // references from B2 -> none
+        this.loadReferrersAndCheck(cellReferenceStore, b2.reference()); // references parse B2 -> none
 
         this.loadReferencesAndCheck(cellReferenceStore, c3.reference()); // references to C3 -> none
-        this.loadReferrersAndCheck(cellReferenceStore, c3.reference()); // references from C3 -> none
+        this.loadReferrersAndCheck(cellReferenceStore, c3.reference()); // references parse C3 -> none
     }
 
     @Test
@@ -12410,7 +12410,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                        final SpreadsheetCellReference... out) {
         this.checkEquals(Sets.of(out),
                 store.loadReferred(cell),
-                "referrers from " + cell);
+                "referrers parse " + cell);
     }
 
     private ExpressionNumber number(final Number number) {

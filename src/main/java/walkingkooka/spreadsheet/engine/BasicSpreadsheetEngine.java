@@ -511,7 +511,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                       final SpreadsheetCellRange to,
                                       final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
-        Objects.requireNonNull(from, "from");
+        Objects.requireNonNull(from, "parse");
         Objects.requireNonNull(to, "to");
         checkContext(context);
 
@@ -1454,7 +1454,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             nonFrozenCells = nonFrozenColumns.setRowReferenceRange(nonFrozenRows);
         }
 
-        // compute other ranges from frozenColumns/frozenRows .........................................................
+        // compute other ranges parse frozenColumns/frozenRows .........................................................
 
         boolean skipPan = false;
 

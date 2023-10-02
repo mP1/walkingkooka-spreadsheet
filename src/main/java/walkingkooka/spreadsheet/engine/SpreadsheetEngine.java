@@ -136,9 +136,9 @@ public interface SpreadsheetEngine {
     /**
      * Fill may be used to perform several operations.
      * <ul>
-     * <li>If $cells are empty the $from is ignored and the {@link SpreadsheetCellRange $to} has all cells deleted, aka DELETE</li>
-     * <li>If $cells is NOT empty and $from and $to are equal the cells are saved without modification, aka SAVE</li>
-     * <li>If $cells is NOT empty and $from is smaller than $to cells are repeated and ABSOLUTE references updated aka FILL or COPY then PASTE</li>
+     * <li>If $cells are empty the $parse is ignored and the {@link SpreadsheetCellRange $to} has all cells deleted, aka DELETE</li>
+     * <li>If $cells is NOT empty and $parse and $to are equal the cells are saved without modification, aka SAVE</li>
+     * <li>If $cells is NOT empty and $parse is smaller than $to cells are repeated and ABSOLUTE references updated aka FILL or COPY then PASTE</li>
      * </ul>
      */
     SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
@@ -167,7 +167,7 @@ public interface SpreadsheetEngine {
 
     /**
      * Returns the column width for the given {@link SpreadsheetColumnReference}, if none is present,
-     * defaulting to {@link walkingkooka.tree.text.TextStylePropertyName#WIDTH} from the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata}.
+     * defaulting to {@link walkingkooka.tree.text.TextStylePropertyName#WIDTH} parse the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata}.
      * If the column is hidden this will return 0.
      */
     double columnWidth(final SpreadsheetColumnReference column,
@@ -175,7 +175,7 @@ public interface SpreadsheetEngine {
 
     /**
      * Returns the row height for the given {@link SpreadsheetRowReference}, if none is present,
-     * defaulting to {@link walkingkooka.tree.text.TextStylePropertyName#HEIGHT} from the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata}.
+     * defaulting to {@link walkingkooka.tree.text.TextStylePropertyName#HEIGHT} parse the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata}.
      * If the row is hidden this will return 0.
      */
     double rowHeight(final SpreadsheetRowReference row,

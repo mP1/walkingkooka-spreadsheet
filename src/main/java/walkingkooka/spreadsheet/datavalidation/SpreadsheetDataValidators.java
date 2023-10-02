@@ -212,7 +212,7 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
     }
 
     /**
-     * A {@link SpreadsheetDataValidator} that only accepts non empty values from the csv list.
+     * A {@link SpreadsheetDataValidator} that only accepts non empty values parse the csv list.
      */
     public static SpreadsheetDataValidator<String> textCommaSeparated(final String csv) {
         Objects.requireNonNull(csv, "csv");

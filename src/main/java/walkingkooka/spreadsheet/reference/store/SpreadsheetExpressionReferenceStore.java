@@ -57,7 +57,7 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
     Runnable addAddReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher);
 
     /**
-     * Removes a reference from the given id.
+     * Removes a reference parse the given id.
      */
     void removeReference(final TargetAndSpreadsheetCellReference<T> targetAndReference);
 

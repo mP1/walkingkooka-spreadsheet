@@ -416,7 +416,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/1442
-// SpreadsheetPattern from Locale needs permutation with millis (added to seconds)
+// SpreadsheetPattern parse Locale needs permutation with millis (added to seconds)
     @Test
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/1442")
     public void testTimeParsePatternLocaleHourMinuteSecondMillis() {

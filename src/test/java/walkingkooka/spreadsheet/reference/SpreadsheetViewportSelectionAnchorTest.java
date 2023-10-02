@@ -20,11 +20,13 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetViewportSelectionAnchorTest implements ClassTesting<SpreadsheetViewportSelectionAnchor> {
+public final class SpreadsheetViewportSelectionAnchorTest implements ClassTesting<SpreadsheetViewportSelectionAnchor>,
+        ParseStringTesting<SpreadsheetViewportSelectionAnchor> {
 
     // constants........................................................................................................
 
@@ -578,63 +580,55 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
         );
     }
 
-    // from.............................................................................................................
-
+    // parse.............................................................................................................
+    
     @Test
-    public void testFromNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetViewportSelectionAnchor.from(null)
-        );
-    }
-
-    @Test
-    public void testFromEmptyFails() {
+    public void testParseUnknownFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetViewportSelectionAnchor.from("")
+                () -> SpreadsheetViewportSelectionAnchor.parse("!")
         );
     }
 
     @Test
-    public void testFromUnknownFails() {
+    public void testParseDifferentCaseFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetViewportSelectionAnchor.from("!")
+                () -> SpreadsheetViewportSelectionAnchor.parse("TOP-LEFT")
         );
     }
 
     @Test
-    public void testFromDifferentCaseFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetViewportSelectionAnchor.from("TOP-LEFT")
-        );
-    }
-
-    @Test
-    public void testFromLeft() {
-        this.fromAndCheck(
+    public void testParseLeft() {
+        this.parseStringAndCheck(
                 "left",
                 SpreadsheetViewportSelectionAnchor.LEFT
         );
     }
 
     @Test
-    public void testFromTopLeft() {
-        this.fromAndCheck(
+    public void testParseTopLeft() {
+        this.parseStringAndCheck(
                 "top-left",
                 SpreadsheetViewportSelectionAnchor.TOP_LEFT
         );
     }
 
-    private void fromAndCheck(final String text,
-                              final SpreadsheetViewportSelectionAnchor expected) {
-        this.checkEquals(
-                expected,
-                SpreadsheetViewportSelectionAnchor.from(text),
-                () -> "from " + CharSequences.quoteAndEscape(text)
-        );
+    // ParseStringTesting...............................................................................................
+
+    @Override
+    public SpreadsheetViewportSelectionAnchor parseString(final String text) {
+        return SpreadsheetViewportSelectionAnchor.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
+        return type;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
     }
 
     // ClassTesting....................................................................................................

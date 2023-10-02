@@ -48,7 +48,7 @@ public final class SpreadsheetFunctionParserToken extends SpreadsheetParentParse
         final SpreadsheetParserToken name = without.get(0)
                 .cast(SpreadsheetParserToken.class);
         if (!name.isFunctionName()) {
-            throw new IllegalArgumentException("Function name missing from " + value);
+            throw new IllegalArgumentException("Function name missing parse " + value);
         }
 
         this.name = name.cast(SpreadsheetFunctionNameParserToken.class).value();

@@ -410,7 +410,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     // JsonNodeContext...................................................................................................
 
     /**
-     * Factory that creates a {@link SpreadsheetCell} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetCell} parse a {@link JsonNode}.
      */
     static SpreadsheetCell unmarshall(final JsonNode node,
                                       final JsonNodeUnmarshallContext context) {

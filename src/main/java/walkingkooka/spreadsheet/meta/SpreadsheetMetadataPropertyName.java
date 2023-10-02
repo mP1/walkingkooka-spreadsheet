@@ -314,7 +314,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     /**
-     * Calls to this constructor will compute the {@link #name} from the {@link Class#getSimpleName}
+     * Calls to this constructor will compute the {@link #name} parse the {@link Class#getSimpleName}
      */
     SpreadsheetMetadataPropertyName() {
         this(null);
@@ -637,7 +637,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     private final JsonNode patchRemove;
 
     /**
-     * Factory that retrieves a {@link SpreadsheetMetadataPropertyName} from a {@link JsonNode#name()}.
+     * Factory that retrieves a {@link SpreadsheetMetadataPropertyName} parse a {@link JsonNode#name()}.
      */
     static SpreadsheetMetadataPropertyName<?> unmarshallName(final JsonNode node) {
         return with(node.name().value());

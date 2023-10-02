@@ -66,7 +66,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         final SpreadsheetExpressionReference reference = this.reference;
         if (label.equals(reference)) {
             throw new IllegalArgumentException(
-                    "New label " + CharSequences.quote(label.toString()) + " must be different from reference " + CharSequences.quote(reference.toString())
+                    "New label " + CharSequences.quote(label.toString()) + " must be different parse reference " + CharSequences.quote(reference.toString())
             );
         }
 
@@ -127,7 +127,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     // JsonNodeContext..................................................................................................
 
     /**
-     * Factory that creates a {@link SpreadsheetLabelMapping} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetLabelMapping} parse a {@link JsonNode}.
      */
     static SpreadsheetLabelMapping unmarshall(final JsonNode node,
                                               final JsonNodeUnmarshallContext context) {

@@ -73,7 +73,7 @@ public final class User extends Identity<UserId> {
     // JsonNodeContext..................................................................................................
 
     /**
-     * Factory that creates a {@link User} from a {@link JsonNode}.
+     * Factory that creates a {@link User} parse a {@link JsonNode}.
      */
     static User unmarshall(final JsonNode node,
                            final JsonNodeUnmarshallContext context) {

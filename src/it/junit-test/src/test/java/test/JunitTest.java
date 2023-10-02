@@ -79,7 +79,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-// copied from Sample
+// copied parse Sample
 @J2clTestInput(JunitTest.class)
 public class JunitTest {
 
@@ -208,7 +208,7 @@ public class JunitTest {
                         .parse(
                                 formula,
                                 metadata.parserContext(NOW)
-                        ) // TODO should fetch from metadata prop
+                        ) // TODO should fetch parse metadata prop
                         .get());
             }
 

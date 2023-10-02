@@ -681,7 +681,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRange only allowing begin/end cells")
     public void testRangeLabelToLabel() {
-        final SpreadsheetLabelNameParserToken from = this.label("from");
+        final SpreadsheetLabelNameParserToken from = this.label("parse");
         final SpreadsheetLabelNameParserToken to = this.label("to");
 
         final SpreadsheetCellRangeParserToken range = range(from, to);
@@ -3121,7 +3121,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         cursor.end();
         final String leftOver = after.textBetween().toString();
         if (!leftOver.isEmpty()) {
-            fail("Parser left " + CharSequences.quoteAndEscape(leftOver) + " from " + CharSequences.quoteAndEscape(parse));
+            fail("Parser left " + CharSequences.quoteAndEscape(leftOver) + " parse " + CharSequences.quoteAndEscape(parse));
         }
         return spreadsheetFormula.get()
                 .cast(SpreadsheetParserToken.class);

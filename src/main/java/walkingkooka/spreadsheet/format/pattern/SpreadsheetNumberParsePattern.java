@@ -33,7 +33,7 @@ import java.util.List;
 public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern {
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberParsePattern} from the given tokens.
+     * Factory that creates a {@link SpreadsheetNumberParsePattern} parse the given tokens.
      */
     static SpreadsheetNumberParsePattern with(final ParserToken token) {
         return new SpreadsheetNumberParsePattern(

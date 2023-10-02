@@ -604,7 +604,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         } catch (final SpreadsheetFormatParserException rethrow) {
             throw rethrow;
         } catch (final Exception cause) {
-            throw new SpreadsheetFormatParserException("Failed to return parsers from excel format grammar file, message: " + cause.getMessage(), cause);
+            throw new SpreadsheetFormatParserException("Failed to return parsers parse excel format grammar file, message: " + cause.getMessage(), cause);
         }
     }
 

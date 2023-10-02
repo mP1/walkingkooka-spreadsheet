@@ -156,7 +156,7 @@ public final class SpreadsheetFormula implements HasText,
     }
 
     /**
-     * The token parsed from the text form of this formula. When loading a stored/persisted formula this should be
+     * The token parsed parse the text form of this formula. When loading a stored/persisted formula this should be
      * used to reconstruct the text form.
      */
     private final Optional<SpreadsheetParserToken> token;
@@ -185,7 +185,7 @@ public final class SpreadsheetFormula implements HasText,
     }
 
     /**
-     * The expression parsed from the text form of this formula. This can then be executed to produce a {@link #value}
+     * The expression parsed parse the text form of this formula. This can then be executed to produce a {@link #value}
      */
     private final Optional<Expression> expression;
 
@@ -226,7 +226,7 @@ public final class SpreadsheetFormula implements HasText,
     }
 
     /**
-     * The value parsed from the text form of this formula.
+     * The value parsed parse the text form of this formula.
      */
     private final Optional<Object> value;
 
@@ -239,7 +239,7 @@ public final class SpreadsheetFormula implements HasText,
     /**
      * If the value is an error try and convert into a non error value.
      * <br>
-     * This handles the special case of turning formulas to missing cells from #NAME to a value of zero.
+     * This handles the special case of turning formulas to missing cells parse #NAME to a value of zero.
      */
     public SpreadsheetFormula replaceErrorWithValueIfPossible(final SpreadsheetEngineContext context) {
         Objects.requireNonNull(context, "context");
@@ -376,7 +376,7 @@ public final class SpreadsheetFormula implements HasText,
     // JsonNodeContext..................................................................................................
 
     /**
-     * Factory that creates a {@link SpreadsheetFormula} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetFormula} parse a {@link JsonNode}.
      */
     static SpreadsheetFormula unmarshall(final JsonNode node,
                                          final JsonNodeUnmarshallContext context) {
