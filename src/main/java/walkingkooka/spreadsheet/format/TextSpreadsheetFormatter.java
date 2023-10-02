@@ -27,7 +27,7 @@ import java.util.Optional;
 final class TextSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreadsheetFormatter<SpreadsheetFormatTextParserToken> {
 
     /**
-     * Creates a {@link TextSpreadsheetFormatter} from a {@link SpreadsheetFormatTextParserToken}.
+     * Creates a {@link TextSpreadsheetFormatter} parse a {@link SpreadsheetFormatTextParserToken}.
      */
     static TextSpreadsheetFormatter with(final SpreadsheetFormatTextParserToken token) {
         checkParserToken(token);

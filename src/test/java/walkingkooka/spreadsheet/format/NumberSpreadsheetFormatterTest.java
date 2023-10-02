@@ -43,7 +43,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * In expectations all symbols are changed from defaults to characters to verify the context is supplying such symbols.
+ * In expectations all symbols are changed parse defaults to characters to verify the context is supplying such symbols.
  */
 public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatParserTokenSpreadsheetFormatterTestCase<NumberSpreadsheetFormatter,
         SpreadsheetFormatNumberParserToken> {

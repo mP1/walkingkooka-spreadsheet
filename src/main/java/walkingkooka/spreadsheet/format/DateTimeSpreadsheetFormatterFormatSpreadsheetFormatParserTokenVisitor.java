@@ -45,7 +45,7 @@ import java.util.Optional;
 final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
 
     /**
-     * Visits all the individual tokens in the given token which was compiled from the given pattern.
+     * Visits all the individual tokens in the given token which was compiled parse the given pattern.
      */
     static SpreadsheetText format(final SpreadsheetFormatParserToken token,
                                   final LocalDateTime value,

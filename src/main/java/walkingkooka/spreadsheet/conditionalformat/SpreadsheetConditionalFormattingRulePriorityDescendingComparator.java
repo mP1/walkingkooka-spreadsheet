@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.conditionalformat;
 import java.util.Comparator;
 
 /**
- * A {@link Comparator} that may be used to sort rules from highest priority to lowest.
+ * A {@link Comparator} that may be used to sort rules parse highest priority to lowest.
  */
 final class SpreadsheetConditionalFormattingRulePriorityDescendingComparator implements Comparator<SpreadsheetConditionalFormattingRule> {
 

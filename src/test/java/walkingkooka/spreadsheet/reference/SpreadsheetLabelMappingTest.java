@@ -77,7 +77,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(LABEL, different);
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setLabel(different));
-        this.checkEquals("New label \"different\" must be different from reference \"different\"", thrown.getMessage());
+        this.checkEquals("New label \"different\" must be different parse reference \"different\"", thrown.getMessage());
     }
 
     @Test

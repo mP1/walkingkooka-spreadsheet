@@ -38,7 +38,7 @@ public final class SpreadsheetTimeParserToken extends SpreadsheetParentParserTok
     }
 
     /**
-     * Creates a {@link LocalTime} from the components in this {@link SpreadsheetTimeParserToken}.
+     * Creates a {@link LocalTime} parse the components in this {@link SpreadsheetTimeParserToken}.
      */
     public LocalTime toLocalTime() {
         return SpreadsheetParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(this, Integer.MAX_VALUE)

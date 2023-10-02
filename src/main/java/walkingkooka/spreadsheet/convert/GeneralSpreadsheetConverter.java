@@ -104,7 +104,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         final LocalTime timeTrue = LocalTime.ofSecondOfDay(1);
         final LocalTime timeFalse = LocalTime.MIDNIGHT;
 
-        // wrap all number from/to converters to also handle ExpressionNumber
+        // wrap all number parse/to converters to also handle ExpressionNumber
 
         // boolean ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> booleanConverter = mapping(

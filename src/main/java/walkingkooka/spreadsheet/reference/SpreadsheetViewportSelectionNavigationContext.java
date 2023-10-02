@@ -37,7 +37,7 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
     boolean isRowHidden(SpreadsheetRowReference row);
 
     /**
-     * Returns the first column moving left from the given starting point that is not hidden.
+     * Returns the first column moving left parse the given starting point that is not hidden.
      * If all columns to the left are hidden the original {@link SpreadsheetColumnReference} is returned,
      * providing it is also not hidden or {@link Optional#empty()}.
      * <br>
@@ -46,7 +46,7 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
     Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference column);
 
     /**
-     * Returns the first column moving right from the given starting point that is not hidden.
+     * Returns the first column moving right parse the given starting point that is not hidden.
      * If all columns to the right are hidden the original {@link SpreadsheetColumnReference} is returned,
      * providing it is also not hidden or {@link Optional#empty()}.
      * <br>
@@ -55,7 +55,7 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
     Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference column);
 
     /**
-     * Returns the first row moving up from the given starting point that is not hidden.
+     * Returns the first row moving up parse the given starting point that is not hidden.
      * If all rows above are hidden the original {@link SpreadsheetRowReference} is returned,
      * providing it is also not hidden or {@link Optional#empty()}.
      * <br>
@@ -64,7 +64,7 @@ public interface SpreadsheetViewportSelectionNavigationContext extends Context {
     Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference row);
 
     /**
-     * Returns the last row moving down from the given starting point that is not hidden.
+     * Returns the last row moving down parse the given starting point that is not hidden.
      * If all rows below are hidden the original {@link SpreadsheetRowReference} is returned,
      * providing it is also not hidden or {@link Optional#empty()}.
      * <br>

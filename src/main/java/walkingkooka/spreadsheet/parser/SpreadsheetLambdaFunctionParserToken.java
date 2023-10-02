@@ -51,19 +51,19 @@ public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetParen
         final SpreadsheetParserToken name = without.get(0)
                 .cast(SpreadsheetParserToken.class);
         if (!name.isFunctionName()) {
-            throw new IllegalArgumentException("Function name missing from " + value);
+            throw new IllegalArgumentException("Function name missing parse " + value);
         }
 
         final SpreadsheetParserToken parameters = without.get(1)
                 .cast(SpreadsheetParserToken.class);
         if (!parameters.isFunctionParameters()) {
-            throw new IllegalArgumentException("Function parameters missing from " + value);
+            throw new IllegalArgumentException("Function parameters missing parse " + value);
         }
 
         final SpreadsheetParserToken parametersValues = without.get(2)
                 .cast(SpreadsheetParserToken.class);
         if (!parametersValues.isFunctionParameters()) {
-            throw new IllegalArgumentException("Function parameter values missing from " + value);
+            throw new IllegalArgumentException("Function parameter values missing parse " + value);
         }
 
         this.name = name.cast(SpreadsheetFunctionNameParserToken.class)

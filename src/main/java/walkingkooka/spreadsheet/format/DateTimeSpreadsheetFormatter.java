@@ -31,7 +31,7 @@ import java.util.function.Predicate;
 final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreadsheetFormatter<SpreadsheetFormatDateTimeParserToken> {
 
     /**
-     * Creates a {@link DateTimeSpreadsheetFormatter} from a {@link SpreadsheetFormatDateTimeParserToken}
+     * Creates a {@link DateTimeSpreadsheetFormatter} parse a {@link SpreadsheetFormatDateTimeParserToken}
      */
     static DateTimeSpreadsheetFormatter with(final SpreadsheetFormatDateTimeParserToken token,
                                              final Predicate<Object> typeTester) {

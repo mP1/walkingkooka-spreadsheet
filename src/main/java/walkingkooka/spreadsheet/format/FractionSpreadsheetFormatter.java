@@ -37,7 +37,7 @@ import java.util.function.Function;
 final class FractionSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreadsheetFormatter<SpreadsheetFormatFractionParserToken> {
 
     /**
-     * Creates a {@link FractionSpreadsheetFormatter} from a {@link SpreadsheetFormatNumberParserToken}.
+     * Creates a {@link FractionSpreadsheetFormatter} parse a {@link SpreadsheetFormatNumberParserToken}.
      */
     static FractionSpreadsheetFormatter with(final SpreadsheetFormatFractionParserToken token,
                                              final Function<BigDecimal, Fraction> fractioner) {

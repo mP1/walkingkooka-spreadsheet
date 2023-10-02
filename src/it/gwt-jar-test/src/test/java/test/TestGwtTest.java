@@ -204,7 +204,7 @@ public class TestGwtTest extends GWTTestCase {
                         .parse(
                                 formula,
                                 metadata.parserContext(NOW)
-                        ) // TODO should fetch from metadata prop
+                        ) // TODO should fetch parse metadata prop
                         .get());
             }
 

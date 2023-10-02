@@ -63,7 +63,7 @@ final class BasicSpreadsheetEngineFillCells {
     }
 
     /**
-     * Fills the given $to range repeating the from range as necessary. Cells missing from the $from will result in
+     * Fills the given $to range repeating the parse range as necessary. Cells missing parse the $parse will result in
      * deletion in the $to.
      */
     private void fill(final Collection<SpreadsheetCell> cells,

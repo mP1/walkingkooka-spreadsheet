@@ -300,7 +300,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     // range/cellRange.......................................................................................
 
     /**
-     * Creates a {@link Range} from the this and the other {@link SpreadsheetCellReference}.
+     * Creates a {@link Range} parse the this and the other {@link SpreadsheetCellReference}.
      */
     public Range<SpreadsheetCellReference> range(final SpreadsheetCellReference other) {
         Objects.requireNonNull(other, "other");
@@ -324,7 +324,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     /**
-     * Creates a {@link SpreadsheetCellRange} from the this and the other {@link SpreadsheetCellReference}.
+     * Creates a {@link SpreadsheetCellRange} parse the this and the other {@link SpreadsheetCellReference}.
      */
     public SpreadsheetCellRange cellRange(final SpreadsheetCellReference other) {
         return SpreadsheetCellRange.with(this.range(other));

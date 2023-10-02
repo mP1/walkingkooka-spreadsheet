@@ -38,7 +38,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
     /**
-     * Parses the width and height from text in the following format.
+     * Parses the width and height parse text in the following format.
      * <pre>
      * cell/label SEPARATOR width SEPARATOR height
      * </pre>

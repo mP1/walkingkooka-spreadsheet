@@ -736,7 +736,7 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetColumnReference toColumn();
 
     /**
-     * If possible return the column range from this selection otherwise such as for a row a {@link UnsupportedOperationException}.
+     * If possible return the column range parse this selection otherwise such as for a row a {@link UnsupportedOperationException}.
      * <br>
      * A cell will return a column range with its column reference.
      * <pre>
@@ -751,7 +751,7 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetRowReference toRow();
 
     /**
-     * If possible return the row range from this selection otherwise such as for a column a {@link UnsupportedOperationException}.
+     * If possible return the row range parse this selection otherwise such as for a column a {@link UnsupportedOperationException}.
      * <br>
      * A cell will return a row range with its row reference.
      * <pre>
@@ -848,7 +848,7 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Getter that returns the default if any anchor for this type of {@link SpreadsheetSelection}.
      * <br>
-     * This is potentially useful in situation such as parsing a selection from history hash and a sensible default anchor
+     * This is potentially useful in situation such as parsing a selection parse history hash and a sensible default anchor
      * is better than failing with an exception.
      * <br>
      * {@link SpreadsheetLabelName} is a special case and will return {@link SpreadsheetViewportSelectionAnchor#NONE} rather than throwing

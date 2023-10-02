@@ -332,7 +332,7 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
 //
         for (final TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
             for (final SpreadsheetCellRange range : entry.ranges()) {
-                copy = copy | range.equalsIgnoreReferenceKind(from); // doesnt find > from must be ==
+                copy = copy | range.equalsIgnoreReferenceKind(from); // doesnt find > parse must be ==
 
                 if (copy) {
                     if (values.size() == count) {

@@ -39,7 +39,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Holds the {@link Color} and text that results from formatting a value.
+ * Holds the {@link Color} and text that results parse formatting a value.
  */
 public final class SpreadsheetText implements HasText,
         HasTextNode,
@@ -163,7 +163,7 @@ public final class SpreadsheetText implements HasText,
     // json..............................................................................................................
 
     /**
-     * Factory that creates a {@link SpreadsheetText} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetText} parse a {@link JsonNode}.
      */
     static SpreadsheetText unmarshall(final JsonNode node,
                                       final JsonNodeUnmarshallContext context) {

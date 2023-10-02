@@ -36,7 +36,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * Base class for any class that creates a {@link Parser} from a {@link DateTimeFormatter}.
+ * Base class for any class that creates a {@link Parser} parse a {@link DateTimeFormatter}.
  */
 abstract class SpreadsheetNonNumberParsePattern<V> extends SpreadsheetParsePattern {
 
@@ -85,7 +85,7 @@ abstract class SpreadsheetNonNumberParsePattern<V> extends SpreadsheetParsePatte
     abstract Class<V> targetType();
 
     /**
-     * Creates an adapter that will be used by the parser from a {@link ConverterContext}.
+     * Creates an adapter that will be used by the parser parse a {@link ConverterContext}.
      */
     private static SpreadsheetParserContext spreadsheetParserContext(final ConverterContext context) {
         return SpreadsheetParserContexts.basic(

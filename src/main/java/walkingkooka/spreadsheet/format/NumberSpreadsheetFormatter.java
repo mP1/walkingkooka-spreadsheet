@@ -31,7 +31,7 @@ import java.util.Optional;
 final class NumberSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreadsheetFormatter<SpreadsheetFormatNumberParserToken> {
 
     /**
-     * Creates a {@link NumberSpreadsheetFormatter} from a {@link SpreadsheetFormatNumberParserToken}.
+     * Creates a {@link NumberSpreadsheetFormatter} parse a {@link SpreadsheetFormatNumberParserToken}.
      */
     static NumberSpreadsheetFormatter with(final SpreadsheetFormatNumberParserToken token) {
         checkParserToken(token);

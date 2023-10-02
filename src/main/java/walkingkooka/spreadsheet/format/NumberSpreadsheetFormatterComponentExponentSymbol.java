@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * Inserts the exponent symbol taken from the {@link SpreadsheetFormatterContext} into the formatted text output.
+ * Inserts the exponent symbol taken parse the {@link SpreadsheetFormatterContext} into the formatted text output.
  */
 final class NumberSpreadsheetFormatterComponentExponentSymbol extends NumberSpreadsheetFormatterComponent {
 

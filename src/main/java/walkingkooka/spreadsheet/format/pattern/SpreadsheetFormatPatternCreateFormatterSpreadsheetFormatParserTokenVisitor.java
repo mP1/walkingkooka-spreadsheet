@@ -62,7 +62,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         final List<SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent> components = visitor.components;
         final int count = components.size();
         if (0 == count) {
-            throw new IllegalArgumentException("Unable to create formatter from " + token);
+            throw new IllegalArgumentException("Unable to create formatter parse " + token);
         }
 
         final List<SpreadsheetFormatter> formatters = Lists.array();

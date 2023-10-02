@@ -614,7 +614,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final Optional<SpreadsheetParserToken> token = this.token();
 
         this.unmarshallAndCheck(JsonNode.object()
-                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string("Different text from token"))
+                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string("Different text parse token"))
                         .set(SpreadsheetFormula.TOKEN_PROPERTY, this.marshallContext().marshallWithType(token.get())),
                 SpreadsheetFormula.EMPTY
                         .setToken(token)

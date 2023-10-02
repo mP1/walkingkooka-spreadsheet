@@ -50,7 +50,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     /**
-     * Lazy cache to help prevent NPE from very early {@link SpreadsheetReferenceKind#firstColumn()}
+     * Lazy cache to help prevent NPE parse very early {@link SpreadsheetReferenceKind#firstColumn()}
      */
     private static SpreadsheetRowReference[] ABSOLUTE_CACHE;
 
@@ -138,7 +138,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     /**
-     * Creates a {@link SpreadsheetCellReference} from this row and the given column.
+     * Creates a {@link SpreadsheetCellReference} parse this row and the given column.
      */
     public SpreadsheetCellReference setColumn(final SpreadsheetColumnReference column) {
         return column.setRow(this);
@@ -212,7 +212,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     // range/rowRange.......................................................................................
 
     /**
-     * Creates a {@link Range} from the this and the other {@link SpreadsheetRowReference}.
+     * Creates a {@link Range} parse the this and the other {@link SpreadsheetRowReference}.
      */
     public Range<SpreadsheetRowReference> range(final SpreadsheetRowReference other) {
         Objects.requireNonNull(other, "other");
@@ -224,7 +224,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     /**
-     * Creates a {@link SpreadsheetRowReferenceRange} from the this and the other {@link SpreadsheetRowReference}.
+     * Creates a {@link SpreadsheetRowReferenceRange} parse the this and the other {@link SpreadsheetRowReference}.
      */
     public SpreadsheetRowReferenceRange rowRange(final SpreadsheetRowReference other) {
         return SpreadsheetRowReferenceRange.with(this.range(other));

@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet;
 
 /**
- * TODO create a sub class that extracts the source and destination types from a {@link ClassCastException#getMessage()}.
+ * TODO create a sub class that extracts the source and destination types parse a {@link ClassCastException#getMessage()}.
  * <br>
  * https://github.com/mP1/walkingkooka-spreadsheet/issues/2302
  */
@@ -85,7 +85,7 @@ final class SpreadsheetErrorKindClassCastExceptionMessage {
     // 6=class
     // 7=walkingkooka.tree.expression.ExpressionNumber
     //
-    // from = 1
+    // parse = 1
     // to = 7
     private static String classClassNameCannotBeCastToClass(final String[] tokens) {
         return failedToConvert(
@@ -96,7 +96,7 @@ final class SpreadsheetErrorKindClassCastExceptionMessage {
 
     // "walkingkooka.spreadsheet.SpreadsheetErrorKindTest cannot be cast to java.base/java.lang.Void"
 
-    // from = first
+    // parse = first
     // to = last
     private static String classCannotBeCastTo(final String[] tokens) {
         return failedToConvert(

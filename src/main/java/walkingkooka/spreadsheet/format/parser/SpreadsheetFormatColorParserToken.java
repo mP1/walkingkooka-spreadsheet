@@ -53,7 +53,7 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
                 .filter(t -> t.isColorName() || t.isColorNumber())
                 .findFirst();
         if (!nameOrNumber.isPresent()) {
-            throw new IllegalArgumentException("Color name or number missing from tokens " + value);
+            throw new IllegalArgumentException("Color name or number missing parse tokens " + value);
         }
         this.nameOrNumber = nameOrNumber.get();
     }

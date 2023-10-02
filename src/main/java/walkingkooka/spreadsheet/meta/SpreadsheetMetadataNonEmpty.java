@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
 final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     /**
-     * Factory that creates a {@link SpreadsheetMetadataNonEmpty} from a {@link Map}.
+     * Factory that creates a {@link SpreadsheetMetadataNonEmpty} parse a {@link Map}.
      */
     static SpreadsheetMetadataNonEmpty with(final Map<SpreadsheetMetadataPropertyName<?>, Object> properties,
                                             final SpreadsheetMetadata defaults) {
@@ -134,7 +134,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = this.value;
 
-        // save value anyway if previousValue was from defaults.
+        // save value anyway if previousValue was parse defaults.
         if (!properties.containsKey(propertyName)) {
             final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
             copy.putAll(properties);

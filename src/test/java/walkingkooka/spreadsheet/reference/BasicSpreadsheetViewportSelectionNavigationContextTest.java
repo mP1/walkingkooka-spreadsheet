@@ -1184,7 +1184,7 @@ public final class BasicSpreadsheetViewportSelectionNavigationContextTest implem
             this.checkNotEquals(
                     null,
                     length,
-                    () -> "Missing " + columnOrRow + " from " + columnOrRowToWidthOrHeight
+                    () -> "Missing " + columnOrRow + " parse " + columnOrRowToWidthOrHeight
             );
             return length;
         };

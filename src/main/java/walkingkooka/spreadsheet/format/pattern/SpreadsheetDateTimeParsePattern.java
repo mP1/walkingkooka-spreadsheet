@@ -33,7 +33,7 @@ import java.util.List;
 public final class SpreadsheetDateTimeParsePattern extends SpreadsheetNonNumberParsePattern<LocalDateTime> {
 
     /**
-     * Factory that creates a {@link ParserToken} from the given tokens.
+     * Factory that creates a {@link ParserToken} parse the given tokens.
      */
     static SpreadsheetDateTimeParsePattern with(final ParserToken token) {
         final SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor.with();

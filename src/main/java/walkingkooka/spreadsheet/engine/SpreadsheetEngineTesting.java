@@ -737,7 +737,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(
                 SpreadsheetFormula.NO_VALUE,
                 cell.formula().value(),
-                () -> "values from returned cells=" + cell);
+                () -> "values parse returned cells=" + cell);
         return cell;
     }
 
@@ -1216,14 +1216,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void checkFormula(final SpreadsheetCell cell, final String formula) {
         this.checkEquals(formula,
                 cell.formula().text(),
-                () -> "formula.text from returned cell=" + cell);
+                () -> "formula.text parse returned cell=" + cell);
     }
 
     default void checkValue(final SpreadsheetCell cell, final Object value) {
         this.checkEquals(
                 value,
                 cell.formula().value().orElse(null),
-                () -> "values from returned cell=" + cell);
+                () -> "values parse returned cell=" + cell);
     }
 
     default void checkFormattedText(final SpreadsheetCell cell) {

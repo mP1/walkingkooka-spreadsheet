@@ -203,8 +203,8 @@ public enum SpreadsheetViewportSelectionAnchor implements HasUrlFragment {
      * <br>
      * {@link #TOP_LEFT} = <pre>top-left</pre>.
      */
-    public static SpreadsheetViewportSelectionAnchor from(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "anchor");
+    public static SpreadsheetViewportSelectionAnchor parse(final String text) {
+        CharSequences.failIfNullOrEmpty(text, "text");
 
         for (final SpreadsheetViewportSelectionAnchor navigation : values()) {
             if (navigation.kebabText.equals(text)) {

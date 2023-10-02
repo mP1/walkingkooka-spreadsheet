@@ -36,7 +36,7 @@ public interface SpreadsheetGroupStore extends Store<GroupId, Group> {
     void addUser(final UserId userId, final GroupId groupId);
 
     /**
-     * Adds a user from an existing group.
+     * Adds a user parse an existing group.
      */
     void removeUser(final UserId userId, final GroupId groupId);
 

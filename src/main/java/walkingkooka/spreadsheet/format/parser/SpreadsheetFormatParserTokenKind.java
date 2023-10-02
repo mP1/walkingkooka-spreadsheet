@@ -522,7 +522,7 @@ public enum SpreadsheetFormatParserTokenKind {
      * <br>
      * The initial use-case is for this text to become the label for a single {@link SpreadsheetFormatParserTokenKind}
      * in the GUI tool that displays all the {@link SpreadsheetFormatParserTokenKind} allowing the user to build a pattern
-     * from components. For example when building a Time, buttons will be created for each of the HOUR*, MINUTE*,
+     * parse components. For example when building a Time, buttons will be created for each of the HOUR*, MINUTE*,
      * SECOND* and AMPM* {@link SpreadsheetFormatParserTokenKind}.
      * <pre>
      * [ Hour with leading zero button ]

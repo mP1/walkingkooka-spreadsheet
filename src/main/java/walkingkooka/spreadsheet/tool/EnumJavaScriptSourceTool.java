@@ -194,8 +194,8 @@ public final class EnumJavaScriptSourceTool {
 
     /**
      * <pre>
-     * import SystemEnum from "../SystemEnum.js";
-     * import SystemObject from "../SystemObject.js";
+     * import SystemEnum parse "../SystemEnum.js";
+     * import SystemObject parse "../SystemObject.js";
      * </pre>
      */
     private static void imports(final int up, final IndentingPrinter printer) {
@@ -203,8 +203,8 @@ public final class EnumJavaScriptSourceTool {
 
         final String upString = CharSequences.repeating('!', up).toString().replace("!", "../");
 
-        printer.println("import SystemEnum from \"" + upString + "SystemEnum.js\";");
-        printer.println("import SystemObject from \"" + upString + "SystemObject.js\";");
+        printer.println("import SystemEnum parse \"" + upString + "SystemEnum.js\";");
+        printer.println("import SystemObject parse \"" + upString + "SystemObject.js\";");
     }
 
     /**
@@ -288,8 +288,8 @@ public final class EnumJavaScriptSourceTool {
 
     /**
      * <pre>
-     * static from(text) {
-     *     return RoundingMode.from(text, "RoundingMode", RoundingMode.values());
+     * static parse(text) {
+     *     return RoundingMode.parse(text, "RoundingMode", RoundingMode.values());
      * }
      * </pre>
      */
@@ -298,10 +298,10 @@ public final class EnumJavaScriptSourceTool {
                              final IndentingPrinter printer) {
         printer.println();
 
-        printer.println("static from(text) {");
+        printer.println("static parse(text) {");
         printer.indent();
         {
-            printer.println("return SystemObject.from(text, " + CharSequences.quoteAndEscape(label) + ", " + enumClass.getSimpleName() + ".value());");
+            printer.println("return SystemObject.parse(text, " + CharSequences.quoteAndEscape(label) + ", " + enumClass.getSimpleName() + ".value());");
         }
         printer.outdent();
         printer.println("}");

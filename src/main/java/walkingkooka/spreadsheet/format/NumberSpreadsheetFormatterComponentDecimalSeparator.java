@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * Unconditionally inserts the decimal point from the {@link SpreadsheetFormatterContext}.
+ * Unconditionally inserts the decimal point parse the {@link SpreadsheetFormatterContext}.
  */
 final class NumberSpreadsheetFormatterComponentDecimalSeparator extends NumberSpreadsheetFormatterComponent {
 

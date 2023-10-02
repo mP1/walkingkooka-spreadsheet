@@ -40,7 +40,7 @@ import java.util.Optional;
 final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
 
     /**
-     * Visits all the individual tokens in the given token which was compiled from the given pattern.
+     * Visits all the individual tokens in the given token which was compiled parse the given pattern.
      */
     static SpreadsheetText format(final SpreadsheetFormatTextParserToken token,
                                   final String value,
