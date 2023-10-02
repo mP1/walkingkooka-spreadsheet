@@ -18,8 +18,36 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
+
 public final class SpreadsheetViewportSelectionNavigationExtendLeftColumnTest extends SpreadsheetViewportSelectionNavigationTestCase2<SpreadsheetViewportSelectionNavigationExtendLeftColumn> {
 
+    @Test
+    public void testUpdateCell() {
+        this.updateAndCheck(
+                SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
+                SpreadsheetSelection.parseCell("C3"),
+                SpreadsheetSelection.parseCellRange("B3:C3")
+        );
+    }
+
+    @Test
+    public void testUpdateColumn() {
+        this.updateAndCheck(
+                SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
+                SpreadsheetSelection.parseColumn("C"),
+                SpreadsheetSelection.parseColumnRange("B:C")
+        );
+    }
+
+    @Test
+    public void testUpdateRow() {
+        this.updateAndCheck(
+                SpreadsheetViewportSelectionNavigation.extendLeftColumn(),
+                SpreadsheetSelection.parseRow("3")
+        );
+    }
+    
     @Override
     SpreadsheetViewportSelectionNavigationExtendLeftColumn createSpreadsheetViewportSelectionNavigation() {
         return SpreadsheetViewportSelectionNavigationExtendLeftColumn.INSTANCE;

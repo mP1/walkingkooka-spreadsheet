@@ -18,8 +18,38 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
+
 public final class SpreadsheetViewportSelectionNavigationExtendDownRowTest extends SpreadsheetViewportSelectionNavigationTestCase2<SpreadsheetViewportSelectionNavigationExtendDownRow> {
 
+    @Test
+    public void testUpdateCell() {
+        this.updateAndCheck(
+                SpreadsheetViewportSelectionNavigation.extendDownRow(),
+                SpreadsheetSelection.parseCell("C3"),
+                SpreadsheetSelection.parseCellRange("C3:C4")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+        );
+    }
+
+    @Test
+    public void testUpdateColumn() {
+        this.updateAndCheck(
+                SpreadsheetViewportSelectionNavigation.extendDownRow(),
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
+    @Test
+    public void testUpdateRow() {
+        this.updateAndCheck(
+                SpreadsheetViewportSelectionNavigation.extendDownRow(),
+                SpreadsheetSelection.parseRow("3"),
+                SpreadsheetSelection.parseRowRange("3:4")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP)
+        );
+    }
+    
     @Override
     SpreadsheetViewportSelectionNavigationExtendDownRow createSpreadsheetViewportSelectionNavigation() {
         return SpreadsheetViewportSelectionNavigationExtendDownRow.INSTANCE;
