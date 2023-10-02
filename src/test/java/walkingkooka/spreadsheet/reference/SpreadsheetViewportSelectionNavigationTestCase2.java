@@ -131,7 +131,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_HEIGHT
+                                ROW_TO_HEIGHT
                         )
                 ),
                 () -> navigation + " update " + selection + " " + anchor
@@ -142,7 +142,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
         throw new UnsupportedOperationException();
     };
 
-    final static Function<SpreadsheetRowReference, Double> ROW_HEIGHT = (c) -> {
+    final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> {
         throw new UnsupportedOperationException();
     };
 
