@@ -129,7 +129,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
                         anchor,
                         SpreadsheetViewportSelectionNavigationContexts.basic(
                                 hiddenColumns,
-                                COLUMN_WIDTH,
+                                COLUMN_TO_WIDTH,
                                 hiddenRows,
                                 ROW_HEIGHT
                         )
@@ -138,7 +138,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
         );
     }
 
-    final static Function<SpreadsheetColumnReference, Double> COLUMN_WIDTH = (c) -> {
+    final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> {
         throw new UnsupportedOperationException();
     };
 
