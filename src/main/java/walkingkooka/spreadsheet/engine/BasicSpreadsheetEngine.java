@@ -1822,16 +1822,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                                            final SpreadsheetViewportSelectionNavigation navigation,
                                                                            final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
 
         return navigation.update(
                 selection,
                 anchor,
                 SpreadsheetViewportSelectionNavigationContexts.basic(
                         repository.columns()::isHidden,
-                        cellStore::maxColumnWidth,
+                        (c) -> this.columnWidth(c, context),
                         repository.rows()::isHidden,
-                        cellStore::maxRowHeight
+                        (r) -> this.rowHeight(r, context)
                 )
         );
     }
