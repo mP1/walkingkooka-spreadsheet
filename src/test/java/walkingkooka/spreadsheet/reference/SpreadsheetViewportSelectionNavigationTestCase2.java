@@ -20,9 +20,13 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.test.ParseStringTesting;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends SpreadsheetViewportSelectionNavigation> extends
         SpreadsheetViewportSelectionNavigationTestCase<T> implements ParseStringTesting<List<T>> {
@@ -30,6 +34,8 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
     SpreadsheetViewportSelectionNavigationTestCase2() {
         super();
     }
+
+    // parse............................................................................................................
 
     @Override
     public final void testParseStringEmptyFails() {
@@ -47,6 +53,98 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
                 )
         );
     }
+
+    // update...........................................................................................................
+
+    void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                        final SpreadsheetSelection selection) {
+        this.updateAndCheck(
+                navigation,
+                selection,
+                selection
+        );
+    }
+
+    void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                        final SpreadsheetSelection selection,
+                        final SpreadsheetSelection expected) {
+        this.updateAndCheck(
+                navigation,
+                selection,
+                expected.setAnchor(expected.defaultAnchor())
+        );
+    }
+
+    void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                        final SpreadsheetSelection selection,
+                        final SpreadsheetViewportSelection expected) {
+        this.updateAndCheck(
+                navigation,
+                selection,
+                selection.defaultAnchor(),
+                expected
+        );
+    }
+
+    void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                        final SpreadsheetSelection selection,
+                        final SpreadsheetViewportSelectionAnchor anchor,
+                        final SpreadsheetViewportSelection expected) {
+        this.updateAndCheck(
+                navigation,
+                selection,
+                anchor,
+                Predicates.never(),
+                Predicates.never(),
+                expected
+        );
+    }
+
+    void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                        final SpreadsheetSelection selection,
+                        final SpreadsheetViewportSelectionAnchor anchor,
+                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                        final Predicate<SpreadsheetRowReference> hiddenRows,
+                        final SpreadsheetViewportSelection expected) {
+        this.updateAndCheck(
+                navigation,
+                selection,
+                anchor,
+                hiddenColumns,
+                hiddenRows,
+                Optional.of(expected)
+        );
+    }
+
+    void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
+                        final SpreadsheetSelection selection,
+                        final SpreadsheetViewportSelectionAnchor anchor,
+                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                        final Predicate<SpreadsheetRowReference> hiddenRows,
+                        final Optional<SpreadsheetViewportSelection> expected) {
+        this.checkEquals(
+                expected,
+                navigation.update(
+                        selection,
+                        anchor,
+                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                                hiddenColumns,
+                                COLUMN_WIDTH,
+                                hiddenRows,
+                                ROW_HEIGHT
+                        )
+                ),
+                () -> navigation + " update " + selection + " " + anchor
+        );
+    }
+
+    final static Function<SpreadsheetColumnReference, Double> COLUMN_WIDTH = (c) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    final static Function<SpreadsheetRowReference, Double> ROW_HEIGHT = (c) -> {
+        throw new UnsupportedOperationException();
+    };
 
     abstract T createSpreadsheetViewportSelectionNavigation();
 
