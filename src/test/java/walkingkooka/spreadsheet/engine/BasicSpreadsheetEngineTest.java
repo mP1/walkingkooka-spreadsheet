@@ -11748,7 +11748,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateCell() {
+    public void testNavigateCellRightColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -11763,6 +11763,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                 context,
                 SpreadsheetSelection.parseCell("C2")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+        );
+    }
+
+    @Test
+    public void testNavigateCellRightPixels() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        this.navigateAndCheck(
+                engine,
+                SpreadsheetSelection.parseCell("B2")
+                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setNavigations(
+                                Lists.of(
+                                        SpreadsheetViewportSelectionNavigation.rightPixel(
+                                                3 * (int) COLUMN_WIDTH - 1
+                                        )
+                                )
+                        ),
+                context,
+                SpreadsheetSelection.parseCell("E2")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
