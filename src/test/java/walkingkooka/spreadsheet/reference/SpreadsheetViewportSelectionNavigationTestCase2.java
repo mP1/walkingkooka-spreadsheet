@@ -20,14 +20,12 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 
 import java.util.List;
 
-public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends SpreadsheetViewportSelectionNavigation> implements ClassTesting<T>,
-        ParseStringTesting<List<T>> {
+public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends SpreadsheetViewportSelectionNavigation> extends
+        SpreadsheetViewportSelectionNavigationTestCase<T> implements ParseStringTesting<List<T>> {
 
     SpreadsheetViewportSelectionNavigationTestCase2() {
         super();
@@ -69,12 +67,5 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
