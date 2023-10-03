@@ -33,8 +33,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testWith() {
         final SpreadsheetDeltaNonWindowed delta = this.createSpreadsheetDelta();
         this.checkCells(delta);
-        this.checkTotalHeight(delta);
-        this.checkTotalHeight(delta);
+        this.checkRowCount(delta);
+        this.checkRowCount(delta);
         this.checkWindow(delta, SpreadsheetDelta.NO_WINDOW);
     }
 
@@ -407,8 +407,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.deletedRows(),
                         this.columnWidths(),
                         this.rowHeights(),
-                        this.totalWidth(),
-                        this.totalHeight()
+                        this.columnCount(),
+                        this.rowCount()
                 ),
                 "SpreadsheetDelta\n" +
                         "  viewportSelection:\n" +
@@ -438,8 +438,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "    A: 50.0\n" +
                         "  rowHeights:\n" +
                         "    1: 75.0\n" +
-                        "  totalWidth: 88.0\n" +
-                        "  totalHeight: 99.0\n"
+                        "  columnCount: 88\n" +
+                        "  rowCount: 99\n"
         );
     }
 
@@ -814,7 +814,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testMarshallCellsTotalHeightTotalHeight() {
+    public void testMarshallCellsRowCountRowCount() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         SpreadsheetDelta.NO_VIEWPORT_SELECTION,
@@ -827,13 +827,13 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.totalWidth(),
-                        this.totalHeight()
+                        this.columnCount(),
+                        this.rowCount()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.MAX_COLUMN_PROPERTY, MAX_COLUMN_JSON)
-                        .set(SpreadsheetDelta.MAX_ROW_PROPERTY, MAX_ROW_JSON)
+                        .set(SpreadsheetDelta.COLUMN_COUNT_PROPERTY, COLUMN_COUNT_JSON)
+                        .set(SpreadsheetDelta.ROW_COUNT_PROPERTY, ROW_COUNT_JSON)
         );
     }
 
@@ -1000,7 +1000,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testToStringTotalHeightTotalHeight() {
+    public void testToStringRowCountRowCount() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         SpreadsheetDelta.NO_VIEWPORT_SELECTION,
@@ -1013,10 +1013,10 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.totalWidth(),
-                        this.totalHeight()
+                        this.columnCount(),
+                        this.rowCount()
                 ),
-                "cells: A1=1, B2=2, C3=3 totalWidth: 88.0 totalHeight: 99.0");
+                "cells: A1=1, B2=2, C3=3 columnCount: 88 rowCount: 99");
     }
 
     @Override
@@ -1032,8 +1032,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 this.deletedRows(),
                 this.columnWidths(),
                 this.rowHeights(),
-                this.totalWidth(),
-                this.totalHeight()
+                this.columnCount(),
+                this.rowCount()
         );
     }
 

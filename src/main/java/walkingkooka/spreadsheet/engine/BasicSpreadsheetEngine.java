@@ -76,7 +76,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -774,21 +774,21 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             delta = delta.setRowHeights(rowsHeights);
         }
 
-        final boolean hasTotalWidth = deltaProperties.contains(SpreadsheetDeltaProperties.TOTAL_WIDTH);
-        final boolean hasTotalHeight = deltaProperties.contains(SpreadsheetDeltaProperties.TOTAL_HEIGHT);
+        final boolean hasColumnCount = deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_COUNT);
+        final boolean hasRowCount = deltaProperties.contains(SpreadsheetDeltaProperties.ROW_COUNT);
 
-        if (hasTotalWidth || hasTotalHeight) {
-            if (hasTotalWidth) {
-                delta = delta.setTotalWidth(
-                        OptionalDouble.of(
-                                this.allColumnsWidth(context)
+        if (hasColumnCount || hasRowCount) {
+            if (hasColumnCount) {
+                delta = delta.setColumnCount(
+                        OptionalInt.of(
+                                this.columnCount(context)
                         )
                 );
             }
-            if (hasTotalHeight) {
-                delta = delta.setTotalHeight(
-                        OptionalDouble.of(
-                                this.allRowsHeight(context)
+            if (hasRowCount) {
+                delta = delta.setRowCount(
+                        OptionalInt.of(
+                                this.rowCount(context)
                         )
                 );
             }

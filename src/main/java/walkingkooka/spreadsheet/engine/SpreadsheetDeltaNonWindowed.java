@@ -33,7 +33,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.Set;
 
 /**
@@ -54,8 +54,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                                        final Set<SpreadsheetRowReference> deletedRows,
                                                        final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                        final Map<SpreadsheetRowReference, Double> rowHeights,
-                                                       final OptionalDouble totalWidth,
-                                                       final OptionalDouble totalHeight) {
+                                                       final OptionalInt columnCount,
+                                                       final OptionalInt rowCount) {
         return new SpreadsheetDeltaNonWindowed(
                 viewportSelection,
                 cells,
@@ -67,8 +67,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 deletedRows,
                 columnWidths,
                 rowHeights,
-                totalWidth,
-                totalHeight
+                columnCount,
+                rowCount
         );
     }
 
@@ -82,8 +82,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                         final Set<SpreadsheetRowReference> deletedRows,
                                         final Map<SpreadsheetColumnReference, Double> columnWidths,
                                         final Map<SpreadsheetRowReference, Double> rowHeights,
-                                        final OptionalDouble totalWidth,
-                                        final OptionalDouble totalHeight) {
+                                        final OptionalInt columnCount,
+                                        final OptionalInt rowCount) {
         super(
                 viewportSelection,
                 cells,
@@ -95,8 +95,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 deletedRows,
                 columnWidths,
                 rowHeights,
-                totalWidth,
-                totalHeight
+                columnCount,
+                rowCount
         );
     }
 
@@ -113,8 +113,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
@@ -132,8 +132,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
@@ -155,8 +155,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
@@ -173,8 +173,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
@@ -196,8 +196,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
@@ -214,8 +214,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
@@ -232,8 +232,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
@@ -250,8 +250,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
@@ -268,8 +268,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
@@ -286,13 +286,13 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 rowHeights,
-                this.totalWidth,
-                this.totalHeight
+                this.columnCount,
+                this.rowCount
         );
     }
 
     @Override
-    SpreadsheetDelta replaceTotalWidth(final OptionalDouble totalWidth) {
+    SpreadsheetDelta replaceColumnCount(final OptionalInt columnCount) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewportSelection,
                 this.cells,
@@ -304,13 +304,13 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                totalWidth,
-                this.totalHeight
+                columnCount,
+                this.rowCount
         );
     }
 
     @Override
-    SpreadsheetDelta replaceTotalHeight(final OptionalDouble totalHeight) {
+    SpreadsheetDelta replaceRowCount(final OptionalInt rowCount) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewportSelection,
                 this.cells,
@@ -322,8 +322,8 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.deletedRows,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                totalHeight
+                this.columnCount,
+                rowCount
         );
     }
 

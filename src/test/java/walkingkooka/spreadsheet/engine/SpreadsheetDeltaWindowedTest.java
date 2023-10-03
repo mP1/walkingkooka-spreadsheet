@@ -36,7 +36,7 @@ import walkingkooka.tree.json.JsonString;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -235,8 +235,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 row5, 60.0
         );
 
-        final OptionalDouble totalWidth = OptionalDouble.of(88);
-        final OptionalDouble totalHeight = OptionalDouble.of(88);
+        final OptionalInt columnCount = OptionalInt.of(88);
+        final OptionalInt rowCount = OptionalInt.of(88);
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.EMPTY;
 
@@ -251,8 +251,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 deletedRows,
                 columnWidths,
                 rowHeights,
-                totalWidth,
-                totalHeight,
+                columnCount,
+                rowCount,
                 window
         );
 
@@ -267,8 +267,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.checkDeletedColumns(before, deletedColumns);
         this.checkDeletedRows(before, deletedRows);
 
-        this.checkTotalWidth(before, totalWidth);
-        this.checkTotalHeight(before, totalHeight);
+        this.checkColumnCount(before, columnCount);
+        this.checkRowCount(before, rowCount);
 
         this.checkWindow(before, window);
 
@@ -285,8 +285,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.checkDeletedColumns(after, Sets.of(e));
         this.checkDeletedRows(after, Sets.of(row5));
 
-        this.checkTotalWidth(after, totalWidth);
-        this.checkTotalHeight(after, totalHeight);
+        this.checkColumnCount(after, columnCount);
+        this.checkRowCount(after, rowCount);
 
         this.checkWindow(after, window2);
     }
@@ -686,8 +686,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         this.deletedRows(),
                         this.columnWidths(),
                         this.rowHeights(),
-                        this.totalWidth(),
-                        this.totalHeight(),
+                        this.columnCount(),
+                        this.rowCount(),
                         this.window()
                 ),
                 "SpreadsheetDelta\n" +
@@ -718,8 +718,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "    A: 50.0\n" +
                         "  rowHeights:\n" +
                         "    1: 75.0\n" +
-                        "  totalWidth: 88.0\n" +
-                        "  totalHeight: 99.0\n" +
+                        "  columnCount: 88\n" +
+                        "  rowCount: 99\n" +
                         "  window:\n" +
                         "    A1:E5\n"
         );
@@ -907,7 +907,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testMarshallCellsTotalWidthWindow() {
+    public void testMarshallCellsColumnCountWindow() {
         this.marshallAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         SpreadsheetDelta.NO_VIEWPORT_SELECTION,
@@ -920,19 +920,19 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.totalWidth(),
+                        this.columnCount(),
                         SpreadsheetDelta.NO_TOTAL_HEIGHT,
                         this.window()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.MAX_COLUMN_PROPERTY, MAX_COLUMN_JSON)
+                        .set(SpreadsheetDelta.COLUMN_COUNT_PROPERTY, COLUMN_COUNT_JSON)
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
         );
     }
 
     @Test
-    public void testMarshallCellsTotalHeightWindow() {
+    public void testMarshallCellsRowCountWindow() {
         this.marshallAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         SpreadsheetDelta.NO_VIEWPORT_SELECTION,
@@ -946,12 +946,12 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        this.totalHeight(),
+                        this.rowCount(),
                         this.window()
                 ),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
-                        .set(SpreadsheetDelta.MAX_ROW_PROPERTY, MAX_ROW_JSON)
+                        .set(SpreadsheetDelta.ROW_COUNT_PROPERTY, ROW_COUNT_JSON)
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
         );
     }
@@ -970,8 +970,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         this.deletedRows(),
                         this.columnWidths(),
                         this.rowHeights(),
-                        this.totalWidth(),
-                        this.totalHeight(),
+                        this.columnCount(),
+                        this.rowCount(),
                         this.window()
                 ),
                 JsonNode.object()
@@ -983,8 +983,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         .set(SpreadsheetDelta.DELETED_ROWS_PROPERTY, deletedRowsJson())
                         .set(SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY, COLUMN_WIDTHS_JSON)
                         .set(SpreadsheetDelta.ROW_HEIGHTS_PROPERTY, ROW_HEIGHTS_JSON)
-                        .set(SpreadsheetDelta.MAX_COLUMN_PROPERTY, MAX_COLUMN_JSON)
-                        .set(SpreadsheetDelta.MAX_ROW_PROPERTY, MAX_ROW_JSON)
+                        .set(SpreadsheetDelta.COLUMN_COUNT_PROPERTY, COLUMN_COUNT_JSON)
+                        .set(SpreadsheetDelta.ROW_COUNT_PROPERTY, ROW_COUNT_JSON)
                         .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_JSON_STRING)
         );
     }
@@ -1162,7 +1162,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testToStringTotalHeightHeights() {
+    public void testToStringRowCountHeights() {
         this.toStringAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         SpreadsheetDelta.NO_VIEWPORT_SELECTION,
@@ -1204,7 +1204,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Test
-    public void testToStringTotalWidthTotalHeight() {
+    public void testToStringColumnCountRowCount() {
         this.toStringAndCheck(
                 SpreadsheetDeltaWindowed.withWindowed(
                         SpreadsheetDelta.NO_VIEWPORT_SELECTION,
@@ -1217,11 +1217,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_DELETED_ROWS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.totalWidth(),
-                        this.totalHeight(),
+                        this.columnCount(),
+                        this.rowCount(),
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 totalWidth: 88.0 totalHeight: 99.0 window: A1:E5");
+                "cells: A1=1, B2=2, C3=3 columnCount: 88 rowCount: 99 window: A1:E5");
     }
 
     // helpers..........................................................................................................
@@ -1252,8 +1252,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 this.deletedRows(),
                 this.columnWidths(),
                 this.rowHeights(),
-                this.totalWidth(),
-                this.totalHeight(),
+                this.columnCount(),
+                this.rowCount(),
                 window
         );
     }

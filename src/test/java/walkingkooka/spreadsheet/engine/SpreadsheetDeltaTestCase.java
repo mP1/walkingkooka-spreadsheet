@@ -52,7 +52,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -102,8 +102,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
 
-        this.checkTotalWidth(after);
-        this.checkTotalHeight(after);
+        this.checkColumnCount(after);
+        this.checkRowCount(after);
 
         this.checkViewportSelection(before);
     }
@@ -905,32 +905,32 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentTotalWidth() {
-        final OptionalDouble totalWidth = this.differentTotalWidth();
+    public final void testDifferentColumnCount() {
+        final OptionalInt columnCount = this.differentColumnCount();
         this.checkNotEquals(
-                this.totalWidth(),
-                totalWidth,
-                "totalWidth() and differentTotalWidth() must be un equal"
+                this.columnCount(),
+                columnCount,
+                "columnCount() and differentColumnCount() must be un equal"
         );
 
         this.checkNotEquals(
                 this.createSpreadsheetDelta()
-                        .setTotalWidth(totalWidth)
+                        .setColumnCount(columnCount)
         );
     }
 
     @Test
-    public final void testDifferentTotalHeight() {
-        final OptionalDouble totalHeight = this.differentTotalHeight();
+    public final void testDifferentRowCount() {
+        final OptionalInt rowCount = this.differentRowCount();
         this.checkNotEquals(
-                this.totalHeight(),
-                totalHeight,
-                "totalHeight() and differentTotalHeight() must be un equal"
+                this.rowCount(),
+                rowCount,
+                "rowCount() and differentRowCount() must be un equal"
         );
 
         this.checkNotEquals(
                 this.createSpreadsheetDelta()
-                        .setTotalHeight(totalHeight)
+                        .setRowCount(rowCount)
         );
     }
 
@@ -1343,53 +1343,53 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    // totalWidth..................................................................................................
+    // columnCount..................................................................................................
 
-    final OptionalDouble totalWidth() {
-        return OptionalDouble.of(88);
+    final OptionalInt columnCount() {
+        return OptionalInt.of(88);
     }
 
-    final static JsonNode MAX_COLUMN_JSON = JsonNode.parse("88");
+    final static JsonNode COLUMN_COUNT_JSON = JsonNode.parse("88");
 
-    final OptionalDouble differentTotalWidth() {
-        return OptionalDouble.empty();
+    final OptionalInt differentColumnCount() {
+        return OptionalInt.empty();
     }
 
-    final void checkTotalWidth(final SpreadsheetDelta delta) {
-        checkTotalWidth(delta, this.totalWidth());
+    final void checkColumnCount(final SpreadsheetDelta delta) {
+        checkColumnCount(delta, this.columnCount());
     }
 
-    final void checkTotalWidth(final SpreadsheetDelta delta,
-                               final OptionalDouble totalWidth) {
+    final void checkColumnCount(final SpreadsheetDelta delta,
+                                final OptionalInt columnCount) {
         this.checkEquals(
-                totalWidth,
-                delta.totalWidth(),
-                "totalWidth"
+                columnCount,
+                delta.columnCount(),
+                "columnCount"
         );
     }
 
-    // totalHeight.......................................................................................................
+    // rowCount.......................................................................................................
 
-    final OptionalDouble totalHeight() {
-        return OptionalDouble.of(99);
+    final OptionalInt rowCount() {
+        return OptionalInt.of(99);
     }
 
-    final static JsonNode MAX_ROW_JSON = JsonNode.parse("99");
+    final static JsonNode ROW_COUNT_JSON = JsonNode.parse("99");
 
-    final OptionalDouble differentTotalHeight() {
-        return OptionalDouble.empty();
+    final OptionalInt differentRowCount() {
+        return OptionalInt.empty();
     }
 
-    final void checkTotalHeight(final SpreadsheetDelta delta) {
-        checkTotalHeight(delta, this.totalHeight());
+    final void checkRowCount(final SpreadsheetDelta delta) {
+        checkRowCount(delta, this.rowCount());
     }
 
-    final void checkTotalHeight(final SpreadsheetDelta delta,
-                                final OptionalDouble totalHeight) {
+    final void checkRowCount(final SpreadsheetDelta delta,
+                             final OptionalInt rowCount) {
         this.checkEquals(
-                totalHeight,
-                delta.totalHeight(),
-                "totalHeight"
+                rowCount,
+                delta.rowCount(),
+                "rowCount"
         );
     }
 

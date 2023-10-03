@@ -52,11 +52,11 @@ public enum SpreadsheetDeltaProperties {
     ROW_HEIGHTS,
 
     /**
-     * The {@link #TOTAL_WIDTH} and {@link #TOTAL_HEIGHT} are required by the UI to compute a slider that grows to show
+     * The {@link #COLUMN_COUNT} and {@link #ROW_COUNT} are required by the UI to compute a slider that grows to show
      * the visible window against the visible viewport dimensions.
      */
-    TOTAL_WIDTH,
-    TOTAL_HEIGHT;
+    COLUMN_COUNT,
+    ROW_COUNT;
 
     SpreadsheetDeltaProperties() {
         this.camelCase = this.name()

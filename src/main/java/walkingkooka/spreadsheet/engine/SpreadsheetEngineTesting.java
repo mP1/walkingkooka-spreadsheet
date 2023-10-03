@@ -49,7 +49,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -62,7 +61,7 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -463,14 +462,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(cells)
-                .setTotalWidth(
-                        OptionalDouble.of(
-                                engine.allColumnsWidth(context)
+                .setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
                         )
                 )
-                .setTotalHeight(
-                        OptionalDouble.of(
-                                engine.allRowsHeight(context)
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
                         )
                 );
         this.checkEquals(
@@ -517,14 +516,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
 
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setTotalWidth(
-                        OptionalDouble.of(
-                                engine.allColumnsWidth(context)
+                .setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
                         )
                 )
-                .setTotalHeight(
-                        OptionalDouble.of(
-                                engine.allRowsHeight(context)
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
                         )
                 );
         ;
@@ -1013,14 +1012,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(
                 SpreadsheetDelta.EMPTY.setCells(
                                 Sets.of(updated)
-                        ).setTotalWidth(
-                                OptionalDouble.of(
-                                        engine.allColumnsWidth(context)
+                        ).setColumnCount(
+                                OptionalInt.of(
+                                        engine.columnCount(context)
                                 )
                         )
-                        .setTotalHeight(
-                                OptionalDouble.of(
-                                        engine.allRowsHeight(context)
+                        .setRowCount(
+                                OptionalInt.of(
+                                        engine.rowCount(context)
                                 )
                         ),
                 result,
@@ -1051,14 +1050,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 .setCells(
                         Sets.of(updated)
 
-                ).setTotalWidth(
-                        OptionalDouble.of(
-                                engine.allColumnsWidth(context)
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
                         )
                 )
-                .setTotalHeight(
-                        OptionalDouble.of(
-                                engine.allRowsHeight(context)
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
                         )
                 );
         ;
@@ -1095,14 +1094,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(updated)
-                ).setTotalWidth(
-                        OptionalDouble.of(
-                                engine.allColumnsWidth(context)
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
                         )
                 )
-                .setTotalHeight(
-                        OptionalDouble.of(
-                                engine.allRowsHeight(context)
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
                         )
                 );
 
@@ -1136,20 +1135,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context
         );
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(updated)
-                ).setTotalWidth(
-                        OptionalDouble.of(
-                                engine.allColumnsWidth(context)
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
                         )
                 )
-                .setTotalHeight(
-                        OptionalDouble.of(
-                                engine.allRowsHeight(context)
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
                         )
                 );
 
@@ -1205,14 +1201,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(
                         Sets.of(updated)
-                ).setTotalWidth(
-                        OptionalDouble.of(
-                                engine.allColumnsWidth(context)
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
                         )
                 )
-                .setTotalHeight(
-                        OptionalDouble.of(
-                                engine.allRowsHeight(context)
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
                         )
                 ).setWindow(
                         result.window()
