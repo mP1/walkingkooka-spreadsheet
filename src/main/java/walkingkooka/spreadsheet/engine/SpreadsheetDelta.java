@@ -63,7 +63,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -91,8 +91,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final static Map<SpreadsheetColumnReference, Double> NO_COLUMN_WIDTHS = Maps.empty();
     public final static Map<SpreadsheetRowReference, Double> NO_ROW_HEIGHTS = Maps.empty();
 
-    public final static OptionalDouble NO_TOTAL_WIDTH = OptionalDouble.empty();
-    public final static OptionalDouble NO_TOTAL_HEIGHT = OptionalDouble.empty();
+    public final static OptionalInt NO_TOTAL_WIDTH = OptionalInt.empty();
+    public final static OptionalInt NO_TOTAL_HEIGHT = OptionalInt.empty();
 
     public final static SpreadsheetViewportWindows NO_WINDOW = SpreadsheetViewportWindows.EMPTY;
 
@@ -127,8 +127,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                      final Set<SpreadsheetRowReference> deletedRows,
                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                      final Map<SpreadsheetRowReference, Double> rowHeights,
-                     final OptionalDouble totalWidth,
-                     final OptionalDouble totalHeight) {
+                     final OptionalInt columnCount,
+                     final OptionalInt rowCount) {
         super();
 
         this.viewportSelection = viewportSelection;
@@ -144,8 +144,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         this.columnWidths = columnWidths;
         this.rowHeights = rowHeights;
 
-        this.totalWidth = totalWidth;
-        this.totalHeight = totalHeight;
+        this.columnCount = columnCount;
+        this.rowCount = rowCount;
     }
 
     // viewportSelection................................................................................................
@@ -522,43 +522,43 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // max..............................................................................................................
 
-    public final OptionalDouble totalWidth() {
-        return this.totalWidth;
+    public final OptionalInt columnCount() {
+        return this.columnCount;
     }
 
-    public SpreadsheetDelta setTotalWidth(final OptionalDouble totalWidth) {
-        checkTotal(totalWidth, "totalWidth");
+    public SpreadsheetDelta setColumnCount(final OptionalInt columnCount) {
+        checkCount(columnCount, "columnCount");
 
-        return this.totalWidth.equals(totalWidth) ?
+        return this.columnCount.equals(columnCount) ?
                 this :
-                this.replaceTotalWidth(totalWidth);
+                this.replaceColumnCount(columnCount);
     }
 
-    abstract SpreadsheetDelta replaceTotalWidth(final OptionalDouble totalWidth);
+    abstract SpreadsheetDelta replaceColumnCount(final OptionalInt columnCount);
 
-    final OptionalDouble totalWidth;
+    final OptionalInt columnCount;
 
-    public final OptionalDouble totalHeight() {
-        return this.totalHeight;
+    public final OptionalInt rowCount() {
+        return this.rowCount;
     }
 
-    final OptionalDouble totalHeight;
+    final OptionalInt rowCount;
 
-    public SpreadsheetDelta setTotalHeight(final OptionalDouble totalHeight) {
-        checkTotal(totalHeight, "totalHeight");
+    public SpreadsheetDelta setRowCount(final OptionalInt rowCount) {
+        checkCount(rowCount, "rowCount");
 
-        return this.totalHeight.equals(totalHeight) ?
+        return this.rowCount.equals(rowCount) ?
                 this :
-                this.replaceTotalHeight(totalHeight);
+                this.replaceRowCount(rowCount);
     }
 
-    abstract SpreadsheetDelta replaceTotalHeight(final OptionalDouble totalHeight);
+    abstract SpreadsheetDelta replaceRowCount(final OptionalInt rowCount);
 
-    private void checkTotal(final OptionalDouble maybeValue,
+    private void checkCount(final OptionalInt maybeValue,
                             final String label) {
         Objects.requireNonNull(maybeValue, label);
         if (maybeValue.isPresent()) {
-            final double value = maybeValue.getAsDouble();
+            final int value = maybeValue.getAsInt();
             if (value < 0) {
                 throw new IllegalArgumentException("Invalid " + label + " = " + value + " < 0");
             }
@@ -606,8 +606,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 window
         );
 
-        final OptionalDouble totalWidth = this.totalWidth;
-        final OptionalDouble totalHeight = this.totalHeight;
+        final OptionalInt columnCount = this.columnCount;
+        final OptionalInt rowCount = this.rowCount;
 
         final SpreadsheetDelta delta;
         if (false == window.isEmpty()) {
@@ -622,8 +622,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     filterDeletedRows0(deletedRows, window),
                     filterColumnWidths0(columnWidths, window),
                     filterRowHeights0(rowHeights, window),
-                    totalWidth,
-                    totalHeight,
+                    columnCount,
+                    rowCount,
                     window
             );
         } else {
@@ -638,8 +638,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     deletedRows,
                     columnWidths,
                     rowHeights,
-                    totalWidth,
-                    totalHeight
+                    columnCount,
+                    rowCount
             );
         }
 
@@ -1579,15 +1579,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     printer
             );
 
-            this.printTreeOptionalDouble(
-                    "totalWidth",
-                    this.totalWidth(),
+            this.printTreeOptionalInt(
+                    "columnCount",
+                    this.columnCount(),
                     printer
             );
 
-            this.printTreeOptionalDouble(
-                    "totalHeight",
-                    this.totalHeight(),
+            this.printTreeOptionalInt(
+                    "rowCount",
+                    this.rowCount(),
                     printer
             );
 
@@ -1664,11 +1664,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
     }
 
-    private void printTreeOptionalDouble(final String label,
-                                         final OptionalDouble value,
-                                         final IndentingPrinter printer) {
+    private void printTreeOptionalInt(final String label,
+                                      final OptionalInt value,
+                                      final IndentingPrinter printer) {
         if (value.isPresent()) {
-            printer.println(label + ": " + value.getAsDouble());
+            printer.println(label + ": " + value.getAsInt());
         }
     }
 
@@ -1772,9 +1772,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
 
-                case MAX_COLUMN_PROPERTY_STRING:
-                    unmarshalled = unmarshalled.setTotalWidth(
-                            OptionalDouble.of(
+                case COLUMN_COUNT_PROPERTY_STRING:
+                    unmarshalled = unmarshalled.setColumnCount(
+                            OptionalInt.of(
                                     context.unmarshall(
                                             child,
                                             Integer.class
@@ -1782,9 +1782,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             )
                     );
                     break;
-                case MAX_ROW_PROPERTY_STRING:
-                    unmarshalled = unmarshalled.setTotalHeight(
-                            OptionalDouble.of(
+                case ROW_COUNT_PROPERTY_STRING:
+                    unmarshalled = unmarshalled.setRowCount(
+                            OptionalInt.of(
                                     context.unmarshall(
                                             child,
                                             Integer.class
@@ -1963,19 +1963,19 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             );
         }
 
-        final OptionalDouble totalWidth = this.totalWidth;
-        if (totalWidth.isPresent()) {
+        final OptionalInt columnCount = this.columnCount;
+        if (columnCount.isPresent()) {
             children.add(
-                    context.marshall(totalWidth.getAsDouble())
-                            .setName(MAX_COLUMN_PROPERTY)
+                    context.marshall(columnCount.getAsInt())
+                            .setName(COLUMN_COUNT_PROPERTY)
             );
         }
 
-        final OptionalDouble totalHeight = this.totalHeight;
-        if (totalHeight.isPresent()) {
+        final OptionalInt rowCount = this.rowCount;
+        if (rowCount.isPresent()) {
             children.add(
-                    context.marshall(totalHeight.getAsDouble())
-                            .setName(MAX_ROW_PROPERTY)
+                    context.marshall(rowCount.getAsInt())
+                            .setName(ROW_COUNT_PROPERTY)
             );
         }
 
@@ -2045,8 +2045,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String COLUMN_WIDTHS_PROPERTY_STRING = "columnWidths";
     private final static String ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
 
-    private final static String MAX_COLUMN_PROPERTY_STRING = "totalWidth";
-    private final static String MAX_ROW_PROPERTY_STRING = "totalHeight";
+    private final static String COLUMN_COUNT_PROPERTY_STRING = "columnCount";
+    private final static String ROW_COUNT_PROPERTY_STRING = "rowCount";
 
     private final static String WINDOW_PROPERTY_STRING = "window";
 
@@ -2076,9 +2076,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final static JsonPropertyName ROW_HEIGHTS_PROPERTY = JsonPropertyName.with(ROW_HEIGHTS_PROPERTY_STRING);
 
     // @VisibleForTesting
-    final static JsonPropertyName MAX_COLUMN_PROPERTY = JsonPropertyName.with(MAX_COLUMN_PROPERTY_STRING);
+    final static JsonPropertyName COLUMN_COUNT_PROPERTY = JsonPropertyName.with(COLUMN_COUNT_PROPERTY_STRING);
     // @VisibleForTesting
-    final static JsonPropertyName MAX_ROW_PROPERTY = JsonPropertyName.with(MAX_ROW_PROPERTY_STRING);
+    final static JsonPropertyName ROW_COUNT_PROPERTY = JsonPropertyName.with(ROW_COUNT_PROPERTY_STRING);
 
     // @VisibleForTesting
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING); // only used by patchCells
@@ -2112,8 +2112,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.deletedCells,
                 this.columnWidths,
                 this.rowHeights,
-                this.totalWidth,
-                this.totalHeight,
+                this.columnCount,
+                this.rowCount,
                 this.window().hashCode()
         );
     }
@@ -2134,8 +2134,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.deletedCells.equals(other.deletedCells) &&
                 this.columnWidths.equals(other.columnWidths) &&
                 this.rowHeights.equals(other.rowHeights) &&
-                this.totalWidth.equals(other.totalWidth) &&
-                this.totalHeight.equals(other.totalHeight) &&
+                this.columnCount.equals(other.columnCount) &&
+                this.rowCount.equals(other.rowCount) &&
                 this.window().equals(other.window());
     }
 
@@ -2182,8 +2182,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             b.value(rowHeights);
         }
 
-        b.label("totalWidth").value(this.totalWidth);
-        b.label("totalHeight").value(this.totalHeight);
+        b.label("columnCount").value(this.columnCount);
+        b.label("rowCount").value(this.rowCount);
 
         this.toStringWindow(b);
 
