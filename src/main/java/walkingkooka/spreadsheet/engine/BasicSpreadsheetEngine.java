@@ -1291,22 +1291,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
 
         double sum = 0;
 
-        final int columns = cellStore.columns();
+        final int columnCount = repository.cells()
+                .columnCount();
 
-        if (-1 != columns) {
-            final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.column(columns);
-
-            for (SpreadsheetColumnReference c = last.referenceKind().firstColumn(); c.compareTo(last) <= 0; ) {
-                sum += this.columnWidth(
-                        c,
-                        context
-                );
-                c = c.addSaturated(1);
-            }
+        for (int i = 0; i < columnCount; i++) {
+            sum += this.columnWidth(
+                    SpreadsheetReferenceKind.RELATIVE.column(i),
+                    context
+            );
         }
 
         return sum;

@@ -135,8 +135,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public int columns() {
-        return this.max(c -> c.reference().column().value());
+    public int columnCount() {
+        return 1 + this.max(c -> c.reference().column().value());
     }
 
     private int max(final ToIntFunction<SpreadsheetCell> value) {
