@@ -130,17 +130,18 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public int rows() {
-        return this.max(c -> c.reference().row().value());
+    public int rowCount() {
+        return this.count(c -> c.reference().row().value());
     }
 
     @Override
     public int columnCount() {
-        return 1 + this.max(c -> c.reference().column().value());
+        return this.count(c -> c.reference().column().value());
     }
 
-    private int max(final ToIntFunction<SpreadsheetCell> value) {
-        return this.all()
+    private int count(final ToIntFunction<SpreadsheetCell> value) {
+        return 1 +
+                this.all()
                 .stream()
                 .mapToInt(value)
                 .max()

@@ -1312,23 +1312,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
 
         double sum = 0;
 
-        final int rows = cellStore.rows();
+        final int rowCount = repository.cells()
+                .rowCount();
 
-        if (-1 != rows) {
-            final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.row(rows);
-
-            for (SpreadsheetRowReference c = last.referenceKind().firstRow(); c.compareTo(last) <= 0; ) {
-                sum += this.rowHeight(
-                        c,
-                        context
-                );
-                c = c.addSaturated(1);
-            }
-
+        for (int i = 0; i < rowCount; i++) {
+            sum += this.rowHeight(
+                    SpreadsheetReferenceKind.RELATIVE.row(i),
+                    context
+            );
         }
 
         return sum;

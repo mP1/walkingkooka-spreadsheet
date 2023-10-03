@@ -157,17 +157,17 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
-    public final void testRowsWhenEmpty() {
+    public final void testRowCountWhenEmpty() {
         final S store = this.createStore();
 
-        this.rowsAndCheck(
+        this.rowCountAndCheck(
                 store,
-                -1
+                0
         );
     }
 
     @Test
-    public final void testRowsWithA24() {
+    public final void testRowCountWithA24() {
         final S store = this.createStore();
 
         store.save(
@@ -177,23 +177,23 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
                 this.cell(0, 23)
         );
 
-        this.rowsAndCheck(
+        this.rowCountAndCheck(
                 store,
-                23
+                24
         );
     }
 
     @Test
-    public final void testRows() {
+    public final void testRowCount() {
         final S store = this.createStore();
 
         store.save(this.cell(1, 2));
         store.save(this.cell(1, 99));
         store.save(this.cell(1, 5));
 
-        this.rowsAndCheck(
+        this.rowCountAndCheck(
                 store,
-                99
+                100
         );
     }
 
@@ -387,8 +387,12 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
                 SpreadsheetReferenceKind.RELATIVE.row(row));
     }
 
-    final void rowsAndCheck(final SpreadsheetCellStore store, final int row) {
-        this.checkEquals(row, store.rows(), () -> "rows for store=" + store);
+    final void rowCountAndCheck(final SpreadsheetCellStore store,
+                                final int expected) {
+        this.checkEquals(
+                expected,
+                store.rowCount(),
+                () -> "rowCount for store=" + store);
     }
 
     private SpreadsheetFormula formula() {
