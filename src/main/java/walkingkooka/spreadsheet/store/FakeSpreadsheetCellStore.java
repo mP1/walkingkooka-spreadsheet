@@ -40,7 +40,7 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     }
 
     @Override
-    public int rows() {
+    public int rowCount() {
         throw new UnsupportedOperationException();
     }
 

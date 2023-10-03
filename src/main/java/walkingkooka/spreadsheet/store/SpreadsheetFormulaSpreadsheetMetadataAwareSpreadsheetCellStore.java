@@ -212,8 +212,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
-    public int rows() {
-        return this.store.rows();
+    public int rowCount() {
+        return this.store.rowCount();
     }
 
     @Override

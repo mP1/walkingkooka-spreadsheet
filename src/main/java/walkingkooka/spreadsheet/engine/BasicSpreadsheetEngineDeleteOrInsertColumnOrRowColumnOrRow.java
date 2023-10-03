@@ -380,7 +380,9 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Returns the max or last row
      */
     final int maxRow() {
-        return this.cellStore().rows();
+        return this.cellStore()
+                .rowCount()
+                - 1;
     }
 
     /**
