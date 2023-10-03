@@ -65,6 +65,24 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     @Test
+    default void testRowCountWhenEmpty() {
+        final S store = this.createStore();
+
+        this.rowCountAndCheck(
+                store,
+                0
+        );
+    }
+
+    default void rowCountAndCheck(final SpreadsheetCellStore store,
+                                  final int expected) {
+        this.checkEquals(
+                expected,
+                store.rowCount(),
+                () -> "rowCount for store=" + store);
+    }
+
+    @Test
     default void testColumnNullColumnFails() {
         assertThrows(
                 NullPointerException.class,
