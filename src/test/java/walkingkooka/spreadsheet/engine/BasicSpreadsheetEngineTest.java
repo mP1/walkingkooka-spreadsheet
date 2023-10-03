@@ -9784,6 +9784,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // columnCount.... .................................................................................................
+
+    @Test
+    public void testColumnCount() {
+        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
+
+        final SpreadsheetEngineContext context = this.createContext(
+                cellStore
+        );
+
+        cellStore.save(
+                SpreadsheetSelection.parseCell("B99")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("'Hello")
+                        )
+        );
+
+        this.columnCountAndCheck(
+                this.createSpreadsheetEngine(),
+                context,
+                2
+        );
+    }
+
     // allColumnWidths .................................................................................................
 
     @Test

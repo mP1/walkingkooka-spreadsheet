@@ -586,6 +586,27 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().rowHeight(SpreadsheetRowReference.parseRow("1"), null));
     }
 
+    // columnCount......................................................................................................
+
+    @Test
+    default void testColumnCountNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .columnCount(null)
+        );
+    }
+
+    default void columnCountAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetEngineContext context,
+                                     final int expected) {
+        this.checkEquals(
+                expected,
+                engine.columnCount(context),
+                () -> "columnCount " + engine
+        );
+    }
+
     // allColumnsWidth..................................................................................................
 
     @Test

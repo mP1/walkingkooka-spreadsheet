@@ -182,6 +182,11 @@ public interface SpreadsheetEngine {
                      final SpreadsheetEngineContext context);
 
     /**
+     * Returns the number of columns in this spreadsheet or 0 when empty.
+     */
+    int columnCount(final SpreadsheetEngineContext context);
+
+    /**
      * Returns the total width of all visible columns.
      */
     double allColumnsWidth(final SpreadsheetEngineContext context);

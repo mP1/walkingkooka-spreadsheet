@@ -1287,6 +1287,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
+    public int columnCount(final SpreadsheetEngineContext context) {
+        checkContext(context);
+
+        return context.storeRepository()
+                .cells()
+                .columnCount();
+    }
+
+    @Override
     public double allColumnsWidth(final SpreadsheetEngineContext context) {
         checkContext(context);
 
