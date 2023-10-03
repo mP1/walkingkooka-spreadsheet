@@ -9808,6 +9808,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // rowCount.... .................................................................................................
+
+    @Test
+    public void testRowCount() {
+        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
+
+        final SpreadsheetEngineContext context = this.createContext(
+                cellStore
+        );
+
+        cellStore.save(
+                SpreadsheetSelection.parseCell("B99")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("'Hello")
+                        )
+        );
+
+        this.rowCountAndCheck(
+                this.createSpreadsheetEngine(),
+                context,
+                99
+        );
+    }
+    
     // allColumnWidths .................................................................................................
 
     @Test

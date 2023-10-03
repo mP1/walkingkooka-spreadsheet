@@ -168,6 +168,11 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public int rowCount(final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public double allColumnsWidth(final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }

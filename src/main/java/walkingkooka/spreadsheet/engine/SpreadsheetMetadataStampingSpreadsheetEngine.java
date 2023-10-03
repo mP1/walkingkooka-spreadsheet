@@ -246,6 +246,11 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public int rowCount(final SpreadsheetEngineContext context) {
+        return this.engine.rowCount(context);
+    }
+
+    @Override
     public double allColumnsWidth(final SpreadsheetEngineContext context) {
         return this.engine.allColumnsWidth(context);
     }
