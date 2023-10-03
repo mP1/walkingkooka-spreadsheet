@@ -130,39 +130,39 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
-    public final void testColumnsWhenEmpty() {
+    public final void testColumnCountWhenEmpty() {
         final S store = this.createStore();
 
-        this.columnsAndCheck(
-                store,
-                -1
-        );
-    }
-
-    @Test
-    public final void testColumnsWithOnlyCellA24() {
-        final S store = this.createStore();
-
-        store.save(this.cell(0, 2));
-        store.save(this.cell(0, 23));
-
-        this.columnsAndCheck(
+        this.columnCountAndCheck(
                 store,
                 0
         );
     }
 
     @Test
-    public final void testColumns() {
+    public final void testColumnCountWithOnlyCellA24() {
+        final S store = this.createStore();
+
+        store.save(this.cell(0, 2));
+        store.save(this.cell(0, 23));
+
+        this.columnCountAndCheck(
+                store,
+                1
+        );
+    }
+
+    @Test
+    public final void testColumnCount() {
         final S store = this.createStore();
 
         store.save(this.cell(1, 1));
         store.save(this.cell(99, 1));
         store.save(this.cell(98, 2));
 
-        this.columnsAndCheck(
+        this.columnCountAndCheck(
                 store,
-                99
+                100
         );
     }
 
@@ -401,8 +401,13 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         this.checkEquals(row, store.rows(), () -> "rows for store=" + store);
     }
 
-    final void columnsAndCheck(final SpreadsheetCellStore store, final int column) {
-        this.checkEquals(column, store.columns(), () -> "columns for store=" + store);
+    final void columnCountAndCheck(final SpreadsheetCellStore store,
+                                   final int count) {
+        this.checkEquals(
+                count,
+                store.columnCount(),
+                () -> "columnCount for store=" + store
+        );
     }
 
     private SpreadsheetFormula formula() {

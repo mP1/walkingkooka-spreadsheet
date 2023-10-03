@@ -78,9 +78,9 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     int rows();
 
     /**
-     * The highest column number or -1 when none.
+     * The total number of columns, with 0 returned for none.
      */
-    int columns();
+    int columnCount();
 
     /**
      * Returns a view of all cells in the given row.

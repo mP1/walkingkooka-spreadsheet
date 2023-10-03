@@ -45,7 +45,7 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     }
 
     @Override
-    public int columns() {
+    public int columnCount() {
         throw new UnsupportedOperationException();
     }
 

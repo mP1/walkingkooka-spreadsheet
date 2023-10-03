@@ -217,8 +217,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
-    public int columns() {
-        return this.store.columns();
+    public int columnCount() {
+        return this.store.columnCount();
     }
 
     @Override
