@@ -44,6 +44,26 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         );
     }
 
+
+    @Test
+    default void testColumnCountWhenEmpty() {
+        final S store = this.createStore();
+
+        this.columnCountAndCheck(
+                store,
+                0
+        );
+    }
+
+    default void columnCountAndCheck(final SpreadsheetCellStore store,
+                                     final int expected) {
+        this.checkEquals(
+                expected,
+                store.columnCount(),
+                () -> "columnCount for store=" + store
+        );
+    }
+
     @Test
     default void testColumnNullColumnFails() {
         assertThrows(
