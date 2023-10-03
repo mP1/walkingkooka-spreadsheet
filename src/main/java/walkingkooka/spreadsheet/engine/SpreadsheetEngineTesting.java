@@ -607,6 +607,27 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // rowCount......................................................................................................
+
+    @Test
+    default void testRowCountNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .rowCount(null)
+        );
+    }
+
+    default void rowCountAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetEngineContext context,
+                                  final int expected) {
+        this.checkEquals(
+                expected,
+                engine.rowCount(context),
+                () -> "rowCount " + engine
+        );
+    }
+
     // allColumnsWidth..................................................................................................
 
     @Test
