@@ -157,16 +157,6 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
-    public final void testRowCountWhenEmpty() {
-        final S store = this.createStore();
-
-        this.rowCountAndCheck(
-                store,
-                0
-        );
-    }
-
-    @Test
     public final void testRowCountWithA24() {
         final S store = this.createStore();
 
@@ -385,14 +375,6 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     final SpreadsheetCellReference cellReference(final int column, final int row) {
         return SpreadsheetSelection.cell(SpreadsheetReferenceKind.RELATIVE.column(column),
                 SpreadsheetReferenceKind.RELATIVE.row(row));
-    }
-
-    final void rowCountAndCheck(final SpreadsheetCellStore store,
-                                final int expected) {
-        this.checkEquals(
-                expected,
-                store.rowCount(),
-                () -> "rowCount for store=" + store);
     }
 
     private SpreadsheetFormula formula() {
