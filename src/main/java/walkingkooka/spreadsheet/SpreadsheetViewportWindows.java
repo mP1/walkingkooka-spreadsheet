@@ -146,6 +146,26 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
         return this.cellRanges.isEmpty();
     }
 
+    /**
+     * Returns the last window, and because the {@link #cellRanges} is sorted this will be the bottom right window,
+     * which is also often the window that maybe scrolled by the user in the UI.
+     */
+    public Optional<SpreadsheetCellRange> last() {
+        if (null == this.last) {
+            SpreadsheetCellRange last = null;
+
+            for (final SpreadsheetCellRange possible : this.cellRanges) {
+                last = possible;
+            }
+
+            this.last = Optional.ofNullable(last);
+        }
+
+        return this.last;
+    }
+
+    private Optional<SpreadsheetCellRange> last;
+
     // bounds...........................................................................................................
 
     /**
