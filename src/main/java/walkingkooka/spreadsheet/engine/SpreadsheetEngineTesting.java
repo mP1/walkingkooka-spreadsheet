@@ -627,44 +627,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    // allColumnsWidth..................................................................................................
-
-    @Test
-    default void testAllColumnsWidthNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .allColumnsWidth(null)
-        );
-    }
-
-    @Test
-    default void testAllColumnsWidthWhenNoCells() {
-        this.allColumnsWidthAndCheck(
-                this.createContext(),
-                0
-        );
-    }
-
-    // allRowsHeight....................................................................................................
-
-    @Test
-    default void testAllRowsHeightNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .allRowsHeight(null)
-        );
-    }
-
-    @Test
-    default void testAllRowsHeightWhenNoCells() {
-        this.allRowsHeightAndCheck(
-                this.createContext(),
-                0
-        );
-    }
-
     // navigate.........................................................................................................
 
     @Test
@@ -1302,48 +1264,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(expected,
                 engine.rowHeight(row, context),
                 () -> "rowHeight " + row + " of " + engine);
-    }
-
-    // allColumnsWidthAndCheck.........................................................................................
-
-    default void allColumnsWidthAndCheck(final SpreadsheetEngineContext context,
-                                         final double expected) {
-        this.allColumnsWidthAndCheck(
-                this.createSpreadsheetEngine(),
-                context,
-                expected
-        );
-    }
-
-    default void allColumnsWidthAndCheck(final SpreadsheetEngine engine,
-                                         final SpreadsheetEngineContext context,
-                                         final double expected) {
-        this.checkEquals(
-                expected,
-                engine.allColumnsWidth(context),
-                () -> "allColumnsWidth of " + engine
-        );
-    }
-
-    // allRowsHeightAndCheck.........................................................................................
-
-    default void allRowsHeightAndCheck(final SpreadsheetEngineContext context,
-                                       final double expected) {
-        this.allRowsHeightAndCheck(
-                this.createSpreadsheetEngine(),
-                context,
-                expected
-        );
-    }
-
-    default void allRowsHeightAndCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetEngineContext context,
-                                       final double expected) {
-        this.checkEquals(
-                expected,
-                engine.allRowsHeight(context),
-                () -> "allRowsHeight of " + engine
-        );
     }
 
     // window...........................................................................................................

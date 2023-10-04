@@ -192,16 +192,6 @@ public interface SpreadsheetEngine {
     int rowCount(final SpreadsheetEngineContext context);
 
     /**
-     * Returns the total width of all visible columns.
-     */
-    double allColumnsWidth(final SpreadsheetEngineContext context);
-
-    /**
-     * Returns the total height of all visible rows.
-     */
-    double allRowsHeight(final SpreadsheetEngineContext context);
-
-    /**
      * An absent {@link SpreadsheetSelection}.
      */
     Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();

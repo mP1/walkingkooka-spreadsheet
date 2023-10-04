@@ -1304,48 +1304,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .rowCount();
     }
 
-    @Override
-    public double allColumnsWidth(final SpreadsheetEngineContext context) {
-        checkContext(context);
-
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-
-        double sum = 0;
-
-        final int columnCount = repository.cells()
-                .columnCount();
-
-        for (int i = 0; i < columnCount; i++) {
-            sum += this.columnWidth(
-                    SpreadsheetReferenceKind.RELATIVE.column(i),
-                    context
-            );
-        }
-
-        return sum;
-    }
-
-    @Override
-    public double allRowsHeight(final SpreadsheetEngineContext context) {
-        checkContext(context);
-
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-
-        double sum = 0;
-
-        final int rowCount = repository.cells()
-                .rowCount();
-
-        for (int i = 0; i < rowCount; i++) {
-            sum += this.rowHeight(
-                    SpreadsheetReferenceKind.RELATIVE.row(i),
-                    context
-            );
-        }
-
-        return sum;
-    }
-
     // WINDOW...........................................................................................................
 
     @Override
