@@ -231,6 +231,73 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         return thrown;
     }
 
+    // last.............................................................................................................
+
+    @Test
+    public void testLastWhenEmpty() {
+        this.lastAndCheck(
+                "",
+                ""
+        );
+    }
+
+    @Test
+    public void testLastWhenOnly() {
+        this.lastAndCheck(
+                "A1:B2",
+                "A1:B2"
+        );
+    }
+
+    @Test
+    public void testLastWhenTwo() {
+        this.lastAndCheck(
+                "A1:B2,C1:D2",
+                "C1:D2"
+        );
+    }
+
+    // A1 B1 C1
+    // A2 B2 C2
+    // A3 B3 C3
+    @Test
+    public void testLastWhenFour() {
+        this.lastAndCheck(
+                "A1,B1:C1,A2:A3,B2:C3",
+                "B2:C3"
+        );
+    }
+
+    private void lastAndCheck(final String windows,
+                              final String last) {
+        this.lastAndCheck(
+                SpreadsheetViewportWindows.parse(windows),
+                Optional.ofNullable(
+                        last.isEmpty() ?
+                                null :
+                                SpreadsheetSelection.parseCellRange(last)
+                )
+        );
+    }
+
+    private void lastAndCheck(final SpreadsheetViewportWindows windows,
+                              final Optional<SpreadsheetCellRange> last) {
+        this.checkEquals(
+                last,
+                windows.last(),
+                () -> "last of " + windows
+        );
+    }
+
+    @Test
+    public void testLastCached() {
+        final SpreadsheetViewportWindows windows = SpreadsheetViewportWindows.parse("A1:B2");
+        assertSame(
+                windows.last(),
+                windows.last()
+        );
+    }
+
     // bounds...........................................................................................................
 
     @Test
