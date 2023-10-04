@@ -173,16 +173,6 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public double allColumnsWidth(final SpreadsheetEngineContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public double allRowsHeight(final SpreadsheetEngineContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
                                              final boolean includeFrozenColumnsRows,
                                              final Optional<SpreadsheetSelection> selection,

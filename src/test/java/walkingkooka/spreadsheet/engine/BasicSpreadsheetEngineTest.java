@@ -9896,11 +9896,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetFormula.EMPTY.setText("'Hello2")
                         )
         );
-
-        this.allColumnsWidthAndCheck(
-                context,
-                COLUMN_WIDTH + cWidth + COLUMN_WIDTH
-        );
     }
 
     // allRowHeights ...................................................................................................
@@ -9966,11 +9961,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("'Hello2")
                         )
-        );
-
-        this.allRowsHeightAndCheck(
-                context,
-                ROW_HEIGHT + cHeight + ROW_HEIGHT
         );
     }
 
