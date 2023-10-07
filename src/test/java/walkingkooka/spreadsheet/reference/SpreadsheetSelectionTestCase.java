@@ -1425,7 +1425,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 .collect(
                         Collectors.toMap(
                                 e -> parser.apply(e.getKey()),
-                                e -> e.getValue()
+                                Map.Entry::getValue
                         )
                 );
         return (columnOrRow) -> {

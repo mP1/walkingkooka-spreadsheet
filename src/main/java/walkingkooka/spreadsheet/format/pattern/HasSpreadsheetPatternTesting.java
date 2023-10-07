@@ -43,7 +43,7 @@ public interface HasSpreadsheetPatternTesting extends Testing {
         this.checkEquals(
                 expected,
                 has.pattern(),
-                () -> has.toString()
+                has::toString
         );
     }
 }
