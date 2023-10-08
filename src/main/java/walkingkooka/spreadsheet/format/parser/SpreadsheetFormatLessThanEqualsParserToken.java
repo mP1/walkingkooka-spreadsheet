@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.compare.ComparisonRelation;
+import walkingkooka.compare.CompareResult;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -39,8 +39,8 @@ public final class SpreadsheetFormatLessThanEqualsParserToken extends Spreadshee
     }
 
     @Override
-    public ComparisonRelation relation() {
-        return ComparisonRelation.LTE;
+    public CompareResult compareResult() {
+        return CompareResult.LTE;
     }
 
     // children.........................................................................................................
