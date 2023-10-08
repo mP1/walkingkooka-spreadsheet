@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.compare.ComparisonRelation;
+import walkingkooka.compare.CompareResult;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -52,9 +52,9 @@ abstract public class SpreadsheetFormatConditionParserToken extends SpreadsheetF
     }
 
     /**
-     * Returns the matching {@link ComparisonRelation} for this token.
+     * Returns the matching {@link CompareResult} for this token.
      */
-    public abstract ComparisonRelation relation();
+    public abstract CompareResult compareResult();
 
     public final SpreadsheetFormatParserToken right() {
         return this.right;

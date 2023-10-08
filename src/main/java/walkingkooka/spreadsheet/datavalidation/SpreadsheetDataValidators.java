@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.datavalidation;
 
 import walkingkooka.collect.Range;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.compare.ComparisonRelation;
+import walkingkooka.compare.CompareResult;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.predicate.Predicates;
@@ -54,42 +54,42 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} equal to the given value.
      */
     public static SpreadsheetDataValidator<LocalDate> localDateEquals(final LocalDate value) {
-        return localDate(ComparisonRelation.EQ, value);
+        return localDate(CompareResult.EQ, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} before the given value.
      */
     public static SpreadsheetDataValidator<LocalDate> localDateBefore(final LocalDate value) {
-        return localDate(ComparisonRelation.LT, value);
+        return localDate(CompareResult.LT, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} before or on the given value.
      */
     public static SpreadsheetDataValidator<LocalDate> localDateBeforeOrOn(final LocalDate value) {
-        return localDate(ComparisonRelation.LTE, value);
+        return localDate(CompareResult.LTE, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} after the given value.
      */
     public static SpreadsheetDataValidator<LocalDate> localDateAfter(final LocalDate value) {
-        return localDate(ComparisonRelation.GT, value);
+        return localDate(CompareResult.GT, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} after or on the given value.
      */
     public static SpreadsheetDataValidator<LocalDate> localDateAfterOrOn(final LocalDate value) {
-        return localDate(ComparisonRelation.GTE, value);
+        return localDate(CompareResult.GTE, value);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetDataValidator} that converts text into a {@link LocalDate} and tests
      * the given {@link Predicate condition}.
      */
-    private static SpreadsheetDataValidator<LocalDate> localDate(final ComparisonRelation comparison,
+    private static SpreadsheetDataValidator<LocalDate> localDate(final CompareResult comparison,
                                                                  final LocalDate value) {
         return localDate(comparison.predicate(value));
     }
@@ -123,49 +123,49 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} equal to the given value.
      */
     public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberEquals(final ExpressionNumber value) {
-        return expressionNumber(ComparisonRelation.EQ, value);
+        return expressionNumber(CompareResult.EQ, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} greater than the given value.
      */
     public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberGreaterThan(final ExpressionNumber value) {
-        return expressionNumber(ComparisonRelation.GT, value);
+        return expressionNumber(CompareResult.GT, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} greater than equals the given value.
      */
     public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberGreaterThanEquals(final ExpressionNumber value) {
-        return expressionNumber(ComparisonRelation.GTE, value);
+        return expressionNumber(CompareResult.GTE, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} less than the given value.
      */
     public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberLessThan(final ExpressionNumber value) {
-        return expressionNumber(ComparisonRelation.LT, value);
+        return expressionNumber(CompareResult.LT, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} less than equals the given value.
      */
     public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberLessThanEquals(final ExpressionNumber value) {
-        return expressionNumber(ComparisonRelation.LTE, value);
+        return expressionNumber(CompareResult.LTE, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} not equal to the given value.
      */
     public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberNotEquals(final ExpressionNumber value) {
-        return expressionNumber(ComparisonRelation.NE, value);
+        return expressionNumber(CompareResult.NE, value);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetDataValidator} that converts text into a {@link ExpressionNumber} and tests
      * the given {@link Predicate condition}.
      */
-    private static SpreadsheetDataValidator<ExpressionNumber> expressionNumber(final ComparisonRelation comparison,
+    private static SpreadsheetDataValidator<ExpressionNumber> expressionNumber(final CompareResult comparison,
                                                                                final ExpressionNumber value) {
         return expressionNumber(comparison.predicate(value));
     }

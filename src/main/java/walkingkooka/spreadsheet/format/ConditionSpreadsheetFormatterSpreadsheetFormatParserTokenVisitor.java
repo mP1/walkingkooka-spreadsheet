@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.compare.ComparisonRelation;
+import walkingkooka.compare.CompareResult;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEqualsParserToken;
@@ -84,10 +84,10 @@ final class ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor ext
     }
 
     private void setRelation(final SpreadsheetFormatConditionParserToken token) {
-        this.relation = token.relation();
+        this.relation = token.compareResult();
     }
 
-    private ComparisonRelation relation;
+    private CompareResult relation;
     private BigDecimal number;
 
     @Override
