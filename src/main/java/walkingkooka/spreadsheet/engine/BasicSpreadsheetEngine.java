@@ -51,7 +51,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigationContexts;
@@ -1716,25 +1716,25 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // navigate.........................................................................................................
 
     @Override
-    public Optional<SpreadsheetViewportSelection> navigate(final SpreadsheetViewportSelection selection,
-                                                           final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(selection, "selection");
+    public Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
+                                                  final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(viewport, "selection");
         checkContext(context);
 
-        Optional<SpreadsheetViewportSelection> result = Optional.empty();
+        Optional<SpreadsheetViewport> result = Optional.empty();
 
         final List<SpreadsheetViewportSelectionNavigation> navigations = SpreadsheetViewportSelectionNavigation.compact(
-                selection.navigations()
+                viewport.navigations()
         );
         if (navigations.isEmpty()) {
             result = this.navigateWithoutNavigation(
-                    selection,
+                    viewport,
                     context
             );
         } else {
             for (final SpreadsheetViewportSelectionNavigation navigation : navigations) {
                 result = this.navigateWithNavigation(
-                        selection,
+                        viewport,
                         navigation,
                         context
                 );
@@ -1744,9 +1744,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
-    private Optional<SpreadsheetViewportSelection> navigateWithNavigation(final SpreadsheetViewportSelection viewportSelection,
-                                                                          final SpreadsheetViewportSelectionNavigation navigation,
-                                                                          final SpreadsheetEngineContext context) {
+    private Optional<SpreadsheetViewport> navigateWithNavigation(final SpreadsheetViewport viewportSelection,
+                                                                 final SpreadsheetViewportSelectionNavigation navigation,
+                                                                 final SpreadsheetEngineContext context) {
         final SpreadsheetSelection selection = viewportSelection.selection();
         final SpreadsheetViewportSelectionAnchor anchor = viewportSelection.anchor();
 
@@ -1765,12 +1765,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
     }
 
-    private Optional<SpreadsheetViewportSelection> navigateWithNavigationLabel(final SpreadsheetLabelName label,
-                                                                               final SpreadsheetViewportSelectionAnchor anchor,
-                                                                               final SpreadsheetViewportSelectionNavigation navigation,
-                                                                               final SpreadsheetEngineContext context) {
+    private Optional<SpreadsheetViewport> navigateWithNavigationLabel(final SpreadsheetLabelName label,
+                                                                      final SpreadsheetViewportSelectionAnchor anchor,
+                                                                      final SpreadsheetViewportSelectionNavigation navigation,
+                                                                      final SpreadsheetEngineContext context) {
         final SpreadsheetSelection cellOrRange = context.resolveIfLabel(label);
-        final Optional<SpreadsheetViewportSelection> after = this.navigateWithNavigation0(
+        final Optional<SpreadsheetViewport> after = this.navigateWithNavigation0(
                 cellOrRange,
                 anchor,
                 navigation,
@@ -1785,10 +1785,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
-    private Optional<SpreadsheetViewportSelection> navigateWithNavigation0(final SpreadsheetSelection selection,
-                                                                           final SpreadsheetViewportSelectionAnchor anchor,
-                                                                           final SpreadsheetViewportSelectionNavigation navigation,
-                                                                           final SpreadsheetEngineContext context) {
+    private Optional<SpreadsheetViewport> navigateWithNavigation0(final SpreadsheetSelection selection,
+                                                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                                                  final SpreadsheetViewportSelectionNavigation navigation,
+                                                                  final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
         return navigation.update(
@@ -1804,16 +1804,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     /**
-     * Assumes a selection without navigation, returning an {@link SpreadsheetEngine#NO_VIEWPORT_SELECTION} if
+     * Assumes a selection without navigation, returning an {@link SpreadsheetEngine#NO_VIEWPORT} if
      * the selection is hidden.
      */
-    private Optional<SpreadsheetViewportSelection> navigateWithoutNavigation(final SpreadsheetViewportSelection viewportSelection,
-                                                                             final SpreadsheetEngineContext context) {
+    private Optional<SpreadsheetViewport> navigateWithoutNavigation(final SpreadsheetViewport viewportSelection,
+                                                                    final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
         return context.resolveIfLabel(viewportSelection.selection())
                 .isHidden(repository.columns()::isHidden, repository.rows()::isHidden) ?
-                SpreadsheetEngine.NO_VIEWPORT_SELECTION :
+                SpreadsheetEngine.NO_VIEWPORT :
                 Optional.of(viewportSelection);
     }
 

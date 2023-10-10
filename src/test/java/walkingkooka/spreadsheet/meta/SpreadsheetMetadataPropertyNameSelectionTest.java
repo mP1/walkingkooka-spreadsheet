@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 
 import java.util.Locale;
@@ -28,7 +28,7 @@ import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSelectionTest extends SpreadsheetMetadataPropertyNameTestCase<
         SpreadsheetMetadataPropertyNameSelection,
-        SpreadsheetViewportSelection> {
+        SpreadsheetViewport> {
 
     @Test
     public void testCheckCellRange() {
@@ -83,7 +83,7 @@ public final class SpreadsheetMetadataPropertyNameSelectionTest extends Spreadsh
     }
 
     @Override
-    SpreadsheetViewportSelection propertyValue() {
+    SpreadsheetViewport propertyValue() {
         return SpreadsheetSelection.parseCell("B99")
                 .setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
     }

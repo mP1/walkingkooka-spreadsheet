@@ -165,9 +165,9 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
     /**
      * Executes this navigation on the given selection and anchor returning the updated result.
      */
-    public abstract Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                                  final SpreadsheetViewportSelectionAnchor anchor,
-                                                                  final SpreadsheetViewportSelectionNavigationContext context);
+    public abstract Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
+                                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                                         final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract boolean isOpposite(final SpreadsheetViewportSelectionNavigation other);
 
@@ -352,7 +352,7 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
             .orReport(INVALID_CHARACTER_EXCEPTION);
 
     private final static Parser<ParserContext> SEPARATOR = Parsers.character(
-            CharPredicates.is(SpreadsheetViewportSelection.SEPARATOR.character())
+            CharPredicates.is(SpreadsheetViewport.SEPARATOR.character())
     ).orReport(INVALID_CHARACTER_EXCEPTION);
 
     private final static ParserContext CONTEXT = ParserContexts.basic(

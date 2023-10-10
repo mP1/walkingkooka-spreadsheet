@@ -38,7 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -75,21 +75,21 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     // selection........................................................................................................
 
     @Test
-    public final void testSetViewportSelectionSame() {
+    public final void testSetViewportSame() {
         final D delta = this.createSpreadsheetDelta();
-        assertSame(delta, delta.setViewportSelection(this.viewportSelection()));
+        assertSame(delta, delta.setViewport(this.viewport()));
     }
 
     @Test
-    public final void testSetViewportSelectionDifferent() {
+    public final void testSetViewportDifferent() {
         final D before = this.createSpreadsheetDelta();
 
-        final Optional<SpreadsheetViewportSelection> different = this.differentViewportSelection();
+        final Optional<SpreadsheetViewport> different = this.differentViewport();
 
-        final SpreadsheetDelta after = before.setViewportSelection(different);
+        final SpreadsheetDelta after = before.setViewport(different);
         assertNotSame(before, after);
 
-        this.checkViewportSelection(after, different);
+        this.checkViewport(after, different);
         this.checkCells(after);
         this.checkColumns(after);
         this.checkLabels(after, before.labels());
@@ -105,7 +105,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkColumnCount(after);
         this.checkRowCount(after);
 
-        this.checkViewportSelection(before);
+        this.checkViewport(before);
     }
 
     // cells............................................................................................................
@@ -761,72 +761,72 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     // unmarshall.......................................................................................................
 
     @Test
-    public final void testUnmarshallViewportSelectionWithCell() {
-        this.unmarshallViewportSelectionAndCheck(
+    public final void testUnmarshallViewportWithCell() {
+        this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseCell("B2")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
     @Test
-    public final void testUnmarshallViewportSelectionWithCellRange() {
-        this.unmarshallViewportSelectionAndCheck(
+    public final void testUnmarshallViewportWithCellRange() {
+        this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
         );
     }
 
     @Test
-    public final void testUnmarshallViewportSelectionWithColumn() {
-        this.unmarshallViewportSelectionAndCheck(
+    public final void testUnmarshallViewportWithColumn() {
+        this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseColumn("B")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
     @Test
-    public final void testUnmarshallViewportSelectionWithColumnRange() {
-        this.unmarshallViewportSelectionAndCheck(
+    public final void testUnmarshallViewportWithColumnRange() {
+        this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseColumnRange("B:CD")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.RIGHT)
         );
     }
 
     @Test
-    public final void testUnmarshallViewportSelectionWithRow() {
-        this.unmarshallViewportSelectionAndCheck(
+    public final void testUnmarshallViewportWithRow() {
+        this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseRow("2")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
     @Test
-    public final void testUnmarshallViewportSelectionWithRowRange() {
-        this.unmarshallViewportSelectionAndCheck(
+    public final void testUnmarshallViewportWithRowRange() {
+        this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseRowRange("2:34")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM)
         );
     }
 
     @Test
-    public final void testUnmarshallNullViewportSelection() {
-        this.unmarshallViewportSelectionAndCheck(null);
+    public final void testUnmarshallNullViewport() {
+        this.unmarshallViewportAndCheck(null);
     }
 
-    abstract void unmarshallViewportSelectionAndCheck(final SpreadsheetViewportSelection viewportSelection);
+    abstract void unmarshallViewportAndCheck(final SpreadsheetViewport viewport);
 
     // equals...........................................................................................................
 
     @Test
     public final void testDifferentSelection() {
-        final Optional<SpreadsheetViewportSelection> viewportSelection = this.differentViewportSelection();
+        final Optional<SpreadsheetViewport> viewport = this.differentViewport();
         this.checkNotEquals(
-                this.viewportSelection(),
-                viewportSelection,
-                "viewportSelection() and differentViewportSelection() must be un equal"
+                this.viewport(),
+                viewport,
+                "viewport() and differentViewport() must be un equal"
         );
 
-        this.checkNotEquals(this.createSpreadsheetDelta().setViewportSelection(viewportSelection));
+        this.checkNotEquals(this.createSpreadsheetDelta().setViewport(viewport));
     }
 
     @Test
@@ -952,27 +952,27 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     // selection........................................................................................................
 
-    final Optional<SpreadsheetViewportSelection> viewportSelection() {
+    final Optional<SpreadsheetViewport> viewport() {
         return Optional.of(
                 SpreadsheetSelection.parseCellRange("A1:B2")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
         );
     }
 
-    final Optional<SpreadsheetViewportSelection> differentViewportSelection() {
+    final Optional<SpreadsheetViewport> differentViewport() {
         return Optional.of(
                 SpreadsheetSelection.parseCell("C3")
                         .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
         );
     }
 
-    final void checkViewportSelection(final SpreadsheetDelta delta) {
-        this.checkViewportSelection(delta, this.viewportSelection());
+    final void checkViewport(final SpreadsheetDelta delta) {
+        this.checkViewport(delta, this.viewport());
     }
 
-    final void checkViewportSelection(final SpreadsheetDelta delta,
-                                      final Optional<SpreadsheetViewportSelection> viewportSelection) {
-        this.checkEquals(viewportSelection, delta.viewportSelection(), "viewportSelection");
+    final void checkViewport(final SpreadsheetDelta delta,
+                                      final Optional<SpreadsheetViewport> viewport) {
+        this.checkEquals(viewport, delta.viewport(), "viewport");
     }
 
     // cells............................................................................................................
@@ -1450,10 +1450,10 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return this.createSpreadsheetDelta();
     }
 
-    final JsonNode viewportSelectionJson() {
+    final JsonNode viewportJson() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        return context.marshall(this.viewportSelection().get());
+        return context.marshall(this.viewport().get());
     }
 
     final JsonNode cellsJson() {

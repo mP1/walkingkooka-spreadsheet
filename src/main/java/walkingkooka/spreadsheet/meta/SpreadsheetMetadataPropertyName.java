@@ -43,7 +43,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellStoreAction;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CaseSensitivity;
@@ -220,9 +220,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerConstant(SpreadsheetMetadataPropertyNameRoundingMode.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>selection</code> {@link SpreadsheetViewportSelection}.
+     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>selection</code> {@link SpreadsheetViewport}.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetViewportSelection> SELECTION = registerConstant(SpreadsheetMetadataPropertyNameSelection.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetViewport> SELECTION = registerConstant(SpreadsheetMetadataPropertyNameSelection.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
@@ -656,6 +656,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);
         SpreadsheetName.with("Untitled");
-        SpreadsheetViewportSelection.NO_NAVIGATION.isEmpty();
+        SpreadsheetViewport.NO_NAVIGATION.isEmpty();
     }
 }

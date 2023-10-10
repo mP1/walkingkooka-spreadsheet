@@ -81,7 +81,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
 
     void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
                         final SpreadsheetSelection selection,
-                        final SpreadsheetViewportSelection expected) {
+                        final SpreadsheetViewport expected) {
         this.updateAndCheck(
                 navigation,
                 selection,
@@ -93,7 +93,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
     void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
                         final SpreadsheetSelection selection,
                         final SpreadsheetViewportSelectionAnchor anchor,
-                        final SpreadsheetViewportSelection expected) {
+                        final SpreadsheetViewport expected) {
         this.updateAndCheck(
                 navigation,
                 selection,
@@ -109,7 +109,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
                         final SpreadsheetViewportSelectionAnchor anchor,
                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
                         final Predicate<SpreadsheetRowReference> hiddenRows,
-                        final SpreadsheetViewportSelection expected) {
+                        final SpreadsheetViewport expected) {
         this.updateAndCheck(
                 navigation,
                 selection,
@@ -125,7 +125,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
                         final SpreadsheetViewportSelectionAnchor anchor,
                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
                         final Predicate<SpreadsheetRowReference> hiddenRows,
-                        final Optional<SpreadsheetViewportSelection> expected) {
+                        final Optional<SpreadsheetViewport> expected) {
         this.checkEquals(
                 expected,
                 navigation.update(

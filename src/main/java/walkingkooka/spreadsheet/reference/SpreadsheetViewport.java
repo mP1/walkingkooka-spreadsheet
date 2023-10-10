@@ -46,7 +46,7 @@ import java.util.Objects;
  * }
  * </pre>
  */
-public final class SpreadsheetViewportSelection implements HasUrlFragment,
+public final class SpreadsheetViewport implements HasUrlFragment,
         TreePrintable,
         UsesToStringBuilder {
 
@@ -57,22 +57,22 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
 
     public final static CharacterConstant SEPARATOR = CharacterConstant.COMMA;
 
-    static SpreadsheetViewportSelection with(final SpreadsheetSelection selection,
-                                             final SpreadsheetViewportSelectionAnchor anchor,
-                                             final List<SpreadsheetViewportSelectionNavigation> navigations) {
+    static SpreadsheetViewport with(final SpreadsheetSelection selection,
+                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                    final List<SpreadsheetViewportSelectionNavigation> navigations) {
         selection.checkAnchor(anchor);
         Objects.requireNonNull(navigations, "navigations");
 
-        return new SpreadsheetViewportSelection(
+        return new SpreadsheetViewport(
                 selection,
                 anchor,
                 Lists.immutable(navigations)
         );
     }
 
-    private SpreadsheetViewportSelection(final SpreadsheetSelection selection,
-                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                         final List<SpreadsheetViewportSelectionNavigation> navigations) {
+    private SpreadsheetViewport(final SpreadsheetSelection selection,
+                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final List<SpreadsheetViewportSelectionNavigation> navigations) {
         super();
         this.selection = selection;
         this.anchor = anchor;
@@ -83,12 +83,12 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
         return this.selection;
     }
 
-    public SpreadsheetViewportSelection setSelection(final SpreadsheetSelection selection) {
+    public SpreadsheetViewport setSelection(final SpreadsheetSelection selection) {
         Objects.requireNonNull(selection, "selection");
 
         return this.selection.equals(selection) ?
                 this :
-                new SpreadsheetViewportSelection(
+                new SpreadsheetViewport(
                         selection,
                         this.anchor,
                         this.navigations
@@ -107,12 +107,12 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
         return this.navigations;
     }
 
-    public SpreadsheetViewportSelection setNavigations(final List<SpreadsheetViewportSelectionNavigation> navigations) {
+    public SpreadsheetViewport setNavigations(final List<SpreadsheetViewportSelectionNavigation> navigations) {
         Objects.requireNonNull(navigations, "navigations");
 
         return this.navigations.equals(navigations) ?
                 this :
-                new SpreadsheetViewportSelection(this.selection, this.anchor, navigations);
+                new SpreadsheetViewport(this.selection, this.anchor, navigations);
     }
 
     private final List<SpreadsheetViewportSelectionNavigation> navigations;
@@ -170,10 +170,10 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
 
     @Override
     public boolean equals(final Object other) {
-        return this == other || other instanceof SpreadsheetViewportSelection && this.equals0((SpreadsheetViewportSelection) other);
+        return this == other || other instanceof SpreadsheetViewport && this.equals0((SpreadsheetViewport) other);
     }
 
-    private boolean equals0(final SpreadsheetViewportSelection other) {
+    private boolean equals0(final SpreadsheetViewport other) {
         return this.selection.equals(other.selection) &&
                 this.anchor.equals(other.anchor) &&
                 this.navigations.equals(other.navigations);
@@ -197,18 +197,18 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetViewportSelection.class),
-                SpreadsheetViewportSelection::unmarshall,
-                SpreadsheetViewportSelection::marshall,
-                SpreadsheetViewportSelection.class
+                JsonNodeContext.computeTypeName(SpreadsheetViewport.class),
+                SpreadsheetViewport::unmarshall,
+                SpreadsheetViewport::marshall,
+                SpreadsheetViewport.class
         );
     }
 
     /**
-     * Unmarshalls a json object back into a {@link SpreadsheetViewportSelection}.
+     * Unmarshalls a json object back into a {@link SpreadsheetViewport}.
      */
-    static SpreadsheetViewportSelection unmarshall(final JsonNode node,
-                                                   final JsonNodeUnmarshallContext context) {
+    static SpreadsheetViewport unmarshall(final JsonNode node,
+                                          final JsonNodeUnmarshallContext context) {
         SpreadsheetSelection selection = null;
         SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NONE;
         List<SpreadsheetViewportSelectionNavigation> navigations = Lists.empty();
@@ -235,7 +235,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
             }
         }
 
-        return new SpreadsheetViewportSelection(
+        return new SpreadsheetViewport(
                 selection,
                 anchor,
                 navigations
@@ -243,7 +243,7 @@ public final class SpreadsheetViewportSelection implements HasUrlFragment,
     }
 
     /**
-     * Creates a JSON object to represent this {@link SpreadsheetViewportSelection}.
+     * Creates a JSON object to represent this {@link SpreadsheetViewport}.
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObject object = JsonNode.object();

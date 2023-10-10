@@ -41,7 +41,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -77,7 +77,7 @@ import java.util.stream.Collectors;
 public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         TreePrintable {
 
-    public final static Optional<SpreadsheetViewportSelection> NO_VIEWPORT_SELECTION = Optional.empty();
+    public final static Optional<SpreadsheetViewport> NO_VIEWPORT_SELECTION = Optional.empty();
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Set<SpreadsheetColumn> NO_COLUMNS = Sets.empty();
@@ -117,7 +117,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetDelta(final Optional<SpreadsheetViewportSelection> viewportSelection,
+    SpreadsheetDelta(final Optional<SpreadsheetViewport> viewport,
                      final Set<SpreadsheetCell> cells,
                      final Set<SpreadsheetColumn> columns,
                      final Set<SpreadsheetLabelMapping> labels,
@@ -131,7 +131,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                      final OptionalInt rowCount) {
         super();
 
-        this.viewportSelection = viewportSelection;
+        this.viewport = viewport;
         this.cells = cells;
         this.columns = columns;
         this.labels = labels;
@@ -148,29 +148,29 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         this.rowCount = rowCount;
     }
 
-    // viewportSelection................................................................................................
+    // viewport................................................................................................
 
-    public final Optional<SpreadsheetViewportSelection> viewportSelection() {
-        return this.viewportSelection;
+    public final Optional<SpreadsheetViewport> viewport() {
+        return this.viewport;
     }
 
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given selection.
      */
-    public final SpreadsheetDelta setViewportSelection(final Optional<SpreadsheetViewportSelection> viewportSelection) {
-        checkViewportSelection(viewportSelection);
+    public final SpreadsheetDelta setViewport(final Optional<SpreadsheetViewport> viewport) {
+        checkViewport(viewport);
 
-        return this.viewportSelection.equals(viewportSelection) ?
+        return this.viewport.equals(viewport) ?
                 this :
-                this.replaceViewportSelection(viewportSelection);
+                this.replaceViewport(viewport);
     }
 
-    abstract SpreadsheetDelta replaceViewportSelection(final Optional<SpreadsheetViewportSelection> viewportSelection);
+    abstract SpreadsheetDelta replaceViewport(final Optional<SpreadsheetViewport> viewport);
 
-    final Optional<SpreadsheetViewportSelection> viewportSelection;
+    final Optional<SpreadsheetViewport> viewport;
 
-    private static void checkViewportSelection(final Optional<SpreadsheetViewportSelection> viewportSelection) {
-        Objects.requireNonNull(viewportSelection, "viewportSelection");
+    private static void checkViewport(final Optional<SpreadsheetViewport> viewport) {
+        Objects.requireNonNull(viewport, "viewport");
     }
 
     // cells............................................................................................................
@@ -585,7 +585,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     private SpreadsheetDelta setWindow0(final SpreadsheetViewportWindows window) {
-        final Optional<SpreadsheetViewportSelection> viewportSelection = this.viewportSelection;
+        final Optional<SpreadsheetViewport> viewport = this.viewport;
 
         final Set<SpreadsheetCell> cells = this.cells;
         final Set<SpreadsheetColumn> columns = this.columns;
@@ -612,7 +612,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final SpreadsheetDelta delta;
         if (false == window.isEmpty()) {
             delta = SpreadsheetDeltaWindowed.withWindowed(
-                    viewportSelection,
+                    viewport,
                     filteredCells,
                     filterColumns0(columns, window),
                     filterLabels0(labels, window),
@@ -628,7 +628,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             );
         } else {
             delta = SpreadsheetDeltaNonWindowed.withNonWindowed(
-                    viewportSelection,
+                    viewport,
                     filteredCells,
                     columns,
                     labels,
@@ -926,7 +926,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     /**
      * Patches the given {@link SpreadsheetDelta}.
-     * Note only some properties may be patched (viewportSelection, cell and window) others will throw an exception as invalid.
+     * Note only some properties may be patched (viewport, cell and window) others will throw an exception as invalid.
      * Attempts to patch an unknown cell will fail with an {@link IllegalArgumentException} being thrown.
      */
     @Override
@@ -990,7 +990,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     /**
      * Patches the given {@link SpreadsheetDelta} assuming only columns have been patched.
-     * Note only some properties may be patched (viewportSelection, column and window) others will throw an exception as invalid.
+     * Note only some properties may be patched (viewport, column and window) others will throw an exception as invalid.
      * Attempts to patch an unknown column will fail with an {@link IllegalArgumentException} being thrown.
      * <pre>
      * {
@@ -1016,7 +1016,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     /**
      * Patches the given {@link SpreadsheetDelta} assuming only rows have been patched.
-     * Note only some properties may be patched (viewportSelection, row and window) others will throw an exception as invalid.
+     * Note only some properties may be patched (viewport, row and window) others will throw an exception as invalid.
      * Attempts to patch an unknown row will fail with an {@link IllegalArgumentException} being thrown.
      * <pre>
      * {
@@ -1166,8 +1166,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
             switch (propertyNameString) {
                 case VIEWPORT_SELECTION_PROPERTY_STRING:
-                    patched = patched.setViewportSelection(
-                            unmarshallViewportSelection(propertyAndValue, context)
+                    patched = patched.setViewport(
+                            unmarshallViewport(propertyAndValue, context)
                     );
                     break;
                 case CELLS_PROPERTY_STRING:
@@ -1534,12 +1534,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         printer.println("SpreadsheetDelta");
         printer.indent();
         {
-            final Optional<SpreadsheetViewportSelection> viewportSelection = this.viewportSelection();
-            if (viewportSelection.isPresent()) {
-                printer.println("viewportSelection:");
+            final Optional<SpreadsheetViewport> viewport = this.viewport();
+            if (viewport.isPresent()) {
+                printer.println("viewport:");
                 printer.indent();
                 {
-                    printer.println(viewportSelection.get().toString());
+                    printer.println(viewport.get().toString());
                 }
                 printer.outdent();
             }
@@ -1686,8 +1686,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
             switch (name.value()) {
                 case VIEWPORT_SELECTION_PROPERTY_STRING:
-                    unmarshalled = unmarshalled.setViewportSelection(
-                            unmarshallViewportSelection(
+                    unmarshalled = unmarshalled.setViewport(
+                            unmarshallViewport(
                                     child,
                                     context
                             )
@@ -1809,10 +1809,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return unmarshalled;
     }
 
-    private static Optional<SpreadsheetViewportSelection> unmarshallViewportSelection(final JsonNode node,
-                                                                                      final JsonNodeUnmarshallContext context) {
+    private static Optional<SpreadsheetViewport> unmarshallViewport(final JsonNode node,
+                                                                             final JsonNodeUnmarshallContext context) {
         return Optional.ofNullable(
-                context.unmarshall(node, SpreadsheetViewportSelection.class)
+                context.unmarshall(node, SpreadsheetViewport.class)
         );
     }
 
@@ -1862,7 +1862,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * <pre>
      * {
-     *   "viewportSelection": {
+     *   "viewport": {
      *     "selection": {
      *        "type": "spreadsheet-column",
      *        "value: "Z"
@@ -1895,10 +1895,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
 
-        final Optional<SpreadsheetViewportSelection> viewportSelection = this.viewportSelection;
-        if (viewportSelection.isPresent()) {
+        final Optional<SpreadsheetViewport> viewport = this.viewport;
+        if (viewport.isPresent()) {
             children.add(
-                    context.marshall(viewportSelection.get())
+                    context.marshall(viewport.get())
                             .setName(VIEWPORT_SELECTION_PROPERTY)
             );
         }
@@ -2029,7 +2029,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
 
-    private final static String VIEWPORT_SELECTION_PROPERTY_STRING = "viewportSelection";
+    private final static String VIEWPORT_SELECTION_PROPERTY_STRING = "viewport";
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String COLUMNS_PROPERTY_STRING = "columns";
     private final static String FORMAT_PATTERN_PROPERTY_STRING = "format-pattern";
@@ -2104,7 +2104,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.viewportSelection,
+                this.viewport,
                 this.cells,
                 this.columns,
                 this.labels,
@@ -2126,7 +2126,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     private boolean equals0(final SpreadsheetDelta other) {
-        return this.viewportSelection.equals(other.viewportSelection) &&
+        return this.viewport.equals(other.viewport) &&
                 equals(this.cells, other.cells) &&
                 equals(this.columns, other.columns) &&
                 equals(this.labels, other.labels) &&
@@ -2149,8 +2149,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .separator(" ")
                 .valueSeparator(", ")
                 .enable(ToStringBuilderOption.QUOTE)
-                .label("viewportSelection")
-                .value(this.viewportSelection)
+                .label("viewport")
+                .value(this.viewport)
                 .label("cells")
                 .value(this.cells)
                 .label("columns")

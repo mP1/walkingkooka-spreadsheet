@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -213,15 +213,15 @@ public interface SpreadsheetEngine {
                                       final SpreadsheetEngineContext context);
 
     /**
-     * An absent {@link SpreadsheetViewportSelection}.
+     * An absent {@link SpreadsheetViewport}.
      */
-    Optional<SpreadsheetViewportSelection> NO_VIEWPORT_SELECTION = Optional.empty();
+    Optional<SpreadsheetViewport> NO_VIEWPORT = Optional.empty();
 
     /**
-     * Performs the given {@link SpreadsheetViewportSelection}, honouring any present {@link SpreadsheetViewportSelection#navigations()},
-     * skipping hidden columns and rows. If no {@link SpreadsheetViewportSelection#navigations()} is present, the
-     * available {@link SpreadsheetViewportSelection#selection()} if hidden is replaced with {@link #NO_VIEWPORT_SELECTION}.
+     * Performs the given {@link SpreadsheetViewport}, honouring any present {@link SpreadsheetViewport#navigations()},
+     * skipping hidden columns and rows. If no {@link SpreadsheetViewport#navigations()} is present, the
+     * available {@link SpreadsheetViewport#selection()} if hidden is replaced with {@link #NO_VIEWPORT}.
      */
-    Optional<SpreadsheetViewportSelection> navigate(final SpreadsheetViewportSelection selection,
-                                                    final SpreadsheetEngineContext context);
+    Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
+                                           final SpreadsheetEngineContext context);
 }

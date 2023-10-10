@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -27,7 +27,7 @@ import java.util.Optional;
 /**
  * Holds the {@link SpreadsheetSelection}, which may be a cell, column, row, or range.
  */
-final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadataPropertyName<SpreadsheetViewportSelection> {
+final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadataPropertyName<SpreadsheetViewport> {
 
     /**
      * Singleton
@@ -44,12 +44,12 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     }
 
     /**
-     * After checking the type force the {@link SpreadsheetViewportSelection}
+     * After checking the type force the {@link SpreadsheetViewport}
      */
     @Override
-    SpreadsheetViewportSelection checkValue0(final Object value) {
+    SpreadsheetViewport checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetViewportSelection);
+                v -> v instanceof SpreadsheetViewport);
     }
 
     @Override
@@ -58,13 +58,13 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     }
 
     @Override
-    Optional<SpreadsheetViewportSelection> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetViewport> extractLocaleValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    Class<SpreadsheetViewportSelection> type() {
-        return SpreadsheetViewportSelection.class;
+    Class<SpreadsheetViewport> type() {
+        return SpreadsheetViewport.class;
     }
 
     @Override
@@ -73,7 +73,7 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     }
 
     @Override
-    void accept(final SpreadsheetViewportSelection value,
+    void accept(final SpreadsheetViewport value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitSelection(value);
     }
@@ -86,7 +86,7 @@ final class SpreadsheetMetadataPropertyNameSelection extends SpreadsheetMetadata
     }
 
     @Override
-    public SpreadsheetViewportSelection parseValue0(final String value) {
+    public SpreadsheetViewport parseValue0(final String value) {
         return this.failParseValueUnsupported();
     }
 }

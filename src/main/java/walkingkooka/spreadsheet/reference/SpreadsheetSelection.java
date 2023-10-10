@@ -786,7 +786,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public abstract boolean isLast();
 
-    // SpreadsheetViewportSelection.....................................................................................
+    // SpreadsheetViewport.....................................................................................
 
     /**
      * Checks and complains if this {@link SpreadsheetSelection} and then given {@link SpreadsheetViewportSelectionAnchor}
@@ -818,26 +818,26 @@ public abstract class SpreadsheetSelection implements HasText,
     abstract Set<SpreadsheetViewportSelectionAnchor> anchors();
 
     /**
-     * Factory that creates a {@link SpreadsheetViewportSelection} using this selection and the given anchor.
+     * Factory that creates a {@link SpreadsheetViewport} using this selection and the given anchor.
      */
-    public final SpreadsheetViewportSelection setAnchor(final SpreadsheetViewportSelectionAnchor anchor) {
-        return SpreadsheetViewportSelection.with(
+    public final SpreadsheetViewport setAnchor(final SpreadsheetViewportSelectionAnchor anchor) {
+        return SpreadsheetViewport.with(
                 this,
                 anchor,
-                SpreadsheetViewportSelection.NO_NAVIGATION
+                SpreadsheetViewport.NO_NAVIGATION
         );
     }
 
     /**
-     * Factory that returns a {@link SpreadsheetViewportSelection} after selecting the default {@link SpreadsheetViewportSelectionAnchor}.
+     * Factory that returns a {@link SpreadsheetViewport} after selecting the default {@link SpreadsheetViewportSelectionAnchor}.
      */
-    public final SpreadsheetViewportSelection setDefaultAnchor() {
+    public final SpreadsheetViewport setDefaultAnchor() {
         return this.setAnchor(
                 this.defaultAnchor()
         );
     }
 
-    final SpreadsheetViewportSelection setAnchorOrDefault(final SpreadsheetViewportSelectionAnchor anchor) {
+    final SpreadsheetViewport setAnchorOrDefault(final SpreadsheetViewportSelectionAnchor anchor) {
         return this.setAnchor(
                 this instanceof HasRange ?
                         anchor :
@@ -921,33 +921,33 @@ public abstract class SpreadsheetSelection implements HasText,
                                                        final int count,
                                                        final SpreadsheetViewportSelectionNavigationContext context);
 
-    abstract Optional<SpreadsheetViewportSelection> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                     final SpreadsheetViewportSelectionNavigationContext context);
+    abstract Optional<SpreadsheetViewport> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                            final SpreadsheetViewportSelectionNavigationContext context);
 
-    abstract Optional<SpreadsheetViewportSelection> extendLeftPixels(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                     final int count,
-                                                                     final SpreadsheetViewportSelectionNavigationContext context);
+    abstract Optional<SpreadsheetViewport> extendLeftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                            final int count,
+                                                            final SpreadsheetViewportSelectionNavigationContext context);
 
-    abstract Optional<SpreadsheetViewportSelection> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                final SpreadsheetViewportSelectionNavigationContext context);
+    abstract Optional<SpreadsheetViewport> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                                       final SpreadsheetViewportSelectionNavigationContext context);
 
-    abstract Optional<SpreadsheetViewportSelection> extendUpPixels(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                   final int count,
-                                                                   final SpreadsheetViewportSelectionNavigationContext context);
+    abstract Optional<SpreadsheetViewport> extendUpPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                          final int count,
+                                                          final SpreadsheetViewportSelectionNavigationContext context);
 
-    abstract Optional<SpreadsheetViewportSelection> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                      final SpreadsheetViewportSelectionNavigationContext context);
+    abstract Optional<SpreadsheetViewport> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final SpreadsheetViewportSelectionNavigationContext context);
 
-    abstract Optional<SpreadsheetViewportSelection> extendRightPixels(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                      final int count,
-                                                                      final SpreadsheetViewportSelectionNavigationContext context);
+    abstract Optional<SpreadsheetViewport> extendRightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                             final int count,
+                                                             final SpreadsheetViewportSelectionNavigationContext context);
 
-    abstract Optional<SpreadsheetViewportSelection> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                  final SpreadsheetViewportSelectionNavigationContext context);
+    abstract Optional<SpreadsheetViewport> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
+                                                         final SpreadsheetViewportSelectionNavigationContext context);
 
-    abstract Optional<SpreadsheetViewportSelection> extendDownPixels(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                     final int count,
-                                                                     final SpreadsheetViewportSelectionNavigationContext context);
+    abstract Optional<SpreadsheetViewport> extendDownPixels(final SpreadsheetViewportSelectionAnchor anchor,
+                                                            final int count,
+                                                            final SpreadsheetViewportSelectionNavigationContext context);
 
     /**
      * Factory that creates or extends a {@link SpreadsheetSelection} into a range. Note the other is either a
@@ -964,8 +964,8 @@ public abstract class SpreadsheetSelection implements HasText,
                 Optional.of(this);
     }
 
-    final Optional<SpreadsheetViewportSelection> setAnchorEmptyIfHidden(final SpreadsheetViewportSelectionAnchor anchor,
-                                                                        final SpreadsheetViewportSelectionNavigationContext context) {
+    final Optional<SpreadsheetViewport> setAnchorEmptyIfHidden(final SpreadsheetViewportSelectionAnchor anchor,
+                                                               final SpreadsheetViewportSelectionNavigationContext context) {
         return this.isHidden(context) ?
                 Optional.empty() :
                 Optional.of(this.setAnchor(anchor));
@@ -1040,7 +1040,7 @@ public abstract class SpreadsheetSelection implements HasText,
         printer.println(this.treeString());
     }
 
-    // only called by SpreadsheetViewportSelection
+    // only called by SpreadsheetViewport
     final String treeString() {
         return this.selectionTypeName() + " " + this;
     }

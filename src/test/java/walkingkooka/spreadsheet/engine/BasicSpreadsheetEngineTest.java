@@ -62,7 +62,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
@@ -11739,13 +11739,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setHidden(true)
         );
 
-        final SpreadsheetViewportSelection viewportSelection = column.setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+        final SpreadsheetViewport viewportSelection = column.setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
                 viewportSelection,
                 context,
-                SpreadsheetEngine.NO_VIEWPORT_SELECTION
+                SpreadsheetEngine.NO_VIEWPORT
         );
     }
 
@@ -11754,7 +11754,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetViewportSelection viewportSelection = SpreadsheetSelection.parseColumn("B")
+        final SpreadsheetViewport viewportSelection = SpreadsheetSelection.parseColumn("B")
                 .setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
 
         this.navigateAndCheck(
@@ -11774,7 +11774,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels()
                 .save(LABEL.mapping(SpreadsheetSelection.parseCell("B2")));
 
-        final SpreadsheetViewportSelection viewportSelection = LABEL
+        final SpreadsheetViewport viewportSelection = LABEL
                 .setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
 
         this.navigateAndCheck(
@@ -11838,7 +11838,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels()
                 .save(LABEL.mapping(selection));
 
-        final SpreadsheetViewportSelection viewportSelection = selection.setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+        final SpreadsheetViewport viewportSelection = selection.setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
@@ -11932,7 +11932,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ),
                 context,
-                SpreadsheetEngine.NO_VIEWPORT_SELECTION
+                SpreadsheetEngine.NO_VIEWPORT
         );
     }
 
