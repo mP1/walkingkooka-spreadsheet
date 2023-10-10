@@ -32,9 +32,9 @@ final class SpreadsheetViewportSelectionNavigationExtendDownPixel extends Spread
     }
 
     @Override
-    public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                                         final SpreadsheetViewportSelectionNavigationContext context) {
+    public Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
+                                                final SpreadsheetViewportSelectionAnchor anchor,
+                                                final SpreadsheetViewportSelectionNavigationContext context) {
         return selection.extendDownPixels(
                 anchor,
                 this.value,

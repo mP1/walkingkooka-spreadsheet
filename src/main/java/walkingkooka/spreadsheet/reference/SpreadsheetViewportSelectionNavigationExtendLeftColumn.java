@@ -38,9 +38,9 @@ final class SpreadsheetViewportSelectionNavigationExtendLeftColumn extends Sprea
     }
 
     @Override
-    public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                                         final SpreadsheetViewportSelectionNavigationContext context) {
+    public Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
+                                                final SpreadsheetViewportSelectionAnchor anchor,
+                                                final SpreadsheetViewportSelectionNavigationContext context) {
         return selection.extendLeftColumn(
                 anchor,
                 context

@@ -23,7 +23,7 @@ import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
 /**
- * Each of the {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection} require an anchor to create a {@link SpreadsheetViewportSelection}.
+ * Each of the {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection} require an anchor to create a {@link SpreadsheetViewport}.
  * Not all combinations are valid for each of range.
  */
 public enum SpreadsheetViewportSelectionAnchor implements HasUrlFragment {

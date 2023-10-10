@@ -38,7 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
@@ -407,7 +407,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitSelection() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitSelection(final SpreadsheetViewportSelection selection) {
+            protected void visitSelection(final SpreadsheetViewport selection) {
                 this.visited = selection;
             }
         }.accept(

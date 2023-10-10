@@ -46,7 +46,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
@@ -1378,9 +1378,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     // navigate.........................................................................................................
 
     default void navigateAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetViewportSelection selection,
+                                  final SpreadsheetViewport selection,
                                   final SpreadsheetEngineContext context,
-                                  final SpreadsheetViewportSelection expected) {
+                                  final SpreadsheetViewport expected) {
         this.navigateAndCheck(
                 engine,
                 selection,
@@ -1390,9 +1390,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void navigateAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetViewportSelection selection,
+                                  final SpreadsheetViewport selection,
                                   final SpreadsheetEngineContext context,
-                                  final Optional<SpreadsheetViewportSelection> expected) {
+                                  final Optional<SpreadsheetViewport> expected) {
         this.checkEquals(
                 expected,
                 engine.navigate(selection, context),

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.Optional;
@@ -72,10 +72,10 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testPrintTreeViewportSelection() {
+    public void testPrintTreeViewport() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        this.viewportSelection(),
+                        this.viewport(),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -89,7 +89,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
                 "SpreadsheetDelta\n" +
-                        "  viewportSelection:\n" +
+                        "  viewport:\n" +
                         "    A1:B2 BOTTOM_RIGHT\n"
         );
     }
@@ -397,7 +397,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeNothingEmpty() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        this.viewportSelection(),
+                        this.viewport(),
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         this.labels(),
@@ -411,7 +411,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.rowCount()
                 ),
                 "SpreadsheetDelta\n" +
-                        "  viewportSelection:\n" +
+                        "  viewport:\n" +
                         "    A1:B2 BOTTOM_RIGHT\n" +
                         "  cells:\n" +
                         "    Cell A1\n" +
@@ -446,7 +446,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    void unmarshallViewportSelectionAndCheck(final SpreadsheetViewportSelection viewportSelection) {
+    void unmarshallViewportAndCheck(final SpreadsheetViewport viewportSelection) {
         this.unmarshallAndCheck(
                 JsonNode.object()
                         .set(
@@ -564,10 +564,10 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
-    public void testMarshallViewportSelection() {
+    public void testMarshallViewport() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        this.viewportSelection(),
+                        this.viewport(),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -581,7 +581,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY, this.viewportSelectionJson())
+                        .set(SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY, this.viewportJson())
         );
     }
 
@@ -843,7 +843,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        this.viewportSelection(),
+                        this.viewport(),
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -856,14 +856,14 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
-                "viewportSelection: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3");
+                "viewport: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3");
     }
 
     @Test
     public void testToStringLabels() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        this.viewportSelection(),
+                        this.viewport(),
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         this.labels(),
@@ -876,7 +876,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
-                "viewportSelection: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4");
+                "viewport: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4");
     }
 
     @Test
@@ -1022,7 +1022,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     @Override
     SpreadsheetDeltaNonWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
         return SpreadsheetDeltaNonWindowed.withNonWindowed(
-                this.viewportSelection(),
+                this.viewport(),
                 cells,
                 this.columns(),
                 this.labels(),

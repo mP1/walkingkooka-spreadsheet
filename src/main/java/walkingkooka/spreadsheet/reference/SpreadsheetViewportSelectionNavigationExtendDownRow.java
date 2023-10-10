@@ -41,9 +41,9 @@ final class SpreadsheetViewportSelectionNavigationExtendDownRow extends Spreadsh
     }
 
     @Override
-    public Optional<SpreadsheetViewportSelection> update(final SpreadsheetSelection selection,
-                                                         final SpreadsheetViewportSelectionAnchor anchor,
-                                                         final SpreadsheetViewportSelectionNavigationContext context) {
+    public Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
+                                                final SpreadsheetViewportSelectionAnchor anchor,
+                                                final SpreadsheetViewportSelectionNavigationContext context) {
         return selection.extendDownRow(
                 anchor,
                 context
