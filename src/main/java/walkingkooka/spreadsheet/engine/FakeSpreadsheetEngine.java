@@ -21,7 +21,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -173,7 +173,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
+    public SpreadsheetViewportWindows window(final SpreadsheetViewportRectangle viewportRectangle,
                                              final boolean includeFrozenColumnsRows,
                                              final Optional<SpreadsheetSelection> selection,
                                              final SpreadsheetEngineContext context) {

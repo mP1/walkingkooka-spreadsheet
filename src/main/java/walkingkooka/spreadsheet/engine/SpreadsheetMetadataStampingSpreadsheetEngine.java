@@ -21,7 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
@@ -251,12 +251,12 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
+    public SpreadsheetViewportWindows window(final SpreadsheetViewportRectangle viewportRectangle,
                                              final boolean includeFrozenColumnsRows,
                                              final Optional<SpreadsheetSelection> selection,
                                              final SpreadsheetEngineContext context) {
         return this.engine.window(
-                viewport,
+                viewportRectangle,
                 includeFrozenColumnsRows,
                 selection,
                 context

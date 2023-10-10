@@ -22,7 +22,7 @@ import walkingkooka.compare.Comparators;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -249,14 +249,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     private final static Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
 
-    // SpreadsheetViewport..............................................................................................
+    // SpreadsheetViewportRectangle.....................................................................................
 
     /**
-     * Creates a {@link SpreadsheetViewport} using this as the top/left.
+     * Creates a {@link SpreadsheetViewportRectangle} using this as the top/left.
      */
-    public SpreadsheetViewport viewport(final double width,
-                                        final double height) {
-        return SpreadsheetViewport.with(this, width, height);
+    public SpreadsheetViewportRectangle viewportRectangle(final double width,
+                                                          final double height) {
+        return SpreadsheetViewportRectangle.with(this, width, height);
     }
 
     // setFormula.......................................................................................................

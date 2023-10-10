@@ -35,7 +35,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -1270,7 +1270,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void windowAndCheck(
             final SpreadsheetEngine engine,
-            final SpreadsheetViewport viewport,
+            final SpreadsheetViewportRectangle viewport,
             final boolean includeFrozenColumnsRows,
             final Optional<SpreadsheetSelection> selection,
             final SpreadsheetEngineContext context,
@@ -1287,7 +1287,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void windowAndCheck(
             final SpreadsheetEngine engine,
-            final SpreadsheetViewport viewport,
+            final SpreadsheetViewportRectangle viewport,
             final boolean includeFrozenColumnsRows,
             final Optional<SpreadsheetSelection> selection,
             final SpreadsheetEngineContext context,
@@ -1306,7 +1306,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void windowAndCheck(
             final SpreadsheetEngine engine,
-            final SpreadsheetViewport viewport,
+            final SpreadsheetViewportRectangle viewport,
             final boolean includeFrozenColumnsRows,
             final Optional<SpreadsheetSelection> selection,
             final SpreadsheetEngineContext context,

@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 
@@ -48,8 +48,8 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     abstract public SpreadsheetExpressionReference toRelative();
 
     /**
-     * Factory that creates a {@link SpreadsheetViewport}.
+     * Factory that creates a {@link SpreadsheetViewportRectangle}.
      */
-    abstract public SpreadsheetViewport viewport(final double width,
-                                                 final double height);
+    abstract public SpreadsheetViewportRectangle viewportRectangle(final double width,
+                                                                   final double height);
 }

@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> extends SpreadsheetSelectionTestCase<R> {
 
@@ -33,21 +33,21 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
         this.cellColumnOrRowTextAndCheck("cell");
     }
 
-    // viewport........................................................................................................
+    // viewportRectangle........................................................................................................
 
-    final void viewportAndCheck(final SpreadsheetExpressionReference selection,
-                                final double width,
-                                final double height,
-                                final SpreadsheetExpressionReference expected) {
-        final SpreadsheetViewport viewport = selection.viewport(width, height);
+    final void viewportRectangleAndCheck(final SpreadsheetExpressionReference selection,
+                                         final double width,
+                                         final double height,
+                                         final SpreadsheetExpressionReference expected) {
+        final SpreadsheetViewportRectangle viewport = selection.viewportRectangle(width, height);
         this.checkEquals(
-                SpreadsheetViewport.with(
+                SpreadsheetViewportRectangle.with(
                         expected,
                         width,
                         height
                 ),
                 viewport,
-                () -> selection + " viewport " + width + "," + height
+                () -> selection + " viewportRectangle " + width + "," + height
         );
     }
 
