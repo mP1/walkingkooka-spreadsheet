@@ -1268,6 +1268,56 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     // window...........................................................................................................
 
+    @Test
+    default void testWindowWithNullRectangleFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .window(
+                                null,
+                                false,
+                                SpreadsheetEngine.NO_SELECTION,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testWindowWithNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .window(
+                                SpreadsheetViewportRectangle.with(
+                                        SpreadsheetSelection.A1,
+                                        1, // width
+                                        2 // height
+                                ),
+                                false,
+                                null,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testWindowWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .window(
+                                SpreadsheetViewportRectangle.with(
+                                        SpreadsheetSelection.A1,
+                                        1, // width
+                                        2 // height
+                                ),
+                                false,
+                                SpreadsheetEngine.NO_SELECTION,
+                                null
+                        )
+        );
+    }
+
     default void windowAndCheck(
             final SpreadsheetEngine engine,
             final SpreadsheetViewportRectangle viewport,
