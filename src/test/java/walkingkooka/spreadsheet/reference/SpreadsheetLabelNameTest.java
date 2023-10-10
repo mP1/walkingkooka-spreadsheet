@@ -306,15 +306,14 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         );
     }
 
-    // SpreadsheetViewport.........................................................................................
-
+    // SpreadsheetViewportRectangle.....................................................................................
     @Test
-    public void testViewport() {
+    public void testViewportRectangle() {
         final SpreadsheetLabelName selection = this.createSelection();
         final double width = 30.5;
         final double height = 40.5;
 
-        this.viewportAndCheck(
+        this.viewportRectangleAndCheck(
                 selection,
                 width,
                 height,

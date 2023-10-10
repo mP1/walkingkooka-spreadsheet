@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -1307,17 +1307,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // WINDOW...........................................................................................................
 
     @Override
-    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
+    public SpreadsheetViewportWindows window(final SpreadsheetViewportRectangle viewportRectangle,
                                              final boolean includeFrozenColumnsRows,
                                              final Optional<SpreadsheetSelection> selection,
                                              final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(viewport, "viewport");
+        Objects.requireNonNull(viewportRectangle, "viewportRectangle");
         Objects.requireNonNull(selection, "selection");
         selection.ifPresent(BasicSpreadsheetEngine::windowSelectionCheck);
         checkContext(context);
 
-        double width = viewport.width();
-        double height = viewport.height();
+        double width = viewportRectangle.width();
+        double height = viewportRectangle.height();
 
         SpreadsheetColumnReferenceRange frozenColumns = null;
         SpreadsheetRowReferenceRange frozenRows = null;
@@ -1379,7 +1379,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         // non frozen viewport
         SpreadsheetCellReference nonFrozenHome = context.resolveIfLabel(
-                viewport.home()
+                viewportRectangle.home()
         ).toCell();
         if (null != frozenColumns) {
             final SpreadsheetColumnReference right = frozenColumns.end();
@@ -1466,7 +1466,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 if (!spreadsheetSelection.testCellRange(nonFrozenCells)) {
                     nonFrozenCells = BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor.pan(
                             nonFrozenCells,
-                            nonFrozenHome.viewport(width, height),
+                            nonFrozenHome.viewportRectangle(
+                                    width,
+                                    height
+                            ),
                             spreadsheetSelection,
                             this,
                             context

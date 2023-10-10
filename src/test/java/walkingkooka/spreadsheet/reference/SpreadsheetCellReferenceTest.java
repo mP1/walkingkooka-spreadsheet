@@ -284,15 +284,15 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    // SpreadsheetViewport.........................................................................................
+    // SpreadsheetViewportRectangle.....................................................................................
 
     @Test
-    public void testViewport() {
+    public void testViewportRectangle() {
         final SpreadsheetCellReference selection = this.createSelection();
         final double width = 30.5;
         final double height = 40.5;
 
-        this.viewportAndCheck(
+        this.viewportRectangleAndCheck(
                 selection,
                 width,
                 height,

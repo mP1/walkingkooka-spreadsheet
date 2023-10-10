@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -126,7 +126,7 @@ public interface SpreadsheetEngine {
                                 final SpreadsheetEngineContext context);
 
     /**
-     * Loads a range of cells. This is useful to fill a range that fills the viewport.
+     * Loads a range of cells. This is useful to fill a range that fills the viewportRectangle.
      */
     SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> range,
                                final SpreadsheetEngineEvaluation evaluation,
@@ -197,7 +197,7 @@ public interface SpreadsheetEngine {
     Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();
 
     /**
-     * Translates the {@link SpreadsheetViewport} into the actual {@link SpreadsheetViewportWindows} of cells that occupy that space.
+     * Translates the {@link SpreadsheetViewportRectangle} into the actual {@link SpreadsheetViewportWindows} of cells that occupy that space.
      * The combination of parameters make it possible to load the range of cells that occupy the selected range and
      * automatically pan across as necessary to include the provided {@link SpreadsheetSelection}.
      * The {@link SpreadsheetSelection} must contain a single
@@ -207,7 +207,7 @@ public interface SpreadsheetEngine {
      *     <li>{@link SpreadsheetRowReference}</li>
      * </ul>
      */
-    SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
+    SpreadsheetViewportWindows window(final SpreadsheetViewportRectangle viewportRectangle,
                                       final boolean includeFrozenColumnsRows,
                                       final Optional<SpreadsheetSelection> selection,
                                       final SpreadsheetEngineContext context);

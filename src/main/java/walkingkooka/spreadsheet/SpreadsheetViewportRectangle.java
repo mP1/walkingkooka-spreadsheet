@@ -33,7 +33,7 @@ import java.util.Objects;
  * Represents a rectangle selection of cells, with the top left being the home and pixels measuring the width and height.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport> {
+public final class SpreadsheetViewportRectangle implements Comparable<SpreadsheetViewportRectangle> {
 
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
@@ -44,7 +44,7 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
      * </pre>
      * Where width and height are decimal numbers.
      */
-    public static SpreadsheetViewport parse(final String text) {
+    public static SpreadsheetViewportRectangle parse(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
         final String[] tokens = text.split(SEPARATOR.string());
@@ -84,11 +84,11 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     }
 
     /**
-     * Factory that creates a new {@link SpreadsheetViewport}.
+     * Factory that creates a new {@link SpreadsheetViewportRectangle}.
      */
-    public static SpreadsheetViewport with(final SpreadsheetExpressionReference home,
-                                           final double width,
-                                           final double height) {
+    public static SpreadsheetViewportRectangle with(final SpreadsheetExpressionReference home,
+                                                    final double width,
+                                                    final double height) {
         Objects.requireNonNull(home, "home");
         if (width < 0) {
             throw new IllegalArgumentException("Invalid width " + width + " < 0");
@@ -96,12 +96,12 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
         if (height < 0) {
             throw new IllegalArgumentException("Invalid height " + width + " < 0");
         }
-        return new SpreadsheetViewport(home, width, height);
+        return new SpreadsheetViewportRectangle(home, width, height);
     }
 
-    private SpreadsheetViewport(final SpreadsheetExpressionReference home,
-                                final double width,
-                                final double height) {
+    private SpreadsheetViewportRectangle(final SpreadsheetExpressionReference home,
+                                         final double width,
+                                         final double height) {
         super();
         this.home = home.toRelative();
         this.width = width;
@@ -152,11 +152,11 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetViewport &&
-                        this.equals0((SpreadsheetViewport) other);
+                other instanceof SpreadsheetViewportRectangle &&
+                        this.equals0((SpreadsheetViewportRectangle) other);
     }
 
-    private boolean equals0(final SpreadsheetViewport other) {
+    private boolean equals0(final SpreadsheetViewportRectangle other) {
         return this.home.equals(other.home) &&
                 this.width == other.width &&
                 this.height == other.height;
@@ -181,16 +181,16 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
     // Comparable.......................................................................................................
 
     @Override
-    public int compareTo(final SpreadsheetViewport other) {
+    public int compareTo(final SpreadsheetViewportRectangle other) {
         throw new UnsupportedOperationException(); // required by HateosHandler
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetViewport.class),
-                SpreadsheetViewport::unmarshall,
-                SpreadsheetViewport::marshall,
-                SpreadsheetViewport.class
+                JsonNodeContext.computeTypeName(SpreadsheetViewportRectangle.class),
+                SpreadsheetViewportRectangle::unmarshall,
+                SpreadsheetViewportRectangle::marshall,
+                SpreadsheetViewportRectangle.class
         );
     }
 
@@ -198,8 +198,8 @@ public final class SpreadsheetViewport implements Comparable<SpreadsheetViewport
         return JsonObject.string(this.toString());
     }
 
-    static SpreadsheetViewport unmarshall(final JsonNode node,
-                                          final JsonNodeUnmarshallContext context) {
+    static SpreadsheetViewportRectangle unmarshall(final JsonNode node,
+                                                   final JsonNodeUnmarshallContext context) {
         return parse(node.stringOrFail());
     }
 }

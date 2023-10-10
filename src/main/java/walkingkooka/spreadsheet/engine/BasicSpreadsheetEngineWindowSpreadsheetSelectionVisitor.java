@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -37,13 +37,13 @@ import java.util.Optional;
 final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static SpreadsheetCellRange pan(final SpreadsheetCellRange range,
-                                    final SpreadsheetViewport viewport,
+                                    final SpreadsheetViewportRectangle viewportRectangle,
                                     final SpreadsheetSelection selection,
                                     final BasicSpreadsheetEngine engine,
                                     final SpreadsheetEngineContext context) {
         final BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor visitor = new BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor(
                 range,
-                viewport,
+                viewportRectangle,
                 engine,
                 context
         );
@@ -52,13 +52,13 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     }
 
     BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor(final SpreadsheetCellRange range,
-                                                            final SpreadsheetViewport viewport,
+                                                            final SpreadsheetViewportRectangle viewportRectangle,
                                                             final BasicSpreadsheetEngine engine,
                                                             final SpreadsheetEngineContext context) {
         super();
 
         this.range = range;
-        this.viewport = viewport;
+        this.viewportRectangle = viewportRectangle;
         this.engine = engine;
         this.context = context;
     }
@@ -101,7 +101,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                     this.engine.columnRange(
                             left,
                             0,
-                            this.viewport.width(),
+                            this.viewportRectangle.width(),
                             Optional.of(columnRange),
                             this.context
                     )
@@ -124,7 +124,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                         engine.columnRange(
                                 beginColumn,
                                 rightOffset,
-                                this.viewport.width(),
+                                this.viewportRectangle.width(),
                                 Optional.of(columnRange),
                                 context
                         )
@@ -164,7 +164,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                     this.engine.rowRange(
                             top,
                             0,
-                            this.viewport.height(),
+                            this.viewportRectangle.height(),
                             Optional.of(rowRange),
                             this.context
                     )
@@ -187,7 +187,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                         engine.rowRange(
                                 beginRow,
                                 bottomOffset,
-                                this.viewport.height(),
+                                this.viewportRectangle.height(),
                                 Optional.of(rowRange),
                                 context
                         )
@@ -198,15 +198,15 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
 
     /**
      * Starts with the initial {@link SpreadsheetCellRange} and then possibly due to the selection is adjusted
-     * to enable minimum movement of the viewport but with the selection included.
+     * to enable minimum movement of the viewportRectangle but with the selection included.
      */
     private SpreadsheetCellRange range;
-    private final SpreadsheetViewport viewport;
+    private final SpreadsheetViewportRectangle viewportRectangle;
     private final BasicSpreadsheetEngine engine;
     private final SpreadsheetEngineContext context;
 
     @Override
     public String toString() {
-        return this.viewport.toString();
+        return this.viewportRectangle.toString();
     }
 }

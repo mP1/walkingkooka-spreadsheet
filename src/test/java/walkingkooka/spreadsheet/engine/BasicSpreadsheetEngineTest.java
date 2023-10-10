@@ -35,7 +35,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -10855,7 +10855,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWindowColumnHidden() {
-        final SpreadsheetViewport viewport = SpreadsheetViewport.with(
+        final SpreadsheetViewportRectangle viewportRectangle = SpreadsheetViewportRectangle.with(
                 SpreadsheetSelection.A1,
                 COLUMN_WIDTH * 4,
                 ROW_HEIGHT * 2
@@ -10866,7 +10866,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
                 engine,
-                viewport,
+                viewportRectangle,
                 false, // includeFrozenColumnsRows
                 SpreadsheetEngine.NO_SELECTION,
                 context,
@@ -10890,7 +10890,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
                 engine,
-                viewport,
+                viewportRectangle,
                 false, // includeFrozenColumnsRows
                 SpreadsheetEngine.NO_SELECTION,
                 context,
@@ -10900,7 +10900,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWindowRowHidden() {
-        final SpreadsheetViewport viewport = SpreadsheetViewport.with(
+        final SpreadsheetViewportRectangle viewportRectangle = SpreadsheetViewportRectangle.with(
                 SpreadsheetSelection.A1,
                 COLUMN_WIDTH * 4,
                 ROW_HEIGHT * 2
@@ -10911,7 +10911,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
                 engine,
-                viewport,
+                viewportRectangle,
                 false, // includeFrozenColumnsRows
                 SpreadsheetEngine.NO_SELECTION,
                 context,
@@ -10935,7 +10935,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
                 engine,
-                viewport,
+                viewportRectangle,
                 false, // includeFrozenColumnsRows
                 SpreadsheetEngine.NO_SELECTION,
                 context,
@@ -10979,7 +10979,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 final String range) {
         this.windowAndCheck(
                 this.createSpreadsheetEngine(),
-                SpreadsheetSelection.parseCellOrLabel(cellOrLabel).viewport(
+                SpreadsheetSelection.parseCellOrLabel(cellOrLabel).viewportRectangle(
                         width,
                         height
                 ),
@@ -11711,7 +11711,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.windowAndCheck(
                 this.createSpreadsheetEngine(),
                 SpreadsheetSelection.parseCellOrLabel(cellOrLabel)
-                        .viewport(
+                        .viewportRectangle(
                                 width,
                                 height
                         ),

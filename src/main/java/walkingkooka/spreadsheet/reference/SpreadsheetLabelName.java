@@ -22,7 +22,7 @@ import walkingkooka.compare.Comparators;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.SpreadsheetViewport;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
@@ -188,14 +188,14 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
 
     private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
 
-    // SpreadsheetViewport..............................................................................................
+    // SpreadsheetViewportRectangle.....................................................................................
 
     /**
-     * Creates a {@link SpreadsheetViewport} using this as the top/left.
+     * Creates a {@link SpreadsheetViewportRectangle} using this as the top/left.
      */
-    public SpreadsheetViewport viewport(final double width,
-                                        final double height) {
-        return SpreadsheetViewport.with(this, width, height);
+    public SpreadsheetViewportRectangle viewportRectangle(final double width,
+                                                          final double height) {
+        return SpreadsheetViewportRectangle.with(this, width, height);
     }
 
     // SpreadsheetSelectionVisitor......................................................................................
