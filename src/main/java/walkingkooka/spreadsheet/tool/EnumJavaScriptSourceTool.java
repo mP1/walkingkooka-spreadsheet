@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigation;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -177,7 +177,7 @@ public final class EnumJavaScriptSourceTool {
             valueOf(enumClass, label, printer);
             fromJson(enumClass, printer);
 
-            if (SpreadsheetViewportAnchor.class.equals(enumClass) || SpreadsheetViewportSelectionNavigation.class.equals(enumClass)) {
+            if (SpreadsheetViewportAnchor.class.equals(enumClass) || SpreadsheetViewportNavigation.class.equals(enumClass)) {
                 from(enumClass, label, printer);
             }
 

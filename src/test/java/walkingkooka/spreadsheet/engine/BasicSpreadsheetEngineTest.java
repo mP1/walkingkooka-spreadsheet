@@ -64,7 +64,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
@@ -11796,7 +11796,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
-                                        SpreadsheetViewportSelectionNavigation.rightColumn()
+                                        SpreadsheetViewportNavigation.rightColumn()
                                 )
                         ),
                 context,
@@ -11816,7 +11816,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
-                                        SpreadsheetViewportSelectionNavigation.rightPixel(
+                                        SpreadsheetViewportNavigation.rightPixel(
                                                 3 * (int) COLUMN_WIDTH - 1
                                         )
                                 )
@@ -11844,7 +11844,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 viewportSelection.setNavigations(
                         Lists.of(
-                                SpreadsheetViewportSelectionNavigation.leftColumn()
+                                SpreadsheetViewportNavigation.leftColumn()
                         )
                 ),
                 context,
@@ -11868,7 +11868,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 selection.setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
-                                        SpreadsheetViewportSelectionNavigation.rightColumn()
+                                        SpreadsheetViewportNavigation.rightColumn()
                                 )
                         ),
                 context,
@@ -11893,7 +11893,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 selection.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                         .setNavigations(
                                 Lists.of(
-                                        SpreadsheetViewportSelectionNavigation.extendRightColumn()
+                                        SpreadsheetViewportNavigation.extendRightColumn()
                                 )
                         ),
                 context,
@@ -11928,7 +11928,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
-                                        SpreadsheetViewportSelectionNavigation.leftColumn()
+                                        SpreadsheetViewportNavigation.leftColumn()
                                 )
                         ),
                 context,
@@ -11955,7 +11955,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
-                                        SpreadsheetViewportSelectionNavigation.rightColumn()
+                                        SpreadsheetViewportNavigation.rightColumn()
                                 )
                         ),
                 context,
@@ -11982,7 +11982,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
-                                        SpreadsheetViewportSelectionNavigation.downRow()
+                                        SpreadsheetViewportNavigation.downRow()
                                 )
                         ),
                 context,

@@ -621,7 +621,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected.map(SpreadsheetSelection::simplify),
                 selection.leftColumn(
                         anchor,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
@@ -667,7 +667,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 selection.leftPixels(
                         anchor,
                         count,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 columnWidths,
                                 hiddenRows,
@@ -703,7 +703,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected.map(SpreadsheetSelection::simplify),
                 selection.upRow(
                         anchor,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
@@ -749,7 +749,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 selection.upPixels(
                         anchor,
                         count,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 columnWidths,
                                 hiddenRows,
@@ -785,7 +785,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected.map(SpreadsheetSelection::simplify),
                 selection.rightColumn(
                         anchor,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
@@ -831,7 +831,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 selection.rightPixels(
                         anchor,
                         count,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 columnWidths,
                                 hiddenRows,
@@ -867,7 +867,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected.map(SpreadsheetSelection::simplify),
                 selection.downRow(
                         anchor,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
@@ -913,7 +913,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 selection.downPixels(
                         anchor,
                         count,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 columnWidths,
                                 hiddenRows,
@@ -1031,7 +1031,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected,
                 selection.extendLeftColumn(
                         anchor,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
@@ -1080,7 +1080,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 selection.extendLeftPixels(
                         anchor,
                         count,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 columnToWidths,
                                 hiddenRows,
@@ -1120,7 +1120,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected,
                 selection.extendUpRow(
                         anchor,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
@@ -1169,7 +1169,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 selection.extendUpPixels(
                         anchor,
                         count,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 columnToWidths,
                                 hiddenRows,
@@ -1208,7 +1208,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected,
                 selection.extendRightColumn(
                         anchor,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
@@ -1257,7 +1257,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 selection.extendRightPixels(
                         anchor,
                         count,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 columnToWidths,
                                 hiddenRows,
@@ -1296,7 +1296,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected,
                 selection.extendDownRow(
                         anchor,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
@@ -1345,7 +1345,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 selection.extendDownPixels(
                         anchor,
                         count,
-                        SpreadsheetViewportSelectionNavigationContexts.basic(
+                        SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 columnToWidths,
                                 hiddenRows,

@@ -53,8 +53,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
 
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final SpreadsheetViewportAnchor ANCHOR = SpreadsheetViewportAnchor.TOP_LEFT;
-    private static final List<SpreadsheetViewportSelectionNavigation> NAVIGATIONS = Lists.of(
-            SpreadsheetViewportSelectionNavigation.leftColumn()
+    private static final List<SpreadsheetViewportNavigation> NAVIGATIONS = Lists.of(
+            SpreadsheetViewportNavigation.leftColumn()
     );
 
     @Test
@@ -144,8 +144,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
 
     private void withNonRangeAndCheck(final SpreadsheetSelection selection) {
         final SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.NONE;
-        final List<SpreadsheetViewportSelectionNavigation> navigations = Lists.of(
-                SpreadsheetViewportSelectionNavigation.leftColumn()
+        final List<SpreadsheetViewportNavigation> navigations = Lists.of(
+                SpreadsheetViewportNavigation.leftColumn()
         );
 
         final SpreadsheetViewport viewportSelection = SpreadsheetViewport.with(
@@ -327,7 +327,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
 
     private void withFails(final SpreadsheetSelection selection,
                            final SpreadsheetViewportAnchor anchor,
-                           final List<SpreadsheetViewportSelectionNavigation> navigations,
+                           final List<SpreadsheetViewportNavigation> navigations,
                            final String message) {
 
         final IllegalArgumentException thrown = assertThrows(
@@ -443,8 +443,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     @Test
     public void testSetNavigationsDifferent() {
         final SpreadsheetViewport selection = this.createObject();
-        final List<SpreadsheetViewportSelectionNavigation> navigations = Lists.of(
-                SpreadsheetViewportSelectionNavigation.extendRightColumn()
+        final List<SpreadsheetViewportNavigation> navigations = Lists.of(
+                SpreadsheetViewportNavigation.extendRightColumn()
         );
         this.checkNotEquals(
                 NAVIGATIONS,
@@ -490,7 +490,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     }
 
     private void checkNavigations(final SpreadsheetViewport viewportSelection,
-                                  final List<SpreadsheetViewportSelectionNavigation> navigations) {
+                                  final List<SpreadsheetViewportNavigation> navigations) {
         this.checkEquals(
                 navigations,
                 viewportSelection.navigations(),
@@ -529,7 +529,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         SELECTION,
                         SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                         Lists.of(
-                                SpreadsheetViewportSelectionNavigation.rightColumn()
+                                SpreadsheetViewportNavigation.rightColumn()
                         )
                 )
         );
@@ -571,7 +571,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         SpreadsheetSelection.A1,
                         SpreadsheetViewportAnchor.NONE,
                         Lists.of(
-                                SpreadsheetViewportSelectionNavigation.leftColumn()
+                                SpreadsheetViewportNavigation.leftColumn()
                         )
                 ),
                 "cell A1 left column" + EOL
@@ -585,8 +585,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         SpreadsheetSelection.A1,
                         SpreadsheetViewportAnchor.NONE,
                         Lists.of(
-                                SpreadsheetViewportSelectionNavigation.leftColumn(),
-                                SpreadsheetViewportSelectionNavigation.upRow()
+                                SpreadsheetViewportNavigation.leftColumn(),
+                                SpreadsheetViewportNavigation.upRow()
                         )
                 ),
                 "cell A1 left column,up row" + EOL
@@ -600,7 +600,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         SpreadsheetSelection.parseRowRange("12:34"),
                         SpreadsheetViewportAnchor.TOP,
                         Lists.of(
-                                SpreadsheetViewportSelectionNavigation.leftColumn()
+                                SpreadsheetViewportNavigation.leftColumn()
                         )
                 ),
                 "row-range 12:34 TOP left column" + EOL
