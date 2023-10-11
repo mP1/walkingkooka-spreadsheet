@@ -53,8 +53,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigationContexts;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigation;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContexts;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -1723,7 +1723,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         Optional<SpreadsheetViewport> result = Optional.empty();
 
-        final List<SpreadsheetViewportSelectionNavigation> navigations = SpreadsheetViewportSelectionNavigation.compact(
+        final List<SpreadsheetViewportNavigation> navigations = SpreadsheetViewportNavigation.compact(
                 viewport.navigations()
         );
         if (navigations.isEmpty()) {
@@ -1732,7 +1732,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context
             );
         } else {
-            for (final SpreadsheetViewportSelectionNavigation navigation : navigations) {
+            for (final SpreadsheetViewportNavigation navigation : navigations) {
                 result = this.navigateWithNavigation(
                         viewport,
                         navigation,
@@ -1745,7 +1745,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     private Optional<SpreadsheetViewport> navigateWithNavigation(final SpreadsheetViewport viewportSelection,
-                                                                 final SpreadsheetViewportSelectionNavigation navigation,
+                                                                 final SpreadsheetViewportNavigation navigation,
                                                                  final SpreadsheetEngineContext context) {
         final SpreadsheetSelection selection = viewportSelection.selection();
         final SpreadsheetViewportAnchor anchor = viewportSelection.anchor();
@@ -1767,7 +1767,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private Optional<SpreadsheetViewport> navigateWithNavigationLabel(final SpreadsheetLabelName label,
                                                                       final SpreadsheetViewportAnchor anchor,
-                                                                      final SpreadsheetViewportSelectionNavigation navigation,
+                                                                      final SpreadsheetViewportNavigation navigation,
                                                                       final SpreadsheetEngineContext context) {
         final SpreadsheetSelection cellOrRange = context.resolveIfLabel(label);
         final Optional<SpreadsheetViewport> after = this.navigateWithNavigation0(
@@ -1787,14 +1787,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private Optional<SpreadsheetViewport> navigateWithNavigation0(final SpreadsheetSelection selection,
                                                                   final SpreadsheetViewportAnchor anchor,
-                                                                  final SpreadsheetViewportSelectionNavigation navigation,
+                                                                  final SpreadsheetViewportNavigation navigation,
                                                                   final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
         return navigation.update(
                 selection,
                 anchor,
-                SpreadsheetViewportSelectionNavigationContexts.basic(
+                SpreadsheetViewportNavigationContexts.basic(
                         repository.columns()::isHidden,
                         (c) -> this.columnWidth(c, context),
                         repository.rows()::isHidden,
