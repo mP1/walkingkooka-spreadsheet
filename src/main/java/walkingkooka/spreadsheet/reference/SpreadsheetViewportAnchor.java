@@ -26,7 +26,7 @@ import walkingkooka.text.CharSequences;
  * Each of the {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection} require an anchor to create a {@link SpreadsheetViewport}.
  * Not all combinations are valid for each of range.
  */
-public enum SpreadsheetViewportSelectionAnchor implements HasUrlFragment {
+public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     NONE,
     TOP_LEFT,
     TOP_RIGHT,
@@ -37,7 +37,7 @@ public enum SpreadsheetViewportSelectionAnchor implements HasUrlFragment {
     LEFT,
     RIGHT;
 
-    SpreadsheetViewportSelectionAnchor() {
+    SpreadsheetViewportAnchor() {
         this.kebabText = CaseKind.kebabEnumName(this);
     }
 
@@ -47,36 +47,36 @@ public enum SpreadsheetViewportSelectionAnchor implements HasUrlFragment {
 
     private final String kebabText;
 
-    SpreadsheetViewportSelectionAnchor setLeft() {
+    SpreadsheetViewportAnchor setLeft() {
         return this.replace(
                 RIGHT,
                 LEFT
         );
     }
 
-    SpreadsheetViewportSelectionAnchor setTop() {
+    SpreadsheetViewportAnchor setTop() {
         return this.replace(
                 BOTTOM,
                 TOP
         );
     }
 
-    SpreadsheetViewportSelectionAnchor setRight() {
+    SpreadsheetViewportAnchor setRight() {
         return this.replace(
                 LEFT,
                 RIGHT
         );
     }
 
-    SpreadsheetViewportSelectionAnchor setBottom() {
+    SpreadsheetViewportAnchor setBottom() {
         return this.replace(
                 TOP,
                 BOTTOM
         );
     }
 
-    private SpreadsheetViewportSelectionAnchor replace(final SpreadsheetViewportSelectionAnchor find,
-                                                       final SpreadsheetViewportSelectionAnchor replace) {
+    private SpreadsheetViewportAnchor replace(final SpreadsheetViewportAnchor find,
+                                              final SpreadsheetViewportAnchor replace) {
         return valueOf(
                 this.name()
                         .replace(
@@ -188,25 +188,25 @@ public enum SpreadsheetViewportSelectionAnchor implements HasUrlFragment {
                 range.end();
     }
 
-    public final static SpreadsheetViewportSelectionAnchor CELL = NONE;
-    public final static SpreadsheetViewportSelectionAnchor COLUMN = NONE;
-    public final static SpreadsheetViewportSelectionAnchor ROW = NONE;
+    public final static SpreadsheetViewportAnchor CELL = NONE;
+    public final static SpreadsheetViewportAnchor COLUMN = NONE;
+    public final static SpreadsheetViewportAnchor ROW = NONE;
 
-    public final static SpreadsheetViewportSelectionAnchor COLUMN_RANGE = RIGHT;
-    public final static SpreadsheetViewportSelectionAnchor ROW_RANGE = BOTTOM;
+    public final static SpreadsheetViewportAnchor COLUMN_RANGE = RIGHT;
+    public final static SpreadsheetViewportAnchor ROW_RANGE = BOTTOM;
 
-    public final static SpreadsheetViewportSelectionAnchor CELL_RANGE = valueOf(ROW_RANGE.name() + "_" + COLUMN_RANGE.name());
+    public final static SpreadsheetViewportAnchor CELL_RANGE = valueOf(ROW_RANGE.name() + "_" + COLUMN_RANGE.name());
 
     /**
-     * Accepts text that has a more pretty form of any {@link SpreadsheetViewportSelectionAnchor enum value}.
+     * Accepts text that has a more pretty form of any {@link SpreadsheetViewportAnchor enum value}.
      * The text is identical to the enum name but in lower case and underscore replaced with dash.
      * <br>
      * {@link #TOP_LEFT} = <pre>top-left</pre>.
      */
-    public static SpreadsheetViewportSelectionAnchor parse(final String text) {
+    public static SpreadsheetViewportAnchor parse(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
-        for (final SpreadsheetViewportSelectionAnchor navigation : values()) {
+        for (final SpreadsheetViewportAnchor navigation : values()) {
             if (navigation.kebabText.equals(text)) {
                 return navigation;
             }

@@ -278,8 +278,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     // SpreadsheetViewportSelectionNavigation...........................................................................
 
     @Override
-    public SpreadsheetViewportSelectionAnchor defaultAnchor() {
-        return SpreadsheetViewportSelectionAnchor.COLUMN;
+    public SpreadsheetViewportAnchor defaultAnchor() {
+        return SpreadsheetViewportAnchor.COLUMN;
     }
 
     @Override
@@ -289,7 +289,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportAnchor anchor,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         return Cast.to(
                 context.leftColumn(this)
@@ -297,7 +297,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportAnchor anchor,
                                               final int count,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         return Cast.to(
@@ -309,7 +309,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
                                                final SpreadsheetViewportSelectionNavigationContext context) {
         return Cast.to(
                 context.rightColumn(this)
@@ -317,7 +317,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportAnchor anchor,
                                                final int count,
                                                final SpreadsheetViewportSelectionNavigationContext context) {
         return Cast.to(
@@ -329,33 +329,33 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
                                          final SpreadsheetViewportSelectionNavigationContext context) {
         return this.emptyIfHidden(context);
     }
 
     @Override
-    Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportAnchor anchor,
                                             final int count,
                                             final SpreadsheetViewportSelectionNavigationContext context) {
         return this.emptyIfHidden(context);
     }
 
     @Override
-    Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportAnchor anchor,
                                            final SpreadsheetViewportSelectionNavigationContext context) {
         return this.emptyIfHidden(context);
     }
 
     @Override
-    Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
                                               final int count,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         return this.emptyIfHidden(context);
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendLeftColumn(final SpreadsheetViewportAnchor anchor,
                                                    final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendRange(
                 this.leftColumn(
@@ -364,12 +364,12 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                 ),
                 anchor
         ).map(
-                s -> s.setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.RIGHT)
+                s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.RIGHT)
         );
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendLeftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendLeftPixels(final SpreadsheetViewportAnchor anchor,
                                                    final int count,
                                                    final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendRange(
@@ -380,12 +380,12 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                 ),
                 anchor
         ).map(
-                s -> s.setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.RIGHT)
+                s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.RIGHT)
         );
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendRightColumn(final SpreadsheetViewportAnchor anchor,
                                                     final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendRange(
                 this.rightColumn(
@@ -394,12 +394,12 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                 ),
                 anchor
         ).map(
-                s -> s.setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.LEFT)
+                s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.LEFT)
         );
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendRightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendRightPixels(final SpreadsheetViewportAnchor anchor,
                                                     final int count,
                                                     final SpreadsheetViewportSelectionNavigationContext context) {
         return this.extendRange(
@@ -410,12 +410,12 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                 ),
                 anchor
         ).map(
-                s -> s.setAnchorOrDefault(SpreadsheetViewportSelectionAnchor.LEFT)
+                s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.LEFT)
         );
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendUpRow(final SpreadsheetViewportAnchor anchor,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         return this.setAnchorEmptyIfHidden(
                 anchor,
@@ -424,7 +424,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendUpPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendUpPixels(final SpreadsheetViewportAnchor anchor,
                                                  final int count,
                                                  final SpreadsheetViewportSelectionNavigationContext context) {
         return this.setAnchorEmptyIfHidden(
@@ -434,7 +434,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendDownRow(final SpreadsheetViewportAnchor anchor,
                                                 final SpreadsheetViewportSelectionNavigationContext context) {
         return this.setAnchorEmptyIfHidden(
                 anchor,
@@ -444,7 +444,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
 
     @Override
-    Optional<SpreadsheetViewport> extendDownPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendDownPixels(final SpreadsheetViewportAnchor anchor,
                                                    final int count,
                                                    final SpreadsheetViewportSelectionNavigationContext context) {
         return this.setAnchorEmptyIfHidden(
@@ -455,7 +455,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     @Override
     Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
-                                               final SpreadsheetViewportSelectionAnchor anchor) {
+                                               final SpreadsheetViewportAnchor anchor) {
         return other.map(
                 o -> this.columnRange((SpreadsheetColumnReference) o).simplify()
         );
@@ -464,7 +464,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     // focused...........................................................................................................
 
     @Override
-    public SpreadsheetColumnReference focused(final SpreadsheetViewportSelectionAnchor anchor) {
+    public SpreadsheetColumnReference focused(final SpreadsheetViewportAnchor anchor) {
         this.checkAnchor(anchor);
         return this;
     }

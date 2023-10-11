@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellStoreAction;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -98,7 +98,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
                 metadata.set(
                         SpreadsheetMetadataPropertyName.SELECTION,
                         SpreadsheetSelection.A1
-                                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                                .setAnchor(SpreadsheetViewportAnchor.NONE)
                 )
         );
     }

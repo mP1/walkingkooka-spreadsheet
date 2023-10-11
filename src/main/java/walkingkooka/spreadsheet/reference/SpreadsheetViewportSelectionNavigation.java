@@ -166,7 +166,7 @@ public abstract class SpreadsheetViewportSelectionNavigation implements HasText 
      * Executes this navigation on the given selection and anchor returning the updated result.
      */
     public abstract Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
-                                                         final SpreadsheetViewportSelectionAnchor anchor,
+                                                         final SpreadsheetViewportAnchor anchor,
                                                          final SpreadsheetViewportSelectionNavigationContext context);
 
     abstract boolean isOpposite(final SpreadsheetViewportSelectionNavigation other);

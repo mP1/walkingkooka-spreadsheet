@@ -135,11 +135,11 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     abstract SpreadsheetColumnOrRowReference replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
 
     @Override
-    final Set<SpreadsheetViewportSelectionAnchor> anchors() {
+    final Set<SpreadsheetViewportAnchor> anchors() {
         return ANCHORS;
     }
 
-    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
+    private final Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
 
     /**
      * A column or row is already simplified.

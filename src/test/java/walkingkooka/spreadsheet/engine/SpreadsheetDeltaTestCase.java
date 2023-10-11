@@ -39,7 +39,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -764,7 +764,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallViewportWithCell() {
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
         );
     }
 
@@ -772,7 +772,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallViewportWithCellRange() {
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
         );
     }
 
@@ -780,7 +780,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallViewportWithColumn() {
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseColumn("B")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
         );
     }
 
@@ -788,7 +788,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallViewportWithColumnRange() {
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseColumnRange("B:CD")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.RIGHT)
+                        .setAnchor(SpreadsheetViewportAnchor.RIGHT)
         );
     }
 
@@ -796,7 +796,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallViewportWithRow() {
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseRow("2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
         );
     }
 
@@ -804,7 +804,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     public final void testUnmarshallViewportWithRowRange() {
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.parseRowRange("2:34")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM)
+                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
         );
     }
 
@@ -955,14 +955,14 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     final Optional<SpreadsheetViewport> viewport() {
         return Optional.of(
                 SpreadsheetSelection.parseCellRange("A1:B2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
         );
     }
 
     final Optional<SpreadsheetViewport> differentViewport() {
         return Optional.of(
                 SpreadsheetSelection.parseCell("C3")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
         );
     }
 

@@ -28,7 +28,7 @@ public final class SpreadsheetViewportSelectionNavigationExtendDownPixelTest ext
                 this.createSpreadsheetViewportSelectionNavigation(),
                 SpreadsheetSelection.parseCell("E5"),
                 SpreadsheetSelection.parseCellRange("E5:E7")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
         );
     }
 
@@ -46,7 +46,7 @@ public final class SpreadsheetViewportSelectionNavigationExtendDownPixelTest ext
                 this.createSpreadsheetViewportSelectionNavigation(),
                 SpreadsheetSelection.parseRow("5"),
                 SpreadsheetSelection.parseRowRange("5:7")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP)
+                        .setAnchor(SpreadsheetViewportAnchor.TOP)
         );
     }
 

@@ -24,18 +24,18 @@ import walkingkooka.test.ParseStringTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetViewportSelectionAnchorTest implements ClassTesting<SpreadsheetViewportSelectionAnchor>,
-        ParseStringTesting<SpreadsheetViewportSelectionAnchor> {
+public final class SpreadsheetViewportAnchorTest implements ClassTesting<SpreadsheetViewportAnchor>,
+        ParseStringTesting<SpreadsheetViewportAnchor> {
 
     // constants........................................................................................................
 
     @Test
     public void testCellRangeConstant() {
         this.checkEquals(
-                SpreadsheetViewportSelectionAnchor.valueOf(
-                        SpreadsheetViewportSelectionAnchor.ROW_RANGE + "_" + SpreadsheetViewportSelectionAnchor.COLUMN_RANGE
+                SpreadsheetViewportAnchor.valueOf(
+                        SpreadsheetViewportAnchor.ROW_RANGE + "_" + SpreadsheetViewportAnchor.COLUMN_RANGE
                 ),
-                SpreadsheetViewportSelectionAnchor.CELL_RANGE
+                SpreadsheetViewportAnchor.CELL_RANGE
         );
     }
 
@@ -44,7 +44,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     @Test
     public void testKebabTextLeft() {
         this.kebabTextAndCheck(
-                SpreadsheetViewportSelectionAnchor.LEFT,
+                SpreadsheetViewportAnchor.LEFT,
                 "left"
         );
     }
@@ -52,12 +52,12 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     @Test
     public void testKebabTextTopRight() {
         this.kebabTextAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.TOP_RIGHT,
                 "top-right"
         );
     }
 
-    private void kebabTextAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
+    private void kebabTextAndCheck(final SpreadsheetViewportAnchor anchor,
                                    final String expected) {
         this.checkEquals(
                 expected,
@@ -71,65 +71,65 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     @Test
     public void testSetLeft_None() {
         this.setLeftAndCheck(
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testSetLeft_Left() {
         this.setLeftAndCheck(
-                SpreadsheetViewportSelectionAnchor.LEFT
+                SpreadsheetViewportAnchor.LEFT
         );
     }
 
     @Test
     public void testSetLeft_Right() {
         this.setLeftAndCheck(
-                SpreadsheetViewportSelectionAnchor.RIGHT,
-                SpreadsheetViewportSelectionAnchor.LEFT
+                SpreadsheetViewportAnchor.RIGHT,
+                SpreadsheetViewportAnchor.LEFT
         );
     }
 
     @Test
     public void testSetLeft_LEFTLeft() {
         this.setLeftAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testSetLeft_LEFTRight() {
         this.setLeftAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testSetLeft_BottomLeft() {
         this.setLeftAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
     @Test
     public void testSetLeft_BottomRight() {
         this.setLeftAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
-    private void setLeftAndCheck(final SpreadsheetViewportSelectionAnchor anchor) {
+    private void setLeftAndCheck(final SpreadsheetViewportAnchor anchor) {
         this.setLeftAndCheck(
                 anchor,
                 anchor
         );
     }
 
-    private void setLeftAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
-                                 final SpreadsheetViewportSelectionAnchor expected) {
+    private void setLeftAndCheck(final SpreadsheetViewportAnchor anchor,
+                                 final SpreadsheetViewportAnchor expected) {
         this.checkEquals(
                 expected,
                 anchor.setLeft(),
@@ -142,65 +142,65 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     @Test
     public void testSetRight_None() {
         this.setRightAndCheck(
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testSetRight_Left() {
         this.setRightAndCheck(
-                SpreadsheetViewportSelectionAnchor.RIGHT
+                SpreadsheetViewportAnchor.RIGHT
         );
     }
 
     @Test
     public void testSetRight_Right() {
         this.setRightAndCheck(
-                SpreadsheetViewportSelectionAnchor.LEFT,
-                SpreadsheetViewportSelectionAnchor.RIGHT
+                SpreadsheetViewportAnchor.LEFT,
+                SpreadsheetViewportAnchor.RIGHT
         );
     }
 
     @Test
     public void testSetRight_LEFTLeft() {
         this.setRightAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+                SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
     @Test
     public void testSetRight_LEFTRight() {
         this.setRightAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+                SpreadsheetViewportAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
     @Test
     public void testSetRight_BottomLeft() {
         this.setRightAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
     @Test
     public void testSetRight_BottomRight() {
         this.setRightAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
-    private void setRightAndCheck(final SpreadsheetViewportSelectionAnchor anchor) {
+    private void setRightAndCheck(final SpreadsheetViewportAnchor anchor) {
         this.setRightAndCheck(
                 anchor,
                 anchor
         );
     }
 
-    private void setRightAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
-                                  final SpreadsheetViewportSelectionAnchor expected) {
+    private void setRightAndCheck(final SpreadsheetViewportAnchor anchor,
+                                  final SpreadsheetViewportAnchor expected) {
         this.checkEquals(
                 expected,
                 anchor.setRight(),
@@ -214,64 +214,64 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     @Test
     public void testSetTop_None() {
         this.setTopAndCheck(
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testSetTop_Top() {
         this.setTopAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP
+                SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testSetTop_Bottom() {
         this.setTopAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM,
-                SpreadsheetViewportSelectionAnchor.TOP
+                SpreadsheetViewportAnchor.BOTTOM,
+                SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testSetTop_TopLeft() {
         this.setTopAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testSetTop_TopRight() {
         this.setTopAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+                SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
     @Test
     public void testSetTop_BottomLeft() {
         this.setTopAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testSetTop_BottomRight() {
         this.setTopAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
-    private void setTopAndCheck(final SpreadsheetViewportSelectionAnchor anchor) {
+    private void setTopAndCheck(final SpreadsheetViewportAnchor anchor) {
         this.setTopAndCheck(
                 anchor,
                 anchor
         );
     }
 
-    private void setTopAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
-                                final SpreadsheetViewportSelectionAnchor expected) {
+    private void setTopAndCheck(final SpreadsheetViewportAnchor anchor,
+                                final SpreadsheetViewportAnchor expected) {
         this.checkEquals(
                 expected,
                 anchor.setTop(),
@@ -284,64 +284,64 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     @Test
     public void testSetBottom_None() {
         this.setBottomAndCheck(
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testSetBottom_Left() {
         this.setBottomAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM
+                SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
     @Test
     public void testSetBottom_Bottom() {
         this.setBottomAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP,
-                SpreadsheetViewportSelectionAnchor.BOTTOM
+                SpreadsheetViewportAnchor.TOP,
+                SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
     @Test
     public void testSetBottom_TopLeft() {
         this.setBottomAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
     @Test
     public void testSetBottom_TopRight() {
         this.setBottomAndCheck(
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
     @Test
     public void testSetBottom_BottomLeft() {
         this.setBottomAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
     @Test
     public void testSetBottom_BottomBottomRight() {
         this.setBottomAndCheck(
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
-    private void setBottomAndCheck(final SpreadsheetViewportSelectionAnchor anchor) {
+    private void setBottomAndCheck(final SpreadsheetViewportAnchor anchor) {
         this.setBottomAndCheck(
                 anchor,
                 anchor
         );
     }
 
-    private void setBottomAndCheck(final SpreadsheetViewportSelectionAnchor anchor,
-                                   final SpreadsheetViewportSelectionAnchor expected) {
+    private void setBottomAndCheck(final SpreadsheetViewportAnchor anchor,
+                                   final SpreadsheetViewportAnchor expected) {
         this.checkEquals(
                 expected,
                 anchor.setBottom(),
@@ -360,7 +360,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testCellTopLeft() {
         this.cellAndCheck(
                 "B2:D4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 "D4"
         );
     }
@@ -369,7 +369,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testCellBottomLeft() {
         this.cellAndCheck(
                 "B2:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 "D2"
         );
     }
@@ -378,13 +378,13 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testCellBottomRight() {
         this.cellAndCheck(
                 "B2:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "B2"
         );
     }
 
     private void cellAndCheck(final String range,
-                              final SpreadsheetViewportSelectionAnchor anchor,
+                              final SpreadsheetViewportAnchor anchor,
                               final String cell) {
         this.checkEquals(
                 SpreadsheetSelection.parseCell(cell),
@@ -399,7 +399,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testFixedCellTopLeft() {
         this.fixedCellAndCheck(
                 "B2:D4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 "B2"
         );
     }
@@ -408,7 +408,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testFixedCellTopRight() {
         this.fixedCellAndCheck(
                 "B2:D4",
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.TOP_RIGHT,
                 "D2"
         );
     }
@@ -417,13 +417,13 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testFixedCellBottomLeft() {
         this.fixedCellAndCheck(
                 "B2:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 "B4"
         );
     }
 
     private void fixedCellAndCheck(final String range,
-                                   final SpreadsheetViewportSelectionAnchor anchor,
+                                   final SpreadsheetViewportAnchor anchor,
                                    final String cell) {
         final SpreadsheetCellRange parsed = SpreadsheetSelection.parseCellRange(range);
         final SpreadsheetCellReference fixed = SpreadsheetSelection.parseCell(cell);
@@ -447,7 +447,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testColumnLeft() {
         this.columnAndCheck(
                 "B:D",
-                SpreadsheetViewportSelectionAnchor.LEFT,
+                SpreadsheetViewportAnchor.LEFT,
                 "D"
         );
     }
@@ -456,13 +456,13 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testColumnRight() {
         this.columnAndCheck(
                 "B:D",
-                SpreadsheetViewportSelectionAnchor.RIGHT,
+                SpreadsheetViewportAnchor.RIGHT,
                 "B"
         );
     }
 
     private void columnAndCheck(final String range,
-                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetViewportAnchor anchor,
                                 final String column) {
         this.checkEquals(
                 SpreadsheetSelection.parseColumn(column),
@@ -477,7 +477,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testFixedColumnLeft() {
         this.fixedColumnAndCheck(
                 "B:D",
-                SpreadsheetViewportSelectionAnchor.LEFT,
+                SpreadsheetViewportAnchor.LEFT,
                 "B"
         );
     }
@@ -486,13 +486,13 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testFixedColumnRight() {
         this.fixedColumnAndCheck(
                 "B:D",
-                SpreadsheetViewportSelectionAnchor.RIGHT,
+                SpreadsheetViewportAnchor.RIGHT,
                 "D"
         );
     }
 
     private void fixedColumnAndCheck(final String range,
-                                     final SpreadsheetViewportSelectionAnchor anchor,
+                                     final SpreadsheetViewportAnchor anchor,
                                      final String column) {
         final SpreadsheetColumnReferenceRange parsed = SpreadsheetSelection.parseColumnRange(range);
         final SpreadsheetColumnReference fixed = SpreadsheetSelection.parseColumn(column);
@@ -516,7 +516,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testRowTop() {
         this.rowAndCheck(
                 "2:4",
-                SpreadsheetViewportSelectionAnchor.TOP,
+                SpreadsheetViewportAnchor.TOP,
                 "4"
         );
     }
@@ -525,13 +525,13 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testRowBottom() {
         this.rowAndCheck(
                 "2:4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                SpreadsheetViewportAnchor.BOTTOM,
                 "2"
         );
     }
 
     private void rowAndCheck(final String range,
-                             final SpreadsheetViewportSelectionAnchor anchor,
+                             final SpreadsheetViewportAnchor anchor,
                              final String row) {
         this.checkEquals(
                 SpreadsheetSelection.parseRow(row),
@@ -546,7 +546,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testFixedRowTop() {
         this.fixedRowAndCheck(
                 "2:4",
-                SpreadsheetViewportSelectionAnchor.TOP,
+                SpreadsheetViewportAnchor.TOP,
                 "2"
         );
     }
@@ -555,13 +555,13 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testFixedRowBottom() {
         this.fixedRowAndCheck(
                 "2:4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM,
+                SpreadsheetViewportAnchor.BOTTOM,
                 "4"
         );
     }
 
     private void fixedRowAndCheck(final String range,
-                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                  final SpreadsheetViewportAnchor anchor,
                                   final String row) {
         final SpreadsheetRowReferenceRange parsed = SpreadsheetSelection.parseRowRange(range);
         final SpreadsheetRowReference fixed = SpreadsheetSelection.parseRow(row);
@@ -585,7 +585,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testParseUnknownFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetViewportSelectionAnchor.parse("!")
+                () -> SpreadsheetViewportAnchor.parse("!")
         );
     }
 
@@ -593,7 +593,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testParseDifferentCaseFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetViewportSelectionAnchor.parse("TOP-LEFT")
+                () -> SpreadsheetViewportAnchor.parse("TOP-LEFT")
         );
     }
 
@@ -601,7 +601,7 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testParseLeft() {
         this.parseStringAndCheck(
                 "left",
-                SpreadsheetViewportSelectionAnchor.LEFT
+                SpreadsheetViewportAnchor.LEFT
         );
     }
 
@@ -609,15 +609,15 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     public void testParseTopLeft() {
         this.parseStringAndCheck(
                 "top-left",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetViewportSelectionAnchor parseString(final String text) {
-        return SpreadsheetViewportSelectionAnchor.parse(text);
+    public SpreadsheetViewportAnchor parseString(final String text) {
+        return SpreadsheetViewportAnchor.parse(text);
     }
 
     @Override
@@ -633,8 +633,8 @@ public final class SpreadsheetViewportSelectionAnchorTest implements ClassTestin
     // ClassTesting....................................................................................................
 
     @Override
-    public Class<SpreadsheetViewportSelectionAnchor> type() {
-        return SpreadsheetViewportSelectionAnchor.class;
+    public Class<SpreadsheetViewportAnchor> type() {
+        return SpreadsheetViewportAnchor.class;
     }
 
     @Override

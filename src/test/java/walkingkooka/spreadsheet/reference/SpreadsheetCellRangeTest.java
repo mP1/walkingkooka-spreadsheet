@@ -1416,7 +1416,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testLeftColumnAnchorTopLeft() {
         this.leftColumnAndCheck(
                 "B2:D4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C4"
@@ -1427,7 +1427,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testLeftColumnAnchorTopRight() {
         this.leftColumnAndCheck(
                 "B2:D4",
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.TOP_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "A4"
@@ -1441,7 +1441,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testLeftColumnAnchorBottomLeft() {
         this.leftColumnAndCheck(
                 "A1:C3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "A1"
@@ -1452,7 +1452,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testLeftPixels() {
         this.leftPixelsAndCheck(
                 "D2:E2",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 50,
                 "C",
                 Maps.of("A", 5.0, "B", 50.0, "D", 50.0),
@@ -1466,7 +1466,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testRightColumnAnchorTopLeft() {
         this.rightColumnAndCheck(
                 "A1:C3",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "D3"
@@ -1477,7 +1477,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testRightColumnAnchorTopRight() {
         this.rightColumnAndCheck(
                 "A1:C3",
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.TOP_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "B3"
@@ -1488,7 +1488,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testRightColumnAnchorBottomRight() {
         this.rightColumnAndCheck(
                 "A1:C3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "B1"
@@ -1499,7 +1499,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testRightPixels() {
         this.rightPixelsAndCheck(
                 "D1:E2",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 50,
                 "F",
                 Maps.of("E", 5.0, "G", 50.0, "H", 50.0),
@@ -1517,7 +1517,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testUpRowAnchorBottomRight() {
         this.upRowAndCheck(
                 "B1:D3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "D1"
@@ -1528,7 +1528,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testUpPixels() {
         this.upPixelsAndCheck(
                 "E5:F6",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 50,
                 NO_HIDDEN_COLUMNS,
                 Maps.empty(),
@@ -1542,7 +1542,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testDownRowAnchorBottomRight() {
         this.downRowAndCheck(
                 "B1:D3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "D2"
@@ -1553,7 +1553,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testDownPixels() {
         this.downPixelsAndCheck(
                 "B2:C3",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 50,
                 NO_HIDDEN_COLUMNS,
                 Maps.empty(),
@@ -1570,7 +1570,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendRangeAndCheck(
                 "B2:C3",
                 "C4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 "B2:C4"
         );
     }
@@ -1580,7 +1580,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendRangeAndCheck(
                 "B2:C3",
                 "D4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 "B2:D4"
         );
     }
@@ -1592,7 +1592,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendRangeAndCheck(
                 "B2:C3",
                 "A3",
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.TOP_RIGHT,
                 "A2:C3"
         );
     }
@@ -1605,7 +1605,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendRangeAndCheck(
                 "B2:C3",
                 "D2",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 "B2:D3"
         );
     }
@@ -1617,7 +1617,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendRangeAndCheck(
                 "B2:C3",
                 "A2",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "A2:C3"
         );
     }
@@ -1627,7 +1627,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.extendRangeAndCheck(
                 "A1:B2",
                 "A1",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "A1:B2"
         );
     }
@@ -1643,11 +1643,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendLeftColumnAnchorBottomRight() {
         this.extendLeftColumnAndCheck(
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "B3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
@@ -1658,11 +1658,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendLeftColumnAnchorTopLeft() {
         this.extendLeftColumnAndCheck(
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3:C4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         ); // C4
     }
 
@@ -1670,18 +1670,18 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendLeftColumnAnchorTopLeft2() {
         this.extendLeftColumnAndCheck(
                 "C3:D3",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testExtendLeftColumnAnchorTopRightFirstColumn() {
         final String range = "A1:A2";
-        final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.TOP_RIGHT;
+        final SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.TOP_RIGHT;
 
         this.extendLeftColumnAndCheck(
                 range,
@@ -1700,11 +1700,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendLeftColumnSingleColumnBottomLeft() {
         this.extendLeftColumnAndCheck(
                 "C3:C4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "B3:C4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
@@ -1715,11 +1715,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendLeftColumnSingleColumnBottomRight() {
         this.extendLeftColumnAndCheck(
                 "C3:C4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "B3:C4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         ); // actual=c3:c4
     }
 
@@ -1727,11 +1727,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendLeftColumnSkipsHidden() {
         this.extendLeftColumnAndCheck(
                 "D4:E5",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "C",
                 NO_HIDDEN_ROWS,
                 "B4:E5",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
@@ -1739,11 +1739,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendLeftColumnIgnoresHiddenRow() {
         this.extendLeftColumnAndCheck(
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 "3",
                 "",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -1751,11 +1751,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendLeftColumnIgnoresHiddenRow2() {
         this.extendLeftColumnAndCheck(
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "",
                 "4",
                 "",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -1765,14 +1765,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendLeftPixels() {
         this.extendLeftPixelsAndCheck(
                 "E5:F5",
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.TOP_RIGHT,
                 50,
                 "D",
                 Maps.of("C", 50.0, "B", 50.0),
                 NO_HIDDEN_ROWS,
                 Maps.empty(),
                 "B5:F5",
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT
+                SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
@@ -1782,11 +1782,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnAnchorTopLeft() {
         this.extendRightColumnAndCheck(
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3:E4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -1794,11 +1794,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnAnchorBottomRight() {
         this.extendRightColumnAndCheck(
                 "C3:D3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "D3",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -1809,11 +1809,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnAnchorBottomRight2() {
         this.extendRightColumnAndCheck(
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "D3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         ); // C4
     }
 
@@ -1821,7 +1821,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnAnchorBottomLeftLastColumn() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
         final String cell = column.add(-1) + "1:" + column + "1";
-        final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT;
+        final SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.BOTTOM_LEFT;
 
         this.extendRightColumnAndCheck(
                 cell,
@@ -1839,11 +1839,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
         this.extendRightColumnAndCheck(
                 column.add(-1) + "1:" + column + "1",
-                SpreadsheetViewportSelectionAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.TOP_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 column + "1",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -1854,11 +1854,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnAnchorFlipsAnchor() {
         this.extendRightColumnAndCheck(
                 "C3:C4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -1869,11 +1869,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnSingleColumnBottomLeft() {
         this.extendRightColumnAndCheck(
                 "C3:C4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -1884,11 +1884,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnSingleColumnBottomRight() {
         this.extendRightColumnAndCheck(
                 "C3:C4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -1896,11 +1896,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnSkipsHiddenColumn() {
         this.extendRightColumnAndCheck(
                 "B2:C3",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 "D",
                 NO_HIDDEN_ROWS,
                 "B2:E3",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -1908,11 +1908,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnIgnoresHiddenRow() {
         this.extendRightColumnAndCheck(
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 "3",
                 "",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -1920,11 +1920,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightColumnIgnoresHiddenRow2() {
         this.extendRightColumnAndCheck(
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "",
                 "4",
                 "",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -1934,14 +1934,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendRightPixels() {
         this.extendRightPixelsAndCheck(
                 "A2:B2",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 50,
                 "C",
                 Maps.of("D", 50.0, "E", 50.0),
                 NO_HIDDEN_ROWS,
                 Maps.empty(),
                 "A2:E2",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -1951,11 +1951,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpRowAnchorTopLeft() {
         this.extendUpRowAndCheck(
                 "C3:E5",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3:E4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -1963,11 +1963,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpRowAnchorTopLeft2() {
         this.extendUpRowAndCheck(
                 "C3:C4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -1979,11 +1979,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpRowAnchorBottomRight() {
         this.extendUpRowAndCheck(
                 "C3:E5",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C2:E5",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
@@ -1994,11 +1994,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpRowAnchorTopLeftFirstRow() {
         this.extendUpRowAndCheck(
                 "A1:B2",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "A1:B1",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2010,11 +2010,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpRowSingleColumnBottomLeft() {
         this.extendUpRowAndCheck(
                 "C3:D3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C2:D3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -2026,11 +2026,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpRowSingleColumnTopLeft() {
         this.extendUpRowAndCheck(
                 "C3:D3",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C2:D3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -2038,11 +2038,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpRowSkipsHiddenRow() {
         this.extendUpRowAndCheck(
                 "D4:E5",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 "3",
                 "D2:E5",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
@@ -2050,11 +2050,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpRowIgnoresHiddenColumn() {
         this.extendUpRowAndCheck(
                 "B3:C3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "B",
                 NO_HIDDEN_ROWS,
                 "",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2062,11 +2062,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpRowIgnoresHiddenColumn2() {
         this.extendUpRowAndCheck(
                 "B3:C3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "C",
                 NO_HIDDEN_ROWS,
                 "",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2076,14 +2076,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendUpPixels() {
         this.extendUpPixelsAndCheck(
                 "E6:F6",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 50,
                 NO_HIDDEN_COLUMNS,
                 Maps.empty(),
                 "5",
                 Maps.of("4", 50.0, "3", 50.0),
                 "E3:F6",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -2093,11 +2093,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownRowAnchorTopLeft() {
         this.extendDownRowAndCheck(
                 "C3:E5",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3:E6",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2105,11 +2105,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownRowAnchorBottomRight() {
         this.extendDownRowAndCheck(
                 "C3:E5",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C4:E5",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
@@ -2117,11 +2117,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownRowAnchorBottomRight2() {
         this.extendDownRowAndCheck(
                 "C3:C4",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C4",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2129,7 +2129,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownRowAnchorTopLeftLastRow() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
         final String cell = "A" + row + ":B" + row;
-        final SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.TOP_LEFT;
+        final SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.TOP_LEFT;
 
         this.extendDownRowAndCheck(
                 cell,
@@ -2147,11 +2147,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
         this.extendDownRowAndCheck(
                 "A" + row.add(-1) + ":A" + row,
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "A" + row,
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2163,11 +2163,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownRowSingleColumnBottomLeft() {
         this.extendDownRowAndCheck(
                 "C3:D3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2179,11 +2179,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownRowSingleColumnTopLeft() {
         this.extendDownRowAndCheck(
                 "C3:D3",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 NO_HIDDEN_ROWS,
                 "C3:D4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2191,11 +2191,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownRowSkipsHiddenRow() {
         this.extendDownRowAndCheck(
                 "B2:C3",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 NO_HIDDEN_COLUMNS,
                 "4",
                 "B2:C5",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2203,11 +2203,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownRowIgnoresHiddenColumn() {
         this.extendDownRowAndCheck(
                 "B3:C3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "B",
                 NO_HIDDEN_ROWS,
                 "",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2215,11 +2215,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownRowIgnoresHiddenColumn2() {
         this.extendDownRowAndCheck(
                 "B3:C3",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "C",
                 NO_HIDDEN_ROWS,
                 "",
-                SpreadsheetViewportSelectionAnchor.NONE
+                SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2229,14 +2229,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testExtendDownPixels() {
         this.extendDownPixelsAndCheck(
                 "B2:C2",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 50,
                 NO_HIDDEN_COLUMNS,
                 Maps.empty(),
                 "3",
                 Maps.of("4", 50.0, "5", 50.0),
                 "B2:C5",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2246,7 +2246,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testFocusedBottomRight() {
         this.focusedAndCheck(
                 "A1:B2",
-                SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "A1"
         );
     }
@@ -2255,7 +2255,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testFocusedTopLeft() {
         this.focusedAndCheck(
                 "C3:$D$4",
-                SpreadsheetViewportSelectionAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP_LEFT,
                 "$D$4"
         );
     }

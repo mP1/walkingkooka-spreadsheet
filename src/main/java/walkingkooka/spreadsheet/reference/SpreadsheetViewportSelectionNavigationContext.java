@@ -22,7 +22,7 @@ import walkingkooka.Context;
 import java.util.Optional;
 
 /**
- * The {@link Context} that accompanies a {@link SpreadsheetViewportSelectionNavigation#update(SpreadsheetSelection, SpreadsheetViewportSelectionAnchor, SpreadsheetViewportSelectionNavigationContext)}
+ * The {@link Context} that accompanies a {@link SpreadsheetViewportSelectionNavigation#update(SpreadsheetSelection, SpreadsheetViewportAnchor, SpreadsheetViewportSelectionNavigationContext)}
  */
 public interface SpreadsheetViewportSelectionNavigationContext extends Context {
 

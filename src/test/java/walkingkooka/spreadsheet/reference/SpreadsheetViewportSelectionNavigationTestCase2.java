@@ -92,7 +92,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
 
     void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
                         final SpreadsheetSelection selection,
-                        final SpreadsheetViewportSelectionAnchor anchor,
+                        final SpreadsheetViewportAnchor anchor,
                         final SpreadsheetViewport expected) {
         this.updateAndCheck(
                 navigation,
@@ -106,7 +106,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
 
     void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
                         final SpreadsheetSelection selection,
-                        final SpreadsheetViewportSelectionAnchor anchor,
+                        final SpreadsheetViewportAnchor anchor,
                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
                         final Predicate<SpreadsheetRowReference> hiddenRows,
                         final SpreadsheetViewport expected) {
@@ -122,7 +122,7 @@ public abstract class SpreadsheetViewportSelectionNavigationTestCase2<T extends 
 
     void updateAndCheck(final SpreadsheetViewportSelectionNavigation navigation,
                         final SpreadsheetSelection selection,
-                        final SpreadsheetViewportSelectionAnchor anchor,
+                        final SpreadsheetViewportAnchor anchor,
                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
                         final Predicate<SpreadsheetRowReference> hiddenRows,
                         final Optional<SpreadsheetViewport> expected) {

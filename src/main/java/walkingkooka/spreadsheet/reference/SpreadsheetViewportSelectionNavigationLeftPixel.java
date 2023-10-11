@@ -32,7 +32,7 @@ final class SpreadsheetViewportSelectionNavigationLeftPixel extends SpreadsheetV
 
     @Override
     public Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
-                                                final SpreadsheetViewportSelectionAnchor anchor,
+                                                final SpreadsheetViewportAnchor anchor,
                                                 final SpreadsheetViewportSelectionNavigationContext context) {
         return selection.leftPixels(
                 anchor,

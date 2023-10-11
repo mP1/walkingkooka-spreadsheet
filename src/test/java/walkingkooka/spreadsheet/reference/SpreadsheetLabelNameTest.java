@@ -437,7 +437,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
                 () -> this.createSelection()
                         .extendRange(
                                 Optional.empty(),
-                                SpreadsheetViewportSelectionAnchor.NONE
+                                SpreadsheetViewportAnchor.NONE
                         )
         );
     }
@@ -448,7 +448,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     public void testFocusedFails() {
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> this.createSelection().focused(SpreadsheetViewportSelectionAnchor.NONE)
+                () -> this.createSelection().focused(SpreadsheetViewportAnchor.NONE)
         );
     }
 

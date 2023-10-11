@@ -33,7 +33,7 @@ final class SpreadsheetViewportSelectionNavigationRightPixel extends Spreadsheet
 
     @Override
     public Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
-                                                final SpreadsheetViewportSelectionAnchor anchor,
+                                                final SpreadsheetViewportAnchor anchor,
                                                 final SpreadsheetViewportSelectionNavigationContext context) {
         return selection.rightPixels(
                 anchor,
