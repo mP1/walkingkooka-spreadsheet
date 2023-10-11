@@ -182,11 +182,11 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
-    Set<SpreadsheetViewportSelectionAnchor> anchors() {
+    Set<SpreadsheetViewportAnchor> anchors() {
         return ANCHORS;
     }
 
-    private final Set<SpreadsheetViewportSelectionAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportSelectionAnchor.NONE);
+    private final Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
 
     // SpreadsheetViewportRectangle.....................................................................................
 
@@ -233,8 +233,8 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     // SpreadsheetViewportSelectionNavigation...........................................................................
 
     @Override
-    public SpreadsheetViewportSelectionAnchor defaultAnchor() {
-        return SpreadsheetViewportSelectionAnchor.NONE; // should never happen
+    public SpreadsheetViewportAnchor defaultAnchor() {
+        return SpreadsheetViewportAnchor.NONE; // should never happen
     }
 
     @Override
@@ -244,104 +244,104 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
-    Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportAnchor anchor,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportAnchor anchor,
                                               final int count,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
                                          final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportAnchor anchor,
                                             final int count,
                                             final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
                                                final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportAnchor anchor,
                                                final int count,
                                                final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportAnchor anchor,
                                            final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
                                               final int count,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendLeftColumn(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendLeftColumn(final SpreadsheetViewportAnchor anchor,
                                                    final SpreadsheetViewportSelectionNavigationContext contexte) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendLeftPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendLeftPixels(final SpreadsheetViewportAnchor anchor,
                                                    final int count,
                                                    final SpreadsheetViewportSelectionNavigationContext contexte) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendUpRow(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendUpRow(final SpreadsheetViewportAnchor anchor,
                                               final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendUpPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendUpPixels(final SpreadsheetViewportAnchor anchor,
                                                  final int count,
                                                  final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendRightColumn(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendRightColumn(final SpreadsheetViewportAnchor anchor,
                                                     final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendRightPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendRightPixels(final SpreadsheetViewportAnchor anchor,
                                                     final int count,
                                                     final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendDownRow(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendDownRow(final SpreadsheetViewportAnchor anchor,
                                                 final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    Optional<SpreadsheetViewport> extendDownPixels(final SpreadsheetViewportSelectionAnchor anchor,
+    Optional<SpreadsheetViewport> extendDownPixels(final SpreadsheetViewportAnchor anchor,
                                                    final int count,
                                                    final SpreadsheetViewportSelectionNavigationContext context) {
         throw new UnsupportedOperationException();
@@ -349,14 +349,14 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
 
     @Override
     Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
-                                               final SpreadsheetViewportSelectionAnchor anchor) {
+                                               final SpreadsheetViewportAnchor anchor) {
         throw new UnsupportedOperationException();
     }
 
     // focused...........................................................................................................
 
     @Override
-    public SpreadsheetLabelName focused(final SpreadsheetViewportSelectionAnchor anchor) {
+    public SpreadsheetLabelName focused(final SpreadsheetViewportAnchor anchor) {
         Objects.requireNonNull(anchor, "anchor");
         throw new UnsupportedOperationException();
     }

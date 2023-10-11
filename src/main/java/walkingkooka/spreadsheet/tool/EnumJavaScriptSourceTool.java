@@ -21,7 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
@@ -52,7 +52,7 @@ public final class EnumJavaScriptSourceTool {
         generateSpreadsheetEngineEvaluation(Paths.get(reactSrc.toString(), "spreadsheet", "engine"));
         generateSpreadsheetErrorKind(Paths.get(reactSrc.toString(), "spreadsheet"));
         generateSpreadsheetReferenceKind(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
-        generateSpreadsheetViewportSelectionAnchor(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
+        generateSpreadsheetViewportAnchor(Paths.get(reactSrc.toString(), "spreadsheet", "reference"));
         generateTextStylePropertyNames(Paths.get(reactSrc.toString(), "text"));
     }
 
@@ -91,9 +91,9 @@ public final class EnumJavaScriptSourceTool {
         );
     }
 
-    private static void generateSpreadsheetViewportSelectionAnchor(final Path dest) throws Exception {
+    private static void generateSpreadsheetViewportAnchor(final Path dest) throws Exception {
         generateEnums(
-                SpreadsheetViewportSelectionAnchor.class,
+                SpreadsheetViewportAnchor.class,
                 "anchor",
                 dest
         );
@@ -177,7 +177,7 @@ public final class EnumJavaScriptSourceTool {
             valueOf(enumClass, label, printer);
             fromJson(enumClass, printer);
 
-            if (SpreadsheetViewportSelectionAnchor.class.equals(enumClass) || SpreadsheetViewportSelectionNavigation.class.equals(enumClass)) {
+            if (SpreadsheetViewportAnchor.class.equals(enumClass) || SpreadsheetViewportSelectionNavigation.class.equals(enumClass)) {
                 from(enumClass, label, printer);
             }
 

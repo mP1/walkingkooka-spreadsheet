@@ -40,7 +40,7 @@ final class SpreadsheetViewportSelectionNavigationUpRow extends SpreadsheetViewp
 
     @Override
     public Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
-                                                final SpreadsheetViewportSelectionAnchor anchor,
+                                                final SpreadsheetViewportAnchor anchor,
                                                 final SpreadsheetViewportSelectionNavigationContext context) {
         return selection.upRow(
                 anchor,

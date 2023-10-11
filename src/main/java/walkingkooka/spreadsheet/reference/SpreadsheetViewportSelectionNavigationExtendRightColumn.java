@@ -40,7 +40,7 @@ final class SpreadsheetViewportSelectionNavigationExtendRightColumn extends Spre
 
     @Override
     public Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
-                                                final SpreadsheetViewportSelectionAnchor anchor,
+                                                final SpreadsheetViewportAnchor anchor,
                                                 final SpreadsheetViewportSelectionNavigationContext context) {
         return selection.extendRightColumn(
                 anchor,

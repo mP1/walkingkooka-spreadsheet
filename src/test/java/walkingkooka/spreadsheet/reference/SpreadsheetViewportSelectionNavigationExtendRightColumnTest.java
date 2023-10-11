@@ -28,7 +28,7 @@ public final class SpreadsheetViewportSelectionNavigationExtendRightColumnTest e
                 SpreadsheetViewportSelectionNavigation.extendRightColumn(),
                 SpreadsheetSelection.parseCell("C3"),
                 SpreadsheetSelection.parseCellRange("C3:D3")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
         );
     }
 
@@ -38,7 +38,7 @@ public final class SpreadsheetViewportSelectionNavigationExtendRightColumnTest e
                 SpreadsheetViewportSelectionNavigation.extendRightColumn(),
                 SpreadsheetSelection.parseColumn("C"),
                 SpreadsheetSelection.parseColumnRange("C:D")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.LEFT)
+                        .setAnchor(SpreadsheetViewportAnchor.LEFT)
         );
     }
 

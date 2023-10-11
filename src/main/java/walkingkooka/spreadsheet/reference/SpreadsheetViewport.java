@@ -58,7 +58,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     public final static CharacterConstant SEPARATOR = CharacterConstant.COMMA;
 
     static SpreadsheetViewport with(final SpreadsheetSelection selection,
-                                    final SpreadsheetViewportSelectionAnchor anchor,
+                                    final SpreadsheetViewportAnchor anchor,
                                     final List<SpreadsheetViewportSelectionNavigation> navigations) {
         selection.checkAnchor(anchor);
         Objects.requireNonNull(navigations, "navigations");
@@ -71,7 +71,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     }
 
     private SpreadsheetViewport(final SpreadsheetSelection selection,
-                                final SpreadsheetViewportSelectionAnchor anchor,
+                                final SpreadsheetViewportAnchor anchor,
                                 final List<SpreadsheetViewportSelectionNavigation> navigations) {
         super();
         this.selection = selection;
@@ -97,11 +97,11 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     private final SpreadsheetSelection selection;
 
-    public SpreadsheetViewportSelectionAnchor anchor() {
+    public SpreadsheetViewportAnchor anchor() {
         return this.anchor;
     }
 
-    private final SpreadsheetViewportSelectionAnchor anchor;
+    private final SpreadsheetViewportAnchor anchor;
 
     public List<SpreadsheetViewportSelectionNavigation> navigations() {
         return this.navigations;
@@ -123,8 +123,8 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     public void printTree(final IndentingPrinter printer) {
         printer.print(this.selection().treeString());
 
-        final SpreadsheetViewportSelectionAnchor anchor = this.anchor();
-        if (SpreadsheetViewportSelectionAnchor.NONE != anchor) {
+        final SpreadsheetViewportAnchor anchor = this.anchor();
+        if (SpreadsheetViewportAnchor.NONE != anchor) {
             printer.print(" ");
             printer.print(anchor.toString());
         }
@@ -149,9 +149,9 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     public UrlFragment urlFragment() {
         final UrlFragment selection = this.selection()
                 .urlFragment();
-        final SpreadsheetViewportSelectionAnchor anchor = this.anchor();
+        final SpreadsheetViewportAnchor anchor = this.anchor();
 
-        return SpreadsheetViewportSelectionAnchor.NONE != anchor ?
+        return SpreadsheetViewportAnchor.NONE != anchor ?
                 selection.append(UrlFragment.SLASH)
                         .append(anchor.urlFragment()) :
                 selection;
@@ -186,10 +186,10 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        final SpreadsheetViewportSelectionAnchor anchor = this.anchor;
+        final SpreadsheetViewportAnchor anchor = this.anchor;
 
         builder.value(this.selection)
-                .value(SpreadsheetViewportSelectionAnchor.NONE == anchor ? null : anchor)
+                .value(SpreadsheetViewportAnchor.NONE == anchor ? null : anchor)
                 .value(this.navigations);
     }
 
@@ -210,7 +210,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     static SpreadsheetViewport unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
         SpreadsheetSelection selection = null;
-        SpreadsheetViewportSelectionAnchor anchor = SpreadsheetViewportSelectionAnchor.NONE;
+        SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.NONE;
         List<SpreadsheetViewportSelectionNavigation> navigations = Lists.empty();
 
         for (final JsonNode child : node.objectOrFail().children()) {
@@ -220,7 +220,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                     selection = context.unmarshallWithType(child);
                     break;
                 case ANCHOR_PROPERTY_STRING:
-                    anchor = SpreadsheetViewportSelectionAnchor.valueOf(
+                    anchor = SpreadsheetViewportAnchor.valueOf(
                             child.stringOrFail()
                     );
                     break;
@@ -250,8 +250,8 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
         object = object.set(SELECTION_PROPERTY, context.marshallWithType(this.selection));
 
-        final SpreadsheetViewportSelectionAnchor anchor = this.anchor();
-        if (SpreadsheetViewportSelectionAnchor.NONE != anchor) {
+        final SpreadsheetViewportAnchor anchor = this.anchor();
+        if (SpreadsheetViewportAnchor.NONE != anchor) {
             object = object.set(
                     ANCHOR_PROPERTY,
                     JsonNode.string(anchor.toString())

@@ -28,7 +28,7 @@ public final class SpreadsheetViewportSelectionNavigationExtendUpRowTest extends
                 SpreadsheetViewportSelectionNavigation.extendUpRow(),
                 SpreadsheetSelection.parseCell("C3"),
                 SpreadsheetSelection.parseCellRange("C2:C3")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
         );
     }
 
@@ -46,7 +46,7 @@ public final class SpreadsheetViewportSelectionNavigationExtendUpRowTest extends
                 SpreadsheetViewportSelectionNavigation.extendUpRow(),
                 SpreadsheetSelection.parseRow("3"),
                 SpreadsheetSelection.parseRowRange("2:3")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM)
+                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
         );
     }
     

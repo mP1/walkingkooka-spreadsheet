@@ -52,7 +52,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigationContexts;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
@@ -1748,7 +1748,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                                  final SpreadsheetViewportSelectionNavigation navigation,
                                                                  final SpreadsheetEngineContext context) {
         final SpreadsheetSelection selection = viewportSelection.selection();
-        final SpreadsheetViewportSelectionAnchor anchor = viewportSelection.anchor();
+        final SpreadsheetViewportAnchor anchor = viewportSelection.anchor();
 
         return selection.isLabelName() ?
                 this.navigateWithNavigationLabel(
@@ -1766,7 +1766,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     private Optional<SpreadsheetViewport> navigateWithNavigationLabel(final SpreadsheetLabelName label,
-                                                                      final SpreadsheetViewportSelectionAnchor anchor,
+                                                                      final SpreadsheetViewportAnchor anchor,
                                                                       final SpreadsheetViewportSelectionNavigation navigation,
                                                                       final SpreadsheetEngineContext context) {
         final SpreadsheetSelection cellOrRange = context.resolveIfLabel(label);
@@ -1786,7 +1786,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     private Optional<SpreadsheetViewport> navigateWithNavigation0(final SpreadsheetSelection selection,
-                                                                  final SpreadsheetViewportSelectionAnchor anchor,
+                                                                  final SpreadsheetViewportAnchor anchor,
                                                                   final SpreadsheetViewportSelectionNavigation navigation,
                                                                   final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();

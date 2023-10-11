@@ -39,7 +39,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.InvalidPropertyJsonNodeException;
 import walkingkooka.tree.json.JsonNode;
@@ -663,7 +663,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
-                                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                                .setAnchor(SpreadsheetViewportAnchor.NONE)
                 )
         );
     }
@@ -688,7 +688,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .setViewport(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
-                                                .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
                         )
                 ,
@@ -758,7 +758,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Optional.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
                                         .setAnchor(
-                                                SpreadsheetViewportSelectionAnchor.TOP_LEFT
+                                                SpreadsheetViewportAnchor.TOP_LEFT
                                         )
                         )
                 );
@@ -1021,7 +1021,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
-                                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                                .setAnchor(SpreadsheetViewportAnchor.NONE)
                 )
         );
     }
@@ -1047,7 +1047,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .setViewport(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
-                                                .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
                         )
                 ,
@@ -1131,7 +1131,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setViewport(
                         Optional.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                         )
                 );
         this.patchCellsAndCheck(
@@ -1949,7 +1949,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseColumn("C")
-                                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                                .setAnchor(SpreadsheetViewportAnchor.NONE)
                 )
         );
     }
@@ -1974,7 +1974,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .setViewport(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
-                                                .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
                         )
                 ,
@@ -2075,7 +2075,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setViewport(
                         Optional.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                         )
                 );
         this.patchColumnsAndCheck(
@@ -2257,7 +2257,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
                         SpreadsheetSelection.parseRow("3")
-                                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                                .setAnchor(SpreadsheetViewportAnchor.NONE)
                 )
         );
     }
@@ -2282,7 +2282,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .setViewport(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
-                                                .setAnchor(SpreadsheetViewportSelectionAnchor.BOTTOM_RIGHT)
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
                         )
                 ,
@@ -2385,7 +2385,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setViewport(
                         Optional.of(
                                 SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                         )
                 );
         this.patchRowsAndCheck(

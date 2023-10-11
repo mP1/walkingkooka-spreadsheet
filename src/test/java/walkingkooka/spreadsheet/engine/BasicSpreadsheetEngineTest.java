@@ -63,7 +63,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionAnchor;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportSelectionNavigation;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
@@ -11739,7 +11739,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setHidden(true)
         );
 
-        final SpreadsheetViewport viewportSelection = column.setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+        final SpreadsheetViewport viewportSelection = column.setAnchor(SpreadsheetViewportAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
@@ -11755,7 +11755,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetViewport viewportSelection = SpreadsheetSelection.parseColumn("B")
-                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+                .setAnchor(SpreadsheetViewportAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
@@ -11775,7 +11775,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(LABEL.mapping(SpreadsheetSelection.parseCell("B2")));
 
         final SpreadsheetViewport viewportSelection = LABEL
-                .setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+                .setAnchor(SpreadsheetViewportAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
@@ -11793,7 +11793,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.navigateAndCheck(
                 engine,
                 SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.rightColumn()
@@ -11801,7 +11801,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                 context,
                 SpreadsheetSelection.parseCell("C2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
         );
     }
 
@@ -11813,7 +11813,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.navigateAndCheck(
                 engine,
                 SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.rightPixel(
@@ -11823,7 +11823,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                 context,
                 SpreadsheetSelection.parseCell("E2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
         );
     }
 
@@ -11838,7 +11838,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels()
                 .save(LABEL.mapping(selection));
 
-        final SpreadsheetViewport viewportSelection = selection.setAnchor(SpreadsheetViewportSelectionAnchor.NONE);
+        final SpreadsheetViewport viewportSelection = selection.setAnchor(SpreadsheetViewportAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
@@ -11865,7 +11865,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.navigateAndCheck(
                 engine,
-                selection.setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                selection.setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.rightColumn()
@@ -11873,7 +11873,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                 context,
                 SpreadsheetSelection.parseCell("B1")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
         );
     }
 
@@ -11890,7 +11890,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.navigateAndCheck(
                 engine,
-                selection.setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                selection.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.extendRightColumn()
@@ -11898,7 +11898,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                 context,
                 SpreadsheetSelection.parseCellRange("A1:C1")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.TOP_LEFT)
+                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
         );
     }
 
@@ -11925,7 +11925,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.navigateAndCheck(
                 engine,
                 SpreadsheetSelection.parseColumn("B")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.leftColumn()
@@ -11952,14 +11952,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.navigateAndCheck(
                 engine,
                 SpreadsheetSelection.parseColumn("A")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.rightColumn()
                                 )
                         ),
                 context,
-                SpreadsheetSelection.parseColumn("C").setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                SpreadsheetSelection.parseColumn("C").setAnchor(SpreadsheetViewportAnchor.NONE)
         );
     }
 
@@ -11979,14 +11979,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.navigateAndCheck(
                 engine,
                 SpreadsheetSelection.parseRow("2")
-                        .setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportSelectionNavigation.downRow()
                                 )
                         ),
                 context,
-                SpreadsheetSelection.parseRow("4").setAnchor(SpreadsheetViewportSelectionAnchor.NONE)
+                SpreadsheetSelection.parseRow("4").setAnchor(SpreadsheetViewportAnchor.NONE)
         );
     }
 
