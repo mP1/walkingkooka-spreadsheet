@@ -1744,11 +1744,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
-    private Optional<SpreadsheetViewport> navigateWithNavigation(final SpreadsheetViewport viewportSelection,
+    private Optional<SpreadsheetViewport> navigateWithNavigation(final SpreadsheetViewport viewport,
                                                                  final SpreadsheetViewportNavigation navigation,
                                                                  final SpreadsheetEngineContext context) {
-        final SpreadsheetSelection selection = viewportSelection.selection();
-        final SpreadsheetViewportAnchor anchor = viewportSelection.anchor();
+        final SpreadsheetSelection selection = viewport.selection();
+        final SpreadsheetViewportAnchor anchor = viewport.anchor();
 
         return selection.isLabelName() ?
                 this.navigateWithNavigationLabel(
@@ -1807,14 +1807,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Assumes a selection without navigation, returning an {@link SpreadsheetEngine#NO_VIEWPORT} if
      * the selection is hidden.
      */
-    private Optional<SpreadsheetViewport> navigateWithoutNavigation(final SpreadsheetViewport viewportSelection,
+    private Optional<SpreadsheetViewport> navigateWithoutNavigation(final SpreadsheetViewport viewport,
                                                                     final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        return context.resolveIfLabel(viewportSelection.selection())
+        return context.resolveIfLabel(viewport.selection())
                 .isHidden(repository.columns()::isHidden, repository.rows()::isHidden) ?
                 SpreadsheetEngine.NO_VIEWPORT :
-                Optional.of(viewportSelection);
+                Optional.of(viewport);
     }
 
     // checkers.........................................................................................................
