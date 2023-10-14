@@ -17,6 +17,13 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+
 import java.util.Objects;
 
 /**
@@ -77,4 +84,71 @@ public final class AnchoredSpreadsheetSelection {
     public String toString() {
         return this.selection + " " + this.anchor;
     }
+
+    // Json.............................................................................................................
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(AnchoredSpreadsheetSelection.class),
+                AnchoredSpreadsheetSelection::unmarshall,
+                AnchoredSpreadsheetSelection::marshall,
+                AnchoredSpreadsheetSelection.class
+        );
+    }
+
+    /**
+     * Unmarshalls a json object back into a {@link SpreadsheetViewport}.
+     */
+    static AnchoredSpreadsheetSelection unmarshall(final JsonNode node,
+                                                   final JsonNodeUnmarshallContext context) {
+        SpreadsheetSelection selection = null;
+        SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.NONE;
+
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+            switch (name.value()) {
+                case SELECTION_PROPERTY_STRING:
+                    selection = context.unmarshallWithType(child);
+                    break;
+                case ANCHOR_PROPERTY_STRING:
+                    anchor = SpreadsheetViewportAnchor.valueOf(
+                            child.stringOrFail()
+                    );
+                    break;
+                default:
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
+            }
+        }
+
+        return new AnchoredSpreadsheetSelection(
+                selection,
+                anchor
+        );
+    }
+
+    /**
+     * Creates a JSON object to represent this {@link SpreadsheetViewport}.
+     */
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        JsonObject object = JsonNode.object()
+                .set(SELECTION_PROPERTY, context.marshallWithType(this.selection));
+
+        final SpreadsheetViewportAnchor anchor = this.anchor();
+        if (SpreadsheetViewportAnchor.NONE != anchor) {
+            object = object.set(
+                    ANCHOR_PROPERTY,
+                    JsonNode.string(anchor.toString())
+            );
+        }
+
+        return object;
+    }
+
+    private final static String SELECTION_PROPERTY_STRING = "selection";
+    private final static String ANCHOR_PROPERTY_STRING = "anchor";
+    // @VisibleForTesting
+
+    final static JsonPropertyName SELECTION_PROPERTY = JsonPropertyName.with(SELECTION_PROPERTY_STRING);
+    final static JsonPropertyName ANCHOR_PROPERTY = JsonPropertyName.with(ANCHOR_PROPERTY_STRING);
 }

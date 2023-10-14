@@ -22,15 +22,18 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<AnchoredSpreadsheetSelection>,
         HashCodeEqualsDefinedTesting2<AnchoredSpreadsheetSelection>,
-        ToStringTesting<AnchoredSpreadsheetSelection> {
+        ToStringTesting<AnchoredSpreadsheetSelection>,
+        JsonNodeMarshallingTesting<AnchoredSpreadsheetSelection> {
 
     private final static SpreadsheetSelection SELECTION = SpreadsheetSelection.parseCellRange("A1:B2");
-
     private final static SpreadsheetViewportAnchor ANCHOR = SpreadsheetViewportAnchor.BOTTOM_RIGHT;
 
     @Test
@@ -136,6 +139,56 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
         );
     }
 
+    // json.............................................................................................................
+
+    @Test
+    public void testJsonMarshallCell() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetSelection.parseCell("B2")
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+        );
+    }
+
+    @Test
+    public void testJsonMarshallCellRange() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetSelection.parseCellRange("B2:C3")
+                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+        );
+    }
+
+    @Test
+    public void testJsonMarshallColumn() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetSelection.parseColumn("B")
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+        );
+    }
+
+    @Test
+    public void testJsonMarshallColumnRange() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetSelection.parseColumnRange("B:C")
+                        .setAnchor(SpreadsheetViewportAnchor.LEFT)
+        );
+    }
+
+    @Test
+    public void testJsonMarshallRow() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetSelection.parseColumn("B")
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+        );
+    }
+
+    @Test
+    public void testJsonMarshallRowRange() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetSelection.parseRowRange("12:34")
+                        .setAnchor(SpreadsheetViewportAnchor.TOP)
+        );
+    }
+
     // HashCodeTesting.................................................................................................
 
     @Override
@@ -156,5 +209,21 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // Json.............................................................................................................
+
+    @Override
+    public AnchoredSpreadsheetSelection createJsonNodeMarshallingValue() {
+        return this.createObject();
+    }
+
+    @Override
+    public AnchoredSpreadsheetSelection unmarshall(final JsonNode jsonNode,
+                                                   final JsonNodeUnmarshallContext context) {
+        return AnchoredSpreadsheetSelection.unmarshall(
+                jsonNode,
+                context
+        );
     }
 }
