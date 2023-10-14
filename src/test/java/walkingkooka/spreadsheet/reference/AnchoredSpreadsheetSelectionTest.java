@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -115,6 +116,25 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
                 SpreadsheetSelection.parseCellRange("B2:C3")
                         .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
                 "cell-range B2:C3 TOP_LEFT" + EOL
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+    @Test
+    public void testHasUrlFragmentCell() {
+        this.checkEquals(
+                UrlFragment.parse("/cell/A1"),
+                SpreadsheetSelection.A1
+                        .urlFragment()
+        );
+    }
+
+    @Test
+    public void testHasUrlFragmentCellRange() {
+        this.checkEquals(
+                UrlFragment.parse("/cell/A1:B2/bottom-right"),
+                this.createObject()
+                        .urlFragment()
         );
     }
 
