@@ -56,6 +56,17 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     }
 
     @Test
+    public void testWithInvalidAnchorFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> AnchoredSpreadsheetSelection.with(
+                        SELECTION,
+                        SpreadsheetViewportAnchor.RIGHT
+                )
+        );
+    }
+
+    @Test
     public void testWith() {
         this.check(
                 AnchoredSpreadsheetSelection.with(
