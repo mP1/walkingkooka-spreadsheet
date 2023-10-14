@@ -51,10 +51,13 @@ public final class SpreadsheetViewport implements HasUrlFragment,
         UsesToStringBuilder {
 
     /**
-     * Constant representing no anchor.
+     * No navigations
      */
     public final static List<SpreadsheetViewportNavigation> NO_NAVIGATION = Lists.empty();
 
+    /**
+     * Constant useful to separate navigations in a CSV.
+     */
     public final static CharacterConstant SEPARATOR = CharacterConstant.COMMA;
 
     static SpreadsheetViewport with(final SpreadsheetSelection selection,
