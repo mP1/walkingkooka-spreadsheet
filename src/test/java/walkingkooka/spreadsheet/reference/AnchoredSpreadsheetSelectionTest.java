@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -31,7 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<AnchoredSpreadsheetSelection>,
         HashCodeEqualsDefinedTesting2<AnchoredSpreadsheetSelection>,
         ToStringTesting<AnchoredSpreadsheetSelection>,
-        JsonNodeMarshallingTesting<AnchoredSpreadsheetSelection> {
+        JsonNodeMarshallingTesting<AnchoredSpreadsheetSelection>,
+        TreePrintableTesting {
 
     private final static SpreadsheetSelection SELECTION = SpreadsheetSelection.parseCellRange("A1:B2");
     private final static SpreadsheetViewportAnchor ANCHOR = SpreadsheetViewportAnchor.BOTTOM_RIGHT;
@@ -93,6 +95,26 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
                 anchor,
                 anchored.anchor(),
                 "anchor"
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintAnchorNone() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.A1
+                        .setAnchor(SpreadsheetViewportAnchor.NONE),
+                "cell A1" + EOL
+        );
+    }
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetSelection.parseCellRange("B2:C3")
+                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
+                "cell-range B2:C3 TOP_LEFT" + EOL
         );
     }
 

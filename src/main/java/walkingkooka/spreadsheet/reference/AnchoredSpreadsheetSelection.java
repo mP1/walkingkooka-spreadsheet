@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -29,7 +31,7 @@ import java.util.Objects;
 /**
  * Holds a {@link SpreadsheetSelection} and {@link SpreadsheetViewportAnchor}.
  */
-public final class AnchoredSpreadsheetSelection {
+public final class AnchoredSpreadsheetSelection implements TreePrintable {
 
     public static AnchoredSpreadsheetSelection with(final SpreadsheetSelection selection,
                                                     final SpreadsheetViewportAnchor anchor) {
@@ -59,6 +61,21 @@ public final class AnchoredSpreadsheetSelection {
     }
 
     private final SpreadsheetViewportAnchor anchor;
+
+    // TreePrintable,...................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.print(this.selection().treeString());
+
+        final SpreadsheetViewportAnchor anchor = this.anchor();
+        if (SpreadsheetViewportAnchor.NONE != anchor) {
+            printer.print(" ");
+            printer.print(anchor.toString());
+        }
+
+        printer.println();
+    }
 
     // Object..........................................................................................................
 
