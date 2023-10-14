@@ -27,7 +27,7 @@ public final class AnchoredSpreadsheetSelection {
     public static AnchoredSpreadsheetSelection with(final SpreadsheetSelection selection,
                                                     final SpreadsheetViewportAnchor anchor) {
         Objects.requireNonNull(selection, "selection");
-        Objects.requireNonNull(anchor, "anchor");
+        selection.checkAnchor(anchor);
 
         return new AnchoredSpreadsheetSelection(
                 selection,
