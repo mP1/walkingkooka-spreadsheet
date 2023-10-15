@@ -446,17 +446,17 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    void unmarshallViewportAndCheck(final SpreadsheetViewport viewportSelection) {
+    void unmarshallViewportAndCheck(final SpreadsheetViewport viewport) {
         this.unmarshallAndCheck(
                 JsonNode.object()
                         .set(
                                 SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
                                 this.marshallContext()
-                                        .marshall(viewportSelection)
+                                        .marshall(viewport)
                         ),
                 SpreadsheetDeltaWindowed.withWindowed(
                         Optional.ofNullable(
-                                viewportSelection
+                                viewport
                         ),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,

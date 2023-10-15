@@ -11739,11 +11739,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setHidden(true)
         );
 
-        final SpreadsheetViewport viewportSelection = column.setAnchor(SpreadsheetViewportAnchor.NONE);
+        final SpreadsheetViewport viewport = column.setAnchor(SpreadsheetViewportAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
-                viewportSelection,
+                viewport,
                 context,
                 SpreadsheetEngine.NO_VIEWPORT
         );
@@ -11754,14 +11754,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetViewport viewportSelection = SpreadsheetSelection.parseColumn("B")
+        final SpreadsheetViewport viewport = SpreadsheetSelection.parseColumn("B")
                 .setAnchor(SpreadsheetViewportAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
-                viewportSelection,
+                viewport,
                 context,
-                Optional.of(viewportSelection)
+                Optional.of(viewport)
         );
     }
 
@@ -11774,14 +11774,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels()
                 .save(LABEL.mapping(SpreadsheetSelection.parseCell("B2")));
 
-        final SpreadsheetViewport viewportSelection = LABEL
+        final SpreadsheetViewport viewport = LABEL
                 .setAnchor(SpreadsheetViewportAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
-                viewportSelection,
+                viewport,
                 context,
-                Optional.of(viewportSelection)
+                Optional.of(viewport)
         );
     }
 
@@ -11838,17 +11838,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels()
                 .save(LABEL.mapping(selection));
 
-        final SpreadsheetViewport viewportSelection = selection.setAnchor(SpreadsheetViewportAnchor.NONE);
+        final SpreadsheetViewport viewport = selection.setAnchor(SpreadsheetViewportAnchor.NONE);
 
         this.navigateAndCheck(
                 engine,
-                viewportSelection.setNavigations(
+                viewport.setNavigations(
                         Lists.of(
                                 SpreadsheetViewportNavigation.leftColumn()
                         )
                 ),
                 context,
-                viewportSelection
+                viewport
         );
     }
 
