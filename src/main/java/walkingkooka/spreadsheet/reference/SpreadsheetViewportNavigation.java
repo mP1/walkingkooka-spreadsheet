@@ -178,6 +178,13 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         return this.getClass().getSimpleName().contains("Extend");
     }
 
+    /**
+     * Returns true if a navigation with a pixel argument
+     */
+    public final boolean isPixel() {
+        return this instanceof SpreadsheetViewportNavigationPixel;
+    }
+
     @Override
     public final String toString() {
         return this.text();

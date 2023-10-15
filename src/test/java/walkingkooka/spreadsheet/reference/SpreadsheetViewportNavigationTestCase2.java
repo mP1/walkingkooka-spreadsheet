@@ -65,6 +65,17 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         );
     }
 
+    // isPixel.........................................................................................................
+    @Test
+    public final void testIsPixel() {
+        this.checkEquals(
+                this.type()
+                        .getName()
+                        .contains("Pixel"),
+                this.createSpreadsheetViewportNavigation().isPixel()
+        );
+    }
+
     // update...........................................................................................................
 
     final static int COLUMN_WIDTH = 100;
