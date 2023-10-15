@@ -48,7 +48,7 @@ public final class SpreadsheetViewportNavigationDownRowTest extends SpreadsheetV
     }
     
     @Override
-    SpreadsheetViewportNavigationDownRow createSpreadsheetViewportSelectionNavigation() {
+    SpreadsheetViewportNavigationDownRow createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationDownRow.INSTANCE;
     }
 
