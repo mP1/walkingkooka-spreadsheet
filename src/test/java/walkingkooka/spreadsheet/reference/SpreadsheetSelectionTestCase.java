@@ -475,9 +475,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final SpreadsheetViewportAnchor anchor = selection.defaultAnchor();
         this.checkNotEquals(null, anchor, "anchor");
 
-        final SpreadsheetViewport viewportSelection = selection.setAnchor(anchor);
-        this.checkEquals(anchor, viewportSelection.anchor(), "anchor");
-        this.checkEquals(selection, viewportSelection.selection(), "selection");
+        final SpreadsheetViewport viewport = selection.setAnchor(anchor);
+        this.checkEquals(anchor, viewport.anchor(), "anchor");
+        this.checkEquals(selection, viewport.selection(), "selection");
     }
 
     // setAnchor........................................................................................................

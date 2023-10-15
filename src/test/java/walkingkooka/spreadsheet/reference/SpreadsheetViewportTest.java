@@ -148,21 +148,21 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 SpreadsheetViewportNavigation.leftColumn()
         );
 
-        final SpreadsheetViewport viewportSelection = SpreadsheetViewport.with(
+        final SpreadsheetViewport viewport = SpreadsheetViewport.with(
                 selection,
                 anchor,
                 navigations
         );
         this.checkSelection(
-                viewportSelection,
+                viewport,
                 selection
         );
         this.checkAnchor(
-                viewportSelection,
+                viewport,
                 anchor
         );
         this.checkNavigations(
-                viewportSelection,
+                viewport,
                 navigations
         );
     }
@@ -352,20 +352,20 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
 
     private void withAndCheck(final SpreadsheetSelection selection,
                               final SpreadsheetViewportAnchor anchor) {
-        final SpreadsheetViewport viewportSelection = selection.setAnchor(
+        final SpreadsheetViewport viewport = selection.setAnchor(
                 anchor
         );
         this.checkSelection(
-                viewportSelection,
+                viewport,
                 selection
         );
 
         this.checkAnchor(
-                viewportSelection,
+                viewport,
                 anchor
         );
         this.checkNavigations(
-                viewportSelection,
+                viewport,
                 SpreadsheetViewport.NO_NAVIGATION
         );
     }
@@ -374,25 +374,25 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
 
     @Test
     public void testSetSelectionNullFails() {
-        final SpreadsheetViewport viewportSelection = this.createObject();
+        final SpreadsheetViewport viewport = this.createObject();
         assertThrows(
                 NullPointerException.class,
-                () -> viewportSelection.setSelection(null)
+                () -> viewport.setSelection(null)
         );
     }
 
     @Test
     public void testSetSelectionSame() {
-        final SpreadsheetViewport viewportSelection = this.createObject();
+        final SpreadsheetViewport viewport = this.createObject();
         assertSame(
-                viewportSelection,
-                viewportSelection.setSelection(viewportSelection.selection())
+                viewport,
+                viewport.setSelection(viewport.selection())
         );
     }
 
     @Test
     public void testSetSelectionDifferent() {
-        final SpreadsheetViewport viewportSelection = this.createObject();
+        final SpreadsheetViewport viewport = this.createObject();
 
         final SpreadsheetSelection selection = SpreadsheetSelection.parseCellRange("ZZ99");
         this.checkNotEquals(
@@ -401,9 +401,9 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 "different selection"
         );
 
-        final SpreadsheetViewport different = viewportSelection.setSelection(selection);
+        final SpreadsheetViewport different = viewport.setSelection(selection);
         assertNotSame(
-                viewportSelection,
+                viewport,
                 different
         );
         this.checkSelection(
@@ -412,11 +412,11 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         );
         this.checkAnchor(
                 different,
-                viewportSelection.anchor()
+                viewport.anchor()
         );
         this.checkNavigations(
                 different,
-                viewportSelection.navigations()
+                viewport.navigations()
         );
     }
 
@@ -471,29 +471,29 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         );
     }
 
-    private void checkSelection(final SpreadsheetViewport viewportSelection,
+    private void checkSelection(final SpreadsheetViewport viewport,
                                 final SpreadsheetSelection selection) {
         this.checkEquals(
                 selection,
-                viewportSelection.selection(),
+                viewport.selection(),
                 "selection"
         );
     }
 
-    private void checkAnchor(final SpreadsheetViewport viewportSelection,
+    private void checkAnchor(final SpreadsheetViewport viewport,
                              final SpreadsheetViewportAnchor anchor) {
         this.checkEquals(
                 anchor,
-                viewportSelection.anchor(),
+                viewport.anchor(),
                 "anchor"
         );
     }
 
-    private void checkNavigations(final SpreadsheetViewport viewportSelection,
+    private void checkNavigations(final SpreadsheetViewport viewport,
                                   final List<SpreadsheetViewportNavigation> navigations) {
         this.checkEquals(
                 navigations,
-                viewportSelection.navigations(),
+                viewport.navigations(),
                 "navigations"
         );
     }

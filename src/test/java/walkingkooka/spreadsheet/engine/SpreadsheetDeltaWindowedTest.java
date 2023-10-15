@@ -171,7 +171,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
     @Test
     public void testSetWindowMultiple() {
-        final Optional<SpreadsheetViewport> viewportSelection = this.viewport();
+        final Optional<SpreadsheetViewport> viewport = this.viewport();
 
         final SpreadsheetCell a1 = this.a1();
         final SpreadsheetCell b2 = this.b2();
@@ -241,7 +241,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.EMPTY;
 
         final SpreadsheetDeltaWindowed before = SpreadsheetDeltaWindowed.withWindowed(
-                viewportSelection,
+                viewport,
                 cells,
                 columns,
                 labels,
@@ -256,7 +256,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 window
         );
 
-        this.checkViewport(before, viewportSelection);
+        this.checkViewport(before, viewport);
 
         this.checkCells(before, cells);
         this.checkColumns(before, columns);
@@ -730,18 +730,18 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     private final static JsonString WINDOW_JSON_STRING = JsonNode.string("A1:E5");
 
     @Override
-    void unmarshallViewportAndCheck(final SpreadsheetViewport viewportSelection) {
+    void unmarshallViewportAndCheck(final SpreadsheetViewport viewport) {
         this.unmarshallAndCheck(
                 JsonNode.object()
                         .set(
                                 SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
                                 this.marshallContext()
-                                        .marshall(viewportSelection)
+                                        .marshall(viewport)
                         )
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, WINDOW_JSON_STRING),
                 SpreadsheetDeltaWindowed.withWindowed(
                         Optional.ofNullable(
-                                viewportSelection
+                                viewport
                         ),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
