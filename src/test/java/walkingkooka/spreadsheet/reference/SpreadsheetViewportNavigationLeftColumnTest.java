@@ -48,7 +48,7 @@ public final class SpreadsheetViewportNavigationLeftColumnTest extends Spreadshe
     }
 
     @Override
-    SpreadsheetViewportNavigationLeftColumn createSpreadsheetViewportSelectionNavigation() {
+    SpreadsheetViewportNavigationLeftColumn createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationLeftColumn.INSTANCE;
     }
 

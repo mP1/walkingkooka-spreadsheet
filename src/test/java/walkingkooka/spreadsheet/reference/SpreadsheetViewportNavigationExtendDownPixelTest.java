@@ -25,7 +25,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportSelectionNavigation(),
+                this.createSpreadsheetViewportNavigation(),
                 SpreadsheetSelection.parseCell("E5"),
                 SpreadsheetSelection.parseCellRange("E5:E7")
                         .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
@@ -35,7 +35,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportSelectionNavigation(),
+                this.createSpreadsheetViewportNavigation(),
                 SpreadsheetSelection.parseColumn("E")
         );
     }
@@ -43,7 +43,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportSelectionNavigation(),
+                this.createSpreadsheetViewportNavigation(),
                 SpreadsheetSelection.parseRow("5"),
                 SpreadsheetSelection.parseRowRange("5:7")
                         .setAnchor(SpreadsheetViewportAnchor.TOP)
@@ -51,7 +51,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
     }
 
     @Override
-    SpreadsheetViewportNavigationExtendDownPixel createSpreadsheetViewportSelectionNavigation() {
+    SpreadsheetViewportNavigationExtendDownPixel createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationExtendDownPixel.with(2 * ROW_HEIGHT - 1);
     }
 

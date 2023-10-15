@@ -44,7 +44,7 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
 
     @Test
     public final void testParseToStringRoundtrip() {
-        final T navigation = this.createSpreadsheetViewportSelectionNavigation();
+        final T navigation = this.createSpreadsheetViewportNavigation();
 
         this.parseStringAndCheck(
                 navigation.text(),
@@ -61,7 +61,7 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
                 this.type()
                         .getName()
                         .contains("Extend"),
-                this.createSpreadsheetViewportSelectionNavigation().isExtend()
+                this.createSpreadsheetViewportNavigation().isExtend()
         );
     }
 
@@ -157,7 +157,7 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
 
     final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> 1.0 * ROW_HEIGHT;
 
-    abstract T createSpreadsheetViewportSelectionNavigation();
+    abstract T createSpreadsheetViewportNavigation();
 
     // ParseString......................................................................................................
 

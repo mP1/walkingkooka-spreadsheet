@@ -51,7 +51,7 @@ public final class SpreadsheetViewportNavigationExtendUpRowTest extends Spreadsh
     }
     
     @Override
-    SpreadsheetViewportNavigationExtendUpRow createSpreadsheetViewportSelectionNavigation() {
+    SpreadsheetViewportNavigationExtendUpRow createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationExtendUpRow.INSTANCE;
     }
 

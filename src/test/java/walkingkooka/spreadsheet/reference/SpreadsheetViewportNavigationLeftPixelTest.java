@@ -24,7 +24,7 @@ public final class SpreadsheetViewportNavigationLeftPixelTest extends Spreadshee
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportSelectionNavigation(),
+                this.createSpreadsheetViewportNavigation(),
                 SpreadsheetSelection.parseCell("E5"),
                 SpreadsheetSelection.parseCell("C5")
         );
@@ -33,7 +33,7 @@ public final class SpreadsheetViewportNavigationLeftPixelTest extends Spreadshee
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportSelectionNavigation(),
+                this.createSpreadsheetViewportNavigation(),
                 SpreadsheetSelection.parseColumn("E"),
                 SpreadsheetSelection.parseColumn("C")
         );
@@ -42,13 +42,13 @@ public final class SpreadsheetViewportNavigationLeftPixelTest extends Spreadshee
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportSelectionNavigation(),
+                this.createSpreadsheetViewportNavigation(),
                 SpreadsheetSelection.parseRow("2")
         );
     }
 
     @Override
-    SpreadsheetViewportNavigationLeftPixel createSpreadsheetViewportSelectionNavigation() {
+    SpreadsheetViewportNavigationLeftPixel createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationLeftPixel.with(2 * COLUMN_WIDTH - 1);
     }
 

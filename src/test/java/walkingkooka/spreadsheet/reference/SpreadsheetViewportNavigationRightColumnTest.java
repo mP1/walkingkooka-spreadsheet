@@ -48,7 +48,7 @@ public final class SpreadsheetViewportNavigationRightColumnTest extends Spreadsh
     }
     
     @Override
-    SpreadsheetViewportNavigationRightColumn createSpreadsheetViewportSelectionNavigation() {
+    SpreadsheetViewportNavigationRightColumn createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationRightColumn.INSTANCE;
     }
 

@@ -49,7 +49,7 @@ public final class SpreadsheetViewportNavigationExtendLeftColumnTest extends Spr
     }
     
     @Override
-    SpreadsheetViewportNavigationExtendLeftColumn createSpreadsheetViewportSelectionNavigation() {
+    SpreadsheetViewportNavigationExtendLeftColumn createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationExtendLeftColumn.INSTANCE;
     }
 
