@@ -54,6 +54,17 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         );
     }
 
+    // isExtend.........................................................................................................
+    @Test
+    public final void testIsExtend() {
+        this.checkEquals(
+                this.type()
+                        .getName()
+                        .contains("Extend"),
+                this.createSpreadsheetViewportSelectionNavigation().isExtend()
+        );
+    }
+
     // update...........................................................................................................
 
     final static int COLUMN_WIDTH = 100;
