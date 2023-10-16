@@ -171,6 +171,20 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     }
 
     @Test
+    public void testToStringNoneAnchor() {
+        final SpreadsheetSelection selection = SpreadsheetSelection.A1;
+        final SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.NONE;
+
+        this.toStringAndCheck(
+                AnchoredSpreadsheetSelection.with(
+                        selection,
+                        anchor
+                ),
+                selection.toString()
+        );
+    }
+
+    @Test
     public void testToString() {
         this.toStringAndCheck(
                 AnchoredSpreadsheetSelection.with(
