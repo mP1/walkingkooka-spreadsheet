@@ -116,7 +116,12 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
 
     @Override
     public String toString() {
-        return this.selection + " " + this.anchor;
+        final SpreadsheetSelection selection = this.selection;
+        final SpreadsheetViewportAnchor anchor = this.anchor;
+
+        return SpreadsheetViewportAnchor.NONE == anchor ?
+                selection.toString() :
+                selection + " " + anchor;
     }
 
     // Json.............................................................................................................
