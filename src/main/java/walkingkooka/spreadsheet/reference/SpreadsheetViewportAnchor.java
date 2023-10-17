@@ -89,7 +89,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
      * Uses this anchor to select the cell-range that will be moved.
      */
     final SpreadsheetCellReference cell(final SpreadsheetCellRange range) {
-        this.failIfNone();
+        // this.failIfNone(); unnecessary #column will fail if NONE.
 
         return this.column(
                         range.columnRange()
