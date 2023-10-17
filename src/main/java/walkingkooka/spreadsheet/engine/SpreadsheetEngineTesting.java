@@ -1378,25 +1378,25 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     // navigate.........................................................................................................
 
     default void navigateAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetViewport selection,
+                                  final SpreadsheetViewport viewport,
                                   final SpreadsheetEngineContext context,
                                   final SpreadsheetViewport expected) {
         this.navigateAndCheck(
                 engine,
-                selection,
+                viewport,
                 context,
                 Optional.of(expected)
         );
     }
 
     default void navigateAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetViewport selection,
+                                  final SpreadsheetViewport viewport,
                                   final SpreadsheetEngineContext context,
                                   final Optional<SpreadsheetViewport> expected) {
         this.checkEquals(
                 expected,
-                engine.navigate(selection, context),
-                () -> "navigate " + selection
+                engine.navigate(viewport, context),
+                () -> "navigate " + viewport
         );
     }
 
