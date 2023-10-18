@@ -26,6 +26,7 @@ import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -296,7 +297,22 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 selection,
                 width,
                 height,
-                selection
+                SpreadsheetViewportRectangle.with(
+                        selection,
+                        width,
+                        height
+                )
+        );
+    }
+
+    private void viewportRectangleAndCheck(final SpreadsheetCellReference selection,
+                                           final double width,
+                                           final double height,
+                                           final SpreadsheetViewportRectangle expected) {
+        this.checkEquals(
+                expected,
+                selection.viewportRectangle(width, height),
+                () -> selection + " viewportRectangle " + width + "," + height
         );
     }
 

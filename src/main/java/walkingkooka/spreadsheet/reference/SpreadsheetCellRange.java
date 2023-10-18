@@ -23,7 +23,6 @@ import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 
 import java.util.Collection;
 import java.util.EnumSet;
@@ -293,19 +292,6 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     @Override
     public SpreadsheetRowReferenceRange toRowRange() {
         return this.rowRange();
-    }
-
-    /**
-     * Creates a {@link SpreadsheetViewportRectangle} with the begin or top/left cell.
-     */
-    @Override
-    public SpreadsheetViewportRectangle viewportRectangle(final double width,
-                                                          final double height) {
-        return SpreadsheetViewportRectangle.with(
-                this.begin(),
-                width,
-                height
-        );
     }
 
     /**

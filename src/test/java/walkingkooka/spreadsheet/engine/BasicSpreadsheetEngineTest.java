@@ -10972,17 +10972,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void windowAndCheck(final String cellOrLabel,
+    private void windowAndCheck(final String cell,
                                 final double width,
                                 final double height,
                                 final Optional<SpreadsheetSelection> selection,
                                 final String range) {
         this.windowAndCheck(
                 this.createSpreadsheetEngine(),
-                SpreadsheetSelection.parseCellOrLabel(cellOrLabel).viewportRectangle(
-                        width,
-                        height
-                ),
+                SpreadsheetSelection.parseCell(cell)
+                        .viewportRectangle(
+                                width,
+                                height
+                        ),
                 false, // includeFrozenColumnsAndRows
                 selection,
                 this.createContext(),
@@ -11670,7 +11671,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void windowAndCheck(final String cellOrLabel,
+    private void windowAndCheck(final String cell,
                                 final double width,
                                 final double height,
                                 final int frozenColumns,
@@ -11678,7 +11679,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 final SpreadsheetSelection selection,
                                 final String window) {
         this.windowAndCheck(
-                cellOrLabel,
+                cell,
                 width,
                 height,
                 frozenColumns,
@@ -11688,7 +11689,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void windowAndCheck(final String cellOrLabel,
+    private void windowAndCheck(final String cell,
                                 final double width,
                                 final double height,
                                 final int frozenColumns,
@@ -11710,7 +11711,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
                 this.createSpreadsheetEngine(),
-                SpreadsheetSelection.parseCellOrLabel(cellOrLabel)
+                SpreadsheetSelection.parseCell(cell)
                         .viewportRectangle(
                                 width,
                                 height
