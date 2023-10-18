@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -55,9 +55,9 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
                 throw new IllegalArgumentException("Expected 3 tokens in " + CharSequences.quoteAndEscape(text));
         }
 
-        final SpreadsheetExpressionReference home;
+        final SpreadsheetCellReference home;
         try {
-            home = SpreadsheetSelection.parseExpressionReference(tokens[0]);
+            home = SpreadsheetSelection.parseCell(tokens[0]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid home in " + CharSequences.quoteAndEscape(text));
         }
@@ -86,7 +86,7 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
     /**
      * Factory that creates a new {@link SpreadsheetViewportRectangle}.
      */
-    public static SpreadsheetViewportRectangle with(final SpreadsheetExpressionReference home,
+    public static SpreadsheetViewportRectangle with(final SpreadsheetCellReference home,
                                                     final double width,
                                                     final double height) {
         Objects.requireNonNull(home, "home");
@@ -99,7 +99,7 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         return new SpreadsheetViewportRectangle(home, width, height);
     }
 
-    private SpreadsheetViewportRectangle(final SpreadsheetExpressionReference home,
+    private SpreadsheetViewportRectangle(final SpreadsheetCellReference home,
                                          final double width,
                                          final double height) {
         super();
@@ -120,11 +120,11 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
 
     // properties.......................................................................................................
 
-    public SpreadsheetExpressionReference home() {
+    public SpreadsheetCellReference home() {
         return this.home;
     }
 
-    private final SpreadsheetExpressionReference home;
+    private final SpreadsheetCellReference home;
 
     public double width() {
         return this.width;

@@ -438,21 +438,6 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.checkEquals(rows, different.rowRange());
     }
 
-    // viewportRectangle................................................................................................
-
-    @Test
-    public void testViewportRectangle() {
-        final SpreadsheetCellRange range = this.createSelection();
-        final double width = 30.5;
-        final double height = 40.5;
-
-        this.viewportRectangleAndCheck(
-                range,
-                width,
-                height,
-                range.begin()
-        );
-    }
     // simplify.........................................................................................................
 
     @Test

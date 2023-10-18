@@ -24,7 +24,6 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -49,29 +48,29 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(reference(), -1, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(cell(), -1, HEIGHT));
     }
 
     @Test
     public void testWithInvalidWidthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(reference(), -2, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(cell(), -2, HEIGHT));
     }
 
     @Test
     public void testWithInvalidHeightFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(reference(), WIDTH, -1));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(cell(), WIDTH, -1));
     }
 
     @Test
     public void testWithInvalidHeightFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(reference(), WIDTH, -2));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(cell(), WIDTH, -2));
     }
 
     @Test
     public void testWith() {
         this.check(
-                SpreadsheetViewportRectangle.with(this.reference(), WIDTH, HEIGHT),
-                this.reference(),
+                SpreadsheetViewportRectangle.with(this.cell(), WIDTH, HEIGHT),
+                this.cell(),
                 WIDTH,
                 HEIGHT
         );
@@ -79,8 +78,8 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     @Test
     public void testWithAbsoluteSpreadsheetCellReference() {
         this.check(
-                SpreadsheetViewportRectangle.with(this.reference().toAbsolute(), WIDTH, HEIGHT),
-                this.reference(),
+                SpreadsheetViewportRectangle.with(this.cell().toAbsolute(), WIDTH, HEIGHT),
+                this.cell(),
                 WIDTH,
                 HEIGHT
         );
@@ -89,33 +88,22 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     @Test
     public void testWithCellReference() {
         this.check(
-                SpreadsheetViewportRectangle.with(this.reference(), WIDTH, HEIGHT),
-                this.reference(),
+                SpreadsheetViewportRectangle.with(this.cell(), WIDTH, HEIGHT),
+                this.cell(),
                 WIDTH,
                 HEIGHT
         );
     }
-
-    @Test
-    public void testWithLabel() {
-        this.check(
-                SpreadsheetViewportRectangle.with(this.label(), WIDTH, HEIGHT),
-                this.label(),
-                WIDTH,
-                HEIGHT
-        );
-    }
-
     @Test
     public void testWithAbsoluteReference() {
-        this.check(SpreadsheetViewportRectangle.with(this.reference().toAbsolute(), WIDTH, HEIGHT));
+        this.check(SpreadsheetViewportRectangle.with(this.cell().toAbsolute(), WIDTH, HEIGHT));
     }
 
     @Test
     public void testWithZeroWidth() {
         this.check(
-                SpreadsheetViewportRectangle.with(this.reference(), 0, HEIGHT),
-                this.reference(),
+                SpreadsheetViewportRectangle.with(this.cell(), 0, HEIGHT),
+                this.cell(),
                 0,
                 HEIGHT
         );
@@ -124,8 +112,8 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     @Test
     public void testWithZeroHeight() {
         this.check(
-                SpreadsheetViewportRectangle.with(this.reference(), WIDTH, 0),
-                this.reference(),
+                SpreadsheetViewportRectangle.with(this.cell(), WIDTH, 0),
+                this.cell(),
                 WIDTH,
                 0
         );
@@ -134,31 +122,18 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     // equals...........................................................................................................
 
     @Test
-    public void testEqualsWithLabel() {
-        this.checkEquals(
-                SpreadsheetViewportRectangle.with(this.label(), WIDTH, HEIGHT),
-                SpreadsheetViewportRectangle.with(this.label(), WIDTH, HEIGHT)
-        );
-    }
-
-    @Test
     public void testEqualsDifferentHome() {
-        this.checkNotEquals(SpreadsheetViewportRectangle.with(SpreadsheetSelection.parseCell("a1"), WIDTH, HEIGHT));
-    }
-
-    @Test
-    public void testEqualsDifferentLabel() {
-        this.checkNotEquals(SpreadsheetViewportRectangle.with(label(), WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetViewportRectangle.with(SpreadsheetSelection.A1, WIDTH, HEIGHT));
     }
 
     @Test
     public void testEqualsDifferentWidth() {
-        this.checkNotEquals(SpreadsheetViewportRectangle.with(this.reference(), 1000 + WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetViewportRectangle.with(this.cell(), 1000 + WIDTH, HEIGHT));
     }
 
     @Test
     public void testEqualsDifferentHeight() {
-        this.checkNotEquals(SpreadsheetViewportRectangle.with(this.reference(), WIDTH, 1000 + HEIGHT));
+        this.checkNotEquals(SpreadsheetViewportRectangle.with(this.cell(), WIDTH, 1000 + HEIGHT));
     }
 
     // ParseStringTesting...............................................................................................
@@ -179,10 +154,18 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     }
 
     @Test
-    public void testParseRangeFails() {
+    public void testParseCellRangeFails() {
         this.parseStringFails2(
                 "A1:B2:300:400",
                 "Expected 3 tokens in \"A1:B2:300:400\""
+        );
+    }
+
+    @Test
+    public void testParseLabelFails() {
+        this.parseStringFails(
+                "Label123:300:400",
+                IllegalArgumentException.class
         );
     }
 
@@ -191,7 +174,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         this.parseStringAndCheck(
                 "B9:300:400",
                 SpreadsheetViewportRectangle.with(
-                        this.reference(),
+                        this.cell(),
                         300,
                         400
                 )
@@ -215,19 +198,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         this.parseStringAndCheck(
                 "B9:300.5:400.5",
                 SpreadsheetViewportRectangle.with(
-                        this.reference(),
-                        300.5,
-                        400.5
-                )
-        );
-    }
-
-    @Test
-    public void testParseLabel() {
-        this.parseStringAndCheck(
-                "Label123:300.5:400.5",
-                SpreadsheetViewportRectangle.with(
-                        this.label(),
+                        this.cell(),
                         300.5,
                         400.5
                 )
@@ -248,7 +219,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     public void testMarshall3() {
         this.marshallAndCheck(
                 SpreadsheetViewportRectangle.with(
-                        this.reference(),
+                        this.cell(),
                         30,
                         40
                 ),
@@ -260,7 +231,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     public void testMarshall4() {
         this.marshallAndCheck(
                 SpreadsheetViewportRectangle.with(
-                        this.reference(),
+                        this.cell(),
                         30.5,
                         40.5
                 ),
@@ -272,18 +243,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     public void testMarshallRoundtrip() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetViewportRectangle.with(
-                        this.reference(),
-                        30.5,
-                        40.5
-                )
-        );
-    }
-
-    @Test
-    public void testMarshallRoundtripLabel() {
-        this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetViewportRectangle.with(
-                        this.label(),
+                        this.cell(),
                         30.5,
                         40.5
                 )
@@ -300,7 +260,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         this.unmarshallAndCheck(
                 JsonNode.string("B9:30:40"),
                 SpreadsheetViewportRectangle.with(
-                        this.reference(),
+                        this.cell(),
                         30,
                         40
                 )
@@ -312,7 +272,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         this.unmarshallAndCheck(
                 JsonNode.string("B9:30.5:40.5"),
                 SpreadsheetViewportRectangle.with(
-                        this.reference(),
+                        this.cell(),
                         30.5,
                         40.5
                 )
@@ -334,10 +294,10 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     // toString.........................................................................................................
 
     @Test
-    public void testToStringCell() {
+    public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetViewportRectangle.with(
-                        this.reference(),
+                        this.cell(),
                         30,
                         40
                 ),
@@ -346,10 +306,10 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     }
 
     @Test
-    public void testToStringCell2() {
+    public void testToString2() {
         this.toStringAndCheck(
                 SpreadsheetViewportRectangle.with(
-                        this.reference(),
+                        this.cell(),
                         30.5,
                         40.5
                 ),
@@ -357,32 +317,16 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         );
     }
 
-    @Test
-    public void testToStringLabel() {
-        this.toStringAndCheck(
-                SpreadsheetViewportRectangle.with(
-                        this.label(),
-                        30,
-                        40
-                ),
-                "Label123:30:40"
-        );
-    }
-
     //helper............................................................................................................
 
-    private SpreadsheetCellReference reference() {
+    private SpreadsheetCellReference cell() {
         return SpreadsheetSelection.parseCell("B9");
-    }
-
-    private SpreadsheetLabelName label() {
-        return SpreadsheetSelection.labelName("Label123");
     }
 
     private void check(final SpreadsheetViewportRectangle viewport) {
         this.check(
                 viewport,
-                this.reference(),
+                this.cell(),
                 WIDTH,
                 HEIGHT
         );
@@ -430,7 +374,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
 
     @Override
     public SpreadsheetViewportRectangle createObject() {
-        return SpreadsheetViewportRectangle.with(this.reference(), WIDTH, HEIGHT);
+        return SpreadsheetViewportRectangle.with(this.cell(), WIDTH, HEIGHT);
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
