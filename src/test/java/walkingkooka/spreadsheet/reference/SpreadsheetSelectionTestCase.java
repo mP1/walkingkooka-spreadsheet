@@ -28,6 +28,8 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunctions;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -55,6 +57,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         PredicateTesting2<S, SpreadsheetSelection>,
         ToStringTesting<S>,
         TreePrintableTesting {
+
+    private final static SpreadsheetViewportWindowsFunction WINDOWS_FUNCTION = SpreadsheetViewportWindowsFunctions.fake();
 
     SpreadsheetSelectionTestCase() {
         super();
@@ -625,7 +629,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate leftColumn"
@@ -671,7 +676,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 columnWidths,
                                 hiddenRows,
-                                rowHeight
+                                rowHeight,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate " + count + " leftPixels"
@@ -707,7 +713,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate upRow"
@@ -753,7 +760,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 columnWidths,
                                 hiddenRows,
-                                rowHeight
+                                rowHeight,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate " + count + " upPixels"
@@ -789,7 +797,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate rightColumn"
@@ -835,7 +844,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 columnWidths,
                                 hiddenRows,
-                                rowHeight
+                                rowHeight,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate " + count + " rightPixels"
@@ -871,7 +881,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate downRow"
@@ -917,7 +928,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 columnWidths,
                                 hiddenRows,
-                                rowHeight
+                                rowHeight,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate " + count + " downPixels"
@@ -1035,7 +1047,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendLeftColumn"
@@ -1084,7 +1097,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 columnToWidths,
                                 hiddenRows,
-                                rowToHeights
+                                rowToHeights,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendLeftPixels"
@@ -1124,7 +1138,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendUpRow"
@@ -1173,7 +1188,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 columnToWidths,
                                 hiddenRows,
-                                rowToHeights
+                                rowToHeights,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendUpPixels"
@@ -1212,7 +1228,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendRightColumn"
@@ -1261,7 +1278,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 columnToWidths,
                                 hiddenRows,
-                                rowToHeights
+                                rowToHeights,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendRightPixels"
@@ -1300,7 +1318,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendDownRow"
@@ -1349,7 +1368,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 hiddenColumns,
                                 columnToWidths,
                                 hiddenRows,
-                                rowToHeights
+                                rowToHeights,
+                                WINDOWS_FUNCTION
                         )
                 ),
                 () -> selection + " anchor=" + anchor + " navigate extendDownPixels"

@@ -1798,7 +1798,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         repository.columns()::isHidden,
                         (c) -> this.columnWidth(c, context),
                         repository.rows()::isHidden,
-                        (r) -> this.rowHeight(r, context)
+                        (r) -> this.rowHeight(r, context),
+                        (r, i, s) -> this.window(r, i, s, context)
                 )
         );
     }
