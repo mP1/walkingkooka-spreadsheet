@@ -29,12 +29,12 @@ public interface SpreadsheetViewportNavigationContext extends Context {
     /**
      * Returns true if the {@link SpreadsheetColumnReference} is hidden.
      */
-    boolean isColumnHidden(SpreadsheetColumnReference column);
+    boolean isColumnHidden(final SpreadsheetColumnReference column);
 
     /**
      * Returns true if the {@link SpreadsheetRowReference} is hidden.
      */
-    boolean isRowHidden(SpreadsheetRowReference row);
+    boolean isRowHidden(final SpreadsheetRowReference row);
 
     /**
      * Returns the first column moving left parse the given starting point that is not hidden.
