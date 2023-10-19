@@ -17,33 +17,41 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
+
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetViewportNavigationContext {
+final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetViewportNavigationContext, SpreadsheetViewportWindowsFunction {
 
     static BasicSpreadsheetViewportNavigationContext with(final Predicate<SpreadsheetColumnReference> columnHidden,
                                                           final Function<SpreadsheetColumnReference, Double> columnWidths,
                                                           final Predicate<SpreadsheetRowReference> rowHidden,
-                                                          final Function<SpreadsheetRowReference, Double> rowHeights) {
+                                                          final Function<SpreadsheetRowReference, Double> rowHeights,
+                                                          final SpreadsheetViewportWindowsFunction windows) {
         return new BasicSpreadsheetViewportNavigationContext(
                 Objects.requireNonNull(columnHidden, "columnHidden"),
                 Objects.requireNonNull(columnWidths, "columnWidths"),
                 Objects.requireNonNull(rowHidden, "rowHidden"),
-                Objects.requireNonNull(rowHeights, "rowHeights")
+                Objects.requireNonNull(rowHeights, "rowHeights"),
+                Objects.requireNonNull(windows, "windows")
         );
     }
 
     private BasicSpreadsheetViewportNavigationContext(final Predicate<SpreadsheetColumnReference> columnHidden,
                                                       final Function<SpreadsheetColumnReference, Double> columnWidths,
                                                       final Predicate<SpreadsheetRowReference> rowHidden,
-                                                      final Function<SpreadsheetRowReference, Double> rowHeights) {
+                                                      final Function<SpreadsheetRowReference, Double> rowHeights,
+                                                      final SpreadsheetViewportWindowsFunction windows) {
         this.columnHidden = columnHidden;
         this.columnWidths = columnWidths;
         this.rowHidden = rowHidden;
         this.rowHeights = rowHeights;
+        this.windows = windows;
     }
 
     @Override
@@ -252,7 +260,20 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     }
 
     @Override
+    public SpreadsheetViewportWindows windows(final SpreadsheetViewportRectangle viewportRectangle,
+                                              final boolean includeFrozenColumnsRows,
+                                              final Optional<SpreadsheetSelection> selection) {
+        return this.windows.windows(
+                viewportRectangle,
+                includeFrozenColumnsRows,
+                selection
+        );
+    }
+
+    private final SpreadsheetViewportWindowsFunction windows;
+
+    @Override
     public String toString() {
-        return this.columnHidden + " " + this.columnWidths + " " + this.rowHidden + " " + this.rowHeights;
+        return this.columnHidden + " " + this.columnWidths + " " + this.rowHidden + " " + this.rowHeights + " " + this.windows;
     }
 }

@@ -23,6 +23,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.text.CharacterConstant;
 
 import java.util.Map;
@@ -45,6 +46,10 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         throw new UnsupportedOperationException();
     };
 
+    private final static SpreadsheetViewportWindowsFunction WINDOWS_FUNCTION = (v, i, s) -> {
+        throw new UnsupportedOperationException();
+    };
+
     @Test
     public void testWithNullColumnHiddenFails() {
         assertThrows(
@@ -54,7 +59,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                 null,
                                 COLUMN_TO_WIDTH,
                                 Predicates.fake(),
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
         );
     }
@@ -68,7 +74,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                 Predicates.fake(),
                                 null,
                                 Predicates.fake(),
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                WINDOWS_FUNCTION
                         )
         );
     }
@@ -81,7 +88,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         Predicates.fake(),
                         COLUMN_TO_WIDTH,
                         null,
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 )
         );
     }
@@ -95,6 +103,22 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                 Predicates.fake(),
                                 COLUMN_TO_WIDTH,
                                 Predicates.fake(),
+                                null,
+                                WINDOWS_FUNCTION
+                        )
+        );
+    }
+
+    @Test
+    public void testWithNullWindowsFunctionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetViewportNavigationContext
+                        .with(
+                                Predicates.fake(),
+                                COLUMN_TO_WIDTH,
+                                Predicates.fake(),
+                                ROW_TO_HEIGHT,
                                 null
                         )
         );
@@ -108,7 +132,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                 Predicates.is(column),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
-                ROW_TO_HEIGHT
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
         );
         this.isColumnHiddenAndCheck(
                 context,
@@ -131,7 +156,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
                 Predicates.is(row),
-                ROW_TO_HEIGHT
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
         );
 
         this.isRowHiddenAndCheck(
@@ -235,7 +261,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         hiddenColumns(columnHidden),
                         COLUMN_TO_WIDTH,
                         Predicates.fake(),
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 column
         );
@@ -249,7 +276,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         hiddenColumns(columnHidden),
                         COLUMN_TO_WIDTH,
                         Predicates.fake(),
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 column,
                 expected
@@ -334,7 +362,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         hiddenColumns(columnHidden),
                         COLUMN_TO_WIDTH,
                         Predicates.fake(),
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 column
         );
@@ -348,7 +377,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         hiddenColumns(columnHidden),
                         COLUMN_TO_WIDTH,
                         Predicates.fake(),
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 column,
                 expected
@@ -443,7 +473,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         Predicates.fake(),
                         COLUMN_TO_WIDTH,
                         this.hiddenRows(rowHidden),
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 row
         );
@@ -457,7 +488,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         Predicates.fake(),
                         COLUMN_TO_WIDTH,
                         this.hiddenRows(rowHidden),
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 row,
                 expected
@@ -542,7 +574,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         Predicates.fake(),
                         COLUMN_TO_WIDTH,
                         hiddenRows(rowHidden),
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 row
         );
@@ -680,7 +713,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         columnsHidden,
                         columnWidths::apply,
                         Predicates.fake(), // rows hidden
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 expected
         );
@@ -826,7 +860,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         columnsHidden,
                         columnWidths::apply,
                         Predicates.fake(), // rows hidden
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 expected
         );
@@ -964,7 +999,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         Predicates.fake(), // columns hidden
                         COLUMN_TO_WIDTH,
                         rowsHidden,
-                        rowHeights::apply
+                        rowHeights::apply,
+                        WINDOWS_FUNCTION
                 ),
                 expected
         );
@@ -1065,7 +1101,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         Predicates.fake(),
                         COLUMN_TO_WIDTH,
                         hiddenRows(rowHidden),
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
                 row,
                 expected
@@ -1125,7 +1162,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         Predicates.fake(), // hidden columns
                         COLUMN_TO_WIDTH,
                         rowsHidden,
-                        rowHeights::apply
+                        rowHeights::apply,
+                        WINDOWS_FUNCTION
                 ),
                 expected
         );
@@ -1202,9 +1240,10 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                         column,
                         COLUMN_TO_WIDTH,
                         row,
-                        ROW_TO_HEIGHT
+                        ROW_TO_HEIGHT,
+                        WINDOWS_FUNCTION
                 ),
-                column + " " + COLUMN_TO_WIDTH + " " + row + " " + ROW_TO_HEIGHT
+                column + " " + COLUMN_TO_WIDTH + " " + row + " " + ROW_TO_HEIGHT + " " + WINDOWS_FUNCTION
         );
     }
 
@@ -1214,7 +1253,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
-                ROW_TO_HEIGHT
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
         );
     }
 

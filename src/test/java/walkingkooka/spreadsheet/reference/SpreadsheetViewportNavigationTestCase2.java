@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunctions;
 import walkingkooka.test.ParseStringTesting;
 
 import java.util.List;
@@ -157,7 +158,8 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
-                                ROW_TO_HEIGHT
+                                ROW_TO_HEIGHT,
+                                SpreadsheetViewportWindowsFunctions.fake()
                         )
                 ),
                 () -> navigation + " update " + selection + " " + anchor
