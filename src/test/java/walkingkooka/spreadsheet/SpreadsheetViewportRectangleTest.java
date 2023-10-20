@@ -30,6 +30,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportRectangleTest implements ClassTesting2<SpreadsheetViewportRectangle>,
@@ -116,6 +117,59 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
                 this.cell(),
                 WIDTH,
                 0
+        );
+    }
+
+    // setHome..........................................................................................................
+
+    @Test
+    public void testSetHomeWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .setHome(null)
+        );
+    }
+
+    @Test
+    public void testSetHomeSame() {
+        final SpreadsheetViewportRectangle rectangle = this.createObject();
+
+        assertSame(
+                rectangle,
+                rectangle.setHome(
+                        rectangle.home()
+                )
+        );
+    }
+
+    @Test
+    public void testSetHomeDifferentReferenceKind() {
+        final SpreadsheetViewportRectangle rectangle = this.createObject();
+        final SpreadsheetCellReference different = SpreadsheetSelection.parseCell("$B$9");
+
+        this.checkEquals(
+                SpreadsheetViewportRectangle.with(
+                        different,
+                        WIDTH,
+                        HEIGHT
+                ),
+                rectangle.setHome(different)
+        );
+    }
+
+    @Test
+    public void testSetHomeDifferentCell() {
+        final SpreadsheetViewportRectangle rectangle = this.createObject();
+        final SpreadsheetCellReference different = SpreadsheetSelection.parseCell("Z1");
+
+        this.checkEquals(
+                SpreadsheetViewportRectangle.with(
+                        different,
+                        WIDTH,
+                        HEIGHT
+                ),
+                rectangle.setHome(different)
         );
     }
 
