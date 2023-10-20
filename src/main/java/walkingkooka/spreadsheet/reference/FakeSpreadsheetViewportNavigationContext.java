@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+
 import java.util.Optional;
 
 public class FakeSpreadsheetViewportNavigationContext implements SpreadsheetViewportNavigationContext {
@@ -71,6 +74,13 @@ public class FakeSpreadsheetViewportNavigationContext implements SpreadsheetView
     @Override
     public Optional<SpreadsheetRowReference> downPixels(final SpreadsheetRowReference row,
                                                         final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetViewportWindows windows(final SpreadsheetViewportRectangle viewportRectangle,
+                                              final boolean includeFrozenColumnsRows,
+                                              final Optional<SpreadsheetSelection> selection) {
         throw new UnsupportedOperationException();
     }
 }

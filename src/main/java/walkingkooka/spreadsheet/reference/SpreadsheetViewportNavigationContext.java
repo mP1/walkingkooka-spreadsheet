@@ -18,13 +18,14 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Context;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 
 import java.util.Optional;
 
 /**
  * The {@link Context} that accompanies a {@link SpreadsheetViewportNavigation#update(SpreadsheetSelection, SpreadsheetViewportAnchor, SpreadsheetViewportNavigationContext)}
  */
-public interface SpreadsheetViewportNavigationContext extends Context {
+public interface SpreadsheetViewportNavigationContext extends Context, SpreadsheetViewportWindowsFunction {
 
     /**
      * Returns true if the {@link SpreadsheetColumnReference} is hidden.

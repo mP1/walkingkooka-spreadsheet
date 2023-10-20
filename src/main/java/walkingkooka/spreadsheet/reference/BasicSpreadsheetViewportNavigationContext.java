@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetViewportNavigationContext, SpreadsheetViewportWindowsFunction {
+final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetViewportNavigationContext {
 
     static BasicSpreadsheetViewportNavigationContext with(final Predicate<SpreadsheetColumnReference> columnHidden,
                                                           final Function<SpreadsheetColumnReference, Double> columnWidths,
