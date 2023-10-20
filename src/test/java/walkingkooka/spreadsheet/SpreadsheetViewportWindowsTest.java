@@ -298,6 +298,64 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
     }
 
+    // home.............................................................................................................
+
+    @Test
+    public void testHomeWhenEmpty() {
+        this.homeAndCheck(
+                "",
+                ""
+        );
+    }
+
+    @Test
+    public void testHomeWhenOnly() {
+        this.homeAndCheck(
+                "A1:B2",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testHomeWhenTwo() {
+        this.homeAndCheck(
+                "A1:B2,C1:D2",
+                "C1"
+        );
+    }
+
+    // A1 B1 C1
+    // A2 B2 C2
+    // A3 B3 C3
+    @Test
+    public void testHomeWhenFour() {
+        this.homeAndCheck(
+                "A1,B1:C1,A2:A3,B2:C3",
+                "B2"
+        );
+    }
+
+    private void homeAndCheck(final String windows,
+                              final String home) {
+        this.homeAndCheck(
+                SpreadsheetViewportWindows.parse(windows),
+                Optional.ofNullable(
+                        home.isEmpty() ?
+                                null :
+                                SpreadsheetSelection.parseCell(home)
+                )
+        );
+    }
+
+    private void homeAndCheck(final SpreadsheetViewportWindows windows,
+                              final Optional<SpreadsheetCellReference> home) {
+        this.checkEquals(
+                home,
+                windows.home(),
+                () -> "home of " + windows
+        );
+    }
+
     // bounds...........................................................................................................
 
     @Test

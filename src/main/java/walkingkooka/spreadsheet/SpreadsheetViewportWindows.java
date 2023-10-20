@@ -166,6 +166,14 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
 
     private Optional<SpreadsheetCellRange> last;
 
+    /**
+     * Returns the home cell if one is present.
+     */
+    public Optional<SpreadsheetCellReference> home() {
+        return this.last()
+                .map(SpreadsheetCellRange::begin);
+    }
+
     // bounds...........................................................................................................
 
     /**
