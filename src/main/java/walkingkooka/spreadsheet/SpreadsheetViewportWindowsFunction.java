@@ -26,6 +26,11 @@ import java.util.Optional;
  */
 public interface SpreadsheetViewportWindowsFunction {
 
+    /**
+     * No {@link SpreadsheetSelection} constant.
+     */
+    Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();
+
     SpreadsheetViewportWindows windows(final SpreadsheetViewportRectangle viewportRectangle,
                                        final boolean includeFrozenColumnsRows,
                                        final Optional<SpreadsheetSelection> selection);
