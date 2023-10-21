@@ -197,11 +197,9 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      * {@link #extendLeftColumn()} = <pre>extend-left</pre>.
      */
     public static List<SpreadsheetViewportNavigation> parse(final String text) {
-        Objects.requireNonNull(text, "text");
-
+        final TextCursor cursor = TextCursors.charSequence(text);
         final List<SpreadsheetViewportNavigation> navigations = Lists.array();
 
-        final TextCursor cursor = TextCursors.charSequence(text);
         while (false == cursor.isEmpty()) {
             final SpreadsheetViewportNavigation navigation;
 
