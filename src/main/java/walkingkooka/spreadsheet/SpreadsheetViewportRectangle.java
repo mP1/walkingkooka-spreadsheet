@@ -21,6 +21,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -33,7 +35,8 @@ import java.util.Objects;
  * Represents a rectangle selection of cells, with the top left being the home and pixels measuring the width and height.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetViewportRectangle implements Comparable<SpreadsheetViewportRectangle> {
+public final class SpreadsheetViewportRectangle implements Comparable<SpreadsheetViewportRectangle>,
+        TreePrintable {
 
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
@@ -217,5 +220,19 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
     static SpreadsheetViewportRectangle unmarshall(final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
         return parse(node.stringOrFail());
+    }
+
+
+    // TreePrintable....................................................................................................
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.print("home: ");
+        printer.println(this.home.toString());
+
+        printer.print("width: ");
+        printer.println(String.valueOf(this.width));
+
+        printer.print("height: ");
+        printer.println(String.valueOf(this.height));
     }
 }

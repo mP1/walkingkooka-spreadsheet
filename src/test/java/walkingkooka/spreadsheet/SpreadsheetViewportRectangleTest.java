@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -37,7 +38,8 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         HashCodeEqualsDefinedTesting2<SpreadsheetViewportRectangle>,
         JsonNodeMarshallingTesting<SpreadsheetViewportRectangle>,
         ParseStringTesting<SpreadsheetViewportRectangle>,
-        ToStringTesting<SpreadsheetViewportRectangle> {
+        ToStringTesting<SpreadsheetViewportRectangle>,
+        TreePrintableTesting {
 
     private final static double WIDTH = 50;
     private final static double HEIGHT = 30;
@@ -342,6 +344,18 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
                         30,
                         40
                 )
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createObject(),
+                "home: B9" + EOL +
+                        "width: 50.0" + EOL +
+                        "height: 30.0" + EOL
         );
     }
 
