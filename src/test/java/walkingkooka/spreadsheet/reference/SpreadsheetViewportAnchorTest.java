@@ -349,35 +349,35 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
-    // selection........................................................................................................
+    // oppositeSelection................................................................................................
 
     @Test
-    public void testSelectionCell() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionCell() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.A1,
                 SpreadsheetViewportAnchor.CELL
         );
     }
 
     @Test
-    public void testSelectionColumn() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionColumn() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseColumn("B"),
                 SpreadsheetViewportAnchor.CELL
         );
     }
 
     @Test
-    public void testSelectionRow() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionRow() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseRow("3"),
                 SpreadsheetViewportAnchor.CELL
         );
     }
 
     @Test
-    public void testSelectionCellRangeTopLeft() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionCellRangeTopLeft() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetViewportAnchor.TOP_LEFT,
                 SpreadsheetSelection.parseCell("B2")
@@ -387,8 +387,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     // A1 B1
     // A2 B2
     @Test
-    public void testSelectionCellRangeTopRight() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionCellRangeTopRight() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetViewportAnchor.TOP_RIGHT,
                 SpreadsheetSelection.parseCell("A2")
@@ -396,8 +396,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testSelectionCellRangeBottomLeft() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionCellRangeBottomLeft() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 SpreadsheetSelection.parseCell("B1")
@@ -407,8 +407,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     // A1 B1
     // A2 B2
     @Test
-    public void testSelectionCellRangeBottomRight() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionCellRangeBottomRight() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 SpreadsheetSelection.A1
@@ -416,8 +416,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testSelectionColumnRangeLeft() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionColumnRangeLeft() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseColumnRange("A:B"),
                 SpreadsheetViewportAnchor.LEFT,
                 SpreadsheetSelection.parseColumn("B")
@@ -425,8 +425,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testSelectionColumnRangeRight() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionColumnRangeRight() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseColumnRange("C:D"),
                 SpreadsheetViewportAnchor.RIGHT,
                 SpreadsheetSelection.parseColumn("C")
@@ -434,8 +434,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testSelectionRowRangeTop() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionRowRangeTop() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseRowRange("1:2"),
                 SpreadsheetViewportAnchor.TOP,
                 SpreadsheetSelection.parseRow("2")
@@ -443,38 +443,38 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testSelectionRowRangeBottom() {
-        this.selectionAndCheck(
+    public void testOppositeSelectionRowRangeBottom() {
+        this.oppositeSelectionAndCheck(
                 SpreadsheetSelection.parseRowRange("3:4"),
                 SpreadsheetViewportAnchor.BOTTOM,
                 SpreadsheetSelection.parseRow("3")
         );
     }
 
-    private void selectionAndCheck(final SpreadsheetSelection selection,
-                                   final SpreadsheetViewportAnchor anchor) {
-        this.selectionAndCheck(
+    private void oppositeSelectionAndCheck(final SpreadsheetSelection selection,
+                                           final SpreadsheetViewportAnchor anchor) {
+        this.oppositeSelectionAndCheck(
                 selection,
                 anchor,
                 selection
         );
     }
 
-    private void selectionAndCheck(final SpreadsheetSelection selection,
-                                   final SpreadsheetViewportAnchor anchor,
-                                   final SpreadsheetSelection expected) {
+    private void oppositeSelectionAndCheck(final SpreadsheetSelection selection,
+                                           final SpreadsheetViewportAnchor anchor,
+                                           final SpreadsheetSelection expected) {
         this.checkEquals(
                 expected,
-                anchor.selection(selection),
-                () -> anchor + " selection " + selection
+                anchor.oppositeSelection(selection),
+                () -> anchor + " oppositeSelection " + selection
         );
     }
 
     @Test
-    public void testSelectionLabelFails() {
+    public void testOppositeSelectionLabelFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetViewportAnchor.NONE.selection(
+                () -> SpreadsheetViewportAnchor.NONE.oppositeSelection(
                         SpreadsheetSelection.labelName("Label123")
                 )
         );
