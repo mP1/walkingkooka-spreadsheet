@@ -640,11 +640,11 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
-    // row...........................................................................................................
+    // oppositeRow......................................................................................................
 
     @Test
-    public void testRowTop() {
-        this.rowAndCheck(
+    public void testOppositeRowTop() {
+        this.oppositeRowAndCheck(
                 "2:4",
                 SpreadsheetViewportAnchor.TOP,
                 "4"
@@ -652,21 +652,21 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testRowBottom() {
-        this.rowAndCheck(
+    public void testOppositeRowBottom() {
+        this.oppositeRowAndCheck(
                 "2:4",
                 SpreadsheetViewportAnchor.BOTTOM,
                 "2"
         );
     }
 
-    private void rowAndCheck(final String range,
-                             final SpreadsheetViewportAnchor anchor,
-                             final String row) {
+    private void oppositeRowAndCheck(final String range,
+                                     final SpreadsheetViewportAnchor anchor,
+                                     final String row) {
         this.checkEquals(
                 SpreadsheetSelection.parseRow(row),
                 anchor.oppositeRow(SpreadsheetSelection.parseRowRange(range)),
-                () -> anchor + " row " + range
+                () -> anchor + " oppositeRow " + range
         );
     }
 
