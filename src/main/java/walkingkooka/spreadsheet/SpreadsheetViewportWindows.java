@@ -119,7 +119,7 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
             for (int j = i + 1; j < count; j++) {
                 final SpreadsheetCellRange other = cellRanges[j];
                 if (first.testCellRange(other)) {
-                    throw new IllegalArgumentException("Window cell-ranges overlap " + first + " and " + other);
+                    throw new IllegalArgumentException("Window component cell-ranges overlap " + first + " and " + other);
                 }
             }
         }
