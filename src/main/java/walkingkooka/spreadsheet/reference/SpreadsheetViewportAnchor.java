@@ -100,7 +100,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
                         selection.isColumnReferenceRange() ?
                                 this.oppositeColumn(selection.toColumnRange()) :
                                 selection.isRowReferenceRange() ?
-                                        this.row(selection.toRowRange()) :
+                                        this.oppositeRow(selection.toRowRange()) :
                                         this.selectionFail(selection);
     }
 
@@ -118,7 +118,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
                         range.columnRange()
                 )
                 .setRow(
-                        this.row(
+                        this.oppositeRow(
                                 range.rowRange()
                         )
                 );
@@ -135,7 +135,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the {@link SpreadsheetColumnReference} oppposite to the one selected by this anchor.
+     * Uses this anchor to select the {@link SpreadsheetColumnReference} opposite to the one selected by this anchor.
      */
     final SpreadsheetColumnReference oppositeColumn(final SpreadsheetColumnReferenceRange range) {
         this.failIfNone();
@@ -156,9 +156,9 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the {@link SpreadsheetRowReference} that will be moved.
+     * Uses this anchor to select the {@link SpreadsheetRowReference} opposite to the one selected by this anchor.
      */
-    final SpreadsheetRowReference row(final SpreadsheetRowReferenceRange range) {
+    final SpreadsheetRowReference oppositeRow(final SpreadsheetRowReferenceRange range) {
         this.failIfNone();
 
         return this.isTop() ?
@@ -172,7 +172,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     final SpreadsheetRowReference fixedRow(final SpreadsheetRowReferenceRange range) {
         return other(
                 range,
-                this.row(range)
+                this.oppositeRow(range)
         );
     }
 
