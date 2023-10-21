@@ -305,7 +305,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
-                s -> anchor.fixedColumn(this)
+                s -> anchor.column(this)
                         .columnRange((SpreadsheetColumnReference) s)
                         .simplify()
         );

@@ -601,11 +601,11 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
-    // fixedColumn.....................................................................................................
+    // column...........................................................................................................
 
     @Test
-    public void testFixedColumnLeft() {
-        this.fixedColumnAndCheck(
+    public void testColumnLeft() {
+        this.columnAndCheck(
                 "B:D",
                 SpreadsheetViewportAnchor.LEFT,
                 "B"
@@ -613,15 +613,15 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testFixedColumnRight() {
-        this.fixedColumnAndCheck(
+    public void testColumnRight() {
+        this.columnAndCheck(
                 "B:D",
                 SpreadsheetViewportAnchor.RIGHT,
                 "D"
         );
     }
 
-    private void fixedColumnAndCheck(final String range,
+    private void columnAndCheck(final String range,
                                      final SpreadsheetViewportAnchor anchor,
                                      final String column) {
         final SpreadsheetColumnReferenceRange parsed = SpreadsheetSelection.parseColumnRange(range);
@@ -629,14 +629,14 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
 
         this.checkEquals(
                 fixed,
-                anchor.fixedColumn(parsed),
-                () -> anchor + " fixedColumn " + range
+                anchor.column(parsed),
+                () -> anchor + " column " + range
         );
 
         this.checkNotEquals(
                 fixed,
                 anchor.oppositeColumn(parsed),
-                () -> anchor + " column " + range
+                () -> anchor + " oppositeColumn " + range
         );
     }
 
