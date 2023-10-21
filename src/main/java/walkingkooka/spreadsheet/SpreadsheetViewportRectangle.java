@@ -183,18 +183,9 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
 
     @Override
     public String toString() {
-        return this.home.toString() +
-                SEPARATOR +
-                toStringWithoutTrailingZero(this.width) +
-                SEPARATOR +
-                toStringWithoutTrailingZero(this.height);
-    }
-
-    private static String toStringWithoutTrailingZero(final double value) {
-        final String toString = String.valueOf(value);
-        return toString.endsWith(".0") ?
-                toString.substring(0, toString.length() - 2) :
-                toString;
+        return "home: " + this.home +
+                " width: " + this.width +
+                " height: " + this.height;
     }
 
     // Comparable.......................................................................................................
@@ -203,6 +194,8 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
     public int compareTo(final SpreadsheetViewportRectangle other) {
         throw new UnsupportedOperationException(); // required by HateosHandler
     }
+
+    // json.............................................................................................................
 
     static {
         JsonNodeContext.register(
@@ -214,7 +207,13 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
     }
 
     public JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonObject.string(this.toString());
+        return JsonObject.string(
+                this.home.toString() +
+                        SEPARATOR +
+                        this.width +
+                        SEPARATOR +
+                        this.height
+        );
     }
 
     static SpreadsheetViewportRectangle unmarshall(final JsonNode node,
