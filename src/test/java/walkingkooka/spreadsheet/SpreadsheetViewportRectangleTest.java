@@ -267,7 +267,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     public void testMarshall2() {
         this.marshallAndCheck(
                 this.createJsonNodeMarshallingValue(),
-                "\"B9:50:30\""
+                "\"B9:50.0:30.0\""
         );
     }
 
@@ -279,7 +279,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
                         30,
                         40
                 ),
-                JsonNode.string("B9:30:40")
+                JsonNode.string("B9:30.0:40.0")
         );
     }
 
@@ -369,7 +369,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
                         30,
                         40
                 ),
-                "B9:30:40"
+                "home: B9 width: 30.0 height: 40.0"
         );
     }
 
@@ -381,7 +381,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
                         30.5,
                         40.5
                 ),
-                "B9:30.5:40.5"
+                "home: B9 width: 30.5 height: 40.5"
         );
     }
 
