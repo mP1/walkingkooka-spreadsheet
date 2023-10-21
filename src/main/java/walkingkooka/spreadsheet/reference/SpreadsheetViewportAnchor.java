@@ -109,7 +109,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the cell-range that will be moved.
+     * Uses this anchor to select the {@link SpreadsheetCellReference} that will be moved.
      */
     final SpreadsheetCellReference cell(final SpreadsheetCellRange range) {
         // this.failIfNone(); unnecessary #column will fail if NONE.
@@ -125,7 +125,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the {@link SpreadsheetCellRange} that will remain fixed.
+     * Uses this anchor to select the {@link SpreadsheetCellReference} that will remain fixed.
      */
     final SpreadsheetCellReference fixedCell(final SpreadsheetCellRange range) {
         final SpreadsheetColumnReference column = fixedColumn(range.columnRange());
@@ -135,7 +135,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the {@link SpreadsheetColumnReferenceRange} that will be moved.
+     * Uses this anchor to select the {@link SpreadsheetColumnReference} that will be moved.
      */
     final SpreadsheetColumnReference column(final SpreadsheetColumnReferenceRange range) {
         this.failIfNone();
@@ -146,7 +146,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the {@link SpreadsheetColumnReferenceRange} that will remain fixed.
+     * Uses this anchor to select the {@link SpreadsheetColumnReference} that will remain fixed.
      */
     final SpreadsheetColumnReference fixedColumn(final SpreadsheetColumnReferenceRange range) {
         return other(
@@ -156,7 +156,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the {@link SpreadsheetRowReferenceRange} that will be moved.
+     * Uses this anchor to select the {@link SpreadsheetRowReference} that will be moved.
      */
     final SpreadsheetRowReference row(final SpreadsheetRowReferenceRange range) {
         this.failIfNone();
@@ -167,7 +167,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the {@link SpreadsheetRowReferenceRange} that will remain fixed.
+     * Uses this anchor to select the {@link SpreadsheetRowReference} that will remain fixed.
      */
     final SpreadsheetRowReference fixedRow(final SpreadsheetRowReferenceRange range) {
         return other(
