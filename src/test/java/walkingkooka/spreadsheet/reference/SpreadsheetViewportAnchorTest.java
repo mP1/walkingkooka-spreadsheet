@@ -665,7 +665,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
                              final String row) {
         this.checkEquals(
                 SpreadsheetSelection.parseRow(row),
-                anchor.row(SpreadsheetSelection.parseRowRange(range)),
+                anchor.oppositeRow(SpreadsheetSelection.parseRowRange(range)),
                 () -> anchor + " row " + range
         );
     }
@@ -704,7 +704,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
 
         this.checkNotEquals(
                 fixed,
-                anchor.row(parsed),
+                anchor.oppositeRow(parsed),
                 () -> anchor + " row " + range
         );
     }

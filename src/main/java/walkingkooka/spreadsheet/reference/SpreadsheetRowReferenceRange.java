@@ -214,7 +214,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     @Override
     Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
                                          final SpreadsheetViewportNavigationContext context) {
-        return anchor.row(this)
+        return anchor.oppositeRow(this)
                 .upRow(
                         anchor,
                         context
@@ -225,7 +225,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportAnchor anchor,
                                             final int count,
                                             final SpreadsheetViewportNavigationContext context) {
-        return anchor.row(this)
+        return anchor.oppositeRow(this)
                 .upPixels(
                         anchor,
                         count,
@@ -236,7 +236,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     @Override
     Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportAnchor anchor,
                                            final SpreadsheetViewportNavigationContext context) {
-        return anchor.row(this)
+        return anchor.oppositeRow(this)
                 .downRow(
                         anchor,
                         context
@@ -247,7 +247,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
                                               final int count,
                                               final SpreadsheetViewportNavigationContext context) {
-        return anchor.row(this)
+        return anchor.oppositeRow(this)
                 .downPixels(
                         anchor,
                         count,
@@ -356,7 +356,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     private Optional<SpreadsheetViewport> extendRow(final SpreadsheetViewportAnchor anchor,
                                                     final Function<SpreadsheetRowReference, Optional<SpreadsheetRowReference>> move) {
         return this.extendRange(
-                move.apply(anchor.row(this)),
+                move.apply(anchor.oppositeRow(this)),
                 anchor
         ).map(s -> s.setAnchorOrDefault(anchor));
     }
@@ -376,7 +376,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
     @Override
     public SpreadsheetRowReference focused(final SpreadsheetViewportAnchor anchor) {
         this.checkAnchor(anchor);
-        return anchor.row(this);
+        return anchor.oppositeRow(this);
     }
 
     // Object...........................................................................................................
