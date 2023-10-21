@@ -523,11 +523,11 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
-    // fixedCell..........................................................................,,...........................
+    // cell................................................................................,,...........................
 
     @Test
-    public void testFixedCellTopLeft() {
-        this.fixedCellAndCheck(
+    public void testCellTopLeft() {
+        this.cellAndCheck(
                 "B2:D4",
                 SpreadsheetViewportAnchor.TOP_LEFT,
                 "B2"
@@ -535,8 +535,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testFixedCellTopRight() {
-        this.fixedCellAndCheck(
+    public void testCellTopRight() {
+        this.cellAndCheck(
                 "B2:D4",
                 SpreadsheetViewportAnchor.TOP_RIGHT,
                 "D2"
@@ -544,15 +544,15 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testFixedCellBottomLeft() {
-        this.fixedCellAndCheck(
+    public void testCellBottomLeft() {
+        this.cellAndCheck(
                 "B2:D4",
                 SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 "B4"
         );
     }
 
-    private void fixedCellAndCheck(final String range,
+    private void cellAndCheck(final String range,
                                    final SpreadsheetViewportAnchor anchor,
                                    final String cell) {
         final SpreadsheetCellRange parsed = SpreadsheetSelection.parseCellRange(range);
@@ -560,14 +560,14 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
 
         this.checkEquals(
                 fixed,
-                anchor.fixedCell(parsed),
-                () -> anchor + " fixedCell " + range
+                anchor.cell(parsed),
+                () -> anchor + " cell " + range
         );
 
         this.checkNotEquals(
                 fixed,
                 anchor.oppositeCell(parsed),
-                () -> anchor + " cell " + range
+                () -> anchor + " oppositeCell " + range
         );
     }
 
