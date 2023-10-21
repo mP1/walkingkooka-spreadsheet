@@ -670,11 +670,11 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
-    // fixedRow.....................................................................................................
+    // row..............................................................................................................
 
     @Test
-    public void testFixedRowTop() {
-        this.fixedRowAndCheck(
+    public void testRowTop() {
+        this.rowAndCheck(
                 "2:4",
                 SpreadsheetViewportAnchor.TOP,
                 "2"
@@ -682,30 +682,30 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testFixedRowBottom() {
-        this.fixedRowAndCheck(
+    public void testRowBottom() {
+        this.rowAndCheck(
                 "2:4",
                 SpreadsheetViewportAnchor.BOTTOM,
                 "4"
         );
     }
 
-    private void fixedRowAndCheck(final String range,
-                                  final SpreadsheetViewportAnchor anchor,
-                                  final String row) {
+    private void rowAndCheck(final String range,
+                             final SpreadsheetViewportAnchor anchor,
+                             final String row) {
         final SpreadsheetRowReferenceRange parsed = SpreadsheetSelection.parseRowRange(range);
         final SpreadsheetRowReference fixed = SpreadsheetSelection.parseRow(row);
 
         this.checkEquals(
                 fixed,
-                anchor.fixedRow(parsed),
-                () -> anchor + " fixedRow " + range
+                anchor.row(parsed),
+                () -> anchor + " row " + range
         );
 
         this.checkNotEquals(
                 fixed,
                 anchor.oppositeRow(parsed),
-                () -> anchor + " row " + range
+                () -> anchor + " oppositeRow " + range
         );
     }
 
