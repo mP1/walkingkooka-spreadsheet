@@ -372,7 +372,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     @Override
     Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportAnchor anchor,
                                               final SpreadsheetViewportNavigationContext context) {
-        return anchor.cell(this)
+        return anchor.oppositeCell(this)
                 .leftColumn(
                         anchor,
                         context
@@ -383,7 +383,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportAnchor anchor,
                                               final int count,
                                               final SpreadsheetViewportNavigationContext context) {
-        return anchor.cell(this)
+        return anchor.oppositeCell(this)
                 .leftPixels(
                         anchor,
                         count,
@@ -394,7 +394,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     @Override
     Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
                                          final SpreadsheetViewportNavigationContext context) {
-        return anchor.cell(this)
+        return anchor.oppositeCell(this)
                 .upRow(
                         anchor,
                         context
@@ -405,7 +405,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportAnchor anchor,
                                             final int count,
                                             final SpreadsheetViewportNavigationContext context) {
-        return anchor.cell(this)
+        return anchor.oppositeCell(this)
                 .upPixels(
                         anchor,
                         count,
@@ -416,7 +416,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     @Override
     Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
                                                final SpreadsheetViewportNavigationContext context) {
-        return anchor.cell(this)
+        return anchor.oppositeCell(this)
                 .rightColumn(
                         anchor,
                         context
@@ -427,7 +427,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportAnchor anchor,
                                                final int count,
                                                final SpreadsheetViewportNavigationContext context) {
-        return anchor.cell(this)
+        return anchor.oppositeCell(this)
                 .rightPixels(
                         anchor,
                         count,
@@ -438,7 +438,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     @Override
     Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportAnchor anchor,
                                            final SpreadsheetViewportNavigationContext context) {
-        return anchor.cell(this)
+        return anchor.oppositeCell(this)
                 .downRow(
                         anchor,
                         context
@@ -449,7 +449,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
                                               final int count,
                                               final SpreadsheetViewportNavigationContext context) {
-        return anchor.cell(this)
+        return anchor.oppositeCell(this)
                 .downPixels(
                         anchor,
                         count,

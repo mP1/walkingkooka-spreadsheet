@@ -480,15 +480,15 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
-    // cell...........................................................................................................
+    // oppositeCell.....................................................................................................
 
     // B2 C2 D2
     // B3 C3 D3
     // B4 C4 D4
 
     @Test
-    public void testCellTopLeft() {
-        this.cellAndCheck(
+    public void testOppositeCellTopLeft() {
+        this.oppositeCellAndCheck(
                 "B2:D4",
                 SpreadsheetViewportAnchor.TOP_LEFT,
                 "D4"
@@ -496,8 +496,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testCellBottomLeft() {
-        this.cellAndCheck(
+    public void testOppositeCellBottomLeft() {
+        this.oppositeCellAndCheck(
                 "B2:D4",
                 SpreadsheetViewportAnchor.BOTTOM_LEFT,
                 "D2"
@@ -505,21 +505,21 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
-    public void testCellBottomRight() {
-        this.cellAndCheck(
+    public void testOppositeCellBottomRight() {
+        this.oppositeCellAndCheck(
                 "B2:D4",
                 SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 "B2"
         );
     }
 
-    private void cellAndCheck(final String range,
-                              final SpreadsheetViewportAnchor anchor,
-                              final String cell) {
+    private void oppositeCellAndCheck(final String range,
+                                      final SpreadsheetViewportAnchor anchor,
+                                      final String cell) {
         this.checkEquals(
                 SpreadsheetSelection.parseCell(cell),
-                anchor.cell(SpreadsheetSelection.parseCellRange(range)),
-                () -> anchor + " cell " + range
+                anchor.oppositeCell(SpreadsheetSelection.parseCellRange(range)),
+                () -> anchor + " oppositeCell " + range
         );
     }
 
@@ -566,7 +566,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
 
         this.checkNotEquals(
                 fixed,
-                anchor.cell(parsed),
+                anchor.oppositeCell(parsed),
                 () -> anchor + " cell " + range
         );
     }
