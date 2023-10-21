@@ -66,7 +66,7 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
 
         this.checkEquals(
-                "Window cell-ranges overlap A1:B2 and A1:C3",
+                "Window component cell-ranges overlap A1:B2 and A1:C3",
                 thrown.getMessage(),
                 "message"
         );
@@ -80,7 +80,7 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
 
         this.checkEquals(
-                "Window cell-ranges overlap A1:B2 and B2:C3",
+                "Window component cell-ranges overlap A1:B2 and B2:C3",
                 thrown.getMessage(),
                 "message"
         );
@@ -94,7 +94,7 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
 
         this.checkEquals(
-                "Window cell-ranges overlap C3:C4 and C3:D4",
+                "Window component cell-ranges overlap C3:C4 and C3:D4",
                 thrown.getMessage(),
                 "message"
         );
