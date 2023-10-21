@@ -536,7 +536,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                 Optional.empty() :
                 this.extendRange(
                         move.apply(
-                                anchor.column(columnRange)
+                                anchor.oppositeColumn(columnRange)
                         ).map(c -> c.setRow(
                                 anchor.row(rowRange)
                         )),
@@ -629,7 +629,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                         move.apply(
                                 anchor.row(rowRange)
                         ).map(c -> c.setColumn(
-                                anchor.column(columnRange)
+                                anchor.oppositeColumn(columnRange)
                         )),
                         anchor
                 ).map(s -> s.setAnchorOrDefault(
@@ -654,7 +654,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     @Override
     public SpreadsheetCellReference focused(final SpreadsheetViewportAnchor anchor) {
         this.checkAnchor(anchor);
-        return anchor.column(this.columnRange())
+        return anchor.oppositeColumn(this.columnRange())
                 .setRow(anchor.row(this.rowRange()));
     }
 

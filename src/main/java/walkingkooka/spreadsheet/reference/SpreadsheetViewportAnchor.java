@@ -98,7 +98,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
                 selection.isCellRange() ?
                         this.cell(selection.toCellRange()) :
                         selection.isColumnReferenceRange() ?
-                                this.column(selection.toColumnRange()) :
+                                this.oppositeColumn(selection.toColumnRange()) :
                                 selection.isRowReferenceRange() ?
                                         this.row(selection.toRowRange()) :
                                         this.selectionFail(selection);
@@ -114,7 +114,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     final SpreadsheetCellReference cell(final SpreadsheetCellRange range) {
         // this.failIfNone(); unnecessary #column will fail if NONE.
 
-        return this.column(
+        return this.oppositeColumn(
                         range.columnRange()
                 )
                 .setRow(
@@ -135,9 +135,9 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the {@link SpreadsheetColumnReference} that will be moved.
+     * Uses this anchor to select the {@link SpreadsheetColumnReference} oppposite to the one selected by this anchor.
      */
-    final SpreadsheetColumnReference column(final SpreadsheetColumnReferenceRange range) {
+    final SpreadsheetColumnReference oppositeColumn(final SpreadsheetColumnReferenceRange range) {
         this.failIfNone();
 
         return this.isLeft() ?
@@ -151,7 +151,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     final SpreadsheetColumnReference fixedColumn(final SpreadsheetColumnReferenceRange range) {
         return other(
                 range,
-                this.column(range)
+                this.oppositeColumn(range)
         );
     }
 
