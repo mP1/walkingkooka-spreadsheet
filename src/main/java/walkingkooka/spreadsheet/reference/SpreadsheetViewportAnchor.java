@@ -128,7 +128,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
      * Uses this anchor to select the {@link SpreadsheetCellReference} that will remain fixed.
      */
     final SpreadsheetCellReference fixedCell(final SpreadsheetCellRange range) {
-        final SpreadsheetColumnReference column = fixedColumn(range.columnRange());
+        final SpreadsheetColumnReference column = column(range.columnRange());
         final SpreadsheetRowReference row = fixedRow(range.rowRange());
 
         return column.setRow(row);
@@ -148,7 +148,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     /**
      * Uses this anchor to select the {@link SpreadsheetColumnReference} that will remain fixed.
      */
-    final SpreadsheetColumnReference fixedColumn(final SpreadsheetColumnReferenceRange range) {
+    final SpreadsheetColumnReference column(final SpreadsheetColumnReferenceRange range) {
         return other(
                 range,
                 this.oppositeColumn(range)
