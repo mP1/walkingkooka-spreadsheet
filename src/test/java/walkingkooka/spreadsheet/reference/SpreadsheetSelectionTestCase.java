@@ -479,9 +479,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final SpreadsheetViewportAnchor anchor = selection.defaultAnchor();
         this.checkNotEquals(null, anchor, "anchor");
 
-        final SpreadsheetViewport viewport = selection.setAnchor(anchor);
-        this.checkEquals(anchor, viewport.anchor(), "anchor");
-        this.checkEquals(selection, viewport.selection(), "selection");
+        final AnchoredSpreadsheetSelection anchored = selection.setAnchor(anchor);
+        this.checkEquals(anchor, anchored.anchor(), "anchor");
+        this.checkEquals(selection, anchored.selection(), "selection");
     }
 
     // setAnchor........................................................................................................
@@ -520,25 +520,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         .map(Enum::toString)
                                         .collect(Collectors.joining(", ")),
                         thrown.getMessage()
-                );
-            }
-        }
-    }
-
-    @Test
-    public final void testSetAnchorTryAllValid() {
-        final S selection = this.createSelection();
-
-        for (final SpreadsheetViewportAnchor anchor : SpreadsheetViewportAnchor.values()) {
-            if (selection.anchors().contains(anchor)) {
-                this.checkEquals(
-                        SpreadsheetViewport.with(
-                                selection,
-                                anchor,
-                                SpreadsheetViewport.NO_NAVIGATION
-                        ),
-                        selection.setAnchor(anchor),
-                        () -> selection + ".setAnchor " + anchor
                 );
             }
         }
@@ -1038,7 +1019,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final SpreadsheetViewportAnchor anchor,
                                         final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                         final Predicate<SpreadsheetRowReference> hiddenRows,
-                                        final Optional<SpreadsheetViewport> expected) {
+                                        final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 selection.extendLeftColumn(
@@ -1087,7 +1068,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final Function<SpreadsheetColumnReference, Double> columnToWidths,
                                         final Predicate<SpreadsheetRowReference> hiddenRows,
                                         final Function<SpreadsheetRowReference, Double> rowToHeights,
-                                        final Optional<SpreadsheetViewport> expected) {
+                                        final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 selection.extendLeftPixels(
@@ -1129,7 +1110,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final SpreadsheetViewportAnchor anchor,
                                    final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                    final Predicate<SpreadsheetRowReference> hiddenRows,
-                                   final Optional<SpreadsheetViewport> expected) {
+                                   final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 selection.extendUpRow(
@@ -1178,7 +1159,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                       final Function<SpreadsheetColumnReference, Double> columnToWidths,
                                       final Predicate<SpreadsheetRowReference> hiddenRows,
                                       final Function<SpreadsheetRowReference, Double> rowToHeights,
-                                      final Optional<SpreadsheetViewport> expected) {
+                                      final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 selection.extendUpPixels(
@@ -1219,7 +1200,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                          final SpreadsheetViewportAnchor anchor,
                                          final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                          final Predicate<SpreadsheetRowReference> hiddenRows,
-                                         final Optional<SpreadsheetViewport> expected) {
+                                         final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 selection.extendRightColumn(
@@ -1268,7 +1249,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                          final Function<SpreadsheetColumnReference, Double> columnToWidths,
                                          final Predicate<SpreadsheetRowReference> hiddenRows,
                                          final Function<SpreadsheetRowReference, Double> rowToHeights,
-                                         final Optional<SpreadsheetViewport> expected) {
+                                         final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 selection.extendRightPixels(
@@ -1309,7 +1290,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                      final SpreadsheetViewportAnchor anchor,
                                      final Predicate<SpreadsheetColumnReference> hiddenColumns,
                                      final Predicate<SpreadsheetRowReference> hiddenRows,
-                                     final Optional<SpreadsheetViewport> expected) {
+                                     final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 selection.extendDownRow(
@@ -1358,7 +1339,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final Function<SpreadsheetColumnReference, Double> columnToWidths,
                                         final Predicate<SpreadsheetRowReference> hiddenRows,
                                         final Function<SpreadsheetRowReference, Double> rowToHeights,
-                                        final Optional<SpreadsheetViewport> expected) {
+                                        final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 selection.extendDownPixels(

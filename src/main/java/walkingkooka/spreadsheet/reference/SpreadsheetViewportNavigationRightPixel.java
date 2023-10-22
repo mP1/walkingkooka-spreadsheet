@@ -21,7 +21,7 @@ package walkingkooka.spreadsheet.reference;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationRightPixel extends SpreadsheetViewportNavigationPixel {
+final class SpreadsheetViewportNavigationRightPixel extends SpreadsheetViewportNavigationNonExtendPixel {
 
     static SpreadsheetViewportNavigationRightPixel with(final int value) {
         return new SpreadsheetViewportNavigationRightPixel(value);
@@ -32,9 +32,20 @@ final class SpreadsheetViewportNavigationRightPixel extends SpreadsheetViewportN
     }
 
     @Override
-    public Optional<SpreadsheetViewport> update(final SpreadsheetSelection selection,
-                                                final SpreadsheetViewportAnchor anchor,
-                                                final SpreadsheetViewportNavigationContext context) {
+    Optional<SpreadsheetSelection> updateHome(final SpreadsheetCellReference home,
+                                              final SpreadsheetViewportAnchor anchor,
+                                              final SpreadsheetViewportNavigationContext context) {
+        return home.rightPixels(
+                anchor,
+                this.value,
+                context
+        );
+    }
+
+    @Override
+    Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
+                                                           final SpreadsheetViewportAnchor anchor,
+                                                           final SpreadsheetViewportNavigationContext context) {
         return selection.rightPixels(
                 anchor,
                 this.value,

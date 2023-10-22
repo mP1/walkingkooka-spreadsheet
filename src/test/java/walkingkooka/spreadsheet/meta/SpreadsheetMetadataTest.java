@@ -174,9 +174,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.checkEquals(
                 Optional.of(
-                        SpreadsheetSelection.A1
+                        SpreadsheetSelection.A1.viewportRectangle(100, 100)
+                                .viewport()
                 ),
-                nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_CELL)
+                nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT)
         );
     }
 
@@ -383,9 +384,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testShouldViewsRefreshSameDifferentSelection() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
-                SpreadsheetMetadataPropertyName.SELECTION,
-                SpreadsheetSelection.parseColumn("A")
-                        .setDefaultAnchor()
+                SpreadsheetMetadataPropertyName.VIEWPORT,
+                SpreadsheetSelection.parseCell("Z99")
+                        .viewportRectangle(100, 40)
+                        .viewport()
         );
 
         this.checkNotEquals(

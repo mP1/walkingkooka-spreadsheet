@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -38,6 +37,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -52,8 +52,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigation;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContexts;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
@@ -1718,24 +1718,50 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                                   final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(viewport, "selection");
+        Objects.requireNonNull(viewport, "viewport");
         checkContext(context);
 
         Optional<SpreadsheetViewport> result = Optional.empty();
 
-        final List<SpreadsheetViewportNavigation> navigations = SpreadsheetViewportNavigation.compact(
-                viewport.navigations()
-        );
-        if (navigations.isEmpty()) {
-            result = this.navigateWithoutNavigation(
-                    viewport,
-                    context
-            );
-        } else {
-            for (final SpreadsheetViewportNavigation navigation : navigations) {
-                result = this.navigateWithNavigation(
-                        viewport,
-                        navigation,
+        SpreadsheetViewport notLabelViewport = viewport;
+
+        final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.selection();
+        if (maybeAnchored.isPresent()) {
+            final AnchoredSpreadsheetSelection anchoredBefore = maybeAnchored.get();
+            final SpreadsheetSelection selection = anchoredBefore.selection();
+
+            if (selection.isLabelName()) {
+                final SpreadsheetSelection selectionNotLabel = context.resolveIfLabel(selection);
+                notLabelViewport = notLabelViewport.setSelection(
+                        Optional.of(
+                                selectionNotLabel.setAnchor(
+                                        anchoredBefore.anchor()
+                                )
+                        )
+                );
+
+                result = this.navigate0(
+                        notLabelViewport,
+                        context
+                );
+
+                if (result.isPresent()) {
+                    SpreadsheetViewport viewportResult = result.get();
+                    final Optional<AnchoredSpreadsheetSelection> resultMaybeAnchored = viewportResult.selection();
+                    if (resultMaybeAnchored.isPresent()) {
+                        final AnchoredSpreadsheetSelection resultAnchored = resultMaybeAnchored.get();
+                        final SpreadsheetSelection resultSelection = resultAnchored.selection();
+                        if (resultSelection.equalsIgnoreReferenceKind(selectionNotLabel)) {
+                            result = Optional.of(
+                                    // restore the original label
+                                    viewportResult.setSelection(maybeAnchored)
+                            );
+                        }
+                    }
+                }
+            } else {
+                result = this.navigate0(
+                        notLabelViewport,
                         context
                 );
             }
@@ -1744,56 +1770,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
-    private Optional<SpreadsheetViewport> navigateWithNavigation(final SpreadsheetViewport viewport,
-                                                                 final SpreadsheetViewportNavigation navigation,
-                                                                 final SpreadsheetEngineContext context) {
-        final SpreadsheetSelection selection = viewport.selection();
-        final SpreadsheetViewportAnchor anchor = viewport.anchor();
-
-        return selection.isLabelName() ?
-                this.navigateWithNavigationLabel(
-                        Cast.to(selection),
-                        anchor,
-                        navigation,
-                        context
-                ) :
-                this.navigateWithNavigation0(
-                        selection,
-                        anchor,
-                        navigation,
-                        context
-                );
-    }
-
-    private Optional<SpreadsheetViewport> navigateWithNavigationLabel(final SpreadsheetLabelName label,
-                                                                      final SpreadsheetViewportAnchor anchor,
-                                                                      final SpreadsheetViewportNavigation navigation,
-                                                                      final SpreadsheetEngineContext context) {
-        final SpreadsheetSelection cellOrRange = context.resolveIfLabel(label);
-        final Optional<SpreadsheetViewport> after = this.navigateWithNavigation0(
-                cellOrRange,
-                anchor,
-                navigation,
-                context
-        );
-
-        // if the original selection was a cell or range & after doing the navigation its the same restore the label.
-        return after.map(
-                s -> s.selection().equalsIgnoreReferenceKind(cellOrRange) ?
-                        s.setSelection(label) :
-                        s
-        );
-    }
-
-    private Optional<SpreadsheetViewport> navigateWithNavigation0(final SpreadsheetSelection selection,
-                                                                  final SpreadsheetViewportAnchor anchor,
-                                                                  final SpreadsheetViewportNavigation navigation,
-                                                                  final SpreadsheetEngineContext context) {
+    private Optional<SpreadsheetViewport> navigate0(final SpreadsheetViewport viewport,
+                                                    final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        return navigation.update(
-                selection,
-                anchor,
+        return this.navigate1(
+                viewport,
                 SpreadsheetViewportNavigationContexts.basic(
                         repository.columns()::isHidden,
                         (c) -> this.columnWidth(c, context),
@@ -1804,18 +1786,63 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
+    private Optional<SpreadsheetViewport> navigate1(final SpreadsheetViewport viewport,
+                                                    final SpreadsheetViewportNavigationContext context) {
+        Optional<SpreadsheetViewport> result;
+
+        final List<SpreadsheetViewportNavigation> navigations = SpreadsheetViewportNavigation.compact(
+                viewport.navigations()
+        );
+        if (navigations.isEmpty()) {
+            result = this.navigateWithoutNavigation(
+                    viewport,
+                    context
+            );
+        } else {
+            SpreadsheetViewport navigating = viewport;
+
+            for (final SpreadsheetViewportNavigation navigation : navigations) {
+                navigating = navigation.update(
+                        navigating,
+                        context
+                );
+            }
+
+            result = Optional.of(
+                    navigating.setNavigations(SpreadsheetViewport.NO_NAVIGATION)
+            );
+        }
+
+        return result;
+    }
+
     /**
-     * Assumes a selection without navigation, returning an {@link SpreadsheetEngine#NO_VIEWPORT} if
-     * the selection is hidden.
+     * Tests if the home is hidden, returning {@link SpreadsheetViewport#NO_NAVIGATION} then also tests the selection
+     * and if that is hidden clears it.
      */
     private Optional<SpreadsheetViewport> navigateWithoutNavigation(final SpreadsheetViewport viewport,
-                                                                    final SpreadsheetEngineContext context) {
-        final SpreadsheetStoreRepository repository = context.storeRepository();
+                                                                    final SpreadsheetViewportNavigationContext context) {
+        SpreadsheetViewport result = null;
 
-        return context.resolveIfLabel(viewport.selection())
-                .isHidden(repository.columns()::isHidden, repository.rows()::isHidden) ?
-                SpreadsheetEngine.NO_VIEWPORT :
-                Optional.of(viewport);
+        final SpreadsheetCellReference home = viewport.rectangle()
+                .home();
+        if (context.isColumnHidden(home.column()) || context.isRowHidden(home.row())) {
+            // home is hidden clear viewport
+            result = null;
+        } else {
+            final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.selection();
+            if (maybeAnchored.isPresent()) {
+                final AnchoredSpreadsheetSelection anchored = maybeAnchored.get();
+                final SpreadsheetSelection selection = anchored.selection();
+                if (selection.isHidden(context::isColumnHidden, context::isRowHidden)) {
+                    // selection is hidden clear it.
+                    result = viewport.setSelection(SpreadsheetViewport.NO_SELECTION);
+                } else {
+                    result = viewport;
+                }
+            }
+        }
+        return Optional.ofNullable(result);
     }
 
     // checkers.........................................................................................................

@@ -836,8 +836,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
                     case "create-date-time":
                     case "modified-by":
                     case "modified-date-time":
-                    case "selection":
                     case "spreadsheet-name":
+                    case "viewport":
                         break;
                     default:
                         should = false == this.get(name).equals(metadata.get(name));

@@ -17,7 +17,32 @@
 
 package walkingkooka.spreadsheet.reference;
 
-public final class SpreadsheetViewportNavigationUpRowTest extends SpreadsheetViewportNavigationTestCase2<SpreadsheetViewportNavigationUpRow> {
+import org.junit.jupiter.api.Test;
+
+public final class SpreadsheetViewportNavigationUpRowTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationUpRow> {
+
+    @Test
+    public void testUpdateCell() {
+        this.updateAndCheck(
+                SpreadsheetSelection.parseCell("C3"),
+                SpreadsheetSelection.parseCell("C2")
+        );
+    }
+
+    @Test
+    public void testUpdateColumn() {
+        this.updateAndCheck(
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
+    @Test
+    public void testUpdateRow() {
+        this.updateAndCheck(
+                SpreadsheetSelection.parseRow("3"),
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
 
     @Override
     SpreadsheetViewportNavigationUpRow createSpreadsheetViewportNavigation() {

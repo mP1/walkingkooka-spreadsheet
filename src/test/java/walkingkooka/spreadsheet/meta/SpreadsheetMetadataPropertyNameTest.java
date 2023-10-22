@@ -369,14 +369,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         );
     }
 
-    @Test
-    public void testParseValueViewportCellFails() {
-        this.parseValueFails(
-                SpreadsheetMetadataPropertyName.VIEWPORT_CELL,
-                "!"
-        );
-    }
-
     private <T> void parseValueFails(final SpreadsheetMetadataPropertyName<T> propertyName,
                                      final T propertyValue) {
         this.parseValueFails(
@@ -470,18 +462,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionSelection() {
+    public void testSpreadsheetCellStoreActionViewport() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.SELECTION,
-                SpreadsheetCellStoreAction.NONE
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionViewportCell() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.VIEWPORT_CELL,
-                SpreadsheetCellStoreAction.NONE
+                SpreadsheetMetadataPropertyName.VIEWPORT,
+                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
         );
     }
 

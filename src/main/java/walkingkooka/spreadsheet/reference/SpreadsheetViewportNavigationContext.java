@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import java.util.Optional;
 
 /**
- * The {@link Context} that accompanies a {@link SpreadsheetViewportNavigation#update(SpreadsheetSelection, SpreadsheetViewportAnchor, SpreadsheetViewportNavigationContext)}
+ * The {@link Context} that accompanies a {@link SpreadsheetViewportNavigation#update(SpreadsheetViewport, SpreadsheetViewportNavigationContext)}
  */
 public interface SpreadsheetViewportNavigationContext extends Context, SpreadsheetViewportWindowsFunction {
 

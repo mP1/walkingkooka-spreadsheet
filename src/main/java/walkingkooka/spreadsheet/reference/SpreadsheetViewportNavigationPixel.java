@@ -17,6 +17,10 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
+
+import java.util.Optional;
+
 /**
  * Sub-classes represent scrolling of the viewport in either the horizontal or vertical directions. These are measured
  * in pixels, which will be used to skip non hidden columns or rows.
@@ -42,6 +46,59 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
     final boolean isOpposite(final SpreadsheetViewportNavigation other) {
         return false;
     }
+
+    // update...........................................................................................................
+
+    @Override
+    SpreadsheetViewport update0(final SpreadsheetViewport viewport,
+                                final SpreadsheetViewportNavigationContext context) {
+        SpreadsheetViewport result = viewport;
+
+        // move home
+        final SpreadsheetViewportRectangle rectangle = viewport.rectangle();
+        final SpreadsheetCellReference home = rectangle.home();
+        final Optional<SpreadsheetSelection> maybeMovedHome = this.updateHome(
+                home,
+                SpreadsheetViewportAnchor.CELL,
+                context
+        );
+
+        if (maybeMovedHome.isPresent()) {
+            final SpreadsheetViewportRectangle movedRectangle = rectangle.setHome(
+                    maybeMovedHome.get()
+                            .toCell()
+            );
+
+            result = result.setRectangle(movedRectangle);
+
+            final Optional<AnchoredSpreadsheetSelection> maybeSelection = viewport.selection();
+            if (maybeSelection.isPresent()) {
+                result = result.setSelection(
+                        updateViewportSelection(
+                                maybeSelection.get(),
+                                rectangle,
+                                context
+                        )
+                );
+            }
+
+        } else {
+            // reset home
+            result = result.setRectangle(
+                    rectangle.setHome(home)
+            ).setSelection(SpreadsheetViewport.NO_SELECTION);
+        }
+
+        return result;
+    }
+
+    abstract Optional<SpreadsheetSelection> updateHome(final SpreadsheetCellReference home,
+                                                       final SpreadsheetViewportAnchor anchor,
+                                                       final SpreadsheetViewportNavigationContext context);
+
+    abstract Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection selection,
+                                                                            final SpreadsheetViewportRectangle rectangle,
+                                                                            final SpreadsheetViewportNavigationContext context);
 
     // Object...........................................................................................................
 

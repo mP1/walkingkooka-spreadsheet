@@ -22,6 +22,7 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -34,22 +35,20 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
- * Represents a selection within a viewport. Non ranges must not have an anchor, while ranges must have an anchor.
- * <br>
- * <pre>
- * {
- *      "selection": "A1:B2",
- *      "anchor": "TOP_LEFT",
- *      "navigations": "DOWN"
- * }
- * </pre>
+ * Holds the home and selection within a viewport that is displayed in the UI, and navigations that should be applied.
  */
 public final class SpreadsheetViewport implements HasUrlFragment,
         TreePrintable,
         UsesToStringBuilder {
 
+    /**
+     * No {@link AnchoredSpreadsheetSelection}
+     */
+    public final static Optional<AnchoredSpreadsheetSelection> NO_SELECTION = Optional.empty();
+    
     /**
      * No navigations
      */
@@ -60,51 +59,74 @@ public final class SpreadsheetViewport implements HasUrlFragment,
      */
     public final static CharacterConstant SEPARATOR = CharacterConstant.COMMA;
 
-    static SpreadsheetViewport with(final SpreadsheetSelection selection,
-                                    final SpreadsheetViewportAnchor anchor,
-                                    final List<SpreadsheetViewportNavigation> navigations) {
-        selection.checkAnchor(anchor);
-        Objects.requireNonNull(navigations, "navigations");
+    /**
+     * Factory that creates a {@link SpreadsheetViewport} with the given cell home.
+     */
+    public static SpreadsheetViewport with(final SpreadsheetViewportRectangle rectangle) {
+        Objects.requireNonNull(rectangle, "rectangle");
 
-        return new SpreadsheetViewport(
-                selection,
-                anchor,
-                Lists.immutable(navigations)
+        return with(
+                rectangle,
+                NO_SELECTION,
+                NO_NAVIGATION
         );
     }
 
-    private SpreadsheetViewport(final SpreadsheetSelection selection,
-                                final SpreadsheetViewportAnchor anchor,
+    // @VisibleForTesting
+    static SpreadsheetViewport with(final SpreadsheetViewportRectangle rectangle,
+                                    final Optional<AnchoredSpreadsheetSelection> selection,
+                                    final List<SpreadsheetViewportNavigation> navigations) {
+        return new SpreadsheetViewport(
+                rectangle,
+                selection,
+                navigations
+        );
+    }
+
+    private SpreadsheetViewport(final SpreadsheetViewportRectangle rectangle,
+                                final Optional<AnchoredSpreadsheetSelection> selection,
                                 final List<SpreadsheetViewportNavigation> navigations) {
         super();
+        this.rectangle = rectangle;
         this.selection = selection;
-        this.anchor = anchor;
         this.navigations = navigations;
     }
 
-    public SpreadsheetSelection selection() {
+    public SpreadsheetViewportRectangle rectangle() {
+        return this.rectangle;
+    }
+
+    public SpreadsheetViewport setRectangle(final SpreadsheetViewportRectangle rectangle) {
+        Objects.requireNonNull(rectangle, "rectangle");
+
+        return this.rectangle.equals(rectangle) ?
+                this :
+                new SpreadsheetViewport(
+                        rectangle,
+                        this.selection,
+                        this.navigations
+                );
+    }
+
+    private final SpreadsheetViewportRectangle rectangle;
+
+    public Optional<AnchoredSpreadsheetSelection> selection() {
         return this.selection;
     }
 
-    public SpreadsheetViewport setSelection(final SpreadsheetSelection selection) {
+    public SpreadsheetViewport setSelection(final Optional<AnchoredSpreadsheetSelection> selection) {
         Objects.requireNonNull(selection, "selection");
 
         return this.selection.equals(selection) ?
                 this :
                 new SpreadsheetViewport(
+                        this.rectangle,
                         selection,
-                        this.anchor,
                         this.navigations
                 );
     }
 
-    private final SpreadsheetSelection selection;
-
-    public SpreadsheetViewportAnchor anchor() {
-        return this.anchor;
-    }
-
-    private final SpreadsheetViewportAnchor anchor;
+    private final Optional<AnchoredSpreadsheetSelection> selection;
 
     public List<SpreadsheetViewportNavigation> navigations() {
         return this.navigations;
@@ -115,7 +137,11 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
         return this.navigations.equals(navigations) ?
                 this :
-                new SpreadsheetViewport(this.selection, this.anchor, navigations);
+                new SpreadsheetViewport(
+                        this.rectangle,
+                        this.selection,
+                        navigations
+                );
     }
 
     private final List<SpreadsheetViewportNavigation> navigations;
@@ -124,40 +150,40 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.print(this.selection().treeString());
+        printer.println("rectangle:");
 
-        final SpreadsheetViewportAnchor anchor = this.anchor();
-        if (SpreadsheetViewportAnchor.NONE != anchor) {
-            printer.print(" ");
-            printer.print(anchor.toString());
+        printer.indent();
+        {
+            this.rectangle()
+                    .printTree(printer);
+        }
+        printer.outdent();
+
+        final Optional<AnchoredSpreadsheetSelection> selection = this.selection;
+        if (selection.isPresent()) {
+            printer.print("selection: ");
+
+            selection.get()
+                    .printTree(printer);
         }
 
         final List<SpreadsheetViewportNavigation> navigations = this.navigations();
         if (false == navigations.isEmpty()) {
-            printer.print(" ");
-            printer.print(
-                    SEPARATOR.toSeparatedString(
-                            navigations,
-                            SpreadsheetViewportNavigation::text
-                    )
-            );
-        }
+            printer.println("navigations:");
+            printer.indent();
 
-        printer.println();
+            for (final SpreadsheetViewportNavigation navigation : navigations) {
+                printer.println(navigation.text());
+            }
+        }
     }
 
     // HasUrlFragment...................................................................................................
 
     @Override
     public UrlFragment urlFragment() {
-        final UrlFragment selection = this.selection()
-                .urlFragment();
-        final SpreadsheetViewportAnchor anchor = this.anchor();
-
-        return SpreadsheetViewportAnchor.NONE != anchor ?
-                selection.append(UrlFragment.SLASH)
-                        .append(anchor.urlFragment()) :
-                selection;
+        return this.selection.map(HasUrlFragment::urlFragment)
+                .orElse(UrlFragment.EMPTY);
     }
 
     // Object...........................................................................................................
@@ -165,20 +191,21 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     @Override
     public int hashCode() {
         return Objects.hash(
+                this.rectangle,
                 this.selection,
-                this.anchor,
                 this.navigations
         );
     }
 
     @Override
     public boolean equals(final Object other) {
-        return this == other || other instanceof SpreadsheetViewport && this.equals0((SpreadsheetViewport) other);
+        return this == other ||
+                other instanceof SpreadsheetViewport && this.equals0((SpreadsheetViewport) other);
     }
 
     private boolean equals0(final SpreadsheetViewport other) {
-        return this.selection.equals(other.selection) &&
-                this.anchor.equals(other.anchor) &&
+        return this.rectangle.equals(other.rectangle) &&
+                this.selection.equals(other.selection) &&
                 this.navigations.equals(other.navigations);
     }
 
@@ -189,16 +216,18 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        final SpreadsheetViewportAnchor anchor = this.anchor;
-
-        builder.value(this.selection)
-                .value(SpreadsheetViewportAnchor.NONE == anchor ? null : anchor)
+        builder.labelSeparator(": ")
+                .value(this.rectangle)
+                .label("selection")
+                .value(this.selection)
+                .label("navigations")
                 .value(this.navigations);
     }
 
     // Json.............................................................................................................
 
     static {
+        SpreadsheetSelection.A1.viewportRectangle(100, 100); // force class init
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetViewport.class),
                 SpreadsheetViewport::unmarshall,
@@ -212,19 +241,25 @@ public final class SpreadsheetViewport implements HasUrlFragment,
      */
     static SpreadsheetViewport unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
-        SpreadsheetSelection selection = null;
-        SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.NONE;
-        List<SpreadsheetViewportNavigation> navigations = Lists.empty();
+        SpreadsheetViewportRectangle rectangle = null;
+        Optional<AnchoredSpreadsheetSelection> selection = NO_SELECTION;
+        List<SpreadsheetViewportNavigation> navigations = NO_NAVIGATION;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
             switch (name.value()) {
-                case SELECTION_PROPERTY_STRING:
-                    selection = context.unmarshallWithType(child);
+                case RECTANGLE_PROPERTY_STRING:
+                    rectangle = context.unmarshall(
+                            child,
+                            SpreadsheetViewportRectangle.class
+                    );
                     break;
-                case ANCHOR_PROPERTY_STRING:
-                    anchor = SpreadsheetViewportAnchor.valueOf(
-                            child.stringOrFail()
+                case SELECTION_PROPERTY_STRING:
+                    selection = Optional.of(
+                            context.unmarshall(
+                                    child,
+                                    AnchoredSpreadsheetSelection.class
+                            )
                     );
                     break;
                 case NAVIGATION_PROPERTY_STRING:
@@ -239,8 +274,8 @@ public final class SpreadsheetViewport implements HasUrlFragment,
         }
 
         return new SpreadsheetViewport(
+                rectangle,
                 selection,
-                anchor,
                 navigations
         );
     }
@@ -249,15 +284,17 @@ public final class SpreadsheetViewport implements HasUrlFragment,
      * Creates a JSON object to represent this {@link SpreadsheetViewport}.
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        JsonObject object = JsonNode.object();
+        JsonObject object = JsonNode.object()
+                .set(
+                        RECTANGLE_PROPERTY,
+                        context.marshall(this.rectangle)
+                );
 
-        object = object.set(SELECTION_PROPERTY, context.marshallWithType(this.selection));
-
-        final SpreadsheetViewportAnchor anchor = this.anchor();
-        if (SpreadsheetViewportAnchor.NONE != anchor) {
+        final Optional<AnchoredSpreadsheetSelection> selection = this.selection();
+        if (selection.isPresent()) {
             object = object.set(
-                    ANCHOR_PROPERTY,
-                    JsonNode.string(anchor.toString())
+                    SELECTION_PROPERTY,
+                    context.marshall(selection.get())
             );
         }
 
@@ -277,13 +314,13 @@ public final class SpreadsheetViewport implements HasUrlFragment,
         return object;
     }
 
+    private final static String RECTANGLE_PROPERTY_STRING = "rectangle";
     private final static String SELECTION_PROPERTY_STRING = "selection";
-    private final static String ANCHOR_PROPERTY_STRING = "anchor";
     private final static String NAVIGATION_PROPERTY_STRING = "navigations";
 
     // @VisibleForTesting
 
+    final static JsonPropertyName RECTANGLE_PROPERTY = JsonPropertyName.with(RECTANGLE_PROPERTY_STRING);
     final static JsonPropertyName SELECTION_PROPERTY = JsonPropertyName.with(SELECTION_PROPERTY_STRING);
-    final static JsonPropertyName ANCHOR_PROPERTY = JsonPropertyName.with(ANCHOR_PROPERTY_STRING);
     final static JsonPropertyName NAVIGATION_PROPERTY = JsonPropertyName.with(NAVIGATION_PROPERTY_STRING);
 }

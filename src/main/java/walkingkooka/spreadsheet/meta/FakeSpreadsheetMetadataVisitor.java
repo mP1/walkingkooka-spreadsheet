@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
@@ -211,11 +210,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitSelection(final SpreadsheetViewport selection) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitSpreadsheetId(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
@@ -256,7 +250,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitViewportCell(final SpreadsheetCellReference cell) {
+    protected void visitViewport(final SpreadsheetViewport viewport) {
         throw new UnsupportedOperationException();
     }
 }

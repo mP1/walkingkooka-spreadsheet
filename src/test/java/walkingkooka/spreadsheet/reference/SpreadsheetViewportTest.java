@@ -24,12 +24,14 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -40,6 +42,17 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         JsonNodeMarshallingTesting<SpreadsheetViewport>,
         ToStringTesting<SpreadsheetViewport>,
         TreePrintableTesting {
+
+    private final static SpreadsheetCellReference HOME = SpreadsheetSelection.A1;
+
+    private final static int WIDTH = 100;
+
+    private final static int HEIGHT = 50;
+
+    private static final SpreadsheetViewportRectangle RECTANGLE = HOME.viewportRectangle(
+            WIDTH,
+            HEIGHT
+    );
 
     private static final SpreadsheetColumnReference COLUMN = SpreadsheetSelection.parseColumn("B");
     private static final SpreadsheetCellReference CELL = SpreadsheetSelection.parseCell("B2");
@@ -58,315 +71,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     );
 
     @Test
-    public void testWithNullSelectorFails() {
+    public void testWithNullRectangleFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetViewport.with(
-                        null,
-                        SpreadsheetViewportAnchor.NONE,
-                        SpreadsheetViewport.NO_NAVIGATION
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullAnchorFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetViewport.with(
-                        CELL,
-                        null,
-                        SpreadsheetViewport.NO_NAVIGATION
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullNavigationsFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetViewport.with(
-                        CELL,
-                        SpreadsheetViewportAnchor.NONE,
-                        null
-                )
-        );
-    }
-
-    // cell.............................................................................................................
-
-    @Test
-    public void testWithCellAndAnchorFails() {
-        this.withAnchorNotNonRangeFails(CELL);
-    }
-
-    @Test
-    public void testWithCellAndNoAnchor() {
-        this.withNonRangeAndCheck(CELL);
-    }
-
-    @Test
-    public void testWithColumnAndAnchorFails() {
-        this.withAnchorNotNonRangeFails(COLUMN);
-    }
-
-    @Test
-    public void testWithColumnAndNoAnchor() {
-        this.withNonRangeAndCheck(COLUMN);
-    }
-
-    @Test
-    public void testWithRowAndAnchorFails() {
-        this.withAnchorNotNonRangeFails(ROW);
-    }
-
-    @Test
-    public void testWithRowAndNoAnchor() {
-        this.withNonRangeAndCheck(ROW);
-    }
-
-    private void withAnchorNotNonRangeFails(final SpreadsheetSelection selection) {
-        for (final SpreadsheetViewportAnchor anchor : SpreadsheetViewportAnchor.values()) {
-            if (anchor != SpreadsheetViewportAnchor.NONE) {
-                this.withFails(
-                        selection,
-                        anchor,
-                        "Invalid anchor " +
-                                anchor +
-                                " for " +
-                                selection +
-                                ", valid anchors: " +
-                                SpreadsheetViewportAnchor.NONE
-                );
-            }
-        }
-    }
-
-    private void withNonRangeAndCheck(final SpreadsheetSelection selection) {
-        final SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.NONE;
-        final List<SpreadsheetViewportNavigation> navigations = Lists.of(
-                SpreadsheetViewportNavigation.leftColumn()
-        );
-
-        final SpreadsheetViewport viewport = SpreadsheetViewport.with(
-                selection,
-                anchor,
-                navigations
-        );
-        this.checkSelection(
-                viewport,
-                selection
-        );
-        this.checkAnchor(
-                viewport,
-                anchor
-        );
-        this.checkNavigations(
-                viewport,
-                navigations
-        );
-    }
-
-    // cellRange.........................................................................................................
-
-    @Test
-    public void testWithCellRangeAndLeftAnchorFails() {
-        this.withFails(CELL_RANGE, SpreadsheetViewportAnchor.LEFT);
-    }
-
-    @Test
-    public void testWithCellRangeAndRightAnchorFails() {
-        this.withFails(CELL_RANGE, SpreadsheetViewportAnchor.RIGHT);
-    }
-
-    @Test
-    public void testWithCellRangeAndTopAnchorFails() {
-        this.withFails(CELL_RANGE, SpreadsheetViewportAnchor.TOP);
-    }
-
-    @Test
-    public void testWithCellRangeAndBottomAnchorFails() {
-        this.withFails(CELL_RANGE, SpreadsheetViewportAnchor.BOTTOM);
-    }
-
-    @Test
-    public void testWithCellRangeAndTopLeftAnchor() {
-        this.withAndCheck(CELL_RANGE, SpreadsheetViewportAnchor.TOP_LEFT);
-    }
-
-    @Test
-    public void testWithCellRangeAndTopRightAnchor() {
-        this.withAndCheck(CELL_RANGE, SpreadsheetViewportAnchor.TOP_RIGHT);
-    }
-
-    @Test
-    public void testWithCellRangeAndBottomLeftAnchor() {
-        this.withAndCheck(CELL_RANGE, SpreadsheetViewportAnchor.BOTTOM_LEFT);
-    }
-
-    @Test
-    public void testWithCellRangeAndBottomRightAnchor() {
-        this.withAndCheck(CELL_RANGE, SpreadsheetViewportAnchor.BOTTOM_RIGHT);
-    }
-
-    // columnRange.........................................................................................................
-
-    @Test
-    public void testWithColumnRangeAndTopAnchorFails() {
-        this.withFails(COLUMN_RANGE, SpreadsheetViewportAnchor.TOP);
-    }
-
-    @Test
-    public void testWithColumnRangeAndBottomAnchorFails() {
-        this.withFails(COLUMN_RANGE, SpreadsheetViewportAnchor.BOTTOM);
-    }
-
-    @Test
-    public void testWithColumnRangeAndTopLeftAnchorFails() {
-        this.withFails(COLUMN_RANGE, SpreadsheetViewportAnchor.TOP_LEFT);
-    }
-
-    @Test
-    public void testWithColumnRangeAndTopRightAnchorFails() {
-        this.withFails(COLUMN_RANGE, SpreadsheetViewportAnchor.TOP_RIGHT);
-    }
-
-    @Test
-    public void testWithColumnRangeAndBottomLeftAnchorFails() {
-        this.withFails(COLUMN_RANGE, SpreadsheetViewportAnchor.BOTTOM_LEFT);
-    }
-
-    @Test
-    public void testWithColumnRangeAndBottomRightAnchorFails() {
-        this.withFails(COLUMN_RANGE, SpreadsheetViewportAnchor.BOTTOM_RIGHT);
-    }
-
-    @Test
-    public void testWithColumnRangeAndLeftAnchor() {
-        this.withAndCheck(COLUMN_RANGE, SpreadsheetViewportAnchor.LEFT);
-    }
-
-    @Test
-    public void testWithColumnRangeAndRightAnchor() {
-        this.withAndCheck(COLUMN_RANGE, SpreadsheetViewportAnchor.RIGHT);
-    }
-
-    // rowRange.........................................................................................................
-
-    @Test
-    public void testWithRowRangeAndLeftAnchorFails() {
-        this.withFails(ROW_RANGE, SpreadsheetViewportAnchor.LEFT);
-    }
-
-    @Test
-    public void testWithRowRangeAndRightAnchorFails() {
-        this.withFails(ROW_RANGE, SpreadsheetViewportAnchor.RIGHT);
-    }
-
-    @Test
-    public void testWithRowRangeAndTopLeftAnchorFails() {
-        this.withFails(ROW_RANGE, SpreadsheetViewportAnchor.TOP_LEFT);
-    }
-
-    @Test
-    public void testWithRowRangeAndTopRightAnchorFails() {
-        this.withFails(ROW_RANGE, SpreadsheetViewportAnchor.TOP_RIGHT);
-    }
-
-    @Test
-    public void testWithRowRangeAndBottomLeftAnchorFails() {
-        this.withFails(ROW_RANGE, SpreadsheetViewportAnchor.BOTTOM_LEFT);
-    }
-
-    @Test
-    public void testWithRowRangeAndBottomRightAnchorFails() {
-        this.withFails(ROW_RANGE, SpreadsheetViewportAnchor.BOTTOM_RIGHT);
-    }
-
-    @Test
-    public void testWithRowRangeAndTopAnchor() {
-        this.withAndCheck(ROW_RANGE, SpreadsheetViewportAnchor.TOP);
-    }
-
-    @Test
-    public void testWithRowRangeAndBottomAnchor() {
-        this.withAndCheck(ROW_RANGE, SpreadsheetViewportAnchor.BOTTOM);
-    }
-
-    // label............................................................................................................
-
-    @Test
-    public void testWithLabelWithoutAnchor() {
-        this.withNonRangeAndCheck(LABEL);
-    }
-
-    @Test
-    public void testWithLabelAnyAnchor() {
-        for (final SpreadsheetViewportAnchor anchor : SpreadsheetViewportAnchor.values()) {
-            this.withAndCheck(LABEL, anchor);
-        }
-    }
-
-    // helpers..........................................................................................................
-
-    private void withFails(final SpreadsheetSelection selection,
-                           final SpreadsheetViewportAnchor anchor) {
-        this.withFails(selection, anchor, null);
-    }
-
-    private void withFails(final SpreadsheetSelection selection,
-                           final SpreadsheetViewportAnchor anchor,
-                           final String message) {
-        this.withFails(
-                selection,
-                anchor,
-                SpreadsheetViewport.NO_NAVIGATION,
-                message
-        );
-    }
-
-    private void withFails(final SpreadsheetSelection selection,
-                           final SpreadsheetViewportAnchor anchor,
-                           final List<SpreadsheetViewportNavigation> navigations,
-                           final String message) {
-
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> selection.setAnchor(anchor)
-        );
-        if (null != message) {
-            this.checkEquals(message, thrown.getMessage(), "message");
-        }
-        final IllegalArgumentException thrown2 = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetViewport.with(
-                        selection,
-                        anchor,
-                        navigations
-                )
-        );
-        if (null != message) {
-            this.checkEquals(message, thrown2.getMessage(), "message");
-        }
-    }
-
-    private void withAndCheck(final SpreadsheetSelection selection,
-                              final SpreadsheetViewportAnchor anchor) {
-        final SpreadsheetViewport viewport = selection.setAnchor(
-                anchor
-        );
-        this.checkSelection(
-                viewport,
-                selection
-        );
-
-        this.checkAnchor(
-                viewport,
-                anchor
-        );
-        this.checkNavigations(
-                viewport,
-                SpreadsheetViewport.NO_NAVIGATION
+                () -> SpreadsheetViewport.with(null)
         );
     }
 
@@ -394,25 +102,25 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testSetSelectionDifferent() {
         final SpreadsheetViewport viewport = this.createObject();
 
-        final SpreadsheetSelection selection = SpreadsheetSelection.parseCellRange("ZZ99");
+        final Optional<AnchoredSpreadsheetSelection> differentSelection = Optional.of(
+                SpreadsheetSelection.parseCell("B2")
+                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+        );
+
         this.checkNotEquals(
-                SELECTION,
-                selection,
+                viewport.selection(),
+                differentSelection,
                 "different selection"
         );
 
-        final SpreadsheetViewport different = viewport.setSelection(selection);
+        final SpreadsheetViewport different = viewport.setSelection(differentSelection);
         assertNotSame(
                 viewport,
                 different
         );
         this.checkSelection(
                 different,
-                selection
-        );
-        this.checkAnchor(
-                different,
-                viewport.anchor()
+                differentSelection
         );
         this.checkNavigations(
                 different,
@@ -461,10 +169,6 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 differentSelection,
                 selection.selection()
         );
-        this.checkAnchor(
-                differentSelection,
-                selection.anchor()
-        );
         this.checkNavigations(
                 differentSelection,
                 navigations
@@ -472,20 +176,11 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     }
 
     private void checkSelection(final SpreadsheetViewport viewport,
-                                final SpreadsheetSelection selection) {
+                                final Optional<AnchoredSpreadsheetSelection> selection) {
         this.checkEquals(
                 selection,
                 viewport.selection(),
                 "selection"
-        );
-    }
-
-    private void checkAnchor(final SpreadsheetViewport viewport,
-                             final SpreadsheetViewportAnchor anchor) {
-        this.checkEquals(
-                anchor,
-                viewport.anchor(),
-                "anchor"
         );
     }
 
@@ -501,22 +196,26 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     // equals...........................................................................................................
 
     @Test
-    public void testDifferentSelection() {
+    public void testDifferentRectangle() {
         this.checkNotEquals(
                 SpreadsheetViewport.with(
-                        SpreadsheetSelection.parseCellRange("X1:Y99"),
-                        ANCHOR,
+                        SpreadsheetSelection.parseCell("Z99")
+                                .viewportRectangle(99, 999),
+                        SpreadsheetViewport.NO_SELECTION,
                         NAVIGATIONS
                 )
         );
     }
 
     @Test
-    public void testDifferentAnchor() {
+    public void testDifferentSelection() {
         this.checkNotEquals(
                 SpreadsheetViewport.with(
-                        SELECTION,
-                        SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+                        RECTANGLE,
+                        Optional.of(
+                                SpreadsheetSelection.parseCell("Z9")
+                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        ),
                         NAVIGATIONS
                 )
         );
@@ -526,8 +225,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testDifferentNavigations() {
         this.checkNotEquals(
                 SpreadsheetViewport.with(
-                        SELECTION,
-                        SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+                        RECTANGLE,
+                        SpreadsheetViewport.NO_SELECTION,
                         Lists.of(
                                 SpreadsheetViewportNavigation.rightColumn()
                         )
@@ -565,45 +264,63 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     }
 
     @Test
-    public void testTreePrintNonRangeAndNavigations() {
+    public void testTreePrintRectangle() {
         this.treePrintAndCheck(
                 SpreadsheetViewport.with(
-                        SpreadsheetSelection.A1,
-                        SpreadsheetViewportAnchor.NONE,
-                        Lists.of(
-                                SpreadsheetViewportNavigation.leftColumn()
-                        )
+                        RECTANGLE,
+                        SpreadsheetViewport.NO_SELECTION,
+                        SpreadsheetViewport.NO_NAVIGATION
                 ),
-                "cell A1 left column" + EOL
+                "rectangle:" + EOL +
+                        "  home: A1" + EOL +
+                        "  width: 100.0" + EOL +
+                        "  height: 50.0" + EOL
         );
     }
 
     @Test
-    public void testTreePrintNonRangeAndNavigations2() {
+    public void testTreePrintRectangleAndNavigations() {
         this.treePrintAndCheck(
                 SpreadsheetViewport.with(
-                        SpreadsheetSelection.A1,
-                        SpreadsheetViewportAnchor.NONE,
+                        RECTANGLE,
+                        SpreadsheetViewport.NO_SELECTION,
                         Lists.of(
                                 SpreadsheetViewportNavigation.leftColumn(),
                                 SpreadsheetViewportNavigation.upRow()
                         )
                 ),
-                "cell A1 left column,up row" + EOL
+                "rectangle:" + EOL +
+                        "  home: A1" + EOL +
+                        "  width: 100.0" + EOL +
+                        "  height: 50.0" + EOL +
+                        "navigations:" + EOL +
+                        "  left column" + EOL +
+                        "  up row" + EOL
         );
     }
 
     @Test
-    public void testTreePrintRangeWithAnchorAndNavigations() {
+    public void testTreePrintRectangleSelectionRowRangeNavigations() {
         this.treePrintAndCheck(
                 SpreadsheetViewport.with(
-                        SpreadsheetSelection.parseRowRange("12:34"),
-                        SpreadsheetViewportAnchor.TOP,
+                        RECTANGLE,
+                        Optional.of(
+                                SpreadsheetSelection.parseRowRange("12:34")
+                                        .setAnchor(
+                                                SpreadsheetViewportAnchor.TOP
+                                        )
+                        ),
                         Lists.of(
                                 SpreadsheetViewportNavigation.leftColumn()
                         )
                 ),
-                "row-range 12:34 TOP left column" + EOL
+                "rectangle:" + EOL +
+                        "  home: A1" + EOL +
+                        "  width: 100.0" + EOL +
+                        "  height: 50.0" + EOL +
+                        "selection: row-range 12:34 TOP" + EOL +
+                        "navigations:" + EOL +
+                        "  left column" + EOL
         );
     }
 
@@ -612,8 +329,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     @Test
     public void testUrlFragmentCell() {
         this.urlFragmentAndCheck(
-                SpreadsheetSelection.A1
-                        .setAnchor(SpreadsheetViewportAnchor.NONE),
+                SpreadsheetSelection.A1.setAnchor(SpreadsheetViewportAnchor.NONE),
                 "/cell/A1"
         );
     }
@@ -681,6 +397,20 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         );
     }
 
+    private void urlFragmentAndCheck(final AnchoredSpreadsheetSelection anchoredSpreadsheetSelection,
+                                     final String expected) {
+        this.urlFragmentAndCheck(
+                HOME.viewportRectangle(WIDTH, HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        anchoredSpreadsheetSelection
+                                )
+                        ),
+                expected
+        );
+    }
+
     private void urlFragmentAndCheck(final SpreadsheetViewport selection,
                                      final String expected) {
         this.checkEquals(
@@ -695,76 +425,124 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     @Test
     public void testJsonMarshallCell() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                HOME.viewportRectangle(WIDTH, HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCell("B2")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 
     @Test
     public void testJsonMarshallCellRange() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetSelection.parseCellRange("B2:C3")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                HOME.viewportRectangle(WIDTH, HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCellRange("B2:C3")
+                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                )
+                        )
         );
     }
 
     @Test
     public void testJsonMarshallColumn() {
         this.marshallRoundTripTwiceAndCheck(
-                COLUMN.setAnchor(SpreadsheetViewportAnchor.NONE)
+                HOME.viewportRectangle(WIDTH, HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        COLUMN.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 
     @Test
     public void testJsonMarshallColumnRange() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetSelection.parseColumnRange("B:C")
-                        .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                HOME.viewportRectangle(WIDTH, HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumnRange("B:C")
+                                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                                )
+                        )
         );
     }
 
     @Test
     public void testJsonMarshallRow() {
         this.marshallRoundTripTwiceAndCheck(
-                COLUMN.setAnchor(SpreadsheetViewportAnchor.NONE)
+                HOME.viewportRectangle(WIDTH, HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        ROW.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 
     @Test
     public void testJsonMarshallRowRange() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetSelection.parseRowRange("12:34")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP)
+                HOME.viewportRectangle(WIDTH, HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseRowRange("12:34")
+                                                .setAnchor(SpreadsheetViewportAnchor.TOP)
+                                )
+                        )
         );
     }
 
-    // toString..........................................................................................................
+    // toString.........................................................................................................
 
     @Test
-    public void testToStringCell() {
+    public void testToString() {
         this.toStringAndCheck(
-                CELL.setAnchor(SpreadsheetViewportAnchor.NONE),
-                CELL.toString()
+                HOME.viewportRectangle(WIDTH, HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                SpreadsheetViewport.NO_SELECTION
+                        ),
+                RECTANGLE.toString()
         );
     }
 
     @Test
-    public void testToStringCellRangeWithAnchor() {
+    public void testToStringWithSelectionCell() {
         this.toStringAndCheck(
-                CELL_RANGE.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
-                CELL_RANGE + " " + SpreadsheetViewportAnchor.TOP_LEFT
+                HOME.viewportRectangle(WIDTH, HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        CELL.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        ),
+                RECTANGLE + " selection: " + CELL
         );
     }
 
     @Test
-    public void testToStringWithNavigations() {
+    public void testToStringCellRangeSelectionAndNavigations() {
         this.toStringAndCheck(
                 SpreadsheetViewport.with(
-                        CELL_RANGE,
-                        ANCHOR,
+                        RECTANGLE,
+                        Optional.of(
+                                CELL_RANGE.setAnchor(ANCHOR)
+                        ),
                         NAVIGATIONS
                 ),
-                CELL_RANGE + " " + ANCHOR + " " + NAVIGATIONS.iterator().next()
+                RECTANGLE + " selection: " + CELL_RANGE + " " + ANCHOR + " navigations: " + NAVIGATIONS.iterator().next()
         );
     }
 
@@ -780,14 +558,20 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         return JavaVisibility.PUBLIC;
     }
 
+    // equals...........................................................................................................
+
     @Override
     public SpreadsheetViewport createObject() {
         return SpreadsheetViewport.with(
-                SELECTION,
-                ANCHOR,
+                RECTANGLE,
+                Optional.of(
+                        SELECTION.setAnchor(ANCHOR)
+                ),
                 NAVIGATIONS
         );
     }
+
+    // Json.............................................................................................................
 
     @Override
     public SpreadsheetViewport unmarshall(final JsonNode from,

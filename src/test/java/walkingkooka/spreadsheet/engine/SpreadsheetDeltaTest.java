@@ -662,14 +662,20 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchViewportAndCheck(
                 SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
-                        SpreadsheetSelection.parseColumn("C")
-                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                .viewport()
+                                .setSelection(
+                                        Optional.of(
+                                                SpreadsheetSelection.parseColumn("C")
+                                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        )
+                                )
                 )
         );
     }
 
     private void patchViewportAndCheck(final Optional<SpreadsheetViewport> before,
-                                                final Optional<SpreadsheetViewport> after) {
+                                       final Optional<SpreadsheetViewport> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
                 .setViewport(after);
 
@@ -687,8 +693,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.EMPTY
                         .setViewport(
                                 Optional.of(
-                                        SpreadsheetSelection.parseCellRange("A1:B2")
-                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                                .viewport()
+                                                .setSelection(
+                                                        Optional.of(
+                                                                SpreadsheetSelection.parseCellRange("A1:B2")
+                                                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                                        )
+                                                )
                                 )
                         )
                 ,
@@ -756,9 +768,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
                 .setViewport(
                         Optional.of(
-                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(
-                                                SpreadsheetViewportAnchor.TOP_LEFT
+                                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                        .viewport()
+                                        .setSelection(
+                                                Optional.of(
+                                                        SpreadsheetSelection.parseCellRange("A1:B2")
+                                                                .setAnchor(
+                                                                        SpreadsheetViewportAnchor.TOP_LEFT
+                                                                )
+                                                )
                                         )
                         )
                 );
@@ -1020,14 +1038,20 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellViewportAndCheck(
                 SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
-                        SpreadsheetSelection.parseColumn("C")
-                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                .viewport()
+                                .setSelection(
+                                        Optional.of(
+                                                SpreadsheetSelection.parseColumn("C")
+                                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        )
+                                )
                 )
         );
     }
 
     private void patchCellViewportAndCheck(final Optional<SpreadsheetViewport> before,
-                                                    final Optional<SpreadsheetViewport> after) {
+                                           final Optional<SpreadsheetViewport> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
                 .setViewport(after);
 
@@ -1046,8 +1070,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.EMPTY
                         .setViewport(
                                 Optional.of(
-                                        SpreadsheetSelection.parseCellRange("A1:B2")
-                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                                .viewport()
+                                                .setSelection(
+                                                        Optional.of(
+                                                                SpreadsheetSelection.parseCellRange("A1:B2")
+                                                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                                        )
+
+                                                )
                                 )
                         )
                 ,
@@ -1130,8 +1161,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
                 .setViewport(
                         Optional.of(
-                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                        .viewport()
+                                        .setSelection(
+                                                Optional.of(
+                                                        SpreadsheetSelection.parseCellRange("A1:B2")
+                                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                                )
+                                        )
                         )
                 );
         this.patchCellsAndCheck(
@@ -1948,14 +1985,20 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchColumnViewportAndCheck(
                 SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
-                        SpreadsheetSelection.parseColumn("C")
-                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                .viewport()
+                                .setSelection(
+                                        Optional.of(
+                                                SpreadsheetSelection.parseColumn("C")
+                                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        )
+                                )
                 )
         );
     }
 
     private void patchColumnViewportAndCheck(final Optional<SpreadsheetViewport> before,
-                                                      final Optional<SpreadsheetViewport> after) {
+                                             final Optional<SpreadsheetViewport> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
                 .setViewport(after);
 
@@ -1973,8 +2016,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.EMPTY
                         .setViewport(
                                 Optional.of(
-                                        SpreadsheetSelection.parseCellRange("A1:B2")
-                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                                .viewport()
+                                                .setSelection(
+                                                        Optional.of(
+                                                                SpreadsheetSelection.parseCellRange("A1:B2")
+                                                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                                        )
+                                                )
                                 )
                         )
                 ,
@@ -2074,8 +2123,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
                 .setViewport(
                         Optional.of(
-                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                        .viewport()
+                                        .setSelection(
+                                                Optional.of(
+                                                        SpreadsheetSelection.parseCellRange("A1:B2")
+                                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                                )
+                                        )
                         )
                 );
         this.patchColumnsAndCheck(
@@ -2256,14 +2311,20 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchRowViewportAndCheck(
                 SpreadsheetDelta.NO_VIEWPORT_SELECTION,
                 Optional.of(
-                        SpreadsheetSelection.parseRow("3")
-                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                .viewport()
+                                .setSelection(
+                                        Optional.of(
+                                                SpreadsheetSelection.parseRow("3")
+                                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        )
+                                )
                 )
         );
     }
 
     private void patchRowViewportAndCheck(final Optional<SpreadsheetViewport> before,
-                                                   final Optional<SpreadsheetViewport> after) {
+                                          final Optional<SpreadsheetViewport> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
                 .setViewport(after);
 
@@ -2281,8 +2342,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.EMPTY
                         .setViewport(
                                 Optional.of(
-                                        SpreadsheetSelection.parseCellRange("A1:B2")
-                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                                .viewport()
+                                                .setSelection(
+                                                        Optional.of(
+                                                                SpreadsheetSelection.parseCellRange("A1:B2")
+                                                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                                        )
+                                                )
                                 )
                         )
                 ,
@@ -2384,8 +2451,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
                 .setViewport(
                         Optional.of(
-                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                                        .viewport()
+                                        .setSelection(
+                                                Optional.of(
+                                                        SpreadsheetSelection.parseCellRange("A1:B2")
+                                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                                )
+                                        )
                         )
                 );
         this.patchRowsAndCheck(

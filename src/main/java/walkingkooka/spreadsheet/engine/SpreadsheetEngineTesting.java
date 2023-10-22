@@ -47,7 +47,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
@@ -647,8 +646,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
                         .navigate(
-                                SpreadsheetSelection.parseColumn("A")
-                                        .setAnchor(SpreadsheetViewportAnchor.NONE),
+                                SpreadsheetSelection.A1
+                                        .viewportRectangle(100, 500)
+                                        .viewport(),
                                 null
                         )
         );
