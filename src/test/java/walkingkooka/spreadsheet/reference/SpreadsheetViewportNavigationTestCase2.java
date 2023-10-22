@@ -20,17 +20,21 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunctions;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 public abstract class SpreadsheetViewportNavigationTestCase2<T extends SpreadsheetViewportNavigation> extends
-        SpreadsheetViewportNavigationTestCase<T> implements ParseStringTesting<List<T>> {
+        SpreadsheetViewportNavigationTestCase<T> implements ParseStringTesting<List<T>>,
+        TreePrintableTesting {
 
     SpreadsheetViewportNavigationTestCase2() {
         super();
@@ -83,92 +87,108 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
 
     final static int ROW_HEIGHT = 30;
 
-    void updateAndCheck(final SpreadsheetViewportNavigation navigation,
-                        final SpreadsheetSelection selection) {
-        this.updateAndCheck(
-                navigation,
-                selection,
-                selection
-        );
-    }
+    final static int COLUMNS_ACROSS = 5;
 
-    void updateAndCheck(final SpreadsheetViewportNavigation navigation,
-                        final SpreadsheetSelection selection,
-                        final SpreadsheetSelection expected) {
-        this.updateAndCheck(
-                navigation,
-                selection,
-                expected.setAnchor(expected.defaultAnchor())
-        );
-    }
+    final static int VIEWPORT_WIDTH = COLUMN_WIDTH * COLUMNS_ACROSS;
 
-    void updateAndCheck(final SpreadsheetViewportNavigation navigation,
-                        final SpreadsheetSelection selection,
-                        final SpreadsheetViewport expected) {
+    final static int ROWS_DOWN = 5;
+    final static int VIEWPORT_HEIGHT = ROW_HEIGHT * ROWS_DOWN;
+
+    final void updateAndCheck(final SpreadsheetViewport viewport,
+                              final SpreadsheetViewport expected) {
         this.updateAndCheck(
-                navigation,
-                selection,
-                selection.defaultAnchor(),
+                this.createSpreadsheetViewportNavigation(),
+                viewport,
                 expected
         );
     }
 
-    void updateAndCheck(final SpreadsheetViewportNavigation navigation,
-                        final SpreadsheetSelection selection,
-                        final SpreadsheetViewportAnchor anchor,
-                        final SpreadsheetViewport expected) {
+    final void updateAndCheck(final SpreadsheetViewportNavigation navigation,
+                              final SpreadsheetViewport viewport,
+                              final SpreadsheetViewport expected) {
         this.updateAndCheck(
                 navigation,
-                selection,
-                anchor,
-                Predicates.never(),
-                Predicates.never(),
+                viewport,
+                Predicates.never(), // hiddenColumns
+                Predicates.never(), // hiddenRows
                 expected
         );
     }
 
-    void updateAndCheck(final SpreadsheetViewportNavigation navigation,
-                        final SpreadsheetSelection selection,
-                        final SpreadsheetViewportAnchor anchor,
-                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
-                        final Predicate<SpreadsheetRowReference> hiddenRows,
-                        final SpreadsheetViewport expected) {
-        this.updateAndCheck(
-                navigation,
-                selection,
-                anchor,
-                hiddenColumns,
-                hiddenRows,
-                Optional.of(expected)
-        );
-    }
+    final void updateAndCheck(final SpreadsheetViewportNavigation navigation,
+                              final SpreadsheetViewport viewport,
+                              final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                              final Predicate<SpreadsheetRowReference> hiddenRows,
+                              final SpreadsheetViewport expected) {
+        final SpreadsheetCellReference home = viewport.rectangle()
+                .home();
 
-    void updateAndCheck(final SpreadsheetViewportNavigation navigation,
-                        final SpreadsheetSelection selection,
-                        final SpreadsheetViewportAnchor anchor,
-                        final Predicate<SpreadsheetColumnReference> hiddenColumns,
-                        final Predicate<SpreadsheetRowReference> hiddenRows,
-                        final Optional<SpreadsheetViewport> expected) {
+        SpreadsheetCellReference bottomRight = home;
+        for (int i = 0; i < COLUMNS_ACROSS; i++) {
+            if (hiddenColumns.test(bottomRight.column())) {
+                i--;
+            }
+            bottomRight = bottomRight.addColumn(1);
+        }
+
+        for (int i = 0; i < ROWS_DOWN; i++) {
+            if (hiddenRows.test(bottomRight.row())) {
+                i--;
+            }
+            bottomRight = bottomRight.addRow(1);
+        }
+
+        final SpreadsheetViewportWindows windows = SpreadsheetViewportWindows.with(
+                Sets.of(
+                        home.cellRange(bottomRight)
+                )
+        );
+
         this.checkEquals(
                 expected,
                 navigation.update(
-                        selection,
-                        anchor,
+                        viewport,
                         SpreadsheetViewportNavigationContexts.basic(
                                 hiddenColumns,
                                 COLUMN_TO_WIDTH,
                                 hiddenRows,
                                 ROW_TO_HEIGHT,
-                                SpreadsheetViewportWindowsFunctions.fake()
+                                (r, i, s) -> {
+                                    checkEquals(true, i, "includeFrozenColumnsRows");
+                                    checkEquals(SpreadsheetViewportWindowsFunction.NO_SELECTION, s, "selection");
+                                    return windows;
+                                }
                         )
                 ),
-                () -> navigation + " update " + selection + " " + anchor
+                () -> navigation + " update " + viewport + " windows: " + windows
         );
     }
 
     final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> 1.0 * COLUMN_WIDTH;
 
     final static Function<SpreadsheetRowReference, Double> ROW_TO_HEIGHT = (c) -> 1.0 * ROW_HEIGHT;
+
+    final Predicate<SpreadsheetColumnReference> hiddenColumns(final String columns) {
+        return hiddenPredicate(
+                columns,
+                SpreadsheetSelection::parseColumn
+        );
+    }
+
+    final Predicate<SpreadsheetRowReference> hiddenRows(final String rows) {
+        return hiddenPredicate(
+                rows,
+                SpreadsheetSelection::parseRow
+        );
+    }
+
+    private static <T extends SpreadsheetColumnOrRowReference> Predicate<T> hiddenPredicate(final String columnOrRows,
+                                                                                            final Function<String, T> parser) {
+        return (columnOrRow) -> CharacterConstant.COMMA.parse(
+                columnOrRows,
+                parser
+        ).contains(columnOrRow);
+    }
 
     abstract T createSpreadsheetViewportNavigation();
 

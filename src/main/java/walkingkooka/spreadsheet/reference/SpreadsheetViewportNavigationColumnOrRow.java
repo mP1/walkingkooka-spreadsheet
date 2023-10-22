@@ -17,9 +17,82 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
+
+import java.util.Optional;
+
 abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewportNavigation {
 
     SpreadsheetViewportNavigationColumnOrRow() {
         super();
+    }
+
+    @Override
+    final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
+                                      final SpreadsheetViewportNavigationContext context) {
+        SpreadsheetViewport result = viewport;
+
+        final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.selection();
+        if (maybeAnchored.isPresent()) {
+            // selection present try and move it.
+            final AnchoredSpreadsheetSelection selection = maybeAnchored.get();
+            final Optional<AnchoredSpreadsheetSelection> maybeMovedSelection = this.updateSelection(
+                    selection.selection(),
+                    selection.anchor(),
+                    context
+            );
+
+            if (maybeMovedSelection.isPresent()) {
+                final AnchoredSpreadsheetSelection movedSelection = maybeMovedSelection.get();
+                final SpreadsheetViewportRectangle rectangle = viewport.rectangle();
+
+                // check if moved selection is within the original viewport
+                final SpreadsheetViewportWindows windows = context.windows(
+                        rectangle,
+                        true, //includeFrozenColumnsRows
+                        SpreadsheetViewportWindowsFunction.NO_SELECTION
+                );
+
+                if (
+                        windows.test(
+                                movedSelection.anchor()
+                                        .oppositeSelection(
+                                                movedSelection.selection()
+                                        )
+                        )
+                ) {
+                    // moved selection within windows leave home unmoved
+                    result = viewport.setSelection(maybeMovedSelection);
+                } else {
+                    // moved selection is outside viewport need to move home
+                    final SpreadsheetCellReference home = rectangle.home();
+                    final Optional<AnchoredSpreadsheetSelection> maybeMovedHome = this.updateSelection(
+                            home,
+                            SpreadsheetViewportAnchor.CELL,
+                            context
+                    );
+
+                    if (maybeMovedHome.isPresent()) {
+                        result = result.setRectangle(
+                                rectangle.setHome(
+                                        maybeMovedHome.get()
+                                                .selection()
+                                                .toCell()
+                                )
+                        );
+                    } else {
+                        result = result.setRectangle(
+                                rectangle.setHome(home)
+                        ).setSelection(SpreadsheetViewport.NO_SELECTION);
+                    }
+                }
+            } else {
+                result = viewport.setSelection(SpreadsheetViewport.NO_SELECTION);
+            }
+        }
+
+        return result;
     }
 }

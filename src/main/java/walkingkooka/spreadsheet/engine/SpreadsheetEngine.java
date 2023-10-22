@@ -213,14 +213,8 @@ public interface SpreadsheetEngine {
                                       final SpreadsheetEngineContext context);
 
     /**
-     * An absent {@link SpreadsheetViewport}.
-     */
-    Optional<SpreadsheetViewport> NO_VIEWPORT = Optional.empty();
-
-    /**
      * Performs the given {@link SpreadsheetViewport}, honouring any present {@link SpreadsheetViewport#navigations()},
-     * skipping hidden columns and rows. If no {@link SpreadsheetViewport#navigations()} is present, the
-     * available {@link SpreadsheetViewport#selection()} if hidden is replaced with {@link #NO_VIEWPORT}.
+     * skipping hidden columns and rows.
      */
     Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                            final SpreadsheetEngineContext context);

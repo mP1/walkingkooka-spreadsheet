@@ -1539,7 +1539,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 printer.println("viewport:");
                 printer.indent();
                 {
-                    printer.println(viewport.get().toString());
+                    viewport.get()
+                            .printTree(printer);
                 }
                 printer.outdent();
             }
@@ -2149,7 +2150,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .separator(" ")
                 .valueSeparator(", ")
                 .enable(ToStringBuilderOption.QUOTE)
-                .label("viewport")
                 .value(this.viewport)
                 .label("cells")
                 .value(this.cells)

@@ -34,12 +34,10 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 
@@ -404,20 +402,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitSelection() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitSelection(final SpreadsheetViewport selection) {
-                this.visited = selection;
-            }
-        }.accept(
-                SpreadsheetMetadataPropertyName.SELECTION,
-                SpreadsheetSelection.parseCell("A2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
-        );
-    }
-
-    @Test
     public void testVisitSpreadsheetId() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -488,13 +472,18 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitViewportCell() {
+    public void testVisitViewport() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitViewportCell(final SpreadsheetCellReference cell) {
-                this.visited = cell;
+            protected void visitViewport(final SpreadsheetViewport selection) {
+                this.visited = selection;
             }
-        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetSelection.parseCell("B99"));
+        }.accept(
+                SpreadsheetMetadataPropertyName.VIEWPORT,
+                SpreadsheetSelection.parseCell("A2")
+                        .viewportRectangle(100, 50)
+                        .viewport()
+        );
     }
 
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {

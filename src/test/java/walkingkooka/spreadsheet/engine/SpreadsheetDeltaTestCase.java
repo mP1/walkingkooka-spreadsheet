@@ -763,48 +763,84 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Test
     public final void testUnmarshallViewportWithCell() {
         this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCell("B2")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 
     @Test
     public final void testUnmarshallViewportWithCellRange() {
         this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.parseCellRange("B2:C3")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCellRange("B2:C3")
+                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                )
+                        )
         );
     }
 
     @Test
     public final void testUnmarshallViewportWithColumn() {
         this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.parseColumn("B")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumn("B")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 
     @Test
     public final void testUnmarshallViewportWithColumnRange() {
         this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.parseColumnRange("B:CD")
-                        .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumnRange("B:CD")
+                                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                                )
+                        )
         );
     }
 
     @Test
     public final void testUnmarshallViewportWithRow() {
         this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.parseRow("2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseRow("2")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 
     @Test
     public final void testUnmarshallViewportWithRowRange() {
         this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.parseRowRange("2:34")
-                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseRowRange("2:34")
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
+                                )
+                        )
         );
     }
 
@@ -954,15 +990,27 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Optional<SpreadsheetViewport> viewport() {
         return Optional.of(
-                SpreadsheetSelection.parseCellRange("A1:B2")
-                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCellRange("A1:B2")
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                )
+                        )
         );
     }
 
     final Optional<SpreadsheetViewport> differentViewport() {
         return Optional.of(
-                SpreadsheetSelection.parseCell("C3")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCell("C3")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 

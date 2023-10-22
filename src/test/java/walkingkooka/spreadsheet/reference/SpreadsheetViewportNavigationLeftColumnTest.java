@@ -19,12 +19,11 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetViewportNavigationLeftColumnTest extends SpreadsheetViewportNavigationTestCase2<SpreadsheetViewportNavigationLeftColumn> {
+public final class SpreadsheetViewportNavigationLeftColumnTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationLeftColumn> {
 
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
-                SpreadsheetViewportNavigation.leftColumn(),
                 SpreadsheetSelection.parseCell("C3"),
                 SpreadsheetSelection.parseCell("B3")
         );
@@ -33,7 +32,6 @@ public final class SpreadsheetViewportNavigationLeftColumnTest extends Spreadshe
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-                SpreadsheetViewportNavigation.leftColumn(),
                 SpreadsheetSelection.parseColumn("C"),
                 SpreadsheetSelection.parseColumn("B")
         );
@@ -42,7 +40,6 @@ public final class SpreadsheetViewportNavigationLeftColumnTest extends Spreadshe
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-                SpreadsheetViewportNavigation.leftColumn(),
                 SpreadsheetSelection.parseRow("2")
         );
     }

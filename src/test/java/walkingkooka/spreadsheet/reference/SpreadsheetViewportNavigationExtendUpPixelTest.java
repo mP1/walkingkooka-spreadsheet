@@ -20,35 +20,100 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetViewportNavigationExtendUpPixelTest extends SpreadsheetViewportNavigationTestCase2<SpreadsheetViewportNavigationExtendUpPixel> {
+import java.util.Optional;
+
+public final class SpreadsheetViewportNavigationExtendUpPixelTest extends SpreadsheetViewportNavigationPixelTestCase<SpreadsheetViewportNavigationExtendUpPixel> {
+
+    @Test
+    public void testUpdateHome() {
+        this.updateAndCheck(
+                "E5",
+                "E3"
+        );
+    }
+
+    @Test
+    public void testUpdateHomeSkipsHiddenRow() {
+        this.updateAndCheck(
+                "E5", // home
+                "", // hidden columns
+                "4", // hidden rows
+                "E2" // expected
+        );
+    }
 
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
-                SpreadsheetSelection.parseCell("E5"),
-                SpreadsheetSelection.parseCellRange("E3:E5")
-                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                SpreadsheetSelection.parseCell("E5")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCell("E5")
+                                                .setDefaultAnchor()
+                                )
+                        ),
+                SpreadsheetSelection.parseCell("E3")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCellRange("E3:E5")
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                )
+                        )
         );
     }
 
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
-                SpreadsheetSelection.parseColumn("E")
+                SpreadsheetSelection.parseCell("E5")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumn("E")
+                                                .setDefaultAnchor()
+                                )
+                        ),
+                SpreadsheetSelection.parseCell("E3")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumn("E")
+                                                .setDefaultAnchor()
+                                )
+                        )
         );
     }
 
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
-                SpreadsheetSelection.parseRow("5"),
-                SpreadsheetSelection.parseRowRange("3:5")
-                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
+                SpreadsheetSelection.parseCell("E5")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseRow("5")
+                                                .setDefaultAnchor()
+                                )
+                        ),
+                SpreadsheetSelection.parseCell("E3")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseRowRange("3:5")
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
+                                )
+                        )
         );
     }
+
     @Override
     SpreadsheetViewportNavigationExtendUpPixel createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationExtendUpPixel.with(2 * ROW_HEIGHT - 1);

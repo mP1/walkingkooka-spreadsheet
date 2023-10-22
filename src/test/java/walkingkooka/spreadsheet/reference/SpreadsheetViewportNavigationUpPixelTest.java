@@ -19,33 +19,89 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetViewportNavigationUpPixelTest extends SpreadsheetViewportNavigationTestCase2<SpreadsheetViewportNavigationUpPixel> {
+import java.util.Optional;
+
+public final class SpreadsheetViewportNavigationUpPixelTest extends SpreadsheetViewportNavigationPixelTestCase<SpreadsheetViewportNavigationUpPixel> {
+
+    @Test
+    public void testUpdateHome() {
+        this.updateAndCheck(
+                "E5",
+                "E3"
+        );
+    }
+
+    @Test
+    public void testUpdateHomeSkipsHiddenRow() {
+        this.updateAndCheck(
+                "E5", // home
+                "", // hidden columns
+                "4", // hidden rows
+                "E2" // expected
+        );
+    }
 
     @Test
     public void testUpdateCell() {
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
+                SpreadsheetSelection.parseCell("E5")
+                        .setDefaultAnchor()
+        );
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
-                SpreadsheetSelection.parseCell("E5"),
+                SpreadsheetSelection.parseCell("E5")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(selection),
                 SpreadsheetSelection.parseCell("E3")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(selection)
         );
     }
 
     @Test
     public void testUpdateColumn() {
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
                 SpreadsheetSelection.parseColumn("E")
+                        .setDefaultAnchor()
+        );
+
+        this.updateAndCheck(
+                SpreadsheetSelection.parseCell("E5")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                selection
+                        ),
+                SpreadsheetSelection.parseCell("E3")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                selection
+                        )
         );
     }
 
     @Test
     public void testUpdateRow() {
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
+                SpreadsheetSelection.parseRow("5")
+                        .setDefaultAnchor()
+        );
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
-                SpreadsheetSelection.parseRow("5"),
-                SpreadsheetSelection.parseRow("3")
+                SpreadsheetSelection.parseCell("E5")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                selection
+                        ),
+                SpreadsheetSelection.parseCell("E3")
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(selection)
         );
     }
+
     @Override
     SpreadsheetViewportNavigationUpPixel createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationUpPixel.with(2 * ROW_HEIGHT - 1);

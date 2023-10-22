@@ -554,7 +554,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testMissingRequiredPropertiesReadOnly() {
         assertThrows(UnsupportedOperationException.class,
-                () -> this.createObject().missingRequiredProperties().add(SpreadsheetMetadataPropertyName.SELECTION));
+                () -> this.createObject().missingRequiredProperties().add(SpreadsheetMetadataPropertyName.VIEWPORT));
     }
 
     final void missingRequiredPropertiesAndCheck(final SpreadsheetMetadata metadata,

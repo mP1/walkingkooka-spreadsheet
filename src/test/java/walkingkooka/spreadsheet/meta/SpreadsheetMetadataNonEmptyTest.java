@@ -2499,7 +2499,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(
-                SpreadsheetMetadataPropertyName.SELECTION,
+                SpreadsheetMetadataPropertyName.VIEWPORT,
                 SpreadsheetSelection.A1
                         .setAnchor(SpreadsheetViewportAnchor.NONE)
         );
@@ -2510,7 +2510,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mm;hh:mm:ss.000"));
         properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31);
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
-        properties.put(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetSelection.parseCell("B99"));
+        properties.put(
+                SpreadsheetMetadataPropertyName.VIEWPORT,
+                SpreadsheetSelection.parseCell("B99")
+                        .viewportRectangle(100, 50)
+                        .viewport());
 
         for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 1; i++) {
             properties.put(
@@ -2548,12 +2552,24 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         .set(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Untitled"))
                         .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:C"))
                         .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:3"))
-                        .set(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetSelection.parseCell("D4")),
+                        .set(SpreadsheetMetadataPropertyName.VIEWPORT, SpreadsheetSelection.parseCell("D4")
+                                .viewportRectangle(100, 50)
+                                .viewport()
+                                .setSelection(
+                                        Optional.of(
+                                                SpreadsheetSelection.parseCell("E5")
+                                                        .setDefaultAnchor()
+                                        )
+                                )),
                 "spreadsheet-id: 4d2\n" +
                         "frozen-columns: column-range A:C\n" +
                         "frozen-rows: row-range 1:3\n" +
                         "spreadsheet-name: Untitled\n" +
-                        "viewport-cell: cell D4\n"
+                        "viewport: rectangle:\n" +
+                        "  home: D4\n" +
+                        "  width: 100.0\n" +
+                        "  height: 50.0\n" +
+                        "selection: cell E5\n"
         );
     }
 

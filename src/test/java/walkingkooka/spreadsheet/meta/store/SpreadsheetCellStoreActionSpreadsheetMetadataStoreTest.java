@@ -23,8 +23,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetCellStoreAction;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -80,25 +78,6 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
                 metadata.set(
                         SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
                         LocalDateTime.now()
-                )
-        );
-    }
-
-    @Test
-    public void testSaveSelectionChange() {
-        final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = this.createStore(
-                SpreadsheetCellStores.fake() // interactions will throw UOE
-        );
-
-        final SpreadsheetMetadata metadata = store.save(
-                this.metadata()
-        );
-
-        store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.SELECTION,
-                        SpreadsheetSelection.A1
-                                .setAnchor(SpreadsheetViewportAnchor.NONE)
                 )
         );
     }

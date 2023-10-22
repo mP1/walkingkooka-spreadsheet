@@ -53,6 +53,7 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -258,6 +259,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         return map;
     }
+
+    private final static double VIEWPORT_WIDTH = COLUMN_WIDTH * 5;
+
+    private final static double VIEWPORT_HEIGHT = ROW_HEIGHT * 5;
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
@@ -11740,13 +11745,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setHidden(true)
         );
 
-        final SpreadsheetViewport viewport = column.setAnchor(SpreadsheetViewportAnchor.NONE);
+        final SpreadsheetViewport viewport = SpreadsheetSelection.A1
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setSelection(
+                        Optional.of(
+                                column.setAnchor(SpreadsheetViewportAnchor.NONE)
+                        )
+                );
 
         this.navigateAndCheck(
                 engine,
                 viewport,
                 context,
-                SpreadsheetEngine.NO_VIEWPORT
+                SpreadsheetSelection.A1.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
         );
     }
 
@@ -11755,8 +11768,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetViewport viewport = SpreadsheetSelection.parseColumn("B")
-                .setAnchor(SpreadsheetViewportAnchor.NONE);
+        final SpreadsheetViewport viewport = SpreadsheetSelection.A1
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setSelection(
+                        Optional.of(
+                                SpreadsheetSelection.parseColumn("B")
+                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        )
+                );
 
         this.navigateAndCheck(
                 engine,
@@ -11767,7 +11787,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateSelectionLabelMissingNavigation() {
+    public void testNavigateSelectionLabelEmptyNavigations() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -11775,14 +11795,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels()
                 .save(LABEL.mapping(SpreadsheetSelection.parseCell("B2")));
 
-        final SpreadsheetViewport viewport = LABEL
-                .setAnchor(SpreadsheetViewportAnchor.NONE);
+        final SpreadsheetViewport viewport = SpreadsheetSelection.A1
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setSelection(
+                        Optional.of(
+                                LABEL.setAnchor(SpreadsheetViewportAnchor.NONE)
+                        )
+                );
 
         this.navigateAndCheck(
                 engine,
                 viewport,
                 context,
-                Optional.of(viewport)
+                viewport
         );
     }
 
@@ -11793,16 +11819,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.navigateAndCheck(
                 engine,
-                SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
-                        .setNavigations(
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCell("B2")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        ).setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.rightColumn()
                                 )
                         ),
                 context,
-                SpreadsheetSelection.parseCell("C2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCell("C2")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 
@@ -11811,10 +11850,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        this.navigateAndCheck(
-                engine,
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
                 SpreadsheetSelection.parseCell("B2")
                         .setAnchor(SpreadsheetViewportAnchor.NONE)
+        );
+
+        this.navigateAndCheck(
+                engine,
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(selection)
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.rightPixel(
@@ -11823,8 +11869,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ),
                 context,
-                SpreadsheetSelection.parseCell("E2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1
+                        .addColumn(3)
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(selection)
         );
     }
 
@@ -11839,7 +11888,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels()
                 .save(LABEL.mapping(selection));
 
-        final SpreadsheetViewport viewport = selection.setAnchor(SpreadsheetViewportAnchor.NONE);
+        final SpreadsheetViewport viewport = SpreadsheetSelection.A1
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setSelection(
+                        Optional.of(
+                                selection.setAnchor(SpreadsheetViewportAnchor.NONE)
+                        )
+                );
 
         this.navigateAndCheck(
                 engine,
@@ -11866,15 +11922,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.navigateAndCheck(
                 engine,
-                selection.setAnchor(SpreadsheetViewportAnchor.NONE)
-                        .setNavigations(
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        selection.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        ).setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.rightColumn()
                                 )
                         ),
                 context,
-                SpreadsheetSelection.parseCell("B1")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCell("B1")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 
@@ -11891,20 +11960,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.navigateAndCheck(
                 engine,
-                selection.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
-                        .setNavigations(
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        selection.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                )
+                        ).setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.extendRightColumn()
                                 )
                         ),
                 context,
-                SpreadsheetSelection.parseCellRange("A1:C1")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCellRange("A1:C1")
+                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                )
+                        )
         );
     }
 
     @Test
-    public void testNavigateHidden() {
+    public void testNavigateHiddenColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -11925,15 +12007,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.navigateAndCheck(
                 engine,
-                SpreadsheetSelection.parseColumn("B")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
-                        .setNavigations(
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumn("B")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        ).setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.leftColumn()
                                 )
                         ),
                 context,
-                SpreadsheetEngine.NO_VIEWPORT
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
         );
     }
 
@@ -11952,15 +12042,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.navigateAndCheck(
                 engine,
-                SpreadsheetSelection.parseColumn("A")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumn("A")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.rightColumn()
                                 )
                         ),
                 context,
-                SpreadsheetSelection.parseColumn("C").setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumn("C")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 
@@ -11979,15 +12084,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.navigateAndCheck(
                 engine,
-                SpreadsheetSelection.parseRow("2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseRow("2")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.downRow()
                                 )
                         ),
                 context,
-                SpreadsheetSelection.parseRow("4").setAnchor(SpreadsheetViewportAnchor.NONE)
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseRow("4")
+                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                )
+                        )
         );
     }
 

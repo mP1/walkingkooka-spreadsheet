@@ -337,7 +337,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 ),
                 "SpreadsheetDelta\n" +
                         "  viewport:\n" +
-                        "    A1:B2 BOTTOM_RIGHT\n" +
+                        "    rectangle:\n" +
+                        "      home: A1\n" +
+                        "      width: 100.0\n" +
+                        "      height: 40.0\n" +
+                        "    selection: cell-range A1:B2 BOTTOM_RIGHT\n" +
                         "  window:\n" +
                         "    A1:E5\n"
         );
@@ -692,7 +696,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 ),
                 "SpreadsheetDelta\n" +
                         "  viewport:\n" +
-                        "    A1:B2 BOTTOM_RIGHT\n" +
+                        "    rectangle:\n" +
+                        "      home: A1\n" +
+                        "      width: 100.0\n" +
+                        "      height: 40.0\n" +
+                        "    selection: cell-range A1:B2 BOTTOM_RIGHT\n" +
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
@@ -1032,7 +1040,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_TOTAL_HEIGHT,
                         this.window()
                 ),
-                "viewport: A1:B2 BOTTOM_RIGHT window: A1:E5");
+                "home: A1 width: 100.0 height: 40.0 selection: A1:B2 BOTTOM_RIGHT window: A1:E5");
     }
 
     @Test

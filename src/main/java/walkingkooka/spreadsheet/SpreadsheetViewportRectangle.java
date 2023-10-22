@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -109,6 +110,15 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         this.home = home.toRelative();
         this.width = width;
         this.height = height;
+    }
+
+    // SpreadsheetViewport..............................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetViewport} using this cell as the home.
+     */
+    public SpreadsheetViewport viewport() {
+        return SpreadsheetViewport.with(this);
     }
 
     /**
