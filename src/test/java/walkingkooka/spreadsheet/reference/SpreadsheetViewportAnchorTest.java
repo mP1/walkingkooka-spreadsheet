@@ -22,6 +22,7 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportAnchorTest implements ClassTesting<SpreadsheetViewportAnchor>,
@@ -36,6 +37,68 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
                         SpreadsheetViewportAnchor.ROW_RANGE + "_" + SpreadsheetViewportAnchor.COLUMN_RANGE
                 ),
                 SpreadsheetViewportAnchor.CELL_RANGE
+        );
+    }
+
+    // opposite.........................................................................................................
+
+    @Test
+    public void testOppositeNone() {
+        this.oppositeAndCheck(
+                SpreadsheetViewportAnchor.NONE,
+                SpreadsheetViewportAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testOppositeLeft() {
+        this.oppositeAndCheck(
+                SpreadsheetViewportAnchor.LEFT,
+                SpreadsheetViewportAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testOppositeTop() {
+        this.oppositeAndCheck(
+                SpreadsheetViewportAnchor.TOP,
+                SpreadsheetViewportAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testOppositeTopLeft() {
+        this.oppositeAndCheck(
+                SpreadsheetViewportAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testOppositeTopRight() {
+        this.oppositeAndCheck(
+                SpreadsheetViewportAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    private void oppositeAndCheck(final SpreadsheetViewportAnchor anchor,
+                                  final SpreadsheetViewportAnchor expected) {
+        oppositeAndCheck2(
+                anchor,
+                expected
+        );
+        oppositeAndCheck2(
+                expected,
+                anchor
+        );
+    }
+
+    private void oppositeAndCheck2(final SpreadsheetViewportAnchor anchor,
+                                   final SpreadsheetViewportAnchor expected) {
+        assertSame(
+                expected,
+                anchor.opposite()
         );
     }
 

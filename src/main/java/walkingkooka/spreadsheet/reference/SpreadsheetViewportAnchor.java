@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.NeverError;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.text.CaseKind;
@@ -83,6 +84,47 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
                                 find.name(), replace.name()
                         )
         );
+    }
+
+    /**
+     * Returns the opposite anchor.
+     */
+    public SpreadsheetViewportAnchor opposite() {
+        SpreadsheetViewportAnchor opposite;
+
+        switch (this) {
+            case NONE:
+                opposite = NONE;
+                break;
+            case TOP:
+                opposite = BOTTOM;
+                break;
+            case TOP_LEFT:
+                opposite = BOTTOM_RIGHT;
+                break;
+            case TOP_RIGHT:
+                opposite = BOTTOM_LEFT;
+                break;
+            case BOTTOM:
+                opposite = TOP;
+                break;
+            case BOTTOM_LEFT:
+                opposite = TOP_RIGHT;
+                break;
+            case BOTTOM_RIGHT:
+                opposite = TOP_LEFT;
+                break;
+            case LEFT:
+                opposite = RIGHT;
+                break;
+            case RIGHT:
+                opposite = LEFT;
+                break;
+            default:
+                opposite = NeverError.unhandledEnum(this, values());
+        }
+
+        return opposite;
     }
 
     /**
