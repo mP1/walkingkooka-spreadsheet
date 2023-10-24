@@ -51,22 +51,22 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(home(), -1, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(home(), 0, HEIGHT));
     }
 
     @Test
     public void testWithInvalidWidthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(home(), -2, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(home(), -1, HEIGHT));
     }
 
     @Test
     public void testWithInvalidHeightFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(home(), WIDTH, -1));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(home(), WIDTH, 0));
     }
 
     @Test
     public void testWithInvalidHeightFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(home(), WIDTH, -2));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetViewportRectangle.with(home(), WIDTH, -1));
     }
 
     @Test
@@ -100,26 +100,6 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     @Test
     public void testWithAbsoluteReference() {
         this.check(SpreadsheetViewportRectangle.with(this.home().toAbsolute(), WIDTH, HEIGHT));
-    }
-
-    @Test
-    public void testWithZeroWidth() {
-        this.check(
-                SpreadsheetViewportRectangle.with(this.home(), 0, HEIGHT),
-                this.home(),
-                0,
-                HEIGHT
-        );
-    }
-
-    @Test
-    public void testWithZeroHeight() {
-        this.check(
-                SpreadsheetViewportRectangle.with(this.home(), WIDTH, 0),
-                this.home(),
-                WIDTH,
-                0
-        );
     }
 
     // setHome..........................................................................................................
