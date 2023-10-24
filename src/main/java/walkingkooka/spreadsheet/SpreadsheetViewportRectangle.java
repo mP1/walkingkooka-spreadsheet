@@ -94,11 +94,11 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
                                                     final double width,
                                                     final double height) {
         checkHome(home);
-        if (width < 0) {
-            throw new IllegalArgumentException("Invalid width " + width + " < 0");
+        if (width <= 0) {
+            throw new IllegalArgumentException("Invalid width " + width + " <= 0");
         }
-        if (height < 0) {
-            throw new IllegalArgumentException("Invalid height " + width + " < 0");
+        if (height <= 0) {
+            throw new IllegalArgumentException("Invalid height " + width + " <= 0");
         }
         return new SpreadsheetViewportRectangle(home, width, height);
     }
