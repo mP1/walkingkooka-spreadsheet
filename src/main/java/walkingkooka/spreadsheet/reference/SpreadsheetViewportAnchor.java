@@ -151,22 +151,6 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the opposite {@link SpreadsheetCellReference}.
-     */
-    final SpreadsheetCellReference oppositeCell(final SpreadsheetCellRange range) {
-        // this.failIfNone(); unnecessary #column will fail if NONE.
-
-        return this.oppositeColumn(
-                        range.columnRange()
-                )
-                .setRow(
-                        this.oppositeRow(
-                                range.rowRange()
-                        )
-                );
-    }
-
-    /**
      * Uses this anchor to select the {@link SpreadsheetCellReference} from the given {@link SpreadsheetCellRange}..
      */
     final SpreadsheetCellReference cell(final SpreadsheetCellRange range) {
@@ -177,45 +161,25 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Uses this anchor to select the {@link SpreadsheetColumnReference} opposite to the one selected by this anchor.
-     */
-    final SpreadsheetColumnReference oppositeColumn(final SpreadsheetColumnReferenceRange range) {
-        this.failIfNone();
-
-        return this.isLeft() ?
-                range.end() :
-                range.begin();
-    }
-
-    /**
      * Uses this anchor to select the {@link SpreadsheetColumnReference} that will remain fixed.
      */
     final SpreadsheetColumnReference column(final SpreadsheetColumnReferenceRange range) {
-        return other(
-                range,
-                this.oppositeColumn(range)
-        );
-    }
-
-    /**
-     * Uses this anchor to select the {@link SpreadsheetRowReference} opposite to the one selected by this anchor.
-     */
-    final SpreadsheetRowReference oppositeRow(final SpreadsheetRowReferenceRange range) {
         this.failIfNone();
 
-        return this.isTop() ?
-                range.end() :
-                range.begin();
+        return this.isLeft() ?
+                range.begin() :
+                range.end();
     }
 
     /**
      * Uses this anchor to select the {@link SpreadsheetRowReference}
      */
     final SpreadsheetRowReference row(final SpreadsheetRowReferenceRange range) {
-        return other(
-                range,
-                this.oppositeRow(range)
-        );
+        this.failIfNone();
+
+        return this.isTop() ?
+                range.begin() :
+                range.end();
     }
 
     private boolean isLeft() {
@@ -240,17 +204,6 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
                         CaseKind.KEBAB
                 )
         );
-    }
-
-    /**
-     * Helper that returns the other / opposite range given the inputs.
-     */
-    private static <RR extends SpreadsheetColumnOrRowReference & Comparable<RR>> RR other(final SpreadsheetColumnOrRowReferenceRange<RR> range,
-                                                                                          final RR bound) {
-        final RR begin = range.begin();
-        return begin != bound ?
-                begin :
-                range.end();
     }
 
     public final static SpreadsheetViewportAnchor CELL = NONE;
