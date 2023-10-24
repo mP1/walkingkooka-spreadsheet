@@ -412,6 +412,138 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
+    // selection................................................................................................
+
+    @Test
+    public void testSelectionCell() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.A1,
+                SpreadsheetViewportAnchor.CELL
+        );
+    }
+
+    @Test
+    public void testSelectionColumn() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseColumn("B"),
+                SpreadsheetViewportAnchor.CELL
+        );
+    }
+
+    @Test
+    public void testSelectionRow() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseRow("3"),
+                SpreadsheetViewportAnchor.CELL
+        );
+    }
+
+    @Test
+    public void testSelectionCellRangeTopLeft() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetViewportAnchor.TOP_LEFT,
+                SpreadsheetSelection.A1
+        );
+    }
+
+    // A1 B1
+    // A2 B2
+    @Test
+    public void testSelectionCellRangeTopRight() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetViewportAnchor.TOP_RIGHT,
+                SpreadsheetSelection.parseCell("B1")
+        );
+    }
+
+    @Test
+    public void testSelectionCellRangeBottomLeft() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
+                SpreadsheetSelection.parseCell("A2")
+        );
+    }
+
+    // A1 B1
+    // A2 B2
+    @Test
+    public void testSelectionCellRangeBottomRight() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testSelectionColumnRangeLeft() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                SpreadsheetViewportAnchor.LEFT,
+                SpreadsheetSelection.parseColumn("A")
+        );
+    }
+
+    @Test
+    public void testSelectionColumnRangeRight() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseColumnRange("C:D"),
+                SpreadsheetViewportAnchor.RIGHT,
+                SpreadsheetSelection.parseColumn("D")
+        );
+    }
+
+    @Test
+    public void testSelectionRowRangeTop() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseRowRange("1:2"),
+                SpreadsheetViewportAnchor.TOP,
+                SpreadsheetSelection.parseRow("1")
+        );
+    }
+
+    @Test
+    public void testSelectionRowRangeBottom() {
+        this.selectionAndCheck(
+                SpreadsheetSelection.parseRowRange("3:4"),
+                SpreadsheetViewportAnchor.BOTTOM,
+                SpreadsheetSelection.parseRow("4")
+        );
+    }
+
+    private void selectionAndCheck(final SpreadsheetSelection selection,
+                                   final SpreadsheetViewportAnchor anchor) {
+        this.selectionAndCheck(
+                selection,
+                anchor,
+                selection
+        );
+    }
+
+    private void selectionAndCheck(final SpreadsheetSelection selection,
+                                   final SpreadsheetViewportAnchor anchor,
+                                   final SpreadsheetSelection expected) {
+        this.checkEquals(
+                expected,
+                anchor.selection(selection),
+                () -> anchor + " selection " + selection
+        );
+    }
+
+    @Test
+    public void testSelectionLabelFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetViewportAnchor.NONE.selection(
+                        SpreadsheetSelection.labelName("Label123")
+                )
+        );
+    }
+
+
     // oppositeSelection................................................................................................
 
     @Test
