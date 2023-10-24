@@ -543,49 +543,6 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
-    // oppositeCell.....................................................................................................
-
-    // B2 C2 D2
-    // B3 C3 D3
-    // B4 C4 D4
-
-    @Test
-    public void testOppositeCellTopLeft() {
-        this.oppositeCellAndCheck(
-                "B2:D4",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                "D4"
-        );
-    }
-
-    @Test
-    public void testOppositeCellBottomLeft() {
-        this.oppositeCellAndCheck(
-                "B2:D4",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                "D2"
-        );
-    }
-
-    @Test
-    public void testOppositeCellBottomRight() {
-        this.oppositeCellAndCheck(
-                "B2:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "B2"
-        );
-    }
-
-    private void oppositeCellAndCheck(final String range,
-                                      final SpreadsheetViewportAnchor anchor,
-                                      final String cell) {
-        this.checkEquals(
-                SpreadsheetSelection.parseCell(cell),
-                anchor.oppositeCell(SpreadsheetSelection.parseCellRange(range)),
-                () -> anchor + " oppositeCell " + range
-        );
-    }
-
     // cell................................................................................,,...........................
 
     @Test
@@ -629,38 +586,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
 
         this.checkNotEquals(
                 fixed,
-                anchor.oppositeCell(parsed),
-                () -> anchor + " oppositeCell " + range
-        );
-    }
-
-    // column...........................................................................................................
-
-    @Test
-    public void testOppositeColumnLeft() {
-        this.oppositeColumnAndCheck(
-                "B:D",
-                SpreadsheetViewportAnchor.LEFT,
-                "D"
-        );
-    }
-
-    @Test
-    public void testOppositeColumnRight() {
-        this.oppositeColumnAndCheck(
-                "B:D",
-                SpreadsheetViewportAnchor.RIGHT,
-                "B"
-        );
-    }
-
-    private void oppositeColumnAndCheck(final String range,
-                                        final SpreadsheetViewportAnchor anchor,
-                                        final String column) {
-        this.checkEquals(
-                SpreadsheetSelection.parseColumn(column),
-                anchor.oppositeColumn(SpreadsheetSelection.parseColumnRange(range)),
-                () -> anchor + " oppositeColumn " + range
+                anchor.opposite().cell(parsed),
+                () -> anchor + " opposite cell " + range
         );
     }
 
@@ -698,38 +625,9 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
 
         this.checkNotEquals(
                 fixed,
-                anchor.oppositeColumn(parsed),
-                () -> anchor + " oppositeColumn " + range
-        );
-    }
-
-    // oppositeRow......................................................................................................
-
-    @Test
-    public void testOppositeRowTop() {
-        this.oppositeRowAndCheck(
-                "2:4",
-                SpreadsheetViewportAnchor.TOP,
-                "4"
-        );
-    }
-
-    @Test
-    public void testOppositeRowBottom() {
-        this.oppositeRowAndCheck(
-                "2:4",
-                SpreadsheetViewportAnchor.BOTTOM,
-                "2"
-        );
-    }
-
-    private void oppositeRowAndCheck(final String range,
-                                     final SpreadsheetViewportAnchor anchor,
-                                     final String row) {
-        this.checkEquals(
-                SpreadsheetSelection.parseRow(row),
-                anchor.oppositeRow(SpreadsheetSelection.parseRowRange(range)),
-                () -> anchor + " oppositeRow " + range
+                anchor.opposite()
+                        .column(parsed),
+                () -> anchor + " opposite column " + range
         );
     }
 
@@ -767,8 +665,9 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
 
         this.checkNotEquals(
                 fixed,
-                anchor.oppositeRow(parsed),
-                () -> anchor + " oppositeRow " + range
+                anchor.opposite()
+                        .row(parsed),
+                () -> anchor + " opposite row " + range
         );
     }
 
