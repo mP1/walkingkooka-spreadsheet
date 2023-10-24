@@ -151,29 +151,6 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
-     * Returns the {@link SpreadsheetSelection} opposite the given {@link SpreadsheetViewportAnchor}
-     */
-    final SpreadsheetSelection oppositeSelection(final SpreadsheetSelection selection) {
-        if (selection.isLabelName()) {
-            throw new IllegalArgumentException("Label not supported: " + selection);
-        }
-
-        return this == NONE ?
-                selection :
-                selection.isCellRange() ?
-                        this.oppositeCell(selection.toCellRange()) :
-                        selection.isColumnReferenceRange() ?
-                                this.oppositeColumn(selection.toColumnRange()) :
-                                selection.isRowReferenceRange() ?
-                                        this.oppositeRow(selection.toRowRange()) :
-                                        this.oppositeSelectionFail(selection);
-    }
-
-    private SpreadsheetSelection oppositeSelectionFail(final SpreadsheetSelection selection) {
-        throw new UnsupportedOperationException(selection.toString());
-    }
-
-    /**
      * Uses this anchor to select the opposite {@link SpreadsheetCellReference}.
      */
     final SpreadsheetCellReference oppositeCell(final SpreadsheetCellRange range) {

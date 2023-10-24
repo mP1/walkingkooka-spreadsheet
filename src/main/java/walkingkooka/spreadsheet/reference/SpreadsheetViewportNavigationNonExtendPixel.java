@@ -42,7 +42,8 @@ abstract class SpreadsheetViewportNavigationNonExtendPixel extends SpreadsheetVi
 
         return windows.test(
                 selection.anchor()
-                        .oppositeSelection(
+                        .opposite()
+                        .selection(
                                 selection.selection()
                         )
         ) ?

@@ -58,7 +58,8 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
                 if (
                         windows.test(
                                 movedSelection.anchor()
-                                        .oppositeSelection(
+                                        .opposite()
+                                        .selection(
                                                 movedSelection.selection()
                                         )
                         )
