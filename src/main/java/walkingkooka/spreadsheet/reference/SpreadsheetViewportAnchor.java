@@ -128,6 +128,29 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     }
 
     /**
+     * Returns the {@link SpreadsheetSelection} for the given {@link SpreadsheetViewportAnchor}
+     */
+    final SpreadsheetSelection selection(final SpreadsheetSelection selection) {
+        if (selection.isLabelName()) {
+            throw new IllegalArgumentException("Label not supported: " + selection);
+        }
+
+        return this == NONE ?
+                selection :
+                selection.isCellRange() ?
+                        this.cell(selection.toCellRange()) :
+                        selection.isColumnReferenceRange() ?
+                                this.column(selection.toColumnRange()) :
+                                selection.isRowReferenceRange() ?
+                                        this.row(selection.toRowRange()) :
+                                        this.selectionFail(selection);
+    }
+
+    private SpreadsheetSelection selectionFail(final SpreadsheetSelection selection) {
+        throw new UnsupportedOperationException(selection.toString());
+    }
+
+    /**
      * Returns the {@link SpreadsheetSelection} opposite the given {@link SpreadsheetViewportAnchor}
      */
     final SpreadsheetSelection oppositeSelection(final SpreadsheetSelection selection) {
