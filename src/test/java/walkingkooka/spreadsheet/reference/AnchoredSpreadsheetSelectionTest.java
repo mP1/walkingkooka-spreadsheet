@@ -201,7 +201,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     public void testJsonMarshallCell() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        .setDefaultAnchor()
         );
     }
 
@@ -217,7 +217,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     public void testJsonMarshallColumn() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetSelection.parseColumn("B")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        .setDefaultAnchor()
         );
     }
 
@@ -233,7 +233,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     public void testJsonMarshallRow() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetSelection.parseColumn("B")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        .setDefaultAnchor()
         );
     }
 

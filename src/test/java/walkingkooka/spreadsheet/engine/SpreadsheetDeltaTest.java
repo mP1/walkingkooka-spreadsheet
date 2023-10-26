@@ -667,7 +667,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 .setSelection(
                                         Optional.of(
                                                 SpreadsheetSelection.parseColumn("C")
-                                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                        .setDefaultAnchor()
                                         )
                                 )
                 )
@@ -1043,7 +1043,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 .setSelection(
                                         Optional.of(
                                                 SpreadsheetSelection.parseColumn("C")
-                                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                        .setDefaultAnchor()
                                         )
                                 )
                 )
@@ -1990,7 +1990,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 .setSelection(
                                         Optional.of(
                                                 SpreadsheetSelection.parseColumn("C")
-                                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                        .setDefaultAnchor()
                                         )
                                 )
                 )
@@ -2316,7 +2316,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 .setSelection(
                                         Optional.of(
                                                 SpreadsheetSelection.parseRow("3")
-                                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                        .setDefaultAnchor()
                                         )
                                 )
                 )
