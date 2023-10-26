@@ -768,7 +768,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("B2")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );
@@ -796,7 +796,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("B")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );
@@ -824,7 +824,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("2")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );
@@ -1008,7 +1008,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("C3")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );

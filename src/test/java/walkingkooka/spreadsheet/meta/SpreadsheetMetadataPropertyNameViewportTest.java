@@ -53,7 +53,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("AB")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );
@@ -67,7 +67,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetLabelName.labelName("Label123")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );
@@ -81,7 +81,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("1234")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );

@@ -11750,7 +11750,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .viewport()
                 .setSelection(
                         Optional.of(
-                                column.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                column.setDefaultAnchor()
                         )
                 );
 
@@ -11774,7 +11774,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .setSelection(
                         Optional.of(
                                 SpreadsheetSelection.parseColumn("B")
-                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        .setDefaultAnchor()
                         )
                 );
 
@@ -11800,7 +11800,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .viewport()
                 .setSelection(
                         Optional.of(
-                                LABEL.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                LABEL.setDefaultAnchor()
                         )
                 );
 
@@ -11825,7 +11825,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("B2")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         ).setNavigations(
                                 Lists.of(
@@ -11839,7 +11839,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("C2")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );
@@ -11852,7 +11852,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
                 SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        .setDefaultAnchor()
         );
 
         this.navigateAndCheck(
@@ -11893,7 +11893,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .viewport()
                 .setSelection(
                         Optional.of(
-                                selection.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                selection.setDefaultAnchor()
                         )
                 );
 
@@ -11927,7 +11927,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .viewport()
                         .setSelection(
                                 Optional.of(
-                                        selection.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        selection.setDefaultAnchor()
                                 )
                         ).setNavigations(
                                 Lists.of(
@@ -11941,7 +11941,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("B1")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );
@@ -12013,7 +12013,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("B")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         ).setNavigations(
                                 Lists.of(
@@ -12048,7 +12048,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("A")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
                         .setNavigations(
@@ -12063,7 +12063,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("C")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );
@@ -12090,7 +12090,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("2")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
                         .setNavigations(
@@ -12105,7 +12105,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("4")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );

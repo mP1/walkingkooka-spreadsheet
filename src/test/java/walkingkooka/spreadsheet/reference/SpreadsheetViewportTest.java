@@ -104,7 +104,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
 
         final Optional<AnchoredSpreadsheetSelection> differentSelection = Optional.of(
                 SpreadsheetSelection.parseCell("B2")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                        .setDefaultAnchor()
         );
 
         this.checkNotEquals(
@@ -214,7 +214,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         RECTANGLE,
                         Optional.of(
                                 SpreadsheetSelection.parseCell("Z9")
-                                        .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        .setDefaultAnchor()
                         ),
                         NAVIGATIONS
                 )
@@ -240,7 +240,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testTreePrint() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.A1
-                        .setAnchor(SpreadsheetViewportAnchor.NONE),
+                        .setDefaultAnchor(),
                 "cell A1" + EOL
         );
     }
@@ -249,7 +249,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testTreePrint2() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseRow("12")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE),
+                        .setDefaultAnchor(),
                 "row 12" + EOL
         );
     }
@@ -329,7 +329,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     @Test
     public void testUrlFragmentCell() {
         this.urlFragmentAndCheck(
-                SpreadsheetSelection.A1.setAnchor(SpreadsheetViewportAnchor.NONE),
+                SpreadsheetSelection.A1.setDefaultAnchor(),
                 "/cell/A1"
         );
     }
@@ -356,7 +356,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testUrlFragmentColumnNone() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseColumn("Z")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE),
+                        .setDefaultAnchor(),
                 "/column/Z"
         );
     }
@@ -383,7 +383,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testUrlFragmentLabelNone() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseCellOrLabel("Label123")
-                        .setAnchor(SpreadsheetViewportAnchor.NONE),
+                        .setDefaultAnchor(),
                 "/cell/Label123"
         );
     }
@@ -430,7 +430,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         .setSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("B2")
-                                                .setAnchor(SpreadsheetViewportAnchor.NONE)
+                                                .setDefaultAnchor()
                                 )
                         )
         );
@@ -457,7 +457,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         .viewport()
                         .setSelection(
                                 Optional.of(
-                                        COLUMN.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        COLUMN.setDefaultAnchor()
                                 )
                         )
         );
@@ -484,7 +484,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         .viewport()
                         .setSelection(
                                 Optional.of(
-                                        ROW.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        ROW.setDefaultAnchor()
                                 )
                         )
         );
@@ -525,7 +525,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         .viewport()
                         .setSelection(
                                 Optional.of(
-                                        CELL.setAnchor(SpreadsheetViewportAnchor.NONE)
+                                        CELL.setDefaultAnchor()
                                 )
                         ),
                 RECTANGLE + " selection: " + CELL
