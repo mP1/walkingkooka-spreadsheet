@@ -93,14 +93,25 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
     public static SpreadsheetViewportRectangle with(final SpreadsheetCellReference home,
                                                     final double width,
                                                     final double height) {
-        checkHome(home);
+        return new SpreadsheetViewportRectangle(
+                checkHome(home),
+                checkWidth(width),
+                checkHeight(height)
+        );
+    }
+
+    private static double checkWidth(final double width) {
         if (width <= 0) {
             throw new IllegalArgumentException("Invalid width " + width + " <= 0");
         }
+        return width;
+    }
+
+    private static double checkHeight(final double height) {
         if (height <= 0) {
-            throw new IllegalArgumentException("Invalid height " + width + " <= 0");
+            throw new IllegalArgumentException("Invalid height " + height + " <= 0");
         }
-        return new SpreadsheetViewportRectangle(home, width, height);
+        return height;
     }
 
     private SpreadsheetViewportRectangle(final SpreadsheetCellReference home,
@@ -151,8 +162,8 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
 
     private final SpreadsheetCellReference home;
 
-    private static void checkHome(final SpreadsheetCellReference home) {
-        Objects.requireNonNull(home, "home");
+    private static SpreadsheetCellReference checkHome(final SpreadsheetCellReference home) {
+        return Objects.requireNonNull(home, "home");
     }
 
     public double width() {
