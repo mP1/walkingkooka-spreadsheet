@@ -188,6 +188,37 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         this.checkHeight(different);
     }
 
+    // setHeight.........................................................................................................
+
+    @Test
+    public void testSetHeightInvalidFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createObject()
+                        .setHeight(0)
+        );
+    }
+
+    @Test
+    public void testSetHeightSame() {
+        final SpreadsheetViewportRectangle rectangle = this.createObject();
+        assertSame(
+                rectangle,
+                rectangle.setHeight(rectangle.height())
+        );
+    }
+
+    @Test
+    public void testSetHeightDifferent() {
+        final SpreadsheetViewportRectangle rectangle = this.createObject();
+        final double height = HEIGHT * 2;
+
+        final SpreadsheetViewportRectangle different = rectangle.setHeight(height);
+        this.checkHome(different);
+        this.checkWidth(different);
+        this.checkHeight(different, height);
+    }
+    
     // equals...........................................................................................................
 
     @Test

@@ -188,6 +188,18 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         return this.height;
     }
 
+    public SpreadsheetViewportRectangle setHeight(final double height) {
+        checkHeight(height);
+
+        return this.height == height ?
+                this :
+                new SpreadsheetViewportRectangle(
+                        this.home,
+                        this.width,
+                        height
+                );
+    }
+
     private final double height;
 
     // Object............................................................................................................
