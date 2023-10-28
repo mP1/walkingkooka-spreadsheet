@@ -170,6 +170,18 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         return this.width;
     }
 
+    public SpreadsheetViewportRectangle setWidth(final double width) {
+        checkWidth(width);
+
+        return this.width == width ?
+                this :
+                new SpreadsheetViewportRectangle(
+                        this.home,
+                        width,
+                        this.height
+                );
+    }
+
     private final double width;
 
     public double height() {
