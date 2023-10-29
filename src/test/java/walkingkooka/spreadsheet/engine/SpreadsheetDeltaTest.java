@@ -652,15 +652,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchAllNoViewport() {
         this.patchViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION
+                SpreadsheetDelta.NO_VIEWPORT,
+                SpreadsheetDelta.NO_VIEWPORT
         );
     }
 
     @Test
     public void testPatchAllViewport() {
         this.patchViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT,
                 Optional.of(
                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                 .viewport()
@@ -1028,15 +1028,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellsNoSelection() {
         this.patchCellViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION
+                SpreadsheetDelta.NO_VIEWPORT,
+                SpreadsheetDelta.NO_VIEWPORT
         );
     }
 
     @Test
     public void testPatchCellsViewport() {
         this.patchCellViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT,
                 Optional.of(
                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                 .viewport()
@@ -1975,15 +1975,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsNoSelection() {
         this.patchColumnViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION
+                SpreadsheetDelta.NO_VIEWPORT,
+                SpreadsheetDelta.NO_VIEWPORT
         );
     }
 
     @Test
     public void testPatchColumnsViewport() {
         this.patchColumnViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT,
                 Optional.of(
                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                 .viewport()
@@ -2301,15 +2301,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsNoSelection() {
         this.patchRowViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION
+                SpreadsheetDelta.NO_VIEWPORT,
+                SpreadsheetDelta.NO_VIEWPORT
         );
     }
 
     @Test
     public void testPatchRowsViewport() {
         this.patchRowViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                SpreadsheetDelta.NO_VIEWPORT,
                 Optional.of(
                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                 .viewport()
