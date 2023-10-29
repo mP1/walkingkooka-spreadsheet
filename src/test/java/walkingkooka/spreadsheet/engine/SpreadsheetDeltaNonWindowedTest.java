@@ -54,7 +54,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeNoCells() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -102,7 +102,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeCells() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -133,7 +133,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeColumns() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         Sets.of(
                                 this.a(),
@@ -161,7 +161,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeLabels() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         this.labels(),
@@ -187,7 +187,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeRows() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -215,7 +215,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeCellsAndLabels() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         this.labels(),
@@ -251,7 +251,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeDeletedCells() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         this.labels(),
@@ -289,7 +289,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeDeletedColumns() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -312,7 +312,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeDeletedRows() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -335,7 +335,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeColumnWidths() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -368,7 +368,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testPrintTreeRowHeights() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -488,7 +488,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson()),
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -511,7 +511,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.LABELS_PROPERTY, labelsJson()),
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         this.labels(),
@@ -534,7 +534,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.DELETED_CELLS_PROPERTY, deletedCellsJson()),
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -554,7 +554,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshall() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -597,7 +597,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallCells() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -619,7 +619,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallColumns() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         this.columns(),
                         SpreadsheetDelta.NO_LABELS,
@@ -641,7 +641,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallRows() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -663,7 +663,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallCellsAndCellsToLabels() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         this.labels(),
@@ -686,7 +686,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallCellsDeletedCells() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -709,7 +709,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallCellsDeletedColumns() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -732,7 +732,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallCellsDeletedRows() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -755,7 +755,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallCellsColumnWidths() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -778,7 +778,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallCellsRowHeights() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -801,7 +801,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallCellsColumnWidthsRowHeights() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -825,7 +825,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testMarshallCellsRowCountRowCount() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -891,7 +891,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testToStringDeletedCells() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         this.labels(),
@@ -911,7 +911,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testToStringDeletedColumns() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -931,7 +931,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testToStringDeletedRows() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -951,7 +951,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testToStringColumnWidths() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -971,7 +971,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testToStringRowHeights() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -991,7 +991,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testToStringColumnWidthsRowHeights() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,
@@ -1011,7 +1011,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testToStringRowCountRowCount() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT_SELECTION,
+                        SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
                         SpreadsheetDelta.NO_LABELS,

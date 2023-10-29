@@ -77,7 +77,7 @@ import java.util.stream.Collectors;
 public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         TreePrintable {
 
-    public final static Optional<SpreadsheetViewport> NO_VIEWPORT_SELECTION = Optional.empty();
+    public final static Optional<SpreadsheetViewport> NO_VIEWPORT = Optional.empty();
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Set<SpreadsheetColumn> NO_COLUMNS = Sets.empty();
@@ -100,7 +100,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * A {@link SpreadsheetDelta} with everything empty.
      */
     public final static SpreadsheetDelta EMPTY = SpreadsheetDeltaNonWindowed.withNonWindowed(
-            NO_VIEWPORT_SELECTION,
+            NO_VIEWPORT,
             NO_CELLS,
             NO_COLUMNS,
             NO_LABELS,
