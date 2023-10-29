@@ -227,7 +227,13 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     // Json.............................................................................................................
 
     static {
-        SpreadsheetSelection.A1.viewportRectangle(100, 100); // force class init
+        SpreadsheetSelection.A1.viewportRectangle(100, 100)
+                .viewport()
+                .setSelection(
+                        Optional.of(
+                                SpreadsheetSelection.A1.setDefaultAnchor()
+                        )
+                ); // force class init
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetViewport.class),
                 SpreadsheetViewport::unmarshall,
