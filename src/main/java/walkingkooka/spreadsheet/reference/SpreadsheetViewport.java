@@ -135,12 +135,13 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     public SpreadsheetViewport setNavigations(final List<SpreadsheetViewportNavigation> navigations) {
         Objects.requireNonNull(navigations, "navigations");
 
-        return this.navigations.equals(navigations) ?
+        final List<SpreadsheetViewportNavigation> copy = Lists.immutable(navigations);
+        return this.navigations.equals(copy) ?
                 this :
                 new SpreadsheetViewport(
                         this.rectangle,
                         this.selection,
-                        navigations
+                        copy
                 );
     }
 
