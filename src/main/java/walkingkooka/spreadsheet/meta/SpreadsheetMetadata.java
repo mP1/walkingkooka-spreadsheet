@@ -940,6 +940,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
 
     static {
         SpreadsheetMetadataPropertyName.CREATOR.value();
+        SpreadsheetMetadataPropertyName.VIEWPORT.value();
 
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetMetadata.class),
