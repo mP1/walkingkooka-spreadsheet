@@ -175,6 +175,41 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         );
     }
 
+    @Test
+    public void testSetNavigationsDifferentCopied() {
+        final SpreadsheetViewport selection = this.createObject();
+        final List<SpreadsheetViewportNavigation> navigations = Lists.array();
+        navigations.add(
+                SpreadsheetViewportNavigation.extendRightColumn()
+        );
+
+        this.checkNotEquals(
+                NAVIGATIONS,
+                navigations,
+                "different navigations"
+        );
+
+
+        final SpreadsheetViewport differentSelection = selection.setNavigations(navigations);
+        assertNotSame(
+                selection,
+                differentSelection
+        );
+        this.checkSelection(
+                differentSelection,
+                selection.selection()
+        );
+
+        navigations.clear();
+
+        this.checkNavigations(
+                differentSelection,
+                Lists.of(
+                        SpreadsheetViewportNavigation.extendRightColumn()
+                )
+        );
+    }
+
     private void checkSelection(final SpreadsheetViewport viewport,
                                 final Optional<AnchoredSpreadsheetSelection> selection) {
         this.checkEquals(
