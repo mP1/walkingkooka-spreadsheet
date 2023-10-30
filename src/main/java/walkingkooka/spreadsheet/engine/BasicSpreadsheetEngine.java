@@ -1765,6 +1765,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context
                 );
             }
+        } else {
+            result = this.navigate0(
+                    notLabelViewport,
+                    context
+            );
         }
 
         return result;

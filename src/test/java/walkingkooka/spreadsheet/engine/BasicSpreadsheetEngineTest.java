@@ -11846,6 +11846,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testNavigateRightPixels() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        this.navigateAndCheck(
+                engine,
+                SpreadsheetSelection.A1
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+                        .setNavigations(
+                                Lists.of(
+                                        SpreadsheetViewportNavigation.rightPixel(
+                                                3 * (int) COLUMN_WIDTH - 1
+                                        )
+                                )
+                        ),
+                context,
+                SpreadsheetSelection.A1
+                        .addColumn(3)
+                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                        .viewport()
+
+        );
+    }
+
+    @Test
     public void testNavigateCellRightPixels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
