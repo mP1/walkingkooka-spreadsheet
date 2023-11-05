@@ -523,7 +523,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // toColumnOrColumnRange............................................................................................
 
     @Test
-    public void testToColumnOrColumnRangeFails() {
+    public void testToColumnOrColumnRange() {
         final SpreadsheetCellRange selection = this.createSelection();
         this.toColumnOrColumnRangeAndCheck(
                 selection,

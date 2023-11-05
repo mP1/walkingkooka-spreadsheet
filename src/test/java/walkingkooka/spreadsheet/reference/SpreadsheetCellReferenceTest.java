@@ -251,7 +251,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // toColumnOrColumnRange............................................................................................
 
     @Test
-    public void testToColumnOrColumnRangeFails() {
+    public void testToColumnOrColumnRange() {
         final SpreadsheetCellReference selection = this.createSelection();
         this.toColumnOrColumnRangeAndCheck(
                 selection,
