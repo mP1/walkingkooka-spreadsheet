@@ -1194,6 +1194,17 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // toRowOrRowRange..................................................................................................
+
+    @Test
+    public void testToRowOrRowRange() {
+        final SpreadsheetRowReferenceRange selection = this.createSelection();
+        this.toRowOrRowRangeAndCheck(
+                selection,
+                selection
+        );
+    }
+    
     // IterableTesting..................................................................................................
 
     @Test

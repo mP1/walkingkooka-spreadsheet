@@ -287,6 +287,17 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // toRowOrRowRange..................................................................................................
+
+    @Test
+    public void testToRowOrRowRange() {
+        final SpreadsheetCellReference selection = this.createSelection();
+        this.toRowOrRowRangeAndCheck(
+                selection,
+                selection.toRow()
+        );
+    }
+
     // simplify.........................................................................................................
 
     @Test
