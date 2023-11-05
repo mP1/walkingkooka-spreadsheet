@@ -755,6 +755,22 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public abstract SpreadsheetColumnReferenceRange toColumnRange();
 
+    public final SpreadsheetSelection toColumnOrColumnRange() {
+        final SpreadsheetSelection selection;
+
+        if (this.isCellReference() || this.isColumnReference()) {
+            selection = this.toColumn();
+        } else {
+            if (this.isCellRange() || this.isColumnReferenceRange()) {
+                selection = this.toColumnRange();
+            } else {
+                throw new UnsupportedOperationException(this.toString());
+            }
+        }
+
+        return selection;
+    }
+
     /**
      * If possible returns a {@link SpreadsheetRowReference}
      */

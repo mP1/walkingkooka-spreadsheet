@@ -520,6 +520,17 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    // toColumnOrColumnRange............................................................................................
+
+    @Test
+    public void testToColumnOrColumnRangeFails() {
+        final SpreadsheetCellRange selection = this.createSelection();
+        this.toColumnOrColumnRangeAndCheck(
+                selection,
+                selection.toColumnRange()
+        );
+    }
+
     // toRow............................................................................................................
 
     @Test

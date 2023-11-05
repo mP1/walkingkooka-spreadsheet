@@ -269,6 +269,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // toColumnOrColumnRange............................................................................................
+
+    final void toColumnOrColumnRangeAndCheck(final S selection,
+                                             final SpreadsheetSelection expected) {
+        this.checkEquals(
+                expected,
+                selection.toColumnOrColumnRange()
+        );
+    }
+
+    final void toColumnOrColumnRangeFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection()
+                        .toColumnOrColumnRange()
+        );
+    }
+    
     // toRow.........................................................................................................
 
     final void toRowFails() {

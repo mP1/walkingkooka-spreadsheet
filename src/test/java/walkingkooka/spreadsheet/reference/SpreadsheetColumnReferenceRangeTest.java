@@ -1211,6 +1211,17 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // toColumnOrColumnRange............................................................................................
+
+    @Test
+    public void testToColumnOrColumnRangeFails() {
+        final SpreadsheetColumnReferenceRange selection = this.createSelection();
+        this.toColumnOrColumnRangeAndCheck(
+                selection,
+                selection.toColumnRange()
+        );
+    }
+
     // toRow.........................................................................................................
 
     @Test
