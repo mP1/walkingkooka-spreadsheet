@@ -721,6 +721,16 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
+     * A cell or cell ranges will return this otherwise a {@link UnsupportedOperationException} will be thrown.
+     */
+    public final SpreadsheetSelection toCellOrCellRange() {
+        if (false == this.isCellReference() && false == this.isCellRange()) {
+            throw new UnsupportedOperationException(this.toString());
+        }
+        return this;
+    }
+
+    /**
      * If possible returns a {@link SpreadsheetColumnReference}.
      * <br>
      * A cell will return the column component.

@@ -18,9 +18,18 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
+
 public abstract class SpreadsheetCellReferenceOrRangeTestCase<R extends SpreadsheetCellReferenceOrRange> extends SpreadsheetExpressionReferenceTestCase<R> {
 
     SpreadsheetCellReferenceOrRangeTestCase() {
         super();
+    }
+
+    // toCellOrCellRange................................................................................................
+
+    @Test
+    public final void testToCellOrCellRange() {
+        this.toCellOrCellRangeAndCheck();
     }
 }
