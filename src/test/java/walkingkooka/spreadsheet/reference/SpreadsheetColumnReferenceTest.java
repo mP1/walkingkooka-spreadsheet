@@ -252,6 +252,17 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.toCellRangeWithNullFunctionFails();
     }
 
+    // toColumnOrColumnRange............................................................................................
+
+    @Test
+    public void testToColumnOrColumnRangeFails() {
+        final SpreadsheetColumnReference selection = this.createSelection();
+        this.toColumnOrColumnRangeAndCheck(
+                selection,
+                selection
+        );
+    }
+
     // toRelative........................................................................................................
 
     @Test
