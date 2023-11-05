@@ -1202,7 +1202,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     // toColumnRange....................................................................................................
 
     @Test
-    public void testToColumnRangeFails() {
+    public void testToColumnRange() {
         final SpreadsheetColumnReferenceRange range = SpreadsheetSelection.parseColumnRange("A:B");
 
         this.toColumnRangeAndCheck(
@@ -1214,7 +1214,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     // toColumnOrColumnRange............................................................................................
 
     @Test
-    public void testToColumnOrColumnRangeFails() {
+    public void testToColumnOrColumnRange() {
         final SpreadsheetColumnReferenceRange selection = this.createSelection();
         this.toColumnOrColumnRangeAndCheck(
                 selection,
