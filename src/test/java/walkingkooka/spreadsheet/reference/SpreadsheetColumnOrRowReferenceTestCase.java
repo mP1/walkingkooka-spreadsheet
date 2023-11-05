@@ -300,6 +300,13 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.toCellFails();
     }
 
+    // toCellOrCellRange................................................................................................
+
+    @Test
+    public final void testToCellOrCellRangeFails() {
+        this.toCellOrCellRangeFails();
+    }
+
     // helper............................................................................................................
 
     final R createSelection() {
