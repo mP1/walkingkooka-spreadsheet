@@ -786,6 +786,22 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public abstract SpreadsheetRowReferenceRange toRowRange();
 
+    public final SpreadsheetSelection toRowOrRowRange() {
+        final SpreadsheetSelection selection;
+
+        if (this.isCellReference() || this.isRowReference()) {
+            selection = this.toRow();
+        } else {
+            if (this.isCellRange() || this.isRowReferenceRange()) {
+                selection = this.toRowRange();
+            } else {
+                throw new UnsupportedOperationException(this.toString());
+            }
+        }
+
+        return selection;
+    }
+
     /**
      * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
      * The sub class {@link SpreadsheetLabelName} will always return <code>this</code>.

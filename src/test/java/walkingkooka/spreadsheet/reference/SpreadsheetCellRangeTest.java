@@ -559,6 +559,17 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    // toRowOrRowRange..................................................................................................
+
+    @Test
+    public void testToRowOrRowRange() {
+        final SpreadsheetCellRange selection = this.createSelection();
+        this.toRowOrRowRangeAndCheck(
+                selection,
+                selection.toRowRange()
+        );
+    }
+
     // test.............................................................................................................
 
     @Test

@@ -263,6 +263,13 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    // toRowOrRowRange..................................................................................................
+
+    @Test
+    public void testToRowOrRowRangeFails() {
+        this.toRowOrRowRangeFails();
+    }
+    
     // toRelative........................................................................................................
 
     @Test
