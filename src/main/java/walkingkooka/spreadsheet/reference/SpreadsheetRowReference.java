@@ -212,7 +212,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     // range/rowRange.......................................................................................
 
     /**
-     * Creates a {@link Range} parse the this and the other {@link SpreadsheetRowReference}.
+     * Creates a {@link Range} using the given {@link SpreadsheetRowReference}.
      */
     public Range<SpreadsheetRowReference> range(final SpreadsheetRowReference other) {
         Objects.requireNonNull(other, "other");
@@ -224,7 +224,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     /**
-     * Creates a {@link SpreadsheetRowReferenceRange} parse the this and the other {@link SpreadsheetRowReference}.
+     * Creates a {@link SpreadsheetRowReferenceRange} using the given {@link SpreadsheetRowReference}.
      */
     public SpreadsheetRowReferenceRange rowRange(final SpreadsheetRowReference other) {
         return SpreadsheetRowReferenceRange.with(this.range(other));
