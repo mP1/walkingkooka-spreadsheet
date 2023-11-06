@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.Range;
+import walkingkooka.collect.RangeBound;
 import walkingkooka.text.CharSequences;
 
 import java.util.EnumSet;
@@ -82,6 +83,28 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
                 .cellRange(
                         columnEnd.setRow(rowEnd)
                 );
+    }
+
+    // add..............................................................................................................
+
+    @Override
+    public SpreadsheetColumnReferenceRange add(final int value) {
+        return this.add0(value)
+                .toColumnRange();
+    }
+
+    @Override
+    SpreadsheetColumnReferenceRange addNonZero(final int value) {
+        return this.setRange(
+                Range.with(
+                        RangeBound.inclusive(
+                                this.begin().add(value)
+                        ),
+                        RangeBound.inclusive(
+                                this.end().add(value)
+                        )
+                )
+        );
     }
 
     // testXXX.........................................................................................................

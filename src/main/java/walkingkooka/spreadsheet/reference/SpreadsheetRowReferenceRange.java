@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.RangeBound;
 import walkingkooka.text.CharSequences;
 
 import java.util.EnumSet;
@@ -76,6 +77,28 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
         return with(range);
     }
 
+    // add..............................................................................................................
+
+    @Override
+    public SpreadsheetRowReferenceRange add(final int value) {
+        return this.add0(value)
+                .toRowRange();
+    }
+
+    @Override
+    SpreadsheetRowReferenceRange addNonZero(final int value) {
+        return this.setRange(
+                Range.with(
+                        RangeBound.inclusive(
+                                this.begin().add(value)
+                        ),
+                        RangeBound.inclusive(
+                                this.end().add(value)
+                        )
+                )
+        );
+    }
+    
     // testXXX.........................................................................................................
 
     @Override
