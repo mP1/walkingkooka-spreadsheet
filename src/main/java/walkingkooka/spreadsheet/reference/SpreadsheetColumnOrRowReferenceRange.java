@@ -115,6 +115,19 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     abstract SpreadsheetColumnOrRowReferenceRange<?> replace(final Range<T> range);
 
     /**
+     * Adds a delta to the value and returns an instance with the result.
+     */
+    abstract SpreadsheetColumnOrRowReferenceRange add(final int value);
+
+    final SpreadsheetColumnOrRowReferenceRange add0(final int value) {
+        return 0 == value ?
+                this :
+                this.addNonZero(value);
+    }
+
+    abstract SpreadsheetColumnOrRowReferenceRange addNonZero(final int value);
+
+    /**
      * Returns true only if this range covers a single column/row.
      */
     public final boolean isSingle() {

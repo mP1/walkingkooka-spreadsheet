@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.ComparableTesting2;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends SpreadsheetColumnOrRowReferenceRange<R> & Comparable<S>,
@@ -35,6 +36,17 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
     @Test
     public final void testWithNullRangeFails() {
         assertThrows(NullPointerException.class, () -> this.createSelection(null));
+    }
+
+    // add..............................................................................................................
+
+    @Test
+    public final void testAddZero() {
+        final S selection = this.createSelection();
+        assertSame(
+                selection,
+                selection.add(0)
+        );
     }
 
     // simplify.........................................................................................................

@@ -435,6 +435,17 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // add..............................................................................................................
+
+    @Test
+    public void testAdd() {
+        final SpreadsheetRowReferenceRange selection = SpreadsheetSelection.parseRowRange("1:4");
+        this.checkEquals(
+                SpreadsheetSelection.parseRowRange("3:6"),
+                selection.add(2)
+        );
+    }
+    
     // frozenRowsCheck...............................................................................................
 
     @Test
