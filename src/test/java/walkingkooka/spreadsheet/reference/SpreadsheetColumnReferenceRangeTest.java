@@ -197,6 +197,26 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // addSaturated.....................................................................................................
+
+    @Test
+    public void testAddSaturated() {
+        final SpreadsheetColumnReferenceRange selection = SpreadsheetSelection.parseColumnRange("A:D");
+        this.checkEquals(
+                SpreadsheetSelection.parseColumnRange("C:F"),
+                selection.addSaturated(2)
+        );
+    }
+
+    @Test
+    public void testAddSaturated1() {
+        final SpreadsheetColumnReferenceRange selection = SpreadsheetSelection.parseColumnRange("A:D");
+        this.checkEquals(
+                SpreadsheetSelection.parseColumnRange("A:C"),
+                selection.addSaturated(-1)
+        );
+    }
+
     // count............................................................................................................
 
     @Test

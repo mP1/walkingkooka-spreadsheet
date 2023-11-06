@@ -445,6 +445,26 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                 selection.add(2)
         );
     }
+
+    // addSaturated.....................................................................................................
+
+    @Test
+    public void testAddSaturated() {
+        final SpreadsheetRowReferenceRange selection = SpreadsheetSelection.parseRowRange("1:4");
+        this.checkEquals(
+                SpreadsheetSelection.parseRowRange("3:6"),
+                selection.addSaturated(2)
+        );
+    }
+
+    @Test
+    public void testAddSaturated2() {
+        final SpreadsheetRowReferenceRange selection = SpreadsheetSelection.parseRowRange("1:4");
+        this.checkEquals(
+                SpreadsheetSelection.parseRowRange("1:3"),
+                selection.addSaturated(-1)
+        );
+    }
     
     // frozenRowsCheck...............................................................................................
 

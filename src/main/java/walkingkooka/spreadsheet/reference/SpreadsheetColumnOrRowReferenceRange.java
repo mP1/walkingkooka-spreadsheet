@@ -127,6 +127,23 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
 
     abstract SpreadsheetColumnOrRowReferenceRange addNonZero(final int value);
 
+    // addSaturated.....................................................................................................
+
+    /**
+     * Adds a delta to the value and returns an instance with the result.
+     */
+    abstract SpreadsheetColumnOrRowReferenceRange addSaturated(final int value);
+
+    final SpreadsheetColumnOrRowReferenceRange addSaturated0(final int value) {
+        return 0 == value ?
+                this :
+                this.addSaturatedNonZero(value);
+    }
+
+    abstract SpreadsheetColumnOrRowReferenceRange addSaturatedNonZero(final int value);
+
+    // isSingle.........................................................................................................
+
     /**
      * Returns true only if this range covers a single column/row.
      */
