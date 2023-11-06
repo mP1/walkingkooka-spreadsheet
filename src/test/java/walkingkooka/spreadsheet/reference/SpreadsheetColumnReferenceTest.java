@@ -417,9 +417,10 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testAdd() {
-        this.checkEquals(
-                SpreadsheetSelection.parseColumn("M"),
-                SpreadsheetSelection.parseColumn("K").add(2)
+        this.addAndCheck(
+                SpreadsheetSelection.parseColumn("K"),
+                2,
+                SpreadsheetSelection.parseColumn("M")
         );
     }
 

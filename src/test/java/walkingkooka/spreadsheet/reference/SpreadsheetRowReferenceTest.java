@@ -294,9 +294,10 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testAdd() {
-        this.checkEquals(
-                SpreadsheetSelection.parseRow("9"),
-                SpreadsheetSelection.parseRow("7").add(2)
+        this.addAndCheck(
+                SpreadsheetSelection.parseRow("7"),
+                2,
+                SpreadsheetSelection.parseRow("9")
         );
     }
 

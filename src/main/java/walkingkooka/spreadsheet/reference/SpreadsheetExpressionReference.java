@@ -33,6 +33,11 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     }
 
     @Override
+    public final SpreadsheetSelection add(final int value) {
+        throw new UnsupportedOperationException(this.toString());
+    }
+
+    @Override
     public final boolean testParameterName(final ExpressionFunctionParameterName parameterName) {
         return this.isLabelName() &&
                 SpreadsheetLabelName.CASE_SENSITIVITY.equals(
