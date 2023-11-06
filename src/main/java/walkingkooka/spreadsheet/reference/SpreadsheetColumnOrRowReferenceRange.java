@@ -129,7 +129,8 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     /**
      * Adds a delta to the value and returns an instance with the result.
      */
-    abstract SpreadsheetColumnOrRowReferenceRange addSaturated(final int value);
+    @Override
+    public abstract SpreadsheetColumnOrRowReferenceRange addSaturated(final int value);
 
     final SpreadsheetColumnOrRowReferenceRange addSaturated0(final int value) {
         return 0 == value ?

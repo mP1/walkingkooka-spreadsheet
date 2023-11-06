@@ -37,6 +37,16 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
         );
     }
 
+    // addSaturated.....................................................................................................
+
+    @Test
+    public final void testAddSaturatedFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().addSaturated(0)
+        );
+    }
+
     // cellColumnOrRowText..............................................................................................
 
     @Test

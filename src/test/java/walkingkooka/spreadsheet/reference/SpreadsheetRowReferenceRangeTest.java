@@ -450,19 +450,19 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testAddSaturated() {
-        final SpreadsheetRowReferenceRange selection = SpreadsheetSelection.parseRowRange("1:4");
-        this.checkEquals(
-                SpreadsheetSelection.parseRowRange("3:6"),
-                selection.addSaturated(2)
+        this.addSaturatedAndCheck(
+                SpreadsheetSelection.parseRowRange("1:4"),
+                2,
+                SpreadsheetSelection.parseRowRange("3:6")
         );
     }
 
     @Test
     public void testAddSaturated2() {
-        final SpreadsheetRowReferenceRange selection = SpreadsheetSelection.parseRowRange("1:4");
-        this.checkEquals(
-                SpreadsheetSelection.parseRowRange("1:3"),
-                selection.addSaturated(-1)
+        this.addSaturatedAndCheck(
+                SpreadsheetSelection.parseRowRange("1:4"),
+                -1,
+                SpreadsheetSelection.parseRowRange("1:3")
         );
     }
     
