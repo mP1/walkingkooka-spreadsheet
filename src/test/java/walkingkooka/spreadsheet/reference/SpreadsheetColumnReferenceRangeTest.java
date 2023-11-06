@@ -190,10 +190,10 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testAdd() {
-        final SpreadsheetColumnReferenceRange selection = SpreadsheetSelection.parseColumnRange("A:D");
-        this.checkEquals(
-                SpreadsheetSelection.parseColumnRange("C:F"),
-                selection.add(2)
+        this.addAndCheck(
+                SpreadsheetSelection.parseColumnRange("A:D"),
+                2,
+                SpreadsheetSelection.parseColumnRange("C:F")
         );
     }
 

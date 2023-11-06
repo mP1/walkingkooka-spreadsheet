@@ -439,10 +439,10 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
 
     @Test
     public void testAdd() {
-        final SpreadsheetRowReferenceRange selection = SpreadsheetSelection.parseRowRange("1:4");
-        this.checkEquals(
-                SpreadsheetSelection.parseRowRange("3:6"),
-                selection.add(2)
+        this.addAndCheck(
+                SpreadsheetSelection.parseRowRange("1:4"),
+                2,
+                SpreadsheetSelection.parseRowRange("3:6")
         );
     }
 

@@ -19,10 +19,22 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> extends SpreadsheetSelectionTestCase<R> {
 
     SpreadsheetExpressionReferenceTestCase() {
         super();
+    }
+
+    // add..............................................................................................................
+
+    @Test
+    public final void testAddFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().add(0)
+        );
     }
 
     // cellColumnOrRowText..............................................................................................

@@ -73,7 +73,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // testCellRangeAndCheck............................................................................................
+    // add..............................................................................................................
+
+    final void addAndCheck(final SpreadsheetSelection selection,
+                           final int delta,
+                           final SpreadsheetSelection expected) {
+        this.checkEquals(
+                expected,
+                selection.add(delta),
+                () -> selection + " add " + delta
+        );
+    }
+
+    // count.............................................................................................................
 
     final void countAndCheck(final String selection,
                              final int expected) {

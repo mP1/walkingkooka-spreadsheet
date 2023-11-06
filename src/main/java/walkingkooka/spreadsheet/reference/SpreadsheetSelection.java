@@ -577,6 +577,12 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
+     * Adds a delta to the value and returns an instance with the result.
+     * Note for binary value selections such as: cell, cell range and label this will throw a {@link UnsupportedOperationException}.
+     */
+    public abstract SpreadsheetSelection add(final int value);
+
+    /**
      * Returns the number of elements in this {@link SpreadsheetSelection}, where element may be cells, columns or rows.
      * <pre>
      * A = 1

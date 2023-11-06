@@ -74,10 +74,12 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         return this.value == this.max();
     }
 
+    // add..............................................................................................................
+
     /**
      * Adds a delta to the value and returns an instance with the result.
      */
-    abstract SpreadsheetColumnOrRowReference add(final int value);
+    public abstract SpreadsheetColumnOrRowReference add(final int value);
 
     final SpreadsheetColumnOrRowReference add0(final int value) {
         return 0 == value ?
