@@ -98,6 +98,30 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
                 )
         );
     }
+
+    // addSaturated.....................................................................................................
+
+    @Override
+    public SpreadsheetRowReferenceRange addSaturated(final int value) {
+        return this.addSaturated0(value)
+                .toRowRange();
+    }
+
+    @Override
+    SpreadsheetRowReferenceRange addSaturatedNonZero(final int value) {
+        return this.setRange(
+                Range.with(
+                        RangeBound.inclusive(
+                                this.begin()
+                                        .addSaturated(value)
+                        ),
+                        RangeBound.inclusive(
+                                this.end()
+                                        .addSaturated(value)
+                        )
+                )
+        );
+    }
     
     // testXXX.........................................................................................................
 

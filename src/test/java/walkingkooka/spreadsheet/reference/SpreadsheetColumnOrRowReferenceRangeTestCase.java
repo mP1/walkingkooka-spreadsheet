@@ -49,6 +49,17 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
         );
     }
 
+    // addSaturated.....................................................................................................
+
+    @Test
+    public final void testAddSaturatedZero() {
+        final S selection = this.createSelection();
+        assertSame(
+                selection,
+                selection.addSaturated(0)
+        );
+    }
+
     // simplify.........................................................................................................
 
     @Test
