@@ -107,12 +107,14 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
 
     @Override
     public SpreadsheetRowReference add(final int value) {
-        return Cast.to(this.add0(value));
+        return this.add0(value)
+                .toRow();
     }
 
     @Override
     public SpreadsheetRowReference addSaturated(final int value) {
-        return Cast.to(this.addSaturated0(value));
+        return this.addSaturated0(value)
+                .toRow();
     }
 
     @Override
