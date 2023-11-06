@@ -583,6 +583,12 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetSelection add(final int value);
 
     /**
+     * Adds a delta to the value with saturation and returns an instance with the result.
+     * Note for binary value selections such as: cell, cell range and label this will throw a {@link UnsupportedOperationException}.
+     */
+    public abstract SpreadsheetSelection addSaturated(final int value);
+
+    /**
      * Returns the number of elements in this {@link SpreadsheetSelection}, where element may be cells, columns or rows.
      * <pre>
      * A = 1

@@ -201,19 +201,19 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testAddSaturated() {
-        final SpreadsheetColumnReferenceRange selection = SpreadsheetSelection.parseColumnRange("A:D");
-        this.checkEquals(
-                SpreadsheetSelection.parseColumnRange("C:F"),
-                selection.addSaturated(2)
+        this.addSaturatedAndCheck(
+                SpreadsheetSelection.parseColumnRange("A:D"),
+                2,
+                SpreadsheetSelection.parseColumnRange("C:F")
         );
     }
 
     @Test
     public void testAddSaturated1() {
-        final SpreadsheetColumnReferenceRange selection = SpreadsheetSelection.parseColumnRange("A:D");
-        this.checkEquals(
-                SpreadsheetSelection.parseColumnRange("A:C"),
-                selection.addSaturated(-1)
+        this.addSaturatedAndCheck(
+                SpreadsheetSelection.parseColumnRange("A:D"),
+                -1,
+                SpreadsheetSelection.parseColumnRange("A:C")
         );
     }
 

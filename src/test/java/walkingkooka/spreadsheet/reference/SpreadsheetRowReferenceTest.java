@@ -305,9 +305,10 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testAddSaturated() {
-        this.checkEquals(
-                SpreadsheetSelection.parseRow("9"),
-                SpreadsheetSelection.parseRow("7").addSaturated(2)
+        this.addSaturatedAndCheck(
+                SpreadsheetSelection.parseRow("7"),
+                2,
+                SpreadsheetSelection.parseRow("9")
         );
     }
 

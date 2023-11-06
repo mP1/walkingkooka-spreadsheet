@@ -85,6 +85,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // addSaturated.....................................................................................................
+
+    final void addSaturatedAndCheck(final SpreadsheetSelection selection,
+                                    final int delta,
+                                    final SpreadsheetSelection expected) {
+        this.checkEquals(
+                expected,
+                selection.addSaturated(delta),
+                () -> selection + " addSaturated " + delta
+        );
+    }
+
     // count.............................................................................................................
 
     final void countAndCheck(final String selection,
