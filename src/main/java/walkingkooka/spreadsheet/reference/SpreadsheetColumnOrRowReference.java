@@ -139,7 +139,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         return ANCHORS;
     }
 
-    private final Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
+    private final static Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
 
     /**
      * A column or row is already simplified.
