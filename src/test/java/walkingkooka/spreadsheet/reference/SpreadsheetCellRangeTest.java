@@ -438,6 +438,38 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.checkEquals(rows, different.rowRange());
     }
 
+    // add column/row..................................................................................................
+
+    @Test
+    public void testAddColumnAndRow() {
+        this.addColumnRowAndCheck(
+                SpreadsheetSelection.parseCellRange("A1"),
+                1,
+                1,
+                SpreadsheetSelection.parseCellRange("B2")
+        );
+    }
+
+    @Test
+    public void testAddColumnAndRow2() {
+        this.addColumnRowAndCheck(
+                SpreadsheetSelection.parseCellRange("B2"),
+                1,
+                0,
+                SpreadsheetSelection.parseCellRange("C2")
+        );
+    }
+
+    @Test
+    public void testAddColumnAndRow3() {
+        this.addColumnRowAndCheck(
+                SpreadsheetSelection.parseCellRange("C3"),
+                0,
+                3,
+                SpreadsheetSelection.parseCellRange("C6")
+        );
+    }
+
     // simplify.........................................................................................................
 
     @Test

@@ -97,6 +97,33 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // add column/row...................................................................................................
+
+    @Test
+    public final void testAddColumnAndRowZeroZero() {
+        final SpreadsheetSelection selection = this.createSelection();
+        if (false == selection.isLabelName()) {
+            assertSame(
+                    selection,
+                    selection.add(0, 0)
+            );
+        }
+    }
+
+    final void addColumnRowAndCheck(final S selection,
+                                    final int column,
+                                    final int row,
+                                    final S expected) {
+        this.checkEquals(
+                expected,
+                selection.add(
+                        column,
+                        row
+                ),
+                () -> selection + "add " + column + " " + row
+        );
+    }
+
     // count.............................................................................................................
 
     final void countAndCheck(final String selection,

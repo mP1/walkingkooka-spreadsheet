@@ -217,6 +217,30 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // add column/row..................................................................................................
+
+    @Test
+    public void testAddNonZeroRowFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSelection()
+                        .add(
+                                1,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    public void testAddColumnAndRow() {
+        this.addColumnRowAndCheck(
+                SpreadsheetSelection.parseColumnRange("K"),
+                2,
+                0,
+                SpreadsheetSelection.parseColumnRange("M")
+        );
+    }
+
     // count............................................................................................................
 
     @Test

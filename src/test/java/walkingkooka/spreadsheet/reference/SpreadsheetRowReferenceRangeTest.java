@@ -465,6 +465,30 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                 SpreadsheetSelection.parseRowRange("1:3")
         );
     }
+
+    // add column/row..................................................................................................
+
+    @Test
+    public void testAddNonZeroColumnFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSelection()
+                        .add(
+                                1,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    public void testAddColumnAndRow() {
+        this.addColumnRowAndCheck(
+                SpreadsheetSelection.parseRowRange("3"),
+                0,
+                2,
+                SpreadsheetSelection.parseRowRange("5")
+        );
+    }
     
     // frozenRowsCheck...............................................................................................
 
