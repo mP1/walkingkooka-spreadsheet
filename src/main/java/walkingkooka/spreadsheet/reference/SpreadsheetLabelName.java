@@ -194,6 +194,13 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         visitor.visit(this);
     }
 
+    // add column/row...................................................................................................
+
+    @Override
+    public SpreadsheetLabelName add(final int column, final int row) {
+        throw new UnsupportedOperationException(this.toString());
+    }
+
     // testXXX..........................................................................................................
 
     /**

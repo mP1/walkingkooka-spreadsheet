@@ -312,6 +312,30 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // add column/row..................................................................................................
+
+    @Test
+    public void testAddNonZeroColumnFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSelection()
+                        .add(
+                                1,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    public void testAddColumnAndRow() {
+        this.addColumnRowAndCheck(
+                SpreadsheetSelection.parseRow("3"),
+                0,
+                2,
+                SpreadsheetSelection.parseRow("5")
+        );
+    }
+
     // max.............................................................................................................
 
     private final static boolean LEFT = true;

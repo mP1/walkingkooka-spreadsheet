@@ -118,6 +118,13 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     @Override
+    public SpreadsheetRowReference add(final int column,
+                                       final int row) {
+        checkColumnDeltaIsZero(column);
+        return this.add(row);
+    }
+
+    @Override
     int max() {
         return MAX_VALUE;
     }

@@ -589,6 +589,25 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetSelection addSaturated(final int value);
 
     /**
+     * Adds a delta to the values to the column and row components and returns an instance with the result.
+     * Note attempts to add a non zero column to a row or row-range will throw a {@link UnsupportedOperationException}.
+     */
+    public abstract SpreadsheetSelection add(final int column,
+                                             final int row);
+
+    static void checkColumnDeltaIsZero(final int column) {
+        if (0 != column) {
+            throw new IllegalArgumentException("Invalid non zero column delta " + column);
+        }
+    }
+
+    static void checkRowDeltaIsZero(final int row) {
+        if (0 != row) {
+            throw new IllegalArgumentException("Invalid non zero row delta " + row);
+        }
+    }
+
+    /**
      * Returns the number of elements in this {@link SpreadsheetSelection}, where element may be cells, columns or rows.
      * <pre>
      * A = 1

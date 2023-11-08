@@ -435,6 +435,30 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    // add column/row..................................................................................................
+
+    @Test
+    public void testAddNonZeroRowFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSelection()
+                        .add(
+                                1,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    public void testAddColumnAndRow() {
+        this.addColumnRowAndCheck(
+                SpreadsheetSelection.parseColumn("K"),
+                2,
+                0,
+                SpreadsheetSelection.parseColumn("M")
+        );
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test

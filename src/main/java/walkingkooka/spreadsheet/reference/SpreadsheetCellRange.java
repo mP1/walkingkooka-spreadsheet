@@ -697,6 +697,17 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                 .iterator();
     }
 
+    // add column/row...................................................................................................
+
+    @Override
+    public SpreadsheetCellRange add(final int column, final int row) {
+        return this.setColumnRange(
+                this.columnRange().add(column)
+        ).setRowRange(
+                this.rowRange().add(row)
+        );
+    }
+
     // testXXXX.........................................................................................................
 
     /**
