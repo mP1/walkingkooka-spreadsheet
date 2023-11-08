@@ -124,6 +124,31 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    @Test
+    public final void testAddSaturatedColumnAndRowZeroZero() {
+        final SpreadsheetSelection selection = this.createSelection();
+        if (false == selection.isLabelName()) {
+            assertSame(
+                    selection,
+                    selection.addSaturated(0, 0)
+            );
+        }
+    }
+
+    final void addSaturatedColumnRowAndCheck(final S selection,
+                                             final int column,
+                                             final int row,
+                                             final S expected) {
+        this.checkEquals(
+                expected,
+                selection.addSaturated(
+                        column,
+                        row
+                ),
+                () -> selection + "addSaturated " + column + " " + row
+        );
+    }
+
     // count.............................................................................................................
 
     final void countAndCheck(final String selection,

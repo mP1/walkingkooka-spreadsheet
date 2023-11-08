@@ -201,6 +201,12 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         throw new UnsupportedOperationException(this.toString());
     }
 
+    @Override
+    public SpreadsheetLabelName addSaturated(final int column,
+                                             final int row) {
+        throw new UnsupportedOperationException(this.toString());
+    }
+
     // testXXX..........................................................................................................
 
     /**

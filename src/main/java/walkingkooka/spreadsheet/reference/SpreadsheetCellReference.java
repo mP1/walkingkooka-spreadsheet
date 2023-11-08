@@ -105,6 +105,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                 .addRow(row);
     }
 
+    @Override
+    public SpreadsheetCellReference addSaturated(final int column, final int row) {
+        return this.addColumnSaturated(column)
+                .addRowSaturated(row);
+    }
+
+    // row..............................................................................................................
+
     public SpreadsheetRowReference row() {
         return this.row;
     }

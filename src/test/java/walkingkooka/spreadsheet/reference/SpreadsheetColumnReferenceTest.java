@@ -459,6 +459,28 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    @Test
+    public void testAddSaturatedNonZeroRowFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSelection()
+                        .addSaturated(
+                                1,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    public void testAddSaturatedColumnAndRow() {
+        this.addSaturatedColumnRowAndCheck(
+                SpreadsheetSelection.parseColumn("K"),
+                2,
+                0,
+                SpreadsheetSelection.parseColumn("M")
+        );
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test

@@ -132,6 +132,13 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
         return this.add(row);
     }
 
+    @Override
+    public SpreadsheetRowReferenceRange addSaturated(final int column,
+                                                     final int row) {
+        checkColumnDeltaIsZero(column);
+        return this.addSaturated(row);
+    }
+
     // testXXX.........................................................................................................
 
     @Override
