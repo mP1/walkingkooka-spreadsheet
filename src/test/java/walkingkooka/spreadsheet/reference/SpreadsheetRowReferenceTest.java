@@ -336,6 +336,28 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    @Test
+    public void testAddSaturatedNonZeroColumnFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSelection()
+                        .addSaturated(
+                                1,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    public void testAddSaturatedColumnAndRow() {
+        this.addSaturatedColumnRowAndCheck(
+                SpreadsheetSelection.parseRow("3"),
+                0,
+                2,
+                SpreadsheetSelection.parseRow("5")
+        );
+    }
+
     // max.............................................................................................................
 
     private final static boolean LEFT = true;

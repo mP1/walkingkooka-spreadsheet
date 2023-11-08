@@ -470,6 +470,36 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    @Test
+    public void testAddSaturatedColumnAndRow() {
+        this.addSaturatedColumnRowAndCheck(
+                SpreadsheetSelection.parseCellRange("A1"),
+                1,
+                1,
+                SpreadsheetSelection.parseCellRange("B2")
+        );
+    }
+
+    @Test
+    public void testAddSaturatedColumnAndRow2() {
+        this.addSaturatedColumnRowAndCheck(
+                SpreadsheetSelection.parseCellRange("B2"),
+                1,
+                0,
+                SpreadsheetSelection.parseCellRange("C2")
+        );
+    }
+
+    @Test
+    public void testAddSaturatedColumnAndRow3() {
+        this.addSaturatedColumnRowAndCheck(
+                SpreadsheetSelection.parseCellRange("C3"),
+                0,
+                3,
+                SpreadsheetSelection.parseCellRange("C6")
+        );
+    }
+
     // simplify.........................................................................................................
 
     @Test

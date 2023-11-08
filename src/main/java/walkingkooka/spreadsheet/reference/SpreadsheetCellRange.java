@@ -708,6 +708,16 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         );
     }
 
+    @Override
+    public SpreadsheetCellRange addSaturated(final int column,
+                                             final int row) {
+        return this.setColumnRange(
+                this.columnRange().addSaturated(column)
+        ).setRowRange(
+                this.rowRange().addSaturated(row)
+        );
+    }
+
     // testXXXX.........................................................................................................
 
     /**

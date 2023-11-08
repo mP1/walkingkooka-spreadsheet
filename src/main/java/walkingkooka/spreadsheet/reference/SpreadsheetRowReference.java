@@ -125,6 +125,13 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     @Override
+    public SpreadsheetRowReference addSaturated(final int column,
+                                                final int row) {
+        checkColumnDeltaIsZero(column);
+        return this.addSaturated(row);
+    }
+
+    @Override
     int max() {
         return MAX_VALUE;
     }
