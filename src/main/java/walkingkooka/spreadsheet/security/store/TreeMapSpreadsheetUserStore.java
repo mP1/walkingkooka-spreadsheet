@@ -93,6 +93,15 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     }
 
     @Override
+    public List<User> between(final UserId from,
+                              final UserId to) {
+        return this.store.between(
+                from,
+                to
+        );
+    }
+
+    @Override
     public Optional<User> loadWithEmail(final EmailAddress email) {
         return this.store.values(UserId.with(0), Integer.MAX_VALUE)
                 .stream()

@@ -108,6 +108,15 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         return this.store.values(from, count);
     }
 
+    @Override
+    public List<SpreadsheetMetadata> between(final SpreadsheetId from,
+                                             final SpreadsheetId to) {
+        return this.store.between(
+                from,
+                to
+        );
+    }
+
     private final Store<SpreadsheetId, SpreadsheetMetadata> store;
 
     @Override

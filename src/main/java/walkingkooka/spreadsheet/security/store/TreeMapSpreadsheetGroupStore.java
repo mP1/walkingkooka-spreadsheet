@@ -96,6 +96,15 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     }
 
     @Override
+    public List<Group> between(final GroupId from,
+                               final GroupId to) {
+        return this.store.between(
+                from,
+                to
+        );
+    }
+
+    @Override
     public void addUser(final UserId userId, final GroupId groupId) {
         Objects.requireNonNull(userId, "userId");
         Objects.requireNonNull(groupId, "groupId");

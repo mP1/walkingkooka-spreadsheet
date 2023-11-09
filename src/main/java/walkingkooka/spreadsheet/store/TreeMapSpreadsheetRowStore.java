@@ -97,6 +97,15 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
         return this.store.values(from, count);
     }
 
+    @Override
+    public List<SpreadsheetRow> between(final SpreadsheetRowReference from,
+                                        final SpreadsheetRowReference to) {
+        return this.store.between(
+                from,
+                to
+        );
+    }
+
     // VisibleForTesting
     private final Store<SpreadsheetRowReference, SpreadsheetRow> store;
 

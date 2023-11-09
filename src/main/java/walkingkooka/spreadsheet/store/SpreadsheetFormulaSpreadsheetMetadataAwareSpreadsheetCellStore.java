@@ -212,6 +212,17 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
+    public List<SpreadsheetCell> between(final SpreadsheetCellReference from,
+                                         final SpreadsheetCellReference to) {
+        return this.fixFormulaTextList(
+                this.store.between(
+                        from,
+                        to
+                )
+        );
+    }
+
+    @Override
     public int rowCount() {
         return this.store.rowCount();
     }

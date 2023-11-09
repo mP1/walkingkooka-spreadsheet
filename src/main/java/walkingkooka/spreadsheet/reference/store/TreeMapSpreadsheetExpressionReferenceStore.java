@@ -137,6 +137,18 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                 .collect(Collectors.toCollection(Lists::array));
     }
 
+    @Override
+    public List<Set<SpreadsheetCellReference>> between(final T from,
+                                                       final T to) {
+        Store.checkBetween(from, to);
+
+        return this.targetToReferences.entrySet()
+                .stream()
+                .filter(e -> comparable(e.getKey()).compareTo(from) >= 0 && comparable(e.getKey()).compareTo(to) <= 0)
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toCollection(Lists::array));
+    }
+
     private Comparable<T> comparable(final T cellOrLabel) {
         return Cast.to(cellOrLabel);
     }

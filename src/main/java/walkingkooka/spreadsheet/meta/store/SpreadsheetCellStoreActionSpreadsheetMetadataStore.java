@@ -174,6 +174,15 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
         );
     }
 
+    @Override
+    public List<SpreadsheetMetadata> between(final SpreadsheetId from,
+                                             final SpreadsheetId to) {
+        return this.metadataStore.between(
+                from,
+                to
+        );
+    }
+
     private final SpreadsheetMetadataStore metadataStore;
 
     @Override
