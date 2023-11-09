@@ -76,35 +76,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
     }
 
-    // loadCells........................................................................................................
-
-    @Test
-    public void testLoadCells() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
-
-        final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
-        store.save(a1);
-
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
-                .setFormula(SpreadsheetFormula.EMPTY);
-        store.save(b2);
-
-        final SpreadsheetCell c3 = SpreadsheetSelection.parseCell("C3")
-                .setFormula(SpreadsheetFormula.EMPTY);
-        store.save(c3);
-
-        final SpreadsheetCell d4 = SpreadsheetSelection.parseCell("D4")
-                .setFormula(SpreadsheetFormula.EMPTY);
-        store.save(d4);
-
-        this.checkEquals(
-                Sets.of(
-                        b2, c3
-                ),
-                store.loadCells(SpreadsheetSelection.parseCellRange("B2:C3"))
-        );
-    }
+    // deleteCells.....................................................................................................
 
     @Test
     public void testDeleteCells() {

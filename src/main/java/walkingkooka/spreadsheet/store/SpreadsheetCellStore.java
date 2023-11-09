@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.store.Store;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -38,7 +40,14 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     /**
      * Attempts to load all the cells in the given {@link SpreadsheetCellRange}.
      */
-    Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range);
+    default List<SpreadsheetCell> loadCells(final SpreadsheetCellRange range) {
+        Objects.requireNonNull(range, "range");
+
+        return this.between(
+                range.begin(),
+                range.end()
+        );
+    }
 
     /**
      * Default implementation that deletes all the cells in the given {@link SpreadsheetCellRange}.

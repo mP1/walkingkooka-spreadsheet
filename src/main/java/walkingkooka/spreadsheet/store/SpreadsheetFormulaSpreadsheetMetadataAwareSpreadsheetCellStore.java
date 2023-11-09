@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -163,14 +162,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     // batch............................................................................................................
-
-    @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range) {
-        return this.store.loadCells(range)
-                .stream()
-                .map(this::fixFormulaText)
-                .collect(Collectors.toCollection(TreeSet::new));
-    }
 
     @Override
     public void deleteCells(final SpreadsheetCellRange range) {

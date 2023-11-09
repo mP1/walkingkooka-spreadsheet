@@ -30,11 +30,6 @@ import java.util.Set;
 public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference, SpreadsheetCell> implements SpreadsheetCellStore, Fake {
 
     @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void deleteCells(final SpreadsheetCellRange range) {
         throw new UnsupportedOperationException();
     }
