@@ -136,10 +136,16 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public List<SpreadsheetCell> between(final SpreadsheetCellReference from,
                                          final SpreadsheetCellReference to) {
-        return this.store.between(
+        final List<SpreadsheetCell> cells = this.store.between(
                 from,
                 to
         );
+
+        final SpreadsheetCellRange window = from.cellRange(to);
+
+        return cells.stream()
+                .filter(c -> window.test(c.reference()))
+                .collect(Collectors.toList());
     }
 
     @Override

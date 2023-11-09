@@ -40,6 +40,44 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<TreeMapSpreadsheetCellStore> {
 
+
+    // between..........................................................................................................
+
+    @Test
+    public void testBetween() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY);
+        store.save(a1);
+
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        store.save(b2);
+
+        final SpreadsheetCell b4 = SpreadsheetSelection.parseCell("B4")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        store.save(b4);
+
+        final SpreadsheetCell c3 = SpreadsheetSelection.parseCell("C3")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        store.save(c3);
+
+        final SpreadsheetCell d4 = SpreadsheetSelection.parseCell("D4")
+                .setFormula(SpreadsheetFormula.EMPTY);
+        store.save(d4);
+
+        this.betweenAndCheck(
+                store,
+                b2.reference(),
+                c3.reference(),
+                b2,
+                c3
+        );
+    }
+
+    // loadCells........................................................................................................
+
     @Test
     public void testLoadCells() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
