@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -133,11 +134,17 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
                                                  final SpreadsheetLabelName to) {
         Store.checkBetween(from, to);
 
-        return this.mappings.entrySet()
-                .stream()
-                .filter(e -> e.getKey().compareTo(from) >= 0 && e.getKey().compareTo(to) <= 0)
-                .map(Map.Entry::getValue)
-                .collect(Collectors.toCollection(Lists::array));
+        final List<SpreadsheetLabelMapping> values = Lists.array();
+
+        for (final Map.Entry<SpreadsheetLabelName, SpreadsheetLabelMapping> labelAndMapping : this.mappings.tailMap(from).entrySet()) {
+            if (labelAndMapping.getKey().compareTo(to) > 0) {
+                break;
+            }
+
+            values.add(labelAndMapping.getValue());
+        }
+
+        return Lists.readOnly(values);
     }
 
     @Override
@@ -218,7 +225,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     /**
      * All mappings present in this spreadsheet
      */
-    private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = Maps.sorted();
+    private final SortedMap<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = Maps.sorted();
 
     @Override
     public String toString() {
