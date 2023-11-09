@@ -49,7 +49,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * Clears the parsed formula for all existing cells.
      */
     default void clearParsedFormulaExpressions() {
-        for (final SpreadsheetCell cell : this.loadCells(SpreadsheetCellRange.ALL)) {
+        for (final SpreadsheetCell cell : this.all()) {
             final SpreadsheetFormula formulaBefore = cell.formula();
             final SpreadsheetFormula formulaAfter = formulaBefore.setExpression(SpreadsheetFormula.NO_EXPRESSION);
             if (false == formulaBefore.equals(formulaAfter)) {
@@ -64,7 +64,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * Clears the formatted output for all existing cells.
      */
     default void clearFormatted() {
-        for (final SpreadsheetCell cell : this.loadCells(SpreadsheetCellRange.ALL)) {
+        for (final SpreadsheetCell cell : this.all()) {
             final SpreadsheetCell after = cell.setFormatted(SpreadsheetCell.NO_FORMATTED_CELL);
             if (false == cell.equals(after)) {
                 this.save(after);
