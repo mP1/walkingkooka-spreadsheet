@@ -69,4 +69,10 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     public double maxRowHeight(final SpreadsheetRowReference row) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
+                                                       final String valueType) {
+        throw new UnsupportedOperationException();
+    }
 }

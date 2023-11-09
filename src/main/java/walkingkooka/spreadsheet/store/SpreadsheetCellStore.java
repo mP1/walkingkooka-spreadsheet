@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.store.Store;
+import walkingkooka.text.CharSequences;
 
 import java.util.List;
 import java.util.Objects;
@@ -110,4 +111,17 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * Returns the max row height for the given {@link SpreadsheetRowReference}
      */
     double maxRowHeight(final SpreadsheetRowReference row);
+
+    static void checkFindCellsWithValueType(final SpreadsheetCellRange range,
+                                            final String valueTypeName) {
+        Objects.requireNonNull(range, "range");
+        CharSequences.failIfNullOrEmpty(valueTypeName, "valueTypeName");
+    }
+
+    /**
+     * Finds all cells with a value type equal to the given. This means empty cells without a formula will never be found,
+     * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
+     */
+    Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
+                                                final String valueTypeName);
 }

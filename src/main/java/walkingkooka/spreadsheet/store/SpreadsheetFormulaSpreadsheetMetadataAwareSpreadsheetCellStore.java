@@ -243,6 +243,17 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         return this.store.maxRowHeight(row);
     }
 
+    @Override
+    public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
+                                                       final String valueType) {
+        return this.fixFormulaTextSet(
+                this.store.findCellsWithValueType(
+                        range,
+                        valueType
+                )
+        );
+    }
+
     // helpers that do the formula tokenization/text thing..............................................................
 
     private List<SpreadsheetCell> fixFormulaTextList(final List<SpreadsheetCell> cells) {
