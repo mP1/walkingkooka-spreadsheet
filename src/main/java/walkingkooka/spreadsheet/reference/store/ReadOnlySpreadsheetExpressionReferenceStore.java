@@ -86,6 +86,15 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
+    public List<Set<SpreadsheetCellReference>> between(final T from,
+                                                       final T to) {
+        return this.store.between(
+                from,
+                to
+        );
+    }
+
+    @Override
     public void saveReferences(final T id, final Set<SpreadsheetCellReference> referrers) {
         checkId(id);
         Objects.requireNonNull(referrers, "referrers");

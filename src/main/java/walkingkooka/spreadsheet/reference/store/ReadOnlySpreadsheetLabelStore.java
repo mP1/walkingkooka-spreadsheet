@@ -87,6 +87,15 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
+    public List<SpreadsheetLabelMapping> between(final SpreadsheetLabelName from,
+                                                 final SpreadsheetLabelName to) {
+        return this.store.between(
+                from,
+                to
+        );
+    }
+
+    @Override
     public Set<SpreadsheetLabelMapping> findSimilar(final String text,
                                                     final int count) {
         return this.store.findSimilar(text, count);

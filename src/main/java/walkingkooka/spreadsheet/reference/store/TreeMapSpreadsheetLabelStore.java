@@ -129,6 +129,18 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
+    public List<SpreadsheetLabelMapping> between(final SpreadsheetLabelName from,
+                                                 final SpreadsheetLabelName to) {
+        Store.checkBetween(from, to);
+
+        return this.mappings.entrySet()
+                .stream()
+                .filter(e -> e.getKey().compareTo(from) >= 0 && e.getKey().compareTo(to) <= 0)
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toCollection(Lists::array));
+    }
+
+    @Override
     public Set<SpreadsheetLabelMapping> findSimilar(final String text,
                                                     final int count) {
         Objects.requireNonNull(text, "text");

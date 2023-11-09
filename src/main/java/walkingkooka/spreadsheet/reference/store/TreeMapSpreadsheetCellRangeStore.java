@@ -350,6 +350,14 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
     }
 
     @Override
+    public List<List<V>> between(final SpreadsheetCellRange from,
+                                 final SpreadsheetCellRange to) {
+        Store.checkBetween(from, to);
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Set<SpreadsheetCellRange> rangesWithValue(final V value) {
         checkValue(value);
 

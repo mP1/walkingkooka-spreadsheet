@@ -79,6 +79,15 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
+    public List<List<V>> between(final SpreadsheetCellRange from,
+                                 final SpreadsheetCellRange to) {
+        return store.between(
+                from,
+                to
+        );
+    }
+
+    @Override
     public Set<SpreadsheetCellRange> loadCellReferenceRanges(final SpreadsheetCellReference cell) {
         return store.loadCellReferenceRanges(cell);
     }
