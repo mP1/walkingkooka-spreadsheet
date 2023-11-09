@@ -30,6 +30,58 @@ import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore> {
 
+    // between..........................................................................................................
+
+    @Test
+    public void testBetweenAll() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+        final SpreadsheetLabelName label3 = this.label3();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a2 = this.a2();
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("A3");
+
+        store.save(label1.mapping(a1));
+        store.save(label2.mapping(a2));
+        store.save(label3.mapping(a3));
+
+        this.betweenAndCheck(
+                store,
+                label1,
+                label3,
+                label1.mapping(a1),
+                label2.mapping(a2),
+                label3.mapping(a3)
+        );
+    }
+
+    @Test
+    public void testBetweenOne() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+        final SpreadsheetLabelName label3 = this.label3();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a2 = this.a2();
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("A3");
+
+        store.save(label1.mapping(a1));
+        store.save(label2.mapping(a2));
+        store.save(label3.mapping(a3));
+
+        this.betweenAndCheck(
+                store,
+                label2,
+                label2,
+                label2.mapping(a2)
+        );
+    }
+
     // labels..........................................................................................................
 
     @Test
