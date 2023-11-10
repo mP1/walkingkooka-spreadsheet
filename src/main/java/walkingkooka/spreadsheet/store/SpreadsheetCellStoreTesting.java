@@ -160,4 +160,42 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                 () -> "findCellsWithValueType " + cellRange + " " + valueTypeName
         );
     }
+
+    // countCellsWithValueType.........................................................................................
+
+    @Test
+    default void testCountCellsWithValueTypeWithNullRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore().countCellsWithValueType(
+                        null,
+                        SpreadsheetValueType.TEXT
+                )
+        );
+    }
+
+    @Test
+    default void testCountCellsWithValueTypeWithNullValueTypeNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore().countCellsWithValueType(
+                        SpreadsheetSelection.ALL_CELLS,
+                        null
+                )
+        );
+    }
+
+    default void countCellsWithValueTypeAndCheck(final S store,
+                                                 final SpreadsheetCellRange cellRange,
+                                                 final String valueTypeName,
+                                                 final int expected) {
+        this.checkEquals(
+                expected,
+                store.countCellsWithValueType(
+                        cellRange,
+                        valueTypeName
+                ),
+                () -> "countCellsWithValueType " + cellRange + " " + valueTypeName
+        );
+    }
 }

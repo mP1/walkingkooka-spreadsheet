@@ -75,4 +75,10 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
                                                        final String valueType) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public int countCellsWithValueType(final SpreadsheetCellRange range,
+                                       final String valueType) {
+        throw new UnsupportedOperationException();
+    }
 }

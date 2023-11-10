@@ -234,6 +234,29 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 ).collect(Collectors.toCollection(Sets::sorted));
     }
 
+    @Override
+    public int countCellsWithValueType(final SpreadsheetCellRange range,
+                                       final String valueTypeName) {
+        SpreadsheetCellStore.checkCountCellsWithValueType(
+                range,
+                valueTypeName
+        );
+
+        return (int) this.between(
+                        range.begin(),
+                        range.end()
+                ).stream()
+                .filter(cell ->
+                        cell.formula()
+                                .value()
+                                .map(
+                                        v -> valueTypeName.equals(
+                                                SpreadsheetValueType.typeName(v.getClass())
+                                        )
+                                ).orElse(false)
+                ).count();
+    }
+
     // VisibleForTesting
     private final Store<SpreadsheetCellReference, SpreadsheetCell> store;
 

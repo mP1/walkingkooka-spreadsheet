@@ -481,6 +481,79 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
     }
 
+    // countCellsWithValueType.........................................................................................
+
+    @Test
+    public void testCountCellsWithValueType() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1")
+                                .setValue(
+                                        Optional.of(1)
+                                )
+                )
+        );
+
+        final SpreadsheetCell a2 = store.save(
+                SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("='ABC")
+                                        .setValue(
+                                                Optional.of("ABC")
+                                        )
+                        )
+        );
+
+        final SpreadsheetCell a3 = store.save(
+                SpreadsheetSelection.parseCell("A3")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2+3")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        )
+        );
+
+        // ignored because value wrong type
+        final SpreadsheetCell a4 = store.save(
+                SpreadsheetSelection.parseCell("A4")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=true()")
+                                        .setValue(
+                                                Optional.of(true)
+                                        )
+                        )
+        );
+
+        // ignored because value missing
+        final SpreadsheetCell a5 = store.save(
+                SpreadsheetSelection.parseCell("A5")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=555")
+                        )
+        );
+
+        // ignore because out of range
+        final SpreadsheetCell a7 = store.save(
+                SpreadsheetSelection.parseCell("A7")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=678")
+                                        .setValue(
+                                                Optional.of(678)
+                                        )
+                        )
+        );
+
+        this.countCellsWithValueTypeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:A6"),
+                SpreadsheetValueType.NUMBER,
+                2
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test
