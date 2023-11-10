@@ -219,19 +219,14 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 valueTypeName
         );
 
+        final Predicate<SpreadsheetCell> valueTypePredicate = valueTypePredicate(valueTypeName);
+
         return this.between(
                         range.begin(),
                         range.end()
                 ).stream()
-                .filter(cell ->
-                        cell.formula()
-                        .value()
-                                .map(
-                                        v -> valueTypeName.equals(
-                                                SpreadsheetValueType.typeName(v.getClass())
-                                        )
-                                ).orElse(false)
-                ).collect(Collectors.toCollection(Sets::sorted));
+                .filter(valueTypePredicate)
+                .collect(Collectors.toCollection(Sets::sorted));
     }
 
     @Override
@@ -242,19 +237,24 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 valueTypeName
         );
 
+        final Predicate<SpreadsheetCell> valueTypePredicate = valueTypePredicate(valueTypeName);
+
         return (int) this.between(
                         range.begin(),
                         range.end()
                 ).stream()
-                .filter(cell ->
-                        cell.formula()
-                                .value()
-                                .map(
-                                        v -> valueTypeName.equals(
-                                                SpreadsheetValueType.typeName(v.getClass())
-                                        )
-                                ).orElse(false)
-                ).count();
+                .filter(valueTypePredicate)
+                .count();
+    }
+
+    private static Predicate<SpreadsheetCell> valueTypePredicate(final String valueTypeName) {
+        return (cell) -> cell.formula()
+                .value()
+                .map(
+                        v -> valueTypeName.equals(
+                                SpreadsheetValueType.typeName(v.getClass())
+                        )
+                ).orElse(false);
     }
 
     // VisibleForTesting
