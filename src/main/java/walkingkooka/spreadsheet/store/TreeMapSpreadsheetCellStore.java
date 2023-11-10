@@ -37,9 +37,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A {@link SpreadsheetCellStore} that uses a {@link Map}.
@@ -219,14 +221,10 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 valueTypeName
         );
 
-        final Predicate<SpreadsheetCell> valueTypePredicate = valueTypePredicate(valueTypeName);
-
-        return this.between(
-                        range.begin(),
-                        range.end()
-                ).stream()
-                .filter(valueTypePredicate)
-                .collect(Collectors.toCollection(Sets::sorted));
+        return this.valueTypeStream(
+                range,
+                valueTypeName
+        ).collect(Collectors.toCollection(Sets::sorted));
     }
 
     @Override
@@ -237,24 +235,33 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 valueTypeName
         );
 
-        final Predicate<SpreadsheetCell> valueTypePredicate = valueTypePredicate(valueTypeName);
+        return (int) valueTypeStream(
+                range,
+                valueTypeName
+        ).count();
+    }
 
-        return (int) this.between(
+    /**
+     * If the valueTypeName is {@link SpreadsheetValueType#ALL} this will match all cells with a value.
+     */
+    private Stream<SpreadsheetCell> valueTypeStream(final SpreadsheetCellRange range,
+                                                    final String valueTypeName) {
+        final Function<Object, Boolean> filter = SpreadsheetValueType.ALL.equals(valueTypeName) ?
+                v -> Boolean.TRUE :
+                v -> valueTypeName.equals(
+                        SpreadsheetValueType.typeName(v.getClass())
+                );
+
+        return this.between(
                         range.begin(),
                         range.end()
                 ).stream()
-                .filter(valueTypePredicate)
-                .count();
-    }
-
-    private static Predicate<SpreadsheetCell> valueTypePredicate(final String valueTypeName) {
-        return (cell) -> cell.formula()
-                .value()
-                .map(
-                        v -> valueTypeName.equals(
-                                SpreadsheetValueType.typeName(v.getClass())
-                        )
-                ).orElse(false);
+                .filter(
+                        (cell) -> cell.formula()
+                                .value()
+                                .map(filter)
+                                .orElse(false)
+                );
     }
 
     // VisibleForTesting
