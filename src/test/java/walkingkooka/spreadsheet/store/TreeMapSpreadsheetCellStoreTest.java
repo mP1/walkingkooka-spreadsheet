@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -404,6 +405,80 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.checkEquals(expected,
                 store.maxRowHeight(row),
                 () -> "maxRowHeight of " + row + " store=" + store);
+    }
+
+    // findCellsWithValueType...........................................................................................
+
+    @Test
+    public void testFindCellsWithValueType() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1")
+                                .setValue(
+                                        Optional.of(1)
+                                )
+                )
+        );
+
+        final SpreadsheetCell a2 = store.save(
+                SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("='ABC")
+                                        .setValue(
+                                                Optional.of("ABC")
+                                        )
+                        )
+        );
+
+        final SpreadsheetCell a3 = store.save(
+                SpreadsheetSelection.parseCell("A3")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2+3")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        )
+        );
+
+        // ignored because value wrong type
+        final SpreadsheetCell a4 = store.save(
+                SpreadsheetSelection.parseCell("A4")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=true()")
+                                        .setValue(
+                                                Optional.of(true)
+                                        )
+                        )
+        );
+
+        // ignored because value missing
+        final SpreadsheetCell a5 = store.save(
+                SpreadsheetSelection.parseCell("A5")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=555")
+                        )
+        );
+
+        // ignore because out of range
+        final SpreadsheetCell a7 = store.save(
+                SpreadsheetSelection.parseCell("A7")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=678")
+                                        .setValue(
+                                                Optional.of(678)
+                                        )
+                        )
+        );
+
+        this.findCellsWithValueTypeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:A6"),
+                SpreadsheetValueType.NUMBER,
+                a1,
+                a3
+        );
     }
 
     // toString.........................................................................................................

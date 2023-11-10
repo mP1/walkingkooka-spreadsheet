@@ -20,8 +20,14 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -102,6 +108,56 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         assertThrows(
                 NullPointerException.class,
                 () -> this.createStore().maxRowHeight(null)
+        );
+    }
+
+    // findCellsWithValueType...........................................................................................
+
+    @Test
+    default void testFindCellsWithValueTypeWithNullRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore().findCellsWithValueType(
+                        null,
+                        SpreadsheetValueType.TEXT
+                )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithValueTypeWithNullValueTypeNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore().findCellsWithValueType(
+                        SpreadsheetSelection.ALL_CELLS,
+                        null
+                )
+        );
+    }
+
+    default void findCellsWithValueTypeAndCheck(final S store,
+                                                final SpreadsheetCellRange cellRange,
+                                                final String valueTypeName,
+                                                final SpreadsheetCell... expected) {
+        this.findCellsWithValueTypeAndCheck(
+                store,
+                cellRange,
+                valueTypeName,
+                Sets.of(expected)
+        );
+    }
+
+    default void findCellsWithValueTypeAndCheck(final S store,
+                                                final SpreadsheetCellRange cellRange,
+                                                final String valueTypeName,
+                                                final Set<SpreadsheetCell> expected) {
+        this.checkEquals(
+                expected,
+                store.findCellsWithValueType(
+                        cellRange,
+                        valueTypeName
+                ),
+                () -> "findCellsWithValueType " + cellRange + " " + valueTypeName
         );
     }
 }

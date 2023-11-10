@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -208,6 +209,29 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                         .orElse(0.0)
                 ).max()
                 .orElse(0.0);
+    }
+
+    @Override
+    public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
+                                                       final String valueTypeName) {
+        SpreadsheetCellStore.checkFindCellsWithValueType(
+                range,
+                valueTypeName
+        );
+
+        return this.between(
+                        range.begin(),
+                        range.end()
+                ).stream()
+                .filter(cell ->
+                        cell.formula()
+                        .value()
+                                .map(
+                                        v -> valueTypeName.equals(
+                                                SpreadsheetValueType.typeName(v.getClass())
+                                        )
+                                ).orElse(false)
+                ).collect(Collectors.toCollection(Sets::sorted));
     }
 
     // VisibleForTesting
