@@ -242,11 +242,11 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     /**
-     * If the valueTypeName is {@link SpreadsheetValueType#ALL} this will match all cells with a value.
+     * If the valueTypeName is {@link SpreadsheetValueType#ANY} this will match all cells with a value.
      */
     private Stream<SpreadsheetCell> valueTypeStream(final SpreadsheetCellRange range,
                                                     final String valueTypeName) {
-        final Function<Object, Boolean> filter = SpreadsheetValueType.ALL.equals(valueTypeName) ?
+        final Function<Object, Boolean> filter = SpreadsheetValueType.ANY.equals(valueTypeName) ?
                 v -> Boolean.TRUE :
                 v -> valueTypeName.equals(
                         SpreadsheetValueType.typeName(v.getClass())
