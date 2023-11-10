@@ -124,4 +124,17 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      */
     Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
                                                 final String valueTypeName);
+
+    static void checkCountCellsWithValueType(final SpreadsheetCellRange range,
+                                             final String valueTypeName) {
+        Objects.requireNonNull(range, "range");
+        CharSequences.failIfNullOrEmpty(valueTypeName, "valueTypeName");
+    }
+
+    /**
+     * Counts all cells with a value type equal to the given. This means empty cells without a formula will never be found,
+     * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
+     */
+    int countCellsWithValueType(final SpreadsheetCellRange range,
+                                final String valueTypeName);
 }

@@ -254,6 +254,15 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         );
     }
 
+    @Override
+    public int countCellsWithValueType(final SpreadsheetCellRange range,
+                                       final String valueType) {
+        return this.store.countCellsWithValueType(
+                range,
+                valueType
+        );
+    }
+
     // helpers that do the formula tokenization/text thing..............................................................
 
     private List<SpreadsheetCell> fixFormulaTextList(final List<SpreadsheetCell> cells) {
