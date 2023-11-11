@@ -1183,4 +1183,11 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                 SpreadsheetPattern::marshall,
                 type);
     }
+
+    // constant here to avoid NPE during static init
+
+    /**
+     * The default {@link SpreadsheetTextFormatPattern}.
+     */
+    public static final SpreadsheetTextFormatPattern DEFAULT_TEXT_FORMAT_PATTERN = parseTextFormatPattern("@");
 }
