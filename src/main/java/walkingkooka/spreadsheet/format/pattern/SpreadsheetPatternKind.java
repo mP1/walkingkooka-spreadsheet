@@ -38,11 +38,13 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * The different types of {@link SpreadsheetPattern}.
@@ -296,4 +298,19 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                 .orElseThrow(() -> new IllegalArgumentException("Unknown typeName " + CharSequences.quoteAndEscape(typeName)));
 
     }
+
+    /**
+     * Equivalent to {@link #values()} but with only {@link SpreadsheetPatternKind#isFormatPattern()}.
+     */
+    public static SpreadsheetPatternKind[] formatValues() {
+        return FORMAT_VALUES.toArray(
+                new SpreadsheetPatternKind[
+                        FORMAT_VALUES.size()
+                        ]
+        );
+    }
+
+    private final static List<SpreadsheetPatternKind> FORMAT_VALUES = Arrays.stream(values())
+            .filter(SpreadsheetPatternKind::isFormatPattern)
+            .collect(Collectors.toList());
 }
