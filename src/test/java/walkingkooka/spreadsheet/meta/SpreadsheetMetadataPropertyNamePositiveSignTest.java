@@ -38,11 +38,6 @@ public final class SpreadsheetMetadataPropertyNamePositiveSignTest extends Sprea
         return SpreadsheetMetadataPropertyNamePositiveSign.instance();
     }
 
-    @Override
-    String urlFragment() {
-        return "/positive-sign";
-    }
-
     // ClassTesting.....................................................................................................
 
     @Override

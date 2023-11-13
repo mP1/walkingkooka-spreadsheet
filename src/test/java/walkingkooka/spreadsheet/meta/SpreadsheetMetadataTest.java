@@ -700,7 +700,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateFormatPattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
-                "/pattern/date-format"
+                "/date-format-pattern"
         );
     }
 
@@ -708,7 +708,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateTimeFormatPattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
-                "/pattern/date-time-format"
+                "/date-time-format-pattern"
         );
     }
 
@@ -716,7 +716,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateTimeParsePattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN,
-                "/pattern/date-time-parse"
+                "/date-time-parse-pattern"
         );
     }
 

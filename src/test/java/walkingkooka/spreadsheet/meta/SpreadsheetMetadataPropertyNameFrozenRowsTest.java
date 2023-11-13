@@ -63,11 +63,6 @@ public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends Spreads
         return SpreadsheetRowReferenceRange.class.getSimpleName();
     }
 
-    @Override
-    String urlFragment() {
-        return "/frozen-rows";
-    }
-
     // ClassTesting.....................................................................................................
 
     @Override

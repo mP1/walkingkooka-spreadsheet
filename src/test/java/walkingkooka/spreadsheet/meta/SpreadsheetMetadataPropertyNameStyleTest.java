@@ -55,11 +55,6 @@ public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetM
         return TextStyle.class.getSimpleName();
     }
 
-    @Override
-    String urlFragment() {
-        return "/style";
-    }
-
     // ClassTesting.....................................................................................................
 
     @Override

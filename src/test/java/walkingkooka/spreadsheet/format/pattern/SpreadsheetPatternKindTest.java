@@ -692,26 +692,42 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
 
     @Test
     public void testUrlFragmentDateFormatPattern() {
-        this.checkEquals(
-                UrlFragment.with("/pattern/date-format"),
-                SpreadsheetPatternKind.DATE_FORMAT_PATTERN.urlFragment()
+        this.urlFragmentAndCheck(
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
+                "/format-pattern/date"
         );
     }
 
     @Test
     public void testUrlFragmentDateTimeFormatPattern() {
-        this.checkEquals(
-                UrlFragment.with("/pattern/date-time-format"),
-                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN.urlFragment()
+        this.urlFragmentAndCheck(
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
+                "/format-pattern/date-time"
         );
     }
 
-
     @Test
     public void testUrlFragmentTimeParsePattern() {
+        this.urlFragmentAndCheck(
+                SpreadsheetPatternKind.TIME_PARSE_PATTERN,
+                "/parse-pattern/time"
+        );
+    }
+
+    private void urlFragmentAndCheck(final SpreadsheetPatternKind kind,
+                                     final String expected) {
+        this.urlFragmentAndCheck(
+                kind,
+                UrlFragment.with(expected)
+        );
+    }
+
+    private void urlFragmentAndCheck(final SpreadsheetPatternKind kind,
+                                     final UrlFragment expected) {
         this.checkEquals(
-                UrlFragment.with("/pattern/time-parse"),
-                SpreadsheetPatternKind.TIME_PARSE_PATTERN.urlFragment()
+                expected,
+                kind.urlFragment(),
+                () -> kind + " urlFragment()"
         );
     }
 

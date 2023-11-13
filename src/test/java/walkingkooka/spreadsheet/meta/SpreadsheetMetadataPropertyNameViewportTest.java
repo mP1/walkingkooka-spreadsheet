@@ -130,11 +130,6 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
         return SpreadsheetViewport.class.getSimpleName();
     }
 
-    @Override
-    String urlFragment() {
-        return "/viewport";
-    }
-
     // ClassTesting.....................................................................................................
 
     @Override

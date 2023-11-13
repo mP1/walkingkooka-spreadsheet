@@ -38,11 +38,6 @@ public final class SpreadsheetMetadataPropertyNameDecimalSeparatorTest extends S
         return SpreadsheetMetadataPropertyNameDecimalSeparator.instance();
     }
 
-    @Override
-    String urlFragment() {
-        return "/decimal-separator";
-    }
-
     // ClassTesting.....................................................................................................
 
     @Override

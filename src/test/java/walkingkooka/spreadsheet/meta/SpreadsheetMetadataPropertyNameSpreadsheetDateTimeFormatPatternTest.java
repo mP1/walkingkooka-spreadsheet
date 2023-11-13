@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -132,13 +131,6 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPatte
     @Override
     String propertyValueType() {
         return "DateTime format pattern";
-    }
-
-    @Override
-    String urlFragment() {
-        return SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
-                .urlFragment()
-                .value();
     }
 
     // ClassTesting.....................................................................................................

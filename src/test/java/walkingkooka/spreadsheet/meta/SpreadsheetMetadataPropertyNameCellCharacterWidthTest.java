@@ -41,11 +41,6 @@ public final class SpreadsheetMetadataPropertyNameCellCharacterWidthTest extends
         return SpreadsheetMetadataPropertyNameCellCharacterWidth.instance();
     }
 
-    @Override
-    String urlFragment() {
-        return "/cell-character-width";
-    }
-
     // ClassTesting.....................................................................................................
 
     @Override
