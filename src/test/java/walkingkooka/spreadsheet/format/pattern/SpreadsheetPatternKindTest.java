@@ -54,6 +54,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTesting,
@@ -973,6 +974,32 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         this.checkEquals(
                 expected,
                 kind.spreadsheetMetadataPropertyName()
+        );
+    }
+
+    // formatValues.....................................................................................................
+
+    @Test
+    public void testFormatValues() {
+        this.checkEquals(
+                Lists.of(
+                        SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
+                        SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
+                        SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN,
+                        SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
+                        SpreadsheetPatternKind.TIME_FORMAT_PATTERN
+                ),
+                List.of(
+                        SpreadsheetPatternKind.formatValues()
+                )
+        );
+    }
+
+    @Test
+    public void testFormatValuesCloned() {
+        assertNotSame(
+                SpreadsheetPatternKind.formatValues(),
+                SpreadsheetPatternKind.formatValues()
         );
     }
 
