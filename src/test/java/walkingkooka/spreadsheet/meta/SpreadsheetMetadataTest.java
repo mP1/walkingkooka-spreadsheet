@@ -684,7 +684,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetId() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                "/spreadsheet-id"
+                "spreadsheet-id"
         );
     }
 
@@ -692,7 +692,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetName() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
-                "/spreadsheet-name"
+                "spreadsheet-name"
         );
     }
 
@@ -700,7 +700,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateFormatPattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
-                "/date-format-pattern"
+                "date-format-pattern"
         );
     }
 
@@ -708,7 +708,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateTimeFormatPattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
-                "/date-time-format-pattern"
+                "date-time-format-pattern"
         );
     }
 
@@ -716,7 +716,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateTimeParsePattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN,
-                "/date-time-parse-pattern"
+                "date-time-parse-pattern"
         );
     }
 
@@ -724,7 +724,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateTimeOffset() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATETIME_OFFSET,
-                "/date-time-offset"
+                "date-time-offset"
         );
     }
 
@@ -732,7 +732,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetStyle() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.STYLE,
-                "/style"
+                "style"
         );
     }
 

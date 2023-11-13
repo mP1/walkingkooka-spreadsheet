@@ -340,8 +340,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                         JsonNode.nullNode()
                 );
 
-        this.urlFragment = UrlFragment.SLASH
-                .append(UrlFragment.parse(finalName));
+        this.urlFragment = UrlFragment.parse(finalName);
     }
 
     /**

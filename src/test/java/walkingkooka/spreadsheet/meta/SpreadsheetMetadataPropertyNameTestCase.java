@@ -53,7 +53,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         final N name = this.createName();
 
         this.checkEquals(
-                UrlFragment.parse("/" + name.value()),
+                UrlFragment.parse(name.value()),
                 name.urlFragment(),
                 () -> name + " urlFragment"
         );
