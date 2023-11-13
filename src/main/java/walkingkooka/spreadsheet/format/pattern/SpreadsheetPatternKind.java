@@ -313,4 +313,19 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     private final static List<SpreadsheetPatternKind> FORMAT_VALUES = Arrays.stream(values())
             .filter(SpreadsheetPatternKind::isFormatPattern)
             .collect(Collectors.toList());
+
+    /**
+     * Equivalent to {@link #values()} but with only {@link SpreadsheetPatternKind#isParsePattern()}.
+     */
+    public static SpreadsheetPatternKind[] parseValues() {
+        return PARSE_VALUES.toArray(
+                new SpreadsheetPatternKind[
+                        PARSE_VALUES.size()
+                        ]
+        );
+    }
+
+    private final static List<SpreadsheetPatternKind> PARSE_VALUES = Arrays.stream(values())
+            .filter(SpreadsheetPatternKind::isParsePattern)
+            .collect(Collectors.toList());
 }

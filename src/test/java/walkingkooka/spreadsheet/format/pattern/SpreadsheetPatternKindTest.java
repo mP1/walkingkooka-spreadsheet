@@ -1003,6 +1003,31 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         );
     }
 
+    // parseValues.....................................................................................................
+
+    @Test
+    public void testParseValues() {
+        this.checkEquals(
+                Lists.of(
+                        SpreadsheetPatternKind.DATE_PARSE_PATTERN,
+                        SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN,
+                        SpreadsheetPatternKind.NUMBER_PARSE_PATTERN,
+                        SpreadsheetPatternKind.TIME_PARSE_PATTERN
+                ),
+                List.of(
+                        SpreadsheetPatternKind.parseValues()
+                )
+        );
+    }
+
+    @Test
+    public void testParseValuesCloned() {
+        assertNotSame(
+                SpreadsheetPatternKind.parseValues(),
+                SpreadsheetPatternKind.parseValues()
+        );
+    }
+
     // ClassTesting......................................................................................................
 
     @Override
