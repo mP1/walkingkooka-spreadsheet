@@ -31,10 +31,6 @@ public final class SpreadsheetMetadataPropertyNameCreatorTest extends Spreadshee
         return SpreadsheetMetadataPropertyNameCreator.instance();
     }
 
-    @Override
-    String urlFragment() {
-        return "/creator";
-    }
     // ClassTesting.....................................................................................................
 
     @Override

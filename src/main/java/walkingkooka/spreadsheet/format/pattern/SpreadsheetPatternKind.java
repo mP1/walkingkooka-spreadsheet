@@ -53,60 +53,70 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     DATE_FORMAT_PATTERN(
             SpreadsheetPattern::parseDateFormatPattern,
             SpreadsheetPattern::dateFormatPattern,
-            SpreadsheetFormatParserTokenKind::isDateFormat
+            SpreadsheetFormatParserTokenKind::isDateFormat,
+            "date"
     ),
 
     DATE_PARSE_PATTERN(
             SpreadsheetPattern::parseDateParsePattern,
             SpreadsheetPattern::dateParsePattern,
-            SpreadsheetFormatParserTokenKind::isDateParse
+            SpreadsheetFormatParserTokenKind::isDateParse,
+            "date"
     ),
 
     DATE_TIME_FORMAT_PATTERN(
             SpreadsheetPattern::parseDateTimeFormatPattern,
             SpreadsheetPattern::dateTimeFormatPattern,
-            SpreadsheetFormatParserTokenKind::isDateTimeFormat
+            SpreadsheetFormatParserTokenKind::isDateTimeFormat,
+            "date-time"
     ),
 
     DATE_TIME_PARSE_PATTERN(
             SpreadsheetPattern::parseDateTimeParsePattern,
             SpreadsheetPattern::dateTimeParsePattern,
-            SpreadsheetFormatParserTokenKind::isDateTimeParse
+            SpreadsheetFormatParserTokenKind::isDateTimeParse,
+            "date-time"
     ),
 
     NUMBER_FORMAT_PATTERN(
             SpreadsheetPattern::parseNumberFormatPattern,
             SpreadsheetPattern::numberFormatPattern,
-            SpreadsheetFormatParserTokenKind::isNumberFormat
+            SpreadsheetFormatParserTokenKind::isNumberFormat,
+            "number"
     ),
 
     NUMBER_PARSE_PATTERN(
             SpreadsheetPattern::parseNumberParsePattern,
             SpreadsheetPattern::numberParsePattern,
-            SpreadsheetFormatParserTokenKind::isNumberParse
+            SpreadsheetFormatParserTokenKind::isNumberParse,
+            "number"
     ),
 
     TEXT_FORMAT_PATTERN(
             SpreadsheetPattern::parseTextFormatPattern,
             SpreadsheetPattern::textFormatPattern,
-            SpreadsheetFormatParserTokenKind::isTextFormat
+            SpreadsheetFormatParserTokenKind::isTextFormat,
+            "text"
     ),
 
     TIME_FORMAT_PATTERN(
             SpreadsheetPattern::parseTimeFormatPattern,
             SpreadsheetPattern::timeFormatPattern,
-            SpreadsheetFormatParserTokenKind::isTimeFormat
+            SpreadsheetFormatParserTokenKind::isTimeFormat,
+            "time"
     ),
 
     TIME_PARSE_PATTERN(
             SpreadsheetPattern::parseTimeParsePattern,
             SpreadsheetPattern::timeParsePattern,
-            SpreadsheetFormatParserTokenKind::isTimeParse
+            SpreadsheetFormatParserTokenKind::isTimeParse,
+            "time"
     );
 
     SpreadsheetPatternKind(final Function<String, SpreadsheetPattern> parser,
                            final Function<ParserToken, SpreadsheetPattern> tokenToPattern,
-                           final Predicate<SpreadsheetFormatParserTokenKind> formatParserTokenKind) {
+                           final Predicate<SpreadsheetFormatParserTokenKind> formatParserTokenKind,
+                           final String urlFragmentSuffix) {
         this.parser = parser;
         this.tokenToPattern = tokenToPattern;
         this.spreadsheetFormatParserTokenKinds = Sets.of(
@@ -115,23 +125,22 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                         .toArray(SpreadsheetFormatParserTokenKind[]::new)
         );
 
-        final String nameLowerKebab = CaseKind.SNAKE.change(
+
+        this.typeName = "spreadsheet-" + CaseKind.SNAKE.change(
                 this.name(),
                 CaseKind.KEBAB
         );
-        this.typeName = "spreadsheet-" + nameLowerKebab;
 
+        // eg time, text
         this.urlFragment =
-                SpreadsheetUrlFragments.PATTERN
+                (
+                        this.isFormatPattern() ?
+                                SpreadsheetUrlFragments.FORMAT_PATTERN :
+                                SpreadsheetUrlFragments.PARSE_PATTERN
+                )
                         .append(UrlFragment.SLASH)
                         .append(
-                                UrlFragment.with(
-                                        CharSequences.subSequence(
-                                                nameLowerKebab,
-                                                0,
-                                                -"_PATTERN".length()
-                                        ).toString()
-                                )
+                                UrlFragment.with(urlFragmentSuffix)
                         );
     }
 

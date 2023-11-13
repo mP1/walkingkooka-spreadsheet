@@ -340,24 +340,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                         JsonNode.nullNode()
                 );
 
-        final String urlFragment;
-        if (finalName.contains("pattern")) {
-            // /pattern/date-format
-            urlFragment = "pattern/" +
-                    CharSequences.subSequence(
-                            finalName,
-                            0,
-                            -"-pattern".length()
-                    ).toString();
-        } else {
-            // /expression-number-kind
-            // /currency-symbol
-            // /rounding-mode
-            urlFragment = finalName;
-        }
-
         this.urlFragment = UrlFragment.SLASH
-                .append(UrlFragment.parse(urlFragment));
+                .append(UrlFragment.parse(finalName));
     }
 
     /**

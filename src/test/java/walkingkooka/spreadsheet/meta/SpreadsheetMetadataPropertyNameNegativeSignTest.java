@@ -38,11 +38,6 @@ public final class SpreadsheetMetadataPropertyNameNegativeSignTest extends Sprea
         return SpreadsheetMetadataPropertyNameNegativeSign.instance();
     }
 
-    @Override
-    String urlFragment() {
-        return "/negative-sign";
-    }
-
     // ClassTesting.....................................................................................................
 
     @Override

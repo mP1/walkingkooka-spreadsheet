@@ -53,13 +53,11 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         final N name = this.createName();
 
         this.checkEquals(
-                UrlFragment.parse(this.urlFragment()),
+                UrlFragment.parse("/" + name.value()),
                 name.urlFragment(),
                 () -> name + " urlFragment"
         );
     }
-
-    abstract String urlFragment();
 
     @Test
     public final void testTextStylePropertyNameClashFree() {
