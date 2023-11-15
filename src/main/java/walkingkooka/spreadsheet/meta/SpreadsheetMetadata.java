@@ -433,6 +433,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
         return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor.numberToColorMap(this));
     }
 
+    // Converter.......................................................................................................
+
     /**
      * Returns a {@link DecimalNumberContext} if the required properties are present.
      * <ul>
