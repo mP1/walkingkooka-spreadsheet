@@ -134,9 +134,4 @@ public enum SpreadsheetReferenceKind {
 
     public abstract SpreadsheetReferenceKind flip();
 
-    // Force static initialization of column and row to avoid NPE when calling methods like #firstColumn
-    static {
-//        SpreadsheetColumnReference.MAX.toString();
-//        SpreadsheetRowReference.MAX.toString();
-    }
 }
