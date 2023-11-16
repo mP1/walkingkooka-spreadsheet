@@ -17,15 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.test.ParseStringTesting;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public abstract class SpreadsheetViewportNavigationPixelTestCase<T extends SpreadsheetViewportNavigationPixel> extends
