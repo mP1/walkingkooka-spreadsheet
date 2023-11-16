@@ -61,7 +61,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return this.columnHidden.test(column);
     }
 
-    private Predicate<SpreadsheetColumnReference> columnHidden;
+    private final Predicate<SpreadsheetColumnReference> columnHidden;
 
     @Override
     public boolean isRowHidden(final SpreadsheetRowReference row) {
@@ -70,7 +70,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return this.rowHidden.test(row);
     }
 
-    private Predicate<SpreadsheetRowReference> rowHidden;
+    private final Predicate<SpreadsheetRowReference> rowHidden;
 
     @Override
     public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference column) {
