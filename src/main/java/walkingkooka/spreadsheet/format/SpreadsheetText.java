@@ -64,7 +64,7 @@ public final class SpreadsheetText implements HasText,
     public static SpreadsheetText with(final String text) {
         checkText(text);
 
-        return text.length() == 0 ?
+        return text.isEmpty() ?
                 EMPTY :
                 new SpreadsheetText(WITHOUT_COLOR, text);
     }
