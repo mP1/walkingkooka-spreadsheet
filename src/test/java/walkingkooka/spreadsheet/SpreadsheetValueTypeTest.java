@@ -170,7 +170,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.checkEquals(
                 typeName,
                 SpreadsheetValueType.typeName(type),
-                () -> type.getName()
+                type::getName
         );
     }
 
