@@ -116,13 +116,13 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
 
     // add..............................................................................................................
 
-    final SpreadsheetColumnOrRowReferenceRange add0(final int value) {
+    final SpreadsheetColumnOrRowReferenceRange<?> add0(final int value) {
         return 0 == value ?
                 this :
                 this.addNonZero(value);
     }
 
-    abstract SpreadsheetColumnOrRowReferenceRange addNonZero(final int value);
+    abstract SpreadsheetColumnOrRowReferenceRange<?> addNonZero(final int value);
 
     // addSaturated.....................................................................................................
 
@@ -130,15 +130,15 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
      * Adds a delta to the value and returns an instance with the result.
      */
     @Override
-    public abstract SpreadsheetColumnOrRowReferenceRange addSaturated(final int value);
+    public abstract SpreadsheetColumnOrRowReferenceRange<?> addSaturated(final int value);
 
-    final SpreadsheetColumnOrRowReferenceRange addSaturated0(final int value) {
+    final SpreadsheetColumnOrRowReferenceRange<?> addSaturated0(final int value) {
         return 0 == value ?
                 this :
                 this.addSaturatedNonZero(value);
     }
 
-    abstract SpreadsheetColumnOrRowReferenceRange addSaturatedNonZero(final int value);
+    abstract SpreadsheetColumnOrRowReferenceRange<?> addSaturatedNonZero(final int value);
 
     // isSingle.........................................................................................................
 
