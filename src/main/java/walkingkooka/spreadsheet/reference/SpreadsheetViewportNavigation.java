@@ -418,7 +418,6 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
 
                 int compactSize = size;
 
-                Exit:
                 for (int i = 0; i < size; i++) {
                     final SpreadsheetViewportNavigation left = temp[i];
                     if (null == left) {
