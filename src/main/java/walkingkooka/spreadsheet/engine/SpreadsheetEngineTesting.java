@@ -525,7 +525,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 engine.rowCount(context)
                         )
                 );
-        ;
         this.checkEquals(
                 expected,
                 result,
@@ -1022,7 +1021,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 engine.rowCount(context)
                         )
                 );
-        ;
         this.checkEquals(
                 expected,
                 result,
