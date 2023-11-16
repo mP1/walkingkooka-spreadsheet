@@ -72,7 +72,7 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
     public static SpreadsheetViewportWindows parse(final String windows) {
         Objects.requireNonNull(windows, "windows");
 
-        return windows.length() == 0 ?
+        return windows.isEmpty() ?
                 EMPTY :
                 new SpreadsheetViewportWindows(
                         copy(

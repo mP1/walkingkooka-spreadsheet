@@ -147,7 +147,7 @@ final class SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor<T exte
 
     private void createAndSavePatternIfNecessary() {
         final List<ParserToken> tokens = this.pattern;
-        if (null != tokens && tokens.size() > 0) {
+        if (null != tokens && false == tokens.isEmpty()) {
             final T pattern = this.patternFactory.apply(
                     ParserTokens.sequence(
                             tokens,
