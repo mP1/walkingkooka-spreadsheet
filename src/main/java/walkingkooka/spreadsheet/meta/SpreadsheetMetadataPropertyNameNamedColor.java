@@ -28,7 +28,7 @@ final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadat
     /**
      * Factory used to create a new {@link SpreadsheetMetadataPropertyNameNamedColor} constant.
      */
-    static <T> SpreadsheetMetadataPropertyNameNamedColor withColorName(final SpreadsheetColorName name) {
+    static SpreadsheetMetadataPropertyNameNamedColor withColorName(final SpreadsheetColorName name) {
         return new SpreadsheetMetadataPropertyNameNamedColor(name);
     }
 
