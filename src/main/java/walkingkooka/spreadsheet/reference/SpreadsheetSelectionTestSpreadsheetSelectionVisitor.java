@@ -32,7 +32,7 @@ final class SpreadsheetSelectionTestSpreadsheetSelectionVisitor extends Spreadsh
 
     @Override
     protected void visit(final SpreadsheetCellRange range) {
-        throw new UnsupportedOperationException(range.toString());
+        this.test = this.selection.testCellRange(range);
     }
 
     @Override

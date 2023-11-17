@@ -428,14 +428,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     @Test
-    public final void testTestWithCellRangeFails() {
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().test(SpreadsheetSelection.parseCellRange("A1:B2"))
-        );
-    }
-
-    @Test
     public final void testTestWithColumnRangeFails() {
         assertThrows(
                 UnsupportedOperationException.class,
@@ -512,6 +504,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 expected,
                 selection.testCellRange(range),
                 () -> selection + " testCellRange " + range
+        );
+
+        this.testAndCheck(
+                selection,
+                range,
+                expected
         );
     }
 
