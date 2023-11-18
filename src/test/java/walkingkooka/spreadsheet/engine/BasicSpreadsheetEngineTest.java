@@ -11728,6 +11728,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    @Test
+    public void testWindowSelectionLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference home = SpreadsheetSelection.parseCell("B2");
+        engine.saveLabel(
+                LABEL.mapping(
+                        home
+                ),
+                context
+        );
+
+        this.windowAndCheck(
+                engine,
+                home.viewportRectangle(
+                        COLUMN_WIDTH * 3,
+                        ROW_HEIGHT * 3
+                ), // viewport
+                false, // includeFrozenColumnsRows
+                Optional.of((SpreadsheetSelection) LABEL), // selection
+                context,
+                "B2:D4"
+        );
+    }
+
     //  navigate........................................................................................................
 
     @Test

@@ -1313,8 +1313,21 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                              final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewportRectangle, "viewportRectangle");
         Objects.requireNonNull(selection, "selection");
-        selection.ifPresent(BasicSpreadsheetEngine::windowSelectionCheck);
         checkContext(context);
+
+        return this.window0(
+                viewportRectangle,
+                includeFrozenColumnsRows,
+                selection.map(context::resolveIfLabel),
+                context
+        );
+    }
+
+    private SpreadsheetViewportWindows window0(final SpreadsheetViewportRectangle viewportRectangle,
+                                               final boolean includeFrozenColumnsRows,
+                                               final Optional<SpreadsheetSelection> selection,
+                                               final SpreadsheetEngineContext context) {
+        selection.ifPresent(BasicSpreadsheetEngine::windowSelectionCheck);
 
         double width = viewportRectangle.width();
         double height = viewportRectangle.height();
