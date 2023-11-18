@@ -1327,8 +1327,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                final boolean includeFrozenColumnsRows,
                                                final Optional<SpreadsheetSelection> selection,
                                                final SpreadsheetEngineContext context) {
-        selection.ifPresent(BasicSpreadsheetEngine::windowSelectionCheck);
-
         double width = viewportRectangle.width();
         double height = viewportRectangle.height();
 
@@ -1493,12 +1491,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
 
         return SpreadsheetViewportWindows.with(window);
-    }
-
-    private static void windowSelectionCheck(final SpreadsheetSelection selection) {
-        if (selection.count() != 1) {
-            throw new IllegalArgumentException("Focused selection must only contain a single viewport element but was " + selection);
-        }
     }
 
     /**
