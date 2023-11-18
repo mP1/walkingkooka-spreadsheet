@@ -11748,7 +11748,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ROW_HEIGHT * 3
                 ), // viewport
                 false, // includeFrozenColumnsRows
-                Optional.of((SpreadsheetSelection) LABEL), // selection
+                Optional.of(LABEL), // selection
                 context,
                 "B2:D4"
         );
