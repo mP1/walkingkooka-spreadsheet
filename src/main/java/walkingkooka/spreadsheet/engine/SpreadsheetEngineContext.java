@@ -55,8 +55,10 @@ public interface SpreadsheetEngineContext extends Context, ExpressionPurityConte
 
     /**
      * Evaluates the expression into a value.
+     * The cell parameter is optional because not all {@link Expression expressions} that may need evaluation belong to a cell.
      */
-    Object evaluate(final Expression node, final Optional<SpreadsheetCell> cell);
+    Object evaluate(final Expression node,
+                    final Optional<SpreadsheetCell> cell);
 
     /**
      * Formats the given value using the provided formatter.
