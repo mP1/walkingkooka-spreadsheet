@@ -88,6 +88,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final static Set<SpreadsheetColumnReference> NO_DELETED_COLUMNS = Sets.empty();
     public final static Set<SpreadsheetRowReference> NO_DELETED_ROWS = Sets.empty();
 
+    public final static Set<SpreadsheetCellReference> NO_MATCHED_CELLS = Sets.empty();
+
     public final static Map<SpreadsheetColumnReference, Double> NO_COLUMN_WIDTHS = Maps.empty();
     public final static Map<SpreadsheetRowReference, Double> NO_ROW_HEIGHTS = Maps.empty();
 
@@ -108,6 +110,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             NO_DELETED_CELLS,
             NO_DELETED_COLUMNS,
             NO_DELETED_ROWS,
+            NO_MATCHED_CELLS,
             NO_COLUMN_WIDTHS,
             NO_ROW_HEIGHTS,
             NO_TOTAL_WIDTH,
@@ -125,6 +128,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                      final Set<SpreadsheetCellReference> deletedCells,
                      final Set<SpreadsheetColumnReference> deletedColumns,
                      final Set<SpreadsheetRowReference> deletedRows,
+                     final Set<SpreadsheetCellReference> matchedCells,
                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                      final Map<SpreadsheetRowReference, Double> rowHeights,
                      final OptionalInt columnCount,
@@ -140,6 +144,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         this.deletedCells = deletedCells;
         this.deletedColumns = deletedColumns;
         this.deletedRows = deletedRows;
+
+        this.matchedCells = matchedCells;
 
         this.columnWidths = columnWidths;
         this.rowHeights = rowHeights;
@@ -463,6 +469,38 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         Objects.requireNonNull(deletedRows, "deletedRows");
     }
 
+    // matchedCells............................................................................................................
+
+    public final Set<SpreadsheetCellReference> matchedCells() {
+        return this.matchedCells;
+    }
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} holding the given matched cells after they are possibly filtered
+     * using the {@link #window()}
+     */
+    public final SpreadsheetDelta setMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
+        checkMatchedCells(matchedCells);
+
+        final Set<SpreadsheetCellReference> copy = this.filterMatchedCells(matchedCells);
+        return this.matchedCells.equals(copy) ?
+                this :
+                this.replaceMatchedCells(copy);
+    }
+
+    abstract SpreadsheetDelta replaceMatchedCells(final Set<SpreadsheetCellReference> matchedCells);
+
+    /**
+     * Takes a copy of the matched cells, possibly filtering out matched Cells if a window is present.
+     */
+    abstract Set<SpreadsheetCellReference> filterMatchedCells(final Set<SpreadsheetCellReference> matchedCells);
+
+    final Set<SpreadsheetCellReference> matchedCells;
+
+    private static void checkMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
+        Objects.requireNonNull(matchedCells, "matchedCells");
+    }
+
     // columnWidths..................................................................................................
 
     /**
@@ -596,6 +634,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final Set<SpreadsheetColumnReference> deletedColumns = this.deletedColumns;
         final Set<SpreadsheetRowReference> deletedRows = this.deletedRows;
 
+        final Set<SpreadsheetCellReference> matchedCells = this.matchedCells;
+
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         final Map<SpreadsheetRowReference, Double> rowHeights = this.rowHeights;
 
@@ -620,6 +660,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     filterDeletedCells0(deletedCells, window),
                     filterDeletedColumns0(deletedColumns, window),
                     filterDeletedRows0(deletedRows, window),
+                    filterMatchedCells0(matchedCells, window),
                     filterColumnWidths0(columnWidths, window),
                     filterRowHeights0(rowHeights, window),
                     columnCount,
@@ -636,6 +677,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     deletedCells,
                     deletedColumns,
                     deletedRows,
+                    matchedCells,
                     columnWidths,
                     rowHeights,
                     columnCount,
@@ -819,6 +861,22 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 deletedRows,
                 window::test,
                 SpreadsheetRowReference::toRelative
+        );
+    }
+
+    static Set<SpreadsheetCellReference> filterMatchedCells(final Set<SpreadsheetCellReference> matchedCells,
+                                                            final SpreadsheetViewportWindows window) {
+        return window.isEmpty() ?
+                matchedCells :
+                filterMatchedCells0(matchedCells, window);
+    }
+
+    private static Set<SpreadsheetCellReference> filterMatchedCells0(final Set<SpreadsheetCellReference> matchedCells,
+                                                                     final SpreadsheetViewportWindows window) {
+        return filter(
+                matchedCells,
+                window::test,
+                SpreadsheetCellReference::toRelative
         );
     }
 
@@ -1568,6 +1626,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     printer
             );
 
+            printTreeCollectionCsv(
+                    "matchedCells",
+                    this.matchedCells(),
+                    printer
+            );
+
             this.printTreeMap(
                     "columnWidths",
                     this.columnWidths(),
@@ -1753,7 +1817,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             )
                     );
                     break;
-
+                case MATCHED_CELLS_PROPERTY_STRING:
+                    unmarshalled = unmarshalled.setMatchedCells(
+                            unmarshallSelectionCsv(
+                                    child,
+                                    SpreadsheetSelection::parseCell
+                            )
+                    );
+                    break;
                 case COLUMN_WIDTHS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setColumnWidths(
                             context.unmarshallMap(
@@ -1948,6 +2019,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             );
         }
 
+        final Set<SpreadsheetCellReference> matchedCells = this.matchedCells;
+        if (false == matchedCells.isEmpty()) {
+            children.add(
+                    marshallSelection(matchedCells, MATCHED_CELLS_PROPERTY)
+            );
+        }
+
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         if (false == columnWidths.isEmpty()) {
             children.add(
@@ -2043,6 +2121,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String DELETED_COLUMNS_PROPERTY_STRING = "deletedColumns";
     private final static String DELETED_ROWS_PROPERTY_STRING = "deletedRows";
 
+
+    private final static String MATCHED_CELLS_PROPERTY_STRING = "matchedCells";
+
     private final static String COLUMN_WIDTHS_PROPERTY_STRING = "columnWidths";
     private final static String ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
 
@@ -2071,6 +2152,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final static JsonPropertyName DELETED_COLUMNS_PROPERTY = JsonPropertyName.with(DELETED_COLUMNS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName DELETED_ROWS_PROPERTY = JsonPropertyName.with(DELETED_ROWS_PROPERTY_STRING);
+
+    // @VisibleForTesting
+    final static JsonPropertyName MATCHED_CELLS_PROPERTY = JsonPropertyName.with(MATCHED_CELLS_PROPERTY_STRING);
+
     // @VisibleForTesting
     final static JsonPropertyName COLUMN_WIDTHS_PROPERTY = JsonPropertyName.with(COLUMN_WIDTHS_PROPERTY_STRING);
     // @VisibleForTesting
@@ -2113,6 +2198,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -2137,6 +2223,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.deletedCells.equals(other.deletedCells) &&
                 this.deletedColumns.equals(other.deletedColumns) &&
                 this.deletedRows.equals(other.deletedRows) &&
+                this.matchedCells.equals(other.matchedCells) &&
                 this.columnWidths.equals(other.columnWidths) &&
                 this.rowHeights.equals(other.rowHeights) &&
                 this.columnCount.equals(other.columnCount) &&
@@ -2168,7 +2255,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .label("deletedColumns")
                 .value(this.deletedColumns)
                 .label("deletedRows")
-                .value(this.deletedRows);
+                .value(this.deletedRows)
+                .label("matchedCells")
+                .value(this.matchedCells);
 
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         final Map<SpreadsheetRowReference, Double> rowHeights = this.rowHeights;

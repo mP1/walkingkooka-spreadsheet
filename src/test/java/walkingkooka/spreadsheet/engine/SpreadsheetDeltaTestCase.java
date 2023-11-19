@@ -448,6 +448,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
+
+        this.checkNotEquals(
+                before,
+                after
+        );
     }
 
     @Test
@@ -655,6 +660,91 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 new ArrayList<>(delta.deletedRows())
         );
     }
+
+    // matchedCells.....................................................................................................
+
+    @Test
+    public final void testMatchedCellsReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Set<SpreadsheetCellReference> matchedCells = delta.matchedCells();
+
+        assertThrows(UnsupportedOperationException.class, () -> matchedCells.add(this.a1().reference()));
+
+        this.checkMatchedCells(delta, this.matchedCells());
+    }
+
+    @Test
+    public final void testSetMatchedCellsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setMatchedCells(this.matchedCells()));
+    }
+
+    @Test
+    public final void testSetMatchedCellsDifferent() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetCellReference> different = this.differentMatchedCells();
+
+        final SpreadsheetDelta after = before.setMatchedCells(different);
+        assertNotSame(before, after);
+
+        this.checkMatchedCells(after, different);
+
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkLabels(after, before.labels());
+        this.checkRows(after);
+
+        this.checkDeletedCells(after);
+        this.checkDeletedColumns(after);
+        this.checkDeletedRows(after);
+
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
+
+        this.checkNotEquals(
+                before,
+                after
+        );
+    }
+
+    @Test
+    public final void testSetMatchedCellsSorted() {
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setMatchedCells(Sets.of(b2, a1));
+
+        this.checkMatchedCells(
+                delta,
+                Sets.of(a1, b2)
+        );
+        this.checkEquals(Lists.of(a1, b2), new ArrayList<>(delta.matchedCells()));
+    }
+
+    @Test
+    public final void testSetMatchedCellsAllRelative() {
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B$2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C$3");
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("D4");
+
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
+                .setMatchedCells(Sets.of(b2, a1, d4, c3));
+
+        this.checkMatchedCells(
+                delta,
+                Sets.of(
+                        a1.toRelative(),
+                        b2.toRelative(),
+                        c3.toRelative(),
+                        d4.toRelative()
+                )
+        );
+        this.checkEquals(Lists.of(a1.toRelative(), b2.toRelative(), c3.toRelative(), d4), new ArrayList<>(delta.matchedCells()));
+    }
+    
     // setColumnWidths...............................................................................................
 
     @Test
@@ -1333,6 +1423,37 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
+    // matchedCells.....................................................................................................
+
+    final Set<SpreadsheetCellReference> matchedCells() {
+        return Sets.of(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.parseCell("B2"),
+                SpreadsheetSelection.parseCell("C3")
+        );
+    }
+
+    final Set<SpreadsheetCellReference> differentMatchedCells() {
+        return Set.of(SpreadsheetSelection.parseCell("C2"));
+    }
+
+    final void checkMatchedCells(final SpreadsheetDelta delta) {
+        this.checkMatchedCells(delta, this.matchedCells());
+    }
+
+    final void checkMatchedCells(final SpreadsheetDelta delta,
+                                 final Set<SpreadsheetCellReference> cells) {
+        this.checkEquals(
+                cells,
+                delta.matchedCells(),
+                "matchedCells"
+        );
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.matchedCells().add(null)
+        );
+    }
+    
     // columnWidths..................................................................................................
 
     final Map<SpreadsheetColumnReference, Double> columnWidths() {
@@ -1599,6 +1720,10 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final JsonNode deletedRowsJson() {
         return JsonNode.string("3,4");
+    }
+
+    final JsonNode matchedCellsJson() {
+        return JsonNode.string("A1,B2,C3");
     }
 
     @Override

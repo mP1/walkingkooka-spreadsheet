@@ -53,6 +53,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                                  final Set<SpreadsheetCellReference> deletedCells,
                                                  final Set<SpreadsheetColumnReference> deletedColumns,
                                                  final Set<SpreadsheetRowReference> deletedRows,
+                                                 final Set<SpreadsheetCellReference> matchedCells,
                                                  final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                  final Map<SpreadsheetRowReference, Double> rowHeights,
                                                  final OptionalInt columnCount,
@@ -67,6 +68,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 deletedCells,
                 deletedColumns,
                 deletedRows,
+                matchedCells,
                 columnWidths,
                 rowHeights,
                 columnCount,
@@ -83,6 +85,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                      final Set<SpreadsheetCellReference> deletedCells,
                                      final Set<SpreadsheetColumnReference> deletedColumns,
                                      final Set<SpreadsheetRowReference> deletedRows,
+                                     final Set<SpreadsheetCellReference> matchedCells,
                                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                                      final Map<SpreadsheetRowReference, Double> rowHeights,
                                      final OptionalInt columnCount,
@@ -97,6 +100,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 deletedCells,
                 deletedColumns,
                 deletedRows,
+                matchedCells,
                 columnWidths,
                 rowHeights,
                 columnCount,
@@ -116,6 +120,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -136,6 +141,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -160,6 +166,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -179,6 +186,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -203,6 +211,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -222,6 +231,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -241,6 +251,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -260,6 +271,27 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 deletedRows,
+                this.matchedCells,
+                this.columnWidths,
+                this.rowHeights,
+                this.columnCount,
+                this.rowCount,
+                this.window
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
+        return new SpreadsheetDeltaWindowed(
+                this.viewport,
+                this.cells,
+                this.columns,
+                this.labels,
+                this.rows,
+                this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
+                matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -279,6 +311,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -298,6 +331,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 rowHeights,
                 this.columnCount,
@@ -317,6 +351,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 columnCount,
@@ -336,6 +371,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.deletedCells,
                 this.deletedColumns,
                 this.deletedRows,
+                this.matchedCells,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -374,6 +410,14 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     Set<SpreadsheetRowReference> filterDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
         return filterDeletedRows(deletedRows, this.window);
+    }
+
+    @Override
+    Set<SpreadsheetCellReference> filterMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
+        return filterMatchedCells(
+                matchedCells,
+                this.window
+        );
     }
 
     @Override
