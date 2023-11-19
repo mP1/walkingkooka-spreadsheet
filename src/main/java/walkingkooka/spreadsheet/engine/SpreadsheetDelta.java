@@ -2111,6 +2111,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.labels,
                 this.rows,
                 this.deletedCells,
+                this.deletedColumns,
                 this.columnWidths,
                 this.rowHeights,
                 this.columnCount,
@@ -2133,6 +2134,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 equals(this.labels, other.labels) &&
                 equals(this.rows, other.rows) &&
                 this.deletedCells.equals(other.deletedCells) &&
+                this.deletedColumns.equals(other.deletedColumns) &&
                 this.columnWidths.equals(other.columnWidths) &&
                 this.rowHeights.equals(other.rowHeights) &&
                 this.columnCount.equals(other.columnCount) &&

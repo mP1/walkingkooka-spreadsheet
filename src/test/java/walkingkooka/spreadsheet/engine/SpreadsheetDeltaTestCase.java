@@ -192,6 +192,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         assertNotSame(before, after);
         this.checkColumns(after, different);
         this.checkLabels(after, before.labels());
+
+        this.checkNotEquals(before, after);
     }
 
     @Test
