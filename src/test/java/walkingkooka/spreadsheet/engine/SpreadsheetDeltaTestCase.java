@@ -354,6 +354,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
+
+        this.checkNotEquals(before, after);
     }
 
     @Test
