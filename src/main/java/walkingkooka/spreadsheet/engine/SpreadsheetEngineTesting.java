@@ -51,6 +51,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -1397,6 +1398,109 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "navigate " + viewport
         );
     }
+
+    // filterCells......................................................................................................
+
+    @Test
+    default void testFilterCellsWithNullCellsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .filterCells(
+                                null,
+                                Expression.value(true),
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFilterCellsWithNullExpressionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .filterCells(
+                                Sets.of(
+                                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                                ),
+                                null,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFilterCellsWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .filterCells(
+                                Sets.of(
+                                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                                ),
+                                Expression.value(true),
+                                null
+                        )
+        );
+    }
+
+    @Test
+    default void testFilterCellsWithEmptyCells() {
+        this.filterCellsAndCheck(
+                this.createSpreadsheetEngine(),
+                Sets.empty(),
+                Expression.value(true),
+                this.createContext()
+        );
+    }
+
+    @Test
+    default void testFilterCellsWithExpressionFalse() {
+        this.filterCellsAndCheck(
+                this.createSpreadsheetEngine(),
+                Sets.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                        SpreadsheetSelection.parseCell("B2")
+                                .setFormula(SpreadsheetFormula.EMPTY)
+                ),
+                Expression.value(false),
+                this.createContext()
+        );
+    }
+
+    default void filterCellsAndCheck(final SpreadsheetEngine engine,
+                                     final Set<SpreadsheetCell> cells,
+                                     final Expression expression,
+                                     final SpreadsheetEngineContext context,
+                                     final SpreadsheetCell... expected) {
+        this.filterCellsAndCheck(
+                engine,
+                cells,
+                expression,
+                context,
+                Sets.of(
+                        expected
+                )
+        );
+    }
+
+    default void filterCellsAndCheck(final SpreadsheetEngine engine,
+                                     final Set<SpreadsheetCell> cells,
+                                     final Expression expression,
+                                     final SpreadsheetEngineContext context,
+                                     final Set<SpreadsheetCell> expected) {
+        this.checkEquals(
+                expected,
+                engine.filterCells(
+                        cells,
+                        expression,
+                        context
+                ),
+                () -> "filterCells " + cells
+        );
+    }
+
+    // helpers..........................................................................................................
 
     default Converter<ExpressionNumberConverterContext> converter() {
         return Converters.collection(

@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -267,6 +268,17 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                                   final SpreadsheetEngineContext context) {
         return this.engine.navigate(viewport, context);
+    }
+
+    @Override
+    public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final Expression expression,
+                                            final SpreadsheetEngineContext context) {
+        return this.engine.filterCells(
+                cells,
+                expression,
+                context
+        );
     }
 
     private <T> T stamp(final Supplier<T> supplier,

@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.test.Fake;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -183,6 +184,13 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     @Override
     public Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                                   final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final Expression expression,
+                                            final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }

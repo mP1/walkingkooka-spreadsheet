@@ -79,6 +79,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * The default or basic implementation of {@link SpreadsheetEngine} that includes support for evaluating nodes,
@@ -1853,6 +1854,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
         }
         return Optional.ofNullable(result);
+    }
+
+    @Override
+    public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final Expression expression,
+                                            final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cells, "cells");
+        Objects.requireNonNull(expression, "expression");
+        checkContext(context);
+
+        return cells.stream()
+                .filter(BasicSpreadsheetEngineFilterPredicate.with(expression, context))
+                .collect(Collectors.toCollection(Sets::ordered));
     }
 
     // checkers.........................................................................................................
