@@ -27,6 +27,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -39,6 +40,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -84,14 +86,12 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -12215,6 +12215,37 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // filterCells......................................................................................................
+
+    @Test
+    public void testFilterCells() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("true")
+                );
+        final SpreadsheetCell b2 = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("false")
+                );
+
+        this.filterCellsAndCheck(
+                this.createSpreadsheetEngine(),
+                Sets.of(
+                        a1,
+                        b2
+                ),
+                Expression.call(
+                        Expression.namedFunction(
+                                FunctionExpressionName.with("BasicSpreadsheetEngineTestFilterCellsPredicate")
+                        ),
+                        Expression.NO_CHILDREN
+                ),
+                this.createContext(),
+                a1
+        );
+    }
+
+
     //  helpers.........................................................................................................
 
     @Override
@@ -12364,14 +12395,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public Object evaluate(final Expression node,
                                    final Optional<SpreadsheetCell> cell) {
                 return node.toValue(
-                        ExpressionEvaluationContexts.basic(
-                                this.metadata().expressionNumberKind(),
-                                this.functions(),
-                                SpreadsheetErrorKind::translate,
-                                this.references(),
-                                SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
-                                CaseSensitivity.INSENSITIVE,
-                                this.converterContext()
+                        SpreadsheetExpressionEvaluationContexts.basic(
+                                cell,
+                                storeRepository.cells(),
+                                Url.parseAbsolute("http://server123"), // serverUrl
+                                this.metadata(), // metadata
+                                this.functions(), // functions
+                                this.references(), // references
+                                (s) -> {
+                                    throw new UnsupportedOperationException(s.toString()); // resolveIfLabel
+                                },
+                                () -> {
+                                    throw new UnsupportedOperationException(); // now
+                                }
                         )
                 );
             }
@@ -12461,6 +12497,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 public Object apply(final List<Object> parameters,
                                                     final ExpressionEvaluationContext context) {
                                     return BasicSpreadsheetEngineTest.this.value;
+                                }
+
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                    return Lists.of(
+                                            ExpressionFunctionParameterName.with("parameters")
+                                                    .variable(Object.class)
+                                    );
+                                }
+
+                                @Override
+                                public boolean isPure(final ExpressionPurityContext context) {
+                                    return false;
+                                }
+                            };
+                        case "BasicSpreadsheetEngineTestFilterCellsPredicate":
+                            return new FakeExpressionFunction<>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final ExpressionEvaluationContext context) {
+                                    checkEquals(
+                                            Lists.empty(),
+                                            parameters,
+                                            "parameters"
+                                    );
+
+                                    return Boolean.valueOf(
+                                            SpreadsheetExpressionEvaluationContext.class.cast(context)
+                                                    .cellOrFail()
+                                                    .formula()
+                                                    .text()
+                                    );
                                 }
 
                                 @Override

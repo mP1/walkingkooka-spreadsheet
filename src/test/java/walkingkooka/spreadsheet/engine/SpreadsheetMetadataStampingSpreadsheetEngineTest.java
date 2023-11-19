@@ -294,6 +294,11 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         this.checkMetadataNotUpdated(context);
     }
 
+    @Override
+    public void testFilterCellsWithExpressionFalse() {
+        // nop context created below hardcoded to return "Hello" ignoring Expression
+    }
+
     private SpreadsheetCell cell() {
         return SpreadsheetSelection.A1
                 .setFormula(

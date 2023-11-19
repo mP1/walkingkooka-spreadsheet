@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -219,4 +220,12 @@ public interface SpreadsheetEngine {
      */
     Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                            final SpreadsheetEngineContext context);
+
+    /**
+     * Executes the {@link Expression} for each and every {@link SpreadsheetCell} as the current cell. Cells are only
+     * kept if the {@link Expression} returns true.
+     */
+    Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                     final Expression expression,
+                                     final SpreadsheetEngineContext context);
 }
