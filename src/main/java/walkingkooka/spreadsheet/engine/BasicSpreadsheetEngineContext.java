@@ -172,8 +172,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(expression, "expression");
         Objects.requireNonNull(cell, "cell");
 
-        final SpreadsheetMetadata metadata = this.metadata;
-
         Object result;
 
         try {
@@ -182,7 +180,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                             cell,
                             this.storeRepository.cells(),
                             this.serverUrl,
-                            metadata,
+                            this.metadata,
                             this.functions,
                             this.function,
                             this::resolveIfLabel,
