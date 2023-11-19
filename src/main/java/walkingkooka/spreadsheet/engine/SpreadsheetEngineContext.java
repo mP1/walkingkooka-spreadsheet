@@ -56,6 +56,7 @@ public interface SpreadsheetEngineContext extends Context, ExpressionPurityConte
     /**
      * Evaluates the expression into a value.
      * The cell parameter is optional because not all {@link Expression expressions} that may need evaluation belong to a cell.
+     * If a {@link RuntimeException} is thrown while evaluating the {@link Expression} it will be translated into a {@link walkingkooka.spreadsheet.SpreadsheetError}.
      */
     Object evaluate(final Expression node,
                     final Optional<SpreadsheetCell> cell);
