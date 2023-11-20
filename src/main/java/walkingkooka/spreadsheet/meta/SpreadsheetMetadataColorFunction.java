@@ -17,35 +17,35 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.color.Color;
-
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * A {@link Function} view of a {@link Map} of {@link Color}
+ * A {@link Function} view of a {@link Map} wrapping get results in an {@link Optional}.
  */
-final class SpreadsheetMetadataColorFunction<K> implements Function<K, Optional<Color>> {
+final class SpreadsheetMetadataColorFunction<K, V> implements Function<K, Optional<V>> {
 
-    static <K> SpreadsheetMetadataColorFunction<K> with(final Map<K, Color> colors) {
-        return new SpreadsheetMetadataColorFunction<>(colors);
+    static <K, V> SpreadsheetMetadataColorFunction<K, V> with(final Map<K, V> values) {
+        return new SpreadsheetMetadataColorFunction<>(values);
     }
 
-    private SpreadsheetMetadataColorFunction(final Map<K, Color> colors) {
+    private SpreadsheetMetadataColorFunction(final Map<K, V> values) {
         super();
-        this.colors = colors;
+        this.values = values;
     }
 
     @Override
-    public Optional<Color> apply(final K key) {
-        return Optional.ofNullable(this.colors.get(key));
+    public Optional<V> apply(final K key) {
+        return Optional.ofNullable(
+                this.values.get(key)
+        );
     }
 
-    private final Map<K, Color> colors;
+    private final Map<K, V> values;
 
     @Override
     public String toString() {
-        return this.colors.toString();
+        return this.values.toString();
     }
 }

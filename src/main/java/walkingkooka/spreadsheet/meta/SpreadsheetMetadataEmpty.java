@@ -112,6 +112,11 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     }
 
     @Override
+    public Function<Integer, Optional<SpreadsheetColorName>> numberToColorName() {
+        return this.numberToColorName0();
+    }
+
+    @Override
     public Converter<SpreadsheetConverterContext> converter() {
         return this.converter0();
     }

@@ -433,6 +433,22 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
         return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor.numberToColorMap(this));
     }
 
+    // Function<Integer, Optional<SpreadsheetColorName>>................................................................
+
+    /**
+     * Returns a {@link Function} that returns a {@link SpreadsheetColorName} given its number.
+     */
+    public abstract Function<Integer, Optional<SpreadsheetColorName>> numberToColorName();
+
+    /**
+     * Lazy factory that creates a {@link Function} that maps an integer to a {@link SpreadsheetColorName}
+     */
+    final Function<Integer, Optional<SpreadsheetColorName>> numberToColorName0() {
+        return SpreadsheetMetadataColorFunction.with(
+                SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor.numberToColorNameMap(this)
+        );
+    }
+
     // Converter.......................................................................................................
 
     /**
