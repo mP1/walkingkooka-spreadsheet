@@ -94,7 +94,7 @@ public abstract class Identity<I extends IdentityId> implements Value<Optional<I
     }
 
     /**
-     * Sub classes should do an instanceof test.
+     * sub-classes should do an instanceof test.
      */
     abstract boolean canBeEqual(final Object other);
 

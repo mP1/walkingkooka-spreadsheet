@@ -286,7 +286,7 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Parsers the given text into one of the sub classes of {@link SpreadsheetExpressionReference}.
+     * Parsers the given text into one of the sub-classes of {@link SpreadsheetExpressionReference}.
      */
     public static SpreadsheetExpressionReference parseExpressionReference(final String text) {
         checkText(text);

@@ -113,7 +113,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     public static final SpreadsheetMetadata EMPTY = SpreadsheetMetadataEmpty.instance();
 
     /**
-     * Private ctor to limit sub classes.
+     * Private ctor to limit sub-classes.
      */
     SpreadsheetMetadata(final SpreadsheetMetadata defaults) {
         super();
@@ -199,7 +199,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     }
 
     /**
-     * Sub classes will fetch the property returning the value.
+     * sub-classes will fetch the property returning the value.
      */
     public final <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
         Objects.requireNonNull(propertyName, "propertyName");
@@ -304,7 +304,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
 
     /**
      * Handle the special case where a property is being set with the same effective value,
-     * which could be the current or default value. Sub classes need to test.
+     * which could be the current or default value. sub-classes need to test.
      */
     abstract <V> SpreadsheetMetadata setSameValue(final SpreadsheetMetadataPropertyName<V> propertyName,
                                                   final V value);
@@ -876,7 +876,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     }
 
     /**
-     * Sub classes will test if ALL their values are equal
+     * sub-classes will test if ALL their values are equal
      */
     abstract boolean equalsValues(final SpreadsheetMetadata other);
 
@@ -909,7 +909,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     static final JsonPropertyName DEFAULTS = JsonPropertyName.with("_defaults");
 
     /**
-     * Sub classes must marshall their properties but not the defaults.
+     * sub-classes must marshall their properties but not the defaults.
      */
     abstract void marshallProperties(final List<JsonNode> children,
                                      final JsonNodeMarshallContext context);

@@ -188,7 +188,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     // COLUMN_OR_ROW_REFERENCE_COMPARATOR..............................................................................
 
     /**
-     * Sub classes must call other.compareSpreadsheetColumnOrRowReference0(this).
+     * sub-classes must call other.compareSpreadsheetColumnOrRowReference0(this).
      * This allows polymorphic dispatch in reverse on this.
      */
     abstract int compareSpreadsheetColumnOrRowReference(final SpreadsheetColumnOrRowReference other);
