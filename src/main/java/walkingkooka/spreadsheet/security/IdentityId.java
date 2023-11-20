@@ -67,7 +67,7 @@ public abstract class IdentityId implements Value<Long> {
     }
 
     /**
-     * Sub classes should do an instanceof test.
+     * sub-classes should do an instanceof test.
      */
     abstract boolean canBeEqual(final Object other);
 

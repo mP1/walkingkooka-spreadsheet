@@ -525,7 +525,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * All sub classes of {@link SpreadsheetFormatConditionParserToken} return true
+     * All sub-classes of {@link SpreadsheetFormatConditionParserToken} return true
      */
     public final boolean isCondition() {
         return this instanceof SpreadsheetFormatConditionParserToken;
@@ -821,7 +821,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Only sub classes of {@link SpreadsheetFormatSymbolParserToken} return true
+     * Only sub-classes of {@link SpreadsheetFormatSymbolParserToken} return true
      */
     public final boolean isSymbol() {
         return this instanceof SpreadsheetFormatSymbolParserToken;

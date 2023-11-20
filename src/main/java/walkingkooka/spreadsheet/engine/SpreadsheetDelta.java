@@ -295,7 +295,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Sub classes only need to call the right constructor, the map is already immutable and has been filtered by {#link #cells}
+     * sub-classes only need to call the right constructor, the map is already immutable and has been filtered by {#link #cells}
      */
     abstract SpreadsheetDelta replaceLabels(final Set<SpreadsheetLabelMapping> labels);
 

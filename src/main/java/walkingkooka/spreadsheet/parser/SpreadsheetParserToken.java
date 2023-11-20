@@ -1103,7 +1103,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     // HasExpression................................................................................................
 
     /**
-     * Converts this token to its {@link Expression} equivalent. Token sub classes that represent a complete value
+     * Converts this token to its {@link Expression} equivalent. Token sub-classes that represent a complete value
      * typically have a {@link Expression} equivalent, while those holding symbols or components such as a decimal-point
      * are not.
      */
@@ -1447,7 +1447,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    // SpreadsheetSymbolParserToken sub classes.........................................................................
+    // SpreadsheetSymbolParserToken sub-classes.........................................................................
 
     static {
         registerLeafParserToken(

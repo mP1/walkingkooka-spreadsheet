@@ -325,7 +325,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                         this.getClass()
                                 .getSimpleName()
                                 .substring(SpreadsheetMetadataPropertyName.class.getSimpleName().length())
-                                .replace("Spreadsheet", ""), // handles sub classes like SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern
+                                .replace("Spreadsheet", ""), // handles sub-classes like SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern
                         CaseKind.KEBAB
                 ) :
                 name;
