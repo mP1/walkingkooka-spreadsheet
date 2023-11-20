@@ -29,9 +29,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataColorFunction<Integer>>
-        implements FunctionTesting<SpreadsheetMetadataColorFunction<Integer>, Integer, Optional<Color>>,
-        ToStringTesting<SpreadsheetMetadataColorFunction<Integer>> {
+public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataColorFunction<Integer, Color>>
+        implements FunctionTesting<SpreadsheetMetadataColorFunction<Integer, Color>, Integer, Optional<Color>>,
+        ToStringTesting<SpreadsheetMetadataColorFunction<Integer, Color>> {
 
     @Test
     public void testKeyPresent() {
@@ -50,7 +50,7 @@ public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetad
     }
 
     @Override
-    public SpreadsheetMetadataColorFunction<Integer> createFunction() {
+    public SpreadsheetMetadataColorFunction<Integer, Color> createFunction() {
         return SpreadsheetMetadataColorFunction.with(this.colorMap());
     }
 
@@ -66,7 +66,7 @@ public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetad
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataColorFunction<Integer>> type() {
+    public Class<SpreadsheetMetadataColorFunction<Integer, Color>> type() {
         return Cast.to(SpreadsheetMetadataColorFunction.class);
     }
 

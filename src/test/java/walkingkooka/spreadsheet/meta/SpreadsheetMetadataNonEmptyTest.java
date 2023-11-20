@@ -1362,6 +1362,102 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         assertSame(metadata.numberToColor(), metadata.numberToColor());
     }
 
+    // NumberToColorName................................................................................................
+
+    @Test
+    public void testNumberToColorName2() {
+        final SpreadsheetColorName colorName1 = SpreadsheetColorName.CYAN;
+        final Color color1 = Color.fromRgb(0x111);
+        final int number1 = 1;
+
+        final SpreadsheetColorName colorName7 = SpreadsheetColorName.YELLOW;
+        final Color color7 = Color.fromRgb(0x777);
+        final int number7 = 7;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
+                .set(SpreadsheetMetadataPropertyName.namedColor(colorName1), number1)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(number7), color7)
+                .set(SpreadsheetMetadataPropertyName.namedColor(colorName7), number7)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"));
+
+        this.numberToColorNameAndCheck(
+                metadata,
+                number1,
+                colorName1
+        );
+
+        this.numberToColorNameAndCheck(
+                metadata,
+                number7,
+                colorName7
+        );
+    }
+
+    @Test
+    public void testNumberToColorNameDefaults() {
+        final SpreadsheetColorName colorName = SpreadsheetColorName.CYAN;
+        final Color color = Color.parse("#123456");
+        final int number = 4;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .setDefaults(
+                        SpreadsheetMetadata.EMPTY
+                                .set(
+                                        SpreadsheetMetadataPropertyName.numberedColor(number),
+                                        color
+                                ).set(
+                                        SpreadsheetMetadataPropertyName.namedColor(colorName),
+                                        number
+                                )
+                );
+
+        this.numberToColorNameAndCheck(
+                metadata,
+                number,
+                colorName
+        );
+    }
+
+    @Test
+    public void testNumberToColorNameIgnoresDefaults() {
+        final SpreadsheetColorName colorName = SpreadsheetColorName.CYAN;
+        final Color color = Color.parse("#123456");
+        final int number = 4;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(number), color)
+                .set(SpreadsheetMetadataPropertyName.namedColor(colorName), number)
+                .setDefaults(
+                        SpreadsheetMetadata.EMPTY
+                                .set(
+                                        SpreadsheetMetadataPropertyName.numberedColor(number),
+                                        Color.parse("#999")
+                                )
+                );
+
+        this.numberToColorNameAndCheck(
+                metadata,
+                number,
+                colorName
+        );
+    }
+
+    @Test
+    public void testNumberToColorNameCached() {
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata();
+        assertSame(
+                metadata.numberToColorName(),
+                metadata.numberToColorName()
+        );
+    }
+    
     // setDefaults......................................................................................................
 
     @Test

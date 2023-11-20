@@ -383,6 +383,28 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> number + " to color " + metadata);
     }
 
+    // NumberToColorName................................................................................................
+
+    @Test
+    public final void testNumberToColorName() {
+        this.numberToColorNameAndCheck(
+                this.createObject(),
+                99,
+                null
+        );
+    }
+
+    final void numberToColorNameAndCheck(final SpreadsheetMetadata metadata,
+                                         final int number,
+                                         final SpreadsheetColorName colorName) {
+        final Function<Integer, Optional<SpreadsheetColorName>> numberToColorName = metadata.numberToColorName();
+        this.checkEquals(
+                Optional.ofNullable(colorName),
+                numberToColorName.apply(number),
+                () -> number + " to color " + metadata
+        );
+    }
+
     // HasConverter.....................................................................................................
 
     @Test
