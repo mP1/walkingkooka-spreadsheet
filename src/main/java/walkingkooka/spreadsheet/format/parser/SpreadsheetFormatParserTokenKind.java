@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -247,6 +248,35 @@ public enum SpreadsheetFormatParserTokenKind {
             throw new IllegalArgumentException("Expected at least 1 pattern but got " + Arrays.toString(patterns));
         }
         this.patterns = Sets.of(patterns);
+    }
+
+    /**
+     * Returns alternatives values for this particular and other alternatives kinds.
+     * <br>
+     * eg
+     * {@link #DAY_WITH_LEADING_ZERO} passing a parameter of "d"
+     * will return
+     * <ul>
+     *     <li>dd</li>
+     *     <li>ddd</li>
+     *     <li>dddd</li>
+     * </ul>
+     * This is useful to build a menu of alternative patterns for a given component of a {@link SpreadsheetPattern}.
+     */
+    public Set<String> alternatives(final String ignore) {
+        CharSequences.failIfNullOrEmpty(ignore, "ignore");
+
+        return Sets.readOnly(
+                Arrays.stream(values())
+                        .filter(this.duplicate)
+                        .flatMap(k -> k.patterns.stream())
+                        .filter(p -> false == p.equalsIgnoreCase(ignore))
+                        .collect(
+                                Collectors.toCollection(
+                                        Sets::sorted
+                                )
+                        )
+        );
     }
 
     /**
