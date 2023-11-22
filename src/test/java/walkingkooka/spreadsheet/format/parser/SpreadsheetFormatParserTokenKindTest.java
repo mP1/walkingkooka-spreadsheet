@@ -418,6 +418,132 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         );
     }
 
+    // alternatives..........................................................................................................
+
+    @Test
+    public void testAlternativesNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormatParserTokenKind.CONDITION.alternatives(null)
+        );
+    }
+
+    @Test
+    public void testAlternativesEmptyFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetFormatParserTokenKind.CONDITION.alternatives("")
+        );
+    }
+
+    @Test
+    public void testAlternativesPatternsDayWithoutLeadingZero() {
+        this.alternativeAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO,
+                "d",
+                "dd",
+                "ddd",
+                "dddd"
+        );
+    }
+
+    @Test
+    public void testAlternativesPatternsDayWithoutLeadingZeroDifferentCase() {
+        this.alternativeAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO,
+                "D",
+                "dd",
+                "ddd",
+                "dddd"
+        );
+    }
+
+    @Test
+    public void testAlternativesPatternsDayWithLeadingZero() {
+        this.alternativeAndCheck(
+                SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
+                "d",
+                "dd",
+                "ddd",
+                "dddd"
+        );
+    }
+
+    @Test
+    public void testAlternativesPatternsColorName() {
+        this.alternativeAndCheck(
+                SpreadsheetFormatParserTokenKind.COLOR_NAME,
+                "[red]",
+                SpreadsheetFormatParserTokenKind.COLOR_NUMBER
+        );
+    }
+
+    @Test
+    public void testAlternativesPatternsDigit() {
+        this.alternativeAndCheck(
+                SpreadsheetFormatParserTokenKind.DIGIT,
+                "#"
+        );
+    }
+
+    @Test
+    public void testAlternativesPatternsGeneral() {
+        this.alternativeAndCheck(
+                SpreadsheetFormatParserTokenKind.GENERAL,
+                "General"
+        );
+    }
+
+    private void alternativeAndCheck(final SpreadsheetFormatParserTokenKind kind,
+                                     final String ignore) {
+        this.alternativeAndCheck(
+                kind,
+                ignore,
+                new String[0]
+        );
+    }
+
+    private void alternativeAndCheck(final SpreadsheetFormatParserTokenKind kind,
+                                     final String ignore,
+                                     final SpreadsheetFormatParserTokenKind... expected) {
+        final Set<String> patterns = Sets.sorted();
+        patterns.addAll(kind.patterns());
+
+        for (final SpreadsheetFormatParserTokenKind e : expected) {
+            patterns.addAll(e.patterns());
+        }
+
+        patterns.removeIf(
+                (p) -> p.equalsIgnoreCase(ignore)
+        );
+
+        this.alternativeAndCheck(
+                kind,
+                ignore,
+                patterns
+        );
+    }
+
+    private void alternativeAndCheck(final SpreadsheetFormatParserTokenKind kind,
+                                     final String ignore,
+                                     final String... alternatives) {
+        this.alternativeAndCheck(
+                kind,
+                ignore,
+                Sets.of(alternatives)
+        );
+    }
+
+    private void alternativeAndCheck(final SpreadsheetFormatParserTokenKind kind,
+                                     final String ignore,
+                                     final Set<String> alternatives) {
+        this.checkEquals(
+                alternatives,
+                kind.alternatives(ignore),
+                () -> kind + " alternatives"
+        );
+    }
+
     // isXXX............................................................................................................
 
     @Test
