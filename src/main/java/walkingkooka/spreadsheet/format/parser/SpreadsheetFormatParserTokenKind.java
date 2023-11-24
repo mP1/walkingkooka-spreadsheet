@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -162,6 +163,7 @@ public enum SpreadsheetFormatParserTokenKind {
     ),
 
     TEXT_LITERAL(
+            Predicates.never(),
             "\"Text\""
     ),
 
