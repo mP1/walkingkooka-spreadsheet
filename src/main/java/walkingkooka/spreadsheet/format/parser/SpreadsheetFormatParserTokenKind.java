@@ -248,30 +248,33 @@ public enum SpreadsheetFormatParserTokenKind {
      * Returns alternatives values for this particular and other alternatives kinds.
      * <br>
      * eg
-     * {@link #DAY_WITH_LEADING_ZERO} passing a parameter of "d"
-     * will return
+     * {@link #DAY_WITH_LEADING_ZERO}
      * <ul>
+     *     <li>d</li>
      *     <li>dd</li>
      *     <li>ddd</li>
      *     <li>dddd</li>
      * </ul>
      * This is useful to build a menu of alternative patterns for a given component of a {@link SpreadsheetPattern}.
      */
-    public Set<String> alternatives(final String ignore) {
-        CharSequences.failIfNullOrEmpty(ignore, "ignore");
+    public Set<String> alternatives() {
+        if (null == this.alternatives) {
+            this.alternatives = Sets.readOnly(
+                    Arrays.stream(values())
+                            .filter(this.duplicate)
+                            .flatMap(k -> k.patterns.stream())
+                            .collect(
+                                    Collectors.toCollection(
+                                            Sets::sorted
+                                    )
+                            )
+            );
+        }
 
-        return Sets.readOnly(
-                Arrays.stream(values())
-                        .filter(this.duplicate)
-                        .flatMap(k -> k.patterns.stream())
-                        .filter(p -> false == p.equalsIgnoreCase(ignore))
-                        .collect(
-                                Collectors.toCollection(
-                                        Sets::sorted
-                                )
-                        )
-        );
+        return this.alternatives;
     }
+
+    private Set<String> alternatives;
 
     /**
      * Used as the answer for many {@link SpreadsheetFormatParserToken#kind()}

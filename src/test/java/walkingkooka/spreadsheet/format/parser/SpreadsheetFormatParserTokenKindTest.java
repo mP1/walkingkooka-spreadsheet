@@ -421,23 +421,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     // alternatives..........................................................................................................
 
     @Test
-    public void testAlternativesNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormatParserTokenKind.CONDITION.alternatives(null)
-        );
-    }
-
-    @Test
-    public void testAlternativesEmptyFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetFormatParserTokenKind.CONDITION.alternatives("")
-        );
-    }
-
-    @Test
-    public void testAlternativesPatternsDayWithoutLeadingZero() {
+    public void testAlternativesDayWithoutLeadingZero() {
         this.alternativeAndCheck(
                 SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO,
                 "d",
@@ -448,10 +432,10 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
-    public void testAlternativesPatternsDayWithoutLeadingZeroDifferentCase() {
+    public void testAlternativesDayWithoutLeadingZeroDifferentCase() {
         this.alternativeAndCheck(
                 SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO,
-                "D",
+                "d",
                 "dd",
                 "ddd",
                 "dddd"
@@ -459,7 +443,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
-    public void testAlternativesPatternsDayWithLeadingZero() {
+    public void testAlternativesDayWithLeadingZero() {
         this.alternativeAndCheck(
                 SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
                 "d",
@@ -470,16 +454,15 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
-    public void testAlternativesPatternsColorName() {
+    public void testAlternativesColorName() {
         this.alternativeAndCheck(
                 SpreadsheetFormatParserTokenKind.COLOR_NAME,
-                "[red]",
                 SpreadsheetFormatParserTokenKind.COLOR_NUMBER
         );
     }
 
     @Test
-    public void testAlternativesPatternsDigit() {
+    public void testAlternativesDigit() {
         this.alternativeAndCheck(
                 SpreadsheetFormatParserTokenKind.DIGIT,
                 "#"
@@ -487,7 +470,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
-    public void testAlternativesPatternsGeneral() {
+    public void testAlternativesGeneral() {
         this.alternativeAndCheck(
                 SpreadsheetFormatParserTokenKind.GENERAL,
                 "General"
@@ -495,16 +478,6 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     private void alternativeAndCheck(final SpreadsheetFormatParserTokenKind kind,
-                                     final String ignore) {
-        this.alternativeAndCheck(
-                kind,
-                ignore,
-                new String[0]
-        );
-    }
-
-    private void alternativeAndCheck(final SpreadsheetFormatParserTokenKind kind,
-                                     final String ignore,
                                      final SpreadsheetFormatParserTokenKind... expected) {
         final Set<String> patterns = Sets.sorted();
         patterns.addAll(kind.patterns());
@@ -513,33 +486,25 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
             patterns.addAll(e.patterns());
         }
 
-        patterns.removeIf(
-                (p) -> p.equalsIgnoreCase(ignore)
-        );
-
         this.alternativeAndCheck(
                 kind,
-                ignore,
                 patterns
         );
     }
 
     private void alternativeAndCheck(final SpreadsheetFormatParserTokenKind kind,
-                                     final String ignore,
                                      final String... alternatives) {
         this.alternativeAndCheck(
                 kind,
-                ignore,
                 Sets.of(alternatives)
         );
     }
 
     private void alternativeAndCheck(final SpreadsheetFormatParserTokenKind kind,
-                                     final String ignore,
                                      final Set<String> alternatives) {
         this.checkEquals(
                 alternatives,
-                kind.alternatives(ignore),
+                kind.alternatives(),
                 () -> kind + " alternatives"
         );
     }
