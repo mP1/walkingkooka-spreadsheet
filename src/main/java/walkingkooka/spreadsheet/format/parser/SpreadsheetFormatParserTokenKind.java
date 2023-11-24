@@ -285,7 +285,7 @@ public enum SpreadsheetFormatParserTokenKind {
     final Optional<SpreadsheetFormatParserTokenKind> asOptional = Optional.of(this);
 
     /**
-     * Used to verify that two similar kinds do not follow each other in a patter.
+     * Used to verify that two similar kinds do not follow each other in a pattern.
      * <pre>
      * {@link #HOUR_WITH_LEADING_ZERO} and {@link #HOUR_WITHOUT_LEADING_ZERO}
      * </pre>
