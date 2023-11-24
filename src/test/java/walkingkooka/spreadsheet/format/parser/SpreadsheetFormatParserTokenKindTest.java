@@ -344,7 +344,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         this.isDuplicateAndCheck(
                 SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
                 SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
-                true
+                false
         );
     }
 
