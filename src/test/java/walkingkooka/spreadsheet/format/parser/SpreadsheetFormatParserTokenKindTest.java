@@ -182,7 +182,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         this.isDuplicateAndCheck(
                 SpreadsheetFormatParserTokenKind.DIGIT,
                 SpreadsheetFormatParserTokenKind.DIGIT,
-                false
+                true
         );
     }
 
@@ -344,7 +344,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         this.isDuplicateAndCheck(
                 SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
                 SpreadsheetFormatParserTokenKind.TEXT_LITERAL,
-                false
+                true
         );
     }
 
@@ -353,7 +353,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         this.isDuplicateAndCheck(
                 SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
                 SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER,
-                false
+                true
         );
     }
 

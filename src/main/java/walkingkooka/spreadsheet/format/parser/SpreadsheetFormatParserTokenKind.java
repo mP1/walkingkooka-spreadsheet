@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -135,17 +134,14 @@ public enum SpreadsheetFormatParserTokenKind {
     CURRENCY_SYMBOL("$"),
 
     DIGIT(
-            Predicates.never(),
             "#"
     ),
 
     DIGIT_SPACE(
-            Predicates.never(),
             "?"
     ),
 
     DIGIT_ZERO(
-            Predicates.never(),
             "0"
     ),
 
@@ -162,12 +158,10 @@ public enum SpreadsheetFormatParserTokenKind {
     // TEXT............................................................................................................
 
     TEXT_PLACEHOLDER(
-            Predicates.never(),
             "@"
     ),
 
     TEXT_LITERAL(
-            Predicates.never(),
             "\"Text\""
     ),
 
