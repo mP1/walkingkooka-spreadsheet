@@ -612,6 +612,11 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             }
 
             @Override
+            public int generalFormatNumberDigitCount() {
+                return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+            }
+
+            @Override
             public String currencySymbol() {
                 return "c";
             }

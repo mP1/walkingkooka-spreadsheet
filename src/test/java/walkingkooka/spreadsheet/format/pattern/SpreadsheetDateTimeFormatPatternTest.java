@@ -812,7 +812,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck2(
                 "General",
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-                "10956d5"
+                "10956d540960648"
         );
     }
 
@@ -852,6 +852,11 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return ExpressionNumberKind.BIG_DECIMAL;
+            }
+
+            @Override
+            public int generalFormatNumberDigitCount() {
+                return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
             }
 
             @Override

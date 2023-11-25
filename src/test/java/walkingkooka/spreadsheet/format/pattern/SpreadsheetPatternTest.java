@@ -651,6 +651,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     @Override
+                    public int generalFormatNumberDigitCount() {
+                        return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                    }
+
+                    @Override
                     public MathContext mathContext() {
                         return MathContext.DECIMAL32;
                     }
@@ -861,6 +866,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public char decimalSeparator() {
                         return '.';
+                    }
+
+                    @Override
+                    public int generalFormatNumberDigitCount() {
+                        return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
                     }
 
                     @Override
@@ -1129,6 +1139,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     @Override
+                    public int generalFormatNumberDigitCount() {
+                        return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                    }
+
+                    @Override
                     public MathContext mathContext() {
                         return MathContext.DECIMAL32;
                     }
@@ -1167,6 +1182,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public char decimalSeparator() {
                         return '.';
+                    }
+
+                    @Override
+                    public int generalFormatNumberDigitCount() {
+                        return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
                     }
 
                     @Override
@@ -1221,6 +1241,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public char decimalSeparator() {
                         return '.';
+                    }
+
+                    @Override
+                    public int generalFormatNumberDigitCount() {
+                        return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
                     }
 
                     @Override
@@ -1984,6 +2009,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public char decimalSeparator() {
                         return '.';
+                    }
+
+                    @Override
+                    public int generalFormatNumberDigitCount() {
+                        return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
                     }
 
                     @Override

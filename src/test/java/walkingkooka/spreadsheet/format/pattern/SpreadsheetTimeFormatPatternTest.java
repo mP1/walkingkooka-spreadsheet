@@ -523,6 +523,11 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             }
 
             @Override
+            public int generalFormatNumberDigitCount() {
+                return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+            }
+
+            @Override
             public MathContext mathContext() {
                 return MathContext.DECIMAL128;
             }
