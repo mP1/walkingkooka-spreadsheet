@@ -700,11 +700,18 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
      */
     public final SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now,
                                                               final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final int characterWidth = components.getOrNull(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH);
+        final int generalNumberFormatDigitCount = components.getOrNull(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
+
+        components.reportIfMissing();
+
         return SpreadsheetFormatterContexts.basic(
                 this.numberToColor(),
                 this.nameToColor(),
-                this.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
-                this.getOrFail(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT),
+                characterWidth,
+                generalNumberFormatDigitCount,
                 this.formatter(),
                 this.converterContext(
                         now,
