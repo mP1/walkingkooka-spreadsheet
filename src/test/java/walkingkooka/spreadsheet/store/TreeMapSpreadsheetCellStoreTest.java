@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
@@ -438,6 +439,82 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                                 SpreadsheetFormula.EMPTY.setText("=2+3")
                                         .setValue(
                                                 Optional.of(5)
+                                        )
+                        )
+        );
+
+        // ignored because value wrong type
+        final SpreadsheetCell a4 = store.save(
+                SpreadsheetSelection.parseCell("A4")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=true()")
+                                        .setValue(
+                                                Optional.of(true)
+                                        )
+                        )
+        );
+
+        // ignored because value missing
+        final SpreadsheetCell a5 = store.save(
+                SpreadsheetSelection.parseCell("A5")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=555")
+                        )
+        );
+
+        // ignore because out of range
+        final SpreadsheetCell a7 = store.save(
+                SpreadsheetSelection.parseCell("A7")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=678")
+                                        .setValue(
+                                                Optional.of(678)
+                                        )
+                        )
+        );
+
+        this.findCellsWithValueTypeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:A6"),
+                SpreadsheetValueType.NUMBER,
+                a1,
+                a3
+        );
+    }
+
+    @Test
+    public void testFindCellsWithValueTypeExpressionNumber() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1")
+                                .setValue(
+                                        Optional.of(
+                                                ExpressionNumberKind.BIG_DECIMAL.create(5)
+                                        )
+                                )
+                )
+        );
+
+        final SpreadsheetCell a2 = store.save(
+                SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("='ABC")
+                                        .setValue(
+                                                Optional.of("ABC")
+                                        )
+                        )
+        );
+
+        final SpreadsheetCell a3 = store.save(
+                SpreadsheetSelection.parseCell("A3")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2+3")
+                                        .setValue(
+                                                Optional.of(
+                                                        ExpressionNumberKind.DOUBLE.create(5)
+                                                )
                                         )
                         )
         );
