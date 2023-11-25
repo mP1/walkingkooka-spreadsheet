@@ -261,6 +261,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitGeneralNumberFormatDigitCount() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitGeneralNumberFormatDigitCount(final int i) {
+                this.visited = i;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 123);
+    }
+
+    @Test
     public void testVisitGroupSeparator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
