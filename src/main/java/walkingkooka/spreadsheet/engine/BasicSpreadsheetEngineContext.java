@@ -24,11 +24,8 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -106,17 +103,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 this
         );
 
-        this.spreadsheetFormatContext = SpreadsheetFormatterContexts.basic(
-                metadata.numberToColor(),
-                metadata.nameToColor(),
-                metadata.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
-                metadata.getOrFail(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT),
-                metadata.formatter(),
-                metadata.converterContext(
-                        now,
-                        this::resolveIfLabel
-                )
-        );
         this.fractioner = fractioner;
 
         this.storeRepository = storeRepository;
@@ -223,11 +209,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                             final SpreadsheetFormatter formatter) {
         return formatter.format(
                 value,
-                this.spreadsheetFormatContext
+                this.metadata()
+                        .formatterContext(
+                                this::now,
+                                this::resolveIfLabel
+                        )
         );
     }
-
-    private final SpreadsheetFormatterContext spreadsheetFormatContext;
 
     // Store............................................................................................................
 
