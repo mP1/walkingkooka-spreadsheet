@@ -67,7 +67,7 @@
   "date-time-offset": -25569,
   "default-year": 1900,
   "expression-number-kind": "BIG_DECIMAL",
-  "general-number-format-digit-count": 8,
+  "general-number-format-digit-count": 9,
   "precision": 10,
   "rounding-mode": "HALF_UP",
   "style": {
