@@ -543,6 +543,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
                         "  \"expression-number-kind\": \"DOUBLE\",\n" +
+                        "  \"general-number-format-digit-count\": 8,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
@@ -691,6 +692,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
                         "  \"expression-number-kind\": \"DOUBLE\",\n" +
+                        "  \"general-number-format-digit-count\": 8,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +

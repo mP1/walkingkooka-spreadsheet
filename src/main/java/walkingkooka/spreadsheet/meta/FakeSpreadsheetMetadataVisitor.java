@@ -144,6 +144,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitGeneralNumberFormatDigitCount(final int generalFormatDigitCount) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitGroupSeparator(final char groupSeparator) {
         throw new UnsupportedOperationException();
     }

@@ -164,6 +164,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetRowReferenceRange> FROZEN_ROWS = registerConstant(SpreadsheetMetadataPropertyNameFrozenRows.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>general-number-format-digit-count {@link Integer}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Integer> GENERAL_NUMBER_FORMAT_DIGIT_COUNT = registerConstant(SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>group-separator {@link Character}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Character> GROUP_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameGroupSeparator.instance());

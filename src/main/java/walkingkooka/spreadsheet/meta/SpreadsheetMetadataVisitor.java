@@ -158,6 +158,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitGeneralNumberFormatDigitCount(final int generalFormatDigitCount) {
+        // nop
+    }
+
     protected void visitGroupSeparator(final char groupSeparator) {
         // nop
     }
