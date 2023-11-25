@@ -2072,12 +2072,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // formatterContext.................................................................................................
 
     @Test
-    public void testFormatterContextCached() {
+    public void testFormatterContext() {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter()
                 .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
+                .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
                 .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)

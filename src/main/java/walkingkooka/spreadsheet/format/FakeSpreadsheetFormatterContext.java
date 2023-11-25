@@ -43,4 +43,9 @@ public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterCon
     public Optional<SpreadsheetText> format(final Object value) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public int generalFormatNumberDigitCount() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -220,6 +220,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
                                         this::numberToColor,
                                         this::nameToColor,
                                         1,
+                                        8, // default general-format-number-digit-count
                                         SpreadsheetFormatters.fake(), // should never be called
                                         this.context
                                 )

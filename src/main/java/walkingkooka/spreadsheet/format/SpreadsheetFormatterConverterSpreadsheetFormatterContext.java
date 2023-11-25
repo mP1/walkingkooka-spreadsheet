@@ -96,6 +96,11 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
+    public int generalFormatNumberDigitCount() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public String currencySymbol() {
         return this.context.currencySymbol();
     }

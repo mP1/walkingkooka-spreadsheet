@@ -44,6 +44,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     static BasicSpreadsheetFormatterContext with(final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int cellCharacterWidth,
+                                                 final int generalFormatNumberDigitCount,
                                                  final SpreadsheetFormatter formatter,
                                                  final SpreadsheetConverterContext context) {
         Objects.requireNonNull(numberToColor, "numberToColor");
@@ -51,19 +52,26 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         if (cellCharacterWidth <= 0) {
             throw new IllegalArgumentException("Invalid cellCharacterWidth " + cellCharacterWidth + " <= 0");
         }
+        if (generalFormatNumberDigitCount <= 0) {
+            throw new IllegalArgumentException("Invalid generalFormatNumberDigitCount " + generalFormatNumberDigitCount + " <= 0");
+        }
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(formatter, "formatter");
 
-        return new BasicSpreadsheetFormatterContext(numberToColor,
+        return new BasicSpreadsheetFormatterContext(
+                numberToColor,
                 nameToColor,
                 cellCharacterWidth,
+                generalFormatNumberDigitCount,
                 formatter,
-                context);
+                context
+        );
     }
 
     private BasicSpreadsheetFormatterContext(final Function<Integer, Optional<Color>> numberToColor,
                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int cellCharacterWidth,
+                                             final int generalFormatNumberDigitCount,
                                              final SpreadsheetFormatter formatter,
                                              final SpreadsheetConverterContext context) {
         super();
@@ -71,6 +79,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         this.numberToColor = numberToColor;
         this.nameToColor = nameToColor;
         this.cellCharacterWidth = cellCharacterWidth;
+        this.generalFormatNumberDigitCount = generalFormatNumberDigitCount;
 
         // necessary because TextSpreadsheetFormatter needs SpreadsheetErrors to be converted to String.
         this.converter = Converters.collection(
@@ -151,6 +160,13 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     private final SpreadsheetFormatter formatter;
+
+    @Override
+    public int generalFormatNumberDigitCount() {
+        return this.generalFormatNumberDigitCount;
+    }
+
+    private final int generalFormatNumberDigitCount;
 
     // DateTimeContext..................................................................................................
 

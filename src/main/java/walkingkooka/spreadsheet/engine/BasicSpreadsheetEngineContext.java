@@ -110,6 +110,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 metadata.numberToColor(),
                 metadata.nameToColor(),
                 metadata.getOrFail(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH),
+                metadata.getOrFail(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT),
                 metadata.formatter(),
                 metadata.converterContext(
                         now,

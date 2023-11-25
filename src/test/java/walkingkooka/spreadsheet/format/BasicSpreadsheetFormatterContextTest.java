@@ -63,12 +63,15 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         }
     };
 
+    private final int GENERAL_NUMBER_FORMAT_DIGIT_COUNT = 8;
+
     @Test
     public void testWithNullNumberToColorFails() {
         this.withFails(
                 null,
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 this.formatter(),
                 this.converterContext()
         );
@@ -80,6 +83,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 this.numberToColor(),
                 null,
                 CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 this.formatter(),
                 this.converterContext()
         );
@@ -92,6 +96,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                         this.nameToColor(),
                         -1,
+                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         this.formatter(),
                         this.converterContext()
                 )
@@ -105,6 +110,34 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                         this.nameToColor(),
                         0,
+                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                        this.formatter(),
+                        this.converterContext())
+        );
+    }
+
+    @Test
+    public void testWithInvalidGeneralFormatNumberDigitCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
+                        this.nameToColor(),
+                        CELL_CHARACTER_WIDTH,
+                        -1,
+                        this.formatter(),
+                        this.converterContext()
+                )
+        );
+    }
+
+    @Test
+    public void testWithInvalidGeneralFormatNumberDigitCountFails2() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
+                        this.nameToColor(),
+                        CELL_CHARACTER_WIDTH,
+                        0,
                         this.formatter(),
                         this.converterContext())
         );
@@ -116,6 +149,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 this.numberToColor(),
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 null,
                 this.converterContext()
         );
@@ -127,6 +161,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 this.numberToColor(),
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 this.formatter(),
                 null
         );
@@ -135,6 +170,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private void withFails(final Function<Integer, Optional<Color>> numberToColor,
                            final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                            final int width,
+                           final int generalNumberFormatDigitCount,
                            final SpreadsheetFormatter formatter,
                            final SpreadsheetConverterContext converterContext) {
         assertThrows(
@@ -143,6 +179,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         numberToColor,
                         nameToColor,
                         width,
+                        generalNumberFormatDigitCount,
                         formatter,
                         converterContext
                 )
@@ -229,6 +266,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 this.formatter(),
                 this.converterContext());
     }
