@@ -75,10 +75,14 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
 
     private Optional<SpreadsheetText> formatNumber(final ExpressionNumber number,
                                                    final SpreadsheetFormatterContext context) {
-        return this.shouldScientificFormat(number) ?
+        return this.shouldScientificFormat(
+                number,
+                context
+        ) ?
                 this.scientificFormatter(context)
                         .format(number, context) :
-                NON_SCIENTIFIC_FORMAT.format(number, context)
+                this.nonScientificFormatter(context)
+                        .format(number, context)
                         .map(t -> removeTrailingDecimalPlaceIfNecessary(t, context));
     }
 
@@ -88,23 +92,58 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
      * <br>
      * The digit count should probably be a method on SpreadsheetFormatterContext#shouldScientificFormat
      */
-    private boolean shouldScientificFormat(final ExpressionNumber number) {
+    private boolean shouldScientificFormat(final ExpressionNumber number,
+                                           final SpreadsheetFormatterContext context) {
         return number.isBigDecimal() ?
-                this.shouldScientificFormatBigDecimal(number.bigDecimal()) :
-                this.shouldScientificFormatDouble(number.doubleValue());
+                this.shouldScientificFormatBigDecimal(
+                        number.bigDecimal(),
+                        context
+                ) :
+                this.shouldScientificFormatDouble(
+                        number.doubleValue(),
+                        context
+                );
     }
 
-    private boolean shouldScientificFormatBigDecimal(final BigDecimal number) {
-        return number.abs().compareTo(SCIENTIFIC_BIG_DECIMAL) >= 0;
+    private boolean shouldScientificFormatBigDecimal(final BigDecimal number,
+                                                     final SpreadsheetFormatterContext context) {
+        final int digitCount = context.generalFormatNumberDigitCount();
+        final Map<Integer, BigDecimal> map = this.generalNumberFormatDigitCountToMaxBigDouble;
+
+        BigDecimal value = map.get(digitCount);
+        if (null == value) {
+            value = BigDecimal.valueOf(1, -digitCount); // eg: 1E12
+
+            map.put(
+                    digitCount,
+                    value
+            );
+        }
+
+        return number.abs()
+                .compareTo(value) >= 0;
     }
 
-    private final static BigDecimal SCIENTIFIC_BIG_DECIMAL = new BigDecimal("1E12");
+    private final Map<Integer, BigDecimal> generalNumberFormatDigitCountToMaxBigDouble = Maps.concurrent();
 
-    private boolean shouldScientificFormatDouble(final double number) {
-        return Math.abs(number) >= SCIENTIFIC_DOUBLE;
+    private boolean shouldScientificFormatDouble(final double number,
+                                                 final SpreadsheetFormatterContext context) {
+        final int digitCount = context.generalFormatNumberDigitCount();
+        final Map<Integer, Double> map = this.generalNumberFormatDigitCountToMaxDouble;
+        Double value = map.get(digitCount);
+        if (null == value) {
+            value = Double.parseDouble("1E" + digitCount); // eg: 1E12
+
+            map.put(
+                    digitCount,
+                    value
+            );
+        }
+
+        return Math.abs(number) >= value;
     }
 
-    private final static double SCIENTIFIC_DOUBLE = 1E12;
+    private final Map<Integer, Double> generalNumberFormatDigitCountToMaxDouble = Maps.concurrent();
 
     /**
      * The number format pattern for large numbers that should be formatted in scientific format.
@@ -112,15 +151,16 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
     private SpreadsheetFormatter scientificFormatter(final SpreadsheetFormatterContext context) {
         final int digitCount = context.generalFormatNumberDigitCount();
 
-        SpreadsheetFormatter formatter = this.generalNumberFormatDigitCountToFormatter.get(digitCount);
+        final Map<Integer, SpreadsheetFormatter> map = generalNumberFormatDigitCountToScientificFormatter;
+
+        SpreadsheetFormatter formatter = map.get(digitCount);
         if (null == formatter) {
             formatter = SpreadsheetPattern.parseNumberFormatPattern(
                             "0." +
                                     CharSequences.repeating('#', digitCount) +
                                     "E+0"
-                    )
-                    .formatter();
-            this.generalNumberFormatDigitCountToFormatter.put(
+            ).formatter();
+            map.put(
                     digitCount,
                     formatter
             );
@@ -129,13 +169,29 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
         return formatter;
     }
 
-    private final Map<Integer, SpreadsheetFormatter> generalNumberFormatDigitCountToFormatter = Maps.concurrent();
+    private final Map<Integer, SpreadsheetFormatter> generalNumberFormatDigitCountToScientificFormatter = Maps.concurrent();
 
-    /**
-     * The number format pattern used to format non scientific numbers..
-     */
-    private final static SpreadsheetFormatter NON_SCIENTIFIC_FORMAT = SpreadsheetPattern.parseNumberFormatPattern("0.#")
-            .formatter();
+
+    private SpreadsheetFormatter nonScientificFormatter(final SpreadsheetFormatterContext context) {
+        final int digitCount = context.generalFormatNumberDigitCount();
+
+        final Map<Integer, SpreadsheetFormatter> map = this.generalNumberFormatDigitCountToNonScientificFormatter;
+        SpreadsheetFormatter formatter = map.get(digitCount);
+        if (null == formatter) {
+            formatter = SpreadsheetPattern.parseNumberFormatPattern(
+                    "0." +
+                            CharSequences.repeating('#', digitCount)
+            ).formatter();
+            map.put(
+                    digitCount,
+                    formatter
+            );
+        }
+
+        return formatter;
+    }
+
+    private final Map<Integer, SpreadsheetFormatter> generalNumberFormatDigitCountToNonScientificFormatter = Maps.concurrent();
 
     /**
      * Removes any trailing decimal place, so formatting whole numbers do not have a decimal place.

@@ -105,18 +105,36 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
     @Test
     public void testFormatSmallNumberBigDecimalAlmostScientific() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(12345678901.5),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "12345678901!5"
+                ExpressionNumberKind.BIG_DECIMAL.create(1.123456789),
+                5,
+                "1!12346"
+        );
+    }
+
+    @Test
+    public void testFormatSmallNumberBigDecimalAlmostScientific2() {
+        this.formatAndCheck2(
+                ExpressionNumberKind.BIG_DECIMAL.create(99.12345678901234567),
+                13,
+                "99!1234567890124"
         );
     }
 
     @Test
     public void testFormatSmallNumberDoubleAlmostScientific() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(12345678901.5),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "12345678901!5"
+                ExpressionNumberKind.DOUBLE.create(1.23456789),
+                5,
+                "1!23457"
+        );
+    }
+
+    @Test
+    public void testFormatSmallNumberDoubleAlmostScientific2() {
+        this.formatAndCheck2(
+                ExpressionNumberKind.DOUBLE.create(12.345678),
+                6,
+                "12!345678"
         );
     }
 
