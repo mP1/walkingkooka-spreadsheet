@@ -69,13 +69,15 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {
-        return SpreadsheetFormatterContexts.basic((n -> {
+        return SpreadsheetFormatterContexts.basic(
+                (n -> {
                     throw new UnsupportedOperationException();
                 }),
                 (n -> {
                     throw new UnsupportedOperationException();
                 }),
-                1,
+                1, // cellCharacterWidth
+                8, // generalNumberFormatDigitCount
                 SpreadsheetFormatters.fake(),
                 SpreadsheetConverterContexts.basic(
                         new FakeConverter<>() {

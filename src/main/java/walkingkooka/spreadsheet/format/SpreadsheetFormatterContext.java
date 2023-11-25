@@ -56,4 +56,9 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
         return this.format(value)
                 .orElse(SpreadsheetText.EMPTY);
     }
+
+    /**
+     * Returns the number of digits when formatting a number.
+     */
+    int generalFormatNumberDigitCount();
 }

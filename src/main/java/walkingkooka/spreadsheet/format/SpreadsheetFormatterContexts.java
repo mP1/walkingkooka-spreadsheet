@@ -32,12 +32,14 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
     public static SpreadsheetFormatterContext basic(final Function<Integer, Optional<Color>> numberToColor,
                                                     final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                     final int cellCharacterWidth,
+                                                    final int generalFormatNumberDigitCount,
                                                     final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                                     final SpreadsheetConverterContext context) {
         return BasicSpreadsheetFormatterContext.with(
                 numberToColor,
                 nameToColor,
                 cellCharacterWidth,
+                generalFormatNumberDigitCount,
                 defaultSpreadsheetFormatter,
                 context
         );
