@@ -17,10 +17,13 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -73,7 +76,8 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
     private Optional<SpreadsheetText> formatNumber(final ExpressionNumber number,
                                                    final SpreadsheetFormatterContext context) {
         return this.shouldScientificFormat(number) ?
-                SCIENTIFIC_FORMAT.format(number, context) :
+                this.scientificFormatter(context)
+                        .format(number, context) :
                 NON_SCIENTIFIC_FORMAT.format(number, context)
                         .map(t -> removeTrailingDecimalPlaceIfNecessary(t, context));
     }
@@ -105,8 +109,27 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
     /**
      * The number format pattern for large numbers that should be formatted in scientific format.
      */
-    private final static SpreadsheetFormatter SCIENTIFIC_FORMAT = SpreadsheetPattern.parseNumberFormatPattern("0.###########E+0")
-            .formatter();
+    private SpreadsheetFormatter scientificFormatter(final SpreadsheetFormatterContext context) {
+        final int digitCount = context.generalFormatNumberDigitCount();
+
+        SpreadsheetFormatter formatter = this.generalNumberFormatDigitCountToFormatter.get(digitCount);
+        if (null == formatter) {
+            formatter = SpreadsheetPattern.parseNumberFormatPattern(
+                            "0." +
+                                    CharSequences.repeating('#', digitCount) +
+                                    "E+0"
+                    )
+                    .formatter();
+            this.generalNumberFormatDigitCountToFormatter.put(
+                    digitCount,
+                    formatter
+            );
+        }
+
+        return formatter;
+    }
+
+    private final Map<Integer, SpreadsheetFormatter> generalNumberFormatDigitCountToFormatter = Maps.concurrent();
 
     /**
      * The number format pattern used to format non scientific numbers..
