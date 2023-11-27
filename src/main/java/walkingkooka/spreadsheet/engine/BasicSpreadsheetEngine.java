@@ -964,9 +964,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 // if expression is absent, convert token into expression
                 if (null != token && false == formula.expression().isPresent()) {
                     formula = formula.setExpression(
-                            token.toExpression(
-                                    SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(context)
-                            )
+                            context.toExpression(token)
                     );
                 }
             }

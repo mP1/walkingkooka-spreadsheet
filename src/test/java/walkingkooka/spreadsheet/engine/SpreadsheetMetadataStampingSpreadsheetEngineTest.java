@@ -361,6 +361,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         metadatas.save(BEFORE);
 
         return new FakeSpreadsheetEngineContext() {
+
             @Override
             public SpreadsheetMetadata metadata() {
                 return BEFORE;
@@ -445,6 +446,13 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                                 SpreadsheetParserToken.textLiteral(FORMULA_VALUE, FORMULA_VALUE)
                         ),
                         FORMULA_TEXT
+                );
+            }
+
+            @Override
+            public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+                return Optional.of(
+                        Expression.value("Hello")
                 );
             }
 
