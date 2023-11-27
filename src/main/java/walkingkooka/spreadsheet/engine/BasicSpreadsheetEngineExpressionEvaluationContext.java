@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * A {@link ExpressionEvaluationContext} used exclusively by {@link BasicSpreadsheetEngine#parseFormulaIfNecessary(SpreadsheetCell, Function, SpreadsheetEngineContext)}
@@ -49,19 +48,15 @@ import java.util.function.Supplier;
  */
 final class BasicSpreadsheetEngineExpressionEvaluationContext implements ExpressionEvaluationContext {
 
-    static BasicSpreadsheetEngineExpressionEvaluationContext with(final SpreadsheetEngineContext context,
-                                                                  final Supplier<LocalDateTime> now) {
+    static BasicSpreadsheetEngineExpressionEvaluationContext with(final SpreadsheetEngineContext context) {
         return new BasicSpreadsheetEngineExpressionEvaluationContext(
-                context,
-                now
+                context
         );
     }
 
-    private BasicSpreadsheetEngineExpressionEvaluationContext(final SpreadsheetEngineContext context,
-                                                              final Supplier<LocalDateTime> now) {
+    private BasicSpreadsheetEngineExpressionEvaluationContext(final SpreadsheetEngineContext context) {
         super();
         this.context = context;
-        this.now = now;
     }
 
     @Override
@@ -132,10 +127,12 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
 
     private ConverterContext converterContext() {
         if (null == this.converterContext) {
+            final SpreadsheetEngineContext context = this.context;
+
             this.converterContext = this.metadata()
                     .converterContext(
-                            this.now,
-                            this.context::resolveIfLabel
+                            context::now,
+                            context::resolveIfLabel
                     );
         }
         return this.converterContext;
@@ -202,7 +199,9 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     private DateTimeContext dateTimeContext() {
         if (null == this.dateTimeContext) {
             this.dateTimeContext = this.metadata()
-                    .dateTimeContext(this.now);
+                    .dateTimeContext(
+                            this.context::now
+                    );
         }
 
         return this.dateTimeContext;
@@ -280,8 +279,6 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     private final SpreadsheetEngineContext context;
-
-    private final Supplier<LocalDateTime> now;
 
     @Override
     public String toString() {
