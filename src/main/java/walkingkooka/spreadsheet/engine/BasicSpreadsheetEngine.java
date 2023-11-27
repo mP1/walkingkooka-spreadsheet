@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -964,9 +965,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 if (null != token && false == formula.expression().isPresent()) {
                     formula = formula.setExpression(
                             token.toExpression(
-                                    BasicSpreadsheetEngineExpressionEvaluationContext.with(
-                                            context
-                                    )
+                                    SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(context)
                             )
                     );
                 }
