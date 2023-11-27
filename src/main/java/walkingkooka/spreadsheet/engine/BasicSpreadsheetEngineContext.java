@@ -147,7 +147,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(token, "token");
 
         return token.toExpression(
-                BasicSpreadsheetEngineExpressionEvaluationContext.with(this)
+                SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(this)
         );
     }
 
