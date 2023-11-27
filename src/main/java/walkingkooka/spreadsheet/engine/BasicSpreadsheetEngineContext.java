@@ -142,6 +142,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 .cast(SpreadsheetParserToken.class);
     }
 
+    @Override
+    public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+        Objects.requireNonNull(token, "token");
+
+        return token.toExpression(
+                BasicSpreadsheetEngineExpressionEvaluationContext.with(
+                        this,
+                        this::now
+                )
+        );
+    }
+
     /**
      * This parser is used to parse strings, date, date/time, time and numbers outside an expression but within a formula.
      */

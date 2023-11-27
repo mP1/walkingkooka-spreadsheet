@@ -53,6 +53,12 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
+    public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+        Objects.requireNonNull(token, "token");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean isPure(final FunctionExpressionName function) {
         throw new UnsupportedOperationException();
     }
