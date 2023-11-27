@@ -965,8 +965,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     formula = formula.setExpression(
                             token.toExpression(
                                     BasicSpreadsheetEngineExpressionEvaluationContext.with(
-                                            context,
-                                            context::now
+                                            context
                                     )
                             )
                     );
