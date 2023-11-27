@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -378,6 +379,30 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 )
         );
     }
+
+    // toExpression.....................................................................................................
+
+    @Test
+    public void testToExpression() {
+        final BasicSpreadsheetEngineContext context = this.createContext();
+
+        this.toExpressionAndCheck(
+                context,
+                context.parseFormula(
+                        TextCursors.charSequence("=1+2")
+                ),
+                Expression.add(
+                        Expression.value(
+                                EXPRESSION_NUMBER_KIND.one()
+                        ),
+                        Expression.value(
+                                EXPRESSION_NUMBER_KIND.create(2)
+                        )
+                )
+        );
+    }
+
+    // evaluate.........................................................................................................
 
     @Test
     public void testEvaluate() {

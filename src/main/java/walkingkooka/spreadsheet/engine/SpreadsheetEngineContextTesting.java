@@ -135,6 +135,46 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 () -> "parseFormula " + formula + " with context " + context);
     }
 
+    // toExpression....................................................................................................
+
+    @Test
+    default void testToExpressionWithNullTokenFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .toExpression(null)
+        );
+    }
+
+    default void toExpressionAndCheck(final SpreadsheetEngineContext context,
+                                      final SpreadsheetParserToken token) {
+        this.toExpressionAndCheck(
+                context,
+                token,
+                Optional.empty()
+        );
+    }
+
+    default void toExpressionAndCheck(final SpreadsheetEngineContext context,
+                                      final SpreadsheetParserToken token,
+                                      final Expression expected) {
+        this.toExpressionAndCheck(
+                context,
+                token,
+                Optional.of(expected)
+        );
+    }
+
+    default void toExpressionAndCheck(final SpreadsheetEngineContext context,
+                                      final SpreadsheetParserToken token,
+                                      final Optional<Expression> expected) {
+        this.checkEquals(
+                expected,
+                context.toExpression(token),
+                () -> token.toString()
+        );
+    }
+
     // evaluate.........................................................................................................
 
     @Test
