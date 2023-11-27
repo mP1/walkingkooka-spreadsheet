@@ -15,12 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Either;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CaseSensitivity;
@@ -37,24 +37,25 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * A {@link ExpressionEvaluationContext} used exclusively by {@link BasicSpreadsheetEngine#parseFormulaIfNecessary(SpreadsheetCell, Function, SpreadsheetEngineContext)}
- * which uses this to convert a {@link walkingkooka.spreadsheet.parser.SpreadsheetParserToken#toExpression(ExpressionEvaluationContext)}.
+ * A {@link ExpressionEvaluationContext} used to assist turning a {@link walkingkooka.spreadsheet.parser.SpreadsheetParserToken} into an {@link Expression}.
  * <br>
  * None of the expression or evaluation type methods should be called and all throw {@link UnsupportedOperationException}.
  */
-final class BasicSpreadsheetEngineExpressionEvaluationContext implements ExpressionEvaluationContext {
+final class SpreadsheetEngineExpressionEvaluationContext implements ExpressionEvaluationContext {
 
-    static BasicSpreadsheetEngineExpressionEvaluationContext with(final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEngineExpressionEvaluationContext(
+    static SpreadsheetEngineExpressionEvaluationContext with(final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(context, "context");
+        return new SpreadsheetEngineExpressionEvaluationContext(
                 context
         );
     }
 
-    private BasicSpreadsheetEngineExpressionEvaluationContext(final SpreadsheetEngineContext context) {
+    private SpreadsheetEngineExpressionEvaluationContext(final SpreadsheetEngineContext context) {
         super();
         this.context = context;
     }
