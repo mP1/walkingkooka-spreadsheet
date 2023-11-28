@@ -150,6 +150,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
                         Optional.empty(),// cell
                         this.serverUrl, // serverUrl
+                        this.functions, // functions
                         this
                 )
         );

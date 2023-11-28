@@ -12400,6 +12400,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
                                 Optional.empty(),
                                 SERVER_URL,
+                                this.functions(),
                                 this
                         )
                 );
