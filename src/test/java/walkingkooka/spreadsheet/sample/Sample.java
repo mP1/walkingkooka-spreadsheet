@@ -229,7 +229,7 @@ public final class Sample {
             }
 
             private Function<ExpressionReference, Optional<Optional<Object>>> references() {
-                return SpreadsheetEngines.expressionEvaluationContextExpressionReferenceFunction(
+                return SpreadsheetEngines.expressionReferenceFunction(
                         engine,
                         this
                 );
