@@ -97,7 +97,7 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     @Override
     public boolean isPure(final FunctionExpressionName name) {
-        throw new UnsupportedOperationException();
+        return this.context.isPure(name);
     }
 
     @Override
