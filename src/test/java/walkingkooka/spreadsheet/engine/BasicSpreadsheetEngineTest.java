@@ -12400,6 +12400,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
                                 Optional.empty(),
                                 SERVER_URL,
+                                (r) -> {
+                                    throw new UnsupportedOperationException(r.toString());
+                                },
                                 this.functions(),
                                 this
                         )
