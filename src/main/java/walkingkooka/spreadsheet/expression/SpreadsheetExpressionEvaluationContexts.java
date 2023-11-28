@@ -113,8 +113,14 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see SpreadsheetEngineExpressionEvaluationContext}
      */
-    public static ExpressionEvaluationContext spreadsheetEngineContext(final SpreadsheetEngineContext context) {
-        return SpreadsheetEngineExpressionEvaluationContext.with(context);
+    public static ExpressionEvaluationContext spreadsheetEngineContext(final Optional<SpreadsheetCell> cell,
+                                                                       final AbsoluteUrl serverUrl,
+                                                                       final SpreadsheetEngineContext context) {
+        return SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
+                cell,
+                serverUrl,
+                context
+        );
     }
 
     /**
