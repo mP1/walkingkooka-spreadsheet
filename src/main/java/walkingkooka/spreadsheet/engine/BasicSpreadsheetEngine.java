@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -1023,7 +1022,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .orFailIfCursorNotEmpty(ParserReporters.basic())
                     .parse(
                             textCursor,
-                            context.metadata()
+                            context.spreadsheetMetadata()
                                     .parserContext(context::now)
                     ).get()
                     .cast(SpreadsheetParserToken.class);
@@ -1167,7 +1166,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 context.format(
                                                 value,
                                                 formatter.orElse(
-                                                        context.metadata()
+                                                        context.spreadsheetMetadata()
                                                                 .formatter()
                                                 )
                                         )
@@ -1204,7 +1203,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             cell
                     )
             );
-            final Boolean booleanResult = context.metadata()
+            final Boolean booleanResult = context.spreadsheetMetadata()
                     .converterContext(
                             context::now,
                             context::resolveIfLabel
@@ -1278,7 +1277,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private double columnWidthOrRowHeight(final TextStylePropertyName<Length<?>> propertyName,
                                           final SpreadsheetEngineContext context) {
-        return context.metadata()
+        return context.spreadsheetMetadata()
                 .getEffectiveStylePropertyOrFail(propertyName)
                 .pixelValue();
     }
@@ -1331,7 +1330,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetRowReferenceRange frozenRows = null;
 
         if (includeFrozenColumnsRows) {
-            final SpreadsheetMetadata metadata = context.metadata();
+            final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
 
             // compute actual frozenColumns, metadata.FROZEN_COLUMNS might be higher than requested width...............
 

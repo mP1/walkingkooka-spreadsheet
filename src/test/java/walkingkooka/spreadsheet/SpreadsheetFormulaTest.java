@@ -298,7 +298,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 ),
                 new FakeSpreadsheetEngineContext() {
                     @Override
-                    public SpreadsheetMetadata metadata() {
+                    public SpreadsheetMetadata spreadsheetMetadata() {
                         return SpreadsheetMetadata.EMPTY.defaults()
                                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind);
                     }

@@ -360,7 +360,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                context.metadata()
+                context.spreadsheetMetadata()
                         .expressionNumberKind()
                         .zero(),
                 " " + FORMATTED_PATTERN_SUFFIX
@@ -383,7 +383,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                context.metadata()
+                context.spreadsheetMetadata()
                         .expressionNumberKind()
                         .create(2),
                 "2 " + FORMATTED_PATTERN_SUFFIX
@@ -12365,13 +12365,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return selection;
             }
 
-            public SpreadsheetMetadata metadata() {
+            public SpreadsheetMetadata spreadsheetMetadata() {
                 return metadata.set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, defaultYear);
             }
 
             @Override
             public int defaultYear() {
-                return this.metadata()
+                return this.spreadsheetMetadata()
                         .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
             }
 
@@ -12384,7 +12384,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetParserContexts.basic(
                                         DateTimeContexts.fake(),
                                         ExpressionNumberContexts.basic(
-                                            this.metadata().expressionNumberKind(),
+                                                this.spreadsheetMetadata().expressionNumberKind(),
                                             converterContext()
                                         ),
                                         VALUE_SEPARATOR
@@ -12413,7 +12413,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 cell,
                                 storeRepository.cells(),
                                 Url.parseAbsolute("http://server123"), // serverUrl
-                                this.metadata(), // metadata
+                                this.spreadsheetMetadata(), // metadata
                                 this.functions(), // functions
                                 this.references(), // references
                                 (s) -> {
@@ -12583,7 +12583,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             private ConverterContext converterContext() {
-                return this.metadata()
+                return this.spreadsheetMetadata()
                         .converterContext(
                                 NOW,
                                 RESOLVE_IF_LABEL

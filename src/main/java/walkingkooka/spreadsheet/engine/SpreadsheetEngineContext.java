@@ -22,7 +22,7 @@ import walkingkooka.datetime.HasNow;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -36,12 +36,10 @@ import java.util.Optional;
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetEngineContext extends Context, ExpressionPurityContext, HasNow {
-
-    /**
-     * Returns the current {@link SpreadsheetMetadata}
-     */
-    SpreadsheetMetadata metadata();
+public interface SpreadsheetEngineContext extends Context,
+        ExpressionPurityContext,
+        HasSpreadsheetMetadata,
+        HasNow {
 
     /**
      * Resolves a {@link SpreadsheetSelection} if it is a {@link SpreadsheetLabelName} otherwise returning the original.

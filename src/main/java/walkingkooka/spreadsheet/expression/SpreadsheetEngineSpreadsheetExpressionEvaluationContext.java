@@ -335,7 +335,7 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        return this.context.metadata();
+        return this.context.spreadsheetMetadata();
     }
 
     @Override

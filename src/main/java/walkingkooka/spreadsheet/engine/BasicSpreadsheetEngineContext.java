@@ -114,7 +114,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // metadata........................................................................................................
 
     @Override
-    public SpreadsheetMetadata metadata() {
+    public SpreadsheetMetadata spreadsheetMetadata() {
         return this.metadata;
     }
 
@@ -222,7 +222,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                             final SpreadsheetFormatter formatter) {
         return formatter.format(
                 value,
-                this.metadata()
+                this.spreadsheetMetadata()
                         .formatterContext(
                                 this::now,
                                 this::resolveIfLabel
