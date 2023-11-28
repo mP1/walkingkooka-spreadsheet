@@ -111,11 +111,11 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
-     * {@see SpreadsheetEngineExpressionEvaluationContext}
+     * {@see SpreadsheetExpressionEvaluationContext}
      */
-    public static ExpressionEvaluationContext spreadsheetEngineContext(final Optional<SpreadsheetCell> cell,
-                                                                       final AbsoluteUrl serverUrl,
-                                                                       final SpreadsheetEngineContext context) {
+    public static SpreadsheetExpressionEvaluationContext spreadsheetEngineContext(final Optional<SpreadsheetCell> cell,
+                                                                                  final AbsoluteUrl serverUrl,
+                                                                                  final SpreadsheetEngineContext context) {
         return SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                 cell,
                 serverUrl,
