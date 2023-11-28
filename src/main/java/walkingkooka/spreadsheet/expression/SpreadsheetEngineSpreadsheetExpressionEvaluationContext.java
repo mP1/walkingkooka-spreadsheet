@@ -93,7 +93,10 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     @Override
     public Object evaluate(final Expression expression) {
-        throw new UnsupportedOperationException();
+        return this.context.evaluate(
+                expression,
+                this.cell
+        );
     }
 
     @Override
