@@ -61,24 +61,29 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     static SpreadsheetEngineSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
                                                                         final AbsoluteUrl serverUrl,
+                                                                        final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                                                         final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(serverUrl, "serverUrl");
+        Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(context, "context");
 
         return new SpreadsheetEngineSpreadsheetExpressionEvaluationContext(
                 cell,
                 serverUrl,
+                functions,
                 context
         );
     }
 
     private SpreadsheetEngineSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                     final AbsoluteUrl serverUrl,
+                                                                    final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                                                     final SpreadsheetEngineContext context) {
         super();
         this.cell = cell;
         this.serverUrl = serverUrl;
+        this.functions = functions;
         this.context = context;
     }
 
@@ -118,8 +123,10 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
-        throw new UnsupportedOperationException();
+        return this.functions.apply(name);
     }
+
+    private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions;
 
     @Override
     public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,

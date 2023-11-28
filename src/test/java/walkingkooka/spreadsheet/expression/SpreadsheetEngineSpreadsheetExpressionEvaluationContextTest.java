@@ -28,8 +28,12 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -38,6 +42,10 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://example.com");
 
+    private final static Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> FUNCTIONS = (n) -> {
+        throw new UnsupportedOperationException();
+    };
+
     @Test
     public void testWithNullCellFails() {
         assertThrows(
@@ -45,6 +53,7 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 () -> SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         null, // cell
                         SERVER_URL, // serverUrl
+                        FUNCTIONS, // functions
                         null
                 )
         );
@@ -57,7 +66,21 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 () -> SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         Optional.empty(), // cell
                         null, // serverUrl
+                        FUNCTIONS, // functions
                         SpreadsheetEngineContexts.fake()// context
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullFunctionsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
+                        Optional.empty(), // cell
+                        SERVER_URL, // serverUrl
+                        null, // functions
+                        SpreadsheetEngineContexts.fake() // context
                 )
         );
     }
@@ -69,6 +92,7 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 () -> SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         Optional.empty(), // cell
                         SERVER_URL, // serverUrl
+                        FUNCTIONS, // functions
                         null // context
                 )
         );
@@ -83,6 +107,7 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         Optional.empty(), // cell
                         SERVER_URL, // serverUrl
+                        FUNCTIONS,
                         context // context
                 ),
                 SERVER_URL + " " + context
@@ -100,6 +125,7 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         Optional.of(cell), // cell
                         SERVER_URL, // serverUrl
+                        FUNCTIONS,
                         context // context
                 ),
                 cell + " " + SERVER_URL + " " + context
