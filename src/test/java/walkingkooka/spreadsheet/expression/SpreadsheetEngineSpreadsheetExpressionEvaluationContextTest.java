@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
@@ -42,6 +43,10 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://example.com");
 
+    private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
+        throw new UnsupportedOperationException();
+    };
+
     private final static Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> FUNCTIONS = (n) -> {
         throw new UnsupportedOperationException();
     };
@@ -53,6 +58,7 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 () -> SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         null, // cell
                         SERVER_URL, // serverUrl
+                        REFERENCES, // references
                         FUNCTIONS, // functions
                         null
                 )
@@ -66,8 +72,23 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 () -> SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         Optional.empty(), // cell
                         null, // serverUrl
+                        REFERENCES, // references
                         FUNCTIONS, // functions
                         SpreadsheetEngineContexts.fake()// context
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullReferencesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
+                        Optional.empty(), // cell
+                        SERVER_URL, // serverUrl
+                        null, // references
+                        FUNCTIONS, // functions
+                        SpreadsheetEngineContexts.fake() // context
                 )
         );
     }
@@ -79,6 +100,7 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 () -> SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         Optional.empty(), // cell
                         SERVER_URL, // serverUrl
+                        REFERENCES, // references
                         null, // functions
                         SpreadsheetEngineContexts.fake() // context
                 )
@@ -92,6 +114,7 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 () -> SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         Optional.empty(), // cell
                         SERVER_URL, // serverUrl
+                        REFERENCES, // references
                         FUNCTIONS, // functions
                         null // context
                 )
@@ -107,6 +130,7 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         Optional.empty(), // cell
                         SERVER_URL, // serverUrl
+                        REFERENCES, // references
                         FUNCTIONS,
                         context // context
                 ),
@@ -125,6 +149,7 @@ public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest i
                 SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
                         Optional.of(cell), // cell
                         SERVER_URL, // serverUrl
+                        REFERENCES, // references
                         FUNCTIONS,
                         context // context
                 ),

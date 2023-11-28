@@ -61,16 +61,19 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     static SpreadsheetEngineSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
                                                                         final AbsoluteUrl serverUrl,
+                                                                        final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                                         final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                                                         final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(serverUrl, "serverUrl");
+        Objects.requireNonNull(references, "references");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(context, "context");
 
         return new SpreadsheetEngineSpreadsheetExpressionEvaluationContext(
                 cell,
                 serverUrl,
+                references,
                 functions,
                 context
         );
@@ -78,11 +81,13 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     private SpreadsheetEngineSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                     final AbsoluteUrl serverUrl,
+                                                                    final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                                     final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                                                     final SpreadsheetEngineContext context) {
         super();
         this.cell = cell;
         this.serverUrl = serverUrl;
+        this.references = references;
         this.functions = functions;
         this.context = context;
     }
@@ -112,8 +117,10 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        throw new UnsupportedOperationException();
+        return this.references.apply(reference);
     }
+
+    private final Function<ExpressionReference, Optional<Optional<Object>>> references;
 
     @Override
     public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
