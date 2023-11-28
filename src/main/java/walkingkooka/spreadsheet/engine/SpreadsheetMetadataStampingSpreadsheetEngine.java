@@ -303,7 +303,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                     } finally {
                         deleteWatcher2.run();
                         if (watcher.saveOrDeletes > 0) {
-                            repository.metadatas().save(this.stamper.apply(context.metadata()));
+                            repository.metadatas().save(this.stamper.apply(context.spreadsheetMetadata()));
                         }
                     }
                 } finally {

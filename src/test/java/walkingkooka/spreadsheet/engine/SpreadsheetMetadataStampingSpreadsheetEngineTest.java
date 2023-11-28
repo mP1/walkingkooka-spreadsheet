@@ -363,7 +363,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         return new FakeSpreadsheetEngineContext() {
 
             @Override
-            public SpreadsheetMetadata metadata() {
+            public SpreadsheetMetadata spreadsheetMetadata() {
                 return BEFORE;
             }
 

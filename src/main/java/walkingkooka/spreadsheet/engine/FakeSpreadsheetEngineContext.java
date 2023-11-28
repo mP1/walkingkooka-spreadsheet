@@ -36,7 +36,7 @@ import java.util.Optional;
 public class FakeSpreadsheetEngineContext extends FakeConverterContext implements SpreadsheetEngineContext, Fake {
 
     @Override
-    public SpreadsheetMetadata metadata() {
+    public SpreadsheetMetadata spreadsheetMetadata() {
         throw new UnsupportedOperationException();
     }
 

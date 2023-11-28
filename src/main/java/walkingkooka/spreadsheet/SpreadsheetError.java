@@ -126,7 +126,7 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         Objects.requireNonNull(context, "context");
 
         return this.isMissingCell() ?
-                context.metadata()
+                context.spreadsheetMetadata()
                         .expressionNumberKind()
                         .zero() :
                 this;
