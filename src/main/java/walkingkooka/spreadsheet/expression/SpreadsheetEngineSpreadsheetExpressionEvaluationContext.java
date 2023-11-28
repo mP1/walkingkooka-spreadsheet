@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.Converter;
@@ -123,7 +124,11 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
     @Override
     public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
                                    final List<Object> parameters) {
-        throw new UnsupportedOperationException();
+        return function
+                .apply(
+                        this.prepareParameters(function, parameters),
+                        Cast.to(this)
+                );
     }
 
     @Override
