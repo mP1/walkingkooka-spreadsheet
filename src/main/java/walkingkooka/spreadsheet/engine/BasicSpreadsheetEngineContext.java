@@ -22,6 +22,7 @@ import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -147,12 +148,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(token, "token");
 
         return token.toExpression(
-                SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
-                        Optional.empty(),// cell
-                        this.serverUrl, // serverUrl
-                        this.function, // references
-                        this.functions, // functions
-                        this
+                this.expressionEvaluationContext(
+                        Optional.empty()// cell
                 )
         );
     }
@@ -178,19 +175,23 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         try {
             result = expression.toValue(
-                    SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
-                            cell,
-                            this.serverUrl,
-                            this.function,
-                            this.functions,
-                            this
-                    )
+                    this.expressionEvaluationContext(cell)
             );
         } catch (final RuntimeException exception) {
             result = SpreadsheetErrorKind.translate(exception);
         }
 
         return result;
+    }
+
+    private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+        return SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
+                cell,
+                this.serverUrl,
+                this.function,
+                this.functions,
+                this
+        );
     }
 
     private final AbsoluteUrl serverUrl;
