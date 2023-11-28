@@ -106,7 +106,7 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
     }
 
     @Override
-    public Optional<Optional<Object>> reference(ExpressionReference reference) {
+    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 
