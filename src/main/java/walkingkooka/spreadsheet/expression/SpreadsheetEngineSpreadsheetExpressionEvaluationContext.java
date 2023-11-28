@@ -24,6 +24,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -124,7 +125,7 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     @Override
     public Object handleException(final RuntimeException exception) {
-        throw new UnsupportedOperationException();
+        return SpreadsheetErrorKind.translate(exception);
     }
 
     @Override
