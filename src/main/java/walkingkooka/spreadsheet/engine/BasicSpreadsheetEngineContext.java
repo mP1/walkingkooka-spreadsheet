@@ -177,15 +177,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         try {
             result = expression.toValue(
-                    SpreadsheetExpressionEvaluationContexts.basic(
+                    SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
                             cell,
-                            this.storeRepository.cells(),
                             this.serverUrl,
-                            this.metadata,
                             this.functions,
-                            this.function,
-                            this::resolveIfLabel,
-                            this.now
+                            this
                     )
             );
         } catch (final RuntimeException exception) {
