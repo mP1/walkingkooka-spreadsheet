@@ -18,12 +18,21 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Either;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -46,17 +55,28 @@ import java.util.function.Function;
  * <br>
  * None of the expression or evaluation type methods should be called and all throw {@link UnsupportedOperationException}.
  */
-final class SpreadsheetEngineExpressionEvaluationContext implements ExpressionEvaluationContext {
+final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
 
-    static SpreadsheetEngineExpressionEvaluationContext with(final SpreadsheetEngineContext context) {
+    static SpreadsheetEngineSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
+                                                                        final AbsoluteUrl serverUrl,
+                                                                        final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(context, "context");
-        return new SpreadsheetEngineExpressionEvaluationContext(
+
+        return new SpreadsheetEngineSpreadsheetExpressionEvaluationContext(
+                cell,
+                serverUrl,
                 context
         );
     }
 
-    private SpreadsheetEngineExpressionEvaluationContext(final SpreadsheetEngineContext context) {
+    private SpreadsheetEngineSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                    final AbsoluteUrl serverUrl,
+                                                                    final SpreadsheetEngineContext context) {
         super();
+        this.cell = cell;
+        this.serverUrl = serverUrl;
         this.context = context;
     }
 
@@ -66,13 +86,8 @@ final class SpreadsheetEngineExpressionEvaluationContext implements ExpressionEv
     }
 
     @Override
-    public ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+    public SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isText(final Object value) {
-        return value instanceof Character || value instanceof CharSequence;
     }
 
     @Override
@@ -130,7 +145,7 @@ final class SpreadsheetEngineExpressionEvaluationContext implements ExpressionEv
         if (null == this.converterContext) {
             final SpreadsheetEngineContext context = this.context;
 
-            this.converterContext = this.metadata()
+            this.converterContext = this.spreadsheetMetadata()
                     .converterContext(
                             context::now,
                             context::resolveIfLabel
@@ -199,7 +214,7 @@ final class SpreadsheetEngineExpressionEvaluationContext implements ExpressionEv
 
     private DateTimeContext dateTimeContext() {
         if (null == this.dateTimeContext) {
-            this.dateTimeContext = this.metadata()
+            this.dateTimeContext = this.spreadsheetMetadata()
                     .dateTimeContext(
                             this.context::now
                     );
@@ -255,34 +270,83 @@ final class SpreadsheetEngineExpressionEvaluationContext implements ExpressionEv
     }
 
     private ExpressionNumberContext expressionNumberContext() {
-        return this.metadata()
+        return this.spreadsheetMetadata()
                 .expressionNumberContext();
     }
 
     @Override
     public Locale locale() {
-        return this.metadata()
+        return this.spreadsheetMetadata()
                 .getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
     }
 
     @Override
     public MathContext mathContext() {
-        return this.metadata().mathContext();
+        return this.spreadsheetMetadata()
+                .mathContext();
     }
 
     @Override
     public ExpressionNumberKind expressionNumberKind() {
-        return this.metadata().expressionNumberKind();
+        return this.spreadsheetMetadata()
+                .expressionNumberKind();
     }
 
-    private SpreadsheetMetadata metadata() {
+    // SpreadsheetExpressionEvaluationContext...........................................................................
+
+    @Override
+    public Optional<SpreadsheetCell> cell() {
+        return this.cell;
+    }
+
+    private final Optional<SpreadsheetCell> cell;
+
+    @Override
+    public Converter<SpreadsheetConverterContext> converter() {
+        return this.spreadsheetMetadata()
+                .converter();
+    }
+
+    @Override
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+        return this.context.storeRepository()
+                .cells()
+                .load(cell);
+    }
+
+    @Override
+    public SpreadsheetParserToken parseExpression(final TextCursor formula) {
+        return this.context.parseFormula(formula);
+    }
+
+    @Override
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        return this.context.resolveIfLabel(selection);
+    }
+
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
         return this.context.metadata();
     }
 
+    @Override
+    public AbsoluteUrl serverUrl() {
+        return this.serverUrl;
+    }
+
+    private final AbsoluteUrl serverUrl;
+
     private final SpreadsheetEngineContext context;
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {
-        return this.context.toString();
+        return ToStringBuilder.empty()
+                .separator(" ")
+                .value(this.cell)
+                .value(this.serverUrl)
+                .value(this.context)
+                .build();
     }
 }

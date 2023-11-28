@@ -27,6 +27,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -151,6 +152,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
         throw new UnsupportedOperationException();
     };
+
+    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://server.example.com");
 
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
         @Override
@@ -12394,7 +12397,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
                 return token.toExpression(
-                        SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(this)
+                        SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
+                                Optional.empty(),
+                                SERVER_URL,
+                                this
+                        )
                 );
             }
 
