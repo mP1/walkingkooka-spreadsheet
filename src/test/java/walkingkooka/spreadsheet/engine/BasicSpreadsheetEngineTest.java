@@ -12392,6 +12392,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
+            public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+                return token.toExpression(
+                        SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(this)
+                );
+            }
+
+            @Override
             public Object evaluate(final Expression node,
                                    final Optional<SpreadsheetCell> cell) {
                 return node.toValue(
