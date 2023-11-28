@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -104,12 +103,6 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      * resolve to a {@link SpreadsheetCellReference} or {@link walkingkooka.spreadsheet.reference.SpreadsheetCellRange}.
      */
     SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection);
-
-    /**
-     * Returns the {@link SpreadsheetMetadata} for the enclosing spreadsheet.
-     */
-    @Override
-    SpreadsheetMetadata spreadsheetMetadata();
 
     /**
      * Returns the base server url, which can then be used to create links to cells and more.
