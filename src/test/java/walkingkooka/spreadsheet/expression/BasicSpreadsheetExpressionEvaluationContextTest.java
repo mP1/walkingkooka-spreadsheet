@@ -246,14 +246,14 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
-    // parseExpression.....................................................................................................
+    // parseFormula.....................................................................................................
 
     @Test
-    public void testParseExpressionQuotedString() {
+    public void testParseFormulaQuotedString() {
         final String text = "abc123";
         final String expression = '"' + text + '"';
 
-        this.parseExpressionAndCheck(
+        this.parseFormulaAndCheck(
                 expression,
                 SpreadsheetParserToken.text(
                         Lists.of(
@@ -267,10 +267,10 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
-    public void testParseExpressionNumber() {
+    public void testParseFormulaNumber() {
         final String text = "123";
 
-        this.parseExpressionAndCheck(
+        this.parseFormulaAndCheck(
                 text,
                 SpreadsheetParserToken.number(
                         Lists.of(
@@ -284,10 +284,10 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private final static char DECIMAL = '.';
 
     @Test
-    public void testParseExpressionNumber2() {
+    public void testParseFormulaNumber2() {
         final String text = "1" + DECIMAL + "5";
 
-        this.parseExpressionAndCheck(
+        this.parseFormulaAndCheck(
                 text,
                 SpreadsheetParserToken.number(
                         Lists.of(
@@ -301,10 +301,10 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
-    public void testParseExpressionAdditionExpression() {
+    public void testParseFormulaAdditionExpression() {
         final String text = "1+2";
 
-        this.parseExpressionAndCheck(
+        this.parseFormulaAndCheck(
                 text,
                 SpreadsheetParserToken.addition(
                         Lists.of(

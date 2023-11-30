@@ -34,28 +34,32 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     // parseExpression......................................................................................................
 
     @Test
-    default void testParseExpressionNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createContext().parseExpression(null));
+    default void testParseFormulaNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .parseFormula(null)
+        );
     }
 
-    default void parseExpressionAndCheck(final String expression,
-                                         final SpreadsheetParserToken expected) {
-        this.parseExpressionAndCheck(
+    default void parseFormulaAndCheck(final String formula,
+                                      final SpreadsheetParserToken expected) {
+        this.parseFormulaAndCheck(
                 this.createContext(),
-                expression,
+                formula,
                 expected
         );
     }
 
-    default void parseExpressionAndCheck(final SpreadsheetExpressionEvaluationContext context,
-                                         final String expression,
-                                         final SpreadsheetParserToken expected) {
+    default void parseFormulaAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                      final String formula,
+                                      final SpreadsheetParserToken expected) {
         this.checkEquals(
                 expected,
-                context.parseExpression(
-                        TextCursors.charSequence(expression)
+                context.parseFormula(
+                        TextCursors.charSequence(formula)
                 ),
-                () -> "parseExpression " + expression + " with context " + context);
+                () -> "parseFormula " + formula + " with context " + context);
     }
 
     // loadCell.........................................................................................................

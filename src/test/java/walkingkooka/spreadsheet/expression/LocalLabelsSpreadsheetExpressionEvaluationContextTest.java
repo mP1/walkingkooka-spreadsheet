@@ -121,7 +121,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Override
-    public void testParseExpressionNullFails() {
+    public void testParseFormulaNullFails() {
         throw new UnsupportedOperationException();
     }
 

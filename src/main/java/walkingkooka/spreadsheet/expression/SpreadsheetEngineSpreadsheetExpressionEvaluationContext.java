@@ -333,7 +333,7 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
     }
 
     @Override
-    public SpreadsheetParserToken parseExpression(final TextCursor formula) {
+    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
         return this.context.parseFormula(formula);
     }
 
