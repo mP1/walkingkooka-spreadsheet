@@ -122,9 +122,8 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         Store.checkFromAndToIds(from, count);
 
         return this.mappings.tailMap(from)
-                .entrySet()
+                .values()
                 .stream()
-                .map(Map.Entry::getValue)
                 .limit(count)
                 .collect(Collectors.toCollection(Lists::array));
     }
