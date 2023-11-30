@@ -90,7 +90,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
 
     default SpreadsheetCell cellOrFail() {
         return this.cell()
-                .orElseThrow(() -> new IllegalStateException("Required cell missing parse context"));
+                .orElseThrow(() -> new IllegalStateException("Required cell missing from context"));
     }
 
     /**
