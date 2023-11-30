@@ -781,7 +781,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
         this.checkValue(
                 first,
-                this.value
+                value
         );
         this.checkFormattedText(
                 first,
