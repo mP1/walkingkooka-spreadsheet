@@ -53,9 +53,9 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     }
 
     /**
-     * Parses the {@link String expression} into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
+     * Parses the {@link TextCursor formula} into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
      */
-    SpreadsheetParserToken parseExpression(final TextCursor formula);
+    SpreadsheetParserToken parseFormula(final TextCursor formula);
 
     @Override
     default boolean isText(final Object value) {

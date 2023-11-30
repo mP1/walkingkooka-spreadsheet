@@ -171,8 +171,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
-    public SpreadsheetParserToken parseExpression(final TextCursor expression) {
-        return this.context.parseExpression(expression);
+    public SpreadsheetParserToken parseFormula(final TextCursor expression) {
+        return this.context.parseFormula(expression);
     }
 
     @Override

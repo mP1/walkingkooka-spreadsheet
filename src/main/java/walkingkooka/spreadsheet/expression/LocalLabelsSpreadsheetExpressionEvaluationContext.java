@@ -114,8 +114,8 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     @Override
-    public SpreadsheetParserToken parseExpression(final TextCursor cursor) {
-        return this.context.parseExpression(cursor);
+    public SpreadsheetParserToken parseFormula(final TextCursor cursor) {
+        return this.context.parseFormula(cursor);
     }
 
     @Override

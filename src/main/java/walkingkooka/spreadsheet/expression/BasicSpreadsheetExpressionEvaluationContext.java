@@ -140,7 +140,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private final SpreadsheetCellStore cellStore;
 
     @Override
-    public SpreadsheetParserToken parseExpression(final TextCursor expression) {
+    public SpreadsheetParserToken parseFormula(final TextCursor expression) {
         Objects.requireNonNull(expression, "expression");
 
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
