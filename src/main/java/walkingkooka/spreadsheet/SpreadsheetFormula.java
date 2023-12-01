@@ -195,6 +195,9 @@ public final class SpreadsheetFormula implements HasText,
 
     // value .............................................................................................
 
+    /**
+     * The value when this formula is evaluated.
+     */
     public Optional<Object> value() {
         return this.value;
     }
@@ -225,9 +228,6 @@ public final class SpreadsheetFormula implements HasText,
                 );
     }
 
-    /**
-     * The value parsed parse the text form of this formula.
-     */
     private final Optional<Object> value;
 
     private static void checkValue(final Optional<Object> value) {
