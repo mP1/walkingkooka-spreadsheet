@@ -159,11 +159,15 @@ public enum SpreadsheetErrorKind implements HasText {
     public static SpreadsheetError translate(final Throwable cause) {
         Objects.requireNonNull(cause, "cause");
 
+        final SpreadsheetError error;
         if (cause instanceof HasSpreadsheetError) {
-            throw (RuntimeException) cause;
+            final HasSpreadsheetError has = (HasSpreadsheetError) cause;
+            error = has.spreadsheetError();
+        } else {
+            error = translate0(cause);
         }
 
-        return translate0(cause);
+        return error;
     }
 
     private static SpreadsheetError translate0(final Throwable cause) {

@@ -20,11 +20,9 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.HasSpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
@@ -1080,31 +1078,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetCell setError(final Throwable cause,
                                      final SpreadsheetCell cell,
                                      final SpreadsheetEngineContext context) {
-        final SpreadsheetError error;
-        if (cause instanceof HasSpreadsheetError) {
-            final HasSpreadsheetError has = (HasSpreadsheetError) cause;
-            error = has.spreadsheetError();
-        } else {
-            error = SpreadsheetErrorKind.translate(cause);
-        }
-
-
-        return this.setError(
-                error,
-                cell,
-                context
-        );
-    }
-
-    private SpreadsheetCell setError(final SpreadsheetError error,
-                                     final SpreadsheetCell cell,
-                                     final SpreadsheetEngineContext context) {
         return this.formatAndApplyStyle(
                 cell.setFormula(
                         cell.formula()
                                 .setValue(
                                         Optional.of(
-                                                error.replaceWithValueIfPossible(context)
+                                                SpreadsheetErrorKind.translate(cause)
+                                                        .replaceWithValueIfPossible(context)
                                         )
                                 )
                 ),
