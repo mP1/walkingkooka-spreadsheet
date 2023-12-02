@@ -31,10 +31,10 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
@@ -59,9 +59,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
@@ -934,7 +932,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     SpreadsheetCell parseFormulaIfNecessary(final SpreadsheetCell cell,
                                             final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed,
                                             final SpreadsheetEngineContext context) {
-        SpreadsheetCell result = cell;
+        SpreadsheetCell result;
         SpreadsheetFormula formula = cell.formula();
 
         try {
@@ -947,11 +945,21 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 SpreadsheetParserToken token = formula.token()
                         .orElse(null);
                 if (null == token) {
-                    token = parseFormula(
-                            cell,
-                            context,
-                            text
+                    final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+
+                    formula = SpreadsheetFormula.parse(
+                            TextCursors.charSequence(cell.formula().text()),
+                            cell.parsePattern()
+                                    .map(p -> p.parser())
+                                    .orElseGet(() -> SpreadsheetParsers.valueOrExpression(
+                                                    metadata.parser()
+                                            )
+                                    ),
+                            metadata.parserContext(context::now)
                     );
+
+                    token = formula.token()
+                            .orElse(null);
                 }
                 if (null != token) {
                     token = parsed.apply(token);
@@ -970,6 +978,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     formula
             );
 
+            //if error formatAndApplyStyle
+            if (formula.error().isPresent()) {
+                result = this.formatAndApplyStyle(
+                        result,
+                        Optional.empty(), // no formatter
+                        context
+                );
+            }
+
         } catch (final Exception failed) {
             result = this.setError(
                     failed,
@@ -980,6 +997,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return result;
     }
+
     /**
      * This {@link SpreadsheetParserToken} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
      */
@@ -999,36 +1017,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     final static Optional<Expression> EMPTY_EXPRESSION = Optional.of(
             Expression.value("")
     );
-
-    /**
-     * If a {@link SpreadsheetCell#parsePattern()} is present use that to parse the formula text otherwise delegate
-     * to {@link SpreadsheetEngineContext#parseFormula(TextCursor)}.
-     * <br>
-     * This means if a {@link SpreadsheetParsePattern} is present it can only contain a value such as date, number etc
-     * and never an expression.
-     */
-    private SpreadsheetParserToken parseFormula(final SpreadsheetCell cell,
-                                                final SpreadsheetEngineContext context,
-                                                final String text) {
-        final Optional<SpreadsheetParsePattern> maybeParsePattern = cell.parsePattern();
-        final TextCursor textCursor = TextCursors.charSequence(text);
-
-        final SpreadsheetParserToken token;
-        if (maybeParsePattern.isPresent()) {
-            token = maybeParsePattern.get()
-                    .parser()
-                    .orFailIfCursorNotEmpty(ParserReporters.basic())
-                    .parse(
-                            textCursor,
-                            context.spreadsheetMetadata()
-                                    .parserContext(context::now)
-                    ).get()
-                    .cast(SpreadsheetParserToken.class);
-        } else {
-            token = context.parseFormula(textCursor);
-        }
-        return token;
-    }
 
     // EVAL .........................................................................................................
 

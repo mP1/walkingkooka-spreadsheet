@@ -220,7 +220,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static int DEFAULT_YEAR = 1900;
     private final static int TWO_DIGIT_YEAR = 20;
-    private final static char VALUE_SEPARATOR = ';';
+    private final static char VALUE_SEPARATOR = ',';
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.labelName("Label123");
     private final static SpreadsheetCellReference LABEL_CELL = SpreadsheetSelection.parseCell("Z99");
@@ -3370,7 +3370,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedFunction() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=BasicSpreadsheetEngineTestSum(1;99)", number(1 + 99));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=BasicSpreadsheetEngineTestSum(1,99)", number(1 + 99));
     }
 
     @Test
@@ -8670,7 +8670,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsFunction() {
-        this.fillCellsAndCheck("=BasicSpreadsheetEngineTestSum(1;99)", number(1 + 99));
+        this.fillCellsAndCheck("=BasicSpreadsheetEngineTestSum(1,99)", number(1 + 99));
     }
 
     @Test
@@ -12695,7 +12695,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetParserToken token =
                 text.isEmpty() ?
                         null :
-                        SpreadsheetParsers.valueOrExpression(BasicSpreadsheetEngineTest.this.metadata().parser())
+                        SpreadsheetParsers.valueOrExpression(
+                                BasicSpreadsheetEngineTest.this.metadata()
+                                        .parser()
+                                ).orFailIfCursorNotEmpty(ParserReporters.basic())
                                 .parse(TextCursors.charSequence(text),
                                         SpreadsheetParserContexts.basic(
                                                 this.dateTimeContext(),
