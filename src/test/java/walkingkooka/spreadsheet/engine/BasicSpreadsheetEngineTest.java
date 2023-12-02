@@ -360,10 +360,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                context.spreadsheetMetadata()
-                        .expressionNumberKind()
-                        .zero(),
-                " " + FORMATTED_PATTERN_SUFFIX
+                SpreadsheetErrorKind.NAME.setMessageAndValue(
+                        "Cell not found: Z99",
+                        SpreadsheetSelection.parseCell("Z99")
+                ),
+                "#NAME? " + FORMATTED_PATTERN_SUFFIX
         );
     }
 

@@ -1054,7 +1054,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         cell,
                                         context
                                 )
-                        ).replaceErrorWithValueIfPossible(context)
+                        )
                 );
             }
 
@@ -1084,7 +1084,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 .setValue(
                                         Optional.of(
                                                 SpreadsheetErrorKind.translate(cause)
-                                                        .replaceWithValueIfPossible(context)
                                         )
                                 )
                 ),

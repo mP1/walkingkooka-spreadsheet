@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.CharSequences;
@@ -118,19 +117,6 @@ public final class SpreadsheetError implements Value<Optional<?>>,
     }
 
     private final String message;
-
-    /**
-     * Applies some cell formula value transformations such as turning formulas to missing cells should give a value of zero.
-     */
-    public Object replaceWithValueIfPossible(final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(context, "context");
-
-        return this.isMissingCell() ?
-                context.spreadsheetMetadata()
-                        .expressionNumberKind()
-                        .zero() :
-                this;
-    }
 
     @Override
     public Optional<?> value() {

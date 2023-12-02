@@ -23,7 +23,6 @@ import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
@@ -282,27 +281,6 @@ public final class SpreadsheetFormula implements HasText,
 
     private static void checkValue(final Optional<Object> value) {
         Objects.requireNonNull(value, "value");
-    }
-
-    // magic...... ....................................................................................................
-
-    /**
-     * If the value is an error try and convert into a non error value.
-     * <br>
-     * This handles the special case of turning formulas to missing cells parse #NAME to a value of zero.
-     */
-    public SpreadsheetFormula replaceErrorWithValueIfPossible(final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(context, "context");
-
-        final SpreadsheetError error = this.error()
-                .orElse(null);
-        return null == error ?
-                this :
-                this.setValue(
-                        Optional.of(
-                                error.replaceWithValueIfPossible(context)
-                        )
-                );
     }
 
     // clear ....................................................................................................
