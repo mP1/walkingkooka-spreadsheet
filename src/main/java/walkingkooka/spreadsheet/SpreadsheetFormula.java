@@ -24,9 +24,15 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.Expression;
@@ -81,6 +87,32 @@ public final class SpreadsheetFormula implements HasText,
             NO_EXPRESSION,
             NO_VALUE
     );
+
+
+    /**
+     * Uses the provided {@link Parser} to create a {@link SpreadsheetFormula} with the text and parsed {@link SpreadsheetParserToken}.
+     */
+    public static SpreadsheetFormula parse(final TextCursor text,
+                                           final Parser<SpreadsheetParserContext> parser,
+                                           final SpreadsheetParserContext context) {
+        Objects.requireNonNull(text, "text");
+        Objects.requireNonNull(parser, "parser");
+        Objects.requireNonNull(context, "context");
+
+        final TextCursorSavePoint begin = text.save();
+
+        final Optional<ParserToken> token = parser.orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(
+                        text,
+                        context
+                );
+        return EMPTY.setText(
+                begin.textBetween()
+                        .toString()
+        ).setToken(
+                token.map(t -> t.cast(SpreadsheetParserToken.class))
+        );
+    }
 
     private SpreadsheetFormula(final String text,
                                final Optional<SpreadsheetParserToken> token,

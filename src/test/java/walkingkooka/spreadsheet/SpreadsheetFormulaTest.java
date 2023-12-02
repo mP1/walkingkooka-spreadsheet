@@ -21,21 +21,33 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -45,6 +57,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
 
 import java.math.MathContext;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -386,6 +399,182 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkExpressionAbsent(formula);
         this.checkValueAbsent(formula);
         this.checkErrorAbsent(formula);
+    }
+
+    // parse............................................................................................................
+
+    @Test
+    public void testParseNullTextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.parse(
+                        null, // text
+                        Parsers.fake(), // parser
+                        SpreadsheetParserContexts.fake() // context
+                )
+        );
+    }
+
+    @Test
+    public void testParseNullParserFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.parse(
+                        TextCursors.fake(), // text
+                        null, // parser
+                        SpreadsheetParserContexts.fake() // context
+                )
+        );
+    }
+
+    @Test
+    public void testParseNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.parse(
+                        TextCursors.fake(), // text
+                        Parsers.fake(), // parser
+                        null // context
+                )
+        );
+    }
+
+    @Test
+    public void testParseEmpty() {
+        this.parseAndCheck(
+                "",
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                        .parser(),
+                SpreadsheetFormula.EMPTY
+        );
+    }
+
+    @Test
+    public void testParseDateWithDateParsePattern() {
+        final String text = "31/12/1999";
+
+        this.parseAndCheck(
+                text,
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                        .parser(),
+                SpreadsheetFormula.EMPTY.setText(text)
+                        .setToken(
+                                Optional.of(
+                                        SpreadsheetParserToken.date(
+                                                Lists.of(
+                                                        SpreadsheetParserToken.dayNumber(
+                                                                31,
+                                                                "31"
+                                                        ),
+                                                        SpreadsheetParserToken.textLiteral(
+                                                                "/",
+                                                                "/"
+                                                        ),
+                                                        SpreadsheetParserToken.monthNumber(
+                                                                12,
+                                                                "12"
+                                                        ),
+                                                        SpreadsheetParserToken.textLiteral(
+                                                                "/",
+                                                                "/"
+                                                        ),
+                                                        SpreadsheetParserToken.year(
+                                                                1999,
+                                                                "1999"
+                                                        )
+                                                ),
+                                                text
+                                        )
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testParseStringWithValueParser() {
+        final String text = "'Hello";
+
+        this.parseAndCheck(
+                text,
+                SpreadsheetParsers.valueOrExpression(
+                        Parsers.never()
+                ),
+                SpreadsheetFormula.EMPTY.setText(text)
+                        .setToken(
+                                Optional.of(
+                                        SpreadsheetParserToken.text(
+                                                Lists.of(
+                                                        SpreadsheetParserToken.apostropheSymbol(
+                                                                "'",
+                                                                "'"
+                                                        ),
+                                                        SpreadsheetParserToken.textLiteral(
+                                                                "Hello",
+                                                                "Hello"
+                                                        )
+                                                ),
+                                                text
+                                        )
+                                )
+                        )
+        );
+    }
+
+    private void parseAndCheck(final String text,
+                               final Parser<SpreadsheetParserContext> parser,
+                               final SpreadsheetFormula expected) {
+        this.parseAndCheck(
+                text,
+                parser,
+                SpreadsheetParserContexts.basic(
+                        DateTimeContexts.locale(
+                                Locale.forLanguageTag("EN-AU"), // locale
+                                1920,
+                                50,
+                                () -> {
+                                    throw new UnsupportedOperationException("now");
+                                }
+                        ),
+                        ExpressionNumberContexts.basic(
+                                ExpressionNumberKind.BIG_DECIMAL,
+                                DecimalNumberContexts.american(MathContext.DECIMAL32)
+                        ),
+                        ','
+                ),
+                expected
+        );
+    }
+
+    private void parseAndCheck(final String text,
+                               final Parser<SpreadsheetParserContext> parser,
+                               final SpreadsheetParserContext context,
+                               final SpreadsheetFormula expected) {
+        this.parseAndCheck(
+                TextCursors.charSequence(text),
+                parser,
+                context,
+                expected
+        );
+    }
+
+    private void parseAndCheck(final TextCursor text,
+                               final Parser<SpreadsheetParserContext> parser,
+                               final SpreadsheetParserContext context,
+                               final SpreadsheetFormula expected) {
+        final TextCursorSavePoint save = text.save();
+        text.end();
+        final CharSequence textCharSequence = save.textBetween();
+        save.restore();
+
+        this.checkEquals(
+                expected,
+                SpreadsheetFormula.parse(
+                        text,
+                        parser,
+                        context
+                ),
+                () -> "parse " + CharSequences.quoteIfChars(textCharSequence)
+        );
     }
 
     // TreePrintable.....................................................................................................
