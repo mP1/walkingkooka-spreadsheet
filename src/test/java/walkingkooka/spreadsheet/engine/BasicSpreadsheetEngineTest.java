@@ -176,8 +176,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 Converters.simple(),
                                                 SpreadsheetConverters.errorToString()
                                                         .cast(SpreadsheetFormatterContext.class),
-                                                SpreadsheetConverters.errorToNumber()
-                                                        .cast(SpreadsheetFormatterContext.class),
                                                 SpreadsheetConverters.errorThrowing()
                                                         .cast(SpreadsheetFormatterContext.class),
                                                 Converters.localDateLocalDateTime(),
@@ -384,10 +382,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                context.spreadsheetMetadata()
-                        .expressionNumberKind()
-                        .create(2),
-                "2 " + FORMATTED_PATTERN_SUFFIX
+                SpreadsheetErrorKind.NAME.setMessageAndValue(
+                        "Cell not found: Z99",
+                        SpreadsheetSelection.parseCell("Z99")
+                ),
+                "#NAME? " + FORMATTED_PATTERN_SUFFIX
         );
     }
 
@@ -429,6 +428,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("A2");
 
         context.storeRepository()
                 .cells()
@@ -444,8 +444,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                EXPRESSION_NUMBER_KIND.zero(),
-                " " + FORMATTED_PATTERN_SUFFIX
+                SpreadsheetError.selectionNotFound(b2),
+                SpreadsheetErrorKind.NAME +
+                        " " +
+                        FORMATTED_PATTERN_SUFFIX
         );
     }
 
@@ -900,8 +902,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a = this.cellReference("A1");
-        final SpreadsheetCell unsaved = this.cell(a, "=1+$B$2");
+        final SpreadsheetCellReference a1 = this.cellReference("A1");
+        final SpreadsheetCellReference b2 = this.cellReference("$B$2");
+        final SpreadsheetCell unsaved = this.cell(a1, "=1+" + b2);
         final Set<SpreadsheetCell> saved = engine.saveCell(
                         unsaved,
                         context)
@@ -910,7 +913,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.checkEquals(
                 this.formattedCell(
                         unsaved,
-                        EXPRESSION_NUMBER_KIND.one()
+                        SpreadsheetError.selectionNotFound(b2)
                 ),
                 saved.iterator().next()
         );
@@ -921,7 +924,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(this.cell(b, "=99"));
 
         this.loadCellAndCheckValue(engine,
-                a,
+                a1,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 context,
                 number(1 + 99));
@@ -1539,10 +1542,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelStore labelStore = repository.labels();
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
-        final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
+        final SpreadsheetCell a1 = this.cell("a1", "=" + b2 + "+99");
         final SpreadsheetCell a1Formatted = this.formattedCell(
                 a1,
-                this.number(99)
+                SpreadsheetError.selectionNotFound(b2)
         );
 
         this.saveCellAndCheck(
@@ -1569,8 +1573,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadLabelStoreAndCheck(labelStore);
 
         // verify references all ways are present in the store.
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
-
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2.toRelative()); // references parse A1 -> B2
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
 
@@ -2860,7 +2862,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                this.number(1) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
+                                                SpreadsheetError.selectionNotFound(b2Reference) // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
                                         )
                                 )
                         ).setDeletedCells(
