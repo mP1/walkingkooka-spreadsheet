@@ -371,21 +371,21 @@ public final class SpreadsheetFormula implements HasText,
                     this.expression(),
                     printer
             );
+        }
 
-            final Optional<Object> possibleValue = this.value();
-            if (possibleValue.isPresent()) {
-                final Object value = possibleValue.get();
+        final Optional<Object> possibleValue = this.value();
+        if (possibleValue.isPresent()) {
+            final Object value = possibleValue.get();
 
-                printer.print("value: ");
-                if (value instanceof TreePrintable) {
+            printer.print("value: ");
+            if (value instanceof TreePrintable) {
 
-                    final TreePrintable treePrintable = Cast.to(value);
-                    printer.indent();
-                    treePrintable.printTree(printer);
-                    printer.outdent();
-                } else {
-                    printer.println(CharSequences.quoteIfChars(value) + " (" + value.getClass().getName() + ")");
-                }
+                final TreePrintable treePrintable = Cast.to(value);
+                printer.indent();
+                treePrintable.printTree(printer);
+                printer.outdent();
+            } else {
+                printer.println(CharSequences.quoteIfChars(value) + " (" + value.getClass().getName() + ")");
             }
         }
 

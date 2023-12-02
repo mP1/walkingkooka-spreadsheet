@@ -681,6 +681,37 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    @Test
+    public void testTreePrintTextError() {
+        this.treePrintAndCheck(
+                formula("=123/0")
+                        .setValue(
+                                Optional.of(
+                                        SpreadsheetErrorKind.DIV0.toError()
+                                )
+                        ),
+                "Formula\n" +
+                        "  text: \"=123/0\"\n" +
+                        "  value: #DIV/0!\n"
+        );
+    }
+
+    public void testTreePrintError() {
+        this.treePrintAndCheck(
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(
+                                SpreadsheetErrorKind.DIV0.toError()
+                        )
+                ),
+                "Formula\n" +
+                        "  token:\n" +
+                        "    SpreadsheetText \"1+2\"\n" +
+                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
+                        "  expression:\n" +
+                        "    ValueExpression \"1+2\" (java.lang.String)\n"
+        );
+    }
+
     // equals.......................................................................................................
 
     @Test
