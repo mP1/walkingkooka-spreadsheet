@@ -696,6 +696,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    @Test
     public void testTreePrintError() {
         this.treePrintAndCheck(
                 SpreadsheetFormula.EMPTY.setValue(
@@ -704,11 +705,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         )
                 ),
                 "Formula\n" +
-                        "  token:\n" +
-                        "    SpreadsheetText \"1+2\"\n" +
-                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\" (java.lang.String)\n" +
-                        "  expression:\n" +
-                        "    ValueExpression \"1+2\" (java.lang.String)\n"
+                        "  text: \"\"\n" +
+                        "  value: #DIV/0!\n"
         );
     }
 
