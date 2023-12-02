@@ -91,6 +91,7 @@ public final class SpreadsheetFormula implements HasText,
 
     /**
      * Uses the provided {@link Parser} to create a {@link SpreadsheetFormula} with the text and parsed {@link SpreadsheetParserToken}.
+     * If the formula expression is invalid, a {@link SpreadsheetFormula} will be created with its value set to {@link SpreadsheetError}.
      */
     public static SpreadsheetFormula parse(final TextCursor text,
                                            final Parser<SpreadsheetParserContext> parser,
@@ -100,18 +101,35 @@ public final class SpreadsheetFormula implements HasText,
         Objects.requireNonNull(context, "context");
 
         final TextCursorSavePoint begin = text.save();
+        SpreadsheetFormula formula;
 
-        final Optional<ParserToken> token = parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        text,
-                        context
-                );
-        return EMPTY.setText(
-                begin.textBetween()
-                        .toString()
-        ).setToken(
-                token.map(t -> t.cast(SpreadsheetParserToken.class))
-        );
+        try {
+            final Optional<ParserToken> token = parser.orFailIfCursorNotEmpty(ParserReporters.basic())
+                    .parse(
+                            text,
+                            context
+                    );
+            formula = EMPTY.setText(
+                    begin.textBetween()
+                            .toString()
+            ).setToken(
+                    token.map(t -> t.cast(SpreadsheetParserToken.class))
+            );
+        } catch (final Exception cause) {
+            text.end();
+
+            formula = EMPTY.setText(
+                    begin.textBetween()
+                            .toString()
+            ).setValue(
+                    Optional.of(
+                            SpreadsheetErrorKind.translate(cause)
+                    )
+            );
+        }
+        ;
+
+        return formula;
     }
 
     private SpreadsheetFormula(final String text,

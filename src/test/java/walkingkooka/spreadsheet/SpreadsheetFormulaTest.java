@@ -450,6 +450,21 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
+    public void testParseUnparseableFormulaExpression() {
+        this.parseAndCheck(
+                "@",
+                SpreadsheetPattern.parseDateParsePattern("dd/mmm/yyyy")
+                        .parser(),
+                SpreadsheetFormula.EMPTY.setText("@")
+                        .setValue(
+                                Optional.of(
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at (1,1) \"@\" expected \"dd/mmm/yyyy\"")
+                                )
+                        )
+        );
+    }
+
+    @Test
     public void testParseDateWithDateParsePattern() {
         final String text = "31/12/1999";
 
