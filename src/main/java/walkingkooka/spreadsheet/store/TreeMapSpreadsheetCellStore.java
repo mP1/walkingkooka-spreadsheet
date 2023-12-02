@@ -215,16 +215,19 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     @Override
     public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
-                                                       final String valueTypeName) {
+                                                       final String valueTypeName,
+                                                       final int max) {
         SpreadsheetCellStore.checkFindCellsWithValueType(
                 range,
-                valueTypeName
+                valueTypeName,
+                max
         );
 
         return this.valueTypeStream(
-                range,
-                valueTypeName
-        ).collect(Collectors.toCollection(Sets::sorted));
+                        range,
+                        valueTypeName
+                ).limit(max)
+                .collect(Collectors.toCollection(Sets::sorted));
     }
 
     @Override
