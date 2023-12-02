@@ -113,9 +113,13 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     double maxRowHeight(final SpreadsheetRowReference row);
 
     static void checkFindCellsWithValueType(final SpreadsheetCellRange range,
-                                            final String valueTypeName) {
+                                            final String valueTypeName,
+                                            final int max) {
         Objects.requireNonNull(range, "range");
         CharSequences.failIfNullOrEmpty(valueTypeName, "valueTypeName");
+        if (max < 0) {
+            throw new IllegalArgumentException("Invalid max " + max + " < 0");
+        }
     }
 
     /**
@@ -123,7 +127,8 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
      */
     Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
-                                                final String valueTypeName);
+                                                final String valueTypeName,
+                                                final int max);
 
     static void checkCountCellsWithValueType(final SpreadsheetCellRange range,
                                              final String valueTypeName) {

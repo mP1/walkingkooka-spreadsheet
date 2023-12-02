@@ -72,7 +72,8 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
 
     @Override
     public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
-                                                       final String valueType) {
+                                                       final String valueType,
+                                                       final int max) {
         throw new UnsupportedOperationException();
     }
 

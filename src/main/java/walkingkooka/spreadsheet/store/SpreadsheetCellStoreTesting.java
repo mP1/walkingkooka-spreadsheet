@@ -119,7 +119,8 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                 NullPointerException.class,
                 () -> this.createStore().findCellsWithValueType(
                         null,
-                        SpreadsheetValueType.TEXT
+                        SpreadsheetValueType.TEXT,
+                        1
                 )
         );
     }
@@ -130,19 +131,44 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                 NullPointerException.class,
                 () -> this.createStore().findCellsWithValueType(
                         SpreadsheetSelection.ALL_CELLS,
-                        null
+                        null,
+                        1
                 )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithValueTypeWithNegativeMaxFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore().findCellsWithValueType(
+                        SpreadsheetSelection.ALL_CELLS,
+                        SpreadsheetValueType.TEXT,
+                        -1
+                )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithValueTypeWithZero() {
+        this.findCellsWithValueTypeAndCheck(
+                this.createStore(),
+                SpreadsheetSelection.ALL_CELLS,
+                SpreadsheetValueType.TEXT,
+                0
         );
     }
 
     default void findCellsWithValueTypeAndCheck(final S store,
                                                 final SpreadsheetCellRange cellRange,
                                                 final String valueTypeName,
+                                                final int max,
                                                 final SpreadsheetCell... expected) {
         this.findCellsWithValueTypeAndCheck(
                 store,
                 cellRange,
                 valueTypeName,
+                max,
                 Sets.of(expected)
         );
     }
@@ -150,14 +176,16 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     default void findCellsWithValueTypeAndCheck(final S store,
                                                 final SpreadsheetCellRange cellRange,
                                                 final String valueTypeName,
+                                                final int max,
                                                 final Set<SpreadsheetCell> expected) {
         this.checkEquals(
                 expected,
                 store.findCellsWithValueType(
                         cellRange,
-                        valueTypeName
+                        valueTypeName,
+                        max
                 ),
-                () -> "findCellsWithValueType " + cellRange + " " + valueTypeName
+                () -> "findCellsWithValueType " + cellRange + " " + valueTypeName + " max=" + max
         );
     }
 

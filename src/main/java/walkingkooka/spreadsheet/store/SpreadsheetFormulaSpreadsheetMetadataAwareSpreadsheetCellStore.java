@@ -245,11 +245,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     @Override
     public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
-                                                       final String valueType) {
+                                                       final String valueType,
+                                                       final int max) {
         return this.fixFormulaTextSet(
                 this.store.findCellsWithValueType(
                         range,
-                        valueType
+                        valueType,
+                        max
                 )
         );
     }
