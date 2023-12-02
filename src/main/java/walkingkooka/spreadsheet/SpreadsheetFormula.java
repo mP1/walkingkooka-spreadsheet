@@ -252,14 +252,13 @@ public final class SpreadsheetFormula implements HasText,
     }
 
     /**
-     * Only returns an error if one is present and ignores any value.
+     * Only returns an {@link SpreadsheetError} if one is present and ignores any non error value.
      */
     public Optional<SpreadsheetError> error() {
         final Optional<Object> value = this.value();
 
-        final Object maybeValue = this.value()
-                .orElse(null);
-        return maybeValue instanceof SpreadsheetError ?
+        return value.orElse(null)
+                instanceof SpreadsheetError ?
                 Cast.to(value) :
                 SpreadsheetFormula.NO_ERROR;
     }
