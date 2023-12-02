@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -217,13 +218,14 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     @Test
-    public void testConvertSpreadsheetErrorMissingCellToNumber() {
-        this.convertAndCheck(
+    public void testConvertSpreadsheetErrorMissingCellToNumberFails() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
+
+        this.convertFails(
                 SpreadsheetError.selectionNotFound(
-                        SpreadsheetSelection.parseCell("Z99")
+                        cell
                 ),
-                ExpressionNumber.class,
-                EXPRESSION_NUMBER_KIND.zero()
+                ExpressionNumber.class
         );
     }
 
@@ -257,7 +259,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean | SpreadsheetError->Number RESOLVE_IF_LABEL locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean RESOLVE_IF_LABEL locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
         );
     }
 
@@ -337,12 +339,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
-                Converters.collection(
-                        Lists.of(
-                                Converters.truthyNumberBoolean(),
-                                SpreadsheetConverters.errorToNumber()
-                        )
-                ),
+                Converters.truthyNumberBoolean(),
                 RESOLVE_IF_LABEL,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
