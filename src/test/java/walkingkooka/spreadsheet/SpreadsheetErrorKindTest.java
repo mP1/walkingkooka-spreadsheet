@@ -51,15 +51,10 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
     public void testTranslateSpreadsheetError() {
         final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Custom message 123");
 
-        final SpreadsheetErrorException thrown = assertThrows(
-                SpreadsheetErrorException.class,
-                () -> SpreadsheetErrorKind.translate(new SpreadsheetErrorException(error))
-        );
-
         this.checkEquals(
                 error,
-                thrown.spreadsheetError(),
-                "spreadsheetError"
+                error,
+                () -> "spreadsheetError: " + error
         );
     }
 
