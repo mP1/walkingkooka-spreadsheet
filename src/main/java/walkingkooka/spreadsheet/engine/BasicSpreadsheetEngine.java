@@ -936,42 +936,39 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetFormula formula = cell.formula();
 
         try {
-            final String text = formula.text();
-            if (text.isEmpty()) {
-                formula = formula.setToken(EMPTY_TOKEN)
-                        .setExpression(EMPTY_EXPRESSION); // will evaluate to empty string
-            } else {
-                // if a token is NOT present parse the formula text
-                SpreadsheetParserToken token = formula.token()
+            // if a token is NOT present parse the formula text
+            SpreadsheetParserToken token = formula.token()
+                    .orElse(null);
+            if (null == token) {
+                final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+
+                formula = SpreadsheetFormula.parse(
+                        TextCursors.charSequence(
+                                cell.formula()
+                                        .text()
+                        ),
+                        cell.parsePattern()
+                                .map(p -> p.parser())
+                                .orElseGet(() -> SpreadsheetParsers.valueOrExpression(
+                                                metadata.parser()
+                                        )
+                                ),
+                        metadata.parserContext(context::now)
+                );
+
+                token = formula.token()
                         .orElse(null);
-                if (null == token) {
-                    final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
-
-                    formula = SpreadsheetFormula.parse(
-                            TextCursors.charSequence(cell.formula().text()),
-                            cell.parsePattern()
-                                    .map(p -> p.parser())
-                                    .orElseGet(() -> SpreadsheetParsers.valueOrExpression(
-                                                    metadata.parser()
-                                            )
-                                    ),
-                            metadata.parserContext(context::now)
-                    );
-
-                    token = formula.token()
-                            .orElse(null);
-                }
-                if (null != token) {
-                    token = parsed.apply(token);
-                    formula = formula.setText(token.text())
-                            .setToken(Optional.of(token));
-                }
-                // if expression is absent, convert token into expression
-                if (null != token && false == formula.expression().isPresent()) {
-                    formula = formula.setExpression(
-                            context.toExpression(token)
-                    );
-                }
+            }
+            if (null != token) {
+                token = parsed.apply(token);
+                formula = formula.setText(token.text())
+                        .setToken(Optional.of(token));
+            }
+            // if expression is absent, convert token into expression
+            if (null != token && false == formula.expression().isPresent()) {
+                formula = formula.setExpression(
+                        context.toExpression(token)
+                );
             }
 
             result = cell.setFormula(
@@ -997,26 +994,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return result;
     }
-
-    /**
-     * This {@link SpreadsheetParserToken} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
-     */
-    // VisibleForTesting
-    final static Optional<SpreadsheetParserToken> EMPTY_TOKEN = Optional.of(
-            SpreadsheetParserToken.text(
-                    Lists.<ParserToken>of( // J2clTranspiler: Error:BasicSpreadsheetEngine.java:386: The method of(H...) of type Lists is not applicable as the formal varargs element type H is not accessible here
-                            SpreadsheetParserToken.textLiteral("", "")
-                    ),
-                    "")
-    );
-
-    /**
-     * This {@link Expression} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
-     */
-    // VisibleForTesting
-    final static Optional<Expression> EMPTY_EXPRESSION = Optional.of(
-            Expression.value("")
-    );
 
     // EVAL .........................................................................................................
 
@@ -1124,28 +1101,29 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                 final SpreadsheetEngineContext context) {
         final SpreadsheetFormula formula = cell
                 .formula();
-        final Object value = formula.value()
-                .orElse("");
+        final Optional<Object> value = formula.value();
 
-        return this.locateAndApplyConditionalFormattingRule(
-                cell.setFormatted(
-                        Optional.of(
-                                context.format(
-                                                value,
-                                                formatter.orElse(
-                                                        context.spreadsheetMetadata()
-                                                                .formatter()
+        return value.isPresent() ?
+                this.locateAndApplyConditionalFormattingRule(
+                        cell.setFormatted(
+                                Optional.of(
+                                        context.format(
+                                                        value.get(),
+                                                        formatter.orElse(
+                                                                context.spreadsheetMetadata()
+                                                                        .formatter()
+                                                        )
                                                 )
-                                        )
-                                        .map(
-                                                f -> cell.style()
-                                                        .replace(f.toTextNode())
-                                        )
-                                        .orElse(EMPTY_TEXT_NODE)
-                        )
-                ),
-                context
-        );
+                                                .map(
+                                                        f -> cell.style()
+                                                                .replace(f.toTextNode())
+                                                )
+                                                .orElse(EMPTY_TEXT_NODE)
+                                )
+                        ),
+                        context
+                ) :
+                cell;
     }
 
     private final static TextNode EMPTY_TEXT_NODE = TextNode.text("");
