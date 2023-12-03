@@ -126,7 +126,6 @@ public final class SpreadsheetFormula implements HasText,
                     )
             );
         }
-        ;
 
         return formula;
     }
