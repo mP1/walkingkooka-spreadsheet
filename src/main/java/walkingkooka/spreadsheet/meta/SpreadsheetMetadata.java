@@ -702,8 +702,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
                                                               final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final int characterWidth = components.getOrNull(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH);
-        final int generalNumberFormatDigitCount = components.getOrNull(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
+        final Integer characterWidth = components.getOrNull(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH);
+        final Integer generalNumberFormatDigitCount = components.getOrNull(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
 
         components.reportIfMissing();
 
