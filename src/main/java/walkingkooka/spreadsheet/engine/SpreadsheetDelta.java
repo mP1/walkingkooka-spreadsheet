@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
@@ -2174,6 +2175,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     static {
         // force static initializers to run, preventing Json type name lookup failures.
         SpreadsheetViewport.SEPARATOR.toString();
+        SpreadsheetFunctionName.with("forceJsonRegister");
 
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetDelta.class),
