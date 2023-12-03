@@ -1346,7 +1346,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "");
-        final SpreadsheetCell a1Formatted = this.formattedCell(a1, "");
+        final SpreadsheetCell a1Formatted = this.formattedCell(a1);
         this.saveCellAndCheck(
                 engine,
                 a1,
@@ -1381,7 +1381,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "");
-        final SpreadsheetCell a1Formatted = this.formattedCell(a1, "");
+        final SpreadsheetCell a1Formatted = this.formattedCell(a1);
         this.saveCellAndCheck(
                 engine,
                 a1,
@@ -6479,7 +6479,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("C1", "", "")
+                                        this.formattedCell("C1", "")
                                 )
                         ).setColumns(
                                 Sets.of(c)
@@ -6531,7 +6531,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("C1", "", "")
+                                        this.formattedCell(
+                                                "C1",
+                                                ""
+                                        )
                                 )
                         ).setRows(
                                 Sets.of(row2)
@@ -7240,7 +7243,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("A2", "", "")
+                                        this.formattedCell("A2", "")
                                 )
                         ).setColumns(
                                 Sets.of(a)
@@ -7295,7 +7298,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("A2", "", "")
+                                        this.formattedCell("A2", "")
                                 )
                         ).setRows(
                                 Sets.of(row2)
@@ -9194,7 +9197,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formattedCell(
-                                                this.cell(c3, ""),
+                                                c3,
                                                 ""
                                         )
                                 )
@@ -9250,7 +9253,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formattedCell(
-                                                this.cell(c3, ""),
+                                                c3,
                                                 ""
                                         )
                                 )
@@ -12636,6 +12639,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetCell formattedCell(final String reference,
+                                          final String formulaText) {
+        return this.formattedCell(
+                SpreadsheetSelection.parseCell(reference),
+                formulaText
+        );
+    }
+
+    private SpreadsheetCell formattedCell(final SpreadsheetCellReference reference,
+                                          final String formulaText) {
+        return this.formattedCell(
+                this.cell(reference, formulaText),
+                Optional.empty(),
+                style()
+        );
+    }
+
+    private SpreadsheetCell formattedCell(final String reference,
                                           final String formulaText,
                                           final Object value) {
         return this.formattedCell(
@@ -12658,11 +12678,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      * Makes a {@link SpreadsheetCell} updating the formula expression and expected value and then formats the cell adding styling etc,
      * mimicking the very actions that happen during evaluation.
      */
+    private SpreadsheetCell formattedCell(final SpreadsheetCell cell) {
+        return this.formattedCell(
+                cell,
+                Optional.empty(),
+                this.style()
+        );
+    }
+
     private SpreadsheetCell formattedCell(final SpreadsheetCell cell,
                                           final Object value) {
         return this.formattedCell(
                 cell,
-                value,
+                Optional.of(value),
                 this.style()
         );
     }
@@ -12670,19 +12698,42 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetCell formattedCell(final SpreadsheetCell cell,
                                           final Object value,
                                           final TextStyle style) {
-        final SpreadsheetText formattedText = this.metadata()
-                .formatter()
-                .format(value, SPREADSHEET_TEXT_FORMAT_CONTEXT)
-                .orElseThrow(() -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value)));
-        final Optional<TextNode> formattedCell = Optional.of(
-                style.replace(formattedText.toTextNode())
-                        .root()
+        return this.formattedCell(
+                cell,
+                Optional.of(value),
+                style
+        );
+    }
+
+    private SpreadsheetCell formattedCell(final SpreadsheetCell cell,
+                                          final Optional<Object> value,
+                                          final TextStyle style) {
+        SpreadsheetCell result = cell.setFormula(
+                this.parseFormula(
+                        cell.formula()
+                ).setValue(value)
         );
 
-        return cell.setFormula(
-                        this.parseFormula(cell.formula()
-                        ).setValue(Optional.of(value)))
-                .setFormatted(formattedCell);
+        if (value.isPresent()) {
+            final SpreadsheetText formattedText = this.metadata()
+                    .formatter()
+                    .format(
+                            value.get(),
+                            SPREADSHEET_TEXT_FORMAT_CONTEXT
+                    ).orElseThrow(
+                            () -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value.get()))
+                    );
+
+            result = result.setFormatted(
+                    Optional.of(
+                            style.replace(
+                                    formattedText.toTextNode()
+                            ).root()
+                    )
+            );
+        }
+
+        return result;
     }
 
     /**
@@ -12711,10 +12762,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 ).orElseThrow(() -> new AssertionError("Failed to parseFormula " + CharSequences.quote(text)))
                                 .cast(SpreadsheetParserToken.class);
         SpreadsheetFormula parsedFormula = formula;
-        if (null == token) {
-            parsedFormula = formula.setToken(BasicSpreadsheetEngine.EMPTY_TOKEN)
-                    .setExpression(BasicSpreadsheetEngine.EMPTY_EXPRESSION);
-        } else {
+        if (null != token) {
             parsedFormula = parsedFormula.setToken(Optional.of(token));
 
             try {
