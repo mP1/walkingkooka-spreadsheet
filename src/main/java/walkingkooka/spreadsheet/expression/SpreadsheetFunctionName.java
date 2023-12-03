@@ -28,7 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
- * The {@link Name} of a expression.
+ * The {@link Name} of a function within a spreadsheet formula expression.
  */
 final public class SpreadsheetFunctionName implements Name, Comparable<SpreadsheetFunctionName> {
 
