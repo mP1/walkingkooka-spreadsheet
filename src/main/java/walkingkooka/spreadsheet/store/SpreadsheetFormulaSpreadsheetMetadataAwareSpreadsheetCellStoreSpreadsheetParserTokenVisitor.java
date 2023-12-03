@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExpressionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionNameParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetFunctionParametersParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanParserToken;
@@ -201,6 +202,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void endVisit(final SpreadsheetExpressionParserToken token) {
         this.exit(token, SpreadsheetParserToken::expression);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFunctionParametersParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFunctionParametersParserToken token) {
+        this.exit(token, SpreadsheetParserToken::functionParameters);
     }
 
     @Override
