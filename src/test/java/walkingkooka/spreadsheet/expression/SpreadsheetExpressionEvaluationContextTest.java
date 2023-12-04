@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetExpressionEvaluationContextTest implements ClassTesting<SpreadsheetExpressionEvaluationContext> {
 
     @Test
-    public void testResolveOrFailPresentNotNull() {
+    public void testReferenceOrFailPresentNotNull() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final Object value = "abc123";
 
@@ -52,7 +52,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void testResolveOrFailPresentNull() {
+    public void testReferenceOrFailPresentNull() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         this.referenceOrFailAndCheck(
@@ -71,7 +71,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void testResolveOrFailAbsent() {
+    public void testReferenceOrFailAbsent() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         this.referenceOrFailAndCheck(
