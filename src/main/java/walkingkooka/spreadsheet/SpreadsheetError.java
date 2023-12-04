@@ -61,7 +61,7 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         Objects.requireNonNull(reference, "reference");
 
         return SpreadsheetErrorKind.NAME.setMessageAndValue(
-                reference.notFound(),
+                reference.notFoundText(),
                 reference
         );
     }

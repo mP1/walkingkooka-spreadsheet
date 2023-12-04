@@ -40,7 +40,7 @@ public interface SpreadsheetStore<K, V> extends Store<K, V> {
      */
     default LoadStoreException notFound(final SpreadsheetExpressionReference reference) {
         return new SpreadsheetExpressionReferenceLoadStoreException(
-                reference.notFound(),
+                reference.notFoundText(),
                 reference
         );
     }
