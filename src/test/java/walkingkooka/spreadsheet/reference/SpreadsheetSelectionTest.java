@@ -1197,13 +1197,13 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // notFound.........................................................................................................
+    // notFoundText.....................................................................................................
 
     @Test
-    public void testNotFound() {
+    public void testNotFoundText() {
         this.checkEquals(
                 "Cell not found: Z99",
-                SpreadsheetSelection.parseCell("Z99").notFound()
+                SpreadsheetSelection.parseCell("Z99").notFoundText()
         );
     }
 

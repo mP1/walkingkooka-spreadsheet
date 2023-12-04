@@ -1094,7 +1094,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * Constructs a human pretty message that a {@link SpreadsheetSelection} could not be found.
      * This can then be used to report load failures etc.
      */
-    public final String notFound() {
+    public final String notFoundText() {
         return this.textLabel() + " not found: " + this;
     }
 

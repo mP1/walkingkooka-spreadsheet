@@ -98,7 +98,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
             final String text;
             if (r instanceof SpreadsheetSelection) {
                 final SpreadsheetSelection selection = (SpreadsheetSelection) r;
-                text = selection.notFound();
+                text = selection.notFoundText();
             } else {
                 text = "Unknown reference: " + r.toString();
             }
