@@ -161,8 +161,13 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
         this.converter = ERROR;
     }
 
-    private final static Converter<SpreadsheetConverterContext> ERROR = SpreadsheetConverters.errorThrowing()
-                            .cast(SpreadsheetConverterContext.class);
+    private final static Converter<SpreadsheetConverterContext> ERROR = Converters.collection(
+            Lists.of(
+                    SpreadsheetConverters.errorToNumber(),
+                    SpreadsheetConverters.errorThrowing()
+                            .cast(SpreadsheetConverterContext.class)
+            )
+    );
 
     @Override
     protected void visit(final SpreadsheetLabelName value) {
