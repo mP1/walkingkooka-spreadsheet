@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -60,7 +59,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.Length;
@@ -1019,7 +1017,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         cell,
                                         context
                                 )
-                        )
+                        ).replaceErrorWithValueIfPossible(context)
                 );
             }
 
@@ -1049,6 +1047,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 .setValue(
                                         Optional.of(
                                                 SpreadsheetErrorKind.translate(cause)
+                                                        .replaceWithValueIfPossible(context)
                                         )
                                 )
                 ),

@@ -59,6 +59,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetErrorToNumberConverter}
+     */
+    public static Converter<SpreadsheetConverterContext> errorToNumber() {
+        return SpreadsheetErrorToNumberConverter.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetErrorToStringConverter}
      */
     public static Converter<ConverterContext> errorToString() {
