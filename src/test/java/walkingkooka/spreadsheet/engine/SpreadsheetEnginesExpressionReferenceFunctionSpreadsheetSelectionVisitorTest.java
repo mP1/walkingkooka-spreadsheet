@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -312,8 +313,12 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
                         Optional.of(
                                 Lists.of(
                                         b2Value, // B2
-                                        null, // B3
-                                        null, // C2
+                                        SpreadsheetError.selectionNotFound(
+                                                SpreadsheetSelection.parseCell("C2")
+                                        ), // C2
+                                        SpreadsheetError.selectionNotFound(
+                                                SpreadsheetSelection.parseCell("B3")
+                                        ), // B3
                                         c3Value // C3
                                 )
                         )

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -111,8 +112,16 @@ final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVis
         return delta.cell(reference)
                 .map(c -> c.formula()
                         .value()
-                        .orElse(null)
-                ).orElse(null);
+                        .orElseGet(
+                                () -> this.missingCellReference(reference)
+                        )
+                ).orElseGet(
+                        () -> this.missingCellReference(reference)
+                );
+    }
+
+    private SpreadsheetError missingCellReference(final SpreadsheetCellReference reference) {
+        return SpreadsheetError.selectionNotFound(reference);
     }
 
     private Optional<Object> value;
