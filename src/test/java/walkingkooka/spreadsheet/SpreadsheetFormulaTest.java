@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -58,6 +59,7 @@ import walkingkooka.tree.json.patch.PatchableTesting;
 
 import java.math.MathContext;
 import java.util.Locale;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -541,21 +543,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.parseAndCheck(
                 text,
                 parser,
-                SpreadsheetParserContexts.basic(
-                        DateTimeContexts.locale(
-                                Locale.forLanguageTag("EN-AU"), // locale
-                                1920,
-                                50,
-                                () -> {
-                                    throw new UnsupportedOperationException("now");
-                                }
-                        ),
-                        ExpressionNumberContexts.basic(
-                                ExpressionNumberKind.BIG_DECIMAL,
-                                DecimalNumberContexts.american(MathContext.DECIMAL32)
-                        ),
-                        ','
-                ),
+                this.parserContext(),
                 expected
         );
     }
@@ -589,6 +577,135 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         context
                 ),
                 () -> "parse " + CharSequences.quoteIfChars(textCharSequence)
+        );
+    }
+
+    private SpreadsheetParserContext parserContext() {
+        return SpreadsheetParserContexts.basic(
+                DateTimeContexts.locale(
+                        Locale.forLanguageTag("EN-AU"), // locale
+                        1920,
+                        50,
+                        () -> {
+                            throw new UnsupportedOperationException("now");
+                        }
+                ),
+                ExpressionNumberContexts.basic(
+                        ExpressionNumberKind.BIG_DECIMAL,
+                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                ),
+                ','
+        );
+    }
+
+    // acceptCellReferenceOrRanges......................................................................................
+
+    @Test
+    public void testAcceptCellReferenceOrRangesNullConsumerFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.EMPTY.acceptCellOrRanges(null)
+        );
+    }
+
+    @Test
+    public void testAcceptCellOrRangesAbsent() {
+        this.acceptCellOrRangesAndCheck(
+                SpreadsheetFormula.EMPTY
+        );
+    }
+
+    @Test
+    public void testAcceptCellOrRangesWithout() {
+        this.acceptCellOrRangesAndCheck(
+                "=1+2"
+        );
+    }
+
+    @Test
+    public void testAcceptCellOrRangesIgnoresLabel() {
+        this.acceptCellOrRangesAndCheck(
+                "=1+Label123"
+        );
+    }
+
+    @Test
+    public void testAcceptCellOrRangesWithCell() {
+        this.acceptCellOrRangesAndCheck(
+                "=1+A1",
+                SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testAcceptCellOrRangesWithCell2() {
+        this.acceptCellOrRangesAndCheck(
+                "=1+A1+B2",
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testAcceptCellOrRangesWithCellRange() {
+        this.acceptCellOrRangesAndCheck(
+                "=1+A1:B2",
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testAcceptCellOrRangesWithCellRange2() {
+        this.acceptCellOrRangesAndCheck(
+                "=1+A1:B2+C3:D4",
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.parseCell("B2"),
+                SpreadsheetSelection.parseCellRange("C3:D4"),
+                SpreadsheetSelection.parseCell("C3"),
+                SpreadsheetSelection.parseCell("D4")
+        );
+    }
+
+    @Test
+    public void testAcceptCellOrRangesWithCellRange3() {
+        this.acceptCellOrRangesAndCheck(
+                "=1+A1:B2+C3",
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseCell("A1"),
+                SpreadsheetSelection.parseCell("B2"),
+                SpreadsheetSelection.parseCell("C3")
+        );
+    }
+
+    private void acceptCellOrRangesAndCheck(final String formula,
+                                            final SpreadsheetCellReferenceOrRange... expected) {
+        this.acceptCellOrRangesAndCheck(
+                SpreadsheetFormula.parse(
+                        TextCursors.charSequence(formula),
+                        SpreadsheetParsers.valueOrExpression(
+                                SpreadsheetPattern.parseNumberParsePattern("#")
+                                        .parser()
+                        ),
+                        this.parserContext()
+                ),
+                expected
+        );
+    }
+
+    private void acceptCellOrRangesAndCheck(final SpreadsheetFormula formula,
+                                            final SpreadsheetCellReferenceOrRange... expected) {
+        final List<SpreadsheetCellReferenceOrRange> consumer = Lists.array();
+        formula.acceptCellOrRanges(consumer::add);
+
+        this.checkEquals(
+                Lists.of(
+                        expected
+                ),
+                consumer,
+                () -> formula.toString()
         );
     }
 
