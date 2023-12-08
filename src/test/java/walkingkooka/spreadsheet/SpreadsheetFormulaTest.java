@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -58,9 +59,10 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
 
 import java.math.MathContext;
-import java.util.Locale;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -706,6 +708,106 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 ),
                 consumer,
                 () -> formula.toString()
+        );
+    }
+
+    // replaceCells.....................................................................................................
+
+    @Test
+    public void testReplaceCellReferencesWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.EMPTY.replaceCellsReferences(
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceCellReferencesNoCells() {
+        final SpreadsheetFormula formula = parse("=1+2");
+        assertSame(
+                formula,
+                formula.replaceCellsReferences(
+                        Function.identity()
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceCellReferencesNoCellsAndLabel() {
+        final SpreadsheetFormula formula = parse("=1+Label123");
+
+        assertSame(
+                formula,
+                formula.replaceCellsReferences(
+                        Function.identity()
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceCellReferencesWithCellReference() {
+        this.replaceCellReferencesAndCheck(
+                "=1+A1",
+                (t) -> t.add(1, 1),
+                "=1+B2"
+        );
+    }
+
+    @Test
+    public void testReplaceCellReferencesWithSeveralCellReference() {
+        this.replaceCellReferencesAndCheck(
+                "=1+A1+2+B2",
+                (t) -> t.add(1, 1),
+                "=1+B2+2+C3"
+        );
+    }
+
+    @Test
+    public void testReplaceCellReferencesWithCellRange() {
+        this.replaceCellReferencesAndCheck(
+                "=1+A1:B2",
+                (t) -> t.add(1, 1),
+                "=1+B2:C3"
+        );
+    }
+
+    @Test
+    public void testReplaceCellReferencesWithCellRangeAndCell() {
+        this.replaceCellReferencesAndCheck(
+                "=1+A1:B2+D4",
+                (t) -> t.add(1, 1),
+                "=1+B2:C3+E5"
+        );
+    }
+
+    @Test
+    public void testReplaceCellReferencesWithCellRangeAndCellMixedAbsolutes() {
+        this.replaceCellReferencesAndCheck(
+                "=1+A1:$B$2+$D4",
+                (t) -> t.add(1, 1),
+                "=1+B2:$C$3+$E5"
+        );
+    }
+
+    private void replaceCellReferencesAndCheck(final String formula,
+                                               final Function<SpreadsheetCellReference, SpreadsheetCellReference> mapper,
+                                               final String expected) {
+        this.checkEquals(
+                parse(expected),
+                parse(formula).replaceCellsReferences(mapper),
+                () -> formula
+        );
+    }
+
+    private SpreadsheetFormula parse(final String formula) {
+        return SpreadsheetFormula.parse(
+                TextCursors.charSequence(formula),
+                SpreadsheetParsers.valueOrExpression(
+                        Parsers.never()
+                ),
+                this.parserContext()
         );
     }
 
