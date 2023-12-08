@@ -23,6 +23,7 @@ import walkingkooka.visit.Visiting;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -85,11 +86,11 @@ public final class SpreadsheetDateTimeParserToken extends SpreadsheetParentParse
 
     @Override
     public SpreadsheetDateTimeParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                         final ParserToken token) {
+                                                         final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceFirstIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetDateTimeParserToken.class
         );
     }

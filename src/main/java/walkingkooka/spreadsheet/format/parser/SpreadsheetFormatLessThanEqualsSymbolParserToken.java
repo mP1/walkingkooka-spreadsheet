@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -61,11 +62,11 @@ public final class SpreadsheetFormatLessThanEqualsSymbolParserToken extends Spre
 
     @Override
     public SpreadsheetFormatLessThanEqualsSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                           final ParserToken token) {
+                                                                           final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceFirstIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatLessThanEqualsSymbolParserToken.class
         );
     }

@@ -20,6 +20,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -65,11 +66,11 @@ public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolP
 
     @Override
     public SpreadsheetLabelNameParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                          final ParserToken token) {
+                                                          final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceFirstIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetLabelNameParserToken.class
         );
     }
