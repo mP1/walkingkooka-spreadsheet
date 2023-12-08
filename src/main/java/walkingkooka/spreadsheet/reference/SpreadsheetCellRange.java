@@ -23,6 +23,8 @@ import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 import java.util.Collection;
 import java.util.EnumSet;
@@ -756,6 +758,21 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     boolean testRow0(final SpreadsheetRowReference row) {
         return this.rowRange()
                 .testRow0(row);
+    }
+
+    // HasParserToken...................................................................................................
+
+    @Override
+    public SpreadsheetCellRangeParserToken toParserToken() {
+        return SpreadsheetParserToken.cellRange(
+                Lists.of(
+                        this.begin()
+                                .toParserToken(),
+                        this.end()
+                                .toParserToken()
+                ),
+                this.text()
+        );
     }
 
     // HashCodeEqualsDefined.......................................................................................

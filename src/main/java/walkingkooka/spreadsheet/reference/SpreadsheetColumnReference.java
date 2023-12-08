@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -483,6 +485,16 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     public SpreadsheetColumnReference focused(final SpreadsheetViewportAnchor anchor) {
         this.checkAnchor(anchor);
         return this;
+    }
+
+    // HasParserToken...................................................................................................
+
+    @Override
+    public SpreadsheetColumnReferenceParserToken toParserToken() {
+        return SpreadsheetParserToken.columnReference(
+                this,
+                this.text()
+        );
     }
 
     // Object...........................................................................................................

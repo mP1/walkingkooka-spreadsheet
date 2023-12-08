@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
@@ -27,6 +28,8 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -1718,6 +1721,46 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("A12"),
                 "cell A12" + EOL
+        );
+    }
+
+    // toParserToken....................................................................................................
+
+    @Test
+    public void testToParserToken() {
+        final String text = "B2";
+
+        this.toParserTokenAndCheck(
+                SpreadsheetSelection.parseCell(text),
+                SpreadsheetParserToken.cellReference(
+                        Lists.of(
+                                SpreadsheetSelection.parseColumn("B")
+                                        .toParserToken(),
+                                SpreadsheetSelection.parseRow("2")
+                                        .toParserToken()
+                        ),
+                        text
+                ),
+                SpreadsheetParsers.cell()
+        );
+    }
+
+    @Test
+    public void testToParserTokenAbsolute() {
+        final String text = "$C$3";
+
+        this.toParserTokenAndCheck(
+                SpreadsheetSelection.parseCell(text),
+                SpreadsheetParserToken.cellReference(
+                        Lists.of(
+                                SpreadsheetSelection.parseColumn("$C")
+                                        .toParserToken(),
+                                SpreadsheetSelection.parseRow("$3")
+                                        .toParserToken()
+                        ),
+                        text
+                ),
+                SpreadsheetParsers.cell()
         );
     }
 

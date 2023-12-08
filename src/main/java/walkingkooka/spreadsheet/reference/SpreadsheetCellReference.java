@@ -18,6 +18,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -26,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.MaxPositionTextCursor;
 import walkingkooka.text.cursor.TextCursors;
@@ -624,6 +626,21 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     public SpreadsheetCellReference focused(final SpreadsheetViewportAnchor anchor) {
         this.checkAnchor(anchor);
         return this;
+    }
+
+    // HasParserToken...................................................................................................
+
+    @Override
+    public SpreadsheetCellReferenceParserToken toParserToken() {
+        return SpreadsheetParserToken.cellReference(
+                Lists.of(
+                        this.column()
+                                .toParserToken(),
+                        this.row()
+                                .toParserToken()
+                ),
+                this.text()
+        );
     }
 
     // Object...........................................................................................................

@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -1233,6 +1235,22 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                 "$B",
                 SpreadsheetViewportAnchor.NONE,
                 "$B"
+        );
+    }
+
+    // toParserToken....................................................................................................
+
+    @Test
+    public void testToParserToken() {
+        final String text = "B";
+
+        this.toParserTokenAndCheck(
+                SpreadsheetSelection.parseColumn(text),
+                SpreadsheetParserToken.columnReference(
+                        SpreadsheetSelection.parseColumn(text),
+                        text
+                ),
+                SpreadsheetParsers.column()
         );
     }
 

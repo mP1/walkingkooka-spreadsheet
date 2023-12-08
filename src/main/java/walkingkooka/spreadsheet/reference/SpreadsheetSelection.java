@@ -1163,6 +1163,14 @@ public abstract class SpreadsheetSelection implements HasText,
         );
     }
 
+    // HasParserToken...................................................................................................
+
+    /**
+     * Returns the {@link SpreadsheetParserToken} equivalent of this {@link SpreadsheetSelection}.
+     * Note {@link SpreadsheetColumnReferenceRange} and {@link SpreadsheetRowReferenceRange} will throw {@link UnsupportedOperationException}.
+     */
+    public abstract SpreadsheetParserToken toParserToken();
+
     // Object...........................................................................................................
 
     @Override
