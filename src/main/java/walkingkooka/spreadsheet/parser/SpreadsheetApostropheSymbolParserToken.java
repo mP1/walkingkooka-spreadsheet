@@ -89,11 +89,11 @@ public final class SpreadsheetApostropheSymbolParserToken extends SpreadsheetSym
 
     @Override
     public SpreadsheetApostropheSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                            final ParserToken token) {
+                                                            final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetApostropheSymbolParserToken.class
         );
     }

@@ -77,11 +77,11 @@ public final class SpreadsheetFormatAmPmParserToken extends SpreadsheetFormatNon
 
     @Override
     public SpreadsheetFormatAmPmParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                      final ParserToken token) {
+                                                      final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatAmPmParserToken.class
         );
     }

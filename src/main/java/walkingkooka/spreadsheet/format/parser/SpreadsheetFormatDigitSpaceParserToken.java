@@ -77,11 +77,11 @@ public final class SpreadsheetFormatDigitSpaceParserToken extends SpreadsheetFor
 
     @Override
     public SpreadsheetFormatDigitSpaceParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                            final ParserToken token) {
+                                                            final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatDigitSpaceParserToken.class
         );
     }

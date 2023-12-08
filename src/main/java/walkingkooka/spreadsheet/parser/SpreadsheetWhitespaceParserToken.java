@@ -88,11 +88,11 @@ public final class SpreadsheetWhitespaceParserToken extends SpreadsheetSymbolPar
 
     @Override
     public SpreadsheetWhitespaceParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                      final ParserToken token) {
+                                                      final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetWhitespaceParserToken.class
         );
     }

@@ -94,11 +94,11 @@ public final class SpreadsheetFormatNotEqualsParserToken extends SpreadsheetForm
 
     @Override
     public SpreadsheetFormatNotEqualsParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                           final ParserToken token) {
+                                                           final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatNotEqualsParserToken.class
         );
     }

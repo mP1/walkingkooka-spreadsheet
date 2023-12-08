@@ -77,11 +77,11 @@ public final class SpreadsheetFormatDayParserToken extends SpreadsheetFormatNonS
 
     @Override
     public SpreadsheetFormatDayParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                     final ParserToken token) {
+                                                     final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatDayParserToken.class
         );
     }

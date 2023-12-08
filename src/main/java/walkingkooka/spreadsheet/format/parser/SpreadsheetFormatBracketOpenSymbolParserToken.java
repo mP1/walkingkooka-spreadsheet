@@ -76,11 +76,11 @@ public final class SpreadsheetFormatBracketOpenSymbolParserToken extends Spreads
 
     @Override
     public SpreadsheetFormatBracketOpenSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                   final ParserToken token) {
+                                                                   final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatBracketOpenSymbolParserToken.class
         );
     }

@@ -76,11 +76,11 @@ public final class SpreadsheetFormatQuotedTextParserToken extends SpreadsheetFor
 
     @Override
     public SpreadsheetFormatQuotedTextParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                            final ParserToken token) {
+                                                            final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatQuotedTextParserToken.class
         );
     }

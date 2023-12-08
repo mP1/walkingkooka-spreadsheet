@@ -77,11 +77,11 @@ public final class SpreadsheetDayNameParserToken extends SpreadsheetNonSymbolPar
 
     @Override
     public SpreadsheetDayNameParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                   final ParserToken token) {
+                                                   final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetDayNameParserToken.class
         );
     }

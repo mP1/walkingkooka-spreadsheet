@@ -87,11 +87,11 @@ public final class SpreadsheetPowerParserToken extends SpreadsheetBinaryParserTo
 
     @Override
     public SpreadsheetPowerParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                 final ParserToken token) {
+                                                 final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetPowerParserToken.class
         );
     }

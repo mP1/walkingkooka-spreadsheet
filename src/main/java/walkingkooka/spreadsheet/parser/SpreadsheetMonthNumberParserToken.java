@@ -76,11 +76,11 @@ public final class SpreadsheetMonthNumberParserToken extends SpreadsheetNonSymbo
 
     @Override
     public SpreadsheetMonthNumberParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                       final ParserToken token) {
+                                                       final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetMonthNumberParserToken.class
         );
     }

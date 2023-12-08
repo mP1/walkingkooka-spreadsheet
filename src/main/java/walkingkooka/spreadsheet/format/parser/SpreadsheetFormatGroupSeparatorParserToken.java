@@ -76,11 +76,11 @@ public final class SpreadsheetFormatGroupSeparatorParserToken extends Spreadshee
 
     @Override
     public SpreadsheetFormatGroupSeparatorParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                final ParserToken token) {
+                                                                final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatGroupSeparatorParserToken.class
         );
     }

@@ -143,11 +143,11 @@ public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetParen
 
     @Override
     public SpreadsheetLambdaFunctionParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                          final ParserToken token) {
+                                                          final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetLambdaFunctionParserToken.class
         );
     }

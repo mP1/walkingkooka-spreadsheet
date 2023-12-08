@@ -75,11 +75,11 @@ public final class SpreadsheetFormatLessThanEqualsSymbolParserToken extends Spre
 
     @Override
     public SpreadsheetFormatLessThanEqualsSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                      final ParserToken token) {
+                                                                      final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatLessThanEqualsSymbolParserToken.class
         );
     }

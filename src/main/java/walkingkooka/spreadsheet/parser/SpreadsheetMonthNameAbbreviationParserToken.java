@@ -76,11 +76,11 @@ public final class SpreadsheetMonthNameAbbreviationParserToken extends Spreadshe
 
     @Override
     public SpreadsheetMonthNameAbbreviationParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                 final ParserToken token) {
+                                                                 final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetMonthNameAbbreviationParserToken.class
         );
     }

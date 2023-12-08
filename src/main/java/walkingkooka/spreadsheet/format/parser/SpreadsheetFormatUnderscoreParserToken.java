@@ -75,11 +75,11 @@ public final class SpreadsheetFormatUnderscoreParserToken extends SpreadsheetFor
 
     @Override
     public SpreadsheetFormatUnderscoreParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                            final ParserToken token) {
+                                                            final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatUnderscoreParserToken.class
         );
     }

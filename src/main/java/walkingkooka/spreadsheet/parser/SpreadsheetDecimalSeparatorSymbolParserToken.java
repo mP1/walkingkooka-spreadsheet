@@ -89,11 +89,11 @@ public final class SpreadsheetDecimalSeparatorSymbolParserToken extends Spreadsh
 
     @Override
     public SpreadsheetDecimalSeparatorSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                  final ParserToken token) {
+                                                                  final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetDecimalSeparatorSymbolParserToken.class
         );
     }

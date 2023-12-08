@@ -75,11 +75,11 @@ public final class SpreadsheetMillisecondParserToken extends SpreadsheetNonSymbo
 
     @Override
     public SpreadsheetMillisecondParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                       final ParserToken token) {
+                                                       final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetMillisecondParserToken.class
         );
     }

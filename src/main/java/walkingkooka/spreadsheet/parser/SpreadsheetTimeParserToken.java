@@ -95,11 +95,11 @@ public final class SpreadsheetTimeParserToken extends SpreadsheetParentParserTok
 
     @Override
     public SpreadsheetTimeParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                final ParserToken token) {
+                                                final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetTimeParserToken.class
         );
     }
