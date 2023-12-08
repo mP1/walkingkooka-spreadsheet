@@ -77,11 +77,11 @@ public final class SpreadsheetDayNameAbbreviationParserToken extends Spreadsheet
 
     @Override
     public SpreadsheetDayNameAbbreviationParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                               final ParserToken token) {
+                                                               final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetDayNameAbbreviationParserToken.class
         );
     }

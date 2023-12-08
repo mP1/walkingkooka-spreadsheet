@@ -77,11 +77,11 @@ public final class SpreadsheetDigitsParserToken extends SpreadsheetNonSymbolPars
 
     @Override
     public SpreadsheetDigitsParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                  final ParserToken token) {
+                                                  final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetDigitsParserToken.class
         );
     }

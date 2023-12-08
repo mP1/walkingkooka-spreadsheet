@@ -74,11 +74,11 @@ public final class SpreadsheetFormatMinuteParserToken extends SpreadsheetFormatN
 
     @Override
     public SpreadsheetFormatMinuteParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                        final ParserToken token) {
+                                                        final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatMinuteParserToken.class
         );
     }

@@ -76,11 +76,11 @@ public final class SpreadsheetFormatGreaterThanSymbolParserToken extends Spreads
 
     @Override
     public SpreadsheetFormatGreaterThanSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                   final ParserToken token) {
+                                                                   final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatGreaterThanSymbolParserToken.class
         );
     }

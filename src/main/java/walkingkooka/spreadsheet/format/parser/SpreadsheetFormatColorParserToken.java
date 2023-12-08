@@ -115,11 +115,11 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
 
     @Override
     public SpreadsheetFormatColorParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                       final ParserToken token) {
+                                                       final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatColorParserToken.class
         );
     }

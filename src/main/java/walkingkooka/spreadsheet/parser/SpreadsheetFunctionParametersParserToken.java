@@ -102,11 +102,11 @@ public final class SpreadsheetFunctionParametersParserToken extends SpreadsheetP
 
     @Override
     public SpreadsheetFunctionParametersParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                              final ParserToken token) {
+                                                              final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFunctionParametersParserToken.class
         );
     }

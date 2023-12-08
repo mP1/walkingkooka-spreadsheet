@@ -77,11 +77,11 @@ public final class SpreadsheetFormatWhitespaceParserToken extends SpreadsheetFor
 
     @Override
     public SpreadsheetFormatWhitespaceParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                            final ParserToken token) {
+                                                            final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatWhitespaceParserToken.class
         );
     }

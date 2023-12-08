@@ -76,11 +76,11 @@ public final class SpreadsheetFormatPercentParserToken extends SpreadsheetFormat
 
     @Override
     public SpreadsheetFormatPercentParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                         final ParserToken token) {
+                                                         final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetFormatPercentParserToken.class
         );
     }

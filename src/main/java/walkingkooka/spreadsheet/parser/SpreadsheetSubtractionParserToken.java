@@ -87,11 +87,11 @@ public final class SpreadsheetSubtractionParserToken extends SpreadsheetBinaryPa
 
     @Override
     public SpreadsheetSubtractionParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                       final ParserToken token) {
+                                                       final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 SpreadsheetSubtractionParserToken.class
         );
     }
