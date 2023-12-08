@@ -22,6 +22,8 @@ import walkingkooka.compare.Comparators;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.parser.SpreadsheetLabelNameParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
@@ -361,6 +363,16 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     public SpreadsheetLabelName focused(final SpreadsheetViewportAnchor anchor) {
         Objects.requireNonNull(anchor, "anchor");
         throw new UnsupportedOperationException();
+    }
+
+    // HasParserToken...................................................................................................
+
+    @Override
+    public SpreadsheetLabelNameParserToken toParserToken() {
+        return SpreadsheetParserToken.labelName(
+                this,
+                this.text()
+        );
     }
 
     // Comparable........................................................................................................

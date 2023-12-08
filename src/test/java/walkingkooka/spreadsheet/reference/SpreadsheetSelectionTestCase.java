@@ -30,10 +30,16 @@ import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunctions;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasTextTesting;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -1652,6 +1658,40 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 toString
                 ),
                 selection.urlFragment()
+        );
+    }
+
+    // HasParserToken...................................................................................................
+
+    final void toParserTokenAndCheck(final SpreadsheetSelection selection,
+                                     final SpreadsheetParserToken expected) {
+        this.checkEquals(
+                expected,
+                selection.toParserToken(),
+                () -> selection.toString()
+        );
+    }
+
+    final void toParserTokenAndCheck(final SpreadsheetSelection selection,
+                                     final SpreadsheetParserToken expected,
+                                     final Parser<SpreadsheetParserContext> parser) {
+        this.toParserTokenAndCheck(
+                selection,
+                expected
+        );
+
+        this.checkEquals(
+                Optional.of(
+                        expected
+                ),
+                parser.orFailIfCursorNotEmpty(ParserReporters.basic())
+                        .parse(
+                                TextCursors.charSequence(
+                                        expected.text()
+                                ),
+                                SpreadsheetParserContexts.fake()
+                        ),
+                () -> "parse " + expected.text()
         );
     }
 

@@ -83,6 +83,16 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
         this.toCellOrCellRangeFails();
     }
 
+    // toParserToken....................................................................................................
+
+    @Test
+    public final void testToParserTokenFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection().toParserToken()
+        );
+    }
+
     // compare.........................................................................................................
 
     @Override

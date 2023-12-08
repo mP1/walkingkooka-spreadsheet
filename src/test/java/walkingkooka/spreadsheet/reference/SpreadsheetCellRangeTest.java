@@ -26,6 +26,7 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -2326,6 +2327,24 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 "C3:$D$4",
                 SpreadsheetViewportAnchor.TOP_LEFT,
                 "$D$4"
+        );
+    }
+
+    // toParserToken....................................................................................................
+
+    @Test
+    public void testToParserToken() {
+        final String text = "A1:B2";
+
+        this.toParserTokenAndCheck(
+                SpreadsheetSelection.parseCellRange(text),
+                SpreadsheetParserToken.cellRange(
+                        Lists.of(
+                                SpreadsheetSelection.A1.toParserToken(),
+                                SpreadsheetSelection.parseCell("B2").toParserToken()
+                        ),
+                        text
+                )
         );
     }
 

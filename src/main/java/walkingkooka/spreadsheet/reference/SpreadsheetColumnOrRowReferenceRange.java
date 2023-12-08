@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 import java.util.Iterator;
 import java.util.stream.IntStream;
@@ -178,6 +179,13 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
      * Mapping expression that returns a relative {@link SpreadsheetColumnOrRowReference} given the value.
      */
     abstract T iteratorIntToReference(int value);
+
+    // HasParserToken...................................................................................................
+
+    @Override
+    public final SpreadsheetParserToken toParserToken() {
+        throw new UnsupportedOperationException();
+    }
 
     // HashCodeEqualsDefined.......................................................................................
 

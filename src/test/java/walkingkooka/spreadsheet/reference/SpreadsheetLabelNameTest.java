@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -455,6 +457,22 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> this.createSelection().focused(SpreadsheetViewportAnchor.NONE)
+        );
+    }
+
+    // toParserToken....................................................................................................
+
+    @Test
+    public void testToParserToken() {
+        final String text = "Label123";
+
+        this.toParserTokenAndCheck(
+                SpreadsheetSelection.labelName(text),
+                SpreadsheetParserToken.labelName(
+                        SpreadsheetSelection.labelName(text),
+                        text
+                ),
+                SpreadsheetParsers.labelName()
         );
     }
 
