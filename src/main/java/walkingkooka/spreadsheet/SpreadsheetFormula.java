@@ -24,10 +24,11 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
@@ -52,6 +53,7 @@ import walkingkooka.tree.json.patch.Patchable;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * A spreadsheet formula, including its compiled {@link Expression} and possibly its {@link Object value} or {@link SpreadsheetError}.
@@ -451,6 +453,26 @@ public final class SpreadsheetFormula implements HasText,
                                 }
                         )
                 );
+    }
+
+    // replaceCellsReferences...........................................................................................
+
+    public SpreadsheetFormula replaceCellsReferences(final Function<SpreadsheetCellReference, SpreadsheetCellReference> mapper) {
+        Objects.requireNonNull(mapper, "mapper");
+
+        return this.setToken(
+                Cast.to(
+                        this.token.map(
+                                t -> t.replaceIf(
+                                        (tt) -> tt instanceof SpreadsheetCellReferenceParserToken,
+                                        (tt) -> mapper.apply(
+                                                tt.cast(SpreadsheetCellReferenceParserToken.class)
+                                                        .cell()
+                                        ).toParserToken()
+                                )
+                        )
+                )
+        );
     }
 
     // JsonNodeContext..................................................................................................
