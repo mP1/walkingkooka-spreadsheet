@@ -606,42 +606,42 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testAcceptCellReferenceOrRangesNullConsumerFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetFormula.EMPTY.acceptCellOrRanges(null)
+                () -> SpreadsheetFormula.EMPTY.acceptCellReferencesOrRanges(null)
         );
     }
 
     @Test
-    public void testAcceptCellOrRangesAbsent() {
-        this.acceptCellOrRangesAndCheck(
+    public void testAcceptCellReferencesOrRangesAbsent() {
+        this.acceptCellReferencesOrRangesAndCheck(
                 SpreadsheetFormula.EMPTY
         );
     }
 
     @Test
-    public void testAcceptCellOrRangesWithout() {
-        this.acceptCellOrRangesAndCheck(
+    public void testAcceptCellReferencesOrRangesWithout() {
+        this.acceptCellReferencesOrRangesAndCheck(
                 "=1+2"
         );
     }
 
     @Test
-    public void testAcceptCellOrRangesIgnoresLabel() {
-        this.acceptCellOrRangesAndCheck(
+    public void testAcceptCellReferencesOrRangesIgnoresLabel() {
+        this.acceptCellReferencesOrRangesAndCheck(
                 "=1+Label123"
         );
     }
 
     @Test
-    public void testAcceptCellOrRangesWithCell() {
-        this.acceptCellOrRangesAndCheck(
+    public void testAcceptCellReferencesOrRangesWithCell() {
+        this.acceptCellReferencesOrRangesAndCheck(
                 "=1+A1",
                 SpreadsheetSelection.A1
         );
     }
 
     @Test
-    public void testAcceptCellOrRangesWithCell2() {
-        this.acceptCellOrRangesAndCheck(
+    public void testAcceptCellReferencesOrRangesWithCell2() {
+        this.acceptCellReferencesOrRangesAndCheck(
                 "=1+A1+B2",
                 SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseCell("B2")
@@ -649,8 +649,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testAcceptCellOrRangesWithCellRange() {
-        this.acceptCellOrRangesAndCheck(
+    public void testAcceptCellReferencesOrRangesWithCellRange() {
+        this.acceptCellReferencesOrRangesAndCheck(
                 "=1+A1:B2",
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetSelection.parseCell("A1"),
@@ -659,8 +659,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testAcceptCellOrRangesWithCellRange2() {
-        this.acceptCellOrRangesAndCheck(
+    public void testAcceptCellReferencesOrRangesWithCellRange2() {
+        this.acceptCellReferencesOrRangesAndCheck(
                 "=1+A1:B2+C3:D4",
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetSelection.parseCell("A1"),
@@ -672,8 +672,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testAcceptCellOrRangesWithCellRange3() {
-        this.acceptCellOrRangesAndCheck(
+    public void testAcceptCellReferencesOrRangesWithCellRange3() {
+        this.acceptCellReferencesOrRangesAndCheck(
                 "=1+A1:B2+C3",
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetSelection.parseCell("A1"),
@@ -682,9 +682,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    private void acceptCellOrRangesAndCheck(final String formula,
-                                            final SpreadsheetCellReferenceOrRange... expected) {
-        this.acceptCellOrRangesAndCheck(
+    private void acceptCellReferencesOrRangesAndCheck(final String formula,
+                                                      final SpreadsheetCellReferenceOrRange... expected) {
+        this.acceptCellReferencesOrRangesAndCheck(
                 SpreadsheetFormula.parse(
                         TextCursors.charSequence(formula),
                         SpreadsheetParsers.valueOrExpression(
@@ -697,10 +697,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    private void acceptCellOrRangesAndCheck(final SpreadsheetFormula formula,
-                                            final SpreadsheetCellReferenceOrRange... expected) {
+    private void acceptCellReferencesOrRangesAndCheck(final SpreadsheetFormula formula,
+                                                      final SpreadsheetCellReferenceOrRange... expected) {
         final List<SpreadsheetCellReferenceOrRange> consumer = Lists.array();
-        formula.acceptCellOrRanges(consumer::add);
+        formula.acceptCellReferencesOrRanges(consumer::add);
 
         this.checkEquals(
                 Lists.of(

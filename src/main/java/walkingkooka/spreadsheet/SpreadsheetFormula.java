@@ -433,7 +433,7 @@ public final class SpreadsheetFormula implements HasText,
      * Useful method that walks the {@link SpreadsheetParserToken} if one is present, passing
      * each and every {@link SpreadsheetCellReferenceOrRange} to the provided {@link Consumer}.
      */
-    public void acceptCellOrRanges(final Consumer<SpreadsheetCellReferenceOrRange> consumer) {
+    public void acceptCellReferencesOrRanges(final Consumer<SpreadsheetCellReferenceOrRange> consumer) {
         Objects.requireNonNull(consumer, "consumer");
 
         this.token()
