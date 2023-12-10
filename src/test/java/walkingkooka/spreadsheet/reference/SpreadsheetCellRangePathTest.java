@@ -25,7 +25,7 @@ import walkingkooka.reflect.JavaVisibility;
 import java.util.Arrays;
 import java.util.List;
 
-public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting<SpreadsheetCellReferenceDirection> {
+public final class SpreadsheetCellRangePathTest implements ClassTesting<SpreadsheetCellRangePath> {
 
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 
@@ -49,7 +49,7 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
     @Test
     public void testLRTD() {
         this.sortAndCompare(
-                SpreadsheetCellReferenceDirection.LRTD,
+                SpreadsheetCellRangePath.LRTD,
                 List.of(
                         C3,
                         C2,
@@ -76,7 +76,7 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
     @Test
     public void testRLTD() {
         this.sortAndCompare(
-                SpreadsheetCellReferenceDirection.RLTD,
+                SpreadsheetCellRangePath.RLTD,
                 List.of(
                         C3,
                         C2,
@@ -103,7 +103,7 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
     @Test
     public void testLRBU() {
         this.sortAndCompare(
-                SpreadsheetCellReferenceDirection.LRBU,
+                SpreadsheetCellRangePath.LRBU,
                 List.of(
                         C3,
                         C2,
@@ -130,7 +130,7 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
     @Test
     public void testRLBU() {
         this.sortAndCompare(
-                SpreadsheetCellReferenceDirection.RLBU,
+                SpreadsheetCellRangePath.RLBU,
                 List.of(
                         C3,
                         C2,
@@ -157,7 +157,7 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
     @Test
     public void testTDLR() {
         this.sortAndCompare(
-                SpreadsheetCellReferenceDirection.TDLR,
+                SpreadsheetCellRangePath.TDLR,
                 List.of(
                         C3,
                         C2,
@@ -184,7 +184,7 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
     @Test
     public void testTDRL() {
         this.sortAndCompare(
-                SpreadsheetCellReferenceDirection.TDRL,
+                SpreadsheetCellRangePath.TDRL,
                 List.of(
                         C3,
                         C2,
@@ -211,7 +211,7 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
     @Test
     public void testBULR() {
         this.sortAndCompare(
-                SpreadsheetCellReferenceDirection.BULR,
+                SpreadsheetCellRangePath.BULR,
                 List.of(
                         C3,
                         C2,
@@ -238,7 +238,7 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
     @Test
     public void testBURL() {
         this.sortAndCompare(
-                SpreadsheetCellReferenceDirection.BURL,
+                SpreadsheetCellRangePath.BURL,
                 List.of(
                         C3,
                         C2,
@@ -262,7 +262,7 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
         );
     }
 
-    private void sortAndCompare(final SpreadsheetCellReferenceDirection direction,
+    private void sortAndCompare(final SpreadsheetCellRangePath direction,
                                 final List<SpreadsheetCellReference> in,
                                 final SpreadsheetCellReference... expected) {
         final SpreadsheetCellReference[] inArray = in.toArray(new SpreadsheetCellReference[0]);
@@ -288,15 +288,15 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
                 A2,
                 A1
         );
-        final List<SpreadsheetCellReferenceDirection> directions = Lists.of(
-                SpreadsheetCellReferenceDirection.values()
+        final List<SpreadsheetCellRangePath> directions = Lists.of(
+                SpreadsheetCellRangePath.values()
         );
-        for (final SpreadsheetCellReferenceDirection direction1 : directions) {
+        for (final SpreadsheetCellRangePath direction1 : directions) {
             final List<SpreadsheetCellReference> sorted1 = Lists.array();
             sorted1.addAll(input);
             sorted1.sort(direction1.comparator());
 
-            for (final SpreadsheetCellReferenceDirection direction2 : directions) {
+            for (final SpreadsheetCellRangePath direction2 : directions) {
                 if (direction1 != direction2) {
                     final List<SpreadsheetCellReference> sorted2 = Lists.array();
                     sorted2.addAll(input);
@@ -315,8 +315,8 @@ public final class SpreadsheetCellReferenceDirectionTest implements ClassTesting
     // ClassTesting....................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceDirection> type() {
-        return SpreadsheetCellReferenceDirection.class;
+    public Class<SpreadsheetCellRangePath> type() {
+        return SpreadsheetCellRangePath.class;
     }
 
     @Override
