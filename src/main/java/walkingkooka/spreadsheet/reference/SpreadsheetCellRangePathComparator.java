@@ -21,21 +21,21 @@ import walkingkooka.compare.Comparators;
 
 import java.util.Comparator;
 
-final class SpreadsheetCellReferenceDirectionComparator implements Comparator<SpreadsheetCellReference> {
+final class SpreadsheetCellRangePathComparator implements Comparator<SpreadsheetCellReference> {
 
-    static SpreadsheetCellReferenceDirectionComparator with(final boolean xFirst,
-                                                            final int reverseX,
-                                                            final int reverseY) {
-        return new SpreadsheetCellReferenceDirectionComparator(
+    static SpreadsheetCellRangePathComparator with(final boolean xFirst,
+                                                   final int reverseX,
+                                                   final int reverseY) {
+        return new SpreadsheetCellRangePathComparator(
                 xFirst,
                 reverseX,
                 reverseY
         );
     }
 
-    private SpreadsheetCellReferenceDirectionComparator(final boolean xFirst,
-                                                        final int reverseX,
-                                                        final int reverseY) {
+    private SpreadsheetCellRangePathComparator(final boolean xFirst,
+                                               final int reverseX,
+                                               final int reverseY) {
         this.xFirst = xFirst;
         this.reverseX = reverseX;
         this.reverseY = reverseY;

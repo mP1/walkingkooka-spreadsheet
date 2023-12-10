@@ -22,7 +22,7 @@ import java.util.Comparator;
 /**
  * A {@link Comparator} provider that may be used to sort {@link SpreadsheetCellReference} in a variety of arrangements.
  */
-public enum SpreadsheetCellReferenceDirection {
+public enum SpreadsheetCellRangePath {
 
     /**
      * <pre>
@@ -32,7 +32,7 @@ public enum SpreadsheetCellReferenceDirection {
      * </pre>
      */
     LRTD(
-            SpreadsheetCellReferenceDirectionComparator.with(
+            SpreadsheetCellRangePathComparator.with(
                     false, // xFirst
                     1, // reverseX
                     1 //reverseY
@@ -47,7 +47,7 @@ public enum SpreadsheetCellReferenceDirection {
      * </pre>
      */
     RLTD(
-            SpreadsheetCellReferenceDirectionComparator.with(
+            SpreadsheetCellRangePathComparator.with(
                     false, // xFirst
                     -1, // reverseX
                     1//reverseY
@@ -62,7 +62,7 @@ public enum SpreadsheetCellReferenceDirection {
      * </pre>
      */
     LRBU(
-            SpreadsheetCellReferenceDirectionComparator.with(
+            SpreadsheetCellRangePathComparator.with(
                     false, // xFirst
                     1, // reverseX
                     -1 //reverseY
@@ -77,7 +77,7 @@ public enum SpreadsheetCellReferenceDirection {
      * </pre>
      */
     RLBU(
-            SpreadsheetCellReferenceDirectionComparator.with(
+            SpreadsheetCellRangePathComparator.with(
                     false, // xFirst
                     -1, // reverseX
                     -1 //reverseY
@@ -92,7 +92,7 @@ public enum SpreadsheetCellReferenceDirection {
      * </pre>
      */
     TDLR(
-            SpreadsheetCellReferenceDirectionComparator.with(
+            SpreadsheetCellRangePathComparator.with(
                     true, // xFirst
                     1, // reverseX
                     1 //reverseY
@@ -107,7 +107,7 @@ public enum SpreadsheetCellReferenceDirection {
      * </pre>
      */
     TDRL(
-            SpreadsheetCellReferenceDirectionComparator.with(
+            SpreadsheetCellRangePathComparator.with(
                     true, // xFirst
                     -1, // reverseX
                     1//reverseY
@@ -122,7 +122,7 @@ public enum SpreadsheetCellReferenceDirection {
      * </pre>
      */
     BULR(
-            SpreadsheetCellReferenceDirectionComparator.with(
+            SpreadsheetCellRangePathComparator.with(
                     true, // xFirst
                     1, // reverseX
                     -1 //reverseY
@@ -137,14 +137,14 @@ public enum SpreadsheetCellReferenceDirection {
      * </pre>
      */
     BURL(
-            SpreadsheetCellReferenceDirectionComparator.with(
+            SpreadsheetCellRangePathComparator.with(
                     true, // xFirst
                     -1, // reverseX
                     -1 //reverseY
             )
     );
 
-    SpreadsheetCellReferenceDirection(final SpreadsheetCellReferenceDirectionComparator comparator) {
+    SpreadsheetCellRangePath(final SpreadsheetCellRangePathComparator comparator) {
         this.comparator = comparator;
     }
 

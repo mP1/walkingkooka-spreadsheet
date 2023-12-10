@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetCellReferenceDirectionComparatorTest implements ClassTesting<SpreadsheetCellReferenceDirectionComparator> {
+public final class SpreadsheetCellRangePathComparatorTest implements ClassTesting<SpreadsheetCellRangePathComparator> {
 
     @Override
-    public Class<SpreadsheetCellReferenceDirectionComparator> type() {
-        return SpreadsheetCellReferenceDirectionComparator.class;
+    public Class<SpreadsheetCellRangePathComparator> type() {
+        return SpreadsheetCellRangePathComparator.class;
     }
 
     @Override
