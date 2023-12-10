@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * A {@link Comparator} provider that may be used to sort {@link SpreadsheetCellReference} in a variety of arrangements.
@@ -152,5 +153,13 @@ public enum SpreadsheetCellRangePath {
         return this.comparator;
     }
 
-    private final Comparator<SpreadsheetCellReference> comparator;
+    // SpreadsheetCellRangePathCellsIterator
+    final SpreadsheetCellRangePathComparator comparator;
+
+    public Iterator<SpreadsheetCellReference> cells(final SpreadsheetCellRange cells) {
+        return SpreadsheetCellRangePathCellsIterator.with(
+                cells,
+                this
+        );
+    }
 }
