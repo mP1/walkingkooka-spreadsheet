@@ -73,9 +73,11 @@ final class SpreadsheetCellRangePathComparator implements Comparator<Spreadsheet
         return result;
     }
 
-    private final boolean xFirst;
+    // required by SpreadsheetCellRangePathCellsIterator
 
-    private final int reverseX;
+    final boolean xFirst;
 
-    private final int reverseY;
+    final int reverseX;
+
+    final int reverseY;
 }
