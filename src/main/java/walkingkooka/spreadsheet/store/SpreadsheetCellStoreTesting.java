@@ -24,6 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -32,6 +33,81 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> extends SpreadsheetStoreTesting<S, SpreadsheetCellReference, SpreadsheetCell> {
+
+    // loadCells........................................................................................................
+
+    @Test
+    default void testLoadCellsNullCellRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .loadCells(
+                                null, // range
+                                SpreadsheetCellRangePath.LRTD,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadCellsNullCellRangePathFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .loadCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                null,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadCellsNegativeMaxFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .loadCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                SpreadsheetCellRangePath.LRTD,
+                                -1
+                        )
+        );
+    }
+
+    default void loadCellsAndCheck(final SpreadsheetCellStore store,
+                                   final SpreadsheetCellRange range,
+                                   final SpreadsheetCellRangePath path,
+                                   final int max,
+                                   final SpreadsheetCell... cells) {
+        this.loadCellsAndCheck(
+                store,
+                range,
+                path,
+                max,
+                Sets.of(
+                        cells
+                )
+        );
+    }
+
+    default void loadCellsAndCheck(final SpreadsheetCellStore store,
+                                   final SpreadsheetCellRange range,
+                                   final SpreadsheetCellRangePath path,
+                                   final int max,
+                                   final Set<SpreadsheetCell> cells) {
+        this.checkEquals(
+                cells,
+                store.loadCells(
+                        range,
+                        path,
+                        max
+                ),
+                () -> "loadCells " + range + " " + path + " " + max
+        );
+    }
+
+    // deleteCells......................................................................................................
 
     @Test
     default void testDeleteCellsNullCellRangeFails() {

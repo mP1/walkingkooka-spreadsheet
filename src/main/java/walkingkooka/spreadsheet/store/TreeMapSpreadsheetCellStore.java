@@ -17,10 +17,12 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -89,6 +91,33 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public void delete(final SpreadsheetCellReference id) {
         this.store.delete(id);
+    }
+
+    @Override
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
+                                          final SpreadsheetCellRangePath path,
+                                          final int max) {
+        checkCellRange(range);
+        Objects.requireNonNull(path, "path");
+        if (max < 0) {
+            throw new IllegalArgumentException("Invalid max " + max + " < 0");
+        }
+
+        final Set<SpreadsheetCell> cells = Sets.sorted(
+                SpreadsheetCellReference.cellComparator(
+                        path.comparator()
+                )
+        );
+
+        for (final SpreadsheetCellReference reference : Iterables.iterator(path.cells(range))) {
+            this.load(reference)
+                    .ifPresent(cells::add);
+            if (cells.size() == max) {
+                break;
+            }
+        }
+
+        return cells;
     }
 
     @Override

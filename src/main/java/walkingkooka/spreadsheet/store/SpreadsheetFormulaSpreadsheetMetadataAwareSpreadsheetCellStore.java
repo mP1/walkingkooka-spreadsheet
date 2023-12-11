@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -162,6 +163,17 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     // batch............................................................................................................
+
+    @Override
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
+                                          final SpreadsheetCellRangePath path,
+                                          final int max) {
+        return this.store.loadCells(
+                range,
+                path,
+                max
+        );
+    }
 
     @Override
     public void deleteCells(final SpreadsheetCellRange range) {
