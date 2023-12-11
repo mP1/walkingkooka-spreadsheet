@@ -583,8 +583,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        builder.labelSeparator("=")
-                .label(this.reference.toString())
+        builder.value(this.reference)
                 .value(this.formula)
                 .value(this.style)
                 .value(this.parsePattern)

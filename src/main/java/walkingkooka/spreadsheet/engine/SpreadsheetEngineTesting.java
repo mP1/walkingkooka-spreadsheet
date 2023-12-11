@@ -352,7 +352,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 range,
                 range,
                 this.createContext()));
-        checkMessage(thrown, "Several cells [B2=1] are outside the range C3");
+        checkMessage(
+                thrown,
+                "Several cells [B2 1] are outside the range C3"
+        );
     }
 
     @Test
@@ -369,7 +372,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 range,
                 this.createContext()));
 
-        checkMessage(thrown, "Several cells [B2=1] are outside the range C3:D4");
+        checkMessage(
+                thrown,
+                "Several cells [B2 1] are outside the range C3:D4"
+        );
     }
 
     @Test
@@ -397,7 +403,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 range,
                 this.createContext()));
 
-        checkMessage(thrown, "Several cells [B2=1] are outside the range C3:D4");
+        checkMessage(
+                thrown,
+                "Several cells [B2 1] are outside the range C3:D4"
+        );
     }
 
     @Test
@@ -430,7 +439,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 range,
                 this.createContext()));
 
-        checkMessage(thrown, "Several cells [B2=1, E5=4] are outside the range C3:D4");
+        checkMessage(
+                thrown,
+                "Several cells [B2 1, E5 4] are outside the range C3:D4"
+        );
     }
 
     @Test
