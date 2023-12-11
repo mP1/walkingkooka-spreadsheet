@@ -35,6 +35,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserToken;
 
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -51,6 +52,13 @@ import java.util.function.Predicate;
 public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRange
         implements Comparable<SpreadsheetCellReference>,
         HateosResource<String> {
+
+    /**
+     * {@see SpreadsheetCellReferenceCellComparator}.
+     */
+    public static Comparator<SpreadsheetCell> cellComparator(final Comparator<SpreadsheetCellReference> comparator) {
+        return SpreadsheetCellReferenceCellComparator.with(comparator);
+    }
 
     /**
      * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
