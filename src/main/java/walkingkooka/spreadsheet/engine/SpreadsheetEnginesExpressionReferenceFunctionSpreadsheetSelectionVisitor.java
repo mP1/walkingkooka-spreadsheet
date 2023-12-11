@@ -113,15 +113,11 @@ final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVis
                 .map(c -> c.formula()
                         .value()
                         .orElseGet(
-                                () -> this.missingCellReference(reference)
+                                () -> SpreadsheetError.selectionNotFound(reference)
                         )
                 ).orElseGet(
-                        () -> this.missingCellReference(reference)
+                        () -> SpreadsheetError.selectionNotFound(reference)
                 );
-    }
-
-    private SpreadsheetError missingCellReference(final SpreadsheetCellReference reference) {
-        return SpreadsheetError.selectionNotFound(reference);
     }
 
     private Optional<Object> value;
