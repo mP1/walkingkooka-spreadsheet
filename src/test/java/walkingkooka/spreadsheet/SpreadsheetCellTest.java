@@ -1407,12 +1407,20 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     // toString.........................................................................................................
 
     @Test
+    public void testToStringEmptySpreadsheetFormula() {
+        this.toStringAndCheck(
+                REFERENCE.setFormula(SpreadsheetFormula.EMPTY),
+                REFERENCE.toString()
+        );
+    }
+
+    @Test
     public void testToStringWithTextStyle() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
                 this.formula()).setStyle(boldAndItalics),
-                REFERENCE + "=" + this.formula() + " " + boldAndItalics);
+                REFERENCE + " " + this.formula() + " " + boldAndItalics);
     }
 
     @Test
@@ -1422,7 +1430,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         REFERENCE,
                         this.formula()
                 ),
-                REFERENCE + "=" + this.formula()
+                REFERENCE + " " + this.formula()
         );
     }
 
@@ -1434,7 +1442,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 this.formula()
                         )
                         .setFormatPattern(this.formatPattern()),
-                REFERENCE + "=" + this.formula() + " \"@@\""
+                REFERENCE + " " + this.formula() + " \"@@\""
         );
     }
 
@@ -1442,7 +1450,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + "=" + this.formula() + " \"dd/mm/yyyy\" \"@@\" \"formatted-text\""
+                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" \"@@\" \"formatted-text\""
         );
     }
 

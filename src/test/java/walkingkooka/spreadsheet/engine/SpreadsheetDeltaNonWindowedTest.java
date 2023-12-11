@@ -960,7 +960,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
-                "home: A1 width: 100.0 height: 40.0 selection: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3");
+                "home: A1 width: 100.0 height: 40.0 selection: A1:B2 BOTTOM_RIGHT cells: A1 1, B2 2, C3 3"
+        );
     }
 
     @Test
@@ -981,7 +982,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
-                "home: A1 width: 100.0 height: 40.0 selection: A1:B2 BOTTOM_RIGHT cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4");
+                "home: A1 width: 100.0 height: 40.0 selection: A1:B2 BOTTOM_RIGHT cells: A1 1, B2 2, C3 3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4"
+        );
     }
 
     @Test
@@ -1002,7 +1004,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 deletedCells: C1, C2");
+                "cells: A1 1, B2 2, C3 3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 deletedCells: C1, C2"
+        );
     }
 
     @Test
@@ -1065,7 +1068,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 matchedCells: A1, B2, C3");
+                "cells: A1 1, B2 2, C3 3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 matchedCells: A1, B2, C3"
+        );
     }
 
 
@@ -1087,7 +1091,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
-                "cells: A1=1, B2=2, C3=3 max: A=50.0");
+                "cells: A1 1, B2 2, C3 3 max: A=50.0"
+        );
     }
 
     @Test
@@ -1108,7 +1113,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
-                "cells: A1=1, B2=2, C3=3 max: 1=75.0");
+                "cells: A1 1, B2 2, C3 3 max: 1=75.0"
+        );
     }
 
     @Test
@@ -1129,7 +1135,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_WIDTH,
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
-                "cells: A1=1, B2=2, C3=3 max: A=50.0, 1=75.0");
+                "cells: A1 1, B2 2, C3 3 max: A=50.0, 1=75.0");
     }
 
     @Test
@@ -1150,7 +1156,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.columnCount(),
                         this.rowCount()
                 ),
-                "cells: A1=1, B2=2, C3=3 columnCount: 88 rowCount: 99");
+                "cells: A1 1, B2 2, C3 3 columnCount: 88 rowCount: 99"
+        );
     }
 
     @Override

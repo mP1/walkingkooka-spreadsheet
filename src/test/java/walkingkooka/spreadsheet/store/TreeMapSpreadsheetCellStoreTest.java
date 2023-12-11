@@ -832,7 +832,10 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         )
         );
 
-        this.toStringAndCheck(store, "[A1=1+2]");
+        this.toStringAndCheck(
+                store,
+                "[A1 1+2]"
+        );
     }
 
     @Override

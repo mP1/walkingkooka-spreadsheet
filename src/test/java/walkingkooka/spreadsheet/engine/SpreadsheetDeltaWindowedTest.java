@@ -1096,7 +1096,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_TOTAL_HEIGHT,
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 window: A1:E5");
+                "cells: A1 1, B2 2, C3 3 window: A1:E5"
+        );
     }
 
     @Test
@@ -1118,7 +1119,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_TOTAL_HEIGHT,
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 window: A1:E5");
+                "cells: A1 1, B2 2, C3 3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 window: A1:E5"
+        );
     }
 
     @Test
@@ -1140,7 +1142,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_TOTAL_HEIGHT,
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 deletedCells: C1, C2 window: A1:E5");
+                "cells: A1 1, B2 2, C3 3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 deletedCells: C1, C2 window: A1:E5"
+        );
     }
 
     @Test
@@ -1228,7 +1231,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_TOTAL_HEIGHT,
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 max: A=50.0 window: A1:E5");
+                "cells: A1 1, B2 2, C3 3 max: A=50.0 window: A1:E5"
+        );
     }
 
     @Test
@@ -1250,7 +1254,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_TOTAL_HEIGHT,
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 max: 1=75.0 window: A1:E5");
+                "cells: A1 1, B2 2, C3 3 max: 1=75.0 window: A1:E5"
+        );
     }
 
     @Test
@@ -1272,7 +1277,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_TOTAL_HEIGHT,
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 max: A=50.0, 1=75.0 window: A1:E5");
+                "cells: A1 1, B2 2, C3 3 max: A=50.0, 1=75.0 window: A1:E5"
+        );
     }
 
     @Test
@@ -1294,7 +1300,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         this.rowCount(),
                         this.window()
                 ),
-                "cells: A1=1, B2=2, C3=3 columnCount: 88 rowCount: 99 window: A1:E5");
+                "cells: A1 1, B2 2, C3 3 columnCount: 88 rowCount: 99 window: A1:E5"
+        );
     }
 
     // helpers..........................................................................................................

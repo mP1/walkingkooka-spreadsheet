@@ -129,7 +129,7 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
 
         this.toStringAndCheck(
                 changes,
-                "{A1=A1=1+2, B2=B2=3+4} {M=M, N=N hidden=true} {6=6, 7=7 hidden=true}"
+                "{A1=A1 1+2, B2=B2 3+4} {M=M, N=N hidden=true} {6=6, 7=7 hidden=true}"
         );
     }
 
