@@ -65,7 +65,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     @Test
     default void testLoadCellsNegativeMaxFails() {
         assertThrows(
-                NullPointerException.class,
+                IllegalArgumentException.class,
                 () -> this.createStore()
                         .loadCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
