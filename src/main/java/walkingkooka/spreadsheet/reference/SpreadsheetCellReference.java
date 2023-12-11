@@ -640,8 +640,12 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     @Override
     public SpreadsheetCellReferenceParserToken toParserToken() {
+        // GWTC fails if type parameter missing
+        //
+        // [INFO]       [ERROR] Errors in 'walkingkooka/spreadsheet/reference/SpreadsheetCellReference.java'
+        // [INFO]          [ERROR] Line 644: The method of(T...) of type Lists is not applicable as the formal varargs element type T is not accessible here
         return SpreadsheetParserToken.cellReference(
-                Lists.of(
+                Lists.<ParserToken>of(
                         this.column()
                                 .toParserToken(),
                         this.row()
