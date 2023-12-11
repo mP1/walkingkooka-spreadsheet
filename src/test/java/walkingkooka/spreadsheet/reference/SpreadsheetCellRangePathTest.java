@@ -312,6 +312,16 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         }
     }
 
+    @Test
+    public void testComparatorToString() {
+        for (final SpreadsheetCellRangePath path : SpreadsheetCellRangePath.values()) {
+            this.checkEquals(
+                    path.toString(),
+                    path.comparator().toString()
+            );
+        }
+    }
+
     // ClassTesting....................................................................................................
 
     @Override
