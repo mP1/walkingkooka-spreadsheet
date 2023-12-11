@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -27,7 +28,6 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -41,14 +41,20 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     /**
      * Attempts to load all the cells in the given {@link SpreadsheetCellRange}.
      */
-    default List<SpreadsheetCell> loadCells(final SpreadsheetCellRange range) {
-        Objects.requireNonNull(range, "range");
-
-        return this.between(
-                range.begin(),
-                range.end()
+    default Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range) {
+        return this.loadCells(
+                range,
+                SpreadsheetCellRangePath.LRTD,
+                Integer.MAX_VALUE
         );
     }
+
+    /**
+     * Attempts to load all the cells in the given {@link SpreadsheetCellRange}.
+     */
+    Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
+                                   final SpreadsheetCellRangePath path,
+                                   final int max);
 
     /**
      * Default implementation that deletes all the cells in the given {@link SpreadsheetCellRange}.

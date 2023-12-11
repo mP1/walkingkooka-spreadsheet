@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -75,6 +76,182 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 c3.reference(),
                 b2,
                 c3
+        );
+    }
+
+    // loadCells........................................................................................................
+
+    @Test
+    public void testLoadCells() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b2 = store.save(
+                SpreadsheetSelection.parseCell("B2")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c3 = store.save(
+                SpreadsheetSelection.parseCell("c3")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell d4 = store.save(
+                SpreadsheetSelection.parseCell("d4")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:D4"),
+                SpreadsheetCellRangePath.LRTD,
+                4,
+                a1,
+                b2,
+                c3,
+                d4
+        );
+    }
+
+    @Test
+    public void testLoadCellsMaxZero() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b2 = store.save(
+                SpreadsheetSelection.parseCell("B2")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c3 = store.save(
+                SpreadsheetSelection.parseCell("c3")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell d4 = store.save(
+                SpreadsheetSelection.parseCell("d4")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:D4"),
+                SpreadsheetCellRangePath.LRTD,
+                0
+        );
+    }
+
+    @Test
+    public void testLoadCellsMaxLess() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b2 = store.save(
+                SpreadsheetSelection.parseCell("B2")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c3 = store.save(
+                SpreadsheetSelection.parseCell("c3")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell d4 = store.save(
+                SpreadsheetSelection.parseCell("d4")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:D4"),
+                SpreadsheetCellRangePath.LRTD,
+                3,
+                a1,
+                b2,
+                c3
+        );
+    }
+
+    @Test
+    public void testLoadCellsRLTD() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b1 = store.save(
+                SpreadsheetSelection.parseCell("B1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c1 = store.save(
+                SpreadsheetSelection.parseCell("c1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell d1 = store.save(
+                SpreadsheetSelection.parseCell("d1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:D4"),
+                SpreadsheetCellRangePath.RLTD,
+                4,
+                d1,
+                c1,
+                b1,
+                a1
+        );
+    }
+
+    @Test
+    public void testLoadCellsRLTDMax() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b1 = store.save(
+                SpreadsheetSelection.parseCell("B1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c1 = store.save(
+                SpreadsheetSelection.parseCell("c1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell d1 = store.save(
+                SpreadsheetSelection.parseCell("d1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:D4"),
+                SpreadsheetCellRangePath.RLTD,
+                3,
+                d1,
+                c1,
+                b1
         );
     }
 
