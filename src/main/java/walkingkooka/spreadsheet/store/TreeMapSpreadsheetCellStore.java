@@ -103,6 +103,18 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
             throw new IllegalArgumentException("Invalid max " + max + " < 0");
         }
 
+        return 0 == max ?
+                Sets.empty() :
+                this.loadCellsNonZeroMax(
+                        range,
+                        path,
+                        max
+                );
+    }
+
+    private Set<SpreadsheetCell> loadCellsNonZeroMax(final SpreadsheetCellRange range,
+                                                     final SpreadsheetCellRangePath path,
+                                                     final int max) {
         final Set<SpreadsheetCell> cells = Sets.sorted(
                 SpreadsheetCellReference.cellComparator(
                         path.comparator()
