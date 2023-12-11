@@ -33,11 +33,9 @@ public enum SpreadsheetCellRangePath {
      * </pre>
      */
     LRTD(
-            SpreadsheetCellRangePathComparator.with(
-                    false, // xFirst
-                    1, // reverseX
-                    1 //reverseY
-            )
+            false, // xFirst
+            1, // reverseX
+            1 //reverseY,
     ),
 
     /**
@@ -48,11 +46,9 @@ public enum SpreadsheetCellRangePath {
      * </pre>
      */
     RLTD(
-            SpreadsheetCellRangePathComparator.with(
-                    false, // xFirst
-                    -1, // reverseX
-                    1//reverseY
-            )
+            false, // xFirst
+            -1, // reverseX
+            1//reverseY
     ),
 
     /**
@@ -63,11 +59,9 @@ public enum SpreadsheetCellRangePath {
      * </pre>
      */
     LRBU(
-            SpreadsheetCellRangePathComparator.with(
-                    false, // xFirst
-                    1, // reverseX
-                    -1 //reverseY
-            )
+            false, // xFirst
+            1, // reverseX
+            -1 //reverseY
     ),
 
     /**
@@ -78,11 +72,9 @@ public enum SpreadsheetCellRangePath {
      * </pre>
      */
     RLBU(
-            SpreadsheetCellRangePathComparator.with(
-                    false, // xFirst
-                    -1, // reverseX
-                    -1 //reverseY
-            )
+            false, // xFirst
+            -1, // reverseX
+            -1 //reverseY
     ),
 
     /**
@@ -93,11 +85,9 @@ public enum SpreadsheetCellRangePath {
      * </pre>
      */
     TDLR(
-            SpreadsheetCellRangePathComparator.with(
-                    true, // xFirst
-                    1, // reverseX
-                    1 //reverseY
-            )
+            true, // xFirst
+            1, // reverseX
+            1 //reverseY
     ),
 
     /**
@@ -108,11 +98,9 @@ public enum SpreadsheetCellRangePath {
      * </pre>
      */
     TDRL(
-            SpreadsheetCellRangePathComparator.with(
-                    true, // xFirst
-                    -1, // reverseX
-                    1//reverseY
-            )
+            true, // xFirst
+            -1, // reverseX
+            1//reverseY
     ),
 
     /**
@@ -123,11 +111,9 @@ public enum SpreadsheetCellRangePath {
      * </pre>
      */
     BULR(
-            SpreadsheetCellRangePathComparator.with(
-                    true, // xFirst
-                    1, // reverseX
-                    -1 //reverseY
-            )
+            true, // xFirst
+            1, // reverseX
+            -1 //reverseY
     ),
 
     /**
@@ -138,15 +124,20 @@ public enum SpreadsheetCellRangePath {
      * </pre>
      */
     BURL(
-            SpreadsheetCellRangePathComparator.with(
-                    true, // xFirst
-                    -1, // reverseX
-                    -1 //reverseY
-            )
+            true, // xFirst
+            -1, // reverseX
+            -1 //reverseY
     );
 
-    SpreadsheetCellRangePath(final SpreadsheetCellRangePathComparator comparator) {
-        this.comparator = comparator;
+    SpreadsheetCellRangePath(final boolean xFirst,
+                             final int reverseX,
+                             final int reverseY) {
+        this.comparator = SpreadsheetCellRangePathComparator.with(
+                xFirst,
+                reverseX,
+                reverseY,
+                this.name()
+        );
     }
 
     public Comparator<SpreadsheetCellReference> comparator() {

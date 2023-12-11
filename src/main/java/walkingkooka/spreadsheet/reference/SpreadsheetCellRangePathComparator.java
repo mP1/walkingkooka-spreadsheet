@@ -25,20 +25,24 @@ final class SpreadsheetCellRangePathComparator implements Comparator<Spreadsheet
 
     static SpreadsheetCellRangePathComparator with(final boolean xFirst,
                                                    final int reverseX,
-                                                   final int reverseY) {
+                                                   final int reverseY,
+                                                   final String toString) {
         return new SpreadsheetCellRangePathComparator(
                 xFirst,
                 reverseX,
-                reverseY
+                reverseY,
+                toString
         );
     }
 
     private SpreadsheetCellRangePathComparator(final boolean xFirst,
                                                final int reverseX,
-                                               final int reverseY) {
+                                               final int reverseY,
+                                               final String toString) {
         this.xFirst = xFirst;
         this.reverseX = reverseX;
         this.reverseY = reverseY;
+        this.toString = toString;
     }
 
     @Override
@@ -80,4 +84,11 @@ final class SpreadsheetCellRangePathComparator implements Comparator<Spreadsheet
     final int reverseX;
 
     final int reverseY;
+
+    @Override
+    public String toString() {
+        return this.toString;
+    }
+
+    private final String toString;
 }
