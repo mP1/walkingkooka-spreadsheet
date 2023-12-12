@@ -38,28 +38,6 @@ public final class SpreadsheetFormatConditionNumberParserToken extends Spreadshe
         super(value, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatConditionNumberParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatConditionNumberParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatConditionNumberParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatConditionNumberParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -50,27 +49,6 @@ public final class SpreadsheetGreaterThanEqualsSymbolParserToken extends Spreads
         return greaterThanEquals(tokens, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetGreaterThanEqualsSymbolParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetGreaterThanEqualsSymbolParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetGreaterThanEqualsSymbolParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetGreaterThanEqualsSymbolParserToken.class
-        );
-    }
     // replaceFirstIf...................................................................................................
 
     @Override

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -48,28 +47,6 @@ public final class SpreadsheetGroupSeparatorSymbolParserToken extends Spreadshee
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return division(tokens, text);
-    }
-
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetGroupSeparatorSymbolParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetGroupSeparatorSymbolParserToken.class
-        );
-    }
-
-    // removeIf........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetGroupSeparatorSymbolParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetGroupSeparatorSymbolParserToken.class
-        );
     }
 
     // replaceFirstIf...................................................................................................

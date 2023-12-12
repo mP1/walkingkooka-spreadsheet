@@ -76,28 +76,6 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
         );
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatColorParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfParent(
-                this,
-                predicate,
-                SpreadsheetFormatColorParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatColorParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfParent(
-                this,
-                predicate,
-                SpreadsheetFormatColorParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override

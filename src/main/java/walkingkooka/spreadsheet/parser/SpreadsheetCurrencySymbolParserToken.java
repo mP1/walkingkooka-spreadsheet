@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -48,28 +47,6 @@ public final class SpreadsheetCurrencySymbolParserToken extends SpreadsheetSymbo
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
-    }
-
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetCurrencySymbolParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetCurrencySymbolParserToken.class
-        );
-    }
-
-    // removeIf........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetCurrencySymbolParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetCurrencySymbolParserToken.class
-        );
     }
 
     // replaceFirstIf...................................................................................................

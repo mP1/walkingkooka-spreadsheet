@@ -37,28 +37,6 @@ public final class SpreadsheetFormatGroupSeparatorParserToken extends Spreadshee
         super(value, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatGroupSeparatorParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatGroupSeparatorParserToken.class
-        );
-    }
-
-    // removeIf.............................................................../////.....................................
-
-    @Override
-    public Optional<SpreadsheetFormatGroupSeparatorParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatGroupSeparatorParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override

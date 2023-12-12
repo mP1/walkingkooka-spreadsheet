@@ -56,28 +56,6 @@ public final class SpreadsheetFormatExpressionParserToken extends SpreadsheetFor
         );
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatExpressionParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfParent(
-                this,
-                predicate,
-                SpreadsheetFormatExpressionParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatExpressionParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfParent(
-                this,
-                predicate,
-                SpreadsheetFormatExpressionParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override

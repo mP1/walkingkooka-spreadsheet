@@ -42,28 +42,6 @@ public final class SpreadsheetFormatColorNameParserToken extends SpreadsheetForm
         return SpreadsheetColorName.with(this.value);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatColorNameParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatColorNameParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatColorNameParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatColorNameParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override

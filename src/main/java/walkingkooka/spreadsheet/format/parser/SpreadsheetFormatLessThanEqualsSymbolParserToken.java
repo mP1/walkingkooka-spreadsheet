@@ -37,27 +37,6 @@ public final class SpreadsheetFormatLessThanEqualsSymbolParserToken extends Spre
         super(value, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatLessThanEqualsSymbolParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatLessThanEqualsSymbolParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatLessThanEqualsSymbolParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatLessThanEqualsSymbolParserToken.class
-        );
-    }
     // replaceFirstIf...................................................................................................
 
     @Override

@@ -37,27 +37,6 @@ public final class SpreadsheetFormatGeneralSymbolParserToken extends Spreadsheet
         super(value, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatGeneralSymbolParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatGeneralSymbolParserToken.class
-        );
-    }
-    // removeIf........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatGeneralSymbolParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatGeneralSymbolParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override
