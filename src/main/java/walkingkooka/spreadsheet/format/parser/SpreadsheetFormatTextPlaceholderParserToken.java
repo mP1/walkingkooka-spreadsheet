@@ -38,28 +38,6 @@ public final class SpreadsheetFormatTextPlaceholderParserToken extends Spreadshe
         super(value, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatTextPlaceholderParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatTextPlaceholderParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatTextPlaceholderParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatTextPlaceholderParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override

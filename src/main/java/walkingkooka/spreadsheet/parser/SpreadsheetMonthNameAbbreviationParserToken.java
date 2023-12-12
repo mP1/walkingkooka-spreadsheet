@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -36,27 +35,6 @@ public final class SpreadsheetMonthNameAbbreviationParserToken extends Spreadshe
 
     private SpreadsheetMonthNameAbbreviationParserToken(final int value, final String text) {
         super(value, text);
-    }
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetMonthNameAbbreviationParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetMonthNameAbbreviationParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetMonthNameAbbreviationParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetMonthNameAbbreviationParserToken.class
-        );
     }
 
     // replaceFirstIf...................................................................................................

@@ -37,28 +37,6 @@ public final class SpreadsheetFormatGreaterThanSymbolParserToken extends Spreads
         super(value, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatGreaterThanSymbolParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatGreaterThanSymbolParserToken.class
-        );
-    }
-
-    // removeIf........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatGreaterThanSymbolParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatGreaterThanSymbolParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override

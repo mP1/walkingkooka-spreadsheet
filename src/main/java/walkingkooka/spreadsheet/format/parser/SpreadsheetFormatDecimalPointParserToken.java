@@ -38,28 +38,6 @@ public final class SpreadsheetFormatDecimalPointParserToken extends SpreadsheetF
         super(value, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatDecimalPointParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatDecimalPointParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatDecimalPointParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatDecimalPointParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override

@@ -37,27 +37,6 @@ public final class SpreadsheetFormatMinuteParserToken extends SpreadsheetFormatN
         super(value, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatMinuteParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatMinuteParserToken.class
-        );
-    }
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatMinuteParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatMinuteParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override

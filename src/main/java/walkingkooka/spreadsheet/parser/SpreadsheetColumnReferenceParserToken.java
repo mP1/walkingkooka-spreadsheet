@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.ParserToken;
 
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -38,28 +37,6 @@ public final class SpreadsheetColumnReferenceParserToken extends SpreadsheetNonS
 
     private SpreadsheetColumnReferenceParserToken(final SpreadsheetColumnReference value, final String text) {
         super(value, text);
-    }
-
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetColumnReferenceParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetColumnReferenceParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetColumnReferenceParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetColumnReferenceParserToken.class
-        );
     }
 
     // replaceFirstIf...................................................................................................

@@ -37,28 +37,6 @@ public final class SpreadsheetFormatCurrencyParserToken extends SpreadsheetForma
         super(value, text);
     }
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatCurrencyParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatCurrencyParserToken.class
-        );
-    }
-
-    // removeIf........................................................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatCurrencyParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SpreadsheetFormatCurrencyParserToken.class
-        );
-    }
-
     // replaceFirstIf...................................................................................................
 
     @Override
