@@ -167,10 +167,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     @Override
     public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
                                           final SpreadsheetCellRangePath path,
+                                          final int offset,
                                           final int max) {
         return this.store.loadCells(
                 range,
                 path,
+                offset,
                 max
         );
     }
