@@ -33,6 +33,7 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     @Override
     public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
                                           final SpreadsheetCellRangePath path,
+                                          final int offset,
                                           final int max) {
         throw new UnsupportedOperationException();
     }

@@ -96,24 +96,30 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
                                           final SpreadsheetCellRangePath path,
+                                          final int offset,
                                           final int max) {
         checkCellRange(range);
         Objects.requireNonNull(path, "path");
+        if (offset < 0) {
+            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
+        }
         if (max < 0) {
             throw new IllegalArgumentException("Invalid max " + max + " < 0");
         }
 
-        return 0 == max ?
+        return 0 == max || offset >= range.count() ?
                 Sets.empty() :
                 this.loadCellsNonZeroMax(
                         range,
                         path,
+                        offset,
                         max
                 );
     }
 
     private Set<SpreadsheetCell> loadCellsNonZeroMax(final SpreadsheetCellRange range,
                                                      final SpreadsheetCellRangePath path,
+                                                     final int offset,
                                                      final int max) {
         final Set<SpreadsheetCell> cells = Sets.sorted(
                 SpreadsheetCellReference.cellComparator(
@@ -121,12 +127,16 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 )
         );
 
+        int i = 0;
         for (final SpreadsheetCellReference reference : Iterables.iterator(path.cells(range))) {
-            this.load(reference)
-                    .ifPresent(cells::add);
-            if (cells.size() == max) {
-                break;
+            if (i >= offset) {
+                this.load(reference)
+                        .ifPresent(cells::add);
+                if (cells.size() == max) {
+                    break;
+                }
             }
+            i++;
         }
 
         return cells;

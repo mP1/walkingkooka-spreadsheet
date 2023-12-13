@@ -109,7 +109,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangePath.LRTD,
-                4,
+                0, // offset
+                4, // max
                 a1,
                 b2,
                 c3,
@@ -145,7 +146,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangePath.LRTD,
-                0
+                0, // offset
+                0 // max
         );
     }
 
@@ -177,7 +179,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangePath.LRTD,
-                3,
+                0, // offset
+                3, // max
                 a1,
                 b2,
                 c3
@@ -212,9 +215,81 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangePath.RLTD,
-                4,
+                0, // offset
+                4, // max
                 d1,
                 c1,
+                b1,
+                a1
+        );
+    }
+
+    @Test
+    public void testLoadCellsRLTDOffset() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b1 = store.save(
+                SpreadsheetSelection.parseCell("B1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c1 = store.save(
+                SpreadsheetSelection.parseCell("c1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell d1 = store.save(
+                SpreadsheetSelection.parseCell("d1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:D4"),
+                SpreadsheetCellRangePath.RLTD,
+                1, // offset
+                4, // max
+                c1,
+                b1,
+                a1
+        );
+    }
+
+    @Test
+    public void testLoadCellsRLTDOffset2() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b1 = store.save(
+                SpreadsheetSelection.parseCell("B1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c1 = store.save(
+                SpreadsheetSelection.parseCell("c1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell d1 = store.save(
+                SpreadsheetSelection.parseCell("d1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:D4"),
+                SpreadsheetCellRangePath.RLTD,
+                2, // offset
+                4, // max
                 b1,
                 a1
         );
@@ -248,7 +323,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangePath.RLTD,
-                3,
+                0, // offset
+                3, // max
                 d1,
                 c1,
                 b1

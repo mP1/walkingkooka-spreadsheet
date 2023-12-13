@@ -45,7 +45,8 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
         return this.loadCells(
                 range,
                 SpreadsheetCellRangePath.LRTD,
-                Integer.MAX_VALUE
+                0, // offset
+                Integer.MAX_VALUE // max
         );
     }
 
@@ -54,6 +55,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      */
     Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
                                    final SpreadsheetCellRangePath path,
+                                   final int offset,
                                    final int max);
 
     /**
