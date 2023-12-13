@@ -22,8 +22,6 @@ import walkingkooka.visit.Visiting;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Holds a date/time value along with the components and original text.
@@ -56,32 +54,6 @@ public final class SpreadsheetDateTimeParserToken extends SpreadsheetParentParse
                 this,
                 children,
                 SpreadsheetDateTimeParserToken::with
-        );
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetDateTimeParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                         final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetDateTimeParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetDateTimeParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                    final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetDateTimeParserToken.class
         );
     }
 

@@ -16,11 +16,7 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.text.cursor.parser.ParserToken;
-
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents a greater than symbol token.
@@ -35,32 +31,6 @@ public final class SpreadsheetFormatGreaterThanSymbolParserToken extends Spreads
 
     private SpreadsheetFormatGreaterThanSymbolParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatGreaterThanSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                        final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatGreaterThanSymbolParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatGreaterThanSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                   final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatGreaterThanSymbolParserToken.class
-        );
     }
 
     // SpreadsheetFormatParserTokenVisitor..............................................................................

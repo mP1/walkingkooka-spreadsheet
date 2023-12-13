@@ -17,11 +17,8 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents a color name token.
@@ -42,30 +39,6 @@ public final class SpreadsheetFormatColorNameParserToken extends SpreadsheetForm
         return SpreadsheetColorName.with(this.value);
     }
 
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatColorNameParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatColorNameParserToken.class
-        );
-    }
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatColorNameParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                           final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatColorNameParserToken.class
-        );
-    }
     // visitor........................................................................................................
 
     @Override

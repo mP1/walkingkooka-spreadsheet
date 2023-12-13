@@ -17,10 +17,6 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
-import walkingkooka.text.cursor.parser.ParserToken;
-
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Holds the actual expression name within a expression token.
@@ -37,32 +33,6 @@ public final class SpreadsheetFunctionNameParserToken extends SpreadsheetNonSymb
 
     private SpreadsheetFunctionNameParserToken(final SpreadsheetFunctionName value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFunctionNameParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                             final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFunctionNameParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFunctionNameParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                        final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFunctionNameParserToken.class
-        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................
