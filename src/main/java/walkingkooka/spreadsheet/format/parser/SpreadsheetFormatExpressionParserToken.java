@@ -22,8 +22,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * A token that contains up to 4 sub expressions.
@@ -56,30 +54,6 @@ public final class SpreadsheetFormatExpressionParserToken extends SpreadsheetFor
         );
     }
 
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatExpressionParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                 final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatExpressionParserToken.class
-        );
-    }
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatExpressionParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                            final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatExpressionParserToken.class
-        );
-    }
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

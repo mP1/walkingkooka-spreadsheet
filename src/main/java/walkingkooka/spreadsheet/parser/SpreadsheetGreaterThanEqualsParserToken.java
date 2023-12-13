@@ -20,8 +20,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents a greater than equals test with its parameters.
@@ -45,32 +43,6 @@ public final class SpreadsheetGreaterThanEqualsParserToken extends SpreadsheetBi
                 this,
                 children,
                 SpreadsheetGreaterThanEqualsParserToken::with
-        );
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetGreaterThanEqualsParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                  final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetGreaterThanEqualsParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetGreaterThanEqualsParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                             final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetGreaterThanEqualsParserToken.class
         );
     }
 

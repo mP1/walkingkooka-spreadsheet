@@ -22,8 +22,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * A token that contains date formatting tokens.
@@ -53,32 +51,6 @@ public final class SpreadsheetFormatDateParserToken extends SpreadsheetFormatPar
                 this,
                 children,
                 SpreadsheetFormatDateParserToken::with
-        );
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatDateParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                           final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatDateParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatDateParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                      final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatDateParserToken.class
         );
     }
 

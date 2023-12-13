@@ -21,8 +21,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents a not equals test operation with its parameters.
@@ -51,32 +49,6 @@ public final class SpreadsheetFormatNotEqualsParserToken extends SpreadsheetForm
                 this,
                 children,
                 SpreadsheetFormatNotEqualsParserToken::with
-        );
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatNotEqualsParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatNotEqualsParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatNotEqualsParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                           final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatNotEqualsParserToken.class
         );
     }
 

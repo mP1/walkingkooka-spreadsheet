@@ -21,8 +21,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * The execution of a lambda function.
@@ -104,30 +102,6 @@ public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetParen
         );
     }
 
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetLambdaFunctionParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                               final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetLambdaFunctionParserToken.class
-        );
-    }
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetLambdaFunctionParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                          final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetLambdaFunctionParserToken.class
-        );
-    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

@@ -16,11 +16,7 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.text.cursor.parser.ParserToken;
-
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents a not equals symbol token.
@@ -37,30 +33,6 @@ public final class SpreadsheetFormatNotEqualsSymbolParserToken extends Spreadshe
         super(value, text);
     }
 
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatNotEqualsSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                      final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatNotEqualsSymbolParserToken.class
-        );
-    }
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatNotEqualsSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                 final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatNotEqualsSymbolParserToken.class
-        );
-    }
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

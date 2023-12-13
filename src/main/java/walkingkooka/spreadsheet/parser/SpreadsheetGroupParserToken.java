@@ -20,8 +20,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * A wrapper around a grouping.
@@ -47,30 +45,6 @@ public final class SpreadsheetGroupParserToken extends SpreadsheetParentParserTo
         );
     }
 
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetGroupParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                      final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetGroupParserToken.class
-        );
-    }
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetGroupParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                 final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetGroupParserToken.class
-        );
-    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

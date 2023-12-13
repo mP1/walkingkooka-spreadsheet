@@ -16,11 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.text.cursor.parser.ParserToken;
-
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents the month name abbreviation within a date or date/time.
@@ -35,32 +31,6 @@ public final class SpreadsheetMonthNameAbbreviationParserToken extends Spreadshe
 
     private SpreadsheetMonthNameAbbreviationParserToken(final int value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetMonthNameAbbreviationParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                      final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetMonthNameAbbreviationParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetMonthNameAbbreviationParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                 final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetMonthNameAbbreviationParserToken.class
-        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

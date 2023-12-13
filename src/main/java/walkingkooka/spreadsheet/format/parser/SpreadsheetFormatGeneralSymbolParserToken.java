@@ -16,11 +16,7 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.text.cursor.parser.ParserToken;
-
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Holds the literal GENERAL.
@@ -35,32 +31,6 @@ public final class SpreadsheetFormatGeneralSymbolParserToken extends Spreadsheet
 
     private SpreadsheetFormatGeneralSymbolParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatGeneralSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                    final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatGeneralSymbolParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatGeneralSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                               final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatGeneralSymbolParserToken.class
-        );
     }
 
     // SpreadsheetFormatParserTokenVisitor..............................................................................

@@ -20,8 +20,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * The parameters including the open/close parenthesis for a function.
@@ -59,32 +57,6 @@ public final class SpreadsheetFunctionParametersParserToken extends SpreadsheetP
                 this,
                 children,
                 SpreadsheetFunctionParametersParserToken::with
-        );
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFunctionParametersParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                   final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFunctionParametersParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFunctionParametersParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                              final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFunctionParametersParserToken.class
         );
     }
 

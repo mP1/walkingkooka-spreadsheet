@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents a between symbol token.
@@ -49,30 +47,6 @@ public final class SpreadsheetBetweenSymbolParserToken extends SpreadsheetSymbol
         return cellRange(tokens, text);
     }
 
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetBetweenSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                              final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetBetweenSymbolParserToken.class
-        );
-    }
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetBetweenSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                         final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetBetweenSymbolParserToken.class
-        );
-    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

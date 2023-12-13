@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents a less than equals symbol token.
@@ -47,32 +45,6 @@ public final class SpreadsheetLessThanEqualsSymbolParserToken extends Spreadshee
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         return lessThanEquals(tokens, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetLessThanEqualsSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                     final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetLessThanEqualsSymbolParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetLessThanEqualsSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetLessThanEqualsSymbolParserToken.class
-        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

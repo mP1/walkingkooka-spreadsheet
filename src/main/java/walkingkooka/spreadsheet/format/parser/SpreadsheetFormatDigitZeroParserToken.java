@@ -17,11 +17,7 @@
 package walkingkooka.spreadsheet.format.parser;
 
 
-import walkingkooka.text.cursor.parser.ParserToken;
-
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents the digit including leading zeros.
@@ -36,32 +32,6 @@ public final class SpreadsheetFormatDigitZeroParserToken extends SpreadsheetForm
 
     private SpreadsheetFormatDigitZeroParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatDigitZeroParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatDigitZeroParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatDigitZeroParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                           final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatDigitZeroParserToken.class
-        );
     }
 
     // visitor........................................................................................................

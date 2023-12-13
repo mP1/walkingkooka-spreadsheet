@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Holds the combination of whitespace or comments.
@@ -46,32 +44,6 @@ public final class SpreadsheetWhitespaceParserToken extends SpreadsheetSymbolPar
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetWhitespaceParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                           final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetWhitespaceParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetWhitespaceParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                      final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetWhitespaceParserToken.class
-        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

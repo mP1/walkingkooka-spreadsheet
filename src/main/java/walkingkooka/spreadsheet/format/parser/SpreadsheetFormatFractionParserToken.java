@@ -22,8 +22,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * A token that contains an fraction.
@@ -53,32 +51,6 @@ public final class SpreadsheetFormatFractionParserToken extends SpreadsheetForma
                 this,
                 children,
                 SpreadsheetFormatFractionParserToken::with
-        );
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatFractionParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                               final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatFractionParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatFractionParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                          final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatFractionParserToken.class
         );
     }
 

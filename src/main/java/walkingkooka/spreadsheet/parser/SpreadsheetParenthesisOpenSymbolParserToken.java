@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents a open / left parens symbol token.
@@ -47,32 +45,6 @@ public final class SpreadsheetParenthesisOpenSymbolParserToken extends Spreadshe
     @Override
     SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
         throw new UnsupportedOperationException();
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetParenthesisOpenSymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                                      final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetParenthesisOpenSymbolParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetParenthesisOpenSymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                                 final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetParenthesisOpenSymbolParserToken.class
-        );
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents a multiply symbol token.
@@ -49,30 +47,6 @@ public final class SpreadsheetMultiplySymbolParserToken extends SpreadsheetSymbo
         return multiplication(tokens, text);
     }
 
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetMultiplySymbolParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                               final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetMultiplySymbolParserToken.class
-        );
-    }
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetMultiplySymbolParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                          final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetMultiplySymbolParserToken.class
-        );
-    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

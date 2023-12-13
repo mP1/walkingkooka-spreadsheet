@@ -20,8 +20,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * A wrapper around a numeric type that is also a percentage.
@@ -63,31 +61,6 @@ public final class SpreadsheetNegativeParserToken extends SpreadsheetParentParse
                 this,
                 children,
                 SpreadsheetNegativeParserToken::with
-        );
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetNegativeParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                         final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetNegativeParserToken.class
-        );
-    }
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetNegativeParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                    final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetNegativeParserToken.class
         );
     }
 

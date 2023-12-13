@@ -22,8 +22,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * A token that includes a general literal and possibly other tokens such as whitespace.
@@ -53,32 +51,6 @@ public final class SpreadsheetFormatGeneralParserToken extends SpreadsheetFormat
                 this,
                 children,
                 SpreadsheetFormatGeneralParserToken::with
-        );
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetFormatGeneralParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                              final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatGeneralParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetFormatGeneralParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                         final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetFormatGeneralParserToken.class
         );
     }
 

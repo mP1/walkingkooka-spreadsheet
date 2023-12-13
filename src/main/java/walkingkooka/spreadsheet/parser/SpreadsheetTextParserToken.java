@@ -21,8 +21,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Holds a text expression in both forms an apostrophe prefixed string literal and a double quoted string.
@@ -51,30 +49,6 @@ public final class SpreadsheetTextParserToken extends SpreadsheetParentParserTok
         );
     }
 
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public SpreadsheetTextParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                     final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetTextParserToken.class
-        );
-    }
-    // replaceIf........................................................................................................
-
-    @Override
-    public SpreadsheetTextParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                                final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                mapper,
-                SpreadsheetTextParserToken.class
-        );
-    }
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override
