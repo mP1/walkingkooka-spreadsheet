@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
@@ -1419,7 +1420,36 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
                         .filterCells(
-                                null,
+                                null, // cells
+                                SpreadsheetValueType.ANY, // valueType
+                                Expression.value(true),
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFilterCellsWithNullValueTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .filterCells(
+                                Sets.empty(), // cells
+                                null, // valueType
+                                Expression.value(true),
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFilterCellsWithEmptyValueTypeFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .filterCells(
+                                Sets.empty(), // cells
+                                "", // valueType
                                 Expression.value(true),
                                 SpreadsheetEngineContexts.fake()
                         )
@@ -1435,7 +1465,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 Sets.of(
                                         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                                 ),
-                                null,
+                                SpreadsheetValueType.ANY, // valueType
+                                null, // expression
                                 SpreadsheetEngineContexts.fake()
                         )
         );
@@ -1450,8 +1481,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 Sets.of(
                                         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                                 ),
+                                SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true),
-                                null
+                                null // context
                         )
         );
     }
@@ -1461,6 +1493,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.filterCellsAndCheck(
                 this.createSpreadsheetEngine(),
                 Sets.empty(),
+                SpreadsheetValueType.ANY,
                 Expression.value(true),
                 this.createContext()
         );
@@ -1475,6 +1508,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         SpreadsheetSelection.parseCell("B2")
                                 .setFormula(SpreadsheetFormula.EMPTY)
                 ),
+                SpreadsheetValueType.ANY,
                 Expression.value(false),
                 this.createContext()
         );
@@ -1482,12 +1516,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void filterCellsAndCheck(final SpreadsheetEngine engine,
                                      final Set<SpreadsheetCell> cells,
+                                     final String valueType,
                                      final Expression expression,
                                      final SpreadsheetEngineContext context,
                                      final SpreadsheetCell... expected) {
         this.filterCellsAndCheck(
                 engine,
                 cells,
+                valueType,
                 expression,
                 context,
                 Sets.of(
@@ -1498,6 +1534,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void filterCellsAndCheck(final SpreadsheetEngine engine,
                                      final Set<SpreadsheetCell> cells,
+                                     final String valueType,
                                      final Expression expression,
                                      final SpreadsheetEngineContext context,
                                      final Set<SpreadsheetCell> expected) {
@@ -1505,10 +1542,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 expected,
                 engine.filterCells(
                         cells,
+                        valueType,
                         expression,
                         context
                 ),
-                () -> "filterCells " + cells
+                () -> "filterCells " + cells + " " + valueType + " " + expression
         );
     }
 

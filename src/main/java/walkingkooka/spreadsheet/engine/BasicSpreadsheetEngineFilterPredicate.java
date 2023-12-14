@@ -17,7 +17,9 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
 
@@ -26,27 +28,48 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 /**
- * This {@link Predicate} is used by {@link BasicSpreadsheetEngine#filterCells(Set, Expression, SpreadsheetEngineContext)} to filter each and every {@link SpreadsheetCell}.
+ * This {@link Predicate} is used by {@link BasicSpreadsheetEngine#filterCells(Set, String, Expression, SpreadsheetEngineContext)} to filter each and every {@link SpreadsheetCell}.
  * It is assumed the {@link Expression} returns a {@link Boolean} result otherwise an {@link IllegalStateException} will be thrown.
  */
 final class BasicSpreadsheetEngineFilterPredicate implements Predicate<SpreadsheetCell> {
 
-    static BasicSpreadsheetEngineFilterPredicate with(final Expression expression,
+    static BasicSpreadsheetEngineFilterPredicate with(final String valueType,
+                                                      final Expression expression,
                                                       final SpreadsheetEngineContext context) {
         return new BasicSpreadsheetEngineFilterPredicate(
+                valueType,
                 expression,
                 context
         );
     }
 
-    private BasicSpreadsheetEngineFilterPredicate(final Expression expression,
+    private BasicSpreadsheetEngineFilterPredicate(final String valueType,
+                                                  final Expression expression,
                                                   final SpreadsheetEngineContext context) {
+        this.valueType = Predicates.customToString(
+                SpreadsheetValueType.ANY.equals(valueType) ?
+                        v -> Boolean.TRUE :
+                        v -> null != v &&
+                                valueType.equals(
+                                        SpreadsheetValueType.typeName(v.getClass())
+                                ),
+                valueType
+        );
         this.expression = expression;
         this.context = context;
     }
 
     @Override
     public boolean test(final SpreadsheetCell cell) {
+        return this.valueType.test(
+                cell.formula()
+                        .value()
+                        .orElse(null)
+        ) &&
+                this.testExpression(cell);
+    }
+
+    private boolean testExpression(final SpreadsheetCell cell) {
         final SpreadsheetEngineContext context = this.context;
 
         final Object filter = context.evaluate(
@@ -63,11 +86,13 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
         return (Boolean) filter;
     }
 
+    private final Predicate<Object> valueType;
+
     private final Expression expression;
     private final SpreadsheetEngineContext context;
 
     @Override
     public String toString() {
-        return this.expression + " " + this.context;
+        return this.valueType + " " + this.expression + " " + this.context;
     }
 }

@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -12240,6 +12241,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         a1,
                         b2
                 ),
+                SpreadsheetValueType.ANY,
                 Expression.call(
                         Expression.namedFunction(
                                 FunctionExpressionName.with("BasicSpreadsheetEngineTestFilterCellsPredicate")

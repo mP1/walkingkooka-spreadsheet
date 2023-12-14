@@ -189,6 +189,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
     public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final String valueType,
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();

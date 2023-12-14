@@ -58,6 +58,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
@@ -1797,15 +1798,22 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final String valueType,
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
+        CharSequences.failIfNullOrEmpty(valueType, "valueType");
         Objects.requireNonNull(expression, "expression");
         checkContext(context);
 
         return cells.stream()
-                .filter(BasicSpreadsheetEngineFilterPredicate.with(expression, context))
-                .collect(Collectors.toCollection(Sets::ordered));
+                .filter(
+                        BasicSpreadsheetEngineFilterPredicate.with(
+                                valueType,
+                                expression,
+                                context
+                        )
+                ).collect(Collectors.toCollection(Sets::ordered));
     }
 
     // checkers.........................................................................................................

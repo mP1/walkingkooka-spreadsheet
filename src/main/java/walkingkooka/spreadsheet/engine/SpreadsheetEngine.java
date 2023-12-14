@@ -226,6 +226,7 @@ public interface SpreadsheetEngine {
      * kept if the {@link Expression} returns true.
      */
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                     final String valueType,
                                      final Expression expression,
                                      final SpreadsheetEngineContext context);
 }
