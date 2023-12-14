@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -1547,6 +1548,149 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         context
                 ),
                 () -> "filterCells " + cells + " " + valueType + " " + expression
+        );
+    }
+
+    // findCells........................................................................................................
+
+    @Test
+    default void testFindCellsWithNullCellsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findCells(
+                                null, // range
+                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetValueType.ANY, // valueType
+                                100, // max
+                                Expression.value(true), // expression
+                                SpreadsheetEngineContexts.fake() // context
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithNullPathFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                null, // path
+                                SpreadsheetValueType.ANY, // valueType
+                                100, // max
+                                Expression.value(true), // expression
+                                SpreadsheetEngineContexts.fake() // context
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithNullValueTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                SpreadsheetCellRangePath.LRTD, // path
+                                null, // valueType
+                                100, // max
+                                Expression.value(true), // expression
+                                SpreadsheetEngineContexts.fake() // context
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithInvalidMaxFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetValueType.ANY, // valueType
+                                -1, // max
+                                Expression.value(true), // expression
+                                SpreadsheetEngineContexts.fake() // context
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithNullExpressionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetValueType.ANY, // valueType
+                                100, // max
+                                null, // expression
+                                SpreadsheetEngineContexts.fake() // context
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetValueType.ANY, // valueType
+                                100, // max
+                                Expression.value(true), // expression
+                                null // context
+                        )
+        );
+    }
+
+    default void findCellsAndCheck(
+            final SpreadsheetEngine engine,
+            final SpreadsheetCellRange range,
+            final SpreadsheetCellRangePath path,
+            final String valueType,
+            final int max,
+            final Expression expression,
+            final SpreadsheetEngineContext context,
+            final SpreadsheetCell... expected) {
+        this.findCellsAndCheck(
+                engine,
+                range,
+                path,
+                valueType,
+                max,
+                expression,
+                context,
+                Sets.of(
+                        expected
+                )
+        );
+    }
+
+    default void findCellsAndCheck(
+            final SpreadsheetEngine engine,
+            final SpreadsheetCellRange range,
+            final SpreadsheetCellRangePath path,
+            final String valueType,
+            final int max,
+            final Expression expression,
+            final SpreadsheetEngineContext context,
+            final Set<SpreadsheetCell> expected) {
+        this.checkEquals(
+                expected,
+                engine.findCells(
+                        range,
+                        path,
+                        valueType,
+                        max,
+                        expression,
+                        context
+                )
         );
     }
 

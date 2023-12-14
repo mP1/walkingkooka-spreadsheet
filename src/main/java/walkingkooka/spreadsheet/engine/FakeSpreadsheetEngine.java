@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -192,6 +193,16 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
                                             final String valueType,
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
+                                          final SpreadsheetCellRangePath path,
+                                          final String valueType,
+                                          final int max,
+                                          final Expression expression,
+                                          final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }
