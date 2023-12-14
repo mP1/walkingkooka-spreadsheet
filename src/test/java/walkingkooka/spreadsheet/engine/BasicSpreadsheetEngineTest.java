@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -12253,6 +12254,526 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // findCells........................................................................................................
+
+    @Test
+    public void testFindCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+        
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                ),
+                        a2.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=1")
+                                ),
+                        b2.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=2")
+                                ),
+                        c2.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=3")
+                                ),
+                        a3.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=4")
+                                ),
+                        b3.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=5")
+                                ),
+                        c3.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=6")
+                                ),
+                        a4.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=7")
+                                ),
+                        b4.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=8")
+                                ),
+                        c4.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=9")
+                                )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetValueType.ANY,
+                10, // max
+                Expression.value(true), // match everything
+                context,
+                saved.cell(a2).get(),
+                saved.cell(b2).get(),
+                saved.cell(c2).get(),
+                saved.cell(a3).get(),
+                saved.cell(b3).get(),
+                saved.cell(c3).get(),
+                saved.cell(a4).get(),
+                saved.cell(b4).get(),
+                saved.cell(c4).get()
+        );
+    }
+
+    @Test
+    public void testFindCellsWithMax() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                ),
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetValueType.ANY,
+                3, // max
+                Expression.value(true), // match everything
+                context,
+                saved.cell(a2).get(),
+                saved.cell(b2).get(),
+                saved.cell(c2).get()
+        );
+    }
+
+    @Test
+    public void testFindCellsWithValueTypeFiltering() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                                .setValue(
+                                                        Optional.of(999)
+                                                )
+                                ),
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                                        .setValue(
+                                                Optional.of(1)
+                                        )
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
+                                        .setValue(
+                                                Optional.of("Hello2")
+                                        )
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
+                                        .setValue(
+                                                Optional.of("Hello3")
+                                        )
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                                        .setValue(
+                                                Optional.of(4)
+                                        )
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                                        .setValue(
+                                                Optional.of(6)
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                                        .setValue(
+                                                Optional.of(8)
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetValueType.NUMBER,
+                10, // max
+                Expression.value(true), // match everything
+                context,
+                saved.cell(a2).get(),
+                saved.cell(a3).get(),
+                saved.cell(b3).get(),
+                saved.cell(c3).get(),
+                saved.cell(a4).get(),
+                saved.cell(b4).get(),
+                saved.cell(c4).get()
+        );
+    }
+
+    @Test
+    public void testFindCellsWithValueTypeFilteringAndMax() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                                .setValue(
+                                                        Optional.of(999)
+                                                )
+                                ),
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                                        .setValue(
+                                                Optional.of(1)
+                                        )
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
+                                        .setValue(
+                                                Optional.of("Hello2")
+                                        )
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
+                                        .setValue(
+                                                Optional.of("Hello3")
+                                        )
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                                        .setValue(
+                                                Optional.of(4)
+                                        )
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                                        .setValue(
+                                                Optional.of(6)
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                                        .setValue(
+                                                Optional.of(8)
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetValueType.NUMBER,
+                3, // max
+                Expression.value(true), // match everything
+                context,
+                saved.cell(a2).get(),
+                saved.cell(a3).get(),
+                saved.cell(b3).get()
+        );
+    }
+
+    @Test
+    public void testFindCellsWithValueTypeFilteringAndMax2() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                                .setValue(
+                                                        Optional.of(999)
+                                                )
+                                ),
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello1\"")
+                                        .setValue(
+                                                Optional.of("Hello1")
+                                        )
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
+                                        .setValue(
+                                                Optional.of("Hello2")
+                                        )
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
+                                        .setValue(
+                                                Optional.of("Hello3")
+                                        )
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                                        .setValue(
+                                                Optional.of(4)
+                                        )
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                                        .setValue(
+                                                Optional.of(6)
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                                        .setValue(
+                                                Optional.of(8)
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetValueType.NUMBER,
+                3, // max
+                Expression.value(true), // match everything
+                context,
+                saved.cell(a3).get(),
+                saved.cell(b3).get(),
+                saved.cell(c3).get()
+        );
+    }
+
+    @Test
+    public void testFindCellsWithPathRlbuValueTypeFilteringAndMax2() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello6\"")
+                                        .setValue(
+                                                Optional.of("Hello6")
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello8\"")
+                                        .setValue(
+                                                Optional.of("Hello8")
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetValueType.NUMBER,
+                3, // max
+                Expression.value(true), // match everything
+                context,
+                saved.cell(c4).get(),
+                saved.cell(a4).get(),
+                saved.cell(b3).get()
+        );
+    }
 
     //  helpers.........................................................................................................
 

@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -74,6 +75,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -1802,7 +1804,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
-        CharSequences.failIfNullOrEmpty(valueType, "valueType");
+        checkValueType(valueType);
         Objects.requireNonNull(expression, "expression");
         checkContext(context);
 
@@ -1816,7 +1818,81 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 ).collect(Collectors.toCollection(Sets::ordered));
     }
 
+    @Override
+    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
+                                          final SpreadsheetCellRangePath path,
+                                          final String valueType,
+                                          final int max,
+                                          final Expression expression,
+                                          final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(range, "range");
+        Objects.requireNonNull(path, "path");
+        checkValueType(valueType);
+        if (max < 0) {
+            throw new IllegalArgumentException("Invalid max " + max + " < 0");
+        }
+        checkExpression(expression);
+        checkContext(context);
+
+        final Set<SpreadsheetCell> found = Sets.sorted(
+                SpreadsheetCellReference.cellComparator(
+                        path.comparator()
+                )
+        );
+
+        final SpreadsheetCellStore store = context.storeRepository()
+                .cells();
+        final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
+                valueType,
+                expression,
+                context
+        );
+
+        int offset = 0;
+
+        for (; ; ) {
+            final int maxLeft = max - found.size();
+            if (maxLeft <= 0) {
+                break;
+            }
+
+            final Collection<SpreadsheetCell> loaded = store.loadCells(
+                    range,
+                    path,
+                    offset,
+                    maxLeft
+            );
+            if (loaded.isEmpty()) {
+                break;
+            }
+
+            for (final SpreadsheetCell possible : loaded) {
+                offset++;
+
+                final SpreadsheetCell loadedAndEval = this.evaluateAndStyle(
+                        possible,
+                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        context
+                );
+
+                if(filterPredicate.test(loadedAndEval)) {
+                    found.add(loadedAndEval);
+                }
+            }
+        }
+
+        return Sets.readOnly(found);
+    }
+
     // checkers.........................................................................................................
+
+    private static String checkValueType(final String valueType) {
+        return CharSequences.failIfNullOrEmpty(valueType, "valueType");
+    }
+
+    private static void checkExpression(final Expression expression) {
+        Objects.requireNonNull(expression, "expression");
+    }
 
     private static void checkLabel(final SpreadsheetLabelName name) {
         Objects.requireNonNull(name, "name");

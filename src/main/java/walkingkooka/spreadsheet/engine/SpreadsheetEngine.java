@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -229,4 +230,15 @@ public interface SpreadsheetEngine {
                                      final String valueType,
                                      final Expression expression,
                                      final SpreadsheetEngineContext context);
+
+    /**
+     * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
+     * the given {@link Expression}.
+     */
+    Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
+                                   final SpreadsheetCellRangePath path,
+                                   final String valueType,
+                                   final int max,
+                                   final Expression expression,
+                                   final SpreadsheetEngineContext context);
 }
