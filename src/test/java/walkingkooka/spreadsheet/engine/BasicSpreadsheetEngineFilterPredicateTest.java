@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
@@ -35,17 +36,51 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     private final static String CONTEXT_TO_STRING = "FakeSpreadsheetEngineContext123";
 
     @Test
-    public void testTrue() {
+    public void testTrueAnyValueType() {
         this.testTrue(
+                this.createPredicate(SpreadsheetValueType.ANY),
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
         );
     }
 
     @Test
-    public void testFalse() {
+    public void testTrueSameValueType() {
+        this.testTrue(
+                this.createPredicate(SpreadsheetValueType.TEXT),
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=\"hello\"")
+                                .setValue(
+                                        Optional.of("hello")
+                                )
+                )
+        );
+    }
+
+    @Test
+    public void testFalseAnyValueType() {
         this.testFalse(
+                this.createPredicate(SpreadsheetValueType.ANY),
                 SpreadsheetSelection.parseCell("B2")
                         .setFormula(SpreadsheetFormula.EMPTY)
+        );
+    }
+
+    @Test
+    public void testFalseWrongValueType() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=\"Hello\"")
+                        .setValue(
+                                Optional.of("Hello")
+                        )
+        );
+
+        this.testTrue(
+                this.createPredicate(SpreadsheetValueType.ANY),
+                cell
+        );
+        this.testFalse(
+                this.createPredicate(SpreadsheetValueType.NUMBER),
+                cell
         );
     }
 
@@ -53,18 +88,25 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     public void testToString() {
         this.toStringAndCheck(
                 this.createPredicate(),
-                "Test123() " + CONTEXT_TO_STRING
+                "* Test123() " + CONTEXT_TO_STRING
         );
     }
 
     @Override
     public BasicSpreadsheetEngineFilterPredicate createPredicate() {
+        return this.createPredicate(
+                SpreadsheetValueType.ANY
+        );
+    }
+
+    private BasicSpreadsheetEngineFilterPredicate createPredicate(final String valueType) {
         final Expression expression = Expression.call(
                 Expression.namedFunction(FunctionExpressionName.with("Test123")),
                 Expression.NO_CHILDREN
         );
 
         return BasicSpreadsheetEngineFilterPredicate.with(
+                valueType,
                 expression,
                 new FakeSpreadsheetEngineContext() {
                     @Override

@@ -272,10 +272,12 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
 
     @Override
     public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final String valueType,
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         return this.engine.filterCells(
                 cells,
+                valueType,
                 expression,
                 context
         );
