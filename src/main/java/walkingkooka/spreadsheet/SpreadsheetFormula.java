@@ -335,6 +335,51 @@ public final class SpreadsheetFormula implements HasText,
         );
     }
 
+    // moveRelativeCellReferences.......................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetFormula} updating any present relative {@link SpreadsheetCellReference}.
+     * If ALL cell references are absolute or none are present this will be returned.
+     */
+    public SpreadsheetFormula moveRelativeCellReferences(final int deltaColumn,
+                                                         final int deltaRow) {
+        return 0 == deltaColumn && 0 == deltaRow ||
+                false == this.token()
+                        .isPresent() ?
+                this :
+                moveRelativeCellReferences0(
+                        deltaColumn,
+                        deltaRow
+                );
+    }
+
+    private SpreadsheetFormula moveRelativeCellReferences0(final int deltaColumn,
+                                                           final int deltaRow) {
+        return this.setToken(
+                Optional.of(
+                        this.token.get()
+                                .replaceIf(
+                                        (t) -> t instanceof SpreadsheetCellReferenceParserToken,
+                                        (t) -> moveRelativeCellReferencesMapper(
+                                                (SpreadsheetCellReferenceParserToken) t,
+                                                deltaColumn,
+                                                deltaRow
+                                        )
+                                ).cast(SpreadsheetParserToken.class)
+                )
+        );
+    }
+
+    private static ParserToken moveRelativeCellReferencesMapper(final SpreadsheetCellReferenceParserToken token,
+                                                                final int deltaColumn,
+                                                                final int deltaRow) {
+        return token.cell().
+                addIfRelative(
+                        deltaColumn,
+                        deltaRow
+                ).toParserToken();
+    }
+
     // Patchable.......................................................................................................
 
     @Override

@@ -811,6 +811,89 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    // moveRelativeCellReferences.......................................................................................
+
+    @Test
+    public void testMoveRelativeCellReferencesMissingToken() {
+        this.moveRelativeCellReferencesAndCheck(
+                SpreadsheetFormula.EMPTY.setText("=1"),
+                1,
+                1
+        );
+    }
+
+    @Test
+    public void testMoveRelativeCellReferencesMissingToken2() {
+        this.moveRelativeCellReferencesAndCheck(
+                SpreadsheetFormula.EMPTY.setText("=1+B2"),
+                1,
+                1
+        );
+    }
+
+    @Test
+    public void testMoveRelativeCellReferencesAbsoluteCellReferences() {
+        this.moveRelativeCellReferencesAndCheck(
+                this.parse("=1+$B$2"),
+                1,
+                2
+        );
+    }
+
+    @Test
+    public void testMoveRelativeCellReferencesRelativeCellReferences() {
+        this.moveRelativeCellReferencesAndCheck(
+                this.parse("=1+B2"),
+                1,
+                2,
+                this.parse("=1+C4")
+        );
+    }
+
+    @Test
+    public void testMoveRelativeCellReferencesAbsoluteAndRelativeCellReferences() {
+        this.moveRelativeCellReferencesAndCheck(
+                this.parse("=1+B2+$C$3+D4"),
+                1,
+                2,
+                this.parse("=1+C4+$C$3+E6")
+        );
+    }
+
+    private void moveRelativeCellReferencesAndCheck(final SpreadsheetFormula formula,
+                                                    final int columnDelta,
+                                                    final int rowDelta) {
+        assertSame(
+                formula,
+                formula.moveRelativeCellReferences(
+                        columnDelta,
+                        rowDelta
+                ),
+                () -> formula + " moveRelativeCellReferences " + columnDelta + ", " + rowDelta
+        );
+    }
+
+    private void moveRelativeCellReferencesAndCheck(final SpreadsheetFormula formula,
+                                                    final int columnDelta,
+                                                    final int rowDelta,
+                                                    final SpreadsheetFormula expected) {
+        final SpreadsheetFormula moved = formula.moveRelativeCellReferences(
+                columnDelta,
+                rowDelta
+        );
+        this.checkEquals(
+                expected,
+                moved,
+                () -> formula + " moveRelativeCellReferences " + columnDelta + ", " + rowDelta
+        );
+        this.checkEquals(
+                expected.text(),
+                expected.token()
+                        .map(Object::toString)
+                        .orElse(null)
+        );
+    }
+
     // TreePrintable.....................................................................................................
 
     @Test
