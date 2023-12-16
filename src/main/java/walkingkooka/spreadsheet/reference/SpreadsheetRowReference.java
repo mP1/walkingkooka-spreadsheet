@@ -134,6 +134,13 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     @Override
+    public SpreadsheetRowReference addIfRelative(final int delta) {
+        return 0 == delta || this.referenceKind() == SpreadsheetReferenceKind.ABSOLUTE ?
+                this :
+                this.add(delta);
+    }
+
+    @Override
     int max() {
         return MAX_VALUE;
     }
