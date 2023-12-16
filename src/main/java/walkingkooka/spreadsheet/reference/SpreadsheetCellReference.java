@@ -154,6 +154,20 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         return this.setRow(this.row().addSaturated(row));
     }
 
+    /**
+     * Adds the given deltas to the relative components of this {@link SpreadsheetCellReference}.
+     */
+    public SpreadsheetCellReference addIfRelative(final int columnDelta,
+                                                  final int rowDelta) {
+        return this.setColumn(
+                this.column()
+                        .addIfRelative(columnDelta)
+        ).setRow(
+                this.row()
+                        .addIfRelative(rowDelta)
+        );
+    }
+
     public SpreadsheetColumnReference column() {
         return this.column;
     }
