@@ -624,6 +624,103 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.checkRow(different, this.row().setValue(ROW + row));
     }
 
+    // addIfRelative....................................................................................................
+
+    @Test
+    public void testAddIfRelativeZero() {
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+        assertSame(
+                reference,
+                reference.addIfRelative(
+                        0,
+                        0
+                )
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeAbsoluteColumn() {
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("$B2");
+
+        assertSame(
+                reference,
+                reference.addIfRelative(
+                        1,
+                        0
+                )
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeAbsoluteRow() {
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B$2");
+
+        assertSame(
+                reference,
+                reference.addIfRelative(
+                        0,
+                        1
+                )
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeAbsoluteColumnRow() {
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("$B$2");
+
+        assertSame(
+                reference,
+                reference.addIfRelative(
+                        1,
+                        1
+                )
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeColumn() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseCell("B2"),
+                1,
+                0,
+                SpreadsheetSelection.parseCell("C2")
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeRow() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseCell("B2"),
+                0,
+                1,
+                SpreadsheetSelection.parseCell("B3")
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeColumnRow() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseCell("D4"),
+                -1,
+                -2,
+                SpreadsheetSelection.parseCell("C2")
+        );
+    }
+
+    private void addIfRelativeAndCheck(final SpreadsheetCellReference reference,
+                                       final int columnDelta,
+                                       final int rowDetla,
+                                       final SpreadsheetCellReference expected) {
+        this.checkEquals(
+                expected,
+                reference.addIfRelative(
+                        columnDelta,
+                        rowDetla
+                ),
+                () -> reference + " addIfRelative " + columnDelta + "," + rowDetla
+        );
+    }
+
     @Test
     public void testSameColumnSameRowDifferentReferenceKinds() {
         this.compareToAndCheckEquals(
