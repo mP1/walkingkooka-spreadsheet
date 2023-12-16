@@ -180,6 +180,47 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkEquals(reference, different.setReferenceKind(REFERENCE_KIND));
     }
 
+    // addIfRelative....................................................................................................
+
+    @Test
+    public final void testAddIfRelativeZero() {
+        final R reference = this.createReference(123);
+        assertSame(
+                reference,
+                reference.addIfRelative(0)
+        );
+    }
+
+    @Test
+    public final void testAddIfRelativeAbsolute() {
+        final R reference = (R) this.createReference(123)
+                .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE);
+        assertSame(
+                reference,
+                reference.addIfRelative(1)
+        );
+    }
+
+    @Test
+    public final void testAddIfRelativeAbsolute2() {
+        final R reference = (R) this.createReference(123)
+                .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE);
+        assertSame(
+                reference,
+                reference.addIfRelative(-1)
+        );
+    }
+
+    final void addIfRelativeAndCheck(final R reference,
+                                     final int delta,
+                                     final R expected) {
+        this.checkEquals(
+                expected,
+                reference.addIfRelative(delta),
+                () -> reference + " addIfRelative " + delta
+        );
+    }
+
     // setValue.........................................................................................................
 
     @Test

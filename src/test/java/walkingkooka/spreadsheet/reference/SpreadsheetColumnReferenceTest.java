@@ -483,6 +483,19 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    // addIfRelative....................................................................................................
+
+    @Test
+    public void testAddIfRelativeWhenRelative() {
+        final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("C");
+
+        this.addIfRelativeAndCheck(
+                reference,
+                1,
+                reference.add(1)
+        );
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Test

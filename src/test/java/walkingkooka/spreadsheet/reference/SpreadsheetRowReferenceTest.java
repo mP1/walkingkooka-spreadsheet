@@ -314,6 +314,19 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // addIfRelative....................................................................................................
+
+    @Test
+    public void testAddIfRelativeWhenRelative() {
+        final SpreadsheetRowReference reference = SpreadsheetSelection.parseRow("3");
+
+        this.addIfRelativeAndCheck(
+                reference,
+                1,
+                reference.add(1)
+        );
+    }
+
     // add column/row..................................................................................................
 
     @Test
