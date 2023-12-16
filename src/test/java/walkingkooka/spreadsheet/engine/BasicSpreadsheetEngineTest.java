@@ -12315,6 +12315,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
                 SpreadsheetValueType.ANY,
+                0, // offset
                 10, // max
                 Expression.value(true), // match everything
                 context,
@@ -12389,6 +12390,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
                 SpreadsheetValueType.ANY,
+                0, // offset
                 3, // max
                 Expression.value(true), // match everything
                 context,
@@ -12487,6 +12489,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
                 SpreadsheetValueType.NUMBER,
+                0, // offset
                 10, // max
                 Expression.value(true), // match everything
                 context,
@@ -12589,6 +12592,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
                 SpreadsheetValueType.NUMBER,
+                0, // offset
                 3, // max
                 Expression.value(true), // match everything
                 context,
@@ -12687,6 +12691,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
                 SpreadsheetValueType.NUMBER,
+                0, // offset
                 3, // max
                 Expression.value(true), // match everything
                 context,
@@ -12766,12 +12771,129 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.RLBU,
                 SpreadsheetValueType.NUMBER,
+                0, // offset
                 3, // max
                 Expression.value(true), // match everything
                 context,
                 saved.cell(c4).get(),
                 saved.cell(a4).get(),
                 saved.cell(b3).get()
+        );
+    }
+
+    @Test
+    public void testFindCellsWithPathRlbuValueTypeFilteringOffsetAndMax() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello6\"")
+                                        .setValue(
+                                                Optional.of("Hello6")
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello8\"")
+                                        .setValue(
+                                                Optional.of("Hello8")
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetValueType.NUMBER,
+                0, // offset
+                3, // max
+                Expression.value(true), // match everything
+                context,
+                saved.cell(c4).get(), // 0
+                saved.cell(a4).get(), // 1
+                saved.cell(b3).get() // 2
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetValueType.NUMBER,
+                1, // offset
+                2, // max
+                Expression.value(true), // match everything
+                context,
+                saved.cell(a4).get(), // 1
+                saved.cell(b3).get() // 2
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetValueType.NUMBER,
+                2, // offset
+                1, // max
+                Expression.value(true), // match everything
+                context,
+                saved.cell(b3).get() // 2
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetValueType.NUMBER,
+                3, // offset
+                0, // max
+                Expression.value(true), // match everything
+                context
         );
     }
 

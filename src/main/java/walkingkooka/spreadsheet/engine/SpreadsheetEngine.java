@@ -238,6 +238,7 @@ public interface SpreadsheetEngine {
     Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
                                    final SpreadsheetCellRangePath path,
                                    final String valueType,
+                                   final int offset,
                                    final int max,
                                    final Expression expression,
                                    final SpreadsheetEngineContext context);
