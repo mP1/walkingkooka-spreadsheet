@@ -1561,9 +1561,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         .findCells(
                                 null, // range
                                 SpreadsheetCellRangePath.LRTD, // path
-                                SpreadsheetValueType.ANY, // valueType
                                 0, // offset
                                 100, // max
+                                SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
                         )
@@ -1578,26 +1578,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 null, // path
+                                0, // offset
+                                100, // max
                                 SpreadsheetValueType.ANY, // valueType
-                                0, // offset
-                                100, // max
-                                Expression.value(true), // expression
-                                SpreadsheetEngineContexts.fake() // context
-                        )
-        );
-    }
-
-    @Test
-    default void testFindCellsWithNullValueTypeFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .findCells(
-                                SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangePath.LRTD, // path
-                                null, // valueType
-                                0, // offset
-                                100, // max
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
                         )
@@ -1612,9 +1595,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangePath.LRTD, // path
-                                SpreadsheetValueType.ANY, // valueType
                                 -1, // offset
-                                0, // max
+                                0,  // max
+                                SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
                         )
@@ -1629,9 +1612,26 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangePath.LRTD, // path
-                                SpreadsheetValueType.ANY, // valueType
                                 0, // offset
                                 -1, // max
+                                SpreadsheetValueType.ANY, // valueType
+                                Expression.value(true), // expression
+                                SpreadsheetEngineContexts.fake() // context
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithNullValueTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                SpreadsheetCellRangePath.LRTD, // path
+                                0, // offset
+                                100, // max
+                                null, // valueType
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
                         )
@@ -1646,9 +1646,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangePath.LRTD, // path
-                                SpreadsheetValueType.ANY, // valueType
                                 0, // offset
                                 100, // max
+                                SpreadsheetValueType.ANY, // valueType
                                 null, // expression
                                 SpreadsheetEngineContexts.fake() // context
                         )
@@ -1663,9 +1663,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangePath.LRTD, // path
-                                SpreadsheetValueType.ANY, // valueType
                                 0, // offset
                                 100, // max
+                                SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
                                 null // context
                         )
@@ -1676,9 +1676,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             final SpreadsheetEngine engine,
             final SpreadsheetCellRange range,
             final SpreadsheetCellRangePath path,
-            final String valueType,
             final int offset,
             final int max,
+            final String valueType,
             final Expression expression,
             final SpreadsheetEngineContext context,
             final SpreadsheetCell... expected) {
@@ -1686,9 +1686,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 engine,
                 range,
                 path,
-                valueType,
                 offset,
                 max,
+                valueType,
                 expression,
                 context,
                 Sets.of(
@@ -1701,9 +1701,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             final SpreadsheetEngine engine,
             final SpreadsheetCellRange range,
             final SpreadsheetCellRangePath path,
-            final String valueType,
             final int offset,
             final int max,
+            final String valueType,
             final Expression expression,
             final SpreadsheetEngineContext context,
             final Set<SpreadsheetCell> expected) {
@@ -1712,12 +1712,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 engine.findCells(
                         range,
                         path,
-                        valueType,
                         offset,
                         max,
+                        valueType,
                         expression,
                         context
-                )
+                ),
+                () -> "findCells " + range + " " + path + " " + offset + " " + max + " " + valueType + " " + expression
         );
     }
 

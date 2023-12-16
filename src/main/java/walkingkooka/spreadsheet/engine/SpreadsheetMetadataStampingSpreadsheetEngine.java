@@ -287,17 +287,17 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     @Override
     public Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
                                           final SpreadsheetCellRangePath path,
-                                          final String valueType,
                                           final int offset,
                                           final int max,
+                                          final String valueType,
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {
         return this.engine.findCells(
                 range,
                 path,
-                valueType,
                 offset,
                 max,
+                valueType,
                 expression,
                 context
         );

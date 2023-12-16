@@ -12314,9 +12314,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
-                SpreadsheetValueType.ANY,
                 0, // offset
                 10, // max
+                SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
                 context,
                 saved.cell(a2).get(),
@@ -12389,9 +12389,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
-                SpreadsheetValueType.ANY,
                 0, // offset
                 3, // max
+                SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
                 context,
                 saved.cell(a2).get(),
@@ -12488,9 +12488,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
-                SpreadsheetValueType.NUMBER,
                 0, // offset
                 10, // max
+                SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
                 saved.cell(a2).get(),
@@ -12591,9 +12591,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
-                SpreadsheetValueType.NUMBER,
                 0, // offset
-                3, // max
+                3, //max
+                SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
                 saved.cell(a2).get(),
@@ -12690,9 +12690,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.LRTD,
-                SpreadsheetValueType.NUMBER,
                 0, // offset
                 3, // max
+                SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
                 saved.cell(a3).get(),
@@ -12770,9 +12770,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.RLBU,
-                SpreadsheetValueType.NUMBER,
                 0, // offset
                 3, // max
+                SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
                 saved.cell(c4).get(),
@@ -12850,9 +12850,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.RLBU,
-                SpreadsheetValueType.NUMBER,
                 0, // offset
                 3, // max
+                SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
                 saved.cell(c4).get(), // 0
@@ -12864,9 +12864,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.RLBU,
-                SpreadsheetValueType.NUMBER,
                 1, // offset
                 2, // max
+                SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
                 saved.cell(a4).get(), // 1
@@ -12877,9 +12877,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.RLBU,
-                SpreadsheetValueType.NUMBER,
                 2, // offset
                 1, // max
+                SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
                 saved.cell(b3).get() // 2
@@ -12889,9 +12889,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangePath.RLBU,
-                SpreadsheetValueType.NUMBER,
                 3, // offset
                 0, // max
+                SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context
         );

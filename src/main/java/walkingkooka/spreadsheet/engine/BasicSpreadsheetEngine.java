@@ -1821,20 +1821,20 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
                                           final SpreadsheetCellRangePath path,
-                                          final String valueType,
                                           final int offset,
                                           final int max,
+                                          final String valueType,
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(path, "path");
-        checkValueType(valueType);
         if (offset < 0) {
             throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
         }
         if (max < 0) {
             throw new IllegalArgumentException("Invalid max " + max + " < 0");
         }
+        checkValueType(valueType);
         checkExpression(expression);
         checkContext(context);
 
