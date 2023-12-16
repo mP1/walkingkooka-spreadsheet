@@ -1822,12 +1822,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
                                           final SpreadsheetCellRangePath path,
                                           final String valueType,
+                                          final int offset,
                                           final int max,
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(path, "path");
         checkValueType(valueType);
+        if (offset < 0) {
+            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
+        }
         if (max < 0) {
             throw new IllegalArgumentException("Invalid max " + max + " < 0");
         }
@@ -1848,7 +1852,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context
         );
 
-        int offset = 0;
+        int loadOffset = 0;
+        int skipOffset = 0;
 
         for (; ; ) {
             final int maxLeft = max - found.size();
@@ -1859,7 +1864,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final Collection<SpreadsheetCell> loaded = store.loadCells(
                     range,
                     path,
-                    offset,
+                    loadOffset,
                     maxLeft
             );
             if (loaded.isEmpty()) {
@@ -1867,7 +1872,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             for (final SpreadsheetCell possible : loaded) {
-                offset++;
+                loadOffset++;
 
                 final SpreadsheetCell loadedAndEval = this.evaluateAndStyle(
                         possible,
@@ -1876,7 +1881,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
 
                 if(filterPredicate.test(loadedAndEval)) {
-                    found.add(loadedAndEval);
+                    if (skipOffset >= offset) {
+                        found.add(loadedAndEval);
+                    }
+                    skipOffset++;
                 }
             }
         }

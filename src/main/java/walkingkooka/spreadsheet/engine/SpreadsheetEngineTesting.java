@@ -1562,6 +1562,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 null, // range
                                 SpreadsheetCellRangePath.LRTD, // path
                                 SpreadsheetValueType.ANY, // valueType
+                                0, // offset
                                 100, // max
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1578,6 +1579,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 null, // path
                                 SpreadsheetValueType.ANY, // valueType
+                                0, // offset
                                 100, // max
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1594,7 +1596,25 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangePath.LRTD, // path
                                 null, // valueType
+                                0, // offset
                                 100, // max
+                                Expression.value(true), // expression
+                                SpreadsheetEngineContexts.fake() // context
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithInvalidOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetValueType.ANY, // valueType
+                                -1, // offset
+                                0, // max
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
                         )
@@ -1610,6 +1630,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangePath.LRTD, // path
                                 SpreadsheetValueType.ANY, // valueType
+                                0, // offset
                                 -1, // max
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1626,6 +1647,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangePath.LRTD, // path
                                 SpreadsheetValueType.ANY, // valueType
+                                0, // offset
                                 100, // max
                                 null, // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1642,6 +1664,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangePath.LRTD, // path
                                 SpreadsheetValueType.ANY, // valueType
+                                0, // offset
                                 100, // max
                                 Expression.value(true), // expression
                                 null // context
@@ -1654,6 +1677,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             final SpreadsheetCellRange range,
             final SpreadsheetCellRangePath path,
             final String valueType,
+            final int offset,
             final int max,
             final Expression expression,
             final SpreadsheetEngineContext context,
@@ -1663,6 +1687,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 range,
                 path,
                 valueType,
+                offset,
                 max,
                 expression,
                 context,
@@ -1677,6 +1702,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             final SpreadsheetCellRange range,
             final SpreadsheetCellRangePath path,
             final String valueType,
+            final int offset,
             final int max,
             final Expression expression,
             final SpreadsheetEngineContext context,
@@ -1687,6 +1713,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         range,
                         path,
                         valueType,
+                        offset,
                         max,
                         expression,
                         context
