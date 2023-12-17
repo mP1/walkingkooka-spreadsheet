@@ -21,11 +21,62 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetCellRangePathTest implements ClassTesting<SpreadsheetCellRangePath> {
+
+    @Test
+    public void testFromCamelCaseWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetCellRangePath.fromCamelCase(null)
+        );
+    }
+
+    @Test
+    public void testFromCamelCaseWithUnknownFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetCellRangePath.fromCamelCase("123?")
+        );
+        this.checkEquals(
+                "Got \"123?\" expected one of lrtd, rltd, lrbu, rlbu, tdlr, tdrl, bulr, burl",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testFromCamelCaseLRTD() {
+        this.fromCamelCaseAndCheck(
+                "lrtd",
+                SpreadsheetCellRangePath.LRTD
+        );
+    }
+
+    @Test
+    public void testFromCamelCaseAllValues() {
+        for (final SpreadsheetCellRangePath path : SpreadsheetCellRangePath.values()) {
+            this.fromCamelCaseAndCheck(
+                    path.name()
+                            .toLowerCase(),
+                    path
+            );
+        }
+    }
+
+    private void fromCamelCaseAndCheck(final String text,
+                                       final SpreadsheetCellRangePath expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetCellRangePath.fromCamelCase(text),
+                () -> "from " + CharSequences.quoteAndEscape(text)
+        );
+    }
 
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 
