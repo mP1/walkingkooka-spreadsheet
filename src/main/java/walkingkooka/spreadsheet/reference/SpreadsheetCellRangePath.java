@@ -17,8 +17,13 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.text.CharSequences;
+
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A {@link Comparator} provider that may be used to sort {@link SpreadsheetCellReference} in a variety of arrangements.
@@ -132,13 +137,18 @@ public enum SpreadsheetCellRangePath {
     SpreadsheetCellRangePath(final boolean xFirst,
                              final int reverseX,
                              final int reverseY) {
+        final String name = this.name();
+
         this.comparator = SpreadsheetCellRangePathComparator.with(
                 xFirst,
                 reverseX,
                 reverseY,
-                this.name()
+                name
         );
+        this.camelCase = name.toLowerCase();
     }
+
+    private final String camelCase;
 
     public Comparator<SpreadsheetCellReference> comparator() {
         return this.comparator;
@@ -151,6 +161,30 @@ public enum SpreadsheetCellRangePath {
         return SpreadsheetCellRangePathCellsIterator.with(
                 cells,
                 this
+        );
+    }
+
+    /**
+     * Finds the matching {@link SpreadsheetCellRangePath} given its name in camel-case form.
+     */
+    public static SpreadsheetCellRangePath fromCamelCase(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        final SpreadsheetCellRangePath[] values = SpreadsheetCellRangePath.values();
+        for (final SpreadsheetCellRangePath possible : values) {
+            if (text.equals(possible.camelCase)) {
+                return possible;
+            }
+        }
+
+        throw new IllegalArgumentException(
+                "Got " +
+                        CharSequences.quoteAndEscape(text) +
+                        " expected one of " +
+                        Arrays.stream(values)
+                                .map(v -> v.camelCase)
+                                .collect(Collectors.joining(", ")
+                                )
         );
     }
 }
