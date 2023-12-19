@@ -41,11 +41,11 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
 
         final SpreadsheetRowReferenceParserToken row = visitor.row;
         if (null == row) {
-            throw new IllegalArgumentException("Row missing parse cell=" + text);
+            throw new IllegalArgumentException("Cell missing row=" + text);
         }
         final SpreadsheetColumnReferenceParserToken column = visitor.column;
         if (null == column) {
-            throw new IllegalArgumentException("Column missing parse cell=" + text);
+            throw new IllegalArgumentException("Cell missing column=" + text);
         }
         this.cell = row.value().setColumn(column.value());
     }
