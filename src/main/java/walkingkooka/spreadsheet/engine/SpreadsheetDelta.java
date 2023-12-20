@@ -792,7 +792,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return filter(
                 labels,
                 m -> {
-                    final SpreadsheetExpressionReference r = m.reference();
+                    final SpreadsheetExpressionReference r = m.target();
 
                     return r.isLabelName() ||
                             window.cellRanges()

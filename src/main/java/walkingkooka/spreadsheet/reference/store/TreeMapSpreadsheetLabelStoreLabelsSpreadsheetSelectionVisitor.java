@@ -58,7 +58,7 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor extend
     // VisibleForTesting
     void acceptAndUpdateLabels(final SpreadsheetLabelMapping mapping) {
         this.add = false;
-        this.accept(mapping.reference());
+        this.accept(mapping.target());
         if (this.add) {
             this.labels.add(mapping);
         }
@@ -74,7 +74,7 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor extend
         if (false == this.add) {
             final SpreadsheetLabelMapping mapping = this.mappings.get(label);
             if (null != mapping) {
-                this.accept(mapping.reference());
+                this.accept(mapping.target());
             }
         }
     }
