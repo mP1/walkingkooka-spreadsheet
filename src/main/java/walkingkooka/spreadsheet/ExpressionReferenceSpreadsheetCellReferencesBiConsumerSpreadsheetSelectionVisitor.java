@@ -52,7 +52,7 @@ final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetSel
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
-        this.stores.labelStore.load(label).ifPresent(m -> this.accept(m.reference()));
+        this.stores.labelStore.load(label).ifPresent(m -> this.accept(m.target()));
     }
 
     @Override

@@ -82,7 +82,7 @@ final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVis
         this.accept(
                 this.context.storeRepository()
                         .labels()
-                        .loadOrFail(label).reference()
+                        .loadOrFail(label).target()
         );
     }
 

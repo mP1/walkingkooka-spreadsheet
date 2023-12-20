@@ -50,7 +50,7 @@ final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelect
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
-        this.function.labelStore.load(label).ifPresent(m -> this.accept(m.reference()));
+        this.function.labelStore.load(label).ifPresent(m -> this.accept(m.target()));
     }
 
     @Override

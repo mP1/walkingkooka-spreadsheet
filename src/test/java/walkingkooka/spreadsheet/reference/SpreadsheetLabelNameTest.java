@@ -249,7 +249,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
         final SpreadsheetLabelMapping mapping = label.mapping(reference);
         assertSame(label, mapping.label(), "label");
-        assertSame(reference, mapping.reference(), "reference");
+        assertSame(reference, mapping.target(), "reference");
     }
 
     @Override

@@ -75,7 +75,7 @@ final class BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisit
     protected void visit(final SpreadsheetLabelName label) {
         this.accept(
                 this.store.loadOrFail(label)
-                        .reference()
+                        .target()
         );
     }
 

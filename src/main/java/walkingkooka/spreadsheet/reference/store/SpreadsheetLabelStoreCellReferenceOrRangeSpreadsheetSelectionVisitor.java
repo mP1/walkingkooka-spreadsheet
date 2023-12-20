@@ -58,7 +58,7 @@ final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor
     protected void visit(final SpreadsheetLabelName label) {
         final Optional<SpreadsheetLabelMapping> mapping = this.store.load(label);
         if (mapping.isPresent()) {
-            this.accept(mapping.get().reference());
+            this.accept(mapping.get().target());
         }
     }
 

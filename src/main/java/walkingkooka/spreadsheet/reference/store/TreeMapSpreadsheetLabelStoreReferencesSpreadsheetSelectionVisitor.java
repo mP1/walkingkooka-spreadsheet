@@ -56,9 +56,9 @@ final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor ex
     protected void visit(final SpreadsheetLabelName label) {
         final SpreadsheetLabelMapping mapping = this.mappings.get(label);
         if (null != mapping) {
-            final ExpressionReference reference = mapping.reference();
+            final ExpressionReference reference = mapping.target();
             if (this.seen.add(reference)) {
-                this.accept(mapping.reference());
+                this.accept(mapping.target());
             }
         }
     }
