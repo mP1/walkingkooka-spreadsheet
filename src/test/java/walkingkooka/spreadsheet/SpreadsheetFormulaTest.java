@@ -860,6 +860,85 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    @Test
+    public void testMoveRelativeCellReferencesWithCellExpression() {
+        this.moveRelativeCellReferencesAndCheck(
+                this.parse("=1+B2")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.add(
+                                                Expression.value(1),
+                                                Expression.reference(
+                                                        SpreadsheetSelection.parseCell("B2")
+                                                )
+                                        )
+                                )
+                        ),
+                1,
+                2,
+                this.parse("=1+C4")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.add(
+                                                Expression.value(1),
+                                                Expression.reference(
+                                                        SpreadsheetSelection.parseCell("C4")
+                                                )
+                                        )
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testMoveRelativeCellReferencesWithCellRangeExpression() {
+        this.moveRelativeCellReferencesAndCheck(
+                this.parse("=1+B2:D4")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.add(
+                                                Expression.value(1),
+                                                Expression.reference(
+                                                        SpreadsheetSelection.parseCellRange("B2:D4")
+                                                )
+                                        )
+                                )
+                        ),
+                1,
+                2,
+                this.parse("=1+C4:E6")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.add(
+                                                Expression.value(1),
+                                                Expression.reference(
+                                                        SpreadsheetSelection.parseCellRange("C4:E6")
+                                                )
+                                        )
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testMoveRelativeCellReferencesWithLabelExpression() {
+        this.moveRelativeCellReferencesAndCheck(
+                this.parse("=1+Label123")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.add(
+                                                Expression.value(1),
+                                                Expression.reference(
+                                                        SpreadsheetSelection.labelName("Label123")
+                                                )
+                                        )
+                                )
+                        ),
+                1,
+                2
+        );
+    }
+
     private void moveRelativeCellReferencesAndCheck(final SpreadsheetFormula formula,
                                                     final int columnDelta,
                                                     final int rowDelta) {

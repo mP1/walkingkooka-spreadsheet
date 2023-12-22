@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
@@ -40,6 +41,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ReferenceExpression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonObject;
@@ -368,6 +370,22 @@ public final class SpreadsheetFormula implements HasText,
                                         deltaRow
                                 )
                         ).cast(SpreadsheetParserToken.class)
+                )
+        ).setExpression(
+                this.expression.map(
+                        (e) -> e.replaceIf(
+                                ee -> ee.isReference(), // predicate
+                                ee -> {
+                                    final ReferenceExpression expression = (ReferenceExpression) ee;
+                                    final SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) expression.value();
+                                    return expression.setValue(
+                                            spreadsheetExpressionReference.addIfRelative(
+                                                    deltaColumn,
+                                                    deltaRow
+                                            )
+                                    );
+                                } // mapper
+                        )
                 )
         );
     }
