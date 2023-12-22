@@ -939,6 +939,36 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    @Test
+    public void testMoveRelativeCellReferencesWithExpressionRelativeAndAbsolute() {
+        this.moveRelativeCellReferencesAndCheck(
+                this.parse("=1+B$2")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.add(
+                                                Expression.value(1),
+                                                Expression.reference(
+                                                        SpreadsheetSelection.parseCell("B$2")
+                                                )
+                                        )
+                                )
+                        ),
+                1,
+                2,
+                this.parse("=1+C$2")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.add(
+                                                Expression.value(1),
+                                                Expression.reference(
+                                                        SpreadsheetSelection.parseCell("C$2")
+                                                )
+                                        )
+                                )
+                        )
+        );
+    }
+
     private void moveRelativeCellReferencesAndCheck(final SpreadsheetFormula formula,
                                                     final int columnDelta,
                                                     final int rowDelta) {
