@@ -343,9 +343,7 @@ public final class SpreadsheetFormula implements HasText,
      */
     public SpreadsheetFormula moveRelativeCellReferences(final int deltaColumn,
                                                          final int deltaRow) {
-        return 0 == deltaColumn && 0 == deltaRow ||
-                false == this.token()
-                        .isPresent() ?
+        return 0 == deltaColumn && 0 == deltaRow ?
                 this :
                 moveRelativeCellReferences0(
                         deltaColumn,
@@ -355,17 +353,21 @@ public final class SpreadsheetFormula implements HasText,
 
     private SpreadsheetFormula moveRelativeCellReferences0(final int deltaColumn,
                                                            final int deltaRow) {
+        final Optional<SpreadsheetParserToken> token = this.token;
+        if (false == token.isPresent()) {
+            throw new IllegalArgumentException("Missing token");
+        }
+
         return this.setToken(
-                Optional.of(
-                        this.token.get()
-                                .replaceIf(
-                                        (t) -> t instanceof SpreadsheetCellReferenceParserToken,
-                                        (t) -> moveRelativeCellReferencesMapper(
-                                                (SpreadsheetCellReferenceParserToken) t,
-                                                deltaColumn,
-                                                deltaRow
-                                        )
-                                ).cast(SpreadsheetParserToken.class)
+                token.map(
+                        t -> t.replaceIf(
+                                (tt) -> tt instanceof SpreadsheetCellReferenceParserToken,
+                                (ttt) -> moveRelativeCellReferencesMapper(
+                                        (SpreadsheetCellReferenceParserToken) ttt,
+                                        deltaColumn,
+                                        deltaRow
+                                )
+                        ).cast(SpreadsheetParserToken.class)
                 )
         );
     }
