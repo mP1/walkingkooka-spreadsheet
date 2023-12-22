@@ -489,6 +489,42 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                 SpreadsheetSelection.parseRowRange("5")
         );
     }
+
+    // addIfRelative....................................................................................................
+
+    @Test
+    public void testAddIfRelativeAbsolute() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseRowRange("$1"),
+                123
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeAbsolute2() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseRowRange("$2:$3"),
+                456
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeMixed() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseRowRange("4:$6"),
+                1,
+                SpreadsheetSelection.parseRowRange("5:$6")
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeMixed2() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseRowRange("$4:6"),
+                1,
+                SpreadsheetSelection.parseRowRange("$4:7")
+        );
+    }
     
     // frozenRowsCheck...............................................................................................
 

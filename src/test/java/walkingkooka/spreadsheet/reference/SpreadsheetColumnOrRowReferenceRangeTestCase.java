@@ -60,6 +60,34 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
         );
     }
 
+    // addIfRelative....................................................................................................
+
+    @Test
+    public final void testAddIfRelativeZero() {
+        this.addIfRelativeAndCheck(
+                this.createSelection(),
+                0
+        );
+    }
+
+    final void addIfRelativeAndCheck(final S selection,
+                                     final int delta) {
+        assertSame(
+                selection,
+                selection.addIfRelative(delta)
+        );
+    }
+
+    final void addIfRelativeAndCheck(final S selection,
+                                     final int delta,
+                                     final S expected) {
+        this.checkEquals(
+                expected,
+                selection.addIfRelative(delta),
+                () -> selection + " addIfRelative " + delta
+        );
+    }
+
     // simplify.........................................................................................................
 
     @Test
