@@ -352,6 +352,18 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // addIfRelative....................................................................................................
+
+    @Test
+    public void testAddIfRelative() {
+        final SpreadsheetLabelName label = this.createSelection();
+
+        assertSame(
+                label,
+                label.addIfRelative(1, 2)
+        );
+    }
+
     // testCell.........................................................................................................
 
     @Test
