@@ -141,6 +141,13 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
 
     abstract SpreadsheetColumnOrRowReferenceRange<?> addSaturatedNonZero(final int value);
 
+    // addIfRelative....................................................................................................
+
+    /**
+     * If this column or row is a relative reference add the given delta or return this if absolute.
+     */
+    public abstract SpreadsheetColumnOrRowReferenceRange<?> addIfRelative(final int delta);
+
     // isSingle.........................................................................................................
 
     /**

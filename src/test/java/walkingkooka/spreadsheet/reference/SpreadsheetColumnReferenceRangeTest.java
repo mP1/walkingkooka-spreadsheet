@@ -241,6 +241,42 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // addIfRelative....................................................................................................
+
+    @Test
+    public void testAddIfRelativeAbsolute() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseColumnRange("$A"),
+                123
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeAbsolute2() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseColumnRange("$B:$C"),
+                456
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeMixed() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseColumnRange("D:$F"),
+                1,
+                SpreadsheetSelection.parseColumnRange("E:$F")
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeMixed2() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseColumnRange("$D:F"),
+                1,
+                SpreadsheetSelection.parseColumnRange("$D:G")
+        );
+    }
+
     // count............................................................................................................
 
     @Test

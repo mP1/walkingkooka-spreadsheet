@@ -145,6 +145,22 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
         return this.addSaturated(column);
     }
 
+    @Override
+    public SpreadsheetColumnReferenceRange addIfRelative(final int delta) {
+        return this.setRange(
+                Range.with(
+                        RangeBound.inclusive(
+                                this.begin()
+                                        .addIfRelative(delta)
+                        ),
+                        RangeBound.inclusive(
+                                this.end()
+                                        .addIfRelative(delta)
+                        )
+                )
+        );
+    }
+
     // testXXX.........................................................................................................
 
     @Override
