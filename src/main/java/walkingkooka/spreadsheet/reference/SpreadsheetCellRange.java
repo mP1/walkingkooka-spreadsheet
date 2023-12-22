@@ -720,6 +720,20 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         );
     }
 
+    /**
+     * Adds the given deltas to the relative components of this {@link SpreadsheetCellRange}.
+     */
+    public SpreadsheetCellRange addIfRelative(final int columnDelta,
+                                              final int rowDelta) {
+        return this.setColumnRange(
+                this.columnRange()
+                        .addIfRelative(columnDelta)
+        ).setRowRange(
+                this.rowRange()
+                        .addIfRelative(rowDelta)
+        );
+    }
+
     // testXXXX.........................................................................................................
 
     /**
