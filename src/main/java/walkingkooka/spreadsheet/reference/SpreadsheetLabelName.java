@@ -209,6 +209,11 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         throw new UnsupportedOperationException(this.toString());
     }
 
+    public SpreadsheetLabelName addIfRelative(final int column,
+                                              final int row) {
+        return this;
+    }
+
     // testXXX..........................................................................................................
 
     /**
