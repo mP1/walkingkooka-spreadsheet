@@ -501,6 +501,83 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    // addIfRelative....................................................................................................
+
+    @Test
+    public void testAddIfRelativeAbsolute() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseCellRange("$A$2:$C$4"),
+                1,
+                2
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeMixed() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseCellRange("A$2:$C$4"),
+                1,
+                0,
+                SpreadsheetSelection.parseCellRange("B$2:$C$4")
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeMixed2() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseCellRange("A2:$C$4"),
+                1,
+                1,
+                SpreadsheetSelection.parseCellRange("B3:$C$4")
+        );
+    }
+
+    @Test
+    public void testAddIfRelativeMixed3() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseCellRange("$A$2:C4"),
+                1,
+                2,
+                SpreadsheetSelection.parseCellRange("$A$2:D6")
+        );
+    }
+
+    @Test
+    public void testAddIfRelative() {
+        this.addIfRelativeAndCheck(
+                SpreadsheetSelection.parseCellRange("A2:D5"),
+                1,
+                2,
+                SpreadsheetSelection.parseCellRange("B4:E7")
+        );
+    }
+
+    private void addIfRelativeAndCheck(final SpreadsheetCellRange range,
+                                       final int columnDelta,
+                                       final int rowDelta) {
+        assertSame(
+                range,
+                range.addIfRelative(
+                        columnDelta,
+                        rowDelta
+                ),
+                () -> range + " addIfRelative " + columnDelta + ", " + range
+        );
+    }
+
+    private void addIfRelativeAndCheck(final SpreadsheetCellRange range,
+                                       final int columnDelta,
+                                       final int rowDelta,
+                                       final SpreadsheetCellRange expected) {
+        this.checkEquals(
+                expected,
+                range.addIfRelative(
+                        columnDelta,
+                        rowDelta
+                ),
+                () -> range + " addIfRelative " + columnDelta + ", " + range
+        );
+    }
     // simplify.........................................................................................................
 
     @Test
