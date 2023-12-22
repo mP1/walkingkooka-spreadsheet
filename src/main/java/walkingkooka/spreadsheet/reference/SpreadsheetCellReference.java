@@ -157,6 +157,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     /**
      * Adds the given deltas to the relative components of this {@link SpreadsheetCellReference}.
      */
+    @Override
     public SpreadsheetCellReference addIfRelative(final int columnDelta,
                                                   final int rowDelta) {
         return this.setColumn(

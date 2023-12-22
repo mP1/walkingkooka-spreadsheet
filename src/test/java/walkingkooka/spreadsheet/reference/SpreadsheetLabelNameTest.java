@@ -355,7 +355,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     // addIfRelative....................................................................................................
 
     @Test
-    public void testAddIfRelative() {
+    public void testAddIfRelativeIgnored() {
         final SpreadsheetLabelName label = this.createSelection();
 
         assertSame(

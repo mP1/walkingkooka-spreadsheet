@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> extends SpreadsheetSelectionTestCase<R> {
@@ -44,6 +45,44 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> this.createSelection().addSaturated(0)
+        );
+    }
+
+    // addIfRelative....................................................................................................
+
+    @Test
+    public final void testAddIfRelative() {
+        this.addIfRelativeAndCheck(
+                this.createSelection(),
+                0,
+                0
+        );
+    }
+
+    final void addIfRelativeAndCheck(final R selection,
+                                     final int columnDelta,
+                                     final int rowDelta) {
+        assertSame(
+                selection,
+                selection.addIfRelative(
+                        columnDelta,
+                        rowDelta
+                ),
+                () -> selection + " addIfRelative " + columnDelta + ", " + selection
+        );
+    }
+
+    final void addIfRelativeAndCheck(final R selection,
+                                     final int columnDelta,
+                                     final int rowDelta,
+                                     final R expected) {
+        this.checkEquals(
+                expected,
+                selection.addIfRelative(
+                        columnDelta,
+                        rowDelta
+                ),
+                () -> selection + " addIfRelative " + columnDelta + ", " + selection
         );
     }
 
