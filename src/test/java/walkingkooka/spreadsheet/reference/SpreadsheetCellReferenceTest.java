@@ -707,19 +707,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    private void addIfRelativeAndCheck(final SpreadsheetCellReference reference,
-                                       final int columnDelta,
-                                       final int rowDetla,
-                                       final SpreadsheetCellReference expected) {
-        this.checkEquals(
-                expected,
-                reference.addIfRelative(
-                        columnDelta,
-                        rowDetla
-                ),
-                () -> reference + " addIfRelative " + columnDelta + "," + rowDetla
-        );
-    }
+    // Compare..........................................................................................................
 
     @Test
     public void testSameColumnSameRowDifferentReferenceKinds() {

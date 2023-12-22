@@ -543,7 +543,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testAddIfRelative() {
+    public void testAddIfRelativeAll() {
         this.addIfRelativeAndCheck(
                 SpreadsheetSelection.parseCellRange("A2:D5"),
                 1,
@@ -552,32 +552,6 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    private void addIfRelativeAndCheck(final SpreadsheetCellRange range,
-                                       final int columnDelta,
-                                       final int rowDelta) {
-        assertSame(
-                range,
-                range.addIfRelative(
-                        columnDelta,
-                        rowDelta
-                ),
-                () -> range + " addIfRelative " + columnDelta + ", " + range
-        );
-    }
-
-    private void addIfRelativeAndCheck(final SpreadsheetCellRange range,
-                                       final int columnDelta,
-                                       final int rowDelta,
-                                       final SpreadsheetCellRange expected) {
-        this.checkEquals(
-                expected,
-                range.addIfRelative(
-                        columnDelta,
-                        rowDelta
-                ),
-                () -> range + " addIfRelative " + columnDelta + ", " + range
-        );
-    }
     // simplify.........................................................................................................
 
     @Test

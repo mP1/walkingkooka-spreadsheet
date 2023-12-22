@@ -723,6 +723,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     /**
      * Adds the given deltas to the relative components of this {@link SpreadsheetCellRange}.
      */
+    @Override
     public SpreadsheetCellRange addIfRelative(final int columnDelta,
                                               final int rowDelta) {
         return this.setColumnRange(

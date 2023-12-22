@@ -42,6 +42,13 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
         throw new UnsupportedOperationException(this.toString());
     }
 
+    /**
+     * Adds the given deltas to the relative components of this {@link SpreadsheetExpressionReference} returning
+     * the result.
+     */
+    public abstract SpreadsheetExpressionReference addIfRelative(final int column,
+                                                                 final int row);
+
     @Override
     public final boolean testParameterName(final ExpressionFunctionParameterName parameterName) {
         return this.isLabelName() &&
