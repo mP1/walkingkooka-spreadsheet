@@ -44,6 +44,16 @@ public final class SpreadsheetLabelNameParserTest extends SpreadsheetParserTestC
     }
 
     @Test
+    public void testAbsoluteColumnAndRowFail() {
+        this.parseFailAndCheck("$A1");
+    }
+
+    @Test
+    public void testColumnAndAbsoluteRowFail() {
+        this.parseFailAndCheck("A$1");
+    }
+
+    @Test
     public void testMaxColumn() {
         // A1 column+row
         this.parseAndCheck2("A" + SpreadsheetRowReference.MAX_VALUE + 1);

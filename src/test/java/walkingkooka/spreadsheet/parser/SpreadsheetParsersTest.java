@@ -846,6 +846,52 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
+    @Test
+    public void testExpressionCellReferenceMixed() {
+        final String text = "$A1";
+
+        this.parseExpressionAndCheck(
+                text,
+                SpreadsheetParserToken.cellReference(
+                        Lists.of(
+                                SpreadsheetParserToken.columnReference(
+                                        SpreadsheetSelection.parseColumn("$A"),
+                                        "$A"
+                                ),
+                                SpreadsheetParserToken.rowReference(
+                                        SpreadsheetSelection.parseRow("1"),
+                                        "1"
+                                )
+                        ),
+                        text
+                ),
+                text
+        );
+    }
+
+    @Test
+    public void testExpressionCellReferenceMixed2() {
+        final String text = "A$1";
+
+        this.parseExpressionAndCheck(
+                text,
+                SpreadsheetParserToken.cellReference(
+                        Lists.of(
+                                SpreadsheetParserToken.columnReference(
+                                        SpreadsheetSelection.parseColumn("A"),
+                                        "A"
+                                ),
+                                SpreadsheetParserToken.rowReference(
+                                        SpreadsheetSelection.parseRow("$1"),
+                                        "$1"
+                                )
+                        ),
+                        text
+                ),
+                text
+        );
+    }
+
     // Expression cell range............................................................................................
 
     @Test

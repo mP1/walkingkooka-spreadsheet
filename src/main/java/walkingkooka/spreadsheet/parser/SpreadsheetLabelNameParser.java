@@ -51,25 +51,35 @@ final class SpreadsheetLabelNameParser implements Parser<SpreadsheetParserContex
         final TextCursorSavePoint save = cursor.save();
         final Optional<ParserToken> stringParserToken = LABEL.parse(cursor, context);
         return stringParserToken.isPresent() ?
-                this.token(stringParserToken.get(), save) :
+                token(
+                        cursor,
+                        stringParserToken.get(),
+                        save
+                ) :
                 Optional.empty();
     }
 
-    private Optional<ParserToken> token(final ParserToken stringParserToken, final TextCursorSavePoint save) {
-        final String text = stringParserToken.text();
-        return SpreadsheetSelection.isLabelText(text) ?
-                Optional.of(
-                        SpreadsheetParserToken.labelName(
-                                SpreadsheetSelection.labelName(text),
-                                text
-                        )
-                ) :
-                restoreAndNothing(save);
-    }
+    private static Optional<ParserToken> token(final TextCursor cursor,
+                                               final ParserToken stringParserToken,
+                                               final TextCursorSavePoint save) {
+        ParserToken token = null;
 
-    private Optional<ParserToken> restoreAndNothing(final TextCursorSavePoint save) {
-        save.restore();
-        return Optional.empty();
+        // if the label is followed by a dollar-sign, abort, its probably a cell eg: A$1
+        if (cursor.isEmpty() || '$' != cursor.at()) {
+            final String text = stringParserToken.text();
+            if (SpreadsheetSelection.isLabelText(text)) {
+                token = SpreadsheetParserToken.labelName(
+                        SpreadsheetSelection.labelName(text),
+                        text
+                );
+            }
+        }
+
+        if (null == token) {
+            save.restore();
+        }
+
+        return Optional.ofNullable(token);
     }
 
     // @see SpreadsheetLabelName
