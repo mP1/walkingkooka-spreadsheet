@@ -91,7 +91,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
      * Factory that creates a {@link SpreadsheetLabelName}
      */
     static SpreadsheetLabelName with(final String name) {
-        CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(name, "name", INITIAL, PART);
+        CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(name, "Label", INITIAL, PART);
 
         if (name.length() >= MAX_LENGTH) {
             throw new InvalidTextLengthException("Label", name, 0, MAX_LENGTH);
