@@ -16,23 +16,12 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.tree.search.HasSearchNode;
-import walkingkooka.tree.search.SearchNode;
-
 /**
  * Base class for all spreadsheet symbol parser tokens.
  */
-abstract class SpreadsheetSymbolParserToken extends SpreadsheetLeafParserToken<String>
-        implements HasSearchNode {
+abstract class SpreadsheetSymbolParserToken extends SpreadsheetLeafParserToken<String> {
 
     SpreadsheetSymbolParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public final SearchNode toSearchNode() {
-        return SearchNode.text(this.text(), this.value());
     }
 }
