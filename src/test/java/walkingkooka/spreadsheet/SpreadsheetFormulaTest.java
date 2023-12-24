@@ -454,7 +454,24 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testParseUnparseableFormulaExpression() {
+    public void testParseInvalidFormulaExpression() {
+        final String text = "=2A";
+
+        this.parseAndCheck(
+                text,
+                SpreadsheetPattern.parseNumberParsePattern("#")
+                        .parser(),
+                SpreadsheetFormula.EMPTY.setText(text)
+                        .setValue(
+                                Optional.of(
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'=\' at (1,1) \"=2A\" expected \"#\"")
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testParseUnparseableFormulaExpression2() {
         this.parseAndCheck(
                 "@",
                 SpreadsheetPattern.parseDateParsePattern("dd/mmm/yyyy")
