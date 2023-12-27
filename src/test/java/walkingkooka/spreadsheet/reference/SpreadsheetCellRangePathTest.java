@@ -31,18 +31,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellRangePathTest implements ClassTesting<SpreadsheetCellRangePath> {
 
     @Test
-    public void testFromCamelCaseWithNullFails() {
+    public void testFromKebabCaseWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetCellRangePath.fromCamelCase(null)
+                () -> SpreadsheetCellRangePath.fromKebabCase(null)
         );
     }
 
     @Test
-    public void testFromCamelCaseWithUnknownFails() {
+    public void testFromKebabCaseWithUnknownFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetCellRangePath.fromCamelCase("123?")
+                () -> SpreadsheetCellRangePath.fromKebabCase("123?")
         );
         this.checkEquals(
                 "Got \"123?\" expected one of lrtd, rltd, lrbu, rlbu, tdlr, tdrl, bulr, burl",
@@ -51,17 +51,17 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     }
 
     @Test
-    public void testFromCamelCaseLRTD() {
-        this.fromCamelCaseAndCheck(
+    public void testFromKebabCaseLRTD() {
+        this.fromKebabCaseAndCheck(
                 "lrtd",
                 SpreadsheetCellRangePath.LRTD
         );
     }
 
     @Test
-    public void testFromCamelCaseAllValues() {
+    public void testFromKebabCaseAllValues() {
         for (final SpreadsheetCellRangePath path : SpreadsheetCellRangePath.values()) {
-            this.fromCamelCaseAndCheck(
+            this.fromKebabCaseAndCheck(
                     path.name()
                             .toLowerCase(),
                     path
@@ -69,11 +69,11 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         }
     }
 
-    private void fromCamelCaseAndCheck(final String text,
+    private void fromKebabCaseAndCheck(final String text,
                                        final SpreadsheetCellRangePath expected) {
         this.checkEquals(
                 expected,
-                SpreadsheetCellRangePath.fromCamelCase(text),
+                SpreadsheetCellRangePath.fromKebabCase(text),
                 () -> "from " + CharSequences.quoteAndEscape(text)
         );
     }
