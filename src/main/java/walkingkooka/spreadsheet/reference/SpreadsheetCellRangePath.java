@@ -145,10 +145,10 @@ public enum SpreadsheetCellRangePath {
                 reverseY,
                 name
         );
-        this.camelCase = name.toLowerCase();
+        this.kebabCase = name.toLowerCase();
     }
 
-    private final String camelCase;
+    private final String kebabCase;
 
     public Comparator<SpreadsheetCellReference> comparator() {
         return this.comparator;
@@ -167,12 +167,12 @@ public enum SpreadsheetCellRangePath {
     /**
      * Finds the matching {@link SpreadsheetCellRangePath} given its name in camel-case form.
      */
-    public static SpreadsheetCellRangePath fromCamelCase(final String text) {
+    public static SpreadsheetCellRangePath fromKebabCase(final String text) {
         Objects.requireNonNull(text, "text");
 
         final SpreadsheetCellRangePath[] values = SpreadsheetCellRangePath.values();
         for (final SpreadsheetCellRangePath possible : values) {
-            if (text.equals(possible.camelCase)) {
+            if (text.equals(possible.kebabCase)) {
                 return possible;
             }
         }
@@ -182,7 +182,7 @@ public enum SpreadsheetCellRangePath {
                         CharSequences.quoteAndEscape(text) +
                         " expected one of " +
                         Arrays.stream(values)
-                                .map(v -> v.camelCase)
+                                .map(v -> v.kebabCase)
                                 .collect(Collectors.joining(", ")
                                 )
         );
