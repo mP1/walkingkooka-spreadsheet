@@ -317,6 +317,14 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     // parseColumn.......................................................................................................
 
     @Test
+    public void testParseColumnStarFails() {
+        this.parseStringFails(
+                "*",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
     public void testParseColumnUpperCased() {
         this.parseStringAndCheck("A", SpreadsheetColumnReference.with(0, SpreadsheetReferenceKind.RELATIVE));
     }

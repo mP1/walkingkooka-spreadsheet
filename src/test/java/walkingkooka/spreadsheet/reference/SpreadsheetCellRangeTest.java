@@ -45,14 +45,6 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         implements ComparableTesting2<SpreadsheetCellRange>,
         IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference> {
 
-    @Test
-    public void testAll() {
-        this.toStringAndCheck(
-                SpreadsheetCellRange.ALL,
-                "A1:XFD1048576"
-        );
-    }
-
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
     private final static int COLUMN2 = 20;
@@ -2574,6 +2566,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // toString.........................................................................................................
 
     @Test
+    public void testToStringStar() {
+        this.toStringAndCheck(
+                SpreadsheetSelection.ALL_CELLS,
+                "*"
+        );
+    }
+
+    @Test
     public void testToStringSingleton() {
         this.toStringAndCheck(SpreadsheetSelection.parseCellRange("Z9"), "Z9");
     }
@@ -2770,6 +2770,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                                 .range(SpreadsheetSelection.parseCell("B2")
                                 )
                 )
+        );
+    }
+
+    @Test
+    public void testParseStar() {
+        this.parseStringAndCheck(
+                "*",
+                SpreadsheetSelection.ALL_CELLS
         );
     }
 

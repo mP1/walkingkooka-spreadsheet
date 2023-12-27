@@ -36,14 +36,6 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         implements IterableTesting<SpreadsheetRowReferenceRange, SpreadsheetRowReference> {
 
     @Test
-    public void testAll() {
-        this.toStringContainsCheck(
-                SpreadsheetRowReferenceRange.ALL,
-                "1:1048576"
-        );
-    }
-
-    @Test
     public void testWith() {
         final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");
         final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("4");
@@ -185,6 +177,14 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
                                 )
                         )
                 )
+        );
+    }
+
+    @Test
+    public void testParseStar() {
+        this.parseStringAndCheck(
+                "*",
+                SpreadsheetSelection.ALL_ROWS
         );
     }
 
@@ -1449,6 +1449,14 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
 
         this.toStringAndCheck(SpreadsheetRowReferenceRange.with(range), "2:4");
+    }
+
+    @Test
+    public void testToStringAll() {
+        this.toStringAndCheck(
+                SpreadsheetSelection.ALL_ROWS,
+                "*"
+        );
     }
 
     @Override

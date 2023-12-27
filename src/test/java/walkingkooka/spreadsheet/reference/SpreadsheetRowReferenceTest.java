@@ -251,6 +251,14 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
+    public void testParseStarFails() {
+        this.parseStringFails(
+                "*",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
     public void testParseAbsolute() {
         this.parseStringAndCheck("$1", SpreadsheetReferenceKind.ABSOLUTE.row(0));
     }
