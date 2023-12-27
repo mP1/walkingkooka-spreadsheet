@@ -220,8 +220,10 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
 
     @Override
     public final String toString() {
-        return this.isSingle() ?
-                this.begin().toString() :
-                this.begin() + SEPARATOR.string() + this.end();
+        return this.isAll() ?
+                SpreadsheetSelection.ALL.toString() :
+                this.isSingle() ?
+                        this.begin().toString() :
+                        this.begin() + SEPARATOR.string() + this.end();
     }
 }

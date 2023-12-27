@@ -98,6 +98,11 @@ public abstract class SpreadsheetSelection implements HasText,
     public final static SpreadsheetRowReferenceRange ALL_ROWS = SpreadsheetRowReferenceRange.ALL;
 
     /**
+     * The star character represents all cells/columns/rows depending on context.
+     */
+    public final static CharacterConstant ALL = CharacterConstant.with('*');
+
+    /**
      * Separator by ranges between cells / columns/ rows.
      */
     public final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
@@ -357,6 +362,7 @@ public abstract class SpreadsheetSelection implements HasText,
     public static SpreadsheetCellRange parseCellRange(final String text) {
         return parseRange(
                 text,
+                ALL_CELLS,
                 SpreadsheetParsers.cell(),
                 (t) -> t.cast(SpreadsheetCellReferenceParserToken.class).cell(),
                 SpreadsheetCellRange::with
@@ -404,6 +410,7 @@ public abstract class SpreadsheetSelection implements HasText,
     public static SpreadsheetColumnReferenceRange parseColumnRange(final String text) {
         return parseRange(
                 text,
+                ALL_COLUMNS,
                 SpreadsheetParsers.column(),
                 (t) -> t.cast(SpreadsheetColumnReferenceParserToken.class).value(),
                 SpreadsheetColumnReferenceRange::with
@@ -450,6 +457,7 @@ public abstract class SpreadsheetSelection implements HasText,
     public static SpreadsheetRowReferenceRange parseRowRange(final String text) {
         return parseRange(
                 text,
+                ALL_ROWS,
                 SpreadsheetParsers.row(),
                 (t) -> t.cast(SpreadsheetRowReferenceParserToken.class).value(),
                 SpreadsheetRowReferenceRange::with
@@ -470,78 +478,86 @@ public abstract class SpreadsheetSelection implements HasText,
      * General purpose helper used by parseXXXRange methods that leverages the simple parser to also handle ranges separated by a {@link #SEPARATOR}.
      */
     private static <R extends SpreadsheetSelection, S extends SpreadsheetSelection & Comparable<S>> R parseRange(final String text,
+                                                                                                                 final R all,
                                                                                                                  final Parser<SpreadsheetParserContext> parser,
                                                                                                                  final Function<ParserToken, S> parserTokenToSelection,
                                                                                                                  final Function<Range<S>, R> rangeFactory) {
         checkText(text);
 
-        final MaxPositionTextCursor cursor = TextCursors.maxPosition(
-                TextCursors.charSequence(text)
-        );
-        final SpreadsheetParserContext context = SpreadsheetParserContexts.fake();
+        final R selection;
+        if (ALL.string().equals(text)) {
+            selection = all;
+        } else {
+            final MaxPositionTextCursor cursor = TextCursors.maxPosition(
+                    TextCursors.charSequence(text)
+            );
+            final SpreadsheetParserContext context = SpreadsheetParserContexts.fake();
 
-        ParserToken lower = parser.parse(cursor, context)
-                .orElse(null);
-        if (null == lower) {
-            final TextCursorLineInfo lineInfo = cursor.lineInfo();
-            throw new InvalidCharacterException(text, lineInfo.column() - 1);
-        }
-        S lowerSelection = parserTokenToSelection.apply(lower);
-
-        ParserToken upper = null;
-        S upperSelection = null;
-
-        if (!cursor.isEmpty()) {
-            final char separator = cursor.at();
-            if (SEPARATOR.character() != separator) {
-                throw new InvalidCharacterException(
-                        text,
-                        cursor.max()
-                );
-            }
-            cursor.next();
-
-            if (cursor.isEmpty()) {
-                throw new IllegalArgumentException("Empty upper range in " + CharSequences.quote(text));
-            }
-
-            upper = parser.parse(cursor, context)
+            ParserToken lower = parser.parse(cursor, context)
                     .orElse(null);
-            if (null == upper) {
-                throw new InvalidCharacterException(
-                        text,
-                        cursor.max()
-                );
+            if (null == lower) {
+                final TextCursorLineInfo lineInfo = cursor.lineInfo();
+                throw new InvalidCharacterException(text, lineInfo.column() - 1);
             }
-            upperSelection = parserTokenToSelection.apply(upper);
+            S lowerSelection = parserTokenToSelection.apply(lower);
 
-            if (false == cursor.isEmpty()) {
-                throw new InvalidCharacterException(
-                        text,
-                        cursor.max()
-                );
+            ParserToken upper = null;
+            S upperSelection = null;
+
+            if (!cursor.isEmpty()) {
+                final char separator = cursor.at();
+                if (SEPARATOR.character() != separator) {
+                    throw new InvalidCharacterException(
+                            text,
+                            cursor.max()
+                    );
+                }
+                cursor.next();
+
+                if (cursor.isEmpty()) {
+                    throw new IllegalArgumentException("Empty upper range in " + CharSequences.quote(text));
+                }
+
+                upper = parser.parse(cursor, context)
+                        .orElse(null);
+                if (null == upper) {
+                    throw new InvalidCharacterException(
+                            text,
+                            cursor.max()
+                    );
+                }
+                upperSelection = parserTokenToSelection.apply(upper);
+
+                if (false == cursor.isEmpty()) {
+                    throw new InvalidCharacterException(
+                            text,
+                            cursor.max()
+                    );
+                }
             }
+
+            selection = rangeFactory.apply(
+                    null == upper ?
+                            Range.singleton(lowerSelection) :
+                            lowerSelection.compareTo(upperSelection) > 0 ?
+                                    Range.greaterThanEquals(
+                                            upperSelection
+                                    ).and(
+                                            Range.lessThanEquals(
+                                                    lowerSelection
+                                            )
+                                    ) :
+                                    Range.greaterThanEquals(
+                                            lowerSelection
+                                    ).and(
+                                            Range.lessThanEquals(
+                                                    upperSelection
+                                            )
+                                    )
+            );
         }
 
-        return rangeFactory.apply(
-                null == upper ?
-                        Range.singleton(lowerSelection) :
-                        lowerSelection.compareTo(upperSelection) > 0 ?
-                                Range.greaterThanEquals(
-                                        upperSelection
-                                ).and(
-                                        Range.lessThanEquals(
-                                                lowerSelection
-                                        )
-                                ) :
-                                Range.greaterThanEquals(
-                                        lowerSelection
-                                ).and(
-                                        Range.lessThanEquals(
-                                                upperSelection
-                                        )
-                                )
-        );
+        return selection;
     }
 
     // cache............................................................................................................

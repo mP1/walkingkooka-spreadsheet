@@ -1117,6 +1117,14 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
+    public void testParseStarFails() {
+        this.parseStringFails(
+                "*",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
     public void testParseCellReferenceRangeFails() {
         final String text = "A1:B2";
 
