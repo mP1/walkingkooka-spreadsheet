@@ -348,6 +348,15 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.toCellOrCellRangeFails();
     }
 
+    // toStringMaybeStar................................................................................................
+
+    @Test
+    public final void testToStringMaybeStar() {
+        this.toStringMaybeStarAndCheck(
+                this.createSelection()
+        );
+    }
+
     // helper............................................................................................................
 
     final R createSelection() {

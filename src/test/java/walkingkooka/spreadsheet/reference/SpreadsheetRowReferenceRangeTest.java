@@ -1459,6 +1459,23 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         );
     }
 
+    // toStringMaybeStar................................................................................................
+
+    @Test
+    public void testToStringMaybeStar() {
+        this.toStringMaybeStarAndCheck(
+                SpreadsheetSelection.parseRowRange("1:2")
+        );
+    }
+
+    @Test
+    public void testToStringMaybeStarAllRows() {
+        this.toStringMaybeStarAndCheck(
+                SpreadsheetSelection.ALL_ROWS,
+                "*"
+        );
+    }
+
     @Override
     SpreadsheetRowReferenceRange createSelection() {
         final SpreadsheetRowReference lower = SpreadsheetSelection.parseRow("2");

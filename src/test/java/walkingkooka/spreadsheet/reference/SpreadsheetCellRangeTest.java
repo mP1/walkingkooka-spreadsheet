@@ -2583,6 +2583,23 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.toStringAndCheck(SpreadsheetSelection.parseCellRange("C3:D4"), "C3:D4");
     }
 
+    // toStringMaybeStar................................................................................................
+
+    @Test
+    public void testToStringMaybeStar() {
+        this.toStringMaybeStarAndCheck(
+                SpreadsheetSelection.parseCellRange("A1:B2")
+        );
+    }
+
+    @Test
+    public void testToStringMaybeStarAllColumns() {
+        this.toStringMaybeStarAndCheck(
+                SpreadsheetSelection.ALL_CELLS,
+                "*"
+        );
+    }
+
     // helpers .........................................................................................................
 
     @Override

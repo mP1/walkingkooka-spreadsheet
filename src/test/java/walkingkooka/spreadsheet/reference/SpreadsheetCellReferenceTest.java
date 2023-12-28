@@ -1897,6 +1897,15 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.toStringAndCheck(this.createSelection(), "$DT$457");
     }
 
+    // toStringMaybeStar................................................................................................
+
+    @Test
+    public void testToStringMaybeStar() {
+        this.toStringMaybeStarAndCheck(
+                SpreadsheetSelection.A1
+        );
+    }
+
     @Override
     SpreadsheetCellReference createSelection() {
         return SpreadsheetCellReference.with(column(), row());
