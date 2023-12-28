@@ -821,11 +821,9 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
 
     @Override
     public String toString() {
-        return this.equals(ALL_CELLS) ?
-                SpreadsheetSelection.ALL.toString() :
-                this.isSingleCell() ?
-                        this.begin().toString() :
-                        this.begin() + SEPARATOR.string() + this.end();
+        return this.isSingleCell() ?
+                this.begin().toString() :
+                this.begin() + SEPARATOR.string() + this.end();
     }
 
     // toRelative.......................................................................................................
