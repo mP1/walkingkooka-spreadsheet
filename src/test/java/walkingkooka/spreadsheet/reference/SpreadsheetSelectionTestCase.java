@@ -1695,6 +1695,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // toStringMaybeStar................................................................................................
+
+    final void toStringMaybeStarAndCheck(final SpreadsheetSelection selection) {
+        this.toStringMaybeStarAndCheck(
+                selection,
+                selection.toString()
+        );
+    }
+
+    final void toStringMaybeStarAndCheck(final SpreadsheetSelection selection,
+                                         final String expected) {
+        this.checkEquals(
+                selection.toStringMaybeStar(),
+                expected,
+                () -> selection.toString()
+        );
+    }
+
     // equalsIgnoreReferenceKind........................................................................................
 
     @Test

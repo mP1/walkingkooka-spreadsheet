@@ -1449,6 +1449,23 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // toStringMaybeStar................................................................................................
+
+    @Test
+    public void testToStringMaybeStar() {
+        this.toStringMaybeStarAndCheck(
+                SpreadsheetSelection.parseColumnRange("A:B")
+        );
+    }
+
+    @Test
+    public void testToStringMaybeStarAllColumns() {
+        this.toStringMaybeStarAndCheck(
+                SpreadsheetSelection.ALL_COLUMNS,
+                "*"
+        );
+    }
+
     @Override
     SpreadsheetColumnReferenceRange createSelection() {
         final SpreadsheetColumnReference lower = SpreadsheetSelection.parseColumn("B");

@@ -1225,6 +1225,15 @@ public abstract class SpreadsheetSelection implements HasText,
     @Override
     abstract public String toString();
 
+    /**
+     * Identical to {@link #toString()} except ranges that match all will return star.
+     */
+    public final String toStringMaybeStar() {
+        return this.isAll() ?
+                ALL.toString() :
+                this.toString();
+    }
+
     // HasText..........................................................................................................
 
     @Override
