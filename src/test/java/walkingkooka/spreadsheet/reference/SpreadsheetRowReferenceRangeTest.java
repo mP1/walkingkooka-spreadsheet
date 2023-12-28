@@ -1452,10 +1452,10 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testToStringAll() {
+    public void testToStringAllRows() {
         this.toStringAndCheck(
                 SpreadsheetSelection.ALL_ROWS,
-                "*"
+                "1:1048576"
         );
     }
 

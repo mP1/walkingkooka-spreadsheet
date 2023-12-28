@@ -1442,10 +1442,10 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testToStringAll() {
+    public void testToStringAllColumns() {
         this.toStringAndCheck(
                 SpreadsheetSelection.ALL_COLUMNS,
-                "*"
+                "A:XFD"
         );
     }
 

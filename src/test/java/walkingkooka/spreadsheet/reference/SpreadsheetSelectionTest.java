@@ -52,7 +52,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testAllCells() {
         this.checkEquals(
-                "*",
+                "A1:XFD1048576",
                 SpreadsheetSelection.ALL_CELLS.toString()
         );
     }
@@ -60,7 +60,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testAllColumns() {
         this.checkEquals(
-                "*",
+                "A:XFD",
                 SpreadsheetSelection.ALL_COLUMNS.toString()
         );
     }
@@ -68,7 +68,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testAllRows() {
         this.checkEquals(
-                "*",
+                "1:1048576",
                 SpreadsheetSelection.ALL_ROWS.toString()
         );
     }

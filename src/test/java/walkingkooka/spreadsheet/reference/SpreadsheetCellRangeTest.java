@@ -2566,10 +2566,10 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // toString.........................................................................................................
 
     @Test
-    public void testToStringStar() {
+    public void testToStringAllCells() {
         this.toStringAndCheck(
                 SpreadsheetSelection.ALL_CELLS,
-                "*"
+                "A1:XFD1048576"
         );
     }
 
