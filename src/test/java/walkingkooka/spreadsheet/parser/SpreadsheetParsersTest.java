@@ -801,6 +801,14 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     // Expression cell..................................................................................................
 
     @Test
+    public void testExpressionStarFails() {
+        this.parseExpressionThrows(
+                "1+*",
+                "Invalid character '*' at (3,1)"
+        );
+    }
+
+    @Test
     public void testExpressionCellReference() {
         final String text = "A1";
 
