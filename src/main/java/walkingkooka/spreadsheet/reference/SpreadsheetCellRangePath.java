@@ -150,6 +150,9 @@ public enum SpreadsheetCellRangePath {
 
     private final String kebabCase;
 
+    /**
+     * A {@link Comparator} that may be used to sort {@link SpreadsheetCellReference} honouring this {@link SpreadsheetCellRangePath}.
+     */
     public Comparator<SpreadsheetCellReference> comparator() {
         return this.comparator;
     }
