@@ -22,6 +22,7 @@ import walkingkooka.collect.Range;
 import walkingkooka.collect.RangeBound;
 import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -1341,6 +1342,24 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.isSingleAndCheck(
                 "1:$2",
                 false
+        );
+    }
+
+    // hasUrlFragment...................................................................................................
+
+    @Test
+    public void testHasUrlFragment2() {
+        this.hasUrlFragmentAndCheck(
+                SpreadsheetSelection.parseRowRange("1:2"),
+                UrlFragment.parse("/row/1:2")
+        );
+    }
+
+    @Test
+    public void testHasUrlFragmentAllRows() {
+        this.hasUrlFragmentAndCheck(
+                SpreadsheetSelection.ALL_ROWS,
+                UrlFragment.parse("/row/*")
         );
     }
 

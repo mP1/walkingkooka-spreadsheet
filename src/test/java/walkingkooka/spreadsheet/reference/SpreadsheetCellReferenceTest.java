@@ -23,6 +23,7 @@ import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.ComparableTesting2;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -1814,6 +1815,24 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("A12"),
                 "cell A12" + EOL
+        );
+    }
+
+    // hasUrlFragment...................................................................................................
+
+    @Test
+    public void testHasUrlFragment2() {
+        this.hasUrlFragmentAndCheck(
+                SpreadsheetSelection.parseCellOrCellRange("A1:B2"),
+                UrlFragment.parse("/cell/A1:B2")
+        );
+    }
+
+    @Test
+    public void testHasUrlFragmentAllCells() {
+        this.hasUrlFragmentAndCheck(
+                SpreadsheetSelection.ALL_CELLS,
+                UrlFragment.parse("/cell/*")
         );
     }
 

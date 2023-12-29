@@ -1262,7 +1262,11 @@ public abstract class SpreadsheetSelection implements HasText,
                                         .replace("-range", "")
                         )
                 ).append(UrlFragment.SLASH)
-                .append(UrlFragment.with(this.toString()));
+                .append(
+                        UrlFragment.with(
+                                this.toStringMaybeStar()
+                        )
+                );
     }
 
     // UsesToStringBuilder..............................................................................................
