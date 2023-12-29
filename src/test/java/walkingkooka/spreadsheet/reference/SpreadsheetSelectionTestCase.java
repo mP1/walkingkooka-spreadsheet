@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
@@ -56,6 +57,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelection> implements ClassTesting2<S>,
         HashCodeEqualsDefinedTesting2<S>,
+        HasUrlFragmentTesting,
         HasTextTesting,
         JsonNodeMarshallingTesting<S>,
         IsMethodTesting<S>,
@@ -1649,15 +1651,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final S selection = this.createSelection();
         final String toString = selection.toString();
 
-        this.checkEquals(
+        this.hasUrlFragmentAndCheck(
+                selection,
                 UrlFragment.with(
                         "/" +
                                 (selection.isLabelName() ? "cell" : selection.selectionTypeName())
                                         .replace("-range", "") +
                                 "/" +
                                 toString
-                ),
-                selection.urlFragment()
+                )
         );
     }
 
