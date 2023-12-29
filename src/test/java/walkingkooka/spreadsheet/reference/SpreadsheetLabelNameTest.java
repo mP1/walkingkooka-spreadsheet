@@ -565,6 +565,27 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        final SpreadsheetLabelName labelName = this.createSelection();
+        this.toStringAndCheck(
+                labelName,
+                labelName.text()
+        );
+    }
+
+    // toStringMaybeStar.........................................................................................................
+
+    @Test
+    public void testToStringMaybeStar() {
+        final SpreadsheetLabelName labelName = this.createSelection();
+        this.toStringMaybeStarAndCheck(
+                labelName
+        );
+    }
+
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
