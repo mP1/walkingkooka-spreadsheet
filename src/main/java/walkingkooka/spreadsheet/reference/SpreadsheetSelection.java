@@ -1229,7 +1229,8 @@ public abstract class SpreadsheetSelection implements HasText,
      * Identical to {@link #toString()} except ranges that match all will return star.
      */
     public final String toStringMaybeStar() {
-        return this.isAll() ?
+        return false == this.isLabelName() &&
+                this.isAll() ?
                 ALL.toString() :
                 this.toString();
     }
