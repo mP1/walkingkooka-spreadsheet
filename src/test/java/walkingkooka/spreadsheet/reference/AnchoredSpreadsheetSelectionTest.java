@@ -195,6 +195,28 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
         );
     }
 
+    @Test
+    public void testToStringCell() {
+        this.toStringAndCheck(
+                AnchoredSpreadsheetSelection.with(
+                        SpreadsheetSelection.A1,
+                        SpreadsheetViewportAnchor.NONE
+                ),
+                "A1"
+        );
+    }
+
+    @Test
+    public void testToStringAllCells() {
+        this.toStringAndCheck(
+                AnchoredSpreadsheetSelection.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        ANCHOR
+                ),
+                "* " + ANCHOR
+        );
+    }
+
     // json.............................................................................................................
 
     @Test
