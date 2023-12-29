@@ -373,6 +373,41 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         }
     }
 
+    // labelText........................................................................................................
+
+    @Test
+    public void testLRTDLabelText() {
+        this.labelTextAndCheck(
+                SpreadsheetCellRangePath.LRTD,
+                "left-right top-down"
+        );
+    }
+
+    @Test
+    public void testRLTDLabelText() {
+        this.labelTextAndCheck(
+                SpreadsheetCellRangePath.RLTD,
+                "right-left top-down"
+        );
+    }
+
+    @Test
+    public void testLRBULabelText() {
+        this.labelTextAndCheck(
+                SpreadsheetCellRangePath.LRBU,
+                "left-right bottom-up"
+        );
+    }
+
+    private void labelTextAndCheck(final SpreadsheetCellRangePath path,
+                                   final String expected) {
+        this.checkEquals(
+                expected,
+                path.labelText(),
+                () -> path.toString()
+        );
+    }
+
     // ClassTesting....................................................................................................
 
     @Override
