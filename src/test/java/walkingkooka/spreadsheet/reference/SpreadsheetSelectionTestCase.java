@@ -1651,7 +1651,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final S selection = this.createSelection();
         final String toString = selection.toString();
 
-        this.hasUrlFragmentAndCheck(
+        this.urlFragmentAndCheck(
                 selection,
                 UrlFragment.with(
                         "/" +

@@ -1821,16 +1821,16 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // hasUrlFragment...................................................................................................
 
     @Test
-    public void testHasUrlFragment2() {
-        this.hasUrlFragmentAndCheck(
+    public void testUrlFragment2() {
+        this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseCellOrCellRange("A1:B2"),
                 UrlFragment.parse("/cell/A1:B2")
         );
     }
 
     @Test
-    public void testHasUrlFragmentAllCells() {
-        this.hasUrlFragmentAndCheck(
+    public void testUrlFragmentAllCells() {
+        this.urlFragmentAndCheck(
                 SpreadsheetSelection.ALL_CELLS,
                 UrlFragment.parse("/cell/*")
         );

@@ -1277,16 +1277,16 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     // hasUrlFragment...................................................................................................
 
     @Test
-    public void testHasUrlFragment2() {
-        this.hasUrlFragmentAndCheck(
+    public void testUrlFragment2() {
+        this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseColumnRange("A:B"),
                 UrlFragment.parse("/column/A:B")
         );
     }
 
     @Test
-    public void testHasUrlFragmentAllColumns() {
-        this.hasUrlFragmentAndCheck(
+    public void testUrlFragmentAllColumns() {
+        this.urlFragmentAndCheck(
                 SpreadsheetSelection.ALL_COLUMNS,
                 UrlFragment.parse("/column/*")
         );

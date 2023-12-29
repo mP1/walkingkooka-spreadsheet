@@ -1348,16 +1348,16 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     // hasUrlFragment...................................................................................................
 
     @Test
-    public void testHasUrlFragment2() {
-        this.hasUrlFragmentAndCheck(
+    public void testUrlFragment2() {
+        this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseRowRange("1:2"),
                 UrlFragment.parse("/row/1:2")
         );
     }
 
     @Test
-    public void testHasUrlFragmentAllRows() {
-        this.hasUrlFragmentAndCheck(
+    public void testUrlFragmentAllRows() {
+        this.urlFragmentAndCheck(
                 SpreadsheetSelection.ALL_ROWS,
                 UrlFragment.parse("/row/*")
         );
