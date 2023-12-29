@@ -131,7 +131,7 @@ public enum SpreadsheetCellRangePath {
     BURL(
             true, // xFirst
             -1, // reverseX
-            -1 //reverseY
+            -1 //reverseY"
     );
 
     SpreadsheetCellRangePath(final boolean xFirst,
@@ -145,8 +145,25 @@ public enum SpreadsheetCellRangePath {
                 reverseY,
                 name
         );
-        this.kebabCase = name.toLowerCase();
+
+        final String nameLower = name.toLowerCase();
+        this.kebabCase = nameLower;
+
+        this.labelText = (nameLower.substring(0, 2) + " " + nameLower.substring(2))
+                .replace("lr", "left-right")
+                .replace("rl", "right-left")
+                .replace("td", "top-down")
+                .replace("bu", "bottom-up");
     }
+
+    /**
+     * Label or pretty text for each enum value.
+     */
+    public String labelText() {
+        return this.labelText;
+    }
+
+    private final String labelText;
 
     private final String kebabCase;
 
