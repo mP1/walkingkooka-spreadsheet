@@ -157,6 +157,9 @@ public enum SpreadsheetCellRangePath {
     // SpreadsheetCellRangePathCellsIterator
     final SpreadsheetCellRangePathComparator comparator;
 
+    /**
+     * Returns an {@link Iterator} for the given {@link SpreadsheetCellRange} for this {@link SpreadsheetCellRangePath}.
+     */
     public Iterator<SpreadsheetCellReference> cells(final SpreadsheetCellRange cells) {
         return SpreadsheetCellRangePathCellsIterator.with(
                 cells,
