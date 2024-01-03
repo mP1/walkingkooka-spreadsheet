@@ -36,10 +36,20 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     private final static String CONTEXT_TO_STRING = "FakeSpreadsheetEngineContext123";
 
     @Test
-    public void testTrueAnyValueType() {
-        this.testTrue(
+    public void testFalseEmptyFormulaNoValueWithAny() {
+        this.testFalse(
                 this.createPredicate(SpreadsheetValueType.ANY),
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+        );
+    }
+
+    @Test
+    public void testTrueAnyValueTypeWithNotEmptyFormula() {
+        this.testTrue(
+                this.createPredicate(SpreadsheetValueType.ANY),
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1")
+                )
         );
     }
 
