@@ -83,7 +83,7 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
         );
 
         if (false == filter instanceof Boolean) {
-            throw new IllegalStateException("Expected boolean result but got " + CharSequences.quoteIfChars(filter));
+            throw new RuntimeException("Expected boolean result but got " + CharSequences.quoteIfChars(filter));
         }
 
         return (Boolean) filter;
