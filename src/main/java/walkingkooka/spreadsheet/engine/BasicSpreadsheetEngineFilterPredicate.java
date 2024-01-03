@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
@@ -30,6 +31,7 @@ import java.util.function.Predicate;
 /**
  * This {@link Predicate} is used by {@link BasicSpreadsheetEngine#filterCells(Set, String, Expression, SpreadsheetEngineContext)} to filter each and every {@link SpreadsheetCell}.
  * It is assumed the {@link Expression} returns a {@link Boolean} result otherwise an {@link IllegalStateException} will be thrown.
+ * Note cells without formula text and no value are always skipped
  */
 final class BasicSpreadsheetEngineFilterPredicate implements Predicate<SpreadsheetCell> {
 
@@ -61,9 +63,10 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
 
     @Override
     public boolean test(final SpreadsheetCell cell) {
-        return this.valueType.test(
-                cell.formula()
-                        .value()
+        final SpreadsheetFormula formula = cell.formula();
+        return false == formula.text().isEmpty() &&
+                this.valueType.test(
+                formula.value()
                         .orElse(null)
         ) &&
                 this.testExpression(cell);
