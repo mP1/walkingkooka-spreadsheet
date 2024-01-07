@@ -549,10 +549,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // ParseString...............................................................................................
+    // ParseExpressionReference.........................................................................................
 
     @Test
-    public void testParseStringCellReferenceUpperCaseRelativeRelative() {
+    public void testParseExpressionReferenceCellReferenceUpperCaseRelativeRelative() {
         final String reference = "A2";
         this.parseStringAndCheck(
                 reference,
@@ -561,7 +561,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseStringCellReferenceUpperCaseRelativeAbsolute() {
+    public void testParseExpressionReferenceCellReferenceUpperCaseRelativeAbsolute() {
         final String reference = "C$4";
         this.parseStringAndCheck(
                 reference,
@@ -570,7 +570,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseStringCellReferenceUpperCaseAbsoluteRelative() {
+    public void testParseExpressionReferenceCellReferenceUpperCaseAbsoluteRelative() {
         final String reference = "$E6";
         this.parseStringAndCheck(
                 reference,
@@ -579,7 +579,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseStringCellReferenceUpperCaseAbsoluteAbsolute() {
+    public void testParseExpressionReferenceCellReferenceUpperCaseAbsoluteAbsolute() {
         final String reference = "$G$8";
         this.parseStringAndCheck(
                 reference,
@@ -588,7 +588,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseStringCellReferenceLowercaseRelativeRelative() {
+    public void testParseExpressionReferenceCellReferenceLowercaseRelativeRelative() {
         final String reference = "i10";
         this.parseStringAndCheck(
                 reference,
@@ -597,7 +597,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseStringCellReferenceLowercaseAbsolute() {
+    public void testParseExpressionReferenceCellReferenceLowercaseAbsolute() {
         final String reference = "$k12";
         this.parseStringAndCheck(
                 reference,
@@ -606,7 +606,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseStringLabelFails() {
+    public void testParseExpressionReferenceLabelFails() {
         final String text = "Label1 2";
 
         final InvalidCharacterException thrown = assertThrows(
@@ -624,13 +624,13 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseStringLabel() {
+    public void testParseExpressionReferenceLabel() {
         final String label = "label123";
         this.parseStringAndCheck(label, SpreadsheetSelection.labelName(label));
     }
 
     @Test
-    public void testParseStringExtraComponentFails() {
+    public void testParseExpressionReferenceExtraComponentFails() {
         this.parseStringFails(
                 "A1:B2:C3",
                 new IllegalArgumentException("Expected cell, label or range got \"A1:B2:C3\"")
@@ -638,7 +638,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testParseStringCellRange() {
+    public void testParseExpressionReferenceCellRange() {
         final String range = "A2:B2";
         this.parseStringAndCheck(range, SpreadsheetSelection.parseCellRange(range));
     }
