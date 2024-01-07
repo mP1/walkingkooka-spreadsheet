@@ -326,7 +326,8 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}
+     * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
+     * Note text holding <pre>*</pre> or a cell-range such as A1:B2 will fail.
      */
     public static SpreadsheetExpressionReference parseCellOrLabel(final String text) {
         checkText(text);

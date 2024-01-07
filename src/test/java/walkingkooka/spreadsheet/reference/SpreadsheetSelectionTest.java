@@ -670,6 +670,14 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
+    public void testParseCellOrLabelStarFails() {
+        parseCellOrLabelFails(
+                "*",
+                InvalidCharacterException.class
+        );
+    }
+
+    @Test
     public void testParseCellOrLabelRangeFails() {
         parseCellOrLabelFails(
                 SpreadsheetSelection.parseCellRange("A1:B2").toString(),
