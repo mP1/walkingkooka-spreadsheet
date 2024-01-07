@@ -302,9 +302,11 @@ public abstract class SpreadsheetSelection implements HasText,
 
         switch (text.split(":").length) {
             case 1:
-                reference = isCellText(text) ?
-                        parseCell(text) :
-                        labelName(text);
+                reference = ALL.string().equals(text) ?
+                        ALL_CELLS :
+                        isCellText(text) ?
+                                parseCell(text) :
+                                labelName(text);
                 break;
             case 2:
                 reference = parseCellRange(text);

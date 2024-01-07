@@ -552,6 +552,14 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     // ParseExpressionReference.........................................................................................
 
     @Test
+    public void testParseExpressionReferenceStar() {
+        this.parseStringAndCheck(
+                "*",
+                SpreadsheetSelection.ALL_CELLS
+        );
+    }
+
+    @Test
     public void testParseExpressionReferenceCellReferenceUpperCaseRelativeRelative() {
         final String reference = "A2";
         this.parseStringAndCheck(
