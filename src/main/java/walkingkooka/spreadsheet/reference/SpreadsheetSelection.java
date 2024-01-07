@@ -344,14 +344,17 @@ public abstract class SpreadsheetSelection implements HasText,
      * A1, // cell
      * B2:C3 // cell-range
      * D4:D4 // cell-range
+     * * // {@link SpreadsheetSelection#ALL_CELLS}
      * </pre>
      */
     public static SpreadsheetCellReferenceOrRange parseCellOrCellRange(final String text) {
         checkText(text);
 
-        return -1 == text.indexOf(SEPARATOR.character()) ?
-                parseCell(text) :
-                parseCellRange(text);
+        return ALL.string().equals(text) ?
+                ALL_CELLS :
+                -1 == text.indexOf(SEPARATOR.character()) ?
+                        parseCell(text) :
+                        parseCellRange(text);
     }
 
     /**

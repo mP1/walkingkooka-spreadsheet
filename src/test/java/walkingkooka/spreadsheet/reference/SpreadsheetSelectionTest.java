@@ -786,6 +786,14 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    @Test
+    public void testParseCellOrCellRangeWithStar() {
+        this.parseCellOrCellRangeAndCheck(
+                "*",
+                SpreadsheetSelection.ALL_CELLS
+        );
+    }
+
     private void parseCellOrCellRangeAndCheck(final String text,
                                               final SpreadsheetCellReferenceOrRange expected) {
         this.checkEquals(
