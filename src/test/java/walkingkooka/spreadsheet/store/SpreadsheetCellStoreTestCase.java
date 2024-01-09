@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -415,7 +414,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     private TextStyle style() {
-        return TextStyle.with(Maps.of(TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD));
+        return TextStyle.EMPTY.set(
+                TextStylePropertyName.FONT_WEIGHT,
+                FontWeight.BOLD
+        );
     }
 
     @SuppressWarnings("SameReturnValue")

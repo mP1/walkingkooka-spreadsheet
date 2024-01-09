@@ -1120,21 +1120,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
 
         // rule 3 is ignored because it returns false, rule 2 short circuits the conditional testing ...
-        final TextStyle italics = TextStyle.with(Maps.of(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC));
-        this.saveRule(true,
+        final TextStyle italics = TextStyle.EMPTY.set(
+                TextStylePropertyName.FONT_STYLE,
+                FontStyle.ITALIC
+        );
+        this.saveRule(
+                true,
                 1,
                 italics,
                 a,
-                rules);
+                rules
+        );
 
-        this.saveRule(true,
+        this.saveRule(
+                true,
                 2,
-                TextStyle.with(Maps.of(TextStylePropertyName.TEXT_DECORATION_LINE, TextDecorationLine.UNDERLINE)),
+                TextStyle.EMPTY.set(
+                        TextStylePropertyName.TEXT_DECORATION_LINE,
+                        TextDecorationLine.UNDERLINE
+                ),
                 a,
-                rules);
-        this.saveRule(false,
+                rules
+        );
+        this.saveRule(
+                false,
                 3,
-                TextStyle.with(Maps.of(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC, TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD, TextStylePropertyName.TEXT_DECORATION_LINE, TextDecorationLine.UNDERLINE)),
+                TextStyle.EMPTY.setValues(
+                        Maps.of(
+                                TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC,
+                                TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD,
+                                TextStylePropertyName.TEXT_DECORATION_LINE, TextDecorationLine.UNDERLINE
+                        )
+                ),
                 a,
                 rules);
 
@@ -13628,7 +13645,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private TextStyle style() {
-        return TextStyle.with(Maps.of(TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD));
+        return TextStyle.EMPTY.set(
+                TextStylePropertyName.FONT_WEIGHT,
+                FontWeight.BOLD
+        );
     }
 
     private void addFailingCellSaveWatcherAndDeleteWatcher(final SpreadsheetEngineContext context) {

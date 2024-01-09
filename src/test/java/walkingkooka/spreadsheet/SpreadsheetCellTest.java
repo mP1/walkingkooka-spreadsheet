@@ -351,7 +351,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testSetStyleDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final TextStyle differentTextStyle = TextStyle.with(Maps.of(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC));
+        final TextStyle differentTextStyle = TextStyle.EMPTY.set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
         final SpreadsheetCell different = cell.setStyle(differentTextStyle);
         assertNotSame(cell, different);
 
@@ -480,8 +480,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testCompareDifferentTextStyle() {
-        this.compareToAndCheckEquals(this.createComparable()
-                .setStyle(TextStyle.with(Maps.of(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC))));
+        this.compareToAndCheckEquals(
+                this.createComparable()
+                        .setStyle(
+                                TextStyle.EMPTY.set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC)
+                        )
+        );
     }
 
     @Test
@@ -1543,7 +1547,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private TextStyle boldAndItalics() {
-        return TextStyle.with(Maps.of(TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD, TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC));
+        return TextStyle.EMPTY.setValues(
+                Maps.of(
+                        TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD,
+                        TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC
+                )
+        );
     }
 
     private void checkTextStyle(final SpreadsheetCell cell) {

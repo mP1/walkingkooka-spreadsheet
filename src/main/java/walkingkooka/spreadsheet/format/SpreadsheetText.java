@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.json.JsonNode;
@@ -122,7 +121,7 @@ public final class SpreadsheetText implements HasText,
 
     @Override
     public TextNode toTextNode() {
-        return this.color.map(c -> TextStyle.with(Maps.of(TextStylePropertyName.COLOR, c)))
+        return this.color.map(c -> TextStyle.EMPTY.set(TextStylePropertyName.COLOR, c))
                 .orElse(TextStyle.EMPTY)
                 .replace(TextNode.text(this.text));
     }
