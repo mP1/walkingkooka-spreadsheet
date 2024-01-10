@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 

@@ -22,8 +22,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 
 import java.util.function.Consumer;
 

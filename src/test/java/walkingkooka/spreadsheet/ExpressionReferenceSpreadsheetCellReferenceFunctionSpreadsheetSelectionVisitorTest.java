@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 
 public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitorTest implements
         SpreadsheetSelectionVisitorTesting<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelectionVisitor>,
