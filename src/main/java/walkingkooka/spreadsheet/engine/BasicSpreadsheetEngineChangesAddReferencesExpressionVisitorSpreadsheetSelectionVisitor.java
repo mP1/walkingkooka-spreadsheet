@@ -21,7 +21,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
-import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
+import walkingkooka.spreadsheet.store.TargetAndSpreadsheetCellReference;
 
 /**
  * A {@link SpreadsheetSelectionVisitor} that adds references to each reference present within cell formula.

@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
+import walkingkooka.spreadsheet.store.TargetAndSpreadsheetCellReference;
 
 import java.util.Set;
 

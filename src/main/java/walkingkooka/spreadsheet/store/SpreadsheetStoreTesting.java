@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 import walkingkooka.store.StoreTesting;
 
 public interface SpreadsheetStoreTesting<S extends SpreadsheetStore<K, V>, K, V> extends StoreTesting<S, K, V> {

@@ -21,7 +21,6 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetStore;
 
 import java.util.Optional;
 

@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.meta.store;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetCellStoreAction;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
 
 import java.util.List;
 import java.util.Map;

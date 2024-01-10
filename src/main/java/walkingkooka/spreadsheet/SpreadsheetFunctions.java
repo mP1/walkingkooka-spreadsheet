@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetCellRangeStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 
 import java.util.Optional;
 import java.util.function.Function;

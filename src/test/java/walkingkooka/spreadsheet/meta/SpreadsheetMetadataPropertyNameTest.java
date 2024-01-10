@@ -32,7 +32,7 @@ import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKindTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetCellStoreAction;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
