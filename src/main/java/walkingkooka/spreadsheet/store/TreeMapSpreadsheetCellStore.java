@@ -193,15 +193,15 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     @Override
     public int rowCount() {
-        return this.count(c -> c.reference().row().value());
+        return this.max(c -> c.reference().row().value());
     }
 
     @Override
     public int columnCount() {
-        return this.count(c -> c.reference().column().value());
+        return this.max(c -> c.reference().column().value());
     }
 
-    private int count(final ToIntFunction<SpreadsheetCell> value) {
+    private int max(final ToIntFunction<SpreadsheetCell> value) {
         return 1 +
                 this.all()
                 .stream()
@@ -214,17 +214,17 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     public Set<SpreadsheetCell> row(final SpreadsheetRowReference row) {
         Objects.requireNonNull(row, "row");
 
-        return this.filter(c -> row.compareTo(c.reference().row()) == 0);
+        return this.filterAndCollect(c -> row.compareTo(c.reference().row()) == 0);
     }
 
     @Override
     public Set<SpreadsheetCell> column(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
 
-        return this.filter(c -> column.compareTo(c.reference().column()) == 0);
+        return this.filterAndCollect(c -> column.compareTo(c.reference().column()) == 0);
     }
 
-    private Set<SpreadsheetCell> filter(final Predicate<SpreadsheetCell> filter) {
+    private Set<SpreadsheetCell> filterAndCollect(final Predicate<SpreadsheetCell> filter) {
         return this.all()
                 .stream()
                 .filter(filter)
