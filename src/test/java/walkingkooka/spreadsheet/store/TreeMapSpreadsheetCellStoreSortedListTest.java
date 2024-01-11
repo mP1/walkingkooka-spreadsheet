@@ -331,6 +331,128 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
         );
     }
 
+    // getOrNext........................................................................................................
+
+    @Test
+    public void testGetOrNextEmpty() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD.comparator()
+        );
+
+        this.getOrNextAndCheck(
+                list,
+                A1.reference()
+        );
+
+        this.getOrNextAndCheck(
+                list,
+                B2.reference()
+        );
+    }
+
+    @Test
+    public void testGetOrNext() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD.comparator()
+        );
+
+        list.addOrReplace(A1);
+        list.addOrReplace(B2);
+        list.addOrReplace(C3);
+
+        this.getOrNextAndCheck(
+                list,
+                A1.reference(),
+                A1
+        );
+
+        this.getOrNextAndCheck(
+                list,
+                B2.reference(),
+                B2
+        );
+
+        this.getOrNextAndCheck(
+                list,
+                C3.reference(),
+                C3
+        );
+    }
+
+    @Test
+    public void testGetOrNextUnknownAfter() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD.comparator()
+        );
+
+        list.addOrReplace(A1);
+        list.addOrReplace(B2);
+        list.addOrReplace(C3);
+
+        this.getOrNextAndCheck(
+                list,
+                SpreadsheetSelection.parseCell("Z99")
+        );
+    }
+
+    @Test
+    public void testGetOrNextUnknownBefore() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD.comparator()
+        );
+
+        list.addOrReplace(A1);
+        list.addOrReplace(B2);
+        list.addOrReplace(C3);
+
+        this.getOrNextAndCheck(
+                list,
+                SpreadsheetSelection.parseCell("B1"),
+                B2
+        );
+
+        this.getOrNextAndCheck(
+                list,
+                B2.reference(),
+                B2
+        );
+
+        this.getOrNextAndCheck(
+                list,
+                SpreadsheetSelection.parseCell("B3"),
+                C3
+        );
+    }
+
+    private void getOrNextAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+                                   final SpreadsheetCellReference getOrNext) {
+        this.getOrNextAndCheck(
+                list,
+                getOrNext,
+                Optional.empty()
+        );
+    }
+
+    private void getOrNextAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+                                   final SpreadsheetCellReference getOrNext,
+                                   final SpreadsheetCell expected) {
+        this.getOrNextAndCheck(
+                list,
+                getOrNext,
+                Optional.of(expected)
+        );
+    }
+
+    private void getOrNextAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+                                   final SpreadsheetCellReference getOrNext,
+                                   final Optional<SpreadsheetCell> expected) {
+        this.checkEquals(
+                expected,
+                list.getOrNext(getOrNext),
+                () -> list + " getOrNext " + getOrNext
+        );
+    }
+    
     // offset..........................................................................................................
 
     @Test

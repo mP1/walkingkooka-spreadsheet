@@ -51,6 +51,31 @@ final class TreeMapSpreadsheetCellStoreSortedList {
         );
     }
 
+    /**
+     * Returns the first cell at or after the given {@link SpreadsheetCellReference}.
+     * This will be useful when finding cells belonging to a range, where some cells are missing.
+     * <pre>
+     * A1, B2, B3, B4
+     *
+     * getOrNext(B1) -> B2
+     * </pre>
+     */
+    Optional<SpreadsheetCell> getOrNext(final SpreadsheetCellReference reference) {
+        int index = this.indexOf(reference);
+
+        SpreadsheetCell getOrNext = null;
+
+        final List<SpreadsheetCell> cells = this.cells;
+        if (index < 0) {
+            index = -index - 1;
+        }
+        if (index < cells.size()) {
+            getOrNext = cells.get(index);
+        }
+
+        return Optional.ofNullable(getOrNext);
+    }
+
     Optional<SpreadsheetCell> offset(final int index) {
         final List<SpreadsheetCell> cells = this.cells;
         return Optional.ofNullable(
