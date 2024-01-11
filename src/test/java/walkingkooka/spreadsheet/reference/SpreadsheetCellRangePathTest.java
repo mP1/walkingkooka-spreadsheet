@@ -503,6 +503,100 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
+    // width...........................................................................................................
+
+    @Test
+    public void testWidthLRTD() {
+        this.widthAndCheck(
+                SpreadsheetCellRangePath.LRTD,
+                "A1:D2",
+                4
+        );
+    }
+
+    @Test
+    public void testWidthRLTD() {
+        this.widthAndCheck(
+                SpreadsheetCellRangePath.RLTD,
+                "A1:D2",
+                4
+        );
+    }
+
+    @Test
+    public void testWidthLRBU() {
+        this.widthAndCheck(
+                SpreadsheetCellRangePath.LRBU,
+                "A1:D2",
+                4
+        );
+    }
+
+    @Test
+    public void testWidthRLBU() {
+        this.widthAndCheck(
+                SpreadsheetCellRangePath.RLBU,
+                "A1:D2",
+                4
+        );
+    }
+
+    @Test
+    public void testWidthTDLR() {
+        this.widthAndCheck(
+                SpreadsheetCellRangePath.TDLR,
+                "A1:D2",
+                2
+        );
+    }
+
+    @Test
+    public void testWidthTDRL() {
+        this.widthAndCheck(
+                SpreadsheetCellRangePath.TDRL,
+                "A1:D2",
+                2
+        );
+    }
+
+    @Test
+    public void testWidthBULR() {
+        this.widthAndCheck(
+                SpreadsheetCellRangePath.BULR,
+                "A1:D2",
+                2
+        );
+    }
+
+    @Test
+    public void testWidthBURL() {
+        this.widthAndCheck(
+                SpreadsheetCellRangePath.BURL,
+                "A1:D2",
+                2
+        );
+    }
+
+    private void widthAndCheck(final SpreadsheetCellRangePath path,
+                               final String range,
+                               final int width) {
+        this.widthAndCheck(
+                path,
+                SpreadsheetSelection.parseCellRange(range),
+                width
+        );
+    }
+
+    private void widthAndCheck(final SpreadsheetCellRangePath path,
+                               final SpreadsheetCellRange range,
+                               final int width) {
+        this.checkEquals(
+                width,
+                path.width(range),
+                () -> path + " width " + range
+        );
+    }
+
     // ClassTesting....................................................................................................
 
     @Override
