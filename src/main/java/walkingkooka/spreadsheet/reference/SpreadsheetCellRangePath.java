@@ -258,6 +258,15 @@ public enum SpreadsheetCellRangePath {
     }
 
     /**
+     * The number of cells down. This always returns a value of 1 or greater.
+     */
+    public final int height(final SpreadsheetCellRange range) {
+        return this.comparator.xFirst ?
+                range.width() :
+                range.height();
+    }
+
+    /**
      * Finds the matching {@link SpreadsheetCellRangePath} given its name in camel-case form.
      */
     public static SpreadsheetCellRangePath fromKebabCase(final String text) {
