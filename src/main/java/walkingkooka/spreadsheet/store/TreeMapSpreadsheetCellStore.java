@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.collect.iterable.Iterables;
+import walkingkooka.NeverError;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
@@ -80,7 +80,21 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     @Override
     public SpreadsheetCell save(final SpreadsheetCell spreadsheetCell) {
-        return this.store.save(spreadsheetCell);
+        final SpreadsheetCell saved = this.store.save(spreadsheetCell);
+
+        this.lrtd.addOrReplace(saved);
+        this.rltd.addOrReplace(saved);
+
+        this.lrbu.addOrReplace(saved);
+        this.rlbu.addOrReplace(saved);
+
+        this.tdlr.addOrReplace(saved);
+        this.tdrl.addOrReplace(saved);
+
+        this.bulr.addOrReplace(saved);
+        this.burl.addOrReplace(saved);
+
+        return saved;
     }
 
     @Override
@@ -91,6 +105,18 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public void delete(final SpreadsheetCellReference id) {
         this.store.delete(id);
+        
+        this.lrtd.remove(id);
+        this.rltd.remove(id);
+
+        this.lrbu.remove(id);
+        this.rlbu.remove(id);
+
+        this.tdlr.remove(id);
+        this.tdrl.remove(id);
+
+        this.bulr.remove(id);
+        this.burl.remove(id);
     }
 
     @Override
@@ -121,25 +147,101 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                                                      final SpreadsheetCellRangePath path,
                                                      final int offset,
                                                      final int max) {
-        final Set<SpreadsheetCell> cells = Sets.sorted(
+        final Set<SpreadsheetCell> loaded = Sets.sorted(
                 SpreadsheetCellReference.cellComparator(
                         path.comparator()
                 )
         );
 
-        int i = 0;
-        for (final SpreadsheetCellReference reference : Iterables.iterator(path.cells(range))) {
-            if (i >= offset) {
-                this.load(reference)
-                        .ifPresent(cells::add);
-                if (cells.size() == max) {
-                    break;
-                }
-            }
-            i++;
+        final TreeMapSpreadsheetCellStoreSortedList list;
+
+        switch (path) {
+            case LRTD:
+                list = this.lrtd;
+                break;
+            case RLTD:
+                list = this.rltd;
+                break;
+            case LRBU:
+                list = this.lrbu;
+                break;
+            case RLBU:
+                list = this.rlbu;
+                break;
+            case TDLR:
+                list = this.tdlr;
+                break;
+            case TDRL:
+                list = this.tdrl;
+                break;
+            case BULR:
+                list = this.bulr;
+                break;
+            case BURL:
+                list = this.burl;
+                break;
+            default:
+                list = NeverError.unhandledEnum(
+                        path,
+                        SpreadsheetCellRangePath.values()
+                );
+                break;
         }
 
-        return cells;
+        final int height = path.height(range);
+        final List<SpreadsheetCell> cells = list.cells;
+        final Comparator<SpreadsheetCellReference> comparator = path.comparator();
+        final int size = cells.size();
+
+        SpreadsheetCellReference cellReference = path.first(range);
+
+        int rows = 0;
+        int i = 0;
+
+        Exit:
+        //
+        for (; ; ) {
+            final SpreadsheetCellReference firstColumn = cellReference;
+            final SpreadsheetCellReference lastColumn = path.lastColumn(
+                    firstColumn,
+                    range
+            );
+
+            int index = list.indexOfOrNext(firstColumn);
+            if (-1 == index) {
+                break;
+            }
+            for (; ; ) {
+                if (index == size) {
+                    break Exit;
+                }
+
+                final SpreadsheetCell cell = cells.get(index);
+                if (comparator.compare(cell.reference(), lastColumn) > 0) {
+                    break;
+                }
+                if (i >= offset) {
+                    if (loaded.size() >= max) {
+                        break Exit;
+                    }
+                    loaded.add(cell);
+                }
+                i++;
+                index++;
+            }
+
+            rows++;
+            if (height == rows) {
+                break;
+            }
+
+            cellReference = path.nextRow(
+                    cellReference,
+                    range
+            );
+        }
+
+        return loaded;
     }
 
     @Override
@@ -320,6 +422,37 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     // VisibleForTesting
     private final Store<SpreadsheetCellReference, SpreadsheetCell> store;
+
+    private final TreeMapSpreadsheetCellStoreSortedList lrtd = TreeMapSpreadsheetCellStoreSortedList.with(
+            SpreadsheetCellRangePath.LRTD
+    );
+    private final TreeMapSpreadsheetCellStoreSortedList rltd = TreeMapSpreadsheetCellStoreSortedList.with(
+            SpreadsheetCellRangePath.RLTD
+    );
+
+    private final TreeMapSpreadsheetCellStoreSortedList lrbu = TreeMapSpreadsheetCellStoreSortedList.with(
+            SpreadsheetCellRangePath.LRBU
+    );
+
+    private final TreeMapSpreadsheetCellStoreSortedList rlbu = TreeMapSpreadsheetCellStoreSortedList.with(
+            SpreadsheetCellRangePath.RLBU
+    );
+
+    private final TreeMapSpreadsheetCellStoreSortedList tdlr = TreeMapSpreadsheetCellStoreSortedList.with(
+            SpreadsheetCellRangePath.TDLR
+    );
+
+    private final TreeMapSpreadsheetCellStoreSortedList tdrl = TreeMapSpreadsheetCellStoreSortedList.with(
+            SpreadsheetCellRangePath.TDRL
+    );
+
+    private final TreeMapSpreadsheetCellStoreSortedList bulr = TreeMapSpreadsheetCellStoreSortedList.with(
+            SpreadsheetCellRangePath.BULR
+    );
+
+    private final TreeMapSpreadsheetCellStoreSortedList burl = TreeMapSpreadsheetCellStoreSortedList.with(
+            SpreadsheetCellRangePath.BURL
+    );
 
     @Override
     public String toString() {
