@@ -597,6 +597,100 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
+    // height...........................................................................................................
+
+    @Test
+    public void testHeightLRTD() {
+        this.heightAndCheck(
+                SpreadsheetCellRangePath.LRTD,
+                "A1:D2",
+                2
+        );
+    }
+
+    @Test
+    public void testHeightRLTD() {
+        this.heightAndCheck(
+                SpreadsheetCellRangePath.RLTD,
+                "A1:D2",
+                2
+        );
+    }
+
+    @Test
+    public void testHeightLRBU() {
+        this.heightAndCheck(
+                SpreadsheetCellRangePath.LRBU,
+                "A1:D2",
+                2
+        );
+    }
+
+    @Test
+    public void testHeightRLBU() {
+        this.heightAndCheck(
+                SpreadsheetCellRangePath.RLBU,
+                "A1:D2",
+                2
+        );
+    }
+
+    @Test
+    public void testHeightTDLR() {
+        this.heightAndCheck(
+                SpreadsheetCellRangePath.TDLR,
+                "A1:D2",
+                4
+        );
+    }
+
+    @Test
+    public void testHeightTDRL() {
+        this.heightAndCheck(
+                SpreadsheetCellRangePath.TDRL,
+                "A1:D2",
+                4
+        );
+    }
+
+    @Test
+    public void testHeightBULR() {
+        this.heightAndCheck(
+                SpreadsheetCellRangePath.BULR,
+                "A1:D2",
+                4
+        );
+    }
+
+    @Test
+    public void testHeightBURL() {
+        this.heightAndCheck(
+                SpreadsheetCellRangePath.BURL,
+                "A1:D2",
+                4
+        );
+    }
+
+    private void heightAndCheck(final SpreadsheetCellRangePath path,
+                                final String range,
+                                final int height) {
+        this.heightAndCheck(
+                path,
+                SpreadsheetSelection.parseCellRange(range),
+                height
+        );
+    }
+
+    private void heightAndCheck(final SpreadsheetCellRangePath path,
+                                final SpreadsheetCellRange range,
+                                final int height) {
+        this.checkEquals(
+                height,
+                path.height(range),
+                () -> path + " height " + range
+        );
+    }
+
     // ClassTesting....................................................................................................
 
     @Override
