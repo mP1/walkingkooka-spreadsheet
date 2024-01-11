@@ -408,6 +408,101 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
+    // first...........................................................................................................
+
+    @Test
+    public void testFirstLRTD() {
+        this.firstAndCheck(
+                SpreadsheetCellRangePath.LRTD,
+                "A1:C3",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testFirstRLTD() {
+        this.firstAndCheck(
+                SpreadsheetCellRangePath.RLTD,
+                "A1:C3",
+                "C1"
+        );
+    }
+
+    @Test
+    public void testFirstLRBU() {
+        this.firstAndCheck(
+                SpreadsheetCellRangePath.LRBU,
+                "A1:C3",
+                "A3"
+        );
+    }
+
+    @Test
+    public void testFirstRLBU() {
+        this.firstAndCheck(
+                SpreadsheetCellRangePath.RLBU,
+                "A1:C3",
+                "C3"
+        );
+    }
+
+    @Test
+    public void testFirstTDLR() {
+        this.firstAndCheck(
+                SpreadsheetCellRangePath.TDLR,
+                "A1:C3",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testFirstTDRL() {
+        this.firstAndCheck(
+                SpreadsheetCellRangePath.TDRL,
+                "A1:C3",
+                "C1"
+        );
+    }
+
+    @Test
+    public void testFirstBULR() {
+        this.firstAndCheck(
+                SpreadsheetCellRangePath.BULR,
+                "A1:C3",
+                "A3"
+        );
+    }
+
+    @Test
+    public void testFirstBURL() {
+        this.firstAndCheck(
+                SpreadsheetCellRangePath.BURL,
+                "A1:C3",
+                "C3"
+        );
+    }
+
+
+    private void firstAndCheck(final SpreadsheetCellRangePath path,
+                               final String range,
+                               final String cell) {
+        this.firstAndCheck(
+                path,
+                SpreadsheetSelection.parseCellRange(range),
+                SpreadsheetSelection.parseCell(cell)
+        );
+    }
+
+    private void firstAndCheck(final SpreadsheetCellRangePath path,
+                               final SpreadsheetCellRange range,
+                               final SpreadsheetCellReference cell) {
+        this.checkEquals(
+                cell,
+                path.first(range),
+                () -> path + " first " + range
+        );
+    }
+
     // ClassTesting....................................................................................................
 
     @Override
