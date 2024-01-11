@@ -97,16 +97,17 @@ final class TreeMapSpreadsheetCellStoreSortedList {
     void addOrReplace(final SpreadsheetCell cell) {
         final List<SpreadsheetCell> cells = this.cells;
 
-        final int index = this.indexOf(cell.reference());
-        if (-1 == index) {
-            cells.add(index + 1, cell);
+        int index = this.indexOf(cell.reference());
+        if (index >= 0) {
+            cells.set(index, cell);
         } else {
-            final int index2 = -index - 1;
-            if (index2 >= cells.size()) {
+            index = -index - 1;
+
+            if (index >= cells.size()) {
                 cells.add(cell);
             } else {
-                cells.set(
-                        index, // 2
+                cells.add(
+                        index,
                         cell
                 );
             }
