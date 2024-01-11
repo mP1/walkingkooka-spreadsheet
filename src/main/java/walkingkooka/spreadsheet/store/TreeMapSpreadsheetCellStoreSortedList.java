@@ -114,6 +114,19 @@ final class TreeMapSpreadsheetCellStoreSortedList {
         }
     }
 
+    int indexOfOrNext(final SpreadsheetCellReference reference) {
+        int index = this.indexOf(reference);
+
+        if (index < 0) {
+            index = -index - 1;
+        }
+        if (index >= cells.size()) {
+            index = -1;
+        }
+
+        return index;
+    }
+
     private int indexOf(final SpreadsheetCellReference reference) {
         return Collections.binarySearch(
                 this.cells,

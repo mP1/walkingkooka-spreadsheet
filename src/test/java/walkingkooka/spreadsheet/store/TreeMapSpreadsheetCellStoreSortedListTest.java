@@ -507,6 +507,146 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
                 () -> list + " getOrNext " + getOrNext
         );
     }
+
+    // indexOfOrNext....................................................................................................
+
+    @Test
+    public void testIndexOfOrNextEmpty() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD
+        );
+
+        this.indexOfOrNextAndCheck(
+                list,
+                A1.reference(),
+                -1
+        );
+
+        this.indexOfOrNextAndCheck(
+                list,
+                B2.reference(),
+                -1
+        );
+    }
+
+    @Test
+    public void testIndexOfOrNext() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD
+        );
+
+        list.addOrReplace(A1);
+        list.addOrReplace(B2);
+        list.addOrReplace(C3);
+
+        this.indexOfOrNextAndCheck(
+                list,
+                A1.reference(),
+                0
+        );
+
+        this.indexOfOrNextAndCheck(
+                list,
+                B2.reference(),
+                1
+        );
+
+        this.indexOfOrNextAndCheck(
+                list,
+                C3.reference(),
+                2
+        );
+
+        this.indexOfOrNextAndCheck(
+                list,
+                SpreadsheetSelection.parseCell("C4"),
+                -1
+        );
+    }
+
+    @Test
+    public void testIndexOfOrNextUnknownAfter() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD
+        );
+
+        list.addOrReplace(A1);
+        list.addOrReplace(B2);
+        list.addOrReplace(C3);
+
+        this.indexOfOrNextAndCheck(
+                list,
+                SpreadsheetSelection.parseCell("Z99"),
+                -1
+        );
+    }
+
+    @Test
+    public void testIndexOfOrNextBefore() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD
+        );
+
+        list.addOrReplace(A1);
+        list.addOrReplace(B2);
+        list.addOrReplace(C3);
+
+        this.indexOfOrNextAndCheck(
+                list,
+                SpreadsheetSelection.parseCell("B1"),
+                1 // B2
+        );
+
+        this.indexOfOrNextAndCheck(
+                list,
+                B2.reference(),
+                1
+        );
+
+        this.indexOfOrNextAndCheck(
+                list,
+                SpreadsheetSelection.parseCell("B3"),
+                2
+        );
+    }
+
+    @Test
+    public void testIndexOfOrNextBefore2() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD
+        );
+
+        list.addOrReplace(B2);
+        list.addOrReplace(C3);
+
+        this.indexOfOrNextAndCheck(
+                list,
+                SpreadsheetSelection.parseCell("B1"),
+                0 // B2
+        );
+
+        this.indexOfOrNextAndCheck(
+                list,
+                B2.reference(),
+                0
+        );
+
+        this.indexOfOrNextAndCheck(
+                list,
+                SpreadsheetSelection.parseCell("B3"),
+                1 // C3
+        );
+    }
+
+    private void indexOfOrNextAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+                                       final SpreadsheetCellReference indexOfOrNext,
+                                       final int expected) {
+        this.checkEquals(
+                expected,
+                list.indexOfOrNext(indexOfOrNext),
+                () -> list + " indexOfOrNext " + indexOfOrNext
+        );
+    }
     
     // offset..........................................................................................................
 
