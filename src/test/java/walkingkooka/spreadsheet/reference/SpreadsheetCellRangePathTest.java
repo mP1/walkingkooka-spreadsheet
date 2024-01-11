@@ -503,6 +503,114 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
+    // lastColumn..........................................................................................................
+
+    @Test
+    public void testLastColumnLRTD() {
+        this.lastColumnAndCheck(
+                SpreadsheetCellRangePath.LRTD,
+                "A1",
+                "A1:C3",
+                "C1"
+        );
+    }
+
+    @Test
+    public void testLastColumnRLTD() {
+        this.lastColumnAndCheck(
+                SpreadsheetCellRangePath.RLTD,
+                "C1",
+                "A1:C3",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testLastColumnLRBU() {
+        this.lastColumnAndCheck(
+                SpreadsheetCellRangePath.LRBU,
+                "A3",
+                "A1:C3",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testLastColumnRLBU() {
+        this.lastColumnAndCheck(
+                SpreadsheetCellRangePath.RLBU,
+                "C3",
+                "A1:C3",
+                "C1"
+        );
+    }
+
+    @Test
+    public void testLastColumnTDLR() {
+        this.lastColumnAndCheck(
+                SpreadsheetCellRangePath.TDLR,
+                "A1",
+                "A1:C3",
+                "A3"
+        );
+    }
+
+    @Test
+    public void testLastColumnTDRL() {
+        this.lastColumnAndCheck(
+                SpreadsheetCellRangePath.TDRL,
+                "C1",
+                "A1:C3",
+                "C3"
+        );
+    }
+
+    @Test
+    public void testLastColumnBULR() {
+        this.lastColumnAndCheck(
+                SpreadsheetCellRangePath.BULR,
+                "A3",
+                "A1:C3",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testLastColumnBURL() {
+        this.lastColumnAndCheck(
+                SpreadsheetCellRangePath.BURL,
+                "C3",
+                "A1:C3",
+                "C1"
+        );
+    }
+
+    private void lastColumnAndCheck(final SpreadsheetCellRangePath path,
+                                    final String cell,
+                                    final String range,
+                                    final String lastColumn) {
+        this.lastColumnAndCheck(
+                path,
+                SpreadsheetSelection.parseCell(cell),
+                SpreadsheetSelection.parseCellRange(range),
+                SpreadsheetSelection.parseCell(lastColumn)
+        );
+    }
+
+    private void lastColumnAndCheck(final SpreadsheetCellRangePath path,
+                                    final SpreadsheetCellReference cell,
+                                    final SpreadsheetCellRange range,
+                                    final SpreadsheetCellReference lastColumn) {
+        this.checkEquals(
+                lastColumn,
+                path.lastColumn(
+                        cell,
+                        range
+                ),
+                () -> path + " lastColumn " + cell + " " + range
+        );
+    }
+    
     // nextRow..........................................................................................................
 
     @Test
