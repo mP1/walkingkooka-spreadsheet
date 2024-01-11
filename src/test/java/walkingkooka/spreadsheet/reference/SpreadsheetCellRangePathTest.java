@@ -503,6 +503,115 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
+    // nextRow..........................................................................................................
+
+    @Test
+    public void testNextRowLRTD() {
+        this.nextRowAndCheck(
+                SpreadsheetCellRangePath.LRTD,
+                "A1",
+                "A1:C3",
+                "A2"
+        );
+    }
+
+    @Test
+    public void testNextRowRLTD() {
+        this.nextRowAndCheck(
+                SpreadsheetCellRangePath.RLTD,
+                "C1",
+                "A1:C3",
+                "C2"
+        );
+    }
+
+    @Test
+    public void testNextRowLRBU() {
+        this.nextRowAndCheck(
+                SpreadsheetCellRangePath.LRBU,
+                "A3",
+                "A1:C3",
+                "A2"
+        );
+    }
+
+    @Test
+    public void testNextRowRLBU() {
+        this.nextRowAndCheck(
+                SpreadsheetCellRangePath.RLBU,
+                "C3",
+                "A1:C3",
+                "B3"
+        );
+    }
+
+    @Test
+    public void testNextRowTDLR() {
+        this.nextRowAndCheck(
+                SpreadsheetCellRangePath.TDLR,
+                "A1",
+                "A1:C3",
+                "B1"
+        );
+    }
+
+    @Test
+    public void testNextRowTDRL() {
+        this.nextRowAndCheck(
+                SpreadsheetCellRangePath.TDRL,
+                "C1",
+                "A1:C3",
+                "B1"
+        );
+    }
+
+    @Test
+    public void testNextRowBULR() {
+        this.nextRowAndCheck(
+                SpreadsheetCellRangePath.BULR,
+                "A3",
+                "A1:C3",
+                "B3"
+        );
+    }
+
+    @Test
+    public void testNextRowBURL() {
+        this.nextRowAndCheck(
+                SpreadsheetCellRangePath.BURL,
+                "C3",
+                "A1:C3",
+                "B3"
+        );
+    }
+
+
+    private void nextRowAndCheck(final SpreadsheetCellRangePath path,
+                                 final String cell,
+                                 final String range,
+                                 final String nextRow) {
+        this.nextRowAndCheck(
+                path,
+                SpreadsheetSelection.parseCell(cell),
+                SpreadsheetSelection.parseCellRange(range),
+                SpreadsheetSelection.parseCell(nextRow)
+        );
+    }
+
+    private void nextRowAndCheck(final SpreadsheetCellRangePath path,
+                                 final SpreadsheetCellReference cell,
+                                 final SpreadsheetCellRange range,
+                                 final SpreadsheetCellReference nextRow) {
+        this.checkEquals(
+                nextRow,
+                path.nextRow(
+                        cell,
+                        range
+                ),
+                () -> path + " nextRow " + cell + " " + range
+        );
+    }
+
     // width...........................................................................................................
 
     @Test
