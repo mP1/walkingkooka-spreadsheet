@@ -93,8 +93,63 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
                 SpreadsheetCellRangePath.LRTD
         );
 
+        list.addOrReplace(A1);
         list.addOrReplace(B2);
         list.addOrReplace(C3);
+
+        this.check(
+                list,
+                A1,
+                B2,
+                C3
+        );
+    }
+
+    @Test
+    public void testAddOrReplaceNew5() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD
+        );
+
+        list.addOrReplace(B2);
+        list.addOrReplace(C3);
+        list.addOrReplace(A1);
+
+        this.check(
+                list,
+                A1,
+                B2,
+                C3
+        );
+    }
+
+    @Test
+    public void testAddOrReplaceNew6() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD
+        );
+
+        list.addOrReplace(C3);
+        list.addOrReplace(A1);
+        list.addOrReplace(B2);
+
+
+        this.check(
+                list,
+                A1,
+                B2,
+                C3
+        );
+    }
+
+    @Test
+    public void testAddOrReplaceNew7() {
+        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+                SpreadsheetCellRangePath.LRTD
+        );
+
+        list.addOrReplace(C3);
+        list.addOrReplace(B2);
         list.addOrReplace(A1);
 
         this.check(
