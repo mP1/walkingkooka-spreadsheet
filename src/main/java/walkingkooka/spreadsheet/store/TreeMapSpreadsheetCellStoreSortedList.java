@@ -35,13 +35,15 @@ import java.util.Optional;
  */
 final class TreeMapSpreadsheetCellStoreSortedList {
 
-    static TreeMapSpreadsheetCellStoreSortedList with(final Comparator<SpreadsheetCellReference> comparator) {
-        return new TreeMapSpreadsheetCellStoreSortedList(comparator);
+    static TreeMapSpreadsheetCellStoreSortedList with(final SpreadsheetCellRangePath path) {
+        return new TreeMapSpreadsheetCellStoreSortedList(path);
     }
 
-    private TreeMapSpreadsheetCellStoreSortedList(final Comparator<SpreadsheetCellReference> comparator) {
+    private TreeMapSpreadsheetCellStoreSortedList(final SpreadsheetCellRangePath path) {
         super();
-        this.comparator = SpreadsheetCellReference.cellComparator(comparator);
+        this.comparator = SpreadsheetCellReference.cellComparator(
+                path.comparator()
+        );
         this.cells = Lists.array();
     }
 
