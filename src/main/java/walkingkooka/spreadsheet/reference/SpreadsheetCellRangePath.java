@@ -41,7 +41,12 @@ public enum SpreadsheetCellRangePath {
             false, // xFirst
             1, // reverseX
             1 //reverseY,
-    ),
+    ) {
+        @Override
+        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+            return range.begin();
+        }
+    },
 
     /**
      * <pre>
@@ -54,7 +59,16 @@ public enum SpreadsheetCellRangePath {
             false, // xFirst
             -1, // reverseX
             1//reverseY
-    ),
+    ) {
+        @Override
+        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+            return range.begin()
+                    .setColumn(
+                            range.end()
+                                    .column()
+                    );
+        }
+    },
 
     /**
      * <pre>
@@ -67,7 +81,16 @@ public enum SpreadsheetCellRangePath {
             false, // xFirst
             1, // reverseX
             -1 //reverseY
-    ),
+    ) {
+        @Override
+        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+            return range.begin()
+                    .setRow(
+                            range.end()
+                                    .row()
+                    );
+        }
+    },
 
     /**
      * <pre>
@@ -80,7 +103,12 @@ public enum SpreadsheetCellRangePath {
             false, // xFirst
             -1, // reverseX
             -1 //reverseY
-    ),
+    ) {
+        @Override
+        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+            return range.end();
+        }
+    },
 
     /**
      * <pre>
@@ -93,7 +121,12 @@ public enum SpreadsheetCellRangePath {
             true, // xFirst
             1, // reverseX
             1 //reverseY
-    ),
+    ) {
+        @Override
+        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+            return range.begin();
+        }
+    },
 
     /**
      * <pre>
@@ -106,7 +139,16 @@ public enum SpreadsheetCellRangePath {
             true, // xFirst
             -1, // reverseX
             1//reverseY
-    ),
+    ) {
+        @Override
+        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+            return range.end()
+                    .setRow(
+                            range.begin()
+                                    .row()
+                    );
+        }
+    },
 
     /**
      * <pre>
@@ -119,7 +161,16 @@ public enum SpreadsheetCellRangePath {
             true, // xFirst
             1, // reverseX
             -1 //reverseY
-    ),
+    ) {
+        @Override
+        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+            return range.begin()
+                    .setRow(
+                            range.end()
+                                    .row()
+                    );
+        }
+    },
 
     /**
      * <pre>
@@ -132,7 +183,12 @@ public enum SpreadsheetCellRangePath {
             true, // xFirst
             -1, // reverseX
             -1 //reverseY"
-    );
+    ) {
+        @Override
+        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+            return range.end();
+        }
+    };
 
     SpreadsheetCellRangePath(final boolean xFirst,
                              final int reverseX,
@@ -186,6 +242,11 @@ public enum SpreadsheetCellRangePath {
                 this
         );
     }
+
+    /**
+     * Returns the first {@link SpreadsheetCellReference} for this {@link SpreadsheetCellRangePath}.
+     */
+    public abstract SpreadsheetCellReference first(final SpreadsheetCellRange range);
 
     /**
      * Finds the matching {@link SpreadsheetCellRangePath} given its name in camel-case form.
