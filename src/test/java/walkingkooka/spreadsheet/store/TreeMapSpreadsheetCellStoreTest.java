@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
@@ -253,7 +254,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangePath.RLTD,
                 1, // offset
-                4, // max
+                3, // max
                 c1,
                 b1,
                 a1
@@ -289,7 +290,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangePath.RLTD,
                 2, // offset
-                4, // max
+                2, // max
                 b1,
                 a1
         );
@@ -330,6 +331,126 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 b1
         );
     }
+
+    @Test
+    public void testLoadCellsBULRMax() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell a2 = store.save(
+                SpreadsheetSelection.parseCell("a2")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell a3 = store.save(
+                SpreadsheetSelection.parseCell("a3")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b1 = store.save(
+                SpreadsheetSelection.parseCell("b1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b2 = store.save(
+                SpreadsheetSelection.parseCell("b2")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:D4"),
+                SpreadsheetCellRangePath.BULR,
+                0, // offset
+                5, // max
+                a3,
+                a2,
+                a1,
+                b2,
+                b1
+        );
+    }
+
+    @Test
+    public void testLoadCellsAllLrtd() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b1 = store.save(
+                SpreadsheetSelection.parseCell("B1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c1 = store.save(
+                SpreadsheetSelection.parseCell("c1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell last = store.save(
+                SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                        .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()
+                        ).setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
+                SpreadsheetCellRangePath.LRTD,
+                0, // offset
+                4, // max
+                a1,
+                b1,
+                c1,
+                last
+        );
+    }
+
+    @Test
+    public void testLoadCellsAllBurl() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b1 = store.save(
+                SpreadsheetSelection.parseCell("B1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c1 = store.save(
+                SpreadsheetSelection.parseCell("c1")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell last = store.save(
+                SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                        .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()
+                        ).setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
+                SpreadsheetCellRangePath.BULR,
+                0, // offset
+                4, // max
+                last,
+                c1,
+                b1,
+                a1
+        );
+    }
+
 
     // deleteCells.....................................................................................................
 
