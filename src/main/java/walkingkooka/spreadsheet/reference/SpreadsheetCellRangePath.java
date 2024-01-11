@@ -46,6 +46,12 @@ public enum SpreadsheetCellRangePath {
         public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
             return range.begin();
         }
+
+        @Override
+        public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
+                                                final SpreadsheetCellRange range) {
+            return startOfRow.addRow(1);
+        }
     },
 
     /**
@@ -67,6 +73,12 @@ public enum SpreadsheetCellRangePath {
                             range.end()
                                     .column()
                     );
+        }
+
+        @Override
+        public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
+                                                final SpreadsheetCellRange range) {
+            return startOfRow.addRow(1);
         }
     },
 
@@ -90,6 +102,12 @@ public enum SpreadsheetCellRangePath {
                                     .row()
                     );
         }
+
+        @Override
+        public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
+                                                final SpreadsheetCellRange range) {
+            return startOfRow.addRow(-1);
+        }
     },
 
     /**
@@ -108,6 +126,12 @@ public enum SpreadsheetCellRangePath {
         public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
             return range.end();
         }
+
+        @Override
+        public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
+                                                final SpreadsheetCellRange range) {
+            return startOfRow.addColumn(-1);
+        }
     },
 
     /**
@@ -125,6 +149,12 @@ public enum SpreadsheetCellRangePath {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
             return range.begin();
+        }
+
+        @Override
+        public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
+                                                final SpreadsheetCellRange range) {
+            return startOfRow.addColumn(1);
         }
     },
 
@@ -148,6 +178,12 @@ public enum SpreadsheetCellRangePath {
                                     .row()
                     );
         }
+
+        @Override
+        public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
+                                                final SpreadsheetCellRange range) {
+            return startOfRow.addColumn(-1);
+        }
     },
 
     /**
@@ -170,6 +206,12 @@ public enum SpreadsheetCellRangePath {
                                     .row()
                     );
         }
+
+        @Override
+        public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
+                                                final SpreadsheetCellRange range) {
+            return startOfRow.addColumn(1);
+        }
     },
 
     /**
@@ -187,6 +229,12 @@ public enum SpreadsheetCellRangePath {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
             return range.end();
+        }
+
+        @Override
+        public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
+                                                final SpreadsheetCellRange range) {
+            return startOfRow.addColumn(-1);
         }
     };
 
@@ -247,6 +295,13 @@ public enum SpreadsheetCellRangePath {
      * Returns the first {@link SpreadsheetCellReference} for this {@link SpreadsheetCellRangePath}.
      */
     public abstract SpreadsheetCellReference first(final SpreadsheetCellRange range);
+
+
+    /**
+     * Computes the first cell for the next row given a {@link SpreadsheetCellReference}.
+     */
+    public abstract SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
+                                                     final SpreadsheetCellRange range);
 
     /**
      * The number of cells across. This always returns a value of 1 or greater.
