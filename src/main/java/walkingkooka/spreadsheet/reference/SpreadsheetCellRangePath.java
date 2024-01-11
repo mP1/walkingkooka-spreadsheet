@@ -249,6 +249,15 @@ public enum SpreadsheetCellRangePath {
     public abstract SpreadsheetCellReference first(final SpreadsheetCellRange range);
 
     /**
+     * The number of cells across. This always returns a value of 1 or greater.
+     */
+    public final int width(final SpreadsheetCellRange range) {
+        return this.comparator.xFirst ?
+                range.height() :
+                range.width();
+    }
+
+    /**
      * Finds the matching {@link SpreadsheetCellRangePath} given its name in camel-case form.
      */
     public static SpreadsheetCellRangePath fromKebabCase(final String text) {
