@@ -168,6 +168,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.textAndCheck("A1:B2");
     }
 
+    @Test
+    public void testTextAll() {
+        this.textAndCheck(
+                SpreadsheetSelection.ALL_CELLS,
+                "*"
+        );
+    }
+
     // count............................................................................................................
 
     @Test

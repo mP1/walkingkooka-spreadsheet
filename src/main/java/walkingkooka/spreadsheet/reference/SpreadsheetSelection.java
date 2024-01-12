@@ -1245,7 +1245,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
     @Override
     public final String text() {
-        return this.toString();
+        return this.toStringMaybeStar();
     }
 
     // HasUrlFragment...................................................................................................
