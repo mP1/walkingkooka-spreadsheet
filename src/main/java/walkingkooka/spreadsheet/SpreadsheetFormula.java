@@ -342,52 +342,40 @@ public final class SpreadsheetFormula implements HasText,
     /**
      * Returns a {@link SpreadsheetFormula} updating any present relative {@link SpreadsheetCellReference}.
      * If ALL cell references are absolute or none are present this will be returned.
+     * If the token is missing probably because the text was not parseable this will be returned unmodified.
      */
     public SpreadsheetFormula moveRelativeCellReferences(final int deltaColumn,
                                                          final int deltaRow) {
-        return 0 == deltaColumn && 0 == deltaRow ?
+        return 0 == deltaColumn && 0 == deltaRow && false == this.token.isPresent() ?
                 this :
-                moveRelativeCellReferences0(
-                        deltaColumn,
-                        deltaRow
-                );
-    }
-
-    private SpreadsheetFormula moveRelativeCellReferences0(final int deltaColumn,
-                                                           final int deltaRow) {
-        final Optional<SpreadsheetParserToken> token = this.token;
-        if (false == token.isPresent()) {
-            throw new IllegalArgumentException("Missing token");
-        }
-
-        return this.setToken(
-                token.map(
-                        t -> t.replaceIf(
-                                (tt) -> tt instanceof SpreadsheetCellReferenceParserToken,
-                                (ttt) -> moveRelativeCellReferencesMapper(
-                                        (SpreadsheetCellReferenceParserToken) ttt,
-                                        deltaColumn,
-                                        deltaRow
-                                )
-                        ).cast(SpreadsheetParserToken.class)
-                )
-        ).setExpression(
-                this.expression.map(
-                        (e) -> e.replaceIf(
-                                ee -> ee.isReference(), // predicate
-                                ee -> {
-                                    final ReferenceExpression expression = (ReferenceExpression) ee;
-                                    final SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) expression.value();
-                                    return expression.setValue(
-                                            spreadsheetExpressionReference.addIfRelative(
-                                                    deltaColumn,
-                                                    deltaRow
-                                            )
-                                    );
-                                } // mapper
+                this.setToken(
+                        this.token.map(
+                                t -> t.replaceIf(
+                                        (tt) -> tt instanceof SpreadsheetCellReferenceParserToken,
+                                        (ttt) -> moveRelativeCellReferencesMapper(
+                                                (SpreadsheetCellReferenceParserToken) ttt,
+                                                deltaColumn,
+                                                deltaRow
+                                        )
+                                ).cast(SpreadsheetParserToken.class)
                         )
-                )
-        );
+                ).setExpression(
+                        this.expression.map(
+                                (e) -> e.replaceIf(
+                                        ee -> ee.isReference(), // predicate
+                                        ee -> {
+                                            final ReferenceExpression expression = (ReferenceExpression) ee;
+                                            final SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) expression.value();
+                                            return expression.setValue(
+                                                    spreadsheetExpressionReference.addIfRelative(
+                                                            deltaColumn,
+                                                            deltaRow
+                                                    )
+                                            );
+                                        } // mapper
+                                )
+                        )
+                );
     }
 
     private static ParserToken moveRelativeCellReferencesMapper(final SpreadsheetCellReferenceParserToken token,

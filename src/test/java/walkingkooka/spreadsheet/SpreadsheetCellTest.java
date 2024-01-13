@@ -475,14 +475,20 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testMoveFormulaTextOnlyFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> REFERENCE.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("'Hello")
-                ).move(
+    public void testMoveWhereFormulaWithoutToken() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("A1+");
+
+        this.moveAndCheck(
+                REFERENCE.setFormula(
+                        formula
+                ),
+                1,
+                2,
+                REFERENCE.add(
                         1,
                         2
+                ).setFormula(
+                        formula
                 )
         );
     }

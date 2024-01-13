@@ -840,11 +840,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testMoveRelativeCellReferencesMissingTokenFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetFormula.EMPTY.setText("=1+B2")
-                        .moveRelativeCellReferences(1, 1)
+    public void testMoveRelativeCellReferencesMissingToken() {
+        this.moveRelativeCellReferencesAndCheck(
+                SpreadsheetFormula.EMPTY.setText("=1+B2"),
+                1,
+                2
         );
     }
 
