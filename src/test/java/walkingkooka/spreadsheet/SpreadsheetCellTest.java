@@ -23,18 +23,26 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.compare.ComparableTesting2;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -54,6 +62,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.MathContext;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -447,6 +456,111 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkTextStyle(different);
         this.checkNoFormatPattern(different);
         this.checkFormatted(different);
+    }
+
+    // move ............................................................................................................
+
+    @Test
+    public void testMoveZeroZero() {
+        final SpreadsheetCell cell = REFERENCE.setFormula(
+                SpreadsheetFormula.EMPTY.setText("'Hello")
+        );
+        assertSame(
+                cell,
+                cell.move(
+                        0,
+                        0
+                )
+        );
+    }
+
+    @Test
+    public void testMoveFormulaTextOnlyFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> REFERENCE.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("'Hello")
+                ).move(
+                        1,
+                        2
+                )
+        );
+    }
+
+    @Test
+    public void testMoveFormulaWithTokenAndExpression() {
+        this.moveAndCheck(
+                REFERENCE.setFormula(
+                        this.parseFormula("=A1")
+                ),
+                1,
+                2,
+                REFERENCE.add(
+                        1,
+                        2
+                ).setFormula(
+                        this.parseFormula("=B3")
+                )
+        );
+    }
+
+    @Test
+    public void testMoveFormulaWithTokenAndExpression2() {
+        this.moveAndCheck(
+                REFERENCE.setFormula(
+                        this.parseFormula("=A1+999")
+                ),
+                1,
+                2,
+                REFERENCE.add(
+                        1,
+                        2
+                ).setFormula(
+                        this.parseFormula("=B3+999")
+                )
+        );
+    }
+
+    private void moveAndCheck(final SpreadsheetCell cell,
+                              final int deltaX,
+                              final int deltaY,
+                              final SpreadsheetCell expected) {
+        this.checkEquals(
+                expected,
+                cell.move(
+                        deltaX,
+                        deltaY
+                ),
+                "move " + deltaX + ", " + deltaY
+        );
+    }
+
+    private SpreadsheetFormula parseFormula(final String text) {
+        return SpreadsheetFormula.parse(
+                TextCursors.charSequence(text),
+                SpreadsheetParsers.valueOrExpression(
+                        Parsers.never()
+                ),
+                this.parserContext()
+        );
+    }
+
+    private SpreadsheetParserContext parserContext() {
+        return SpreadsheetParserContexts.basic(
+                DateTimeContexts.locale(
+                        Locale.forLanguageTag("EN-AU"), // locale
+                        1920,
+                        50,
+                        () -> {
+                            throw new UnsupportedOperationException("now");
+                        }
+                ),
+                ExpressionNumberContexts.basic(
+                        ExpressionNumberKind.BIG_DECIMAL,
+                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                ),
+                ','
+        );
     }
 
     // equals .............................................................................................
