@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetEngineSpreadsheetExpressionEvaluationContextTest implements ClassTesting<SpreadsheetEngineSpreadsheetExpressionEvaluationContext>,
         ToStringTesting<SpreadsheetEngineSpreadsheetExpressionEvaluationContext> {
 
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://example.com");
+    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
     private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
         throw new UnsupportedOperationException();
