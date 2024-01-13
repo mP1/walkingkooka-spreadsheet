@@ -310,6 +310,36 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         return this.reference().compareTo(other.reference());
     }
 
+    // move.............................................................................................................
+
+    /**
+     * Moves this cell by the given delta amounts updating the formula text and expression. If the {@link SpreadsheetFormula#token()}
+     * is missing a {@link IllegalArgumentException} will be thrown.
+     */
+    public SpreadsheetCell move(final int deltaX, final int deltaY) {
+        return 0 == deltaX && 0 == deltaY ?
+                this :
+                move0(
+                        deltaX,
+                        deltaY
+                );
+    }
+
+    private SpreadsheetCell move0(final int deltaX, final int deltaY) {
+        return this.setReference(
+                this.reference.add(
+                        deltaX,
+                        deltaY
+                )
+        ).setFormula(
+                this.formula()
+                        .moveRelativeCellReferences(
+                                deltaX,
+                                deltaY
+                        )
+        );
+    }
+
     // Patchable.......................................................................................................
 
     /**
