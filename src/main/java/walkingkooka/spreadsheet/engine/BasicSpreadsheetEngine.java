@@ -962,8 +962,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
             if (null != token) {
                 token = parsed.apply(token);
-                formula = formula.setText(token.text())
-                        .setToken(Optional.of(token));
+                formula = formula.setToken(
+                        Optional.of(token)
+                );
             }
             // if expression is absent, convert token into expression
             if (null != token && false == formula.expression().isPresent()) {
