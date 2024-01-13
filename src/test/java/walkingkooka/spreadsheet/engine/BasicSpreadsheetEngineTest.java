@@ -155,7 +155,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         throw new UnsupportedOperationException();
     };
 
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://server.example.com");
+    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://server.example.com");
 
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
         @Override
