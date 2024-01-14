@@ -26,9 +26,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
  */
 final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowInsert extends BasicSpreadsheetEngineDeleteOrInsertColumnOrRow {
 
-    static void insert(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow,
-                       final SpreadsheetEngineContext context) {
-        new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowInsert(columnOrRow).insert0(context);
+    static void insert(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
+        new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowInsert(columnOrRow).insert0();
     }
 
     private BasicSpreadsheetEngineDeleteOrInsertColumnOrRowInsert(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
@@ -38,9 +37,9 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowInsert extends BasicS
     /**
      * Inserts the requested number of columns or rows.
      */
-    private void insert0(final SpreadsheetEngineContext context) {
+    private void insert0() {
         this.move();
-        this.columnOrRow.fixAllExpressionReferences(context);
+        this.columnOrRow.fixAllExpressionReferences();
         this.columnOrRow.fixAllLabelMappings();
     }
 

@@ -59,13 +59,13 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     final void delete() {
         if (this.count > 0) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete.delete(this, this.context);
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete.delete(this);
         }
     }
 
     final void insert() {
         if (this.count > 0) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowInsert.insert(this, this.context);
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowInsert.insert(this);
         }
     }
 
@@ -131,28 +131,27 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     /**
      * Scans all cell expressions for references and fixes those needing fixing.
      */
-    final void fixAllExpressionReferences(final SpreadsheetEngineContext context) {
+    final void fixAllExpressionReferences() {
         final int rows = this.maxRow();
         for (int i = 0; i <= rows; i++) {
-            this.fixRowReferences(SpreadsheetReferenceKind.ABSOLUTE.row(i), context);
+            this.fixRowReferences(SpreadsheetReferenceKind.ABSOLUTE.row(i));
         }
     }
 
-    private void fixRowReferences(final SpreadsheetRowReference row, final SpreadsheetEngineContext context) {
+    private void fixRowReferences(final SpreadsheetRowReference row) {
         this.rowCells(row)
-                .forEach(r -> this.fixExpressionReferences(r, context));
+                .forEach(r -> this.fixExpressionReferences(r));
     }
 
     /**
      * Attempts to parse the formula if necessary and then update cell references that may have shifted due to a
      * delete or insert and if the cell changed saves the updated.
      */
-    private void fixExpressionReferences(final SpreadsheetCell cell,
-                                         final SpreadsheetEngineContext context) {
+    private void fixExpressionReferences(final SpreadsheetCell cell) {
         final SpreadsheetCell fixed = this.engine.parseFormulaIfNecessary(
                 cell,
                 this::fixCellReferencesWithinExpression,
-                context
+                this.context
         );
         if (!cell.equals(fixed)) {
             this.saveCell(fixed);
