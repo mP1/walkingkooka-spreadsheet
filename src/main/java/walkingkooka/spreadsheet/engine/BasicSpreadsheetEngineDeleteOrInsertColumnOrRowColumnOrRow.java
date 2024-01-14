@@ -140,7 +140,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     private void fixRowReferences(final SpreadsheetRowReference row) {
         this.rowCells(row)
-                .forEach(r -> this.fixExpressionReferences(r));
+                .forEach(this::fixExpressionReferences);
     }
 
     /**
