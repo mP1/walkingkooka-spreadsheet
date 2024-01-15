@@ -1107,7 +1107,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Optional<Object> value = formula.value();
 
         return value.isPresent() ?
-                this.locateAndApplyConditionalFormattingRule(
+                this.applyConditionalRules(
                         cell.setFormatted(
                                 Optional.of(
                                         context.format(
@@ -1130,18 +1130,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     /**
-     * Locates and returns the first matching conditional rule style.
+     * Locates and formats the cell using any matching conditional formatting rules.
      */
-    private SpreadsheetCell locateAndApplyConditionalFormattingRule(final SpreadsheetCell cell,
-                                                                    final SpreadsheetEngineContext context) {
-        SpreadsheetCell result = cell;
+    private SpreadsheetCell applyConditionalRules(final SpreadsheetCell cell,
+                                                  final SpreadsheetEngineContext context) {
+        SpreadsheetCell formatted = cell;
 
         final Set<SpreadsheetConditionalFormattingRule> rules = Sets.sorted(SpreadsheetConditionalFormattingRule.PRIORITY_COMPARATOR);
         rules.addAll(context.storeRepository()
                 .rangeToConditionalFormattingRules()
                 .loadCellReferenceValues(cell.reference()));
         for (final SpreadsheetConditionalFormattingRule rule : rules) {
-            final Boolean booleanResult = context.evaluateAsBoolean(
+            final boolean ruleResult = context.evaluateAsBoolean(
                     rule.formula()
                             .expression()
                             .get(),
@@ -1149,17 +1149,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             cell
                     )
             );
-            if (Boolean.TRUE.equals(booleanResult)) {
-                final TextNode formatted = cell.formatted()
+            if (Boolean.TRUE.equals(ruleResult)) {
+                final TextNode formattedText = cell.formatted()
                         .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formatted cell=" + cell));
-                result = cell.setFormatted(
+                formatted = formatted.setFormatted(
                         Optional.of(
                                 rule.style()
                                         .apply(cell)
-                                        .replace(formatted)));
+                                        .replace(formattedText)
+                        )
+                );
             }
         }
-        return result;
+        return formatted;
     }
 
     // max..............................................................................................................
