@@ -904,9 +904,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     // Visible for SpreadsheetEngineEvaluation only called by COMPUTE_IF_NECESSARY & FORCE_RECOMPUTE
-    SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                 final SpreadsheetEngineEvaluation evaluation,
-                                                 final SpreadsheetEngineContext context) {
+    SpreadsheetCell parseFormulaEvaluateFormatAndStyle(final SpreadsheetCell cell,
+                                                       final SpreadsheetEngineEvaluation evaluation,
+                                                       final SpreadsheetEngineContext context) {
         final SpreadsheetCell afterParse = this.parseFormulaIfNecessary(
                 cell,
                 Function.identity(),
