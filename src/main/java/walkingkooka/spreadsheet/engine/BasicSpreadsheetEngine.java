@@ -915,7 +915,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return afterParse.formula().error().isPresent() ?
                 afterParse :
-                this.evaluateAndStyle(
+                this.evaluateFormatAndStyle(
                         afterParse,
                         evaluation,
                         context
@@ -998,9 +998,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * This is only called if the formula was parsed an {@link Expression} exists ready for evaluation.
      */
-    private SpreadsheetCell evaluateAndStyle(final SpreadsheetCell cell,
-                                             final SpreadsheetEngineEvaluation evaluation,
-                                             final SpreadsheetEngineContext context) {
+    private SpreadsheetCell evaluateFormatAndStyle(final SpreadsheetCell cell,
+                                                   final SpreadsheetEngineEvaluation evaluation,
+                                                   final SpreadsheetEngineContext context) {
         SpreadsheetFormula formula = cell.formula();
         SpreadsheetCell result = cell;
 
@@ -1793,7 +1793,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             for (final SpreadsheetCell possible : loaded) {
                 loadOffset++;
 
-                final SpreadsheetCell loadedAndEval = this.evaluateAndStyle(
+                final SpreadsheetCell loadedAndEval = this.evaluateFormatAndStyle(
                         possible,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                         context
