@@ -225,6 +225,33 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         );
     }
 
+    // evaluateAsBoolean................................................................................................
+
+    default void evaluateAsBooleanAndCheck(final SpreadsheetEngineContext context,
+                                           final Expression expression,
+                                           final boolean expected) {
+        this.evaluateAsBooleanAndCheck(
+                context,
+                expression,
+                Optional.empty(),
+                expected
+        );
+    }
+
+    default void evaluateAsBooleanAndCheck(final SpreadsheetEngineContext context,
+                                           final Expression expression,
+                                           final Optional<SpreadsheetCell> cell,
+                                           final boolean expected) {
+        this.checkEquals(
+                expected,
+                context.evaluateAsBoolean(
+                        expression,
+                        cell
+                ),
+                () -> "evaluateAsBoolean " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
+        );
+    }
+
     // format...........................................................................................................
 
     @Test
