@@ -85,8 +85,8 @@ public interface SpreadsheetEngineContext extends Context,
     /**
      * Formats the given value using the provided formatter.
      */
-    Optional<SpreadsheetText> format(final Object value,
-                                     final SpreadsheetFormatter formatter);
+    Optional<SpreadsheetText> formatValue(final Object value,
+                                          final SpreadsheetFormatter formatter);
 
     /**
      * Getter that returns the {@link SpreadsheetStoreRepository} for this spreadsheet.

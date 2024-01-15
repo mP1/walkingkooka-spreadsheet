@@ -236,8 +236,8 @@ public final class Sample {
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatter formatter) {
+            public Optional<SpreadsheetText> formatValue(final Object value,
+                                                         final SpreadsheetFormatter formatter) {
                 checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
 
                 return formatter.format(

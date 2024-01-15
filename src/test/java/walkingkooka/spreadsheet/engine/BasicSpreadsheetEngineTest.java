@@ -13342,8 +13342,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatter formatter) {
+            public Optional<SpreadsheetText> formatValue(final Object value,
+                                                         final SpreadsheetFormatter formatter) {
                 assertFalse(
                         value instanceof Optional,
                         () -> "Value must not be optional" + value

@@ -72,8 +72,8 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public Optional<SpreadsheetText> format(final Object value,
-                                            final SpreadsheetFormatter formatter) {
+    public Optional<SpreadsheetText> formatValue(final Object value,
+                                                 final SpreadsheetFormatter formatter) {
         throw new UnsupportedOperationException();
     }
 
