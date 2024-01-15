@@ -21,7 +21,6 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
-import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
@@ -66,27 +65,19 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
         final SpreadsheetFormula formula = cell.formula();
         return false == formula.text().isEmpty() &&
                 this.valueType.test(
-                formula.value()
-                        .orElse(null)
-        ) &&
+                        formula.value()
+                                .orElse(null)
+                ) &&
                 this.testExpression(cell);
     }
 
     private boolean testExpression(final SpreadsheetCell cell) {
-        final SpreadsheetEngineContext context = this.context;
-
-        final Object filter = context.evaluate(
+        return this.context.evaluateAsBoolean(
                 this.expression,
                 Optional.of(
                         cell
                 )
         );
-
-        if (false == filter instanceof Boolean) {
-            throw new RuntimeException("Expected boolean result but got " + CharSequences.quoteIfChars(filter));
-        }
-
-        return (Boolean) filter;
     }
 
     private final Predicate<Object> valueType;
