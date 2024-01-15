@@ -1142,8 +1142,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         rules.addAll(context.storeRepository()
                 .rangeToConditionalFormattingRules()
                 .loadCellReferenceValues(cell.reference()));
-        for (SpreadsheetConditionalFormattingRule rule : rules) {
-            final Object test = context.evaluate(
+        for (final SpreadsheetConditionalFormattingRule rule : rules) {
+            final Boolean booleanResult = context.evaluateAsBoolean(
                     rule.formula()
                             .expression()
                             .get(),
@@ -1151,12 +1151,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             cell
                     )
             );
-            final Boolean booleanResult = context.spreadsheetMetadata()
-                    .converterContext(
-                            context::now,
-                            context::resolveIfLabel
-                    )
-                    .convertOrFail(test, Boolean.class);
             if (Boolean.TRUE.equals(booleanResult)) {
                 final TextNode formatted = cell.formatted()
                         .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formatted cell=" + cell));
