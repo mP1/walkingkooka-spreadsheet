@@ -18,15 +18,24 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.Converters;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -134,6 +143,24 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                             default:
                                 throw new IllegalArgumentException("Unexpected cell " + cell);
                         }
+                    }
+
+                    @Override
+                    public SpreadsheetMetadata spreadsheetMetadata() {
+                        return SpreadsheetMetadata.EMPTY
+                                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
+                                .loadFromLocale()
+                                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
+                                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
+                                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
+                                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 50)
+                                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                                .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("user@example.com"))
+                                .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now())
+                                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
+                                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
+                                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 50)
+                                .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN);
                     }
 
                     @Override
