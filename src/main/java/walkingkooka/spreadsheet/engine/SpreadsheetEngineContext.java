@@ -65,6 +65,24 @@ public interface SpreadsheetEngineContext extends Context,
                     final Optional<SpreadsheetCell> cell);
 
     /**
+     * Helper that converts the result of the {@link Expression} evaluation into a {@link Boolean} value.
+     */
+    default boolean evaluateAsBoolean(final Expression node,
+                                      final Optional<SpreadsheetCell> cell) {
+        return this.spreadsheetMetadata()
+                .converterContext(
+                        this::now,
+                        this::resolveIfLabel
+                ).convertOrFail(
+                        this.evaluate(
+                                node,
+                                cell
+                        ),
+                        Boolean.class
+                );
+    }
+
+    /**
      * Formats the given value using the provided formatter.
      */
     Optional<SpreadsheetText> format(final Object value,

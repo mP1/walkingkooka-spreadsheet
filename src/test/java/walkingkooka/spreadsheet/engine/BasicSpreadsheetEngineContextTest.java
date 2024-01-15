@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.ConversionException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
@@ -483,6 +484,54 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 MINUS + "123" + DECIMAL + "5Abc123"
                         )
                 )
+        );
+    }
+
+    // evaluateAsBoolean................................................................................................
+
+    @Test
+    public void testEvaluateAsBooleanConvertFails() {
+        assertThrows(
+                ConversionException.class,
+                () -> this.createContext()
+                        .evaluateAsBoolean(
+                                Expression.value(this),
+                                Optional.empty()
+                        )
+        );
+    }
+
+    @Test
+    public void testEvaluateAsBooleanTrue() {
+        final boolean value = true;
+
+        this.evaluateAsBooleanAndCheck(
+                this.createContext(),
+                Expression.value(value),
+                value
+        );
+    }
+
+    @Test
+    public void testEvaluateAsBooleanFalse() {
+        final boolean value = false;
+
+        this.evaluateAsBooleanAndCheck(
+                this.createContext(),
+                Expression.value(value),
+                value
+        );
+    }
+
+    @Test
+    public void testEvaluateAsBooleanAddition() {
+        this.evaluateAsBooleanAndCheck(
+                this.createContext(),
+                Expression.add(
+                        this.expression(1),
+                        this.expression(2)
+                ),
+                true
         );
     }
 
