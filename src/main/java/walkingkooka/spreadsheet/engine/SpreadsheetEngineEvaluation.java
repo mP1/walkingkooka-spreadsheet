@@ -88,7 +88,7 @@ public enum SpreadsheetEngineEvaluation {
                                                      final BasicSpreadsheetEngine engine,
                                                      final SpreadsheetEngineContext context) {
             // clear value and error to allow evaluation to continue.
-            return engine.parseFormulaEvaluateAndStyle(
+            return engine.parseFormulaEvaluateFormatAndStyle(
                     cell.setFormula(
                             cell.formula()
                                     .clear()
@@ -120,7 +120,7 @@ public enum SpreadsheetEngineEvaluation {
         SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                      final BasicSpreadsheetEngine engine,
                                                      final SpreadsheetEngineContext context) {
-            return engine.parseFormulaEvaluateAndStyle(
+            return engine.parseFormulaEvaluateFormatAndStyle(
                     cell,
                     this,
                     context
