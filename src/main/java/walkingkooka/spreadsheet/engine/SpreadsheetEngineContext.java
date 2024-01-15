@@ -89,6 +89,12 @@ public interface SpreadsheetEngineContext extends Context,
                                           final SpreadsheetFormatter formatter);
 
     /**
+     * Combines formatting of any present value along with possibly applying conditional rules.
+     */
+    SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
+                                   final Optional<SpreadsheetFormatter> formatter);
+
+    /**
      * Getter that returns the {@link SpreadsheetStoreRepository} for this spreadsheet.
      */
     SpreadsheetStoreRepository storeRepository();

@@ -30,8 +30,11 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -42,6 +45,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
@@ -61,6 +66,9 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -474,6 +482,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
+    // formatValue......................................................................................................
+
     @Test
     public void testFormatValue() {
         this.formatValueAndCheck(
@@ -482,6 +492,83 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Optional.of(
                         SpreadsheetText.with(
                                 MINUS + "123" + DECIMAL + "5Abc123"
+                        )
+                )
+        );
+    }
+
+    // formatAndStyle...................................................................................................
+
+    @Test
+    public void testFormatAndStyle() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("1")
+                        .setValue(
+                                Optional.of(1)
+                        )
+        );
+
+        this.formatAndStyleAndCheck(
+                this.createContext(
+                        this.metadata(),
+                        SpreadsheetLabelStores.fake(),
+                        SpreadsheetCellRangeStores.treeMap()
+                ),
+                cell,
+                SpreadsheetPattern.parseNumberFormatPattern("$#.00")
+                        .formatter(),
+                cell.setFormatted(
+                        Optional.of(
+                                TextNode.text("CURR1.00")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testFormatAndStyleWithConditionalFormattingRule() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("1")
+                        .setValue(
+                                Optional.of(1)
+                        )
+        );
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.BACKGROUND_COLOR,
+                Color.parse("#123456")
+        );
+
+        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = SpreadsheetCellRangeStores.treeMap();
+        rangeToConditionalFormattingRules.addValue(
+                SpreadsheetSelection.A1.toCellRange(),
+                SpreadsheetConditionalFormattingRule.with(
+                        SpreadsheetDescription.with("Test Description"),
+                        1,
+                        SpreadsheetFormula.EMPTY.setText("=true()")
+                                .setExpression(
+                                        Optional.of(
+                                                Expression.value(true)
+                                        )
+                                ),
+                        (c) -> style
+                )
+        );
+
+        this.formatAndStyleAndCheck(
+                this.createContext(
+                        this.metadata(),
+                        SpreadsheetLabelStores.fake(),
+                        rangeToConditionalFormattingRules
+                ),
+                cell,
+                SpreadsheetPattern.parseNumberFormatPattern("$#.00")
+                        .formatter(),
+                cell.setFormatted(
+                        Optional.of(
+                                TextNode.text("CURR1.00")
+                                        .setAttributes(
+                                                style.value()
+                                        )
                         )
                 )
         );
@@ -832,11 +919,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
-        return this.createContext(this.metadata(), labelStore);
+        return this.createContext(
+                this.metadata(),
+                labelStore
+        );
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
                                                         final SpreadsheetLabelStore labelStore) {
+        return this.createContext(
+                metadata,
+                labelStore,
+                SpreadsheetCellRangeStores.fake()
+        );
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                        final SpreadsheetLabelStore labelStore,
+                                                        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
         final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
         cells.save(
                 LOAD_CELL_REFERENCE.setFormula(
@@ -858,6 +958,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     @Override
                     public SpreadsheetCellStore cells() {
                         return cells;
+                    }
+
+                    @Override
+                    public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
+                        return rangeToConditionalFormattingRules;
                     }
 
                     @Override

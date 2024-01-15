@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
 import walkingkooka.locale.HasLocaleTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -286,6 +287,72 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 context.formatValue(value, formatter),
                 () -> "formatValue " + CharSequences.quoteIfChars(value) + " " + formatter
         );
+    }
+
+    // format...........................................................................................................
+
+    @Test
+    default void testFormatAndStyleNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .formatAndStyle(
+                                null,
+                                Optional.empty() // no formatter
+                        )
+        );
+    }
+
+    @Test
+    default void testFormatAndStyleNullFormatterFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .formatAndStyle(
+                                SpreadsheetSelection.A1.setFormula(
+                                        SpreadsheetFormula.EMPTY
+                                ),
+                                null
+                        )
+        );
+    }
+
+    default void formatAndStyleAndCheck(final SpreadsheetCell cell,
+                                        final SpreadsheetFormatter formatter,
+                                        final SpreadsheetCell expected) {
+        this.formatAndStyleAndCheck(
+                this.createContext(),
+                cell,
+                formatter,
+                expected
+        );
+    }
+
+    default void formatAndStyleAndCheck(final SpreadsheetEngineContext context,
+                                        final SpreadsheetCell cell,
+                                        final SpreadsheetFormatter formatter,
+                                        final SpreadsheetCell expected) {
+        this.formatAndStyleAndCheck(
+                context,
+                cell,
+                Optional.of(
+                        formatter
+                ),
+                expected
+        );
+    }
+
+    default void formatAndStyleAndCheck(final SpreadsheetEngineContext context,
+                                        final SpreadsheetCell cell,
+                                        final Optional<SpreadsheetFormatter> formatter,
+                                        final SpreadsheetCell expected) {
+        this.checkEquals(
+                expected,
+                context.formatAndStyle(
+                        cell,
+                        formatter
+                ),
+                () -> "formatAndStyle " + cell + " " + formatter);
     }
 
     // TypeNameTesting .........................................................................................

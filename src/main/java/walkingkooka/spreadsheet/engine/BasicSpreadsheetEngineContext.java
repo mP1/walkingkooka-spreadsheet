@@ -18,10 +18,13 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -39,11 +42,13 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -222,6 +227,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public Optional<SpreadsheetText> formatValue(final Object value,
                                                  final SpreadsheetFormatter formatter) {
+        Objects.requireNonNull(formatter, "formatter");
+
         return formatter.format(
                 value,
                 this.spreadsheetMetadata()
@@ -230,6 +237,83 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                 this::resolveIfLabel
                         )
         );
+    }
+
+    // FORMAT .........................................................................................................
+
+    /**
+     * If a value is present use the {@link SpreadsheetFormatter} and apply the styling.
+     */
+    @Override
+    public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
+                                          final Optional<SpreadsheetFormatter> formatter) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(formatter, "formatter");
+
+        final SpreadsheetFormula formula = cell
+                .formula();
+        final Optional<Object> value = formula.value();
+
+        return value.isPresent() ?
+                this.applyConditionalRules(
+                        cell.setFormatted(
+                                Optional.of(
+                                        this.formatValue(
+                                                        value.get(),
+                                                        formatter.orElse(
+                                                                this.spreadsheetMetadata()
+                                                                        .formatter()
+                                                        )
+                                                )
+                                                .map(
+                                                        f -> cell.style()
+                                                                .replace(f.toTextNode())
+                                                )
+                                                .orElse(TextNode.EMPTY_TEXT)
+                                )
+                        )
+                ) :
+                cell;
+    }
+
+    /**
+     * Locates and formats the cell using any matching conditional formatting rules.
+     */
+    private SpreadsheetCell applyConditionalRules(final SpreadsheetCell cell) {
+        SpreadsheetCell formatted = cell;
+
+        // load rules for cell
+        final Set<SpreadsheetConditionalFormattingRule> rules = Sets.sorted(SpreadsheetConditionalFormattingRule.PRIORITY_COMPARATOR);
+        rules.addAll(
+                this.storeRepository()
+                        .rangeToConditionalFormattingRules()
+                        .loadCellReferenceValues(cell.reference())
+        );
+
+        // apply them
+        for (final SpreadsheetConditionalFormattingRule rule : rules) {
+            final boolean ruleResult = this.evaluateAsBoolean(
+                    rule.formula()
+                            .expression()
+                            .get(),
+                    Optional.of(
+                            cell
+                    )
+            );
+            if (Boolean.TRUE.equals(ruleResult)) {
+                final TextNode formattedText = cell.formatted()
+                        .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formatted cell=" + cell));
+                formatted = formatted.setFormatted(
+                        Optional.of(
+                                rule.style()
+                                        .apply(cell)
+                                        .replace(formattedText)
+                        )
+                );
+                break;
+            }
+        }
+        return formatted;
     }
 
     // Store............................................................................................................

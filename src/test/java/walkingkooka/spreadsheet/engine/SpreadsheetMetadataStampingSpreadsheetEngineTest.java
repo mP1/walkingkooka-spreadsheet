@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
@@ -304,6 +305,13 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                 .setFormula(
                         SpreadsheetFormula.EMPTY
                                 .setText(FORMULA_TEXT)
+                                .setExpression(
+                                        Optional.of(
+                                                Expression.value(FORMULA_VALUE)
+                                        )
+                                ).setValue(
+                                        Optional.of(FORMULA_VALUE)
+                                )
                 );
     }
 
@@ -468,6 +476,19 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                 checkEquals(FORMULA_VALUE, value, "formatValue");
                 return Optional.of(
                         SpreadsheetText.with(FORMULA_VALUE)
+                );
+            }
+
+            @Override
+            public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
+                                                  final Optional<SpreadsheetFormatter> formatter) {
+                return cell.setFormatted(
+                        this.formatValue(
+                                cell.formula().value().get(),
+                                formatter.orElse(
+                                        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
+                                )
+                        ).map(SpreadsheetText::toTextNode)
                 );
             }
         };
