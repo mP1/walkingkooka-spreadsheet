@@ -252,29 +252,40 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         );
     }
 
-    // format...........................................................................................................
+    // formatValue......................................................................................................
 
     @Test
-    default void testFormatNullFormatterFails() {
-        assertThrows(NullPointerException.class, () -> this.createContext().format("1", null));
+    default void testFormatValueNullFormatterFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .format(
+                                "1",
+                                null
+                        )
+        );
     }
 
-    default void formatAndCheck(final Object value,
-                                final SpreadsheetFormatter formatter,
-                                final Optional<SpreadsheetText> expected) {
-        this.formatAndCheck(this.createContext(),
+    default void formatValueAndCheck(final Object value,
+                                     final SpreadsheetFormatter formatter,
+                                     final Optional<SpreadsheetText> expected) {
+        this.formatValueAndCheck(
+                this.createContext(),
                 value,
                 formatter,
-                expected);
+                expected
+        );
     }
 
-    default void formatAndCheck(final SpreadsheetEngineContext context,
-                                final Object value,
-                                final SpreadsheetFormatter formatter,
-                                final Optional<SpreadsheetText> expected) {
-        this.checkEquals(expected,
+    default void formatValueAndCheck(final SpreadsheetEngineContext context,
+                                     final Object value,
+                                     final SpreadsheetFormatter formatter,
+                                     final Optional<SpreadsheetText> expected) {
+        this.checkEquals(
+                expected,
                 context.format(value, formatter),
-                () -> "format " + CharSequences.quoteIfChars(value) + " " + formatter);
+                () -> "formatValue " + CharSequences.quoteIfChars(value) + " " + formatter
+        );
     }
 
     // TypeNameTesting .........................................................................................

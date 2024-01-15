@@ -475,8 +475,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testFormat() {
-        this.formatAndCheck(
+    public void testFormatValue() {
+        this.formatValueAndCheck(
                 BigDecimal.valueOf(-123.45),
                 SpreadsheetPattern.parseNumberFormatPattern("#.#\"Abc123\"").formatter(),
                 Optional.of(
