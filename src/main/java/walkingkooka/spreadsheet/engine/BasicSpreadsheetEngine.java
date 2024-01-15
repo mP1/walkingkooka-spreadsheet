@@ -134,7 +134,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             for (final SpreadsheetCell cell : repository.cells()
                     .loadCells(cellRange)) {
 
-                final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(
+                final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
                         evaluation,
                         context
@@ -191,7 +191,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .cells()
                 .load(reference);
         loaded.map(c -> {
-            final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(c, evaluation, context);
+            final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(c, evaluation, context);
             changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
             return evaluated;
         });
@@ -211,7 +211,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
-            final SpreadsheetCell saved = this.maybeParseAndEvaluateAndFormat(
+            final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
                     cell,
                     SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                     context
@@ -245,7 +245,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         // save all cells.
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
             for (final SpreadsheetCell cell : cells) {
-                final SpreadsheetCell saved = this.maybeParseAndEvaluateAndFormat(
+                final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
                         SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                         context
@@ -316,7 +316,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // load cells in column and save them again, this will re-evaluate as necessary.
             final SpreadsheetCellStore cells = repo.cells();
             for (final SpreadsheetCell cell : cells.column(column.reference())) {
-                this.maybeParseAndEvaluateAndFormat(
+                this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
                         SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                         context
@@ -360,7 +360,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // load cells in row and save them again, this will re-evaluate as necessary.
             final SpreadsheetCellStore cells = repo.cells();
             for (final SpreadsheetCell cell : cells.row(row.reference())) {
-                this.maybeParseAndEvaluateAndFormat(
+                this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
                         SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                         context
@@ -482,7 +482,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     if (!changes.isLoaded(reference)) {
                                         final Optional<SpreadsheetCell> loaded = store.load(reference);
                                         if (loaded.isPresent()) {
-                                            final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(loaded.get(), evaluation, context);
+                                            final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(loaded.get(), evaluation, context);
                                             changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
                                         }
                                     }
@@ -893,9 +893,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineEvaluation}
      */
-    SpreadsheetCell maybeParseAndEvaluateAndFormat(final SpreadsheetCell cell,
-                                                   final SpreadsheetEngineEvaluation evaluation,
-                                                   final SpreadsheetEngineContext context) {
+    SpreadsheetCell parseFormulaEvaluateFormatStyleAndSave(final SpreadsheetCell cell,
+                                                           final SpreadsheetEngineEvaluation evaluation,
+                                                           final SpreadsheetEngineContext context) {
         final SpreadsheetCell result = evaluation.parseFormulaEvaluateAndStyle(cell, this, context);
         context.storeRepository()
                 .cells()

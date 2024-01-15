@@ -138,7 +138,7 @@ final class BasicSpreadsheetEngineFillCells {
                 ),
                 context
         );
-        this.engine.maybeParseAndEvaluateAndFormat(save,
+        this.engine.parseFormulaEvaluateFormatStyleAndSave(save,
                 SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
                 context);
     }
