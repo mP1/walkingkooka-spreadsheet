@@ -27,8 +27,6 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -64,7 +62,6 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.Length;
-import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
@@ -977,12 +974,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     formula
             );
 
-            //if error formatAndApplyStyle
+            //if error formatAndStyle
             if (formula.error().isPresent()) {
-                result = this.formatAndApplyStyle(
+                result = context.formatAndStyle(
                         result,
-                        Optional.empty(), // no formatter
-                        context
+                        Optional.empty()
                 );
             }
 
@@ -1025,11 +1021,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
-            result = this.formatAndApplyStyle(
+            result = context.formatAndStyle(
                     result,
                     cell.formatPattern()
-                            .map(SpreadsheetFormatPattern::formatter),
-                    context
+                            .map(SpreadsheetFormatPattern::formatter)
             );
         } catch (final Exception cause) {
             result = this.setError(
@@ -1045,7 +1040,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetCell setError(final Throwable cause,
                                      final SpreadsheetCell cell,
                                      final SpreadsheetEngineContext context) {
-        return this.formatAndApplyStyle(
+        return context.formatAndStyle(
                 cell.setFormula(
                         cell.formula()
                                 .setValue(
@@ -1055,8 +1050,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         )
                                 )
                 ),
-                Optional.empty(), // ignore cell formatter
-                context
+                Optional.empty() // ignore cell formatter
         );
     }
 
@@ -1092,76 +1086,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         Optional.of(cell)
                 )
         );
-    }
-
-    // FORMAT .........................................................................................................
-
-    /**
-     * If a value is present use the {@link SpreadsheetFormatter} and apply the styling.
-     */
-    private SpreadsheetCell formatAndApplyStyle(final SpreadsheetCell cell,
-                                                final Optional<SpreadsheetFormatter> formatter,
-                                                final SpreadsheetEngineContext context) {
-        final SpreadsheetFormula formula = cell
-                .formula();
-        final Optional<Object> value = formula.value();
-
-        return value.isPresent() ?
-                this.applyConditionalRules(
-                        cell.setFormatted(
-                                Optional.of(
-                                        context.formatValue(
-                                                        value.get(),
-                                                        formatter.orElse(
-                                                                context.spreadsheetMetadata()
-                                                                        .formatter()
-                                                        )
-                                                )
-                                                .map(
-                                                        f -> cell.style()
-                                                                .replace(f.toTextNode())
-                                                )
-                                                .orElse(TextNode.EMPTY_TEXT)
-                                )
-                        ),
-                        context
-                ) :
-                cell;
-    }
-
-    /**
-     * Locates and formats the cell using any matching conditional formatting rules.
-     */
-    private SpreadsheetCell applyConditionalRules(final SpreadsheetCell cell,
-                                                  final SpreadsheetEngineContext context) {
-        SpreadsheetCell formatted = cell;
-
-        final Set<SpreadsheetConditionalFormattingRule> rules = Sets.sorted(SpreadsheetConditionalFormattingRule.PRIORITY_COMPARATOR);
-        rules.addAll(context.storeRepository()
-                .rangeToConditionalFormattingRules()
-                .loadCellReferenceValues(cell.reference()));
-        for (final SpreadsheetConditionalFormattingRule rule : rules) {
-            final boolean ruleResult = context.evaluateAsBoolean(
-                    rule.formula()
-                            .expression()
-                            .get(),
-                    Optional.of(
-                            cell
-                    )
-            );
-            if (Boolean.TRUE.equals(ruleResult)) {
-                final TextNode formattedText = cell.formatted()
-                        .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formatted cell=" + cell));
-                formatted = formatted.setFormatted(
-                        Optional.of(
-                                rule.style()
-                                        .apply(cell)
-                                        .replace(formattedText)
-                        )
-                );
-            }
-        }
-        return formatted;
     }
 
     // max..............................................................................................................

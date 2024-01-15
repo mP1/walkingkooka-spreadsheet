@@ -78,6 +78,12 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
+    public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
+                                          final Optional<SpreadsheetFormatter> formatter) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetStoreRepository storeRepository() {
         throw new UnsupportedOperationException();
     }

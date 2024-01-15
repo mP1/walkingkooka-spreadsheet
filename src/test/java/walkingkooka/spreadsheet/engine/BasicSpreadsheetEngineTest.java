@@ -108,10 +108,8 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
-import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.Length;
-import walkingkooka.tree.text.TextDecorationLine;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -1107,68 +1105,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 number(3 + 4),
                 FORMATTED_PATTERN_SUFFIX);
-    }
-
-    @Test
-    public void testLoadCellsWithConditionalFormattingRule() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-
-        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rules = repository.rangeToConditionalFormattingRules();
-        final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
-
-        // rule 3 is ignored because it returns false, rule 2 short circuits the conditional testing ...
-        final TextStyle italics = TextStyle.EMPTY.set(
-                TextStylePropertyName.FONT_STYLE,
-                FontStyle.ITALIC
-        );
-        this.saveRule(
-                true,
-                1,
-                italics,
-                a,
-                rules
-        );
-
-        this.saveRule(
-                true,
-                2,
-                TextStyle.EMPTY.set(
-                        TextStylePropertyName.TEXT_DECORATION_LINE,
-                        TextDecorationLine.UNDERLINE
-                ),
-                a,
-                rules
-        );
-        this.saveRule(
-                false,
-                3,
-                TextStyle.EMPTY.setValues(
-                        Maps.of(
-                                TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC,
-                                TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD,
-                                TextStylePropertyName.TEXT_DECORATION_LINE, TextDecorationLine.UNDERLINE
-                        )
-                ),
-                a,
-                rules);
-
-        repository.cells()
-                .save(this.cell(a, "=3+4"));
-
-        final SpreadsheetCell cell = this.loadCellAndCheckFormatted2(engine,
-                a,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                number(3 + 4),
-                FORMATTED_PATTERN_SUFFIX);
-
-        // UNDERLINED parse conditional formatting rule #2.
-        this.checkEquals(Optional.of(italics.replace(TextNode.text("7 " + FORMATTED_PATTERN_SUFFIX)).root()),
-                cell.formatted(),
-                () -> "TextStyle should include underline if correct rule was applied=" + cell);
     }
 
     @Test
@@ -13352,6 +13288,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         value,
                         SPREADSHEET_TEXT_FORMAT_CONTEXT
                 );
+            }
+
+            @Override
+            public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
+                                                  final Optional<SpreadsheetFormatter> formatter) {
+                final Optional<Object> value = cell.formula()
+                        .value();
+                return value.isPresent() ?
+                        cell.setFormatted(
+                                Optional.of(
+                                        this.formatValue(
+                                                        value.get(),
+                                                        formatter.orElse(
+                                                                this.spreadsheetMetadata()
+                                                                        .formatter()
+                                                        )
+                                                ).map(
+                                                        f -> cell.style()
+                                                                .replace(f.toTextNode())
+                                                )
+                                                .orElse(TextNode.EMPTY_TEXT)
+                                )
+                        ) :
+                        cell;
             }
 
             @Override
