@@ -1121,15 +1121,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                         f -> cell.style()
                                                                 .replace(f.toTextNode())
                                                 )
-                                                .orElse(EMPTY_TEXT_NODE)
+                                                .orElse(TextNode.EMPTY_TEXT)
                                 )
                         ),
                         context
                 ) :
                 cell;
     }
-
-    private final static TextNode EMPTY_TEXT_NODE = TextNode.text("");
 
     /**
      * Locates and returns the first matching conditional rule style.
