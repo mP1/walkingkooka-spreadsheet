@@ -217,9 +217,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      */
     private final Function<BigDecimal, Fraction> fractioner;
 
+    // formatValue......................................................................................................
+
     @Override
-    public Optional<SpreadsheetText> format(final Object value,
-                                            final SpreadsheetFormatter formatter) {
+    public Optional<SpreadsheetText> formatValue(final Object value,
+                                                 final SpreadsheetFormatter formatter) {
         return formatter.format(
                 value,
                 this.spreadsheetMetadata()

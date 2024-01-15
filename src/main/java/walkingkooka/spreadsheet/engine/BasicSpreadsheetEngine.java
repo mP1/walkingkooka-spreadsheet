@@ -1110,7 +1110,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 this.applyConditionalRules(
                         cell.setFormatted(
                                 Optional.of(
-                                        context.format(
+                                        context.formatValue(
                                                         value.get(),
                                                         formatter.orElse(
                                                                 context.spreadsheetMetadata()

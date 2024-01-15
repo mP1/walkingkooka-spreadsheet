@@ -259,7 +259,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         assertThrows(
                 NullPointerException.class,
                 () -> this.createContext()
-                        .format(
+                        .formatValue(
                                 "1",
                                 null
                         )
@@ -283,7 +283,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final Optional<SpreadsheetText> expected) {
         this.checkEquals(
                 expected,
-                context.format(value, formatter),
+                context.formatValue(value, formatter),
                 () -> "formatValue " + CharSequences.quoteIfChars(value) + " " + formatter
         );
     }

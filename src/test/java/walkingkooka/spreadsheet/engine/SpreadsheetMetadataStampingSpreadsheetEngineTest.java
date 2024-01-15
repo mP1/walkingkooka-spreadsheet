@@ -463,8 +463,8 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatter formatter) {
+            public Optional<SpreadsheetText> formatValue(final Object value,
+                                                         final SpreadsheetFormatter formatter) {
                 checkEquals(FORMULA_VALUE, value, "formatValue");
                 return Optional.of(
                         SpreadsheetText.with(FORMULA_VALUE)
