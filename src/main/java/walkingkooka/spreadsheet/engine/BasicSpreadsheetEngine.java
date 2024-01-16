@@ -22,7 +22,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
@@ -983,10 +982,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
         } catch (final Exception failed) {
-            result = this.setError(
+            result = context.formatThrowableAndStyle(
                     failed,
-                    cell.setFormula(formula),
-                    context
+                    cell.setFormula(formula)
             );
         }
 
@@ -1027,31 +1025,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             .map(SpreadsheetFormatPattern::formatter)
             );
         } catch (final Exception cause) {
-            result = this.setError(
+            result = context.formatThrowableAndStyle(
                     cause,
-                    cell,
-                    context
+                    cell
             );
         }
 
         return result;
-    }
-
-    private SpreadsheetCell setError(final Throwable cause,
-                                     final SpreadsheetCell cell,
-                                     final SpreadsheetEngineContext context) {
-        return context.formatAndStyle(
-                cell.setFormula(
-                        cell.formula()
-                                .setValue(
-                                        Optional.of(
-                                                SpreadsheetErrorKind.translate(cause)
-                                                        .replaceWithValueIfPossible(context)
-                                        )
-                                )
-                ),
-                Optional.empty() // ignore cell formatter
-        );
     }
 
     /**
