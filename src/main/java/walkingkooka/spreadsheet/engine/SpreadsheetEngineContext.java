@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Context;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
@@ -31,6 +32,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -93,6 +95,28 @@ public interface SpreadsheetEngineContext extends Context,
      */
     SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
                                    final Optional<SpreadsheetFormatter> formatter);
+
+    /**
+     * Formats the {@link Throwable} into text and styles it as an error.
+     */
+    default SpreadsheetCell formatThrowableAndStyle(final Throwable cause,
+                                                    final SpreadsheetCell cell) {
+        Objects.requireNonNull(cause, "cause");
+        Objects.requireNonNull(cell, "cell");
+
+        return this.formatAndStyle(
+                cell.setFormula(
+                        cell.formula()
+                                .setValue(
+                                        Optional.of(
+                                                SpreadsheetErrorKind.translate(cause)
+                                                        .replaceWithValueIfPossible(this)
+                                        )
+                                )
+                ),
+                Optional.empty() // ignore cell formatter
+        );
+    }
 
     /**
      * Getter that returns the {@link SpreadsheetStoreRepository} for this spreadsheet.
