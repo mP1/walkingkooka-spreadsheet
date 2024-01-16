@@ -51,6 +51,7 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -81,6 +82,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     private final static String ERROR = "Message #1";
 
     private final static String DIFFERENT_TEXT = "99+99";
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     @Test
     public void testWithNullExpressionFails() {
@@ -825,6 +828,156 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         Parsers.never()
                 ),
                 this.parserContext()
+        );
+    }
+
+    // replaceReferences................................................................................................
+
+    @Test
+    public void testReplaceReferencesWithNullMapperFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.EMPTY.replaceReferences(null)
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesNoCells() {
+        final SpreadsheetFormula formula = parse("=1+2");
+        assertSame(
+                formula,
+                formula.replaceReferences(
+                        (r) -> {
+                            throw new UnsupportedOperationException();
+                        }
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesOnlyLabel() {
+        final SpreadsheetFormula formula = parse("=1+Label123");
+
+        assertSame(
+                formula,
+                formula.replaceReferences(
+                        (r) -> {
+                            throw new UnsupportedOperationException();
+                        }
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesWithCellReferenceThenNone() {
+        this.replaceReferencesAndCheck(
+                parseFormula("=A1"),
+                (t) -> Optional.empty(),
+                parseFormula("=A1")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.value(SpreadsheetError.selectionDeleted())
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesWithCellReference() {
+        this.replaceReferencesAndCheck(
+                "=1+A1",
+                (t) -> Optional.of(
+                        t.add(1, 1)
+                ),
+                "=1+B2"
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesWithSeveralCellReference() {
+        this.replaceReferencesAndCheck(
+                "=1+A1+2+B2",
+                (t) -> Optional.of(
+                        t.add(1, 1)
+                ),
+                "=1+B2+2+C3"
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesWithCellRange() {
+        this.replaceReferencesAndCheck(
+                "=1+A1:B2",
+                (t) -> Optional.of(
+                        t.add(1, 1)
+                ),
+                "=1+B2:C3"
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesWithCellRangeAndCell() {
+        this.replaceReferencesAndCheck(
+                "=1+A1:B2+D4",
+                (t) -> Optional.of(
+                        t.add(1, 1)
+                ),
+                "=1+B2:C3+E5"
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesWithCellRangeAndCellMixedAbsolutes() {
+        this.replaceReferencesAndCheck(
+                "=1+A1:$B$2+$D4",
+                (t) -> Optional.of(
+                        t.add(1, 1)
+                ),
+                "=1+B2:$C$3+$E5"
+        );
+    }
+
+    private void replaceReferencesAndCheck(final String formula,
+                                           final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
+                                           final String expected) {
+        this.replaceReferencesAndCheck(
+                parseFormula(formula),
+                mapper,
+                parseFormula(expected)
+        );
+    }
+
+    private SpreadsheetFormula parseFormula(final String text) {
+        final SpreadsheetFormula formula = SpreadsheetFormula.parse(
+                TextCursors.charSequence(text),
+                SpreadsheetParsers.valueOrExpression(
+                        Parsers.never()
+                ),
+                this.parserContext()
+        );
+
+        return formula.setExpression(
+                formula.token()
+                        .map(
+                                t -> t.toExpression(
+                                        new FakeExpressionEvaluationContext() {
+                                            @Override
+                                            public ExpressionNumberKind expressionNumberKind() {
+                                                return EXPRESSION_NUMBER_KIND;
+                                            }
+                                        }
+                                ).get()
+                        )
+        );
+    }
+
+    private void replaceReferencesAndCheck(final SpreadsheetFormula formula,
+                                           final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
+                                           final SpreadsheetFormula expected) {
+        this.checkEquals(
+                expected,
+                formula.replaceReferences(mapper),
+                () -> formula.toString()
         );
     }
 

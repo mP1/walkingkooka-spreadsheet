@@ -337,6 +337,28 @@ public final class SpreadsheetFormula implements HasText,
         );
     }
 
+    // replaceReferences................................................................................................
+
+    public SpreadsheetFormula replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
+        Objects.requireNonNull(mapper, "mapper");
+
+        return this.setToken(
+                this.token.map(
+                        t -> t.replaceIf(
+                                (tt) -> tt instanceof SpreadsheetCellReferenceParserToken,
+                                SpreadsheetFormulaReplaceReferencesFunction.parserToken(mapper)
+                        ).cast(SpreadsheetParserToken.class)
+                )
+        ).setExpression(
+                this.expression.map(
+                        (e) -> e.replaceIf(
+                                ee -> ee.isReference() && ((ReferenceExpression) ee).value() instanceof SpreadsheetCellReferenceOrRange, // predicate
+                                SpreadsheetFormulaReplaceReferencesFunction.expression(mapper)
+                        )
+                )
+        );
+    }
+
     // moveRelativeCellReferences.......................................................................................
 
     /**
