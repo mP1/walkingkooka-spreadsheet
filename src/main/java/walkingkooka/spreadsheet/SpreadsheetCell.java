@@ -44,6 +44,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A spreadsheet cell including its formula, and other attributes such as format, text properties(styling) and more.
@@ -308,6 +309,23 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     @Override
     public int compareTo(final SpreadsheetCell other) {
         return this.reference().compareTo(other.reference());
+    }
+
+    // replaceReferences................................................................................................
+
+    /**
+     * Accepts a mapper which may be used to update the {@link #reference()} and {@link SpreadsheetFormula}.
+     */
+    public SpreadsheetCell replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
+        Objects.requireNonNull(mapper, "mapper");
+
+        final SpreadsheetCellReference cell = this.reference();
+        return this.setReference(
+                mapper.apply(this.reference())
+                        .orElseThrow(
+                                () -> new IllegalArgumentException("Mapper returned nothing for " + cell)
+                        )
+        ).setFormula(this.formula().replaceReferences(mapper));
     }
 
     // move.............................................................................................................

@@ -64,6 +64,7 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -456,6 +457,75 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkTextStyle(different);
         this.checkNoFormatPattern(different);
         this.checkFormatted(different);
+    }
+
+    // replaceReferences................................................................................................
+
+    @Test
+    public void testReplaceReferencesWithNullMapper() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .replaceReferences(null)
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesWithMapperReturnsEmptyForReference() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .replaceReferences((cell) -> Optional.empty())
+        );
+        this.checkEquals(
+                "Mapper returned nothing for A1",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperReturnsCell() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                parseFormula("=1+B2")
+        );
+        assertSame(
+                cell,
+                cell.replaceReferences(
+                        (c) ->
+                                Optional.of(
+                                        c
+                                )
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMove() {
+        this.replaceReferencesAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        parseFormula("=1+B2")
+                ),
+                (c) ->
+                        Optional.of(
+                                c.add(
+                                        1,
+                                        2
+                                )
+                        ),
+                SpreadsheetSelection.parseCell("B3")
+                        .setFormula(
+                                parseFormula("=1+C4")
+                        )
+        );
+    }
+
+    private void replaceReferencesAndCheck(final SpreadsheetCell cell,
+                                           final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
+                                           final SpreadsheetCell expected) {
+        this.checkEquals(
+                expected,
+                cell.replaceReferences(mapper)
+        );
     }
 
     // move ............................................................................................................
