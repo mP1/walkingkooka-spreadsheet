@@ -339,6 +339,12 @@ public final class SpreadsheetFormula implements HasText,
 
     // replaceReferences................................................................................................
 
+    /**
+     * Uses a {@link Function} to replace any existing {@link SpreadsheetCellReference} updating the {@link ParserToken}
+     * and {@link Expression}. When a token is present the {@link #text()} will also be updated.
+     * If the {@link Function} returns an {@link Optional#empty()}, that {@link SpreadsheetCellReference} will be replaced with
+     * a {@link SpreadsheetErrorKind#REF}.
+     */
     public SpreadsheetFormula replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
         Objects.requireNonNull(mapper, "mapper");
 
