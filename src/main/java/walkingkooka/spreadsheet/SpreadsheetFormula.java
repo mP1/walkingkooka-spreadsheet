@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
@@ -363,57 +362,6 @@ public final class SpreadsheetFormula implements HasText,
                         )
                 )
         );
-    }
-
-    // moveRelativeCellReferences.......................................................................................
-
-    /**
-     * Returns a {@link SpreadsheetFormula} updating any present relative {@link SpreadsheetCellReference}.
-     * If ALL cell references are absolute or none are present this will be returned.
-     * If the token is missing probably because the text was not parseable this will be returned unmodified.
-     */
-    public SpreadsheetFormula moveRelativeCellReferences(final int deltaColumn,
-                                                         final int deltaRow) {
-        return 0 == deltaColumn && 0 == deltaRow && false == this.token.isPresent() ?
-                this :
-                this.setToken(
-                        this.token.map(
-                                t -> t.replaceIf(
-                                        (tt) -> tt instanceof SpreadsheetCellReferenceParserToken,
-                                        (ttt) -> moveRelativeCellReferencesMapper(
-                                                (SpreadsheetCellReferenceParserToken) ttt,
-                                                deltaColumn,
-                                                deltaRow
-                                        )
-                                ).cast(SpreadsheetParserToken.class)
-                        )
-                ).setExpression(
-                        this.expression.map(
-                                (e) -> e.replaceIf(
-                                        ee -> ee.isReference(), // predicate
-                                        ee -> {
-                                            final ReferenceExpression expression = (ReferenceExpression) ee;
-                                            final SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) expression.value();
-                                            return expression.setValue(
-                                                    spreadsheetExpressionReference.addIfRelative(
-                                                            deltaColumn,
-                                                            deltaRow
-                                                    )
-                                            );
-                                        } // mapper
-                                )
-                        )
-                );
-    }
-
-    private static ParserToken moveRelativeCellReferencesMapper(final SpreadsheetCellReferenceParserToken token,
-                                                                final int deltaColumn,
-                                                                final int deltaRow) {
-        return token.cell().
-                addIfRelative(
-                        deltaColumn,
-                        deltaRow
-                ).toParserToken();
     }
 
     // Patchable.......................................................................................................
