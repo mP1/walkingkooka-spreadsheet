@@ -484,26 +484,6 @@ public final class SpreadsheetFormula implements HasText,
                 );
     }
 
-    // replaceCellsReferences...........................................................................................
-
-    public SpreadsheetFormula replaceCellsReferences(final Function<SpreadsheetCellReference, SpreadsheetCellReference> mapper) {
-        Objects.requireNonNull(mapper, "mapper");
-
-        return this.setToken(
-                Cast.to(
-                        this.token.map(
-                                t -> t.replaceIf(
-                                        (tt) -> tt instanceof SpreadsheetCellReferenceParserToken,
-                                        (tt) -> mapper.apply(
-                                                tt.cast(SpreadsheetCellReferenceParserToken.class)
-                                                        .cell()
-                                        ).toParserToken()
-                                )
-                        )
-                )
-        );
-    }
-
     // JsonNodeContext..................................................................................................
 
     /**
