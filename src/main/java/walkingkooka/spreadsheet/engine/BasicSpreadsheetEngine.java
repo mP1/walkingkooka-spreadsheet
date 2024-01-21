@@ -143,7 +143,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 loadedOrDeleted.add(cell.reference());
             }
 
-            SpreadsheetDelta delta = this.prepareDelta(
+            SpreadsheetDelta delta = this.prepareResponse(
                     changes,
                     context
             );
@@ -216,7 +216,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context
             );
             changes.onCellSavedImmediate(saved);
-            return this.prepareDelta(
+            return this.prepareResponse(
                     changes,
                     context
             );
@@ -253,7 +253,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 changes.onCellSavedBatch(saved);
             }
 
-            return this.prepareDelta(
+            return this.prepareResponse(
                     changes,
                     context
             );
@@ -279,7 +279,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             if (cells.isPresent()) {
                 repository.cells().deleteCells(cells.get());
             }
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
@@ -322,7 +322,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
@@ -366,7 +366,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
@@ -388,7 +388,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context
             ).delete();
 
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
@@ -409,7 +409,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     )
                     .delete();
 
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
@@ -430,7 +430,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     )
                     .insert();
 
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
@@ -451,7 +451,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     )
                     .insert();
 
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
@@ -491,7 +491,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.with(ranges);
 
-            return this.prepareDelta(
+            return this.prepareResponse(
                     changes,
                     window,
                     context
@@ -518,18 +518,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context
             );
 
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
     /**
      * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
      */
-    private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
-                                          final SpreadsheetEngineContext context) {
+    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
+                                             final SpreadsheetEngineContext context) {
         changes.refreshUpdated();
 
-        return this.prepareDelta(
+        return this.prepareResponse(
                 changes,
                 changes.deletedAndUpdatedCellRange().map(
                         r -> SpreadsheetViewportWindows.with(
@@ -546,9 +546,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * because {@link SpreadsheetLabelMapping} may exist for missing/empty cells which are not present in either
      * {@link SpreadsheetDelta#cells} or {@link SpreadsheetDelta#deletedColumns}.
      */
-    private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
-                                          final SpreadsheetViewportWindows window,
-                                          final SpreadsheetEngineContext context) {
+    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
+                                             final SpreadsheetViewportWindows window,
+                                             final SpreadsheetEngineContext context) {
         changes.refreshUpdated();
 
         final Set<SpreadsheetDeltaProperties> deltaProperties = changes.deltaProperties;
@@ -859,7 +859,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .labels()
                     .save(mapping);
 
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
@@ -874,7 +874,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .labels()
                     .delete(label);
 
-            return this.prepareDelta(changes, context);
+            return this.prepareResponse(changes, context);
         }
     }
 
