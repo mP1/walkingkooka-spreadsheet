@@ -541,7 +541,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     /**
-     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
+     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for the
+     * given {@link SpreadsheetViewportWindows}. Labels must be loaded for the entire {@link SpreadsheetViewportWindows},
+     * because {@link SpreadsheetLabelMapping} may exist for missing/empty cells which are not present in either
+     * {@link SpreadsheetDelta#cells} or {@link SpreadsheetDelta#deletedColumns}.
      */
     private SpreadsheetDelta prepareDelta(final BasicSpreadsheetEngineChanges changes,
                                           final SpreadsheetViewportWindows window,
@@ -631,7 +634,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         // add labels within the range of the given window.
         if (!window.isEmpty()) {
-            // if not adding columns/rows/labels theres no point looping over ranges their cells
+            // if not adding columns/rows/labels theres no point looping over ranges for their cells
             if (addCells && (addColumns || addRows || addLabels)) {
                 final Set<SpreadsheetCellReference> cellReferences = Sets.hash();
 
@@ -693,7 +696,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     );
                 }
             }
-
         }
 
         // order is important because labels and cells for hidden columns/rows are filtered.
