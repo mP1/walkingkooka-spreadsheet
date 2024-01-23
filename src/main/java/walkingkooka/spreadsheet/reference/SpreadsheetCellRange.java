@@ -738,7 +738,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     // testXXXX.........................................................................................................
 
     /**
-     * Tests if this range test the given {@link SpreadsheetCellReference}.
+     * Tests if this range contains the given {@link SpreadsheetCellReference}.
      */
     @Override
     boolean testCell0(final SpreadsheetCellReference cell) {
@@ -748,6 +748,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
 
     /**
      * Returns true if any part of the given range intersects this range.
+     * {@link SpreadsheetCellRange} that overlaps and contain cells inside and outside this range will return true.
      */
     @Override
     boolean testCellRange0(final SpreadsheetCellRange range) {
