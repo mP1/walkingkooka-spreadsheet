@@ -550,6 +550,30 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     }
 
     @Test
+    public void testTestNotEmptyWindowCellRangeInside() {
+        this.testTrue(
+                SpreadsheetViewportWindows.parse("A1:D4"),
+                SpreadsheetSelection.parseCellRange("B2:C3")
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowCellRangeOutside() {
+        this.testFalse(
+                SpreadsheetViewportWindows.parse("A1:B2"),
+                SpreadsheetSelection.parseCellRange("C3:D4")
+        );
+    }
+
+    @Test
+    public void testTestNotEmptyWindowCellRangeInsideAndOutside() {
+        this.testTrue(
+                SpreadsheetViewportWindows.parse("B2:D4"),
+                SpreadsheetSelection.parseCellRange("A1:C3")
+        );
+    }
+
+    @Test
     public void testTestNotEmptyWindowColumnInside() {
         this.testTrue(
                 SpreadsheetViewportWindows.parse("A1:B2"),

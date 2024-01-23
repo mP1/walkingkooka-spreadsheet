@@ -275,6 +275,7 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
 
     /**
      * Return true if there are no cell-ranges OR the cell is matched by any cell-range.
+     * A cell-range that overlaps the window with some cells inside and some outside will return true.
      */
     @Override
     public boolean test(final SpreadsheetSelection selection) {
