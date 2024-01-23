@@ -776,6 +776,21 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                 .testRow0(row);
     }
 
+    // containsAll......................................................................................................
+
+    /**
+     * Only returns true if the given {@link SpreadsheetCellRange} is entirely within this {@link SpreadsheetCellRange}.
+     */
+    public boolean containsAll(final SpreadsheetCellRange range) {
+        Objects.requireNonNull(range, "range");
+
+        return this.testCell0(
+                range.begin()
+        ) && this.testCell0(
+                range.end()
+        );
+    }
+
     // HasParserToken...................................................................................................
 
     @Override
