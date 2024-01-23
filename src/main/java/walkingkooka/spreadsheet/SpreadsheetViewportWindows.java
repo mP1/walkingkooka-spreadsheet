@@ -288,6 +288,20 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
 
     }
 
+    // containsAll......................................................................................................
+
+    /**
+     * Returns true only if this window contains the entire given {@link SpreadsheetCellRange}.
+     */
+    public boolean containsAll(final SpreadsheetCellRange cells) {
+        Objects.requireNonNull(cells, "cells");
+
+        final Set<SpreadsheetCellRange> cellRanges = this.cellRanges;
+        return cellRanges.isEmpty() ||
+                cellRanges.stream()
+                        .anyMatch(r -> r.containsAll(cells));
+    }
+
     // TreePrintable....................................................................................................
 
     @Override

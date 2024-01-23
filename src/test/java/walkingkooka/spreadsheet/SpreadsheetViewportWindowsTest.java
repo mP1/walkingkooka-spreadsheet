@@ -605,6 +605,127 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
     }
 
+    // containsAll......................................................................................................
+
+    @Test
+    public void testContainsAllAllOutside() {
+        this.containsAllAndCheck(
+                "A1:B2",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllTopLeftOutside() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "A1:B2",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllBottomRightOutside() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllBottomRightOutsideMultipleRanges() {
+        this.containsAllAndCheck(
+                "B2:C3,Z9:Z10",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllSame() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "B2:C3",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllInside() {
+        this.containsAllAndCheck(
+                "B2:E5",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllInside2() {
+        this.containsAllAndCheck(
+                "B2:E5",
+                "C3",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllInside3() {
+        this.containsAllAndCheck(
+                "*",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllInsideMultipleRanges() {
+        this.containsAllAndCheck(
+                "A1,B2:E5",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllAndSomeOutside() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "A1:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllAndSomeOutside2() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "*",
+                false
+        );
+    }
+
+    private void containsAllAndCheck(final String windows,
+                                     final String test,
+                                     final boolean expected) {
+        this.containsAllAndCheck(
+                SpreadsheetViewportWindows.parse(windows),
+                SpreadsheetSelection.parseCellRange(test),
+                expected
+        );
+    }
+
+    private void containsAllAndCheck(final SpreadsheetViewportWindows windows,
+                                     final SpreadsheetCellRange test,
+                                     final boolean expected) {
+        this.checkEquals(
+                expected,
+                windows.containsAll(test),
+                () -> windows + " contains " + test
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
