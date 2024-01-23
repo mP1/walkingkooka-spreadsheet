@@ -182,6 +182,15 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     }
 
     @Test
+    public void testParseAllCells() {
+        this.parseStringAndCheck(
+                "*",
+                "*",
+                "*"
+        );
+    }
+
+    @Test
     public void testParseMany() {
         this.parseStringAndCheck(
                 "A1,B2:C3",
@@ -962,6 +971,18 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         this.toStringAndCheck(
                 this.createObject(),
                 "A1:B2"
+        );
+    }
+
+    @Test
+    public void testToStringAllCells() {
+        this.toStringAndCheck(
+                SpreadsheetViewportWindows.with(
+                        Sets.of(
+                                SpreadsheetSelection.ALL_CELLS
+                        )
+                ),
+                "*"
         );
     }
 

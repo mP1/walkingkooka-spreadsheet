@@ -314,7 +314,7 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
     public String toString() {
         return SEPARATOR.toSeparatedString(
                 this.cellRanges,
-                SpreadsheetCellRange::toString
+                SpreadsheetCellRange::toStringMaybeStar
         );
     }
 
