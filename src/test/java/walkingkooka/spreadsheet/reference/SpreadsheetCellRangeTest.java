@@ -1073,7 +1073,110 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    // stream.................................................................................................
+    // containsAll......................................................................................................
+
+    @Test
+    public void testContainsAllAllOutside() {
+        this.containsAllAndCheck(
+                "A1:B2",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllTopLeftOutside() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "A1:B2",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllBottomRightOutside() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllSame() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "B2:C3",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllInside() {
+        this.containsAllAndCheck(
+                "B2:E5",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllInside2() {
+        this.containsAllAndCheck(
+                "B2:E5",
+                "C3",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllInside3() {
+        this.containsAllAndCheck(
+                "*",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllAndSomeOutside() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "A1:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllAndSomeOutside2() {
+        this.containsAllAndCheck(
+                "B2:C3",
+                "*",
+                false
+        );
+    }
+
+    private void containsAllAndCheck(final String range,
+                                     final String test,
+                                     final boolean expected) {
+        this.containsAllAndCheck(
+                SpreadsheetSelection.parseCellRange(range),
+                SpreadsheetSelection.parseCellRange(test),
+                expected
+        );
+    }
+
+    private void containsAllAndCheck(final SpreadsheetCellRange range,
+                                     final SpreadsheetCellRange test,
+                                     final boolean expected) {
+        this.checkEquals(
+                expected,
+                range.containsAll(test),
+                () -> range + " contains " + test
+        );
+    }
+
+    // stream...........................................................................................................
 
     @Test
     public void testColumnStream() {
