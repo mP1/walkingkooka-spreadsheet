@@ -26,6 +26,7 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -1073,10 +1074,167 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
+    // containsAllSpreadsheetViewportWindows............................................................................
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsAllSpreadsheetViewportWindowsOutside() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "A1:B2",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsTopLeftOutside() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "B2:C3",
+                "A1:B2",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsBottomRightOutside() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "B2:C3",
+                "C3:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsOutside() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "B2:C3",
+                "D4:E5,F6:G7",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsSame() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "B2:C3",
+                "B2:C3",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsSameInsideAndOutside() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "A1:C3",
+                "A1,B2:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsInside() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "B2:E5",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsInside2() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "B2:E5",
+                "C3",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsStarInside() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "*",
+                "C3:D4",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsEmpty() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "A1",
+                "",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsEmpty2() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "A1:B2",
+                "",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsStarInside2() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "*",
+                "C3:D4,E5:F6",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsStarWithStar() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "*",
+                "*",
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsAndSomeOutside() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "B2:C3",
+                "A1:D4",
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllSpreadsheetViewportWindowsAndSomeStarOutside() {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                "B2:C3",
+                "*",
+                false
+        );
+    }
+
+    private void containsAllSpreadsheetViewportWindowsAndCheck(final String range,
+                                                               final String windows,
+                                                               final boolean expected) {
+        this.containsAllSpreadsheetViewportWindowsAndCheck(
+                SpreadsheetSelection.parseCellRange(range),
+                SpreadsheetViewportWindows.parse(windows),
+                expected
+        );
+    }
+
+    private void containsAllSpreadsheetViewportWindowsAndCheck(final SpreadsheetCellRange range,
+                                                               final SpreadsheetViewportWindows windows,
+                                                               final boolean expected) {
+        this.checkEquals(
+                expected,
+                range.containsAll(windows),
+                () -> range + " containsAll " + windows
+        );
+    }
+    
     // containsAll......................................................................................................
 
     @Test
-    public void testContainsAllAllOutside() {
+    public void testContainsAllSpreadsheetCellRangeAllOutside() {
         this.containsAllAndCheck(
                 "A1:B2",
                 "C3:D4",
@@ -1085,7 +1243,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testContainsAllTopLeftOutside() {
+    public void testContainsAllSpreadsheetCellRangeTopLeftOutside() {
         this.containsAllAndCheck(
                 "B2:C3",
                 "A1:B2",
@@ -1094,7 +1252,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testContainsAllBottomRightOutside() {
+    public void testContainsAllSpreadsheetCellRangeBottomRightOutside() {
         this.containsAllAndCheck(
                 "B2:C3",
                 "C3:D4",
@@ -1103,7 +1261,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testContainsAllSame() {
+    public void testContainsAllSpreadsheetCellRangeSame() {
         this.containsAllAndCheck(
                 "B2:C3",
                 "B2:C3",
@@ -1112,7 +1270,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testContainsAllInside() {
+    public void testContainsAllSpreadsheetCellRangeInside() {
         this.containsAllAndCheck(
                 "B2:E5",
                 "C3:D4",
@@ -1121,7 +1279,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testContainsAllInside2() {
+    public void testContainsAllSpreadsheetCellRangeInside2() {
         this.containsAllAndCheck(
                 "B2:E5",
                 "C3",
@@ -1130,7 +1288,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testContainsAllInside3() {
+    public void testContainsAllSpreadsheetCellRangeInside3() {
         this.containsAllAndCheck(
                 "*",
                 "C3:D4",
@@ -1139,7 +1297,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testContainsAllAndSomeOutside() {
+    public void testContainsAllSpreadsheetCellRangeAndSomeOutside() {
         this.containsAllAndCheck(
                 "B2:C3",
                 "A1:D4",
@@ -1148,7 +1306,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testContainsAllAndSomeOutside2() {
+    public void testContainsAllSpreadsheetCellRangeAndSomeOutside2() {
         this.containsAllAndCheck(
                 "B2:C3",
                 "*",

@@ -23,6 +23,7 @@ import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
@@ -774,6 +775,19 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     boolean testRow0(final SpreadsheetRowReference row) {
         return this.rowRange()
                 .testRow0(row);
+    }
+
+    // containsAll......................................................................................................
+
+    /**
+     * Only returns true if the given {@link SpreadsheetViewportWindows} is entirely within this {@link SpreadsheetCellRange}.
+     */
+    boolean containsAll(final SpreadsheetViewportWindows windows) {
+        return this.equalsIgnoreReferenceKind(ALL_CELLS) ||
+                windows.isEmpty() ||
+                windows.cellRanges()
+                        .stream()
+                        .allMatch(this::containsAll);
     }
 
     // containsAll......................................................................................................
