@@ -1224,13 +1224,13 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     private void containsAllSpreadsheetViewportWindowsAndCheck(final SpreadsheetCellRange range,
                                                                final SpreadsheetViewportWindows windows,
                                                                final boolean expected) {
-        this.checkEquals(
-                expected,
-                range.containsAll(windows),
-                () -> range + " containsAll " + windows
+        this.containsAllAndCheck(
+                range,
+                windows,
+                expected
         );
     }
-    
+
     // containsAll......................................................................................................
 
     @Test

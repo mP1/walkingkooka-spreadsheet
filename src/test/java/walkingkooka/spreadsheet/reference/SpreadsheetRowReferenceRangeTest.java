@@ -24,6 +24,7 @@ import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -204,6 +205,17 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.countAndCheck(
                 SpreadsheetSelection.parseRowRange("3:5"),
                 3
+        );
+    }
+
+    // containsAll......................................................................................................
+
+    @Test
+    public void testContainsAll() {
+        this.containsAllAndCheck(
+                SpreadsheetSelection.parseRowRange("1:2"),
+                SpreadsheetViewportWindows.parse("A1"),
+                false
         );
     }
 

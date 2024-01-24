@@ -29,6 +29,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -721,6 +722,23 @@ public abstract class SpreadsheetSelection implements HasText,
 
     abstract boolean testRow0(final SpreadsheetRowReference row);
 
+    // containsAll(SpreadsheetViewportWidget)...........................................................................
+
+    /**
+     * Can only return true for {@link SpreadsheetCell} or {@link SpreadsheetCellRange} if they contain all the given
+     * {@link SpreadsheetViewportWindows}. If this is a {@link SpreadsheetLabelName} a {@link UnsupportedOperationException}
+     * will be thrown while other selection sub types will return false.
+     */
+    public final boolean containsAll(final SpreadsheetViewportWindows windows) {
+        Objects.requireNonNull(windows, "windows");
+
+        if (this.isLabelName()) {
+            throw new UnsupportedOperationException(this.toString());
+        }
+
+        return (this.isCellReference() || this.isCellRange()) &&
+                this.toCellRange().containsAll0(windows);
+    }
     // isXXX............................................................................................................
 
     public final boolean isCellRange() {
