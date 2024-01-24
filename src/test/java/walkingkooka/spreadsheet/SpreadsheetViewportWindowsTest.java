@@ -726,6 +726,65 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
         );
     }
 
+    // count............................................................................................................
+
+    @Test
+    public void testCountEmpty() {
+        this.countAndCheck(
+                "",
+                SpreadsheetSelection.ALL_CELLS.count()
+        );
+    }
+
+    @Test
+    public void testCountStar() {
+        this.countAndCheck(
+                "*",
+                SpreadsheetSelection.ALL_CELLS.count()
+        );
+    }
+
+    @Test
+    public void testCountA1() {
+        this.countAndCheck(
+                "A1",
+                1
+        );
+    }
+
+    @Test
+    public void testCountA1B2C3() {
+        this.countAndCheck(
+                "A1,B2,C3",
+                3
+        );
+    }
+
+    @Test
+    public void testCountA1toB2andC3toE5() {
+        this.countAndCheck(
+                "A1:B2,C3:E5",
+                4 + 9
+        );
+    }
+
+    private void countAndCheck(final String windows,
+                               final long expected) {
+        this.countAndCheck(
+                SpreadsheetViewportWindows.parse(windows),
+                expected
+        );
+    }
+
+    private void countAndCheck(final SpreadsheetViewportWindows windows,
+                               final long expected) {
+        this.checkEquals(
+                expected,
+                windows.count(),
+                () -> "count " + windows
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
