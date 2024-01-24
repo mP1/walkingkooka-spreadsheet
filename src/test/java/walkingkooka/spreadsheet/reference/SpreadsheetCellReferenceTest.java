@@ -29,6 +29,7 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.tree.json.JsonNode;
@@ -339,6 +340,35 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 expected,
                 selection.viewportRectangle(width, height),
                 () -> selection + " viewportRectangle " + width + "," + height
+        );
+    }
+
+    // containsAll......................................................................................................
+
+    @Test
+    public void testContainsAllInside() {
+        this.containsAllAndCheck(
+                SpreadsheetSelection.A1,
+                SpreadsheetViewportWindows.parse("A1"),
+                true
+        );
+    }
+
+    @Test
+    public void testContainsAllInsideAndOutside() {
+        this.containsAllAndCheck(
+                SpreadsheetSelection.A1,
+                SpreadsheetViewportWindows.parse("A1,B2"),
+                false
+        );
+    }
+
+    @Test
+    public void testContainsAllOutside() {
+        this.containsAllAndCheck(
+                SpreadsheetSelection.A1,
+                SpreadsheetViewportWindows.parse("B2"),
+                false
         );
     }
 

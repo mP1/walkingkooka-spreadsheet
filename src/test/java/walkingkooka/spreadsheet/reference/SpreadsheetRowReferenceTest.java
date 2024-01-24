@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.tree.json.JsonNode;
@@ -64,6 +65,17 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testCountZ() {
         this.countAndCheck("$99", 1);
+    }
+
+    // containsAll......................................................................................................
+
+    @Test
+    public void testContainsAll() {
+        this.containsAllAndCheck(
+                SpreadsheetSelection.parseRow("1"),
+                SpreadsheetViewportWindows.parse("A1"),
+                false
+        );
     }
 
     // testTestRow......................................................................................................

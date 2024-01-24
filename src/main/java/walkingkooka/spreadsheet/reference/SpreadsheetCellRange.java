@@ -782,7 +782,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     /**
      * Only returns true if the given {@link SpreadsheetViewportWindows} is entirely within this {@link SpreadsheetCellRange}.
      */
-    boolean containsAll(final SpreadsheetViewportWindows windows) {
+    boolean containsAll0(final SpreadsheetViewportWindows windows) {
         return this.equalsIgnoreReferenceKind(ALL_CELLS) ||
                 windows.isEmpty() ||
                 windows.cellRanges()

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.CaseSensitivity;
@@ -319,7 +320,18 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     public void testToRowOrRowRangeFails() {
         this.toRowOrRowRangeFails();
     }
-    
+
+    // containsAll......................................................................................................
+
+    @Test
+    public void testContainsAllFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection()
+                        .containsAll(SpreadsheetViewportWindows.EMPTY)
+        );
+    }
+
     // simplify.........................................................................................................
 
     @Test

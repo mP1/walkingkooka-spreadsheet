@@ -29,6 +29,7 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunctions;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -424,7 +425,28 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         .toRowOrRowRange()
         );
     }
-    
+
+    // containsAll.......................................................................................................
+
+    @Test
+    public final void testContainsAllWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection()
+                        .containsAll(null)
+        );
+    }
+
+    final void containsAllAndCheck(final SpreadsheetSelection selection,
+                                   final SpreadsheetViewportWindows windows,
+                                   final boolean expected) {
+        this.checkEquals(
+                expected,
+                selection.containsAll(windows),
+                () -> selection + " containsAll " + windows
+        );
+    }
+
     // testXXX..........................................................................................................
 
     @Test
