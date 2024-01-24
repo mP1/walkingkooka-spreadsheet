@@ -302,6 +302,19 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
                         .anyMatch(r -> r.containsAll(cells));
     }
 
+    // count............................................................................................................
+
+    /**
+     * Returns the number of cells within this window. {@link #EMPTY} will return all cells.
+     */
+    public long count() {
+        return this.isEmpty() ?
+                SpreadsheetSelection.ALL_CELLS.count() :
+                this.cellRanges().stream()
+                        .mapToLong(SpreadsheetSelection::count)
+                        .sum();
+    }
+
     // TreePrintable....................................................................................................
 
     @Override
