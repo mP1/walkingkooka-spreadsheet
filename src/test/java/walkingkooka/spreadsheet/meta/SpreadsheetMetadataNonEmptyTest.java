@@ -2537,6 +2537,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"default-year\": 1901,\n" +
                 "  \"exponent-symbol\": \"E\",\n" +
                 "  \"group-separator\": \",\",\n" +
+                "  \"hide-zero-values\": true,\n" +
                 "  \"locale\": \"en\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
                 "  \"modified-date-time\": \"1999-12-31T12:58:59\",\n" +
@@ -2584,6 +2585,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"));
         properties.put(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR);
+        properties.put(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES, true);
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59));

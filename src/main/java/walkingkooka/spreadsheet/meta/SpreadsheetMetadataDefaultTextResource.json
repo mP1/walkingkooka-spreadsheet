@@ -68,6 +68,7 @@
   "default-year": 1900,
   "expression-number-kind": "BIG_DECIMAL",
   "general-number-format-digit-count": 9,
+  "hide-zero-values": false,
   "precision": 10,
   "rounding-mode": "HALF_UP",
   "style": {
