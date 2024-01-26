@@ -154,6 +154,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitHideZeroValues(final boolean value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }

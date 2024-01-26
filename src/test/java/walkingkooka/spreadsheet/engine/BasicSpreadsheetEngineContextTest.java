@@ -706,6 +706,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"expression-number-kind\": \"DOUBLE\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
+                        "  \"hide-zero-values\": false,\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-format-pattern\": \"#,##0.###\",\n" +
@@ -855,6 +856,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"expression-number-kind\": \"DOUBLE\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
+                        "  \"hide-zero-values\": false,\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-format-pattern\": \"#,##0.###\",\n" +

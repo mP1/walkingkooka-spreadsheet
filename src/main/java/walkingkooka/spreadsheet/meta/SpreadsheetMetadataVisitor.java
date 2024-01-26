@@ -166,6 +166,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitHideZeroValues(final boolean value) {
+        // nop
+    }
+
     protected void visitLocale(final Locale locale) {
         // nop
     }
