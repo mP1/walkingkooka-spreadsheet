@@ -81,46 +81,46 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     // setSelection.....................................................................................................
 
     @Test
-    public void testSetSelectionNullFails() {
+    public void testSetAnchoredSelectionNullFails() {
         final SpreadsheetViewport viewport = this.createObject();
         assertThrows(
                 NullPointerException.class,
-                () -> viewport.setSelection(null)
+                () -> viewport.setAnchoredSelection(null)
         );
     }
 
     @Test
-    public void testSetSelectionSame() {
+    public void testSetAnchoredSelectionSame() {
         final SpreadsheetViewport viewport = this.createObject();
         assertSame(
                 viewport,
-                viewport.setSelection(viewport.selection())
+                viewport.setAnchoredSelection(viewport.anchoredSelection())
         );
     }
 
     @Test
-    public void testSetSelectionDifferent() {
+    public void testSetAnchoredSelectionDifferent() {
         final SpreadsheetViewport viewport = this.createObject();
 
-        final Optional<AnchoredSpreadsheetSelection> differentSelection = Optional.of(
+        final Optional<AnchoredSpreadsheetSelection> differentAnchoredSelection = Optional.of(
                 SpreadsheetSelection.parseCell("B2")
                         .setDefaultAnchor()
         );
 
         this.checkNotEquals(
-                viewport.selection(),
-                differentSelection,
-                "different selection"
+                viewport.anchoredSelection(),
+                differentAnchoredSelection,
+                "different anchoredSelection"
         );
 
-        final SpreadsheetViewport different = viewport.setSelection(differentSelection);
+        final SpreadsheetViewport different = viewport.setAnchoredSelection(differentAnchoredSelection);
         assertNotSame(
                 viewport,
                 different
         );
-        this.checkSelection(
+        this.checkAnchoredSelection(
                 different,
-                differentSelection
+                differentAnchoredSelection
         );
         this.checkNavigations(
                 different,
@@ -150,7 +150,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
 
     @Test
     public void testSetNavigationsDifferent() {
-        final SpreadsheetViewport selection = this.createObject();
+        final SpreadsheetViewport viewport = this.createObject();
         final List<SpreadsheetViewportNavigation> navigations = Lists.of(
                 SpreadsheetViewportNavigation.extendRightColumn()
         );
@@ -160,17 +160,17 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 "different navigations"
         );
 
-        final SpreadsheetViewport differentSelection = selection.setNavigations(navigations);
+        final SpreadsheetViewport differentViewport = viewport.setNavigations(navigations);
         assertNotSame(
-                selection,
-                differentSelection
+                viewport,
+                differentViewport
         );
-        this.checkSelection(
-                differentSelection,
-                selection.selection()
+        this.checkAnchoredSelection(
+                differentViewport,
+                viewport.anchoredSelection()
         );
         this.checkNavigations(
-                differentSelection,
+                differentViewport,
                 navigations
         );
     }
@@ -195,9 +195,9 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 selection,
                 differentSelection
         );
-        this.checkSelection(
+        this.checkAnchoredSelection(
                 differentSelection,
-                selection.selection()
+                selection.anchoredSelection()
         );
 
         navigations.clear();
@@ -210,12 +210,12 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         );
     }
 
-    private void checkSelection(final SpreadsheetViewport viewport,
-                                final Optional<AnchoredSpreadsheetSelection> selection) {
+    private void checkAnchoredSelection(final SpreadsheetViewport viewport,
+                                        final Optional<AnchoredSpreadsheetSelection> anchoredSelection) {
         this.checkEquals(
-                selection,
-                viewport.selection(),
-                "selection"
+                anchoredSelection,
+                viewport.anchoredSelection(),
+                "anchoredSelection"
         );
     }
 
@@ -236,7 +236,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 SpreadsheetViewport.with(
                         SpreadsheetSelection.parseCell("Z99")
                                 .viewportRectangle(99, 999),
-                        SpreadsheetViewport.NO_SELECTION,
+                        SpreadsheetViewport.NO_ANCHORED_SELECTION,
                         NAVIGATIONS
                 )
         );
@@ -261,7 +261,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.checkNotEquals(
                 SpreadsheetViewport.with(
                         RECTANGLE,
-                        SpreadsheetViewport.NO_SELECTION,
+                        SpreadsheetViewport.NO_ANCHORED_SELECTION,
                         Lists.of(
                                 SpreadsheetViewportNavigation.rightColumn()
                         )
@@ -303,7 +303,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.treePrintAndCheck(
                 SpreadsheetViewport.with(
                         RECTANGLE,
-                        SpreadsheetViewport.NO_SELECTION,
+                        SpreadsheetViewport.NO_ANCHORED_SELECTION,
                         SpreadsheetViewport.NO_NAVIGATION
                 ),
                 "rectangle:" + EOL +
@@ -318,7 +318,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.treePrintAndCheck(
                 SpreadsheetViewport.with(
                         RECTANGLE,
-                        SpreadsheetViewport.NO_SELECTION,
+                        SpreadsheetViewport.NO_ANCHORED_SELECTION,
                         Lists.of(
                                 SpreadsheetViewportNavigation.leftColumn(),
                                 SpreadsheetViewportNavigation.upRow()
@@ -335,7 +335,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     }
 
     @Test
-    public void testTreePrintRectangleSelectionRowRangeNavigations() {
+    public void testTreePrintRectangleAnchoredSelectionRowRangeNavigations() {
         this.treePrintAndCheck(
                 SpreadsheetViewport.with(
                         RECTANGLE,
@@ -353,7 +353,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         "  home: A1" + EOL +
                         "  width: 100.0" + EOL +
                         "  height: 50.0" + EOL +
-                        "selection: row-range 12:34 TOP" + EOL +
+                        "anchoredSelection: row-range 12:34 TOP" + EOL +
                         "navigations:" + EOL +
                         "  left column" + EOL
         );
@@ -437,7 +437,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
                 HOME.viewportRectangle(WIDTH, HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         anchoredSpreadsheetSelection
                                 )
@@ -462,7 +462,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.marshallRoundTripTwiceAndCheck(
                 HOME.viewportRectangle(WIDTH, HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("B2")
                                                 .setDefaultAnchor()
@@ -476,7 +476,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.marshallRoundTripTwiceAndCheck(
                 HOME.viewportRectangle(WIDTH, HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("B2:C3")
                                                 .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
@@ -490,7 +490,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.marshallRoundTripTwiceAndCheck(
                 HOME.viewportRectangle(WIDTH, HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         COLUMN.setDefaultAnchor()
                                 )
@@ -503,7 +503,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.marshallRoundTripTwiceAndCheck(
                 HOME.viewportRectangle(WIDTH, HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumnRange("B:C")
                                                 .setAnchor(SpreadsheetViewportAnchor.LEFT)
@@ -517,7 +517,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.marshallRoundTripTwiceAndCheck(
                 HOME.viewportRectangle(WIDTH, HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         ROW.setDefaultAnchor()
                                 )
@@ -530,7 +530,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.marshallRoundTripTwiceAndCheck(
                 HOME.viewportRectangle(WIDTH, HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRowRange("12:34")
                                                 .setAnchor(SpreadsheetViewportAnchor.TOP)
@@ -546,8 +546,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.toStringAndCheck(
                 HOME.viewportRectangle(WIDTH, HEIGHT)
                         .viewport()
-                        .setSelection(
-                                SpreadsheetViewport.NO_SELECTION
+                        .setAnchoredSelection(
+                                SpreadsheetViewport.NO_ANCHORED_SELECTION
                         ),
                 RECTANGLE.toString()
         );
@@ -558,12 +558,12 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.toStringAndCheck(
                 HOME.viewportRectangle(WIDTH, HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         CELL.setDefaultAnchor()
                                 )
                         ),
-                RECTANGLE + " selection: " + CELL
+                RECTANGLE + " anchoredSelection: " + CELL
         );
     }
 
@@ -577,7 +577,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         ),
                         NAVIGATIONS
                 ),
-                RECTANGLE + " selection: " + CELL_RANGE + " " + ANCHOR + " navigations: " + NAVIGATIONS.iterator().next()
+                RECTANGLE + " anchoredSelection: " + CELL_RANGE + " " + ANCHOR + " navigations: " + NAVIGATIONS.iterator().next()
         );
     }
 

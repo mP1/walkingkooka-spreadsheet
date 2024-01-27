@@ -48,7 +48,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
                 SpreadsheetSelection.parseCell("C3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("C3")
                                                 .setDefaultAnchor()
@@ -57,7 +57,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
                 SpreadsheetSelection.parseCell("C5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("C3:C5")
                                                 .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
@@ -72,7 +72,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
                 SpreadsheetSelection.parseCell("C3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("C")
                                                 .setDefaultAnchor()
@@ -81,7 +81,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
                 SpreadsheetSelection.parseCell("C5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("C")
                                                 .setDefaultAnchor()
@@ -96,7 +96,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
                 SpreadsheetSelection.parseCell("C3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("3")
                                                 .setDefaultAnchor()
@@ -105,7 +105,7 @@ public final class SpreadsheetViewportNavigationExtendDownPixelTest extends Spre
                 SpreadsheetSelection.parseCell("C5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRowRange("3:5")
                                                 .setAnchor(SpreadsheetViewportAnchor.TOP)

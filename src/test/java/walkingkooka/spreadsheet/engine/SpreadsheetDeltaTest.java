@@ -664,7 +664,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 Optional.of(
                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                 .viewport()
-                                .setSelection(
+                                .setAnchoredSelection(
                                         Optional.of(
                                                 SpreadsheetSelection.parseColumn("C")
                                                         .setDefaultAnchor()
@@ -695,7 +695,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 Optional.of(
                                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                                 .viewport()
-                                                .setSelection(
+                                                .setAnchoredSelection(
                                                         Optional.of(
                                                                 SpreadsheetSelection.parseCellRange("A1:B2")
                                                                         .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
@@ -770,7 +770,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Optional.of(
                                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                         .viewport()
-                                        .setSelection(
+                                        .setAnchoredSelection(
                                                 Optional.of(
                                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                                 .setAnchor(
@@ -1040,7 +1040,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 Optional.of(
                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                 .viewport()
-                                .setSelection(
+                                .setAnchoredSelection(
                                         Optional.of(
                                                 SpreadsheetSelection.parseColumn("C")
                                                         .setDefaultAnchor()
@@ -1072,7 +1072,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 Optional.of(
                                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                                 .viewport()
-                                                .setSelection(
+                                                .setAnchoredSelection(
                                                         Optional.of(
                                                                 SpreadsheetSelection.parseCellRange("A1:B2")
                                                                         .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
@@ -1163,7 +1163,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Optional.of(
                                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                         .viewport()
-                                        .setSelection(
+                                        .setAnchoredSelection(
                                                 Optional.of(
                                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                                 .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
@@ -1987,7 +1987,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 Optional.of(
                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                 .viewport()
-                                .setSelection(
+                                .setAnchoredSelection(
                                         Optional.of(
                                                 SpreadsheetSelection.parseColumn("C")
                                                         .setDefaultAnchor()
@@ -2018,7 +2018,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 Optional.of(
                                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                                 .viewport()
-                                                .setSelection(
+                                                .setAnchoredSelection(
                                                         Optional.of(
                                                                 SpreadsheetSelection.parseCellRange("A1:B2")
                                                                         .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
@@ -2125,7 +2125,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Optional.of(
                                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                         .viewport()
-                                        .setSelection(
+                                        .setAnchoredSelection(
                                                 Optional.of(
                                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                                 .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
@@ -2313,7 +2313,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 Optional.of(
                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                 .viewport()
-                                .setSelection(
+                                .setAnchoredSelection(
                                         Optional.of(
                                                 SpreadsheetSelection.parseRow("3")
                                                         .setDefaultAnchor()
@@ -2344,7 +2344,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 Optional.of(
                                         SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                                 .viewport()
-                                                .setSelection(
+                                                .setAnchoredSelection(
                                                         Optional.of(
                                                                 SpreadsheetSelection.parseCellRange("A1:B2")
                                                                         .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
@@ -2453,7 +2453,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         Optional.of(
                                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                                         .viewport()
-                                        .setSelection(
+                                        .setAnchoredSelection(
                                                 Optional.of(
                                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                                 .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)

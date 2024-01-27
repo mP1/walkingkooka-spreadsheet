@@ -51,11 +51,11 @@ public final class SpreadsheetViewportNavigationRightPixelTest extends Spreadshe
                 SpreadsheetSelection.parseCell("C3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection),
+                        .setAnchoredSelection(selection),
                 SpreadsheetSelection.parseCell("E3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection)
+                        .setAnchoredSelection(selection)
         );
     }
 
@@ -70,11 +70,11 @@ public final class SpreadsheetViewportNavigationRightPixelTest extends Spreadshe
                 SpreadsheetSelection.parseCell("C3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection),
+                        .setAnchoredSelection(selection),
                 SpreadsheetSelection.parseCell("E3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection)
+                        .setAnchoredSelection(selection)
         );
     }
 
@@ -84,7 +84,7 @@ public final class SpreadsheetViewportNavigationRightPixelTest extends Spreadshe
                 SpreadsheetSelection.parseCell("C3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("3")
                                                 .setDefaultAnchor()
@@ -93,7 +93,7 @@ public final class SpreadsheetViewportNavigationRightPixelTest extends Spreadshe
                 SpreadsheetSelection.parseCell("E3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("3")
                                                 .setDefaultAnchor()

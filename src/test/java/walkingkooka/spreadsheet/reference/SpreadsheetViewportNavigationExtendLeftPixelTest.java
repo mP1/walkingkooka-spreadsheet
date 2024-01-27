@@ -48,7 +48,7 @@ public final class SpreadsheetViewportNavigationExtendLeftPixelTest extends Spre
                 SpreadsheetSelection.parseCell("E5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("E5")
                                                 .setDefaultAnchor()
@@ -57,7 +57,7 @@ public final class SpreadsheetViewportNavigationExtendLeftPixelTest extends Spre
                 SpreadsheetSelection.parseCell("C5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("C5:E5")
                                                 .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
@@ -72,7 +72,7 @@ public final class SpreadsheetViewportNavigationExtendLeftPixelTest extends Spre
                 SpreadsheetSelection.parseCell("E5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("E")
                                                 .setDefaultAnchor()
@@ -81,7 +81,7 @@ public final class SpreadsheetViewportNavigationExtendLeftPixelTest extends Spre
                 SpreadsheetSelection.parseCell("C5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumnRange("C:E")
                                                 .setAnchor(SpreadsheetViewportAnchor.RIGHT)
@@ -96,7 +96,7 @@ public final class SpreadsheetViewportNavigationExtendLeftPixelTest extends Spre
                 SpreadsheetSelection.parseCell("E5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("5")
                                                 .setDefaultAnchor()
@@ -105,7 +105,7 @@ public final class SpreadsheetViewportNavigationExtendLeftPixelTest extends Spre
                 SpreadsheetSelection.parseCell("C5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("5")
                                                 .setDefaultAnchor()

@@ -58,14 +58,14 @@ public abstract class SpreadsheetViewportNavigationColumnOrRowTestCase<T extends
                 this.createSpreadsheetViewportNavigation(),
                 HOME.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         selection
                                 )
                         ),
                 HOME.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         expected
                                 )

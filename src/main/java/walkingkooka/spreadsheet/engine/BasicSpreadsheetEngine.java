@@ -1574,14 +1574,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         SpreadsheetViewport notLabelViewport = viewport;
 
-        final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.selection();
+        final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.anchoredSelection();
         if (maybeAnchored.isPresent()) {
             final AnchoredSpreadsheetSelection anchoredBefore = maybeAnchored.get();
             final SpreadsheetSelection selection = anchoredBefore.selection();
 
             if (selection.isLabelName()) {
                 final SpreadsheetSelection selectionNotLabel = context.resolveIfLabel(selection);
-                notLabelViewport = notLabelViewport.setSelection(
+                notLabelViewport = notLabelViewport.setAnchoredSelection(
                         Optional.of(
                                 selectionNotLabel.setAnchor(
                                         anchoredBefore.anchor()
@@ -1596,14 +1596,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
                 if (result.isPresent()) {
                     SpreadsheetViewport viewportResult = result.get();
-                    final Optional<AnchoredSpreadsheetSelection> resultMaybeAnchored = viewportResult.selection();
+                    final Optional<AnchoredSpreadsheetSelection> resultMaybeAnchored = viewportResult.anchoredSelection();
                     if (resultMaybeAnchored.isPresent()) {
                         final AnchoredSpreadsheetSelection resultAnchored = resultMaybeAnchored.get();
                         final SpreadsheetSelection resultSelection = resultAnchored.selection();
                         if (resultSelection.equalsIgnoreReferenceKind(selectionNotLabel)) {
                             result = Optional.of(
                                     // restore the original label
-                                    viewportResult.setSelection(maybeAnchored)
+                                    viewportResult.setAnchoredSelection(maybeAnchored)
                             );
                         }
                     }
@@ -1684,13 +1684,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // home is hidden clear viewport
             result = null;
         } else {
-            final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.selection();
+            final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.anchoredSelection();
             if (maybeAnchored.isPresent()) {
                 final AnchoredSpreadsheetSelection anchored = maybeAnchored.get();
                 final SpreadsheetSelection selection = anchored.selection();
                 if (selection.isHidden(context::isColumnHidden, context::isRowHidden)) {
                     // selection is hidden clear it.
-                    result = viewport.setSelection(SpreadsheetViewport.NO_SELECTION);
+                    result = viewport.setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
                 } else {
                     result = viewport;
                 }

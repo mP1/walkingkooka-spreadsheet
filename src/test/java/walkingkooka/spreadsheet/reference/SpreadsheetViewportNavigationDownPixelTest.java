@@ -51,11 +51,11 @@ public final class SpreadsheetViewportNavigationDownPixelTest extends Spreadshee
                 SpreadsheetSelection.parseCell("C3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection),
+                        .setAnchoredSelection(selection),
                 SpreadsheetSelection.parseCell("C5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection)
+                        .setAnchoredSelection(selection)
         );
     }
 
@@ -70,11 +70,11 @@ public final class SpreadsheetViewportNavigationDownPixelTest extends Spreadshee
                 SpreadsheetSelection.parseCell("C3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection),
+                        .setAnchoredSelection(selection),
                 SpreadsheetSelection.parseCell("C5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection)
+                        .setAnchoredSelection(selection)
         );
     }
 
@@ -89,11 +89,11 @@ public final class SpreadsheetViewportNavigationDownPixelTest extends Spreadshee
                 SpreadsheetSelection.parseCell("C3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection),
+                        .setAnchoredSelection(selection),
                 SpreadsheetSelection.parseCell("C5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection)
+                        .setAnchoredSelection(selection)
         );
     }
 
