@@ -34,7 +34,7 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
                                       final SpreadsheetViewportNavigationContext context) {
         SpreadsheetViewport result = viewport;
 
-        final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.selection();
+        final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.anchoredSelection();
         if (maybeAnchored.isPresent()) {
             // selection present try and move it.
             final AnchoredSpreadsheetSelection selection = maybeAnchored.get();
@@ -65,7 +65,7 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
                         )
                 ) {
                     // moved selection within windows leave home unmoved
-                    result = viewport.setSelection(maybeMovedSelection);
+                    result = viewport.setAnchoredSelection(maybeMovedSelection);
                 } else {
                     // moved selection is outside viewport need to move home
                     final SpreadsheetCellReference home = rectangle.home();
@@ -86,11 +86,11 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
                     } else {
                         result = result.setRectangle(
                                 rectangle.setHome(home)
-                        ).setSelection(SpreadsheetViewport.NO_SELECTION);
+                        ).setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
                     }
                 }
             } else {
-                result = viewport.setSelection(SpreadsheetViewport.NO_SELECTION);
+                result = viewport.setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
             }
         }
 

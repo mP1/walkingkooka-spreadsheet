@@ -2653,7 +2653,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         .set(SpreadsheetMetadataPropertyName.VIEWPORT, SpreadsheetSelection.parseCell("D4")
                                 .viewportRectangle(100, 50)
                                 .viewport()
-                                .setSelection(
+                                .setAnchoredSelection(
                                         Optional.of(
                                                 SpreadsheetSelection.parseCell("E5")
                                                         .setDefaultAnchor()
@@ -2667,7 +2667,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         "  home: D4\n" +
                         "  width: 100.0\n" +
                         "  height: 50.0\n" +
-                        "selection: cell E5\n"
+                        "anchoredSelection: cell E5\n"
         );
     }
 

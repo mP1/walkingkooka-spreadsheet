@@ -71,11 +71,11 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
 
             result = result.setRectangle(movedRectangle);
 
-            final Optional<AnchoredSpreadsheetSelection> maybeSelection = viewport.selection();
-            if (maybeSelection.isPresent()) {
-                result = result.setSelection(
+            final Optional<AnchoredSpreadsheetSelection> maybeAnchoredSelection = viewport.anchoredSelection();
+            if (maybeAnchoredSelection.isPresent()) {
+                result = result.setAnchoredSelection(
                         updateViewportSelection(
-                                maybeSelection.get(),
+                                maybeAnchoredSelection.get(),
                                 rectangle,
                                 context
                         )
@@ -86,7 +86,7 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
             // reset home
             result = result.setRectangle(
                     rectangle.setHome(home)
-            ).setSelection(SpreadsheetViewport.NO_SELECTION);
+            ).setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
         }
 
         return result;
@@ -96,7 +96,7 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
                                                        final SpreadsheetViewportAnchor anchor,
                                                        final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection selection,
+    abstract Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection anchoredSelection,
                                                                             final SpreadsheetViewportRectangle rectangle,
                                                                             final SpreadsheetViewportNavigationContext context);
 

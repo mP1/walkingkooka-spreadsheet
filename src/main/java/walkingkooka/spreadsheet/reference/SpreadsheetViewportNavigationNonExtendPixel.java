@@ -30,7 +30,7 @@ abstract class SpreadsheetViewportNavigationNonExtendPixel extends SpreadsheetVi
     }
 
     @Override
-    final Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection selection,
+    final Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection anchoredSelection,
                                                                          final SpreadsheetViewportRectangle rectangle,
                                                                          final SpreadsheetViewportNavigationContext context) {
         // check if original selection is within the moved viewport
@@ -41,13 +41,13 @@ abstract class SpreadsheetViewportNavigationNonExtendPixel extends SpreadsheetVi
         );
 
         return windows.test(
-                selection.anchor()
+                anchoredSelection.anchor()
                         .opposite()
                         .selection(
-                                selection.selection()
+                                anchoredSelection.selection()
                         )
         ) ?
-                Optional.of(selection) :
-                SpreadsheetViewport.NO_SELECTION;
+                Optional.of(anchoredSelection) :
+                SpreadsheetViewport.NO_ANCHORED_SELECTION;
     }
 }

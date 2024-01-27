@@ -859,7 +859,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("B2")
                                                 .setDefaultAnchor()
@@ -873,7 +873,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("B2:C3")
                                                 .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
@@ -887,7 +887,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("B")
                                                 .setDefaultAnchor()
@@ -901,7 +901,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumnRange("B:CD")
                                                 .setAnchor(SpreadsheetViewportAnchor.RIGHT)
@@ -915,7 +915,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("2")
                                                 .setDefaultAnchor()
@@ -929,7 +929,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRowRange("2:34")
                                                 .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
@@ -1086,7 +1086,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return Optional.of(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                 .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
@@ -1099,7 +1099,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return Optional.of(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("C3")
                                                 .setDefaultAnchor()

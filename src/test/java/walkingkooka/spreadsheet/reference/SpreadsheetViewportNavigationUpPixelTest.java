@@ -51,11 +51,11 @@ public final class SpreadsheetViewportNavigationUpPixelTest extends SpreadsheetV
                 SpreadsheetSelection.parseCell("E5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection),
+                        .setAnchoredSelection(selection),
                 SpreadsheetSelection.parseCell("E3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection)
+                        .setAnchoredSelection(selection)
         );
     }
 
@@ -70,13 +70,13 @@ public final class SpreadsheetViewportNavigationUpPixelTest extends SpreadsheetV
                 SpreadsheetSelection.parseCell("E5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 selection
                         ),
                 SpreadsheetSelection.parseCell("E3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 selection
                         )
         );
@@ -92,13 +92,13 @@ public final class SpreadsheetViewportNavigationUpPixelTest extends SpreadsheetV
                 SpreadsheetSelection.parseCell("E5")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 selection
                         ),
                 SpreadsheetSelection.parseCell("E3")
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection)
+                        .setAnchoredSelection(selection)
         );
     }
 

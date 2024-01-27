@@ -11787,7 +11787,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetViewport viewport = SpreadsheetSelection.A1
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setSelection(
+                .setAnchoredSelection(
                         Optional.of(
                                 column.setDefaultAnchor()
                         )
@@ -11810,7 +11810,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetViewport viewport = SpreadsheetSelection.A1
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setSelection(
+                .setAnchoredSelection(
                         Optional.of(
                                 SpreadsheetSelection.parseColumn("B")
                                         .setDefaultAnchor()
@@ -11837,7 +11837,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetViewport viewport = SpreadsheetSelection.A1
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setSelection(
+                .setAnchoredSelection(
                         Optional.of(
                                 LABEL.setDefaultAnchor()
                         )
@@ -11861,7 +11861,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("B2")
                                                 .setDefaultAnchor()
@@ -11875,7 +11875,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("C2")
                                                 .setDefaultAnchor()
@@ -11925,7 +11925,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection)
+                        .setAnchoredSelection(selection)
                         .setNavigations(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.rightPixel(
@@ -11938,7 +11938,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .addColumn(3)
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(selection)
+                        .setAnchoredSelection(selection)
         );
     }
 
@@ -11956,7 +11956,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetViewport viewport = SpreadsheetSelection.A1
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setSelection(
+                .setAnchoredSelection(
                         Optional.of(
                                 selection.setDefaultAnchor()
                         )
@@ -11990,7 +11990,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         selection.setDefaultAnchor()
                                 )
@@ -12003,7 +12003,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCell("B1")
                                                 .setDefaultAnchor()
@@ -12028,7 +12028,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         selection.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                                 )
@@ -12041,7 +12041,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:C1")
                                                 .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
@@ -12075,7 +12075,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("B")
                                                 .setDefaultAnchor()
@@ -12110,7 +12110,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("A")
                                                 .setDefaultAnchor()
@@ -12125,7 +12125,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("C")
                                                 .setDefaultAnchor()
@@ -12152,7 +12152,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("2")
                                                 .setDefaultAnchor()
@@ -12167,7 +12167,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.A1
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("4")
                                                 .setDefaultAnchor()

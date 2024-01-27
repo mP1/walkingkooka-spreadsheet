@@ -28,12 +28,12 @@ abstract class SpreadsheetViewportNavigationExtendPixel extends SpreadsheetViewp
     }
 
     @Override
-    final Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection selection,
+    final Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection anchoredSelection,
                                                                          final SpreadsheetViewportRectangle rectangle,
                                                                          final SpreadsheetViewportNavigationContext context) {
         return this.updateSelection(
-                selection.selection(),
-                selection.anchor(),
+                anchoredSelection.selection(),
+                anchoredSelection.anchor(),
                 context
         );
     }

@@ -36,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
         this.checkValue(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseCellRange("A1:B2")
                                                 .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
@@ -50,7 +50,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
         this.checkValue(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseColumn("AB")
                                                 .setDefaultAnchor()
@@ -64,7 +64,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
         this.checkValue(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetLabelName.labelName("Label123")
                                                 .setDefaultAnchor()
@@ -78,7 +78,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
         this.checkValue(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
-                        .setSelection(
+                        .setAnchoredSelection(
                                 Optional.of(
                                         SpreadsheetSelection.parseRow("1234")
                                                 .setDefaultAnchor()
@@ -117,7 +117,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
     SpreadsheetViewport propertyValue() {
         return SpreadsheetSelection.A1.viewportRectangle(100, 40)
                 .viewport()
-                .setSelection(
+                .setAnchoredSelection(
                         Optional.of(
                                 SpreadsheetSelection.parseCell("B99")
                                         .setDefaultAnchor()
