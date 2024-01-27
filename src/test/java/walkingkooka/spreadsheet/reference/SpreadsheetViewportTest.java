@@ -58,12 +58,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     private static final SpreadsheetCellReference CELL = SpreadsheetSelection.parseCell("B2");
     private static final SpreadsheetRowReference ROW = SpreadsheetSelection.parseRow("2");
 
-    private static final SpreadsheetColumnReferenceRange COLUMN_RANGE = SpreadsheetSelection.parseColumnRange("B:C");
     private static final SpreadsheetCellRange CELL_RANGE = SpreadsheetSelection.parseCellRange("B2:C3");
-    private static final SpreadsheetRowReferenceRange ROW_RANGE = SpreadsheetSelection.parseRowRange("2:3");
-
-    private static final SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("Label123");
-
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final SpreadsheetViewportAnchor ANCHOR = SpreadsheetViewportAnchor.TOP_LEFT;
     private static final List<SpreadsheetViewportNavigation> NAVIGATIONS = Lists.of(
