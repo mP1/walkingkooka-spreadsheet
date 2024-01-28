@@ -300,7 +300,16 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         throw new UnsupportedOperationException(this.toString());
     }
 
-    // SpreadsheetViewportNavigation...........................................................................
+    // pick.............................................................................................................
+
+    @Override
+    public <T> T pick(final T cellOrCellRangeOrLabel,
+                      final T columnOrColumnRange,
+                      final T rowOrRowRange) {
+        return columnOrColumnRange;
+    }
+
+    // SpreadsheetViewportNavigation....................................................................................
 
     @Override
     public SpreadsheetViewportAnchor defaultAnchor() {

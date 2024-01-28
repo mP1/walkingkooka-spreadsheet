@@ -62,4 +62,13 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
      * Returns this {@link SpreadsheetExpressionReference} in relative form. This is a no-op for {@link SpreadsheetLabelName}.
      */
     abstract public SpreadsheetExpressionReference toRelative();
+
+    // pick.............................................................................................................
+
+    @Override
+    public final <T> T pick(final T cellOrCellRangeOrLabel,
+                            final T columnOrColumnRange,
+                            final T rowOrRowRange) {
+        return cellOrCellRangeOrLabel;
+    }
 }
