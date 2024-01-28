@@ -93,6 +93,19 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
         this.cellColumnOrRowTextAndCheck("cell");
     }
 
+    // pick.............................................................................................................
+
+    @Test
+    public final void testPick() {
+        this.pickAndCheck(
+                this.createSelection(),
+                1, // cell
+                2, // columns
+                3,// rows
+                1
+        );
+    }
+
     // equalsIgnoreReferenceKind..........................................................................................
 
     @Test

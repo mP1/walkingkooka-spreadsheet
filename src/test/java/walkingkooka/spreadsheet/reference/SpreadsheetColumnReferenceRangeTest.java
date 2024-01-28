@@ -657,6 +657,19 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
         );
     }
 
+    // pick.............................................................................................................
+
+    @Test
+    public void testPick() {
+        this.pickAndCheck(
+                this.createSelection(),
+                1, // cell
+                2, // columns
+                3,// rows
+                2
+        );
+    }
+
     // navigate.........................................................................................................
 
     @Test

@@ -212,6 +212,17 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
                 relative;
     }
 
+    // pick.............................................................................................................
+
+    @Override
+    public <T> T pick(final T cellOrCellRangeOrLabel,
+                      final T columnOrColumnRange,
+                      final T rowOrRowRange) {
+        return rowOrRowRange;
+    }
+
+    // SpreadsheetSelectionVisitor......................................................................................
+
     @Override
     void accept(final SpreadsheetSelectionVisitor visitor) {
         visitor.visit(this);
