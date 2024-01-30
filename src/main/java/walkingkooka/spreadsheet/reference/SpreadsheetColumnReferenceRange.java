@@ -391,7 +391,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
         return other.map(
                 s -> anchor.column(this)
                         .columnRange((SpreadsheetColumnReference) s)
-                        .simplify()
+                        .toScalar()
         );
     }
 

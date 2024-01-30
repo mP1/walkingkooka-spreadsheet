@@ -303,11 +303,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    // simplify.........................................................................................................
+    // toScalar.........................................................................................................
 
     @Test
-    public void testSimplify() {
-        this.simplifyAndCheck(
+    public void testToScalar() {
+        this.toScalarAndCheck(
                 this.createSelection()
         );
     }

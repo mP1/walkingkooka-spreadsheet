@@ -1213,41 +1213,41 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
         this.checkEquals("132", b.toString());
     }
 
-    // simplify.........................................................................................................
+    // toScalar.........................................................................................................
 
     @Test
-    public void testSimplifyDifferentBeginAndEnd() {
-        this.simplifyAndCheck(
+    public void testToScalarDifferentBeginAndEnd() {
+        this.toScalarAndCheck(
                 "1:2"
         );
     }
 
     @Test
-    public void testSimplifyBeginAndEndDifferentKind() {
-        this.simplifyAndCheck(
+    public void testToScalarBeginAndEndDifferentKind() {
+        this.toScalarAndCheck(
                 "1:$2"
         );
     }
 
     @Test
-    public void testSimplifyBeginAndEndSame() {
-        this.simplifyAndCheck(
+    public void testToScalarBeginAndEndSame() {
+        this.toScalarAndCheck(
                 "1:1",
                 SpreadsheetSelection.parseRow("1")
         );
     }
 
     @Test
-    public void testSimplifyBeginAndEndSame2() {
-        this.simplifyAndCheck(
+    public void testToScalarBeginAndEndSame2() {
+        this.toScalarAndCheck(
                 "$1:1",
                 SpreadsheetSelection.parseRow("$1")
         );
     }
 
     @Test
-    public void testSimplifyBeginAndEndSame3() {
-        this.simplifyAndCheck(
+    public void testToScalarBeginAndEndSame3() {
+        this.toScalarAndCheck(
                 "1:$1",
                 SpreadsheetSelection.parseRow("1")
         );

@@ -788,7 +788,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::simplify),
+                expected.map(SpreadsheetSelection::toScalar),
                 selection.leftColumn(
                         anchor,
                         SpreadsheetViewportNavigationContexts.basic(
@@ -834,7 +834,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Function<SpreadsheetRowReference, Double> rowHeight,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::simplify),
+                expected.map(SpreadsheetSelection::toScalar),
                 selection.leftPixels(
                         anchor,
                         count,
@@ -872,7 +872,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                              final Predicate<SpreadsheetRowReference> hiddenRows,
                              final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::simplify),
+                expected.map(SpreadsheetSelection::toScalar),
                 selection.upRow(
                         anchor,
                         SpreadsheetViewportNavigationContexts.basic(
@@ -918,7 +918,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Function<SpreadsheetRowReference, Double> rowHeight,
                                    final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::simplify),
+                expected.map(SpreadsheetSelection::toScalar),
                 selection.upPixels(
                         anchor,
                         count,
@@ -956,7 +956,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::simplify),
+                expected.map(SpreadsheetSelection::toScalar),
                 selection.rightColumn(
                         anchor,
                         SpreadsheetViewportNavigationContexts.basic(
@@ -1002,7 +1002,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Function<SpreadsheetRowReference, Double> rowHeight,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::simplify),
+                expected.map(SpreadsheetSelection::toScalar),
                 selection.rightPixels(
                         anchor,
                         count,
@@ -1040,7 +1040,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final Predicate<SpreadsheetRowReference> hiddenRows,
                                final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::simplify),
+                expected.map(SpreadsheetSelection::toScalar),
                 selection.downRow(
                         anchor,
                         SpreadsheetViewportNavigationContexts.basic(
@@ -1086,7 +1086,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Function<SpreadsheetRowReference, Double> rowHeight,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::simplify),
+                expected.map(SpreadsheetSelection::toScalar),
                 selection.downPixels(
                         anchor,
                         count,
@@ -1120,7 +1120,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
         this.extendRangeAndCheck(
                 parsed,
-                this.parseString(moved).simplify(),
+                this.parseString(moved).toScalar(),
                 anchor,
                 parsed
         );
@@ -1143,7 +1143,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final String expected) {
         this.extendRangeAndCheck(
                 this.parseString(selection),
-                this.parseString(moved).simplify(),
+                this.parseString(moved).toScalar(),
                 anchor,
                 this.parseRange(expected)
         );
@@ -1173,7 +1173,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             );
         }
         this.checkEquals(
-                expected.map(SpreadsheetSelection::simplify),
+                expected.map(SpreadsheetSelection::toScalar),
                 selection.extendRange(Cast.to(moved), anchor),
                 () -> selection + " extendRange " + moved + " " + anchor
         );
@@ -1285,7 +1285,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 this.hiddenColumns(hiddenColumns),
                 this.hiddenRows(hiddenRows),
                 this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.simplify()
+                        s -> s.toScalar()
                                 .setAnchor(expectedAnchor)
                 )
         );
@@ -1564,7 +1564,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         return Optional.ofNullable(
                 CharSequences.isNullOrEmpty(text) ?
                         null :
-                        this.parseRange(text).simplify()
+                        this.parseRange(text).toScalar()
         );
     }
 
@@ -1641,7 +1641,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.focusedAndCheck(
                 this.parseString(selection),
                 anchor,
-                this.parseString(expected).simplify()
+                this.parseString(expected).toScalar()
         );
     }
 
@@ -1661,35 +1661,35 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // simplify.........................................................................................................
+    // toScalar.........................................................................................................
 
-    final void simplifyAndCheck(final String selection) {
-        this.simplifyAndCheck(
+    final void toScalarAndCheck(final String selection) {
+        this.toScalarAndCheck(
                 this.parseString(selection)
         );
     }
 
-    final void simplifyAndCheck(final S selection) {
-        this.simplifyAndCheck(
+    final void toScalarAndCheck(final S selection) {
+        this.toScalarAndCheck(
                 selection,
                 selection
         );
     }
 
-    final void simplifyAndCheck(final String selection,
+    final void toScalarAndCheck(final String selection,
                                 final SpreadsheetSelection expected) {
-        this.simplifyAndCheck(
+        this.toScalarAndCheck(
                 this.parseString(selection),
                 expected
         );
     }
 
-    final void simplifyAndCheck(final S selection,
+    final void toScalarAndCheck(final S selection,
                                 final SpreadsheetSelection expected) {
         this.checkEquals(
                 expected,
-                selection.simplify(),
-                () -> "simplify " + selection
+                selection.toScalar(),
+                () -> "toScalar " + selection
         );
     }
 

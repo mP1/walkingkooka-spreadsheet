@@ -272,7 +272,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public SpreadsheetSelection simplify() {
+    public SpreadsheetSelection toScalar() {
         return this;
     }
 
@@ -639,7 +639,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
                 o -> this.cellRange((SpreadsheetCellReference) o)
-                        .simplify()
+                        .toScalar()
         );
     }
 

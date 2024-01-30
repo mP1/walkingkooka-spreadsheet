@@ -660,7 +660,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         return other.map(
                 s -> anchor.cell(this)
                         .cellRange((SpreadsheetCellReference) s)
-                        .simplify()
+                        .toScalar()
         );
     }
 
@@ -676,10 +676,10 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                 .row(this.rowRange()));
     }
 
-    // simplify.........................................................................................................
+    // toScalar.........................................................................................................
 
     @Override
-    public SpreadsheetSelection simplify() {
+    public SpreadsheetSelection toScalar() {
         return this.isSingleCell() ?
                 this.begin() :
                 this;

@@ -153,7 +153,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
      * A column or row is already simplified.
      */
     @Override
-    public final SpreadsheetSelection simplify() {
+    public final SpreadsheetSelection toScalar() {
         return this;
     }
 
