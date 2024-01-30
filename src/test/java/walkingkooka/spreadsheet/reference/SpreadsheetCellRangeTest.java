@@ -553,33 +553,33 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    // simplify.........................................................................................................
+    // toScalar.........................................................................................................
 
     @Test
-    public void testSimplifyDifferentBeginAndEnd() {
-        this.simplifyAndCheck(
+    public void testToScalarDifferentBeginAndEnd() {
+        this.toScalarAndCheck(
                 "A1:B2"
         );
     }
 
     @Test
-    public void testSimplifyBeginAndEndDifferentKind() {
-        this.simplifyAndCheck(
+    public void testToScalarBeginAndEndDifferentKind() {
+        this.toScalarAndCheck(
                 "A1:$B$2"
         );
     }
 
     @Test
-    public void testSimplifyBeginAndEndSame() {
-        this.simplifyAndCheck(
+    public void testToScalarBeginAndEndSame() {
+        this.toScalarAndCheck(
                 "A1:A1",
                 SpreadsheetSelection.A1
         );
     }
 
     @Test
-    public void testSimplifyBeginAndEndSame2() {
-        this.simplifyAndCheck(
+    public void testToScalarBeginAndEndSame2() {
+        this.toScalarAndCheck(
                 "$A$1:A1",
                 SpreadsheetSelection.parseCell("$A$1")
         );

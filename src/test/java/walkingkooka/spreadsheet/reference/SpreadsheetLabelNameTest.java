@@ -332,11 +332,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         );
     }
 
-    // simplify.........................................................................................................
+    // toScalar.........................................................................................................
 
     @Test
-    public void testSimplify() {
-        this.simplifyAndCheck(
+    public void testToScalar() {
+        this.toScalarAndCheck(
                 this.createSelection()
         );
     }

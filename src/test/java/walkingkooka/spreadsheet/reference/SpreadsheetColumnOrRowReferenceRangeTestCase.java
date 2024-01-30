@@ -88,11 +88,11 @@ public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends Spr
         );
     }
 
-    // simplify.........................................................................................................
+    // toScalar.........................................................................................................
 
     @Test
-    public final void testSimplify() {
-        this.simplifyAndCheck(
+    public final void testToScalar() {
+        this.toScalarAndCheck(
                 this.createSelection()
         );
     }

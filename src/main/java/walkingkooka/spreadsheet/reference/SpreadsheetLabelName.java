@@ -178,7 +178,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
-    public SpreadsheetSelection simplify() {
+    public SpreadsheetSelection toScalar() {
         return this;
     }
 

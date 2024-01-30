@@ -158,7 +158,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     }
 
     @Override
-    public SpreadsheetSelection simplify() {
+    public SpreadsheetSelection toScalar() {
         return this.isSingle() ?
                 this.begin() :
                 this;
