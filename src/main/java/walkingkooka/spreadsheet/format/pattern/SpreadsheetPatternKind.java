@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -279,6 +280,44 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
         }
 
         return kind;
+    }
+
+    /**
+     * Returns the equivalent {@link SpreadsheetPatternKind}. If this a {@link #isFormatPattern()} it will return itself.
+     * Note unlike {@link #toFormat()} this returns an {@link Optional} because there is no parse equivalent of {@link #TEXT_FORMAT_PATTERN}.
+     */
+    public Optional<SpreadsheetPatternKind> toParse() {
+        final SpreadsheetPatternKind kind;
+
+        switch (this) {
+            case DATE_FORMAT_PATTERN:
+            case DATE_PARSE_PATTERN:
+                kind = DATE_PARSE_PATTERN;
+                break;
+            case DATE_TIME_FORMAT_PATTERN:
+            case DATE_TIME_PARSE_PATTERN:
+                kind = DATE_TIME_PARSE_PATTERN;
+                break;
+            case NUMBER_FORMAT_PATTERN:
+            case NUMBER_PARSE_PATTERN:
+                kind = NUMBER_PARSE_PATTERN;
+                break;
+            case TEXT_FORMAT_PATTERN:
+                kind = null;
+                break;
+            case TIME_FORMAT_PATTERN:
+            case TIME_PARSE_PATTERN:
+                kind = TIME_PARSE_PATTERN;
+                break;
+            default:
+                kind = NeverError.unhandledCase(
+                        this,
+                        values()
+                );
+                break;
+        }
+
+        return Optional.ofNullable(kind);
     }
 
     @Override

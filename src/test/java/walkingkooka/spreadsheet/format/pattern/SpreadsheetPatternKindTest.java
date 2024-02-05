@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -841,6 +842,100 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         this.checkEquals(
                 expected,
                 kind.toFormat(),
+                () -> kind.toString()
+        );
+    }
+
+    // toFormat.........................................................................................................
+
+    @Test
+    public void testToParseDateFormatPattern() {
+        this.toParseAndCheck(
+                SpreadsheetPatternKind.DATE_PARSE_PATTERN
+        );
+    }
+
+    @Test
+    public void testToParseDateTimeFormatPattern() {
+        this.toParseAndCheck(
+                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
+        );
+    }
+
+    @Test
+    public void testToParseNumberFormatPattern() {
+        this.toParseAndCheck(
+                SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
+        );
+    }
+
+    @Test
+    public void testToParseTimeFormatPattern() {
+        this.toParseAndCheck(
+                SpreadsheetPatternKind.TIME_PARSE_PATTERN
+        );
+    }
+
+    private void toParseAndCheck(final SpreadsheetPatternKind kind) {
+        this.toParseAndCheck(
+                kind,
+                kind
+        );
+    }
+
+    @Test
+    public void testToParseDateParsePattern() {
+        this.toParseAndCheck(
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
+                SpreadsheetPatternKind.DATE_PARSE_PATTERN
+        );
+    }
+
+    @Test
+    public void testToParseDateTimeParsePattern() {
+        this.toParseAndCheck(
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
+                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
+        );
+    }
+
+    @Test
+    public void testToParseNumberParsePattern() {
+        this.toParseAndCheck(
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN,
+                SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
+        );
+    }
+
+    @Test
+    public void testToParseTextFormatPattern() {
+        this.toParseAndCheck(
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testToParseTimeParsePattern() {
+        this.toParseAndCheck(
+                SpreadsheetPatternKind.TIME_FORMAT_PATTERN,
+                SpreadsheetPatternKind.TIME_PARSE_PATTERN
+        );
+    }
+
+    private void toParseAndCheck(final SpreadsheetPatternKind kind,
+                                 final SpreadsheetPatternKind expected) {
+        this.toParseAndCheck(
+                kind,
+                Optional.of(expected)
+        );
+    }
+
+    private void toParseAndCheck(final SpreadsheetPatternKind kind,
+                                 final Optional<SpreadsheetPatternKind> expected) {
+        this.checkEquals(
+                expected,
+                kind.toParse(),
                 () -> kind.toString()
         );
     }
