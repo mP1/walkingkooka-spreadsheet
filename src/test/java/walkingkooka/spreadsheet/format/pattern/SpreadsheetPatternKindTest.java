@@ -55,6 +55,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTesting,
@@ -755,6 +756,92 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                 expected,
                 kind.isFormatPattern(),
                 () -> kind + " isFormatPattern"
+        );
+    }
+
+    // toFormat.........................................................................................................
+
+    @Test
+    public void testToFormatDateFormatPattern() {
+        this.toFormatAndCheck(
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testToFormatDateTimeFormatPattern() {
+        this.toFormatAndCheck(
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testToFormatNumberFormatPattern() {
+        this.toFormatAndCheck(
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testToFormatTextFormatPattern() {
+        this.toFormatAndCheck(
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testToFormatTimeFormatPattern() {
+        this.toFormatAndCheck(
+                SpreadsheetPatternKind.TIME_FORMAT_PATTERN
+        );
+    }
+
+    private void toFormatAndCheck(final SpreadsheetPatternKind kind) {
+        assertSame(
+                kind,
+                kind.toFormat(),
+                () -> kind.toString()
+        );
+    }
+
+    @Test
+    public void testToFormatDateParsePattern() {
+        this.toFormatAndCheck(
+                SpreadsheetPatternKind.DATE_PARSE_PATTERN,
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testToFormatDateTimeParsePattern() {
+        this.toFormatAndCheck(
+                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN,
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testToFormatNumberParsePattern() {
+        this.toFormatAndCheck(
+                SpreadsheetPatternKind.NUMBER_PARSE_PATTERN,
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testToFormatTimeParsePattern() {
+        this.toFormatAndCheck(
+                SpreadsheetPatternKind.TIME_PARSE_PATTERN,
+                SpreadsheetPatternKind.TIME_FORMAT_PATTERN
+        );
+    }
+
+    private void toFormatAndCheck(final SpreadsheetPatternKind kind,
+                                  final SpreadsheetPatternKind expected) {
+        this.checkEquals(
+                expected,
+                kind.toFormat(),
+                () -> kind.toString()
         );
     }
 
