@@ -148,6 +148,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
     // reference .............................................................................................
 
+    @Override
     public SpreadsheetCellReference reference() {
         return this.reference;
     }
