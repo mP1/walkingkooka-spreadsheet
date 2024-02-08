@@ -26,16 +26,16 @@ import walkingkooka.spreadsheet.store.TargetAndSpreadsheetCellReference;
 /**
  * A {@link SpreadsheetSelectionVisitor} that adds references to each reference present within cell formula.
  */
-final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor with(final SpreadsheetCellReference target,
-                                                                                                       final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor(target, context);
+    static BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor with(final SpreadsheetCellReference target,
+                                                                                      final SpreadsheetEngineContext context) {
+        return new BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(target, context);
     }
 
     // VisibleForTesting
-    BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor(final SpreadsheetCellReference target,
-                                                                                           final SpreadsheetEngineContext context) {
+    BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(final SpreadsheetCellReference target,
+                                                                          final SpreadsheetEngineContext context) {
         super();
         this.target = target;
         this.context = context;

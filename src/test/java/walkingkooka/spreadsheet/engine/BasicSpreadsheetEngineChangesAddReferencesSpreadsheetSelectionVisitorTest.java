@@ -22,8 +22,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
-public final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor>
-        implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor> {
+public final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor>
+        implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor> {
 
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.parseCell("A99");
 
@@ -33,14 +33,14 @@ public final class BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSp
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor> type() {
-        return BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor.class;
+    public Class<BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor> type() {
+        return BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor.class;
     }
 
     // VisitingTesting.............................................................................................................
 
     @Override
-    public BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor createVisitor() {
-        return new BasicSpreadsheetEngineChangesAddReferencesExpressionVisitorSpreadsheetSelectionVisitor(CELL, null);
+    public BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor createVisitor() {
+        return new BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(CELL, null);
     }
 }

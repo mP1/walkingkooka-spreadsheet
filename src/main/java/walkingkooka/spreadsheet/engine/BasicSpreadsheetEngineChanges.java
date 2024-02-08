@@ -172,20 +172,22 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
             updatedAndDeleted.put(reference, cell);
 
             this.removePreviousExpressionReferences(reference);
-            this.addNewExpressionReferences(reference, cell.formula());
+            this.addReferences(cell);
             this.batchReferrers(reference);
         }
     }
 
     /**
-     * Removes any existing references by this cell and replaces them with new references if any are present.
+     * Records any {@link walkingkooka.tree.expression.ExpressionReference} within the given {@link SpreadsheetFormula}.
      */
-    private void addNewExpressionReferences(final SpreadsheetCellReference cell,
-                                            final SpreadsheetFormula formula) {
-        formula.expression()
-                .ifPresent(e -> BasicSpreadsheetEngineChangesAddReferencesExpressionVisitor.processReferences(e,
-                        cell,
-                        this.context));
+    private void addReferences(final SpreadsheetCell cell) {
+        cell.formula()
+                .consumeSpreadsheetExpressionReferences(
+                        BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor.with(
+                                cell.reference(),
+                                this.context
+                        )::accept
+        );
     }
 
     /**
@@ -275,7 +277,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         this.unsavedCells.add(reference);
 
         this.removePreviousExpressionReferences(reference);
-        this.addNewExpressionReferences(reference, cell.formula());
+        this.addReferences(cell);
         this.batchReferrers(reference);
     }
 
