@@ -82,7 +82,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
 
     @Override
     Optional<SpreadsheetRowReferenceParserToken> fixRowReferenceParserToken(final SpreadsheetRowReferenceParserToken token) {
-        return this.deleteOrInsert.isDeletedReference(token) ?
+        return this.deleteOrInsert.isRowDeleted(token) ?
                 Optional.empty() :
                 this.fixRowReferenceParserToken0(token);
     }
@@ -94,7 +94,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
         SpreadsheetRowReferenceParserToken result = token;
 
         if (value > this.value) {
-            final SpreadsheetRowReference reference = old.setValue(value + this.deleteOrInsert.fixReferenceOffset(this.count));
+            final SpreadsheetRowReference reference = old.setValue(value + this.deleteOrInsert.fixColumnOrRowReference(this.count));
             result = SpreadsheetParserToken.rowReference(reference, reference.toString());
         }
 
@@ -103,7 +103,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
 
     @Override
     SpreadsheetCellReference fixCellReference(final SpreadsheetCellReference reference) {
-        return reference.addRow(this.deleteOrInsert.fixReferenceOffset(this.count));
+        return reference.addRow(this.deleteOrInsert.fixColumnOrRowReference(this.count));
     }
 
     @Override

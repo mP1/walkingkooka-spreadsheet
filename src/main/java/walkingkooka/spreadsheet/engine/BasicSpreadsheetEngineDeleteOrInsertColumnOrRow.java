@@ -33,11 +33,11 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRow {
         columnOrRow.deleteOrInsert = this;
     }
 
-    abstract boolean isDeletedReference(final SpreadsheetColumnReferenceParserToken row);
+    abstract boolean isColumnDeleted(final SpreadsheetColumnReferenceParserToken row);
 
-    abstract boolean isDeletedReference(final SpreadsheetRowReferenceParserToken row);
+    abstract boolean isRowDeleted(final SpreadsheetRowReferenceParserToken row);
 
-    abstract int fixReferenceOffset(final int count);
+    abstract int fixColumnOrRowReference(final int count);
 
     abstract void fixLabelMapping(final SpreadsheetLabelMapping mapping);
 
