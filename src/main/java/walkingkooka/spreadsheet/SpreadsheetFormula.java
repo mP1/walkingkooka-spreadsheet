@@ -457,7 +457,7 @@ public final class SpreadsheetFormula implements HasText,
         }
     }
 
-    // acceptSpreadsheetExpressionReferences............................................................................
+    // consumeSpreadsheetExpressionReferences............................................................................
 
     /**
      * Useful method that walks the {@link SpreadsheetParserToken} if one is present, passing
