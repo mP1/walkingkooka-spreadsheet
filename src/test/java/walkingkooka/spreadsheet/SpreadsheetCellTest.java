@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -73,12 +74,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>,
         ComparableTesting2<SpreadsheetCell>,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
+        HasSpreadsheetReferenceTesting,
         HateosResourceTesting<SpreadsheetCell>,
         PatchableTesting<SpreadsheetCell>,
         ToStringTesting<SpreadsheetCell>,
         TreePrintableTesting {
-
-
     private final static int COLUMN = 1;
     private final static int ROW = 20;
     private final static SpreadsheetCellReference REFERENCE = reference(COLUMN, ROW);
@@ -1564,6 +1564,20 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" \"@@\" \"formatted-text\""
         );
     }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Test
+    public void testReference() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("AB123");
+
+        this.referenceAndCheck(
+                cell.setFormula(SpreadsheetFormula.EMPTY),
+                cell
+        );
+    }
+
+    // helpers..........................................................................................................
 
     private SpreadsheetCell createCell() {
         return this.createComparable();

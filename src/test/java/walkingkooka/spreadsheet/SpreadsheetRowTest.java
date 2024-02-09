@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -31,7 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<SpreadsheetRow, SpreadsheetRowReference>
-        implements PatchableTesting<SpreadsheetRow> {
+        implements HasSpreadsheetReferenceTesting,
+        PatchableTesting<SpreadsheetRow> {
 
     private final static int ROW = 20;
     private final static SpreadsheetRowReference REFERENCE = reference(ROW);
@@ -222,6 +224,18 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
                 REFERENCE.row()
                         .setHidden(true),
                 "$21 hidden=true"
+        );
+    }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Test
+    public void testReference() {
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("123");
+
+        this.referenceAndCheck(
+                row.row(),
+                row
         );
     }
 
