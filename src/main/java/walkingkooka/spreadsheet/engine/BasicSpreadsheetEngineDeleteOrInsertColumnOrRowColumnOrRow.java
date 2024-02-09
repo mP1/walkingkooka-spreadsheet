@@ -155,7 +155,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     private void fixExpressionReferences(final SpreadsheetCell cell) {
         final SpreadsheetCell fixed = this.engine.parseFormulaIfNecessary(
                 cell,
-                this::fixCellReferencesWithinExpression,
+                this::fixExpressionReferences0,
                 this.context
         );
         if (!cell.equals(fixed)) {
@@ -166,7 +166,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     /**
      * Updates any column/row references within any {@link SpreadsheetCellReferenceParserToken} in the given {@link SpreadsheetParserToken}.
      */
-    private SpreadsheetParserToken fixCellReferencesWithinExpression(final SpreadsheetParserToken token) {
+    private SpreadsheetParserToken fixExpressionReferences0(final SpreadsheetParserToken token) {
         return token.replaceIf(
                 (t) -> t instanceof SpreadsheetCellReferenceParserToken,// predicate
                 (c) -> {
