@@ -80,10 +80,10 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     Optional<SpreadsheetColumnReferenceParserToken> fixColumnReferenceParserToken(final SpreadsheetColumnReferenceParserToken token) {
         return this.deleteOrInsert.isDeletedReference(token) ?
                 Optional.empty() :
-                this.fixCellReferencesWithinExpression0(token);
+                this.fixColumnReferenceParserToken0(token);
     }
 
-    private Optional<SpreadsheetColumnReferenceParserToken> fixCellReferencesWithinExpression0(final SpreadsheetColumnReferenceParserToken token) {
+    private Optional<SpreadsheetColumnReferenceParserToken> fixColumnReferenceParserToken0(final SpreadsheetColumnReferenceParserToken token) {
         final SpreadsheetColumnReference old = token.value();
         final int value = old.value();
 
