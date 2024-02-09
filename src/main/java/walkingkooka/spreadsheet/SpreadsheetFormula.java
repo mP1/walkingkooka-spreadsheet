@@ -24,12 +24,13 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
@@ -456,29 +457,24 @@ public final class SpreadsheetFormula implements HasText,
         }
     }
 
-    // acceptCellReferenceOrRanges......................................................................................
+    // acceptSpreadsheetExpressionReferences............................................................................
 
     /**
      * Useful method that walks the {@link SpreadsheetParserToken} if one is present, passing
-     * each and every {@link SpreadsheetCellReferenceOrRange} to the provided {@link Consumer}.
+     * each and every {@link SpreadsheetExpressionReference} to the provided {@link Consumer}.
      */
-    public void acceptCellReferencesOrRanges(final Consumer<SpreadsheetCellReferenceOrRange> consumer) {
+    public void consumeSpreadsheetExpressionReferences(final Consumer<SpreadsheetExpressionReference> consumer) {
         Objects.requireNonNull(consumer, "consumer");
 
         this.token()
-                .ifPresent(t -> t.findIf(
-                                p -> p instanceof SpreadsheetCellReferenceParserToken || p instanceof SpreadsheetCellRangeParserToken,
-                                c -> {
-                                    if (c instanceof SpreadsheetCellReferenceParserToken) {
-                                        consumer.accept(
-                                                ((SpreadsheetCellReferenceParserToken) c).cell()
-                                        );
-                                    }
-                                    if (c instanceof SpreadsheetCellRangeParserToken) {
-                                        consumer.accept(
-                                                ((SpreadsheetCellRangeParserToken) c).toCellRange()
-                                        );
-                                    }
+                .ifPresent(
+                        t -> t.findIf(
+                                tt -> tt instanceof SpreadsheetParserToken && tt instanceof HasSpreadsheetReference,
+                                ttt -> {
+                                    final HasSpreadsheetReference<?> has = (HasSpreadsheetReference<?>) ttt;
+                                    consumer.accept(
+                                            (SpreadsheetExpressionReference) has.reference()
+                                    );
                                 }
                         )
                 );
