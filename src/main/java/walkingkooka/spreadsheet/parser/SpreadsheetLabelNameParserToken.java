@@ -16,12 +16,14 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 
 /**
  * Represents a label or name for a cell or range etc.
  */
-public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetLabelName> implements SpreadsheetReferenceParserToken {
+public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetLabelName> implements SpreadsheetReferenceParserToken,
+        HasSpreadsheetReference<SpreadsheetLabelName> {
 
     static SpreadsheetLabelNameParserToken with(final SpreadsheetLabelName value,
                                                 final String text) {
@@ -45,5 +47,12 @@ public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolP
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetLabelNameParserToken;
+    }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Override
+    public SpreadsheetLabelName reference() {
+        return this.value();
     }
 }

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -31,7 +32,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetCellReferenceParserToken> {
+public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetCellReferenceParserToken>
+        implements HasSpreadsheetReferenceTesting {
 
     private final static String ROW_TEXT = "B";
     private final static int ROW_VALUE = 2;
@@ -127,5 +129,17 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
     public SpreadsheetCellReferenceParserToken unmarshall(final JsonNode from,
                                                           final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserToken.unmarshallCellReference(from, context);
+    }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Test
+    public void testReference() {
+        final SpreadsheetCellReferenceParserToken token = this.createToken();
+
+        this.referenceAndCheck(
+                token,
+                token.cell()
+        );
     }
 }

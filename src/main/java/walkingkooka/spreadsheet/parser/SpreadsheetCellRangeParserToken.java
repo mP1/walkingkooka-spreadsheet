@@ -16,6 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
@@ -25,7 +26,8 @@ import java.util.List;
 /**
  * A wrapper around a numeric type that is also a percentage.
  */
-public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryParserToken {
+public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryParserToken
+        implements HasSpreadsheetReference<SpreadsheetCellRange> {
 
     static SpreadsheetCellRangeParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetCellRangeParserToken(copyAndCheckTokens(value), checkText(text));
@@ -86,5 +88,12 @@ public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryPars
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetCellRangeParserToken;
+    }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Override
+    public SpreadsheetCellRange reference() {
+        return this.toCellRange();
     }
 }
