@@ -37,7 +37,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -620,48 +620,58 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    // acceptCellReferenceOrRanges......................................................................................
+    // consumeSpreadsheetExpressionReferences...........................................................................
 
     @Test
-    public void testAcceptCellReferenceOrRangesNullConsumerFails() {
+    public void testConsumeSpreadsheetExpressionReferencesWithNullConsumerFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetFormula.EMPTY.acceptCellReferencesOrRanges(null)
+                () -> SpreadsheetFormula.EMPTY.consumeSpreadsheetExpressionReferences(null)
         );
     }
 
     @Test
-    public void testAcceptCellReferencesOrRangesAbsent() {
-        this.acceptCellReferencesOrRangesAndCheck(
+    public void testConsumeSpreadsheetExpressionReferencesAbsent() {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
                 SpreadsheetFormula.EMPTY
         );
     }
 
     @Test
-    public void testAcceptCellReferencesOrRangesWithout() {
-        this.acceptCellReferencesOrRangesAndCheck(
+    public void testConsumeSpreadsheetExpressionReferencesWithout() {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
                 "=1+2"
         );
     }
 
     @Test
-    public void testAcceptCellReferencesOrRangesIgnoresLabel() {
-        this.acceptCellReferencesOrRangesAndCheck(
-                "=1+Label123"
+    public void testConsumeSpreadsheetExpressionReferencesWithLabel() {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
+                "=1+Label123",
+                SpreadsheetSelection.labelName("Label123")
         );
     }
 
     @Test
-    public void testAcceptCellReferencesOrRangesWithCell() {
-        this.acceptCellReferencesOrRangesAndCheck(
+    public void testConsumeSpreadsheetExpressionReferencesWithLabel2() {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
+                "=1+Label123+Label456",
+                SpreadsheetSelection.labelName("Label123"),
+                SpreadsheetSelection.labelName("Label456")
+        );
+    }
+
+    @Test
+    public void testConsumeSpreadsheetExpressionReferencesWithCell() {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
                 "=1+A1",
                 SpreadsheetSelection.A1
         );
     }
 
     @Test
-    public void testAcceptCellReferencesOrRangesWithCell2() {
-        this.acceptCellReferencesOrRangesAndCheck(
+    public void testConsumeSpreadsheetExpressionReferencesWithCell2() {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
                 "=1+A1+B2",
                 SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseCell("B2")
@@ -669,8 +679,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testAcceptCellReferencesOrRangesWithCellRange() {
-        this.acceptCellReferencesOrRangesAndCheck(
+    public void testConsumeSpreadsheetExpressionReferencesWithCellRange() {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
                 "=1+A1:B2",
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetSelection.parseCell("A1"),
@@ -679,21 +689,22 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testAcceptCellReferencesOrRangesWithCellRange2() {
-        this.acceptCellReferencesOrRangesAndCheck(
-                "=1+A1:B2+C3:D4",
+    public void testConsumeSpreadsheetExpressionReferencesWithCellRange2() {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
+                "=1+A1:B2+C3:D4+Label123",
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetSelection.parseCell("A1"),
                 SpreadsheetSelection.parseCell("B2"),
                 SpreadsheetSelection.parseCellRange("C3:D4"),
                 SpreadsheetSelection.parseCell("C3"),
-                SpreadsheetSelection.parseCell("D4")
+                SpreadsheetSelection.parseCell("D4"),
+                SpreadsheetSelection.labelName("Label123")
         );
     }
 
     @Test
-    public void testAcceptCellReferencesOrRangesWithCellRange3() {
-        this.acceptCellReferencesOrRangesAndCheck(
+    public void testConsumeSpreadsheetExpressionReferencesWithCellRange3() {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
                 "=1+A1:B2+C3",
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetSelection.parseCell("A1"),
@@ -702,9 +713,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    private void acceptCellReferencesOrRangesAndCheck(final String formula,
-                                                      final SpreadsheetCellReferenceOrRange... expected) {
-        this.acceptCellReferencesOrRangesAndCheck(
+    private void consumeSpreadsheetExpressionReferencesAndCheck(final String formula,
+                                                                final SpreadsheetExpressionReference... expected) {
+        this.consumeSpreadsheetExpressionReferencesAndCheck(
                 SpreadsheetFormula.parse(
                         TextCursors.charSequence(formula),
                         SpreadsheetParsers.valueOrExpression(
@@ -717,10 +728,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    private void acceptCellReferencesOrRangesAndCheck(final SpreadsheetFormula formula,
-                                                      final SpreadsheetCellReferenceOrRange... expected) {
-        final List<SpreadsheetCellReferenceOrRange> consumer = Lists.array();
-        formula.acceptCellReferencesOrRanges(consumer::add);
+    private void consumeSpreadsheetExpressionReferencesAndCheck(final SpreadsheetFormula formula,
+                                                                final SpreadsheetExpressionReference... expected) {
+        final List<SpreadsheetExpressionReference> consumer = Lists.array();
+        formula.consumeSpreadsheetExpressionReferences(consumer::add);
 
         this.checkEquals(
                 Lists.of(
