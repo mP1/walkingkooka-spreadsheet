@@ -141,14 +141,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     /**
-     * Adds a delta to the row, performing a would be update if the row value is not zero.
+     * Adds a delta to the row, performing a would be updated if the row value is not zero.
      */
     public SpreadsheetCellReference addRow(final int row) {
         return this.setRow(this.row().add(row));
     }
 
     /**
-     * Adds with saturation a delta to the row, performing a would be update if the row value is not zero.
+     * Adds with saturation a delta to the row, performing a would be updated if the row value is not zero.
      */
     public SpreadsheetCellReference addRowSaturated(final int row) {
         return this.setRow(this.row().addSaturated(row));
@@ -209,14 +209,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     /**
-     * Adds a delta to the column, performing a would be update if the column value is not zero.
+     * Adds a delta to the column, performing a would be updated if the column value is not zero.
      */
     public SpreadsheetCellReference addColumn(final int column) {
         return this.setColumn(this.column().add(column));
     }
 
     /**
-     * Adds with saturation a delta to the column, performing a would be update if the column value is not zero
+     * Adds with saturation a delta to the column, performing a would be updated if the column value is not zero
      */
     public SpreadsheetCellReference addColumnSaturated(final int column) {
         return this.setColumn(this.column().addSaturated(column));
