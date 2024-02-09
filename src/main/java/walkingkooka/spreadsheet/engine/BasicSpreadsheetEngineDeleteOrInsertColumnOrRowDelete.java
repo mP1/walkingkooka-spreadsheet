@@ -55,12 +55,12 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete extends BasicS
     }
 
     @Override
-    boolean isDeletedReference(final SpreadsheetColumnReferenceParserToken column) {
+    boolean isColumnDeleted(final SpreadsheetColumnReferenceParserToken column) {
         return this.isDeletedReference(column.value().value());
     }
 
     @Override
-    boolean isDeletedReference(final SpreadsheetRowReferenceParserToken row) {
+    boolean isRowDeleted(final SpreadsheetRowReferenceParserToken row) {
         return this.isDeletedReference(row.value().value());
     }
 
@@ -70,7 +70,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete extends BasicS
     }
 
     @Override
-    int fixReferenceOffset(final int count) {
+    int fixColumnOrRowReference(final int count) {
         return -count;
     }
 

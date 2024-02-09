@@ -53,17 +53,17 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowInsert extends BasicS
     }
 
     @Override
-    int fixReferenceOffset(final int count) {
+    int fixColumnOrRowReference(final int count) {
         return +count;
     }
 
     @Override
-    boolean isDeletedReference(final SpreadsheetColumnReferenceParserToken column) {
+    boolean isColumnDeleted(final SpreadsheetColumnReferenceParserToken column) {
         return false; // no references are ever deleted during an insert.
     }
 
     @Override
-    boolean isDeletedReference(final SpreadsheetRowReferenceParserToken row) {
+    boolean isRowDeleted(final SpreadsheetRowReferenceParserToken row) {
         return false; // no references are ever deleted during an insert.
     }
 

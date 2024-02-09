@@ -232,7 +232,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     final SpreadsheetColumnReference fixColumnReference(final SpreadsheetColumnReference reference) {
         return reference.add(
-                this.deleteOrInsert.fixReferenceOffset(this.count)
+                this.deleteOrInsert.fixColumnOrRowReference(this.count)
         );
     }
 
@@ -241,7 +241,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     final SpreadsheetRowReference fixRowReference(final SpreadsheetRowReference reference) {
         return reference.add(
-                this.deleteOrInsert.fixReferenceOffset(this.count)
+                this.deleteOrInsert.fixColumnOrRowReference(this.count)
         );
     }
 
