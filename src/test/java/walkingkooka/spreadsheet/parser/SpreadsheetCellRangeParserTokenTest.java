@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
@@ -29,7 +30,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinaryParserTokenTestCase<SpreadsheetCellRangeParserToken> {
+public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinaryParserTokenTestCase<SpreadsheetCellRangeParserToken>
+        implements HasSpreadsheetReferenceTesting {
 
     @Test
     public void testAccept() {
@@ -178,5 +180,17 @@ public final class SpreadsheetCellRangeParserTokenTest extends SpreadsheetBinary
     public SpreadsheetCellRangeParserToken unmarshall(final JsonNode from,
                                                       final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserToken.unmarshallCellRange(from, context);
+    }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Test
+    public void testReference() {
+        final SpreadsheetCellRangeParserToken token = this.createToken();
+
+        this.referenceAndCheck(
+                token,
+                token.toCellRange()
+        );
     }
 }

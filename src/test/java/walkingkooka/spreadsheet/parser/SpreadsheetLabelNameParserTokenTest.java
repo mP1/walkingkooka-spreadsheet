@@ -17,6 +17,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -27,7 +28,8 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetLabelNameParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetLabelNameParserToken, SpreadsheetLabelName> {
+public final class SpreadsheetLabelNameParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetLabelNameParserToken, SpreadsheetLabelName>
+        implements HasSpreadsheetReferenceTesting {
 
     @Test
     public void testWithEmptyTextFails() {
@@ -107,5 +109,15 @@ public final class SpreadsheetLabelNameParserTokenTest extends SpreadsheetNonSym
     public SpreadsheetLabelNameParserToken unmarshall(final JsonNode from,
                                                       final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserToken.unmarshallLabelName(from, context);
+    }
+
+    // HasSpreadsheetReference.........................................................................................
+
+    @Test
+    public void testReference() {
+        this.referenceAndCheck(
+                this.createToken(),
+                this.value()
+        );
     }
 }

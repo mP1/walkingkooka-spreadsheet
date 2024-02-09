@@ -17,6 +17,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
@@ -27,7 +28,8 @@ import java.util.List;
  * A reference that includes a defined name or column and row.
  */
 public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParentParserToken
-        implements SpreadsheetReferenceParserToken {
+        implements SpreadsheetReferenceParserToken,
+        HasSpreadsheetReference<SpreadsheetCellReference> {
 
     static SpreadsheetCellReferenceParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetCellReferenceParserToken(Lists.immutable(value), checkText(text));
@@ -82,5 +84,12 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetCellReferenceParserToken;
+    }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Override
+    public SpreadsheetCellReference reference() {
+        return this.cell();
     }
 }
