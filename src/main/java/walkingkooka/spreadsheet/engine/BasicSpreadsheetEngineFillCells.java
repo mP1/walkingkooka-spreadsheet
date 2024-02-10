@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -128,17 +130,20 @@ final class BasicSpreadsheetEngineFillCells {
         final BasicSpreadsheetEngine engine = this.engine;
         final SpreadsheetEngineContext context = this.context;
 
-        // possibly fix references, and then parse the formula and evaluate etc.
-        final SpreadsheetCell save = engine.parseFormulaIfNecessary(
+        final SpreadsheetCell save2 = engine.parseFormulaIfNecessary(
                 updatedReference,
-                token -> BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(
-                        token,
-                        xOffset,
-                        yOffset
-                ),
+                t -> t.replaceIf(
+                        p -> p instanceof SpreadsheetCellReferenceParserToken, // predicate
+                        m -> m.cast(SpreadsheetCellReferenceParserToken.class) // mapper
+                                .cell()
+                                .addIfRelative(xOffset, yOffset)
+                                .toParserToken()
+                ).cast(SpreadsheetParserToken.class),
+
                 context
         );
-        this.engine.parseFormulaEvaluateFormatStyleAndSave(save,
+
+        this.engine.parseFormulaEvaluateFormatStyleAndSave(save2,
                 SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
                 context);
     }
