@@ -33,7 +33,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRow {
         columnOrRow.deleteOrInsert = this;
     }
 
-    abstract boolean isColumnDeleted(final SpreadsheetColumnReferenceParserToken row);
+    abstract boolean isColumnDeleted(final SpreadsheetColumnReferenceParserToken column);
 
     abstract boolean isRowDeleted(final SpreadsheetRowReferenceParserToken row);
 
