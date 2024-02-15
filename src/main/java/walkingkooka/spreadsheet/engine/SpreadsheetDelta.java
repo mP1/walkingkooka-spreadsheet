@@ -1230,10 +1230,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case CELLS_PROPERTY_STRING:
-                    cells = patchCells0(propertyAndValue, context);
+                    cells = patchCells0(
+                            selection,
+                            propertyAndValue,
+                            context
+                    );
                     break;
                 case COLUMNS_PROPERTY_STRING:
-                    columns = patchColumns0(propertyAndValue, context);
+                    columns = patchColumns0(
+                            selection,
+                            propertyAndValue,
+                            context
+                    );
                     break;
                 case FORMAT_PATTERN_PROPERTY_STRING:
                     cells = patchFormatPattern(
@@ -1254,7 +1262,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case ROWS_PROPERTY_STRING:
-                    rows = patchRows0(propertyAndValue, context);
+                    rows = patchRows0(
+                            selection,
+                            propertyAndValue,
+                            context
+                    );
                     break;
                 case STYLE_PROPERTY_STRING:
                     cells = patchStyle(
@@ -1289,21 +1301,28 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .setWindow(window);
     }
 
-    private Set<SpreadsheetCell> patchCells0(final JsonNode node,
+    private Set<SpreadsheetCell> patchCells0(final SpreadsheetSelection selection,
+                                             final JsonNode node,
                                              final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_CELLS :
-                this.patchCellsNonNull(node, context);
+                this.patchCellsNonNull(
+                        selection,
+                        node,
+                        context
+                );
     }
 
     /**
      * Takes a json object of reference to cell and patches the existing cells in this {@link SpreadsheetDelta}.
      * If the patch is a new cell it is added, existing cells are patched.
      */
-    private Set<SpreadsheetCell> patchCellsNonNull(final JsonNode node,
+    private Set<SpreadsheetCell> patchCellsNonNull(final SpreadsheetSelection selection,
+                                                   final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
         return patchReferenceToValue(
+                selection,
                 node,
                 SpreadsheetSelection::parseCell,
                 this::cell,
@@ -1312,21 +1331,28 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private Set<SpreadsheetColumn> patchColumns0(final JsonNode node,
+    private Set<SpreadsheetColumn> patchColumns0(final SpreadsheetSelection selection,
+                                                 final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_COLUMNS :
-                this.patchColumnsNonNull(node, context);
+                this.patchColumnsNonNull(
+                        selection,
+                        node,
+                        context
+                );
     }
 
     /**
      * Takes a json object of reference to column and patches the existing columns in this {@link SpreadsheetDelta}.
      * If the patch is a new column it is added, existing columns are patched.
      */
-    private Set<SpreadsheetColumn> patchColumnsNonNull(final JsonNode node,
+    private Set<SpreadsheetColumn> patchColumnsNonNull(final SpreadsheetSelection selection,
+                                                       final JsonNode node,
                                                        final JsonNodeUnmarshallContext context) {
         return patchReferenceToValue(
+                selection,
                 node,
                 SpreadsheetSelection::parseColumn,
                 this::column,
@@ -1419,21 +1445,28 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return patched;
     }
 
-    private Set<SpreadsheetRow> patchRows0(final JsonNode node,
+    private Set<SpreadsheetRow> patchRows0(final SpreadsheetSelection selection,
+                                           final JsonNode node,
                                            final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_ROWS :
-                this.patchRowsNonNull(node, context);
+                this.patchRowsNonNull(
+                        selection,
+                        node,
+                        context
+                );
     }
 
     /**
      * Takes a json object of reference to row and patches the existing rows in this {@link SpreadsheetDelta}.
      * If the patch is a new row it is added, existing rows are patched.
      */
-    private Set<SpreadsheetRow> patchRowsNonNull(final JsonNode node,
+    private Set<SpreadsheetRow> patchRowsNonNull(final SpreadsheetSelection selection,
+                                                 final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
         return patchReferenceToValue(
+                selection,
                 node,
                 SpreadsheetSelection::parseRow,
                 this::row,
@@ -1442,12 +1475,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private <R extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchReferenceToValue(final JsonNode node,
+    private <R extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchReferenceToValue(final SpreadsheetSelection selection,
+                                                                                                  final JsonNode node,
                                                                                                   final Function<String, R> referenceParser,
                                                                                                   final Function<R, Optional<V>> referenceToValue,
                                                                                                   final Class<V> valueType,
                                                                                                   final JsonNodeUnmarshallContext context) {
-        final Set<V> patched = Sets.ordered();
+        // collect either patch or invalid cells.
+        Set<V> patched = null;
+        Set<R> invalid = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName propertyName = child.name();
@@ -1455,6 +1491,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             final R reference = referenceParser.apply(
                     propertyName.value()
             );
+            if (null != selection && false == selection.test(reference)) {
+                if (null == invalid) {
+                    invalid = Sets.ordered();
+                }
+                invalid.add(reference);
+                patched = null; // no longer patching.
+                continue;
+            }
+            // skip patching only interested in collecting invalid patch cells
+            if (null != invalid) {
+                continue;
+            }
 
             final V add;
 
@@ -1470,7 +1518,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 );
             }
 
+            if (null == patched) {
+                patched = Sets.ordered();
+            }
             patched.add(add);
+        }
+
+        if (null != invalid) {
+            throw new IllegalArgumentException(
+                    "Patch includes cells " +
+                            invalid.stream()
+                                    .map(Objects::toString)
+                                    .collect(Collectors.joining(", ")) +
+                            " outside " +
+                            selection.toStringMaybeStar()
+            );
         }
 
         return patched;
