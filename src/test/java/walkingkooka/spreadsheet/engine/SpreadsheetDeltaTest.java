@@ -940,6 +940,103 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsWithPatchCellsOutsideSelectionFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetDelta.EMPTY.patchCells(
+                        SpreadsheetSelection.A1,
+                        marshall(
+                                SpreadsheetDelta.EMPTY
+                                        .setCells(
+                                                Sets.of(
+                                                        SpreadsheetSelection.parseCell("A2")
+                                                                .setFormula(
+                                                                        SpreadsheetFormula.EMPTY.setText("=1")
+                                                                )
+                                                )
+                                        )
+                        ),
+                        JsonNodeUnmarshallContexts.fake()
+                )
+        );
+        this.checkEquals(
+                "Patch includes cells A2 outside A1",
+                thrown.getMessage(),
+                "messages"
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithPatchCellsOutsideSelectionFails2() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetDelta.EMPTY.patchCells(
+                        SpreadsheetSelection.parseCell("A2"),
+                        marshall(
+                                SpreadsheetDelta.EMPTY
+                                        .setCells(
+                                                Sets.of(
+                                                        SpreadsheetSelection.A1
+                                                                .setFormula(
+                                                                        SpreadsheetFormula.EMPTY.setText("=1")
+                                                                ),
+                                                        SpreadsheetSelection.parseCell("A2")
+                                                                .setFormula(
+                                                                        SpreadsheetFormula.EMPTY.setText("=2")
+                                                                ),
+                                                        SpreadsheetSelection.parseCell("B1")
+                                                                .setFormula(
+                                                                        SpreadsheetFormula.EMPTY.setText("=3")
+                                                                )
+                                                )
+                                        )
+                        ),
+                        JsonNodeUnmarshallContexts.fake()
+                )
+        );
+        this.checkEquals(
+                "Patch includes cells A1, B1 outside A2",
+                thrown.getMessage(),
+                "messages"
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithPatchCellsOutsideSelectionFails3() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetDelta.EMPTY.patchCells(
+                        SpreadsheetSelection.A1,
+                        marshall(
+                                SpreadsheetDelta.EMPTY
+                                        .setCells(
+                                                Sets.of(
+                                                        SpreadsheetSelection.A1
+                                                                .setFormula(
+                                                                        SpreadsheetFormula.EMPTY.setText("=1")
+                                                                ),
+                                                        SpreadsheetSelection.parseCell("A2")
+                                                                .setFormula(
+                                                                        SpreadsheetFormula.EMPTY.setText("=2")
+                                                                ),
+                                                        SpreadsheetSelection.parseCell("B1")
+                                                                .setFormula(
+                                                                        SpreadsheetFormula.EMPTY.setText("=3")
+                                                                )
+                                                )
+                                        )
+                        ),
+                        this.createPatchContext() // required to unmarshall A1
+                )
+        );
+        this.checkEquals(
+                "Patch includes cells A2, B1 outside A1",
+                thrown.getMessage(),
+                "messages"
+        );
+    }
+
+    @Test
     public void testPatchCellsColumnsFails() {
         this.patchCellInvalidPropertyFails2(
                 SpreadsheetDelta.COLUMNS_PROPERTY,
