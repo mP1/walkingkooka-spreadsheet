@@ -1000,9 +1000,16 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Patches the cells or style of this {@link SpreadsheetDelta}.<br>
-     * Note the style will patch all cells.<br>
-     * Any attempt to patch other properties or both cells or style will result in a {@link IllegalArgumentException}.
+     * Patches the cells within this {@link SpreadsheetDelta} using the provided patch, which may be any of the following:
+     * <ul>
+     *     <li>{@link SpreadsheetFormatPattern}</li>
+     *     <li>{@link SpreadsheetParsePattern}</li>
+     *     <li>{@link TextStyle}</li>
+     * </ul>
+     * Any attempt to patch any other property will result in a {@link IllegalArgumentException} being thrown. It is not
+     * possible to patch a single formula for given {@link SpreadsheetCell cells}.<br>
+     * <br>
+     * Cells to be patched
      * <pre>
      * {
      *   "cells": {
@@ -1014,7 +1021,26 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      *   }
      * }
      * </pre>
-     * OR
+     * Format pattern patch
+     * <pre>
+     * {
+     *   "format-pattern": {
+     *     "type": "spreadsheet-text-format-pattern",
+     *     "value": "@\"patched\""
+     *   }
+     * }
+     * </pre>
+     * Parse pattern patch
+     * <pre>
+     * {
+     *   "parse-pattern": {
+     *     "type": "spreadsheet-number-parse-pattern",
+     *     "value": "\"patched\""
+     *   }
+     * }
+     * </pre>
+     * Style patch, any style property may be replaced by including a key/value entry with null resulting in the property
+     * being removed for all cells.
      * <pre>
      * {
      *   "style": {
@@ -1363,6 +1389,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     /**
      * Traverses the cells, patching each with the provided {@link JsonNode format}.
+     * <pre>
+     * {
+     *   "format-pattern": {
+     *     "type": "spreadsheet-text-format-pattern",
+     *     "value": "@\"patched\""
+     *   }
+     * }
+     * </pre>
      */
     private static Set<SpreadsheetCell> patchFormatPattern(final SpreadsheetCellRange cellRange,
                                                            final Set<SpreadsheetCell> cells,
@@ -1405,6 +1439,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     /**
      * Traverses the cells, patching each with the provided {@link JsonNode parsePattern}.
+     * <pre>
+     * {
+     *   "parse-pattern": {
+     *     "type": "spreadsheet-number-parse-pattern",
+     *     "value": "\"patched\""
+     *   }
+     * }
+     * </pre>
      */
     private static Set<SpreadsheetCell> patchParsePattern(final SpreadsheetCellRange cellRange,
                                                           final Set<SpreadsheetCell> cells,
@@ -1540,6 +1582,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     /**
      * Traverses the cells, patching each with the provided {@link JsonNode style}.
+     * <pre>
+     * {
+     *   "style": {
+     *     "color": "#123456"
+     *   }
+     * }
+     * </pre>
      */
     private static Set<SpreadsheetCell> patchStyle(final SpreadsheetCellRange cellRange,
                                                    final Set<SpreadsheetCell> cells,
