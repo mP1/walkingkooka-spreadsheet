@@ -500,6 +500,28 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         );
     }
 
+    /**
+     * <pre>
+     * {
+     *   "A1": {
+     *     "formula": {
+     *       "text": "=1+2"
+     *     },
+     *     "format-pattern": {
+     *       "type": "spreadsheet-number-format-pattern",
+     *       "value": "$0.00"
+     *     }
+     *     "parse-pattern": {
+     *       "type": "spreadsheet-number-parse-pattern",
+     *       "value": "$0.00"
+     *     },
+     *     "style": {
+     *       "font-style": "ITALIC"
+     *     }
+     *   }
+     * }
+     * </pre>
+     */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
                 .set(JsonPropertyName.with(this.reference.toString()), marshall0(context));
