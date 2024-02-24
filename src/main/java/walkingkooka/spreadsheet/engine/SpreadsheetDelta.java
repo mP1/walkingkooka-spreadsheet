@@ -1609,9 +1609,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (patched.size() < cellRange.count()) {
-            final TextStyle textStyle = context.unmarshall(
+            final TextStyle textStyle = TextStyle.EMPTY.patch(
                     style,
-                    TextStyle.class
+                    context
             );
 
             for (final SpreadsheetCellReference possible : cellRange) {
