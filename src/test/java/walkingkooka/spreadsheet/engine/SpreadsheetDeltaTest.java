@@ -1907,6 +1907,59 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsMissingCellWithStyleNullValue() {
+        final TextStylePropertyName<Color> propertyName = TextStylePropertyName.COLOR;
+        final Color propertyValue = Color.parse("#123456");
+        final TextStyle beforeStyle = TextStyle.EMPTY.set(
+                propertyName,
+                propertyValue
+        ).set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
+        );
+
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
+                .setStyle(beforeStyle);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a2)
+                ).setWindow(
+                        SpreadsheetViewportWindows.parse("A1:A2")
+                );
+
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(null);
+
+        // A1 will be created with no formula and only the stylePatch
+        final JsonNodeUnmarshallContext patchContext = this.createPatchContext();
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                                .setStyle(
+                                        TextStyle.EMPTY.patch(
+                                                stylePatch,
+                                                patchContext
+                                        )
+                                ),
+                        a2.setStyle(
+                                beforeStyle.patch(
+                                        stylePatch,
+                                        patchContext
+                                )
+                        )
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                SpreadsheetDelta.stylePatch(stylePatch),
+                after
+        );
+    }
+
+    @Test
     public void testPatchCellsWithStyleMerging() {
         final TextStyle beforeStyle = TextStyle.EMPTY
                 .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
