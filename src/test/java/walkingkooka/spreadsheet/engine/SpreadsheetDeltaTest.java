@@ -51,6 +51,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.tree.text.FontStyle;
+import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
@@ -1859,6 +1860,53 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsWithStyleNullValue() {
+        final TextStylePropertyName<Color> propertyName = TextStylePropertyName.COLOR;
+        final Color propertyValue = Color.parse("#123456");
+        final TextStyle style = TextStyle.EMPTY.set(
+                propertyName,
+                propertyValue
+        ).set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
+        );
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
+                .setStyle(style);
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
+                .setStyle(style);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, a2)
+                ).setWindow(
+                        SpreadsheetViewportWindows.parse("A1:A2")
+                );
+
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(null);
+        final TextStyle patchedStyle = style.patch(
+                stylePatch,
+                this.createPatchContext()
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setStyle(patchedStyle),
+                        a2.setStyle(patchedStyle)
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                SpreadsheetDelta.stylePatch(stylePatch),
+                after
+        );
+    }
+
+    @Test
     public void testPatchCellsWithStyleMerging() {
         final TextStyle beforeStyle = TextStyle.EMPTY
                 .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
@@ -1880,11 +1928,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
                 Color.parse("#123456")
         );
-        final TextStyle patchStyle = TextStyle.EMPTY
-                .patch(
-                        stylePatch,
-                        this.createPatchContext()
-                );
+        final TextStyle patchStyle = beforeStyle.patch(
+                stylePatch,
+                this.createPatchContext()
+        );
 
         final TextStyle patchedStyle = beforeStyle.merge(patchStyle);
 
