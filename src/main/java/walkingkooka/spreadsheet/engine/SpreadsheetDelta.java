@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -939,33 +940,43 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link SpreadsheetFormatPattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
-    public static JsonObject formatPatternPatch(final SpreadsheetFormatPattern pattern,
+    public static JsonObject formatPatternPatch(final Optional<SpreadsheetFormatPattern> pattern,
                                                 final JsonNodeMarshallContext context) {
-        checkContext(context);
-
-        return JsonNode.object()
-                .set(
-                        FORMAT_PATTERN_PROPERTY,
-                        context.marshallWithType(pattern)
-                );
+        return patternPatch(
+                pattern,
+                FORMAT_PATTERN_PROPERTY,
+                context
+        );
     }
 
     /**
      * Creates a {@link SpreadsheetParsePattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
-    public static JsonObject parsePatternPatch(final SpreadsheetParsePattern pattern,
+    public static JsonObject parsePatternPatch(final Optional<SpreadsheetParsePattern> pattern,
                                                final JsonNodeMarshallContext context) {
-        checkContext(context);
+        return patternPatch(
+                pattern,
+                PARSE_PATTERN_PROPERTY,
+                context
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetParsePattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
+     */
+    private static JsonObject patternPatch(final Optional<? extends SpreadsheetPattern> pattern,
+                                           final JsonPropertyName propertyName,
+                                           final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(pattern, "pattern");
+        Objects.requireNonNull(context, "context");
 
         return JsonNode.object()
                 .set(
-                        PARSE_PATTERN_PROPERTY,
-                        context.marshallWithType(pattern)
+                        propertyName,
+                        pattern.isPresent() ?
+                                context.marshallWithType(pattern.get()) :
+                                JsonNode.nullNode()
                 );
-    }
-
-    private static JsonNodeMarshallContext checkContext(final JsonNodeMarshallContext context) {
-        return Objects.requireNonNull(context, "context");
     }
 
     /**

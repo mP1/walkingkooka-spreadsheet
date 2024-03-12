@@ -1088,19 +1088,45 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
     // patternPatch.....................................................................................................
 
     @Test
-    public void testPatternPatchWithInvalidPatternFails() {
+    public void testPatternPatchWithNullPatternFails() {
         assertThrows(
-                IllegalArgumentException.class,
+                NullPointerException.class,
                 () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
-                        SpreadsheetPattern.parseTextFormatPattern("@@@"),
+                        null,
                         JsonNodeMarshallContexts.fake()
                 )
         );
     }
 
     @Test
-    public void testPatternPatchWithNull() {
-        final SpreadsheetFormatPattern pattern = null;
+    public void testPatternPatchWithNullContextFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
+                        Optional.of(
+                                SpreadsheetPattern.parseTextFormatPattern("@@@")
+                        ),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testPatternPatchWithInvalidPatternFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
+                        Optional.of(
+                                SpreadsheetPattern.parseTextFormatPattern("@@@")
+                        ),
+                        JsonNodeMarshallContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testPatternPatchWithEmpty() {
+        final Optional<SpreadsheetFormatPattern> pattern = Optional.empty();
         final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
 
         this.checkEquals(
@@ -1122,13 +1148,14 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
 
         this.checkEquals(
                 SpreadsheetDelta.formatPatternPatch(
-                        pattern,
+                        Optional.of(pattern),
                         context
                 ),
-                pattern.kind().patternPatch(
-                        pattern,
-                        context
-                )
+                pattern.kind()
+                        .patternPatch(
+                                Optional.of(pattern),
+                                context
+                        )
         );
     }
 
@@ -1139,13 +1166,14 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
 
         this.checkEquals(
                 SpreadsheetDelta.parsePatternPatch(
-                        pattern,
+                        Optional.of(pattern),
                         context
                 ),
-                pattern.kind().patternPatch(
-                        pattern,
-                        context
-                )
+                pattern.kind()
+                        .patternPatch(
+                                Optional.of(pattern),
+                                context
+                        )
         );
     }
 
