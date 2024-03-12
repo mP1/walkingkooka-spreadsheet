@@ -771,6 +771,179 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // cellsParsePatternPatch..........................................................................................
+
+    @Test
+    public void testCellsParsePatternPatchWithNullCellsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsParsePatternPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testCellsParsePatternPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsParsePatternPatch(
+                        Maps.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsParsePatternPatch() {
+        final Optional<SpreadsheetParsePattern> pattern = Optional.of(
+                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/ddd")
+        );
+
+        final Map<SpreadsheetCellReference, Optional<SpreadsheetParsePattern>> cellToParsePatterns = Maps.of(
+                SpreadsheetSelection.A1,
+                pattern
+        );
+
+        this.cellsParsePatternPatchAndCheck(
+                cellToParsePatterns,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("parse-pattern"),
+                                                                marshallWithType(pattern.get())
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsParsePatternPatchEmptyPattern() {
+        final Optional<SpreadsheetParsePattern> pattern = Optional.empty();
+
+        final Map<SpreadsheetCellReference, Optional<SpreadsheetParsePattern>> cellToParsePatterns = Maps.of(
+                SpreadsheetSelection.A1,
+                pattern
+        );
+
+        this.cellsParsePatternPatchAndCheck(
+                cellToParsePatterns,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("parse-pattern"),
+                                                                marshallWithType(null)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsParsePatternPatchEmptyCells() {
+        this.cellsParsePatternPatchAndCheck(
+                Maps.empty(),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsParsePatternPatchMultipleCells() {
+        final Optional<SpreadsheetParsePattern> pattern1 = Optional.of(
+                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/ddd")
+        );
+        final Optional<SpreadsheetParsePattern> pattern2 = Optional.of(
+                SpreadsheetPattern.parseTimeParsePattern("hh:mm")
+        );
+
+        final Map<SpreadsheetCellReference, Optional<SpreadsheetParsePattern>> cellToParsePatterns = Maps.of(
+                SpreadsheetSelection.A1,
+                pattern1,
+                SpreadsheetSelection.parseCell("A2"),
+                pattern2
+        );
+
+        this.cellsParsePatternPatchAndCheck(
+                cellToParsePatterns,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("parse-pattern"),
+                                                                marshallWithType(pattern1.get())
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A2"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("parse-pattern"),
+                                                                marshallWithType(pattern2.get())
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    private void cellsParsePatternPatchAndCheck(final Map<SpreadsheetCellReference, Optional<SpreadsheetParsePattern>> cellToParsePatterns,
+                                                final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsParsePatternPatch(
+                cellToParsePatterns,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                expected,
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = Sets.sorted();
+        final Set<SpreadsheetCell> patchedCells = Sets.sorted();
+
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<SpreadsheetParsePattern>> cellAndParsePattern : cellToParsePatterns.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndParsePattern.getKey();
+
+            beforePatchCells.add(
+                    cell.setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=1")
+                    ).setParsePattern(
+                            Optional.of(SpreadsheetPattern.parseNumberParsePattern("$0.00"))
+                    )
+            );
+            patchedCells.add(
+                    cell.setFormula(formula)
+                            .setParsePattern(cellAndParsePattern.getValue())
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+
     // formatPatternPatch...............................................................................................
 
     @Test
