@@ -944,6 +944,155 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // cellsStylePatch.......................................................................................................
+
+    @Test
+    public void testCellsStylePatchWithNullCellsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsStylePatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testCellsStylePatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsStylePatch(
+                        Maps.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsStylePatch() {
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        this.cellsStylePatchAndCheck(
+                Maps.of(
+                        SpreadsheetSelection.A1,
+                        style
+                ),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("style"),
+                                                                marshall(style)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsStylePatchEmptyCells() {
+        this.cellsStylePatchAndCheck(
+                Maps.empty(),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsStylePatchMultipleCells() {
+        final TextStyle style1 = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+        final TextStyle style2 = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.WHITE
+        );
+
+        final Map<SpreadsheetCellReference, TextStyle> cellToStyles = Maps.of(
+                SpreadsheetSelection.A1,
+                style1,
+                SpreadsheetSelection.parseCell("A2"),
+                style2
+        );
+
+        this.cellsStylePatchAndCheck(
+                cellToStyles,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("style"),
+                                                                marshall(style1)
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A2"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("style"),
+                                                                marshall(style2)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    private void cellsStylePatchAndCheck(final Map<SpreadsheetCellReference, TextStyle> cellToStyles,
+                                         final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsStylePatch(
+                cellToStyles,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                expected,
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = Sets.sorted();
+        final Set<SpreadsheetCell> patchedCells = Sets.sorted();
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
+
+        for (final Map.Entry<SpreadsheetCellReference, TextStyle> cellAndStyle : cellToStyles.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndStyle.getKey();
+
+            beforePatchCells.add(
+                    cell.setFormula(formula)
+                            .setStyle(
+                                    TextStyle.EMPTY.set(TextStylePropertyName.COLOR, Color.parse("#123456"))
+                                            .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.CENTER)
+                            )
+            );
+            patchedCells.add(
+                    cell.setFormula(formula)
+                            .setStyle(
+                                    cellAndStyle.getValue()
+                                            .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.CENTER)
+                            )
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+
     // formatPatternPatch...............................................................................................
 
     @Test
