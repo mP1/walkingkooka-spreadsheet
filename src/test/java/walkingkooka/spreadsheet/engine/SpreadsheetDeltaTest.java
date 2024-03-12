@@ -347,11 +347,24 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     // formatPatternPatch...............................................................................................
 
     @Test
+    public void testFormatPatternPatchWithNullPatternFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.formatPatternPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
     public void testFormatPatternPatchWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetDelta.formatPatternPatch(
-                        SpreadsheetPattern.parseDateFormatPattern("ddmmyyyyy"),
+                        Optional.of(
+                                SpreadsheetPattern.parseDateFormatPattern("ddmmyyyyy")
+                        ),
                         null
                 )
         );
@@ -369,14 +382,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         )
                 ,
                 SpreadsheetDelta.formatPatternPatch(
-                        pattern,
+                        Optional.of(pattern),
                         MARSHALL_CONTEXT
                 )
         );
     }
 
     @Test
-    public void testFormatPatternPatchWithNullPattern() {
+    public void testFormatPatternPatchWithEmptyPattern() {
         this.checkEquals(
                 JsonNode.object()
                         .set(
@@ -385,7 +398,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         )
                 ,
                 SpreadsheetDelta.formatPatternPatch(
-                        null,
+                        Optional.empty(),
                         MARSHALL_CONTEXT
                 )
         );
@@ -394,11 +407,24 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     // parsePatternPatch...............................................................................................
 
     @Test
+    public void testParsePatternPatchWithNullPatternFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.parsePatternPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
     public void testParsePatternPatchWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetDelta.parsePatternPatch(
-                        SpreadsheetPattern.parseDateParsePattern("ddmmyyyyy"),
+                        Optional.of(
+                                SpreadsheetPattern.parseDateParsePattern("ddmmyyyyy")
+                        ),
                         null
                 )
         );
@@ -416,14 +442,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         )
                 ,
                 SpreadsheetDelta.parsePatternPatch(
-                        pattern,
+                        Optional.of(pattern),
                         MARSHALL_CONTEXT
                 )
         );
     }
 
     @Test
-    public void testParsePatternPatchWithNullPattern() {
+    public void testParsePatternPatchWithEmptyPattern() {
         this.checkEquals(
                 JsonNode.object()
                         .set(
@@ -432,7 +458,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         )
                 ,
                 SpreadsheetDelta.parsePatternPatch(
-                        null,
+                        Optional.empty(),
                         MARSHALL_CONTEXT
                 )
         );
@@ -1325,7 +1351,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .objectOrFail()
                 .merge(
                         SpreadsheetDelta.formatPatternPatch(
-                                SpreadsheetPattern.parseTextFormatPattern("@"),
+                                Optional.of(
+                                        SpreadsheetPattern.parseTextFormatPattern("@")
+                                ),
                                 MARSHALL_CONTEXT
                         )
                 );
@@ -1356,7 +1384,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .objectOrFail()
                 .merge(
                         SpreadsheetDelta.parsePatternPatch(
-                                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy"),
+                                Optional.of(
+                                        SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                                ),
                                 MARSHALL_CONTEXT
                         )
                 );
@@ -1379,11 +1409,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellFormatPatternAndParsePatternFails() {
         final JsonNode patch = SpreadsheetDelta.formatPatternPatch(
-                SpreadsheetPattern.parseTextFormatPattern("@"),
+                Optional.of(
+                        SpreadsheetPattern.parseTextFormatPattern("@")
+                ),
                 MARSHALL_CONTEXT
         ).merge(
                 SpreadsheetDelta.parsePatternPatch(
-                        SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy"),
+                        Optional.of(
+                                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                        ),
                         MARSHALL_CONTEXT
                 )
         );
@@ -1406,7 +1440,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellWithFormatPatternAndStyleFails() {
         final JsonNode patch = SpreadsheetDelta.formatPatternPatch(
-                SpreadsheetPattern.parseTextFormatPattern("@"),
+                Optional.of(
+                        SpreadsheetPattern.parseTextFormatPattern("@")
+                ),
                 MARSHALL_CONTEXT
         ).merge(
                 SpreadsheetDelta.stylePatch(
@@ -1432,7 +1468,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellWithParsePatternAndStyleFails() {
         final JsonNode patch = SpreadsheetDelta.parsePatternPatch(
-                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy"),
+                Optional.of(
+                        SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                ),
                 MARSHALL_CONTEXT
         ).merge(
                 SpreadsheetDelta.stylePatch(
@@ -1485,7 +1523,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.formatPatternPatch(
-                        formatPattern,
+                        Optional.of(formatPattern),
                         MARSHALL_CONTEXT
                 ),
                 after
@@ -1523,7 +1561,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.formatPatternPatch(
-                        formatPattern,
+                        Optional.of(formatPattern),
                         MARSHALL_CONTEXT
                 ),
                 after
@@ -1531,7 +1569,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellsWithFormatPatternNullClears() {
+    public void testPatchCellsWithFormatPatternEmptyClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
@@ -1559,7 +1597,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.formatPatternPatch(
-                        null,
+                        Optional.empty(),
                         MARSHALL_CONTEXT
                 ),
                 after
@@ -1567,7 +1605,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellsWithFormatPatternNullClears2() {
+    public void testPatchCellsWithFormatPatternEmptyClears2() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
 
@@ -1594,7 +1632,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.formatPatternPatch(
-                        null,
+                        Optional.empty(),
                         MARSHALL_CONTEXT
                 ),
                 after
@@ -1634,7 +1672,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.formatPatternPatch(
-                        formatPattern,
+                        Optional.of(formatPattern),
                         MARSHALL_CONTEXT
                 ),
                 after
@@ -1673,7 +1711,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.parsePatternPatch(
-                        parsePattern,
+                        Optional.of(parsePattern),
                         MARSHALL_CONTEXT
                 ),
                 after
@@ -1681,7 +1719,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellsWithParsePatternNullClears() {
+    public void testPatchCellsWithParsePatternEmptyClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
@@ -1709,7 +1747,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.parsePatternPatch(
-                        null,
+                        Optional.empty(),
                         MARSHALL_CONTEXT
                 ),
                 after
@@ -1717,7 +1755,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchCellsWithParsePatternNullClearsAbsentCell() {
+    public void testPatchCellsWithParsePatternEmptylClearsAbsentCell() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY);
 
@@ -1744,7 +1782,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.parsePatternPatch(
-                        null,
+                        Optional.empty(),
                         MARSHALL_CONTEXT
                 ),
                 after

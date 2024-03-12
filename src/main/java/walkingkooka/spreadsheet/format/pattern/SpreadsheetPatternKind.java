@@ -357,16 +357,18 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     /**
      * Factory that creates a {@link JsonNode} patch for the given {@link SpreadsheetPattern}.
      */
-    public JsonNode patternPatch(final SpreadsheetPattern pattern,
+    public JsonNode patternPatch(final Optional<? extends SpreadsheetPattern> pattern,
                                  final JsonNodeMarshallContext context) {
-        this.checkSameOrFail(pattern);
+        Objects.requireNonNull(pattern, "pattern");
+
+        this.checkSameOrFail(pattern.orElse(null));
         return this.isFormatPattern() ?
                 SpreadsheetDelta.formatPatternPatch(
-                        (SpreadsheetFormatPattern) pattern,
+                        Cast.to(pattern),
                         context
                 ) :
                 SpreadsheetDelta.parsePatternPatch(
-                        (SpreadsheetParsePattern) pattern,
+                        Cast.to(pattern),
                         context
                 );
     }
