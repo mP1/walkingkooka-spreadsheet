@@ -344,6 +344,119 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     // Patch argument factories.........................................................................................
 
+    // cellsPatch.......................................................................................................
+
+    @Test
+    public void testCellsPatchWithNullCellsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testCellsPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsPatch(
+                        Sets.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsPatch() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
+
+        this.cellsPatchAndCheck(
+                Sets.of(SpreadsheetSelection.A1.setFormula(formula)),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("formula"),
+                                                                marshall(formula)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsPatchEmptyCells() {
+        this.cellsPatchAndCheck(
+                Sets.empty(),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsPatchMultipleCells() {
+        final SpreadsheetFormula formula1 = SpreadsheetFormula.EMPTY.setText("=1");
+        final SpreadsheetFormula formula2 = SpreadsheetFormula.EMPTY.setText("=22");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                SpreadsheetSelection.A1.setFormula(formula1),
+                SpreadsheetSelection.parseCell("A2")
+                        .setFormula(formula2)
+        );
+
+        this.cellsPatchAndCheck(
+                cells,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("formula"),
+                                                                marshall(formula1)
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A2"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("formula"),
+                                                                marshall(formula2)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    private void cellsPatchAndCheck(final Set<SpreadsheetCell> cells,
+                                    final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsPatch(
+                cells,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                expected,
+                patch
+        );
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY,
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(cells)
+        );
+    }
+
     // formatPatternPatch...............................................................................................
 
     @Test

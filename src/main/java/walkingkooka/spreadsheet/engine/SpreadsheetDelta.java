@@ -938,6 +938,24 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // patch argument factories.........................................................................................
 
     /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsPatch(final Set<SpreadsheetCell> cells,
+                                      final JsonNodeMarshallContext context) {
+        checkCells(cells);
+        checkContext(context);
+
+        return JsonNode.object()
+                .set(
+                        SpreadsheetDelta.CELLS_PROPERTY,
+                        marshallCellOrColumnsOrRow(
+                                cells,
+                                context
+                        )
+                );
+    }
+
+    /**
      * Creates a {@link SpreadsheetFormatPattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
     public static JsonObject formatPatternPatch(final Optional<SpreadsheetFormatPattern> pattern,
@@ -968,7 +986,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                            final JsonPropertyName propertyName,
                                            final JsonNodeMarshallContext context) {
         Objects.requireNonNull(pattern, "pattern");
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         return JsonNode.object()
                 .set(
@@ -977,6 +995,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                 context.marshallWithType(pattern.get()) :
                                 JsonNode.nullNode()
                 );
+    }
+
+    private static JsonNodeMarshallContext checkContext(final JsonNodeMarshallContext context) {
+        return Objects.requireNonNull(context, "context");
     }
 
     /**
