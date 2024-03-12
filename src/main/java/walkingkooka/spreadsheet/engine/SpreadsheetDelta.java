@@ -961,21 +961,37 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public static JsonNode cellsFormulaPatch(final Map<SpreadsheetCellReference, SpreadsheetFormula> cellToFormulas,
                                              final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cellToFormulas, "cellToFormulas");
+        checkContext(context);
 
         return cellsPatchFromMap(
                 cellToFormulas,
                 FORMULA,
-                context
+                context::marshall
         );
     }
 
     private final static JsonPropertyName FORMULA = JsonPropertyName.with("formula");
 
-    private static JsonNode cellsPatchFromMap(final Map<SpreadsheetCellReference, ?> cellToValue,
-                                              final JsonPropertyName propertyName,
-                                              final JsonNodeMarshallContext context) {
+    /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsFormatPatternPatch(final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatPattern>> cellToFormatPatterns,
+                                                   final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToFormatPatterns, "cellToFormatPatterns");
         checkContext(context);
 
+        return SpreadsheetDelta.cellsPatchFromMap(
+                cellToFormatPatterns,
+                FORMAT_PATTERN,
+                (pattern) -> context.marshallWithType(pattern.orElse(null))
+        );
+    }
+
+    private final static JsonPropertyName FORMAT_PATTERN = JsonPropertyName.with("format-pattern");
+
+    private static <T> JsonNode cellsPatchFromMap(final Map<SpreadsheetCellReference, T> cellToValue,
+                                                  final JsonPropertyName propertyName,
+                                                  final Function<T, JsonNode> marshaller) {
         // {
         //  "cells": [
         //    {
@@ -1001,7 +1017,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                 .map(ctv -> JsonNode.object()
                                                         .setChildren(
                                                                 Lists.of(
-                                                                        context.marshall(
+                                                                        marshaller.apply(
                                                                                 ctv.getValue()
                                                                         ).setName(propertyName)
                                                                 )
