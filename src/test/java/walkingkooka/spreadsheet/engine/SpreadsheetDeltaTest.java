@@ -598,6 +598,179 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // cellsFormatPatternPatch..........................................................................................
+
+    @Test
+    public void testCellsFormatPatternPatchWithNullCellsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsFormatPatternPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testCellsFormatPatternPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsFormatPatternPatch(
+                        Maps.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsFormatPatternPatch() {
+        final Optional<SpreadsheetFormatPattern> pattern = Optional.of(
+                SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/ddd")
+        );
+
+        final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatPattern>> cellToFormatPatterns = Maps.of(
+                SpreadsheetSelection.A1,
+                pattern
+        );
+
+        this.cellsFormatPatternPatchAndCheck(
+                cellToFormatPatterns,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("format-pattern"),
+                                                                marshallWithType(pattern.get())
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsFormatPatternPatchEmptyPattern() {
+        final Optional<SpreadsheetFormatPattern> pattern = Optional.empty();
+
+        final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatPattern>> cellToFormatPatterns = Maps.of(
+                SpreadsheetSelection.A1,
+                pattern
+        );
+
+        this.cellsFormatPatternPatchAndCheck(
+                cellToFormatPatterns,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("format-pattern"),
+                                                                marshallWithType(null)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsFormatPatternPatchEmptyCells() {
+        this.cellsFormatPatternPatchAndCheck(
+                Maps.empty(),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsFormatPatternPatchMultipleCells() {
+        final Optional<SpreadsheetFormatPattern> pattern1 = Optional.of(
+                SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/ddd")
+        );
+        final Optional<SpreadsheetFormatPattern> pattern2 = Optional.of(
+                SpreadsheetPattern.parseTimeFormatPattern("hh:mm")
+        );
+
+        final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatPattern>> cellToFormatPatterns = Maps.of(
+                SpreadsheetSelection.A1,
+                pattern1,
+                SpreadsheetSelection.parseCell("A2"),
+                pattern2
+        );
+
+        this.cellsFormatPatternPatchAndCheck(
+                cellToFormatPatterns,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("format-pattern"),
+                                                                marshallWithType(pattern1.get())
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A2"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("format-pattern"),
+                                                                marshallWithType(pattern2.get())
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    private void cellsFormatPatternPatchAndCheck(final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatPattern>> cellToFormatPatterns,
+                                                 final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsFormatPatternPatch(
+                cellToFormatPatterns,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                expected,
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = Sets.sorted();
+        final Set<SpreadsheetCell> patchedCells = Sets.sorted();
+
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<SpreadsheetFormatPattern>> cellAndFormatPattern : cellToFormatPatterns.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndFormatPattern.getKey();
+
+            beforePatchCells.add(
+                    cell.setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=1")
+                    ).setFormatPattern(
+                            Optional.of(SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN)
+                    )
+            );
+            patchedCells.add(
+                    cell.setFormula(formula)
+                            .setFormatPattern(cellAndFormatPattern.getValue())
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+
     // formatPatternPatch...............................................................................................
 
     @Test
