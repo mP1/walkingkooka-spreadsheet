@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.reflect.ClassTesting2;
@@ -56,6 +57,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.MathContext;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -454,6 +456,145 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.EMPTY,
                 patch,
                 SpreadsheetDelta.EMPTY.setCells(cells)
+        );
+    }
+
+    // cellsFormulaPatch.......................................................................................................
+
+    @Test
+    public void testCellsFormulaPatchWithNullCellsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsFormulaPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testCellsFormulaPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsFormulaPatch(
+                        Maps.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsFormulaPatch() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
+
+        this.cellsFormulaPatchAndCheck(
+                Maps.of(
+                        SpreadsheetSelection.A1,
+                        formula
+                ),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("formula"),
+                                                                marshall(formula)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsFormulaPatchEmptyCells() {
+        this.cellsFormulaPatchAndCheck(
+                Maps.empty(),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsFormulaPatchMultipleCells() {
+        final SpreadsheetFormula formula1 = SpreadsheetFormula.EMPTY.setText("=1");
+        final SpreadsheetFormula formula2 = SpreadsheetFormula.EMPTY.setText("=22");
+
+        final Map<SpreadsheetCellReference, SpreadsheetFormula> cellToFormulas = Maps.of(
+                SpreadsheetSelection.A1,
+                formula1,
+                SpreadsheetSelection.parseCell("A2"),
+                formula2
+        );
+
+        this.cellsFormulaPatchAndCheck(
+                cellToFormulas,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("formula"),
+                                                                marshall(formula1)
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A2"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("formula"),
+                                                                marshall(formula2)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    private void cellsFormulaPatchAndCheck(final Map<SpreadsheetCellReference, SpreadsheetFormula> cellToFormulas,
+                                           final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsFormulaPatch(
+                cellToFormulas,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                expected,
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = Sets.sorted();
+        final Set<SpreadsheetCell> patchedCells = Sets.sorted();
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        for (final Map.Entry<SpreadsheetCellReference, SpreadsheetFormula> cellAndFormula : cellToFormulas.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndFormula.getKey();
+
+            beforePatchCells.add(
+                    cell.setFormula(
+                            SpreadsheetFormula.EMPTY.setText("'Patched over")
+                    ).setStyle(style)
+            );
+            patchedCells.add(
+                    cell.setFormula(
+                            cellAndFormula.getValue()
+                    ).setStyle(style)
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
 

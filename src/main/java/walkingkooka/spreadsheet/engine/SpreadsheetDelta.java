@@ -956,6 +956,64 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsFormulaPatch(final Map<SpreadsheetCellReference, SpreadsheetFormula> cellToFormulas,
+                                             final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToFormulas, "cellToFormulas");
+
+        return cellsPatchFromMap(
+                cellToFormulas,
+                FORMULA,
+                context
+        );
+    }
+
+    private final static JsonPropertyName FORMULA = JsonPropertyName.with("formula");
+
+    private static JsonNode cellsPatchFromMap(final Map<SpreadsheetCellReference, ?> cellToValue,
+                                              final JsonPropertyName propertyName,
+                                              final JsonNodeMarshallContext context) {
+        checkContext(context);
+
+        // {
+        //  "cells": [
+        //    {
+        //      "formula": {
+        //        "text": "=1"
+        //      }
+        //    },
+        //    {
+        //      "formula": {
+        //        "text": "=22"
+        //      }
+        //    }
+        //  ]
+        // }
+
+        return JsonNode.object()
+                .set(
+                        SpreadsheetDelta.CELLS_PROPERTY,
+                        JsonNode.object()
+                                .setChildren(
+                                        cellToValue.entrySet()
+                                                .stream()
+                                                .map(ctv -> JsonNode.object()
+                                                        .setChildren(
+                                                                Lists.of(
+                                                                        context.marshall(
+                                                                                ctv.getValue()
+                                                                        ).setName(propertyName)
+                                                                )
+                                                        ).setName(
+                                                                JsonPropertyName.with(ctv.getKey().toString())
+                                                        )
+                                                ).collect(Collectors.toList())
+                                )
+                );
+    }
+
+    /**
      * Creates a {@link SpreadsheetFormatPattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
     public static JsonObject formatPatternPatch(final Optional<SpreadsheetFormatPattern> pattern,
