@@ -1588,7 +1588,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             );
         }
 
-        return patched;
+        // helps prevent NPE in patchCells
+        return null == patched ?
+                Sets.empty() :
+                patched;
     }
 
     /**
