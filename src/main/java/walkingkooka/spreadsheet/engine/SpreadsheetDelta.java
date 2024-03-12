@@ -989,6 +989,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private final static JsonPropertyName FORMAT_PATTERN = JsonPropertyName.with("format-pattern");
 
+    /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsParsePatternPatch(final Map<SpreadsheetCellReference, Optional<SpreadsheetParsePattern>> cellToParsePatterns,
+                                                  final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToParsePatterns, "cellToParsePatterns");
+        checkContext(context);
+
+        return SpreadsheetDelta.cellsPatchFromMap(
+                cellToParsePatterns,
+                PARSE_PATTERN,
+                (pattern) -> context.marshallWithType(pattern.orElse(null))
+        );
+    }
+
+    private final static JsonPropertyName PARSE_PATTERN = JsonPropertyName.with("parse-pattern");
+
     private static <T> JsonNode cellsPatchFromMap(final Map<SpreadsheetCellReference, T> cellToValue,
                                                   final JsonPropertyName propertyName,
                                                   final Function<T, JsonNode> marshaller) {
