@@ -379,13 +379,9 @@ public final class SpreadsheetFormula implements HasText,
             final JsonPropertyName propertyName = propertyAndValue.name();
             switch (propertyName.value()) {
                 case TEXT_PROPERTY_STRING:
-                    final String text;
-                    try {
-                        text = propertyAndValue.stringOrFail();
-                    } catch (final JsonNodeException cause) {
-                        throw new JsonNodeUnmarshallException("Node " + TEXT_PROPERTY_STRING + " is not a string=" + propertyAndValue, propertyAndValue);
-                    }
-                    patched = patched.setText(text);
+                    patched = patched.setText(
+                            propertyAndValue.stringOrFail()
+                    );
                     break;
                 case TOKEN_PROPERTY_STRING:
                 case EXPRESSION_PROPERTY_STRING:
