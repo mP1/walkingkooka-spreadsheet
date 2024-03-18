@@ -741,33 +741,33 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // Compare..........................................................................................................
 
     @Test
-    public void testSameColumnSameRowDifferentReferenceKinds() {
+    public void testCompareToSameColumnSameRowDifferentReferenceKinds() {
         this.compareToAndCheckEquals(
                 this.cell(SpreadsheetReferenceKind.ABSOLUTE, COLUMN, SpreadsheetReferenceKind.ABSOLUTE, ROW),
                 this.cell(SpreadsheetReferenceKind.RELATIVE, COLUMN, SpreadsheetReferenceKind.RELATIVE, ROW));
     }
 
     @Test
-    public void testSameColumnDifferentRow() {
+    public void testCompareToSameColumnDifferentRow() {
         this.compareToAndCheckLess(
                 this.cell(SpreadsheetReferenceKind.ABSOLUTE, COLUMN, SpreadsheetReferenceKind.ABSOLUTE, ROW),
                 this.cell(COLUMN, ROW + 10));
     }
 
     @Test
-    public void testSameColumnDifferentReferenceKindDifferentRow() {
+    public void testCompareToSameColumnDifferentReferenceKindDifferentRow() {
         this.compareToAndCheckLess(
                 this.cell(SpreadsheetReferenceKind.ABSOLUTE, COLUMN, SpreadsheetReferenceKind.ABSOLUTE, ROW),
                 this.cell(SpreadsheetReferenceKind.RELATIVE, COLUMN, SpreadsheetReferenceKind.ABSOLUTE, ROW + 10));
     }
 
     @Test
-    public void testDifferentColumnSameRow() {
+    public void testCompareToDifferentColumnSameRow() {
         this.compareToAndCheckLess(this.cell(COLUMN + 10, ROW));
     }
 
     @Test
-    public void testDifferentColumnDifferentReferenceKindDifferentRow() {
+    public void testCompareToDifferentColumnDifferentReferenceKindDifferentRow() {
         this.compareToAndCheckLess(this.cell(SpreadsheetReferenceKind.RELATIVE, COLUMN + 10, SpreadsheetReferenceKind.ABSOLUTE, ROW));
     }
 
@@ -780,6 +780,39 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                                           final SpreadsheetReferenceKind rowKind,
                                           final int row) {
         return columnKind.column(column).setRow(rowKind.row(row));
+    }
+
+    @Test
+    public void testCompareSortArray() {
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("C2");
+
+        this.compareToArraySortAndCheck(
+                c2, b3,
+                c2, b3
+        );
+
+        this.compareToArraySortAndCheck(
+                b3, c2,
+                c2, b3
+        );
+    }
+
+    @Test
+    public void testCompareSortArray2() {
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$b$2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        this.compareToArraySortAndCheck(
+                b2, a1, c3,
+                a1, b2, c3
+        );
+
+        this.compareToArraySortAndCheck(
+                c3, b2, a1,
+                a1, b2, c3
+        );
     }
 
     // testCell.........................................................................................................
