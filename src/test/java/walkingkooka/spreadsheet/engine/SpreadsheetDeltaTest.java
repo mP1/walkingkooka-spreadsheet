@@ -1806,7 +1806,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
         );
         this.checkEquals(
-                "Patch includes cells A2, B1 outside A1",
+                "Patch includes cells B1, A2 outside A1",
                 thrown.getMessage(),
                 "messages"
         );

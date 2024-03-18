@@ -704,11 +704,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     // Comparable ......................................................................................................
 
+    /**
+     * Sort by rows then column, so B3 comes before C2
+     */
     @Override
     public int compareTo(final SpreadsheetCellReference other) {
-        final int result = this.column.value - other.column.value;
+        final int result = this.row.value - other.row.value;
         return Comparators.EQUAL != result ?
                 result :
-                this.row.value - other.row.value;
+                this.column.value - other.column.value;
     }
 }
