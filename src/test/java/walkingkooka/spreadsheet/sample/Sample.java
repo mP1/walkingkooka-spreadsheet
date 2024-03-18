@@ -59,15 +59,18 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -94,7 +97,7 @@ public final class Sample {
                 SpreadsheetSelection.A1
                         .setFormula(
                                 SpreadsheetFormula.EMPTY
-                                        .setText("12+B2")
+                                        .setText("=12+B2")
                         ),
                 engineContext
         );
@@ -102,7 +105,7 @@ public final class Sample {
         final SpreadsheetDelta delta = engine.saveCell(
                 SpreadsheetSelection.parseCell("B2")
                         .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("34")
+                                SpreadsheetFormula.EMPTY.setText("=34")
                         ),
                 engineContext
         );
@@ -149,7 +152,7 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
                     .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"))
                     .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
-                    .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#0.0$#0.00"))
+                    .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#"))
                     .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
                     .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
                     .set(SpreadsheetMetadataPropertyName.PRECISION, 123)
@@ -192,13 +195,15 @@ public final class Sample {
 
             @Override
             public SpreadsheetParserToken parseFormula(final TextCursor formula) {
-                return Cast.to(SpreadsheetParsers.expression()
+                return Cast.to(
+                        SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(
                                 formula,
                                 metadata.parserContext(NOW)
                         ) // TODO should fetch parse metadata prop
-                        .get());
+                                .get()
+                );
             }
 
             @Override
@@ -232,6 +237,41 @@ public final class Sample {
                 return SpreadsheetEngines.expressionReferenceFunction(
                         engine,
                         this
+                );
+            }
+
+            @Override
+            public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+                Objects.requireNonNull(token, "token");
+
+                return token.toExpression(
+                        new FakeExpressionEvaluationContext() {
+                            @Override
+                            public ExpressionNumberKind expressionNumberKind() {
+                                return EXPRESSION_NUMBER_KIND;
+                            }
+                        }
+                );
+            }
+
+            @Override
+            public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
+                                                  final Optional<SpreadsheetFormatter> formatter) {
+                return cell.setFormatted(
+                        Optional.of(
+                                this.formatValue(
+                                        cell.formula()
+                                                .value()
+                                                .get(),
+                                        formatter.orElse(
+                                                this.spreadsheetMetadata()
+                                                        .formatter()
+                                        )
+                                ).map(
+                                        f -> cell.style()
+                                                .replace(f.toTextNode())
+                                ).orElse(TextNode.EMPTY_TEXT)
+                        )
                 );
             }
 

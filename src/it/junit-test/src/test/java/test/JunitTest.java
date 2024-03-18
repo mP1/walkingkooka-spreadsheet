@@ -24,7 +24,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
-import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.j2cl.locale.LocaleAware;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
@@ -42,7 +42,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -64,15 +63,18 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -105,7 +107,7 @@ public class JunitTest {
                 SpreadsheetSelection.parseCell("A1")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY
-                                        .setText("12+B2")
+                                        .setText("=12+B2")
                         ),
                 engineContext
         );
@@ -113,7 +115,7 @@ public class JunitTest {
         final SpreadsheetDelta delta = engine.saveCell(
                 SpreadsheetSelection.parseCell("B2")
                         .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("34")
+                                SpreadsheetFormula.EMPTY.setText("=34")
                         ),
                 engineContext
         );
@@ -154,12 +156,13 @@ public class JunitTest {
                     .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"))
                     .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"))
                     .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, ',')
+                    .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
                     .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
                     .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"))
-                    .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#0.0$#0.00"))
+                    .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#"))
                     .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
                     .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
                     .set(SpreadsheetMetadataPropertyName.PRECISION, 123)
@@ -197,19 +200,21 @@ public class JunitTest {
         return new FakeSpreadsheetEngineContext() {
 
             @Override
-            public SpreadsheetMetadata metadata() {
+            public SpreadsheetMetadata spreadsheetMetadata() {
                 return metadata;
             }
 
             @Override
             public SpreadsheetParserToken parseFormula(final TextCursor formula) {
-                return Cast.to(SpreadsheetParsers.expression()
-                        .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(
-                                formula,
-                                metadata.parserContext(NOW)
-                        ) // TODO should fetch parse metadata prop
-                        .get());
+                return Cast.to(
+                        SpreadsheetParsers.expression()
+                                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                                .parse(
+                                        formula,
+                                        metadata.parserContext(NOW)
+                                ) // TODO should fetch parse metadata prop
+                                .get()
+                );
             }
 
             @Override
@@ -240,15 +245,50 @@ public class JunitTest {
             }
 
             private Function<ExpressionReference, Optional<Optional<Object>>> references() {
-                return SpreadsheetEngines.expressionEvaluationContextExpressionReferenceFunction(
+                return SpreadsheetEngines.expressionReferenceFunction(
                         engine,
                         this
                 );
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatter formatter) {
+            public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+                Objects.requireNonNull(token, "token");
+
+                return token.toExpression(
+                        new FakeExpressionEvaluationContext() {
+                            @Override
+                            public ExpressionNumberKind expressionNumberKind() {
+                                return EXPRESSION_NUMBER_KIND;
+                            }
+                        }
+                );
+            }
+
+            @Override
+            public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
+                                                  final Optional<SpreadsheetFormatter> formatter) {
+                return cell.setFormatted(
+                        Optional.of(
+                                this.formatValue(
+                                        cell.formula()
+                                                .value()
+                                                .get(),
+                                        formatter.orElse(
+                                                this.spreadsheetMetadata()
+                                                        .formatter()
+                                        )
+                                ).map(
+                                        f -> cell.style()
+                                                .replace(f.toTextNode())
+                                ).orElse(TextNode.EMPTY_TEXT)
+                        )
+                );
+            }
+
+            @Override
+            public Optional<SpreadsheetText> formatValue(final Object value,
+                                                         final SpreadsheetFormatter formatter) {
                 checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
 
                 return formatter.format(
