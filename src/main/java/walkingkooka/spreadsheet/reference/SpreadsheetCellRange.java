@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -341,6 +342,16 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                       final Consumer<? super SpreadsheetCellReference> absent) {
         this.cellStream()
                 .forEach(SpreadsheetCellRangeCellsConsumer.with(cells, present, absent));
+    }
+
+    /**
+     * {@see SpreadsheetCellRangeSortedMapSpreadsheetCellIterator}
+     */
+    public Iterator<SpreadsheetCell> cellsIterator(final SortedMap<SpreadsheetCellReference, SpreadsheetCell> referenceToCell) {
+        return SpreadsheetCellRangeSortedMapSpreadsheetCellIterator.with(
+                this,
+                referenceToCell
+        );
     }
 
     // navigation.......................................................................................................
