@@ -26,9 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -39,7 +37,6 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -143,18 +140,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     public SpreadsheetParserToken parseFormula(final TextCursor expression) {
         Objects.requireNonNull(expression, "expression");
 
-        final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
-
-        final ExpressionNumberConverterContext converterContext = metadata.converterContext(
-                this.now,
-                this.resolveIfLabel
-        );
-
-        final SpreadsheetParserContext parserContext = SpreadsheetParserContexts.basic(
-                converterContext,
-                metadata.expressionNumberContext(),
-                metadata.getOrFail(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR)
-        );
+        final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
+                .parserContext(this.now);
 
         return SpreadsheetParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
