@@ -22,7 +22,6 @@ import walkingkooka.convert.Converter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -108,23 +107,6 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                     r
             );
         };
-    }
-
-    /**
-     * {@see SpreadsheetExpressionEvaluationContext}
-     */
-    public static SpreadsheetExpressionEvaluationContext spreadsheetEngineContext(final Optional<SpreadsheetCell> cell,
-                                                                                  final AbsoluteUrl serverUrl,
-                                                                                  final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
-                                                                                  final SpreadsheetEngineContext context) {
-        return SpreadsheetEngineSpreadsheetExpressionEvaluationContext.with(
-                cell,
-                serverUrl,
-                references,
-                functions,
-                context
-        );
     }
 
     /**

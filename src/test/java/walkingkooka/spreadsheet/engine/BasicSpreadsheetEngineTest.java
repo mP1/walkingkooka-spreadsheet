@@ -13080,14 +13080,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
                 return token.toExpression(
-                        SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
-                                Optional.empty(),
+                        SpreadsheetExpressionEvaluationContexts.basic(
+                                Optional.empty(), // cell
+                                SpreadsheetCellStores.fake(),
                                 SERVER_URL,
+                                this.spreadsheetMetadata(),
+                                this.functions(),
                                 (r) -> {
                                     throw new UnsupportedOperationException(r.toString());
-                                },
-                                this.functions(),
-                                this
+                                }, // references
+                                this::resolveIfLabel,
+                                this::now
                         )
                 );
             }
