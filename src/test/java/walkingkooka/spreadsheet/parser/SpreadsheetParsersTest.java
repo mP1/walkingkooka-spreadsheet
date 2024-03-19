@@ -1116,6 +1116,54 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
+    public void testExpressionNumberBigDecimal() {
+        this.testExpressionNumber();
+    }
+
+    @Test
+    public void testExpressionNumberDouble() {
+        this.testExpressionNumber();
+    }
+
+    private void testExpressionNumber() {
+        final String text = "1";
+
+        this.parseExpressionAndCheck(
+                text,
+                number(
+                        digits(1)
+                ),
+                text,
+                text
+        );
+    }
+
+    @Test
+    public void testExpressionNumberWithDigitsBigDecimal() {
+        this.testExpressionNumberWithDigits();
+    }
+
+    @Test
+    public void testExpressionNumberWithDigitsDouble() {
+        this.testExpressionNumberWithDigits();
+    }
+
+    private void testExpressionNumberWithDigits() {
+        final String text = "1.75";
+
+        this.parseExpressionAndCheck(
+                text,
+                number(
+                        digits(1),
+                        decimalSymbols(),
+                        digits(75)
+                ),
+                text,
+                text
+        );
+    }
+    
+    @Test
     public void testExpressionNumberPercentageBigDecimal() {
         this.testExpressionNumberPercentage();
     }
@@ -3464,6 +3512,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 ),
                 columnToken.text() + rowToken.text()
         );
+    }
+
+    private SpreadsheetParserToken decimalSymbols() {
+        return SpreadsheetParserToken.decimalSeparatorSymbol(".", ".");
     }
 
     private SpreadsheetParserToken digits(final Number number) {
