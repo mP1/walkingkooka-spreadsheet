@@ -104,7 +104,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         this.parserContext = metadata.parserContext(now);
 
         this.functions = functions;
-        this.function = SpreadsheetEnginesExpressionReferenceFunction.with(
+        this.referenceFunction = SpreadsheetEnginesExpressionReferenceFunction.with(
                 engine,
                 this
         );
@@ -193,7 +193,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
                 cell,
                 this.serverUrl,
-                this.function,
+                this.referenceFunction,
                 this.functions,
                 this
         );
@@ -206,7 +206,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      */
     private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions;
 
-    private final SpreadsheetEnginesExpressionReferenceFunction function;
+    private final SpreadsheetEnginesExpressionReferenceFunction referenceFunction;
 
     // HasNow...........................................................................................................
 
