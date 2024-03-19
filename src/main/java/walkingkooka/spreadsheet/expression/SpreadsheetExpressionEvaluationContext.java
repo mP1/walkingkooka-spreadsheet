@@ -54,6 +54,9 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
 
     /**
      * Parses the {@link TextCursor formula} into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
+     * Note a formula here is an expression without the leading equals sign. Value literals such as date like 1/2/2000 will actually probably
+     * be parsed into a series of division operations and not an actual date. Apostrophe string literals will fail,
+     * date/times and times will not actually return date/time or time values.
      */
     SpreadsheetParserToken parseFormula(final TextCursor formula);
 

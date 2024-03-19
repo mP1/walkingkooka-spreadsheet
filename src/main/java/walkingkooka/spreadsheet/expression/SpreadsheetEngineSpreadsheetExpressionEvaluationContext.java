@@ -31,10 +31,12 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -99,10 +101,7 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     @Override
     public Object evaluate(final Expression expression) {
-        return this.context.evaluate(
-                expression,
-                this.cell
-        );
+        return expression.toValue(this);
     }
 
     @Override
@@ -334,7 +333,16 @@ final class SpreadsheetEngineSpreadsheetExpressionEvaluationContext implements S
 
     @Override
     public SpreadsheetParserToken parseFormula(final TextCursor formula) {
-        return this.context.parseFormula(formula);
+        return SpreadsheetParsers.expression()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(
+                        formula,
+                        this.spreadsheetMetadata()
+                                .parserContext(
+                                        this.context::now
+                                )
+                ).get()
+                .cast(SpreadsheetParserToken.class);
     }
 
     @Override
