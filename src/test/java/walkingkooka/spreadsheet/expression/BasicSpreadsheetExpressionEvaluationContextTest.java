@@ -327,6 +327,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
+    @Test
+    public void testParseFormulaEqualsAdditionExpressionFails() {
+        final String text = "=1+2";
+
+        this.parseFormulaAndFail(
+                text,
+                "Invalid character '=' at (1,1) \"=1+2\" expected EXPRESSION_OPT"
+        );
+    }
+
     // ExpressionEvaluationContextTesting................................................................................
 
     @Override
