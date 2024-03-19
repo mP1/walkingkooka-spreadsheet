@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
 
 import java.util.Optional;
@@ -60,6 +61,31 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                         TextCursors.charSequence(formula)
                 ),
                 () -> "parseFormula " + formula + " with context " + context);
+    }
+
+    default void parseFormulaAndFail(final String formula,
+                                     final String expected) {
+        this.parseFormulaAndFail(
+                this.createContext(),
+                formula,
+                expected
+        );
+    }
+
+    default void parseFormulaAndFail(final SpreadsheetExpressionEvaluationContext context,
+                                     final String formula,
+                                     final String expected) {
+        final ParserReporterException thrown = assertThrows(
+                ParserReporterException.class,
+                () -> context.parseFormula(
+                        TextCursors.charSequence(formula)
+                )
+        );
+        this.checkEquals(
+                expected,
+                thrown.getMessage(),
+                "message"
+        );
     }
 
     // loadCell.........................................................................................................
