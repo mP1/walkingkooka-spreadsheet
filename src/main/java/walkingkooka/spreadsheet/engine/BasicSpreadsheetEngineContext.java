@@ -190,12 +190,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     }
 
     private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
-        return SpreadsheetExpressionEvaluationContexts.spreadsheetEngineContext(
+        return SpreadsheetExpressionEvaluationContexts.basic(
                 cell,
+                this.storeRepository.cells(),
                 this.serverUrl,
-                this.referenceFunction,
+                this.spreadsheetMetadata(),
                 this.functions,
-                this
+                this.referenceFunction,
+                this::resolveIfLabel,
+                this.now
         );
     }
 
