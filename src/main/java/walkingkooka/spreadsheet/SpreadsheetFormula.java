@@ -532,15 +532,12 @@ public final class SpreadsheetFormula implements HasText,
      * Creates an JSON object with all the components of this formula.
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        JsonObject object = JsonNode.object();
-
-        final String text = this.text;
-        if (null != text) {
-            object = object.set(
-                    TEXT_PROPERTY,
-                    JsonNode.string(text)
-            );
-        }
+        // always marshall formula text
+        JsonObject object = JsonNode.object()
+                .set(
+                        TEXT_PROPERTY,
+                        JsonNode.string(this.text())
+                );
 
         final Optional<SpreadsheetParserToken> token = this.token;
         if (token.isPresent()) {
