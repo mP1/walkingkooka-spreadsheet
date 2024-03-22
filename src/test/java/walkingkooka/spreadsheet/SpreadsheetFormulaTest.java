@@ -1205,6 +1205,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 formula(TEXT)
                         .setToken(this.token()),
                 "{\n" +
+                        "  \"text\": \"1+2\",\n" +
                         "  \"token\": {\n" +
                         "    \"type\": \"spreadsheet-text-parser-token\",\n" +
                         "    \"value\": {\n" +
@@ -1231,6 +1232,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setToken(this.token())
                         .setExpression(this.expression()),
                 "{\n" +
+                        "  \"text\": \"1+2\",\n" +
                         "  \"token\": {\n" +
                         "    \"type\": \"spreadsheet-text-parser-token\",\n" +
                         "    \"value\": {\n" +
