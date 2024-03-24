@@ -704,7 +704,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testTestDifferentColumn() {
+    public void testtestEqualsDifferentColumn() {
         this.testFalse(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetSelection.parseColumn("C")
@@ -712,7 +712,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Test
-    public void testTestDifferentRow() {
+    public void testtestEqualsDifferentRow() {
         this.testFalse(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetSelection.parseRow("3")

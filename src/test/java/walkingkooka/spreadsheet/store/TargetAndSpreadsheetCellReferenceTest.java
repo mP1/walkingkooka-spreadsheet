@@ -57,12 +57,12 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     }
 
     @Test
-    public void testDifferentTarget() {
+    public void testEqualsDifferentTarget() {
         this.checkNotEquals(TargetAndSpreadsheetCellReference.with(SpreadsheetSelection.labelName("Different"), this.reference()));
     }
 
     @Test
-    public void testDifferentCellReference() {
+    public void testEqualsDifferentCellReference() {
         this.checkNotEquals(TargetAndSpreadsheetCellReference.with(this.label(), SpreadsheetSelection.parseCell("Z99")));
     }
 

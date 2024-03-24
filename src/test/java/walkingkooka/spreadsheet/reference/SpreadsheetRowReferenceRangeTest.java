@@ -1404,7 +1404,7 @@ public final class SpreadsheetRowReferenceRangeTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDifferentColumn() {
+    public void testEqualsDifferentColumn() {
         this.checkNotEquals(SpreadsheetSelection.parseRowRange("55:66"));
     }
 

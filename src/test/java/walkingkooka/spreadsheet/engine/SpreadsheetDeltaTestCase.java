@@ -948,7 +948,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     // equals...........................................................................................................
 
     @Test
-    public final void testDifferentSelection() {
+    public final void testEqualsDifferentSelection() {
         final Optional<SpreadsheetViewport> viewport = this.differentViewport();
         this.checkNotEquals(
                 this.viewport(),
@@ -960,7 +960,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentCells() {
+    public final void testEqualsDifferentCells() {
         final Set<SpreadsheetCell> cells = this.differentCells();
         this.checkNotEquals(this.cells(), cells, "cells() and differentCells() must be un equal");
 
@@ -968,7 +968,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentColumns() {
+    public final void testEqualsDifferentColumns() {
         final Set<SpreadsheetColumn> columns = this.differentColumns();
 
         this.checkNotEquals(
@@ -983,7 +983,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentLabels() {
+    public final void testEqualsDifferentLabels() {
         final Set<SpreadsheetLabelMapping> labels = this.differentLabels();
         this.checkNotEquals(this.labels(), labels, "labels() and differentLabels() must be un equal");
 
@@ -996,7 +996,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentRows() {
+    public final void testEqualsDifferentRows() {
         final Set<SpreadsheetRow> rows = this.differentRows();
 
         this.checkNotEquals(
@@ -1011,7 +1011,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentDeletedLabels() {
+    public final void testEqualsDifferentDeletedLabels() {
         final Set<SpreadsheetCellReference> deletedCells = this.differentDeletedCells();
         this.checkNotEquals(this.labels(), deletedCells, "deletedCells() and differentDeletedCells() must be un equal");
 
@@ -1019,7 +1019,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentColumnWidths() {
+    public final void testEqualsDifferentColumnWidths() {
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.differentColumnWidths();
         this.checkNotEquals(this.columnWidths(), columnWidths, "columnWidths() and differentColumnWidths() must be un equal");
 
@@ -1027,7 +1027,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentRowHeights() {
+    public final void testEqualsDifferentRowHeights() {
         final Map<SpreadsheetRowReference, Double> rowHeights = this.differentRowHeights();
         this.checkNotEquals(this.rowHeights(), rowHeights, "rowHeights() and differentRowHeights() must be un equal");
 
@@ -1035,7 +1035,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentColumnCount() {
+    public final void testEqualsDifferentColumnCount() {
         final OptionalInt columnCount = this.differentColumnCount();
         this.checkNotEquals(
                 this.columnCount(),
@@ -1050,7 +1050,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentRowCount() {
+    public final void testEqualsDifferentRowCount() {
         final OptionalInt rowCount = this.differentRowCount();
         this.checkNotEquals(
                 this.rowCount(),
@@ -1065,7 +1065,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
-    public final void testDifferentWindow() {
+    public final void testEqualsDifferentWindow() {
         final SpreadsheetViewportWindows differentWindow = this.differentWindow();
         this.checkNotEquals(this.window(), differentWindow, "window() and differentWindow() must be un equal");
 

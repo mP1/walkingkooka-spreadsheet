@@ -55,7 +55,7 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     // equals...........................................................................................................
 
     @Test
-    public void testDifferentSpreadsheetName() {
+    public void testEqualsDifferentSpreadsheetName() {
         this.checkNotEquals(SpreadsheetName.with("Different"));
     }
 
