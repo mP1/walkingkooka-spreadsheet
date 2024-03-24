@@ -62,7 +62,7 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     }
 
     @Test
-    public void testDifferentName() {
+    public void testEqualsDifferentName() {
         this.checkNotEquals(Group.with(this.createId(), GroupName.with("different")));
     }
 

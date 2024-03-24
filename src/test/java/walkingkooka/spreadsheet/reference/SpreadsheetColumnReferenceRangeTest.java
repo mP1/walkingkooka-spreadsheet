@@ -1394,7 +1394,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testDifferentColumn() {
+    public void testEqualsDifferentColumn() {
         this.checkNotEquals(SpreadsheetSelection.parseColumnRange("Y:Z"));
     }
 

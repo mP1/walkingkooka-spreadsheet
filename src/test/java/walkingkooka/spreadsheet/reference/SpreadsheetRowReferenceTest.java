@@ -124,7 +124,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testTestDifferentRow() {
+    public void testtestEqualsDifferentRow() {
         this.testFalse(
                 SpreadsheetSelection.parseRow("1"),
                 SpreadsheetSelection.parseRow("2")

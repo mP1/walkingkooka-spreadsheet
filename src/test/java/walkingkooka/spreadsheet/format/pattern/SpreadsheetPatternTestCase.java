@@ -316,7 +316,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
     // HashCodeEqualsDefined............................................................................................
 
     @Test
-    public final void testDifferentPattern() {
+    public final void testEqualsDifferentPattern() {
         this.checkNotEquals(this.createPattern("\"different-text-literal\""));
     }
 

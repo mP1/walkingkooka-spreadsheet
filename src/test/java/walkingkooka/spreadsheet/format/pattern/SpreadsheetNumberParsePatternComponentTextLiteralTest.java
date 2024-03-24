@@ -32,7 +32,7 @@ public final class SpreadsheetNumberParsePatternComponentTextLiteralTest extends
     }
 
     @Test
-    public void testDifferentCaseFails() {
+    public void testEqualsDifferentCaseFails() {
         this.parseFails(
                 TOKEN.toUpperCase()
         );

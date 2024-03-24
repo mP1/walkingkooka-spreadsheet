@@ -141,7 +141,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     // Object...........................................................................................................
 
     @Test
-    public void testDifferentSelection() {
+    public void testEqualsDifferentSelection() {
         this.checkNotEquals(
                 AnchoredSpreadsheetSelection.with(
                         SpreadsheetSelection.parseCellRange("A1:C3"),
@@ -151,7 +151,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     }
 
     @Test
-    public void testDifferentSelectionKind() {
+    public void testEqualsDifferentSelectionKind() {
         this.checkNotEquals(
                 AnchoredSpreadsheetSelection.with(
                         SpreadsheetSelection.parseCellRange("A1:$A$2"),
@@ -161,7 +161,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     }
 
     @Test
-    public void testDifferentAnchor() {
+    public void testEqualsDifferentAnchor() {
         this.checkNotEquals(
                 AnchoredSpreadsheetSelection.with(
                         SELECTION,

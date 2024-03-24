@@ -95,7 +95,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testTestDifferentColumn() {
+    public void testtestEqualsDifferentColumn() {
         this.testFalse(
                 SpreadsheetSelection.parseColumn("A"),
                 SpreadsheetSelection.parseColumn("B")

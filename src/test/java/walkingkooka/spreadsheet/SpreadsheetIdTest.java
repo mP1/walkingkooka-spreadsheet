@@ -66,7 +66,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     }
 
     @Test
-    public void testDifferentSpreadsheetId() {
+    public void testEqualsDifferentSpreadsheetId() {
         this.checkNotEquals(SpreadsheetId.with(999));
     }
 

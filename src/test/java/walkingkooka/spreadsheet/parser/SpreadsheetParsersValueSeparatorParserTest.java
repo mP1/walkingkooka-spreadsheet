@@ -69,7 +69,7 @@ public final class SpreadsheetParsersValueSeparatorParserTest extends Spreadshee
     }
 
     @Test
-    public void testDifferentValueSeparator() {
+    public void testEqualsDifferentValueSeparator() {
         final char c = ';';
         this.checkNotEquals(c, VALUE_SEPARATOR, "valueSeparator");
         final String text = c + "";

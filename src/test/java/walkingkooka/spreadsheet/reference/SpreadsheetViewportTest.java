@@ -226,7 +226,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     // equals...........................................................................................................
 
     @Test
-    public void testDifferentRectangle() {
+    public void testEqualsDifferentRectangle() {
         this.checkNotEquals(
                 SpreadsheetViewport.with(
                         SpreadsheetSelection.parseCell("Z99")
@@ -238,7 +238,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     }
 
     @Test
-    public void testDifferentSelection() {
+    public void testEqualsDifferentSelection() {
         this.checkNotEquals(
                 SpreadsheetViewport.with(
                         RECTANGLE,
@@ -252,7 +252,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     }
 
     @Test
-    public void testDifferentNavigations() {
+    public void testEqualsDifferentNavigations() {
         this.checkNotEquals(
                 SpreadsheetViewport.with(
                         RECTANGLE,
