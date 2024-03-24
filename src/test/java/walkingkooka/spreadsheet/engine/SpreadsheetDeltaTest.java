@@ -1814,7 +1814,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsColumnsFails() {
-        this.patchCellInvalidPropertyFails2(
+        this.patchCellsWithInvalidPropertyFails(
                 SpreadsheetDelta.COLUMNS_PROPERTY,
                 JsonNode.nullNode()
         );
@@ -1822,7 +1822,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsLabelsFails() {
-        this.patchCellInvalidPropertyFails2(
+        this.patchCellsWithInvalidPropertyFails(
                 SpreadsheetDelta.LABELS_PROPERTY,
                 JsonNode.nullNode()
         );
@@ -1830,7 +1830,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsRowsFails() {
-        this.patchCellInvalidPropertyFails2(
+        this.patchCellsWithInvalidPropertyFails(
                 SpreadsheetDelta.ROWS_PROPERTY,
                 JsonNode.nullNode()
         );
@@ -1838,7 +1838,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsDeletedCellsFails() {
-        this.patchCellInvalidPropertyFails2(
+        this.patchCellsWithInvalidPropertyFails(
                 SpreadsheetDelta.DELETED_CELLS_PROPERTY,
                 JsonNode.nullNode()
         );
@@ -1846,7 +1846,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsDeletedRowsFails() {
-        this.patchCellInvalidPropertyFails2(
+        this.patchCellsWithInvalidPropertyFails(
                 SpreadsheetDelta.DELETED_ROWS_PROPERTY,
                 JsonNode.nullNode()
         );
@@ -1854,7 +1854,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsColumnWidthFails() {
-        this.patchCellInvalidPropertyFails2(
+        this.patchCellsWithInvalidPropertyFails(
                 SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
                 JsonNode.nullNode()
         );
@@ -1862,14 +1862,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsRowHeightFails() {
-        this.patchCellInvalidPropertyFails2(
+        this.patchCellsWithInvalidPropertyFails(
                 SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
                 JsonNode.nullNode()
         );
     }
 
-    private void patchCellInvalidPropertyFails2(final JsonPropertyName key,
-                                                final JsonNode value) {
+    private void patchCellsWithInvalidPropertyFails(final JsonPropertyName key,
+                                                    final JsonNode value) {
         final JsonNode patch = JsonNode.object()
                 .set(
                         key,
