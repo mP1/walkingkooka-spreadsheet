@@ -1551,41 +1551,22 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     private static Set<SpreadsheetCell> patchFormatPattern(final SpreadsheetCellRange cellRange,
                                                            final Set<SpreadsheetCell> cells,
-                                                           final JsonNode format,
+                                                           final JsonNode patch,
                                                            final JsonNodeUnmarshallContext context) {
-        final Set<SpreadsheetCell> patched = Sets.sorted();
-        final Set<SpreadsheetCellReference> patchedCellReferences = Sets.sorted();
+        final Optional<SpreadsheetFormatPattern> formatPattern = Optional.ofNullable(
+                context.unmarshallWithType(
+                        patch.objectOrFail()
+                                .getOrFail(FORMAT_PATTERN_PROPERTY)
+                )
+        );
 
-        for (final SpreadsheetCell cell : cells) {
-            patched.add(
-                    cell.patch(
-                            format,
-                            context
-                    )
-            );
-
-            patchedCellReferences.add(cell.reference());
-        }
-
-        if (patched.size() < cellRange.count()) {
-            final Optional<SpreadsheetFormatPattern> formatPattern = Optional.ofNullable(
-                    context.unmarshallWithType(
-                            format.objectOrFail()
-                                    .getOrFail(FORMAT_PATTERN_PROPERTY)
-                    )
-            );
-
-            for (final SpreadsheetCellReference possible : cellRange) {
-                if (false == patchedCellReferences.contains(possible)) {
-                    patched.add(
-                            possible.setFormula(SpreadsheetFormula.EMPTY)
-                                    .setFormatPattern(formatPattern)
-                    );
-                }
-            }
-        }
-
-        return patched;
+        return patchAllCells(
+                cellRange,
+                cells,
+                c -> c.setFormatPattern(formatPattern),
+                r -> r.setFormula(SpreadsheetFormula.EMPTY)
+                        .setFormatPattern(formatPattern)
+        );
     }
 
     /**
@@ -1601,41 +1582,22 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     private static Set<SpreadsheetCell> patchParsePattern(final SpreadsheetCellRange cellRange,
                                                           final Set<SpreadsheetCell> cells,
-                                                          final JsonNode pattern,
+                                                          final JsonNode patch,
                                                           final JsonNodeUnmarshallContext context) {
-        final Set<SpreadsheetCell> patched = Sets.sorted();
-        final Set<SpreadsheetCellReference> patchedCellReferences = Sets.sorted();
+        final Optional<SpreadsheetParsePattern> parsePattern = Optional.ofNullable(
+                context.unmarshallWithType(
+                        patch.objectOrFail()
+                                .getOrFail(PARSE_PATTERN_PROPERTY)
+                )
+        );
 
-        for (final SpreadsheetCell cell : cells) {
-            patched.add(
-                    cell.patch(
-                            pattern,
-                            context
-                    )
-            );
-
-            patchedCellReferences.add(cell.reference());
-        }
-
-        if (patched.size() < cellRange.count()) {
-            final Optional<SpreadsheetParsePattern> parsePattern = Optional.ofNullable(
-                    context.unmarshallWithType(
-                            pattern.objectOrFail()
-                                    .getOrFail(PARSE_PATTERN_PROPERTY)
-                    )
-            );
-
-            for (final SpreadsheetCellReference possible : cellRange) {
-                if (false == patchedCellReferences.contains(possible)) {
-                    patched.add(
-                            possible.setFormula(SpreadsheetFormula.EMPTY)
-                                    .setParsePattern(parsePattern)
-                    );
-                }
-            }
-        }
-
-        return patched;
+        return patchAllCells(
+                cellRange,
+                cells,
+                c -> c.setParsePattern(parsePattern),
+                r -> r.setFormula(SpreadsheetFormula.EMPTY)
+                        .setParsePattern(parsePattern)
+        );
     }
 
     private Set<SpreadsheetRow> patchRows0(final SpreadsheetSelection selection,
@@ -1746,33 +1708,50 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     private static Set<SpreadsheetCell> patchStyle(final SpreadsheetCellRange cellRange,
                                                    final Set<SpreadsheetCell> cells,
-                                                   final JsonNode style,
+                                                   final JsonNode patch,
                                                    final JsonNodeUnmarshallContext context) {
+        final TextStyle style = TextStyle.EMPTY.patch(
+                patch,
+                context
+        );
+
+        return patchAllCells(
+                cellRange,
+                cells,
+                c -> c.setStyle(
+                        c.style()
+                                .patch(
+                                        patch,
+                                        context
+                                )
+                ),
+                r -> r.setFormula(SpreadsheetFormula.EMPTY)
+                        .setStyle(style)
+        );
+    }
+
+    private static Set<SpreadsheetCell> patchAllCells(final SpreadsheetCellRange cellRange,
+                                                      final Set<SpreadsheetCell> cells,
+                                                      final Function<SpreadsheetCell, SpreadsheetCell> patcher,
+                                                      final Function<SpreadsheetCellReference, SpreadsheetCell> creator) {
         final Set<SpreadsheetCell> patched = Sets.sorted();
         final Set<SpreadsheetCellReference> patchedCellReferences = Sets.sorted();
 
         for (final SpreadsheetCell cell : cells) {
             patched.add(
-                    cell.setStyle(
-                            cell.style()
-                                    .patch(style, context)
-                    )
+                    patcher.apply(cell)
             );
 
-            patchedCellReferences.add(cell.reference());
+            patchedCellReferences.add(
+                    cell.reference()
+            );
         }
 
         if (patched.size() < cellRange.count()) {
-            final TextStyle textStyle = TextStyle.EMPTY.patch(
-                    style,
-                    context
-            );
-
             for (final SpreadsheetCellReference possible : cellRange) {
                 if (false == patchedCellReferences.contains(possible)) {
                     patched.add(
-                            possible.setFormula(SpreadsheetFormula.EMPTY)
-                                    .setStyle(textStyle)
+                            creator.apply(possible)
                     );
                 }
             }
@@ -2148,7 +2127,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     private static Optional<SpreadsheetViewport> unmarshallViewport(final JsonNode node,
-                                                                             final JsonNodeUnmarshallContext context) {
+                                                                    final JsonNodeUnmarshallContext context) {
         return Optional.ofNullable(
                 context.unmarshall(node, SpreadsheetViewport.class)
         );
