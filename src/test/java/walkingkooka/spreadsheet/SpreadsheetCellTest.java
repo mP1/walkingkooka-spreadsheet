@@ -1241,6 +1241,49 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
+    @Test
+    public void testParsePatternPatchNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .parsePatternPatch(null)
+        );
+    }
+
+    @Test
+    public void testParsePatternPatchNotEmpty() {
+        final Optional<SpreadsheetParsePattern> parsePattern = Optional.of(
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+        );
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setParsePattern(parsePattern);
+
+        this.patchAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setParsePattern(parsePattern),
+                cell.parsePatternPatch(
+                        this.jsonNodeMarshallContext()
+                ),
+                cell
+        );
+    }
+
+    @Test
+    public void testParsePatternPatchEmpty() {
+        final Optional<SpreadsheetParsePattern> parsePattern = SpreadsheetCell.NO_PARSE_PATTERN;
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setParsePattern(parsePattern);
+
+        this.patchAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setParsePattern(parsePattern),
+                cell.parsePatternPatch(
+                        this.jsonNodeMarshallContext()
+                ),
+                cell
+        );
+    }
+
     private JsonNodeMarshallContext jsonNodeMarshallContext() {
         return JsonNodeMarshallContexts.basic();
     }
@@ -1613,7 +1656,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
-                this.formula()).setStyle(boldAndItalics),
+                        this.formula()).setStyle(boldAndItalics),
                 REFERENCE + " " + this.formula() + " " + boldAndItalics);
     }
 

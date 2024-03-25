@@ -417,6 +417,21 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         );
     }
 
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
+     * a parse-pattern.
+     */
+    public JsonNode parsePatternPatch(final JsonNodeMarshallContext context) {
+        checkContext(context);
+
+        return this.makePatch(
+                PARSE_PATTERN_PROPERTY,
+                context.marshallWithType(
+                        this.parsePattern.orElse(null)
+                )
+        );
+    }
+
     private JsonNode makePatch(final JsonPropertyName propertyName,
                                final JsonNode value) {
         return JsonNode.object()
