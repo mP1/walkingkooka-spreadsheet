@@ -577,7 +577,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         SpreadsheetCell.NO_FORMATTED_VALUE_CELL.hashCode();
         SpreadsheetFormula.EMPTY.hashCode();
         TextNode.NO_ATTRIBUTES.isEmpty();
-        SpreadsheetPattern.parseTextFormatPattern("@");
+        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.toString();
 
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetCell.class),
