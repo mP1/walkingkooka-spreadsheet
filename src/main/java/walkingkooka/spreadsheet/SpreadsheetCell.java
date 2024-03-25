@@ -348,12 +348,17 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 case FORMULA_PROPERTY_STRING:
                     patched = patched.setFormula(
                             patched.formula()
-                                    .patch(propertyAndValue, context)
+                                    .patch(
+                                            propertyAndValue,
+                                            context
+                                    )
                     );
                     break;
-                case STYLE_PROPERTY_STRING:
-                    patched = patched.setStyle(
-                            patched.style().patch(propertyAndValue, context)
+                case FORMAT_PATTERN_PROPERTY_STRING:
+                    patched = patched.setFormatPattern(
+                            Optional.ofNullable(
+                                    context.unmarshallWithType(propertyAndValue)
+                            )
                     );
                     break;
                 case PARSE_PATTERN_PROPERTY_STRING:
@@ -363,11 +368,13 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                             )
                     );
                     break;
-                case FORMAT_PATTERN_PROPERTY_STRING:
-                    patched = patched.setFormatPattern(
-                            Optional.ofNullable(
-                                    context.unmarshallWithType(propertyAndValue)
-                            )
+                case STYLE_PROPERTY_STRING:
+                    patched = patched.setStyle(
+                            patched.style()
+                                    .patch(
+                                            propertyAndValue,
+                                            context
+                                    )
                     );
                     break;
                 case REFERENCE_PROPERTY_STRING:
