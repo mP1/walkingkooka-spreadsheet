@@ -970,7 +970,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private final static JsonPropertyName FORMULA = JsonPropertyName.with("formula");
+    final static JsonPropertyName FORMULA = JsonPropertyName.with("formula");
 
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
@@ -1311,6 +1311,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case FORMAT_PATTERN_PROPERTY_STRING:
                     formatPatternPatched = true;
+                    break;
+                case FORMATTED_PROPERTY_STRING:
+                    break;
+                case FORMULA_PROPERTY_STRING:
                     break;
                 case PARSE_PATTERN_PROPERTY_STRING:
                     parsePatternPatched = true;
@@ -2367,6 +2371,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String VIEWPORT_SELECTION_PROPERTY_STRING = "viewport";
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String COLUMNS_PROPERTY_STRING = "columns";
+    private final static String FORMATTED_PROPERTY_STRING = "formatted";
+    private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String FORMAT_PATTERN_PROPERTY_STRING = "format-pattern";
     private final static String LABELS_PROPERTY_STRING = "labels";
     private final static String PARSE_PATTERN_PROPERTY_STRING = "parse-pattern";
