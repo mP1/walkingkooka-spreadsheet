@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
@@ -70,6 +71,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
+        CanBeEmptyTesting<SpreadsheetFormula>,
         HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
         JsonNodeMarshallingTesting<SpreadsheetFormula>,
         PatchableTesting<SpreadsheetFormula>,
@@ -96,12 +98,17 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testEmpty() {
+    public void testNotEmpty() {
         final SpreadsheetFormula formula = this.createObject();
         this.checkText(formula);
         this.checkExpressionAbsent(formula);
         this.checkValueAbsent(formula);
         this.checkErrorAbsent(formula);
+
+        this.isEmptyAndCheck(
+                formula,
+                false
+        );
     }
 
     @Test
@@ -109,6 +116,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final String text = "";
         final SpreadsheetFormula formula = formula(text);
         this.checkText(formula, text);
+
+        this.isEmptyAndCheck(
+                formula,
+                true
+        );
     }
 
     // SetText..........................................................................................................
@@ -139,6 +151,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula different = formula.setText(differentText);
         assertNotSame(formula, different);
         this.checkText(different, differentText);
+
+        this.isEmptyAndCheck(
+                different,
+                differentText.isEmpty()
+        );
     }
 
     @Test
@@ -1514,5 +1531,12 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public SpreadsheetFormula unmarshall(final JsonNode jsonNode,
                                          final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormula.unmarshall(jsonNode, context);
+    }
+
+    // CanBeEmptyTesting................................................................................................
+
+    @Override
+    public SpreadsheetFormula createCanBeEmpty() {
+        return this.createObject();
     }
 }

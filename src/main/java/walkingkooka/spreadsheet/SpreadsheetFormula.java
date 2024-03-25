@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
@@ -60,7 +61,8 @@ import java.util.function.Function;
 /**
  * A spreadsheet formula, including its compiled {@link Expression} and possibly its {@link Object value} or {@link SpreadsheetError}.
  */
-public final class SpreadsheetFormula implements HasText,
+public final class SpreadsheetFormula implements CanBeEmpty,
+        HasText,
         Patchable<SpreadsheetFormula>,
         TreePrintable,
         UsesToStringBuilder,
@@ -625,6 +627,13 @@ public final class SpreadsheetFormula implements HasText,
             builder.surroundValues("(=", ")")
                     .value(new Object[]{this.value});
         }
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Override
+    public boolean isEmpty() {
+        return this.text.isEmpty();
     }
 }
 
