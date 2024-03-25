@@ -1093,6 +1093,83 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // formulaPatch.....................................................................................................
+
+    @Test
+    public void testFormulaPatchWithNullFormulaFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.formulaPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testFormulaPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.formulaPatch(
+                        SpreadsheetFormula.EMPTY,
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testFormulaPatch() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
+
+        final JsonNode patch = SpreadsheetDelta.formulaPatch(
+                formula,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.FORMULA_PROPERTY,
+                                marshall(formula)
+                        )
+                ,
+                patch
+        );
+
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
+        );
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("'Will be Patched over")
+        ).setStyle(style);
+
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("a2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("'Will be Patched over")
+                );
+
+        this.patchCellsAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                a1,
+                                a2
+                        )
+                ),
+                SpreadsheetSelection.parseCellOrCellRange("a1:a3"),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                a1.setFormula(formula),
+                                a2.setFormula(formula),
+                                SpreadsheetSelection.parseCell("a3")
+                                        .setFormula(formula)
+                        )
+                )
+        );
+    }
+
     // formatPatternPatch...............................................................................................
 
     @Test
@@ -1864,14 +1941,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsRowHeightFails() {
         this.patchCellsWithInvalidPropertyFails(
                 SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
-                JsonNode.nullNode()
-        );
-    }
-
-    @Test
-    public void testPatchCellsFormulaFails() {
-        this.patchCellsWithInvalidPropertyFails(
-                SpreadsheetDelta.FORMULA,
                 JsonNode.nullNode()
         );
     }

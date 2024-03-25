@@ -1063,6 +1063,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode formulaPatch(final SpreadsheetFormula formula,
+                                        final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(formula, "formula");
+        checkContext(context);
+
+        return makePatch(
+                FORMULA_PROPERTY,
+                context.marshall(formula)
+        );
+    }
+
+    /**
      * Creates a {@link SpreadsheetFormatPattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
     public static JsonNode formatPatternPatch(final Optional<SpreadsheetFormatPattern> pattern,
@@ -1204,14 +1218,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.patch0(
                 cellReferenceOrRange, // technically only required by patchFormat & patchStyle
                 json,
-                IS_CELL_OR_FORMAT_OR_PARSE_OR_STYLE,
+                PATCH_CELL_PROPERTIES_PREDICATE,
                 context
         );
     }
 
-    private final static Predicate<String> IS_CELL_OR_FORMAT_OR_PARSE_OR_STYLE = Predicates.setContains(
+    private final static Predicate<String> PATCH_CELL_PROPERTIES_PREDICATE = Predicates.setContains(
             Sets.of(
                     SpreadsheetDelta.CELLS_PROPERTY_STRING,
+                    SpreadsheetDelta.FORMULA_PROPERTY_STRING,
                     SpreadsheetDelta.FORMAT_PATTERN_PROPERTY_STRING,
                     SpreadsheetDelta.PARSE_PATTERN_PROPERTY_STRING,
                     SpreadsheetDelta.STYLE_PROPERTY_STRING
@@ -1294,6 +1309,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                       final JsonNode json,
                                       final Predicate<String> patchableProperties) {
         boolean cellsPatched = false;
+        boolean formulaPatched = false;
         boolean formatPatternPatched = false;
         boolean parsePatternPatched = false;
         boolean stylePatched = false;
@@ -1321,6 +1337,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case FORMATTED_VALUE_PROPERTY_STRING:
                     break;
                 case FORMULA_PROPERTY_STRING:
+                    formulaPatched = true;
                     break;
                 case PARSE_PATTERN_PROPERTY_STRING:
                     parsePatternPatched = true;
@@ -1426,6 +1443,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             cells,
                             JsonNode.object()
                                     .set(FORMAT_PATTERN_PROPERTY, propertyAndValue),
+                            context
+                    );
+                    break;
+                case FORMULA_PROPERTY_STRING:
+                    cells = patchFormula(
+                            selection.toCellRange(),
+                            cells,
+                            JsonNode.object()
+                                    .set(
+                                            FORMULA_PROPERTY,
+                                            propertyAndValue
+                                    ),
                             context
                     );
                     break;
@@ -1535,6 +1564,34 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this::column,
                 SpreadsheetColumn.class,
                 context
+        );
+    }
+
+    /**
+     * Traverses the cells, patching each with the provided {@link JsonNode formula}.
+     * <pre>
+     * {
+     *   "formula": {
+     *     "text": "=1+2"
+     *   }
+     * }
+     * </pre>
+     */
+    private static Set<SpreadsheetCell> patchFormula(final SpreadsheetCellRange cellRange,
+                                                           final Set<SpreadsheetCell> cells,
+                                                           final JsonNode patch,
+                                                           final JsonNodeUnmarshallContext context) {
+        final SpreadsheetFormula formula = context.unmarshall(
+                        patch.objectOrFail()
+                                .getOrFail(FORMULA),
+                SpreadsheetFormula.class
+        );
+
+        return patchAllCells(
+                cellRange,
+                cells,
+                c -> c.setFormula(formula),
+                r -> r.setFormula(formula)
         );
     }
 
@@ -2385,6 +2442,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final static JsonPropertyName CELLS_PROPERTY = JsonPropertyName.with(CELLS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName COLUMNS_PROPERTY = JsonPropertyName.with(COLUMNS_PROPERTY_STRING);
+
+    // @VisibleForTesting
+    final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
+
     // @VisibleForTesting
     final static JsonPropertyName FORMAT_PATTERN_PROPERTY = JsonPropertyName.with(FORMAT_PATTERN_PROPERTY_STRING);
     // @VisibleForTesting
