@@ -1284,6 +1284,37 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
+    @Test
+    public void testStylePatchNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .stylePatch(null)
+        );
+    }
+
+    @Test
+    public void testStylePatch() {
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
+        );
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2"));
+
+        this.patchAndCheck(
+                cell.setStyle(
+                        TextStyle.EMPTY.set(
+                                TextStylePropertyName.TEXT_ALIGN,
+                                TextAlign.CENTER
+                        )
+                ),
+                cell.stylePatch(
+                        this.jsonNodeMarshallContext()
+                ),
+                cell.setStyle(style)
+        );
+    }
+
     private JsonNodeMarshallContext jsonNodeMarshallContext() {
         return JsonNodeMarshallContexts.basic();
     }
