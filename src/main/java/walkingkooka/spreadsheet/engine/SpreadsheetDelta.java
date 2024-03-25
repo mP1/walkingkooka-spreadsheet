@@ -1578,12 +1578,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * </pre>
      */
     private static Set<SpreadsheetCell> patchFormula(final SpreadsheetCellRange cellRange,
-                                                           final Set<SpreadsheetCell> cells,
-                                                           final JsonNode patch,
-                                                           final JsonNodeUnmarshallContext context) {
+                                                     final Set<SpreadsheetCell> cells,
+                                                     final JsonNode patch,
+                                                     final JsonNodeUnmarshallContext context) {
         final SpreadsheetFormula formula = context.unmarshall(
-                        patch.objectOrFail()
-                                .getOrFail(FORMULA),
+                patch.objectOrFail()
+                        .getOrFail(FORMULA),
                 SpreadsheetFormula.class
         );
 
