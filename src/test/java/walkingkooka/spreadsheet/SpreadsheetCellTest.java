@@ -810,7 +810,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testMarshallWithFormatted() {
+    public void testMarshallWithFormattedValue() {
         this.marshallAndCheck(
                 this.createCell(),
                 "{\n" +
@@ -826,7 +826,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "      \"type\": \"spreadsheet-text-format-pattern\",\n" +
                         "      \"value\": \"@@\"\n" +
                         "    },\n" +
-                        "    \"formattedValue\": {\n" +
+                        "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
                         "    }\n" +
@@ -836,7 +836,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testMarshallWithStyleAndFormatted() {
+    public void testMarshallWithStyleAndFormattedValue() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         this.marshallAndCheck(
@@ -860,7 +860,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "      \"type\": \"spreadsheet-text-format-pattern\",\n" +
                         "      \"value\": \"@@\"\n" +
                         "    },\n" +
-                        "    \"formattedValue\": {\n" +
+                        "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
                         "    }\n" +

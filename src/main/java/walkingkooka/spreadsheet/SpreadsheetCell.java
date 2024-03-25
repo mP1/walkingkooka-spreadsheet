@@ -564,7 +564,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     private final static String STYLE_PROPERTY_STRING = "style";
     private final static String PARSE_PATTERN_PROPERTY_STRING = "parse-pattern";
     private final static String FORMAT_PATTERN_PROPERTY_STRING = "format-pattern";
-    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
+    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formatted-value";
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
