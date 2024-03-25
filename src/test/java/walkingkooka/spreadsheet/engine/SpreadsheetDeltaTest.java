@@ -2333,6 +2333,50 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsWithFormula() {
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
+        );
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY.setText("'will be patched over"))
+                .setStyle(style);
+
+        final SpreadsheetCell a3 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY.setText("'not patched"));
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1,
+                                a3
+                        )
+                );
+
+        final SpreadsheetFormula patched = SpreadsheetFormula.EMPTY.setText("'patched formula");
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setFormula(patched),
+                        SpreadsheetSelection.parseCell("A2")
+                                .setFormula(patched),
+                        a3
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                SpreadsheetDelta.formulaPatch(
+                        patched,
+                        MARSHALL_CONTEXT
+                ),
+                after
+        );
+    }
+
+    @Test
     public void testPatchCellsWithFormatPatternWithMissingCells() {
         final Optional<SpreadsheetFormatPattern> beforeFormat = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")

@@ -1806,7 +1806,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         if (patched.size() < cellRange.count()) {
             for (final SpreadsheetCellReference possible : cellRange) {
-                if (false == patchedCellReferences.contains(possible)) {
+                if (cellRange.testCell(possible) && false == patchedCellReferences.contains(possible)) {
                     patched.add(
                             creator.apply(possible)
                     );
