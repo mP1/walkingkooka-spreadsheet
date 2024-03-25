@@ -1041,26 +1041,25 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         //  ]
         // }
 
-        return JsonNode.object()
-                .set(
-                        SpreadsheetDelta.CELLS_PROPERTY,
-                        JsonNode.object()
-                                .setChildren(
-                                        cellToValue.entrySet()
-                                                .stream()
-                                                .map(ctv -> JsonNode.object()
-                                                        .setChildren(
-                                                                Lists.of(
-                                                                        marshaller.apply(
-                                                                                ctv.getValue()
-                                                                        ).setName(propertyName)
-                                                                )
-                                                        ).setName(
-                                                                JsonPropertyName.with(ctv.getKey().toString())
+        return makePatch(
+                SpreadsheetDelta.CELLS_PROPERTY,
+                JsonNode.object()
+                        .setChildren(
+                                cellToValue.entrySet()
+                                        .stream()
+                                        .map(ctv -> JsonNode.object()
+                                                .setChildren(
+                                                        Lists.of(
+                                                                marshaller.apply(
+                                                                        ctv.getValue()
+                                                                ).setName(propertyName)
                                                         )
-                                                ).collect(Collectors.toList())
-                                )
-                );
+                                                ).setName(
+                                                        JsonPropertyName.with(ctv.getKey().toString())
+                                                )
+                                        ).collect(Collectors.toList())
+                        )
+        );
     }
 
     /**
@@ -1096,13 +1095,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         Objects.requireNonNull(pattern, "pattern");
         checkContext(context);
 
-        return JsonNode.object()
-                .set(
-                        propertyName,
-                        pattern.isPresent() ?
-                                context.marshallWithType(pattern.get()) :
-                                JsonNode.nullNode()
-                );
+        return makePatch(
+                propertyName,
+                pattern.isPresent() ?
+                        context.marshallWithType(pattern.get()) :
+                        JsonNode.nullNode()
+        );
     }
 
     /**
