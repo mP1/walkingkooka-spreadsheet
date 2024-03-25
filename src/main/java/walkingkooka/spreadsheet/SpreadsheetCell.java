@@ -531,7 +531,16 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(JsonPropertyName.with(this.reference.toString()), marshall0(context));
+                .set(
+                        this.referenceToJsonPropertyName(),
+                        marshall0(context)
+                );
+    }
+
+    private JsonPropertyName referenceToJsonPropertyName() {
+        return JsonPropertyName.with(
+                this.reference.toString()
+        );
     }
 
     private JsonNode marshall0(final JsonNodeMarshallContext context) {
