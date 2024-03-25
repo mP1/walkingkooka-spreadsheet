@@ -1198,6 +1198,49 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
+    @Test
+    public void testFormatPatternPatchNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .formatPatternPatch(null)
+        );
+    }
+
+    @Test
+    public void testFormatPatternPatchNotEmpty() {
+        final Optional<SpreadsheetFormatPattern> formatPattern = Optional.of(
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+        );
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setFormatPattern(formatPattern);
+
+        this.patchAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setFormatPattern(formatPattern),
+                cell.formatPatternPatch(
+                        this.jsonNodeMarshallContext()
+                ),
+                cell
+        );
+    }
+
+    @Test
+    public void testFormatPatternPatchEmpty() {
+        final Optional<SpreadsheetFormatPattern> formatPattern = SpreadsheetCell.NO_FORMAT_PATTERN;
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setFormatPattern(formatPattern);
+
+        this.patchAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setFormatPattern(formatPattern),
+                cell.formatPatternPatch(
+                        this.jsonNodeMarshallContext()
+                ),
+                cell
+        );
+    }
+
     private JsonNodeMarshallContext jsonNodeMarshallContext() {
         return JsonNodeMarshallContexts.basic();
     }
