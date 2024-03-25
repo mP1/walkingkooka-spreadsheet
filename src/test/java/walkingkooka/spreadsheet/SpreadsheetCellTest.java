@@ -1168,6 +1168,40 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
+    // XXXPatch.........................................................................................................
+
+    @Test
+    public void testFormulaPatchNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .formulaPatch(null)
+        );
+    }
+
+    @Test
+    public void testFormulaPatch() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
+        final Optional<SpreadsheetFormatPattern> formatPattern = Optional.of(
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+        );
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(formula)
+                .setFormatPattern(formatPattern);
+
+        this.patchAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setFormatPattern(formatPattern),
+                cell.formulaPatch(
+                        this.jsonNodeMarshallContext()
+                ),
+                cell
+        );
+    }
+
+    private JsonNodeMarshallContext jsonNodeMarshallContext() {
+        return JsonNodeMarshallContexts.basic();
+    }
+
     // treePrintable....................................................................................................
 
     @Test

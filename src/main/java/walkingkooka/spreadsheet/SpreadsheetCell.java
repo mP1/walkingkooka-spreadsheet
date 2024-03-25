@@ -390,6 +390,31 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         return patched;
     }
 
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public JsonNode formulaPatch(final JsonNodeMarshallContext context) {
+        checkContext(context);
+
+        return this.makePatch(
+                FORMULA_PROPERTY,
+                context.marshall(this.formula)
+        );
+    }
+
+    private JsonNode makePatch(final JsonPropertyName propertyName,
+                               final JsonNode value) {
+        return JsonNode.object()
+                .set(
+                        propertyName,
+                        value
+                );
+    }
+
+    private static JsonNodeMarshallContext checkContext(final JsonNodeMarshallContext context) {
+        return Objects.requireNonNull(context, "context");
+    }
+
     // TreePrintable.....................................................................................................
 
     @Override
