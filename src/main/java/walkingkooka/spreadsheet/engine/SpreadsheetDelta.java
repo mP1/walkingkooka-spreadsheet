@@ -965,12 +965,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return cellsPatchFromMap(
                 cellToFormulas,
-                FORMULA,
+                FORMULA_PROPERTY,
                 context::marshall
         );
     }
-
-    final static JsonPropertyName FORMULA = JsonPropertyName.with("formula");
 
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
@@ -982,12 +980,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToFormatPatterns,
-                FORMAT_PATTERN,
+                FORMAT_PATTERN_PROPERTY,
                 (pattern) -> context.marshallWithType(pattern.orElse(null))
         );
     }
-
-    private final static JsonPropertyName FORMAT_PATTERN = JsonPropertyName.with("format-pattern");
 
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
@@ -999,12 +995,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToParsePatterns,
-                PARSE_PATTERN,
+                PARSE_PATTERN_PROPERTY,
                 (pattern) -> context.marshallWithType(pattern.orElse(null))
         );
     }
-
-    private final static JsonPropertyName PARSE_PATTERN = JsonPropertyName.with("parse-pattern");
 
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
@@ -1016,12 +1010,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return cellsPatchFromMap(
                 cellToStyles,
-                STYLE,
+                STYLE_PROPERTY,
                 context::marshall
         );
     }
-
-    private final static JsonPropertyName STYLE = JsonPropertyName.with("style");
 
     private static <T> JsonNode cellsPatchFromMap(final Map<SpreadsheetCellReference, T> cellToValue,
                                                   final JsonPropertyName propertyName,
@@ -1583,7 +1575,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                      final JsonNodeUnmarshallContext context) {
         final SpreadsheetFormula formula = context.unmarshall(
                 patch.objectOrFail()
-                        .getOrFail(FORMULA),
+                        .getOrFail(FORMULA_PROPERTY),
                 SpreadsheetFormula.class
         );
 
