@@ -432,6 +432,19 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         );
     }
 
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to
+     * patch a style
+     */
+    public JsonNode stylePatch(final JsonNodeMarshallContext context) {
+        checkContext(context);
+
+        return this.makePatch(
+                STYLE_PROPERTY,
+                context.marshall(this.style)
+        );
+    }
+
     private JsonNode makePatch(final JsonPropertyName propertyName,
                                final JsonNode value) {
         return JsonNode.object()
