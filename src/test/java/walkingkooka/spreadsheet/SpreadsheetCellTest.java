@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
@@ -71,7 +72,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>,
+public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetCell>,
+        ClassTesting2<SpreadsheetCell>,
         ComparableTesting2<SpreadsheetCell>,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
         HasSpreadsheetReferenceTesting,
@@ -1734,6 +1736,26 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
+    // CanBeEmpty.......................................................................................................
+
+    @Test
+    public void testCanBeEmptyEmpty() {
+        this.isEmptyAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                true
+        );
+    }
+
+    @Test
+    public void testCanBeEmptyNotEmpty() {
+        this.isEmptyAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1")
+                ),
+                false
+        );
+    }
+
     // helpers..........................................................................................................
 
     private SpreadsheetCell createCell() {
@@ -1923,6 +1945,13 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Override
     public SpreadsheetCell createHateosResource() {
+        return this.createCell();
+    }
+
+    // CanBeEmptyTesting................................................................................................
+
+    @Override
+    public SpreadsheetCell createCanBeEmpty() {
         return this.createCell();
     }
 }
