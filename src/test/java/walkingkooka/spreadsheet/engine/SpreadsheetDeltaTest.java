@@ -1868,6 +1868,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    @Test
+    public void testPatchCellsFormulaFails() {
+        this.patchCellsWithInvalidPropertyFails(
+                SpreadsheetDelta.FORMULA,
+                JsonNode.nullNode()
+        );
+    }
+
+    @Test
+    public void testPatchCellsFormattedValueFails() {
+        this.patchCellsWithInvalidPropertyFails(
+                JsonPropertyName.with("formatted"),
+                JsonNode.nullNode()
+        );
+    }
+
     private void patchCellsWithInvalidPropertyFails(final JsonPropertyName key,
                                                     final JsonNode value) {
         final JsonNode patch = JsonNode.object()
