@@ -1449,7 +1449,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 SpreadsheetRowReferenceRange.class
         );
 
-        SpreadsheetCell.NO_FORMATTED_CELL.isPresent();
+        SpreadsheetCell.NO_FORMATTED_VALUE_CELL.isPresent();
         SpreadsheetReferenceKind.ABSOLUTE.firstColumn();
         SpreadsheetLabelMapping.init();
         SpreadsheetReferenceKind.ABSOLUTE.firstRow();

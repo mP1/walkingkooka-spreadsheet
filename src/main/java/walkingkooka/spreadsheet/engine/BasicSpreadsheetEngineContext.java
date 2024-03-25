@@ -259,7 +259,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         return value.isPresent() ?
                 this.applyConditionalRules(
-                        cell.setFormatted(
+                        cell.setFormattedValue(
                                 Optional.of(
                                         this.formatValue(
                                                         value.get(),
@@ -304,9 +304,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                     )
             );
             if (Boolean.TRUE.equals(ruleResult)) {
-                final TextNode formattedText = cell.formatted()
-                        .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formatted cell=" + cell));
-                formatted = formatted.setFormatted(
+                final TextNode formattedText = cell.formattedValue()
+                        .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formattedValue cell=" + cell));
+                formatted = formatted.setFormattedValue(
                         Optional.of(
                                 rule.style()
                                         .apply(cell)

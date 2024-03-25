@@ -103,7 +103,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkFormatPattern(cell);
-        this.checkFormatted(cell);
+        this.checkFormattedValue(cell);
     }
 
     @Test
@@ -117,7 +117,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkNoFormatPattern(cell);
-        this.checkFormatted(cell, SpreadsheetCell.NO_FORMATTED_CELL);
+        this.checkFormattedValue(cell, SpreadsheetCell.NO_FORMATTED_VALUE_CELL);
     }
 
     @Test
@@ -129,7 +129,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkNoFormatPattern(cell);
-        this.checkNoFormatted(cell);
+        this.checkNoFormattedValue(cell);
     }
 
     @Test
@@ -154,7 +154,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
         this.checkTextStyle(cell);
         this.checkNoFormatPattern(cell);
-        this.checkNoFormatted(cell);
+        this.checkNoFormattedValue(cell);
     }
 
     // SetReference.....................................................................................................
@@ -246,7 +246,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
-        this.checkNoFormatted(different); // clear formatted because of format change
+        this.checkNoFormattedValue(different); // clear formattedValue because of format change
     }
 
     @Test
@@ -278,7 +278,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(different, formula);
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
-        this.checkNoFormatted(different); // clear formatted because of format change
+        this.checkNoFormattedValue(different); // clear formattedValue because of format change
     }
 
     @Test
@@ -292,7 +292,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(different);
         this.checkTextStyle(different);
         this.checkNoFormatPattern(different);
-        this.checkNoFormatted(different);
+        this.checkNoFormattedValue(different);
     }
 
     // SetFormula.....................................................................................................
@@ -320,7 +320,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(different, differentFormula);
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
-        this.checkNoFormatted(different); // clear formatted because of formula / value change.
+        this.checkNoFormattedValue(different); // clear formattedValue because of formula / value change.
     }
 
     @Test
@@ -342,7 +342,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
-        this.checkNoFormatted(different); // clear formatted because of formula / value change.
+        this.checkNoFormattedValue(different); // clear formattedValue because of formula / value change.
     }
 
     // SetStyle.....................................................................................................
@@ -370,7 +370,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different, differentTextStyle);
         this.checkFormatPattern(different);
-        this.checkNoFormatted(different); // clear formatted because of text properties change
+        this.checkNoFormattedValue(different); // clear formattedValue because of text properties change
     }
 
     // SetFormatPattern.....................................................................................................
@@ -401,7 +401,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
         this.checkFormatPattern(different, differentFormatPattern);
-        this.checkNoFormatted(different); // clear formatted because of format change
+        this.checkNoFormattedValue(different); // clear formattedValue because of format change
     }
 
     @Test
@@ -415,7 +415,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormula(different);
         this.checkTextStyle(different);
         this.checkFormatPattern(different);
-        this.checkNoFormatted(different);
+        this.checkNoFormattedValue(different);
     }
 
     // SetFormatted.....................................................................................................
@@ -423,40 +423,40 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetFormattedNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCell().setFormatted(null));
+        assertThrows(NullPointerException.class, () -> this.createCell().setFormattedValue(null));
     }
 
     @Test
     public void testSetFormattedSame() {
         final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setFormatted(cell.formatted()));
+        assertSame(cell, cell.setFormattedValue(cell.formattedValue()));
     }
 
     @Test
     public void testSetFormattedDifferent() {
         final SpreadsheetCell cell = this.createCell();
         final Optional<TextNode> differentFormatted = Optional.of(TextNode.text("different"));
-        final SpreadsheetCell different = cell.setFormatted(differentFormatted);
+        final SpreadsheetCell different = cell.setFormattedValue(differentFormatted);
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
         this.checkFormatPattern(different, this.formatPattern());
-        this.checkFormatted(different, differentFormatted);
+        this.checkFormattedValue(different, differentFormatted);
     }
 
     @Test
     public void testSetFormattedWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
-        final SpreadsheetCell different = cell.setFormatted(this.formatted());
+        final SpreadsheetCell different = cell.setFormattedValue(this.formattedValue());
         assertNotSame(cell, different);
 
         this.checkReference(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
         this.checkNoFormatPattern(different);
-        this.checkFormatted(different);
+        this.checkFormattedValue(different);
     }
 
     // replaceReferences................................................................................................
@@ -605,7 +605,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testCompareDifferentFormatted() {
-        this.compareToAndCheckEquals(this.createComparable().setFormatted(Optional.of(TextNode.text("different-formatted"))));
+        this.compareToAndCheckEquals(this.createComparable().setFormattedValue(Optional.of(TextNode.text("different-formattedValue"))));
     }
 
     // JsonNodeMarshallingTesting................................................................................
@@ -695,11 +695,11 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
                                 .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                                .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get()))
+                                .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
-                        .setFormatted(formatted()));
+                        .setFormattedValue(formattedValue()));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -724,14 +724,14 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula))
                                 .set(SpreadsheetCell.PARSE_PATTERN_PROPERTY, context.marshallWithType(this.parsePattern().get()))
-                                .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get()))
+                                .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 reference()
                         .setFormula(SpreadsheetFormula.EMPTY)
                         .setParsePattern(this.parsePattern())
                         .setFormula(formula)
-                        .setFormatted(formatted())
-                        .setFormatted(formatted())
+                        .setFormattedValue(formattedValue())
+                        .setFormattedValue(formattedValue())
         );
     }
 
@@ -744,11 +744,11 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
                                 .set(SpreadsheetCell.FORMAT_PATTERN_PROPERTY, context.marshallWithType(formatPattern().get()))
-                                .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get()))
+                                .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 SpreadsheetCell.with(reference(), formula())
                         .setFormatPattern(formatPattern())
-                        .setFormatted(formatted()));
+                        .setFormattedValue(formattedValue()));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -763,12 +763,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
                                 .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
                                 .set(SpreadsheetCell.FORMAT_PATTERN_PROPERTY, context.marshallWithType(formatPattern().get()))
-                                .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get()))
+                                .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormatPattern(formatPattern())
-                        .setFormatted(formatted()));
+                        .setFormattedValue(formattedValue()));
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
@@ -826,9 +826,9 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "      \"type\": \"spreadsheet-text-format-pattern\",\n" +
                         "      \"value\": \"@@\"\n" +
                         "    },\n" +
-                        "    \"formatted\": {\n" +
+                        "    \"formattedValue\": {\n" +
                         "      \"type\": \"text\",\n" +
-                        "      \"value\": \"formatted-text\"\n" +
+                        "      \"value\": \"formattedValue-text\"\n" +
                         "    }\n" +
                         "  }\n" +
                         "}"
@@ -842,7 +842,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.marshallAndCheck(
                 this.createCell()
                         .setStyle(boldAndItalics)
-                        .setFormatted(this.formatted()),
+                        .setFormattedValue(this.formattedValue()),
                 "{\n" +
                         "  \"B21\": {\n" +
                         "    \"formula\": {\n" +
@@ -860,9 +860,9 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "      \"type\": \"spreadsheet-text-format-pattern\",\n" +
                         "      \"value\": \"@@\"\n" +
                         "    },\n" +
-                        "    \"formatted\": {\n" +
+                        "    \"formattedValue\": {\n" +
                         "      \"type\": \"text\",\n" +
-                        "      \"value\": \"formatted-text\"\n" +
+                        "      \"value\": \"formattedValue-text\"\n" +
                         "    }\n" +
                         "  }\n" +
                         "}"
@@ -892,7 +892,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .setFormatPattern(
                                 Optional.of(
                                         SpreadsheetPattern.parseNumberFormatPattern("##")
-                                )).setFormatted(
+                                )).setFormattedValue(
                                 Optional.of(
                                         TextNode.text("abc123")
                                 )
@@ -1130,7 +1130,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testPatchFormattedFails() {
-        final JsonPropertyName name = SpreadsheetCell.FORMATTED_PROPERTY;
+        final JsonPropertyName name = SpreadsheetCell.FORMATTED_VALUE_PROPERTY;
         final JsonNode value = JsonNode.string("@");
 
         this.patchInvalidPropertyFails(
@@ -1444,7 +1444,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                         .setValue(Optional.of(3))
                         ).setStyle(this.boldAndItalics())
                         .setFormatPattern(formatPattern())
-                        .setFormatted(formatted()),
+                        .setFormattedValue(formattedValue()),
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
@@ -1466,8 +1466,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "  formatPattern:\n" +
                         "    text-format-pattern\n" +
                         "      \"@@\"\n" +
-                        "  formatted:\n" +
-                        "    Text \"formatted-text\"\n"
+                        "  formattedValue:\n" +
+                        "    Text \"formattedValue-text\"\n"
         );
     }
 
@@ -1561,7 +1561,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" \"@@\" \"formatted-text\""
+                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" \"@@\" \"formattedValue-text\""
         );
     }
 
@@ -1595,7 +1595,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 )
                 .setParsePattern(this.parsePattern())
                 .setFormatPattern(this.formatPattern())
-                .setFormatted(this.formatted());
+                .setFormattedValue(this.formattedValue());
     }
 
     private static SpreadsheetCellReference differentReference() {
@@ -1710,20 +1710,28 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         );
     }
 
-    private Optional<TextNode> formatted() {
-        return Optional.of(TextNode.text("formatted-text"));
+    private Optional<TextNode> formattedValue() {
+        return Optional.of(TextNode.text("formattedValue-text"));
     }
 
-    private void checkNoFormatted(final SpreadsheetCell cell) {
-        this.checkFormatted(cell, SpreadsheetCell.NO_FORMATTED_CELL);
+    private void checkNoFormattedValue(final SpreadsheetCell cell) {
+        this.checkFormattedValue(cell, SpreadsheetCell.NO_FORMATTED_VALUE_CELL);
     }
 
-    private void checkFormatted(final SpreadsheetCell cell) {
-        this.checkFormatted(cell, this.formatted());
+    private void checkFormattedValue(final SpreadsheetCell cell) {
+        this.checkFormattedValue(
+                cell,
+                this.formattedValue()
+        );
     }
 
-    private void checkFormatted(final SpreadsheetCell cell, final Optional<TextNode> formatted) {
-        this.checkEquals(formatted, cell.formatted(), "formatted");
+    private void checkFormattedValue(final SpreadsheetCell cell,
+                                     final Optional<TextNode> formatted) {
+        this.checkEquals(
+                formatted,
+                cell.formattedValue(),
+                "formattedValue"
+        );
     }
 
     @Override

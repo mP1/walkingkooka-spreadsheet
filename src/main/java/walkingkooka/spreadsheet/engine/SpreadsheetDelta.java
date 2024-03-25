@@ -1312,7 +1312,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case FORMAT_PATTERN_PROPERTY_STRING:
                     formatPatternPatched = true;
                     break;
-                case FORMATTED_PROPERTY_STRING:
+                case FORMATTED_VALUE_PROPERTY_STRING:
                     break;
                 case FORMULA_PROPERTY_STRING:
                     break;
@@ -2371,7 +2371,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String VIEWPORT_SELECTION_PROPERTY_STRING = "viewport";
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String COLUMNS_PROPERTY_STRING = "columns";
-    private final static String FORMATTED_PROPERTY_STRING = "formatted";
+    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
     private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String FORMAT_PATTERN_PROPERTY_STRING = "format-pattern";
     private final static String LABELS_PROPERTY_STRING = "labels";

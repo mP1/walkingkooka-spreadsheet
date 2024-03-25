@@ -585,7 +585,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 );
 
         store.save(
-                withoutFormatted.setFormatted(
+                withoutFormatted.setFormattedValue(
                         Optional.of(
                                 TextNode.text("123")
                         )
@@ -616,7 +616,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 );
 
         store.save(
-                withoutFormatted.setFormatted(
+                withoutFormatted.setFormattedValue(
                         Optional.of(
                                 TextNode.text("123")
                         )

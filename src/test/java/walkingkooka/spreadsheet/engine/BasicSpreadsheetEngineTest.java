@@ -594,7 +594,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 value
         );
-        this.checkFormattedText(
+        this.checkFormattedValue(
                 cell,
                 formattedText
         );
@@ -710,7 +710,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 second,
                 LocalDate.of(1900, 2, 1)
         );
-        this.checkFormattedText(
+        this.checkFormattedValue(
                 second,
                 "1900/02/01 FORMATTED_PATTERN_SUFFIX"
         );
@@ -752,7 +752,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 second,
                 LocalDate.of(1900, 2, 1)
         );
-        this.checkFormattedText(
+        this.checkFormattedValue(
                 second,
                 "1900/02/01 FORMATTED_PATTERN_SUFFIX"
         );
@@ -786,7 +786,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 first,
                 value
         );
-        this.checkFormattedText(
+        this.checkFormattedValue(
                 first,
                 "1 FORMATTED_PATTERN_SUFFIX"
         );
@@ -804,7 +804,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 second,
                 value2
         );
-        this.checkFormattedText(
+        this.checkFormattedValue(
                 second,
                 "2 FORMATTED_PATTERN_SUFFIX"
         );
@@ -834,7 +834,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell second = this.loadCellOrFail(engine, b2, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context);
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
 
-        this.checkFormattedText(
+        this.checkFormattedValue(
                 second,
                 "#ERROR " + FORMATTED_PATTERN_SUFFIX
         );
@@ -866,7 +866,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 second,
                 LocalDate.of(defaultYear, 2, 1)
         );
-        this.checkFormattedText(
+        this.checkFormattedValue(
                 second,
                 "2000/02/01 FORMATTED_PATTERN_SUFFIX"
         );
@@ -13304,7 +13304,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 final Optional<Object> value = cell.formula()
                         .value();
                 return value.isPresent() ?
-                        cell.setFormatted(
+                        cell.setFormattedValue(
                                 Optional.of(
                                         this.formatValue(
                                                         value.get(),
@@ -13338,7 +13338,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                        final Object value,
                                                        final String suffix) {
         final SpreadsheetCell cell = this.loadCellAndCheckValue(engine, reference, evaluation, context, value);
-        this.checkFormattedText(cell, value + " " + suffix);
+        this.checkFormattedValue(cell, value + " " + suffix);
         return cell;
     }
 
@@ -13428,7 +13428,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             () -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value.get()))
                     );
 
-            result = result.setFormatted(
+            result = result.setFormattedValue(
                     Optional.of(
                             style.replace(
                                     formattedText.toTextNode()

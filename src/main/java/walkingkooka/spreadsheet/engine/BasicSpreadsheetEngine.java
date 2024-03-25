@@ -1045,7 +1045,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                          final SpreadsheetFormula formula,
                                          final SpreadsheetCell cell,
                                          final SpreadsheetEngineContext context) {
-        return cell.formatted().isPresent() && expression.isPure(context) ?
+        return cell.formattedValue().isPresent() && expression.isPure(context) ?
                 formula.value() :
                 this.evaluate(
                         expression,
