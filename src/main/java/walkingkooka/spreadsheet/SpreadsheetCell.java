@@ -64,7 +64,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     /**
      * Holds an absent {@link TextNode}.
      */
-    public final static Optional<TextNode> NO_FORMATTED_CELL = Optional.empty();
+    public final static Optional<TextNode> NO_FORMATTED_VALUE_CELL = Optional.empty();
 
     /**
      * Holds an absent {@link SpreadsheetParsePattern}.
@@ -89,7 +89,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 NO_STYLE,
                 NO_PARSE_PATTERN,
                 NO_FORMAT_PATTERN,
-                NO_FORMATTED_CELL
+                NO_FORMATTED_VALUE_CELL
         );
     }
 
@@ -124,7 +124,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                             final TextStyle style,
                             final Optional<SpreadsheetParsePattern> parsePattern,
                             final Optional<SpreadsheetFormatPattern> formatPattern,
-                            final Optional<TextNode> formatted) {
+                            final Optional<TextNode> formattedValue) {
         super();
 
         this.reference = reference.toRelative();
@@ -132,7 +132,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         this.style = style;
         this.parsePattern = parsePattern;
         this.formatPattern = formatPattern;
-        this.formatted = formatted;
+        this.formattedValue = formattedValue;
     }
 
     // HasId .......................................................................................
@@ -158,7 +158,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
         return this.reference.equals(reference) ?
                 this :
-                this.replace(reference, this.formula, this.style, this.parsePattern, this.formatPattern, NO_FORMATTED_CELL);
+                this.replace(reference, this.formula, this.style, this.parsePattern, this.formatPattern, NO_FORMATTED_VALUE_CELL);
     }
 
     /**
@@ -181,7 +181,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     private SpreadsheetCell setFormula0(final SpreadsheetFormula formula) {
         return this.formula.equals(formula) ?
                 this :
-                this.replace(this.reference, formula, this.style, this.parsePattern, this.formatPattern, NO_FORMATTED_CELL);
+                this.replace(this.reference, formula, this.style, this.parsePattern, this.formatPattern, NO_FORMATTED_VALUE_CELL);
     }
 
     /**
@@ -200,7 +200,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
         return this.style.equals(style) ?
                 this :
-                this.replace(this.reference, this.formula, style, this.parsePattern, this.formatPattern, NO_FORMATTED_CELL);
+                this.replace(this.reference, this.formula, style, this.parsePattern, this.formatPattern, NO_FORMATTED_VALUE_CELL);
     }
 
     /**
@@ -236,7 +236,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 this.style,
                 parsePattern,
                 this.formatPattern,
-                NO_FORMATTED_CELL
+                NO_FORMATTED_VALUE_CELL
         );
     }
 
@@ -256,7 +256,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
         return this.formatPattern.equals(formatPattern) ?
                 this :
-                this.replace(this.reference, this.formula, this.style, this.parsePattern, formatPattern, NO_FORMATTED_CELL);
+                this.replace(this.reference, this.formula, this.style, this.parsePattern, formatPattern, NO_FORMATTED_VALUE_CELL);
     }
 
     /**
@@ -266,15 +266,15 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
     // formatted .............................................................................................
 
-    public Optional<TextNode> formatted() {
-        return this.formatted;
+    public Optional<TextNode> formattedValue() {
+        return this.formattedValue;
     }
 
-    public SpreadsheetCell setFormatted(final Optional<TextNode> formatted) {
-        Objects.requireNonNull(formatted, "formatted");
+    public SpreadsheetCell setFormattedValue(final Optional<TextNode> formattedValue) {
+        Objects.requireNonNull(formattedValue, "formattedValue");
 
-        final Optional<TextNode> formatted2 = formatted.map(TextNode::root);
-        return this.formatted.equals(formatted2) ?
+        final Optional<TextNode> formatted2 = formattedValue.map(TextNode::root);
+        return this.formattedValue.equals(formatted2) ?
                 this :
                 this.replace(this.reference, this.formula, this.style, this.parsePattern, this.formatPattern, formatted2);
     }
@@ -282,7 +282,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     /**
      * A cached form of the cell output formatted and formula executed.
      */
-    private final Optional<TextNode> formatted;
+    private final Optional<TextNode> formattedValue;
 
     // replace..........................................................................................................
 
@@ -371,7 +371,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                     );
                     break;
                 case REFERENCE_PROPERTY_STRING:
-                case FORMATTED_PROPERTY_STRING:
+                case FORMATTED_VALUE_PROPERTY_STRING:
                     Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
                     break;
                 default:
@@ -413,9 +413,9 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 printer.outdent();
             }
 
-            final Optional<TextNode> formatted = this.formatted();
+            final Optional<TextNode> formatted = this.formattedValue();
             if (formatted.isPresent()) {
-                printer.println("formatted:");
+                printer.println("formattedValue:");
                 printer.indent();
                 {
                     formatted.get().printTree(printer);
@@ -481,7 +481,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 case FORMAT_PATTERN_PROPERTY_STRING:
                     formatPattern = context.unmarshallWithType(child);
                     break;
-                case FORMATTED_PROPERTY_STRING:
+                case FORMATTED_VALUE_PROPERTY_STRING:
                     formatted = context.unmarshallWithType(child);
                     break;
                 default:
@@ -552,8 +552,8 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                     )
             );
         }
-        if (this.formatted.isPresent()) {
-            object = object.set(FORMATTED_PROPERTY, context.marshallWithType(this.formatted.get()));
+        if (this.formattedValue.isPresent()) {
+            object = object.set(FORMATTED_VALUE_PROPERTY, context.marshallWithType(this.formattedValue.get()));
         }
 
         return object;
@@ -564,17 +564,17 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     private final static String STYLE_PROPERTY_STRING = "style";
     private final static String PARSE_PATTERN_PROPERTY_STRING = "parse-pattern";
     private final static String FORMAT_PATTERN_PROPERTY_STRING = "format-pattern";
-    private final static String FORMATTED_PROPERTY_STRING = "formatted";
+    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
     final static JsonPropertyName PARSE_PATTERN_PROPERTY = JsonPropertyName.with(PARSE_PATTERN_PROPERTY_STRING);
     final static JsonPropertyName FORMAT_PATTERN_PROPERTY = JsonPropertyName.with(FORMAT_PATTERN_PROPERTY_STRING);
-    final static JsonPropertyName FORMATTED_PROPERTY = JsonPropertyName.with(FORMATTED_PROPERTY_STRING);
+    final static JsonPropertyName FORMATTED_VALUE_PROPERTY = JsonPropertyName.with(FORMATTED_VALUE_PROPERTY_STRING);
 
     static {
-        SpreadsheetCell.NO_FORMATTED_CELL.hashCode();
+        SpreadsheetCell.NO_FORMATTED_VALUE_CELL.hashCode();
         SpreadsheetFormula.EMPTY.hashCode();
         TextNode.NO_ATTRIBUTES.isEmpty();
         SpreadsheetPattern.parseTextFormatPattern("@");
@@ -597,7 +597,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 this.style,
                 this.parsePattern,
                 this.formatPattern,
-                this.formatted
+                this.formattedValue
         );
     }
 
@@ -614,7 +614,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 this.style.equals(other.style) &&
                 this.parsePattern.equals(other.parsePattern) &&
                 this.formatPattern.equals(other.formatPattern) &&
-                this.formatted.equals(other.formatted);
+                this.formattedValue.equals(other.formattedValue);
     }
 
     @Override
@@ -629,6 +629,6 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                 .value(this.style)
                 .value(this.parsePattern)
                 .value(this.formatPattern)
-                .value(this.formatted);
+                .value(this.formattedValue);
     }
 }

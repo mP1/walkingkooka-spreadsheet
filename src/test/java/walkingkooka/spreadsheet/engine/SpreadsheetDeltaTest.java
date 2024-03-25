@@ -1879,7 +1879,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellsFormattedValueFails() {
         this.patchCellsWithInvalidPropertyFails(
-                JsonPropertyName.with("formatted"),
+                JsonPropertyName.with("formattedValue"),
                 JsonNode.nullNode()
         );
     }

@@ -82,7 +82,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      */
     default void clearFormatted() {
         for (final SpreadsheetCell cell : this.all()) {
-            final SpreadsheetCell after = cell.setFormatted(SpreadsheetCell.NO_FORMATTED_CELL);
+            final SpreadsheetCell after = cell.setFormattedValue(SpreadsheetCell.NO_FORMATTED_VALUE_CELL);
             if (false == cell.equals(after)) {
                 this.save(after);
             }

@@ -869,7 +869,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 value
         );
 
-        this.checkFormattedText(cell, text);
+        this.checkFormattedValue(cell, text);
 
         if (null != errorContains) {
             final SpreadsheetFormula formula = cell.formula();
@@ -1239,14 +1239,18 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "values parse returned cell=" + cell);
     }
 
-    default void checkFormattedText(final SpreadsheetCell cell) {
-        this.checkEquals(Optional.empty(), cell.formatted(), "formatted text absent");
+    default void checkFormattedValue(final SpreadsheetCell cell) {
+        this.checkEquals(
+                Optional.empty(),
+                cell.formattedValue(),
+                "formattedValue text absent"
+        );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    default void checkFormattedText(final SpreadsheetCell cell, final String text) {
-        this.checkNotEquals(Optional.empty(), cell.formatted(), "formatted text present");
-        this.checkEquals(text, cell.formatted().get().text(), "formattedText");
+    default void checkFormattedValue(final SpreadsheetCell cell, final String text) {
+        this.checkNotEquals(Optional.empty(), cell.formattedValue(), "formattedValue present");
+        this.checkEquals(text, cell.formattedValue().get().text(), "formattedText");
     }
 
     default void columnWidthAndCheck(final SpreadsheetColumnReference column,

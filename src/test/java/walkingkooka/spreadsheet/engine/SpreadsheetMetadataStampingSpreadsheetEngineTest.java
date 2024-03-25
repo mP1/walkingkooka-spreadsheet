@@ -127,7 +127,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                 context
         );
         final SpreadsheetCell loaded = delta.cells().iterator().next();
-        this.checkEquals(Optional.of(TextNode.text(FORMULA_VALUE)), loaded.formatted(), "formatted");
+        this.checkEquals(Optional.of(TextNode.text(FORMULA_VALUE)), loaded.formattedValue(), "formattedValue");
         this.checkEquals(Optional.of(FORMULA_VALUE), loaded.formula().value());
 
         this.checkMetadataUpdated(context);
@@ -482,7 +482,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             @Override
             public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
                                                   final Optional<SpreadsheetFormatter> formatter) {
-                return cell.setFormatted(
+                return cell.setFormattedValue(
                         this.formatValue(
                                 cell.formula().value().get(),
                                 formatter.orElse(

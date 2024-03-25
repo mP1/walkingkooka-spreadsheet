@@ -517,7 +517,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 cell,
                 SpreadsheetPattern.parseNumberFormatPattern("$#.00")
                         .formatter(),
-                cell.setFormatted(
+                cell.setFormattedValue(
                         Optional.of(
                                 TextNode.text("CURR1.00")
                         )
@@ -563,7 +563,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 cell,
                 SpreadsheetPattern.parseNumberFormatPattern("$#.00")
                         .formatter(),
-                cell.setFormatted(
+                cell.setFormattedValue(
                         Optional.of(
                                 TextNode.text("CURR1.00")
                                         .setAttributes(

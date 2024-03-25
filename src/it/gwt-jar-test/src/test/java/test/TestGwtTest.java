@@ -263,7 +263,7 @@ public class TestGwtTest extends GWTTestCase {
             @Override
             public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
                                                   final Optional<SpreadsheetFormatter> formatter) {
-                return cell.setFormatted(
+                return cell.setFormattedValue(
                         Optional.of(
                                 this.formatValue(
                                         cell.formula()
