@@ -1066,8 +1066,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link SpreadsheetFormatPattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
-    public static JsonObject formatPatternPatch(final Optional<SpreadsheetFormatPattern> pattern,
-                                                final JsonNodeMarshallContext context) {
+    public static JsonNode formatPatternPatch(final Optional<SpreadsheetFormatPattern> pattern,
+                                              final JsonNodeMarshallContext context) {
         return patternPatch(
                 pattern,
                 FORMAT_PATTERN_PROPERTY,
@@ -1078,8 +1078,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link SpreadsheetParsePattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
-    public static JsonObject parsePatternPatch(final Optional<SpreadsheetParsePattern> pattern,
-                                               final JsonNodeMarshallContext context) {
+    public static JsonNode parsePatternPatch(final Optional<SpreadsheetParsePattern> pattern,
+                                             final JsonNodeMarshallContext context) {
         return patternPatch(
                 pattern,
                 PARSE_PATTERN_PROPERTY,
@@ -1090,9 +1090,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link SpreadsheetParsePattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
-    private static JsonObject patternPatch(final Optional<? extends SpreadsheetPattern> pattern,
-                                           final JsonPropertyName propertyName,
-                                           final JsonNodeMarshallContext context) {
+    private static JsonNode patternPatch(final Optional<? extends SpreadsheetPattern> pattern,
+                                         final JsonPropertyName propertyName,
+                                         final JsonNodeMarshallContext context) {
         Objects.requireNonNull(pattern, "pattern");
         checkContext(context);
 
@@ -1105,21 +1105,29 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 );
     }
 
-    private static JsonNodeMarshallContext checkContext(final JsonNodeMarshallContext context) {
-        return Objects.requireNonNull(context, "context");
-    }
-
     /**
      * Creates a {@link JsonObject} which can then be used to as an argument to {@link #patchStyle(SpreadsheetCellRange, Set, JsonNode, JsonNodeUnmarshallContext)}.
      */
-    public static JsonObject stylePatch(final JsonNode style) {
+    public static JsonNode stylePatch(final JsonNode style) {
         Objects.requireNonNull(style, "style");
 
+        return makePatch(
+                STYLE_PROPERTY,
+                style
+        );
+    }
+
+    private static JsonNode makePatch(final JsonPropertyName propertyName,
+                                      final JsonNode value) {
         return JsonNode.object()
                 .set(
-                        STYLE_PROPERTY,
-                        style
+                        propertyName,
+                        value
                 );
+    }
+
+    private static JsonNodeMarshallContext checkContext(final JsonNodeMarshallContext context) {
+        return Objects.requireNonNull(context, "context");
     }
 
     // Patchable.......................................................................................................
