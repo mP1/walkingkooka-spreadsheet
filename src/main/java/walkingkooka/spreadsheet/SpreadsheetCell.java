@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
@@ -49,7 +50,8 @@ import java.util.function.Function;
 /**
  * A spreadsheet cell including its formula, and other attributes such as format, text properties(styling) and more.
  */
-public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
+public final class SpreadsheetCell implements CanBeEmpty,
+        Comparable<SpreadsheetCell>,
         HasSpreadsheetReference<SpreadsheetCellReference>,
         HateosResource<SpreadsheetCellReference>,
         Patchable<SpreadsheetCell>,
@@ -305,7 +307,20 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         );
     }
 
-    // Comparable.................................................................................................
+    // CanBeEmpty ......................................................................................................
+
+    /**
+     * A {@link SpreadsheetCell} is empty if it has no formula, no format or parse patterns and no style.
+     */
+    @Override
+    public boolean isEmpty() {
+        return this.formula.isEmpty() &&
+                false == this.formatPattern.isPresent() &&
+                false == this.parsePattern.isPresent() &&
+                this.style.isEmpty();
+    }
+
+    // Comparable.......................................................................................................
 
     @Override
     public int compareTo(final SpreadsheetCell other) {
