@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.Sets;
@@ -45,7 +46,8 @@ import java.util.function.Predicate;
 /**
  * Captures one or more windows that define the cells within a viewport.
  */
-public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCellReference>,
+public final class SpreadsheetViewportWindows implements CanBeEmpty,
+        Iterable<SpreadsheetCellReference>,
         Predicate<SpreadsheetSelection>,
         TreePrintable {
 
@@ -142,6 +144,7 @@ public final class SpreadsheetViewportWindows implements Iterable<SpreadsheetCel
     /**
      * Returns true if there are no {@link SpreadsheetCellRange ranges}
      */
+    @Override
     public boolean isEmpty() {
         return this.cellRanges.isEmpty();
     }
