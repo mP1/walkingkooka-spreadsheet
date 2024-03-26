@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
@@ -50,7 +51,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements ClassTesting2<SpreadsheetMetadata>,
+public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting<SpreadsheetMetadata>,
+        ClassTesting2<SpreadsheetMetadata>,
         ConverterTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
         JsonNodeMarshallingTesting<SpreadsheetMetadata>,
@@ -72,9 +74,11 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testIsEmpty() {
         final SpreadsheetMetadata metadata = this.createObject();
-        this.checkEquals(metadata.value().isEmpty(),
-                metadata.isEmpty(),
-                () -> "" + metadata);
+
+        this.isEmptyAndCheck(
+                metadata,
+                metadata.value().isEmpty()
+        );
     }
 
     // get..............................................................................................................
@@ -617,6 +621,13 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Override
     public final SpreadsheetMetadata createHateosResource() {
+        return this.createObject();
+    }
+
+    // CanBeEmptyTesting................................................................................................
+
+    @Override
+    public final SpreadsheetMetadata createCanBeEmpty() {
         return this.createObject();
     }
 }

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
@@ -95,7 +96,8 @@ import java.util.function.Supplier;
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
  */
-public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetConverterContext>,
+public abstract class SpreadsheetMetadata implements CanBeEmpty,
+        HasConverter<SpreadsheetConverterContext>,
         HasDecimalNumberContext,
         HasExpressionNumberKind,
         HasMathContext,
@@ -146,6 +148,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<SpreadsheetCon
     /**
      * Returns true if the {@link SpreadsheetMetadata} is empty.
      */
+    @Override
     public final boolean isEmpty() {
         return this instanceof SpreadsheetMetadataEmpty;
     }
