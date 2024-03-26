@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.iterable.IterableTesting;
@@ -41,7 +42,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetViewportWindowsTest implements ClassTesting<SpreadsheetViewportWindows>,
+public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<SpreadsheetViewportWindows>,
+        ClassTesting<SpreadsheetViewportWindows>,
         HashCodeEqualsDefinedTesting2<SpreadsheetViewportWindows>,
         IterableTesting<SpreadsheetViewportWindows, SpreadsheetCellReference>,
         JsonNodeMarshallingTesting<SpreadsheetViewportWindows>,
@@ -110,7 +112,11 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
                 cellRanges,
                 windows.cellRanges()
         );
-        this.checkEquals(false, windows.isEmpty());
+
+        this.isEmptyAndCheck(
+                windows,
+                false
+        );
     }
 
     @Test
@@ -121,7 +127,11 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
                 cellRanges,
                 windows.cellRanges()
         );
-        this.checkEquals(true, windows.isEmpty());
+
+        this.isEmptyAndCheck(
+                windows,
+                true
+        );
         assertSame(
                 SpreadsheetViewportWindows.EMPTY,
                 windows
@@ -1236,5 +1246,12 @@ public final class SpreadsheetViewportWindowsTest implements ClassTesting<Spread
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // CanBeEmptyTesting................................................................................................
+
+    @Override
+    public SpreadsheetViewportWindows createCanBeEmpty() {
+        return SpreadsheetViewportWindows.EMPTY;
     }
 }
