@@ -18,32 +18,25 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
-import walkingkooka.convert.Converters;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Locale;
 import java.util.function.Function;
 
 public final class UnformattedNumberSpreadsheetConverterTest implements ConverterTesting2<UnformattedNumberSpreadsheetConverter, SpreadsheetConverterContext>,
+        SpreadsheetMetadataTesting,
         ToStringTesting<UnformattedNumberSpreadsheetConverter> {
 
     private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
@@ -194,49 +187,24 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
 
     @Override
     public SpreadsheetConverterContext createContext() {
-        final JsonNodeUnmarshallContext context = JsonNodeUnmarshallContexts.basic(
-                ExpressionNumberKind.DOUBLE,
-                MathContext.UNLIMITED
+        final SpreadsheetMetadata metadata = METADATA_EN_AU.set(
+                SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
+                SpreadsheetPattern.parseDateFormatPattern("\"date:\" dd/mm/yyyy")
+        ).set(
+                SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
+                SpreadsheetPattern.parseDateTimeFormatPattern("\"datetime:\" dd/mm/yyyy hh:mm:ss")
+        ).set(
+                SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN,
+                SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss")
         );
-
-        SpreadsheetMetadata.EMPTY.toString(); // force JsonNodeUnmarshallContexts register
-
-        final SpreadsheetMetadata metadata = context.unmarshall(
-                JsonNode.parse(
-                        "{\n" +
-                                "  \"date-time-offset\": " + Converters.EXCEL_1900_DATE_SYSTEM_OFFSET + ",\n" +
-                                "  \"date-format-pattern\": \"\\\"date:\\\" dd/mm/yyyy\",\n" +
-                                "  \"date-parse-pattern\": \"ddmmyyyy\",\n" +
-                                "  \"date-time-format-pattern\": \"\\\"datetime:\\\" dd/mm/yyyy hh:mm:ss\",\n" +
-                                "  \"date-time-parse-pattern\": \"ddmmyyyyhhmmss\",\n" +
-                                "  \"number-format-pattern\": \"\\\"number: \\\" #.##\",\n" +
-                                "  \"number-parse-pattern\": \"\\\"number: \\\" #.##\",\n" +
-                                "  \"text-format-pattern\": \"\\\"text: \\\" @\",\n" +
-                                "  \"time-format-pattern\": \"\\\"time:\\\" hh:mm:ss\",\n" +
-                                "  \"time-parse-pattern\": \"hhmmss\"\n" +
-                                "}"
-                ),
-                SpreadsheetMetadata.class
-        );
-
         final Converter<SpreadsheetConverterContext> converter = metadata.converter();
 
         return SpreadsheetConverterContexts.basic(
                 converter,
                 RESOLVE_IF_LABEL,
-                ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
-                        ConverterContexts.basic(
-                                Cast.to(converter),
-                                DateTimeContexts.locale(
-                                        Locale.FRANCE,
-                                        1900,
-                                        50,
-                                        LocalDateTime::now
-                                ),
-                                DecimalNumberContexts.fake()
-                        ),
-                        ExpressionNumberKind.DOUBLE
+                metadata.converterContext(
+                        LocalDateTime::now,
+                        RESOLVE_IF_LABEL
                 )
         );
     }
