@@ -66,5 +66,5 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
                         .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
                         .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
-                );
+                ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 1);
 }

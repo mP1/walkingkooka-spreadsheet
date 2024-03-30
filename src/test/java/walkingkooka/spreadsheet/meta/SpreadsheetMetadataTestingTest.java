@@ -44,6 +44,21 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testFormatter() {
+        METADATA_EN_AU.formatter();
+    }
+
+    @Test
+    public void testFormatterContext() {
+        METADATA_EN_AU.formatterContext(
+                LocalDateTime::now,
+                (label) -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
+    }
+
+    @Test
     public void testJsonNodeMarshallContext() {
         METADATA_EN_AU.jsonNodeMarshallContext();
     }
