@@ -25,14 +25,12 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testConverter() {
-        this.metadataEnAu()
-                .converter();
+        METADATA_EN_AU.converter();
     }
 
     @Test
     public void testConverterContext() {
-        this.metadataEnAu()
-                .converterContext(
+        METADATA_EN_AU.converterContext(
                         LocalDateTime::now,
                         (label) -> {
                             throw new UnsupportedOperationException();
@@ -42,28 +40,27 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testEffectiveStyle() {
-        this.metadataEnAu()
-                .effectiveStyle();
+        METADATA_EN_AU.effectiveStyle();
     }
 
     @Test
     public void testJsonNodeMarshallContext() {
-        this.metadataEnAu().jsonNodeMarshallContext();
+        METADATA_EN_AU.jsonNodeMarshallContext();
     }
 
     @Test
     public void testJsonNodeUnmarshallContext() {
-        this.metadataEnAu().jsonNodeUnmarshallContext();
+        METADATA_EN_AU.jsonNodeUnmarshallContext();
     }
 
     @Test
     public void testParser() {
-        this.metadataEnAu().parser();
+        METADATA_EN_AU.parser();
     }
 
     @Test
     public void testParserContext() {
-        this.metadataEnAu()
+        METADATA_EN_AU
                 .parserContext(LocalDateTime::now);
     }
 }
