@@ -1747,7 +1747,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default ExpressionNumberKind expressionNumberKind() {
-        return ExpressionNumberKind.DEFAULT;
+        return ExpressionNumberKind.BIG_DECIMAL;
     }
 
     default DateTimeContext dateTimeContext() {

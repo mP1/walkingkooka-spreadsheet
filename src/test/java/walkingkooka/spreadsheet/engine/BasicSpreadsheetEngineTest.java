@@ -29,7 +29,6 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
@@ -53,6 +52,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -122,7 +122,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -137,7 +136,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("PointlessArithmeticExpression")
 public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngine>
-        implements SpreadsheetEngineTesting<BasicSpreadsheetEngine> {
+        implements SpreadsheetEngineTesting<BasicSpreadsheetEngine>,
+        SpreadsheetMetadataTesting {
 
     private final static String FORMATTED_PATTERN_SUFFIX = "FORMATTED_PATTERN_SUFFIX";
 
@@ -147,7 +147,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String NUMBER_PATTERN = "#";
     private final static String TEXT_PATTERN = "@";
 
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = METADATA_EN_AU.expressionNumberKind();
 
     private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
         throw new UnsupportedOperationException();
@@ -214,11 +214,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public MathContext mathContext() {
-            return MATH_CONTEXT;
+            return METADATA_EN_AU.mathContext();
         }
     };
-
-    private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
     private final static int DEFAULT_YEAR = 1900;
     private final static int TWO_DIGIT_YEAR = 20;
@@ -13282,7 +13280,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public MathContext mathContext() {
-                return MATH_CONTEXT;
+                return METADATA_EN_AU.mathContext();
             }
 
             @Override
@@ -13484,6 +13482,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         return expressionNumberKind;
                                     }
 
+                                    public MathContext mathContext() {
+                                        return METADATA_EN_AU.mathContext();
+                                    }
+
                                     @Override
                                     public int twoDigitYear() {
                                         return TWO_DIGIT_YEAR;
@@ -13549,16 +13551,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetMetadata metadata() {
         final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
 
-        return SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-                .loadFromLocale()
-                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
-                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+        return METADATA_EN_AU.set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("user@example.com"))
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now())
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
@@ -13567,7 +13561,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetParsePattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetParsePattern.parseDateTimeParsePattern(DATETIME_PATTERN))
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetParsePattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix))
-                .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetParsePattern.parseNumberParsePattern(NUMBER_PATTERN))
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetParsePattern.parseTextFormatPattern(TEXT_PATTERN + suffix))
                 .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetParsePattern.parseTimeFormatPattern(TIME_PATTERN + suffix))
