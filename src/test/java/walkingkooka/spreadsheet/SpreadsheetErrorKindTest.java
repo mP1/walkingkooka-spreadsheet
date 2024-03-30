@@ -28,9 +28,12 @@ import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.FakeExpressionNumberContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
+import java.math.MathContext;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -75,7 +78,8 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
                         "ignored!",
                         new ArithmeticException(MESSAGE)
                 ),
-                SpreadsheetErrorKind.DIV0
+                SpreadsheetErrorKind.DIV0,
+                "Division by zero"
         );
     }
 
@@ -141,10 +145,48 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
     }
 
     @Test
-    public void testTranslateArithmeticException() {
+    public void testTranslateArithmeticExceptionDivideByZeroBigDecimal() {
+        final ExpressionEvaluationException thrown = assertThrows(
+                ExpressionEvaluationException.class,
+                () -> ExpressionNumberKind.BIG_DECIMAL.one()
+                        .divide(
+                                ExpressionNumberKind.BIG_DECIMAL.zero(),
+                                new FakeExpressionNumberContext() {
+                                    @Override
+                                    public MathContext mathContext() {
+                                        return MathContext.DECIMAL32;
+                                    }
+                                }
+                        )
+        );
+
         this.translateAndCheck(
-                new ArithmeticException(MESSAGE),
-                SpreadsheetErrorKind.DIV0
+                thrown,
+                SpreadsheetErrorKind.DIV0,
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testTranslateArithmeticExceptionDivideByZeroDouble() {
+        final ExpressionEvaluationException thrown = assertThrows(
+                ExpressionEvaluationException.class,
+                () -> ExpressionNumberKind.DOUBLE.one()
+                        .divide(
+                                ExpressionNumberKind.DOUBLE.zero(),
+                                new FakeExpressionNumberContext() {
+                                    @Override
+                                    public MathContext mathContext() {
+                                        return MathContext.DECIMAL32;
+                                    }
+                                }
+                        )
+        );
+
+        this.translateAndCheck(
+                thrown,
+                SpreadsheetErrorKind.DIV0,
+                thrown.getMessage()
         );
     }
 

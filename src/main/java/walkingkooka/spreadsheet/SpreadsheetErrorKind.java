@@ -213,6 +213,8 @@ public enum SpreadsheetErrorKind implements HasText {
 
             // Trying to divide by 0
             if (cause instanceof ArithmeticException) {
+                // want a single divide by zero message because of BigDecimal divide undefined
+                message = "Division by zero";
                 kind = DIV0;
                 break;
             }
