@@ -40,8 +40,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     /**
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
      */
-    default SpreadsheetMetadata metadataEnAu() {
-        return SpreadsheetMetadata.EMPTY
+    SpreadsheetMetadata METADATA_EN_AU = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .loadFromLocale()
                 .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
@@ -68,5 +67,4 @@ public interface SpreadsheetMetadataTesting extends Testing {
                         .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
                         .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
                 );
-    }
 }
