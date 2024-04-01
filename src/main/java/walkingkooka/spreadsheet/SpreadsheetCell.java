@@ -481,36 +481,43 @@ public final class SpreadsheetCell implements CanBeEmpty,
         printer.indent();
         {
             this.formula.printTree(printer);
+
+            {
+                final Optional<SpreadsheetFormatPattern> formatPattern = this.formatPattern();
+                if (formatPattern.isPresent()) {
+                    printer.println("formatPattern:");
+                    printer.indent();
+                    {
+                        formatPattern.get().printTree(printer);
+                    }
+                    printer.outdent();
+                }
+            }
+
+            {
+                final Optional<SpreadsheetParsePattern> parsePattern = this.parsePattern();
+                if (parsePattern.isPresent()) {
+                    printer.println("parsePattern:");
+                    printer.indent();
+                    {
+                        parsePattern.get().printTree(printer);
+                    }
+                    printer.outdent();
+                }
+            }
+
             this.style.printTree(printer);
 
-            final Optional<SpreadsheetParsePattern> parsePattern = this.parsePattern();
-            if (parsePattern.isPresent()) {
-                printer.println("parsePattern:");
-                printer.indent();
-                {
-                    parsePattern.get().printTree(printer);
+            {
+                final Optional<TextNode> formatted = this.formattedValue();
+                if (formatted.isPresent()) {
+                    printer.println("formattedValue:");
+                    printer.indent();
+                    {
+                        formatted.get().printTree(printer);
+                    }
+                    printer.outdent();
                 }
-                printer.outdent();
-            }
-
-            final Optional<SpreadsheetFormatPattern> formatPattern = this.formatPattern();
-            if (formatPattern.isPresent()) {
-                printer.println("formatPattern:");
-                printer.indent();
-                {
-                    formatPattern.get().printTree(printer);
-                }
-                printer.outdent();
-            }
-
-            final Optional<TextNode> formatted = this.formattedValue();
-            if (formatted.isPresent()) {
-                printer.println("formattedValue:");
-                printer.indent();
-                {
-                    formatted.get().printTree(printer);
-                }
-                printer.outdent();
             }
         }
         printer.outdent();

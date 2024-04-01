@@ -1507,12 +1507,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
-                        "  TextStyle\n" +
-                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
                         "  parsePattern:\n" +
                         "    date-time-parse-pattern\n" +
-                        "      \"dd/mm/yyyy\"\n"
+                        "      \"dd/mm/yyyy\"\n" +
+                        "  TextStyle\n" +
+                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -1545,15 +1545,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
-                        "  TextStyle\n" +
-                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
+                        "  formatPattern:\n" +
+                        "    text-format-pattern\n" +
+                        "      \"@@\"\n" +
                         "  parsePattern:\n" +
                         "    date-time-parse-pattern\n" +
                         "      \"dd/mm/yyyy\"\n" +
-                        "  formatPattern:\n" +
-                        "    text-format-pattern\n" +
-                        "      \"@@\"\n"
+                        "  TextStyle\n" +
+                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -1583,12 +1583,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
-                        "  TextStyle\n" +
-                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
                         "  formatPattern:\n" +
                         "    text-format-pattern\n" +
-                        "      \"@@\"\n"
+                        "      \"@@\"\n" +
+                        "  TextStyle\n" +
+                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -1619,12 +1619,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
-                        "  TextStyle\n" +
-                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
                         "  formatPattern:\n" +
                         "    text-format-pattern\n" +
                         "      \"@@\"\n" +
+                        "  TextStyle\n" +
+                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
                         "  formattedValue:\n" +
                         "    Text \"formattedValue-text\"\n"
         );
