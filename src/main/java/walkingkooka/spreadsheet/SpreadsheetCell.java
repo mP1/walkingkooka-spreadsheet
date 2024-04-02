@@ -25,6 +25,7 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -51,6 +52,7 @@ import java.util.function.Function;
  * A spreadsheet cell including its formula, and other attributes such as format, text properties(styling) and more.
  */
 public final class SpreadsheetCell implements CanBeEmpty,
+        CanReplaceReferences<SpreadsheetCell>,
         Comparable<SpreadsheetCell>,
         HasSpreadsheetReference<SpreadsheetCellReference>,
         HateosResource<SpreadsheetCellReference>,
@@ -332,6 +334,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     /**
      * Accepts a mapper which may be used to update the {@link #reference()} and {@link SpreadsheetFormula}.
      */
+    @Override
     public SpreadsheetCell replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
         Objects.requireNonNull(mapper, "mapper");
 
