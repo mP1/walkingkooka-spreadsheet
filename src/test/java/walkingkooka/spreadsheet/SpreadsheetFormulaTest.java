@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -72,6 +73,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
         CanBeEmptyTesting<SpreadsheetFormula>,
+        CanReplaceReferencesTesting<SpreadsheetFormula>,
         HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
         JsonNodeMarshallingTesting<SpreadsheetFormula>,
         PatchableTesting<SpreadsheetFormula>,
@@ -762,37 +764,22 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // replaceReferences................................................................................................
 
     @Test
-    public void testReplaceReferencesWithNullMapperFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormula.EMPTY.replaceReferences(null)
-        );
-    }
-
-    @Test
     public void testReplaceReferencesNoCells() {
-        final SpreadsheetFormula formula = parseFormula("=1+2");
-        assertSame(
-                formula,
-                formula.replaceReferences(
-                        (r) -> {
-                            throw new UnsupportedOperationException();
-                        }
-                )
+        this.replaceReferencesAndCheck(
+                parseFormula("=1+2"),
+                (r) -> {
+                    throw new UnsupportedOperationException();
+                }
         );
     }
 
     @Test
     public void testReplaceReferencesOnlyLabel() {
-        final SpreadsheetFormula formula = parseFormula("=1+Label123");
-
-        assertSame(
-                formula,
-                formula.replaceReferences(
+        this.replaceReferencesAndCheck(
+                parseFormula("=1+Label123"),
                         (r) -> {
                             throw new UnsupportedOperationException();
                         }
-                )
         );
     }
 
@@ -899,14 +886,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    private void replaceReferencesAndCheck(final SpreadsheetFormula formula,
-                                           final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
-                                           final SpreadsheetFormula expected) {
-        this.checkEquals(
-                expected,
-                formula.replaceReferences(mapper),
-                () -> formula.toString()
-        );
+    @Override
+    public SpreadsheetFormula createReplaceReference() {
+        return this.createObject();
     }
 
     // TreePrintable.....................................................................................................
