@@ -1304,11 +1304,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testStylePatchSetOrReplace() {
+    public void testStyleMakePatchSetOrReplace() {
         final TextStylePropertyName<Color> propertyName = TextStylePropertyName.COLOR;
         final Color color = Color.parse("#123456");
 
-        final JsonNode stylePatch = propertyName.patch(color);
+        final JsonNode stylePatch = propertyName.makePatch(color);
 
         final JsonNode deltaPatch = SpreadsheetDelta.stylePatch(stylePatch);
         this.stylePatchAndCheck(
@@ -1357,7 +1357,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final TextStylePropertyName<Color> propertyName = TextStylePropertyName.COLOR;
         final Color color = null;
 
-        final JsonNode stylePatch = propertyName.patch(color);
+        final JsonNode stylePatch = propertyName.makePatch(color);
 
         final JsonNode deltaPatch = SpreadsheetDelta.stylePatch(stylePatch);
         this.stylePatchAndCheck(
@@ -1491,7 +1491,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 IllegalArgumentException.class,
                 () -> SpreadsheetDelta.EMPTY.patch(
                         SpreadsheetDelta.stylePatch(
-                                TextStylePropertyName.COLOR.patch(null)
+                                TextStylePropertyName.COLOR.makePatch(null)
                         ),
                         JsonNodeUnmarshallContexts.fake()
                 )
@@ -2714,7 +2714,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
-        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.makePatch(
                 Color.parse("#123456")
         );
 
@@ -2756,7 +2756,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
-        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.makePatch(
                 Color.parse("#123456")
         );
         final TextStyle style = TextStyle.EMPTY
@@ -2806,7 +2806,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
-        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(null);
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.makePatch(null);
         final TextStyle patchedStyle = style.patch(
                 stylePatch,
                 this.createPatchContext()
@@ -2850,7 +2850,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
-        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(null);
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.makePatch(null);
 
         // A1 will be created with no formula and only the stylePatch
         final JsonNodeUnmarshallContext patchContext = this.createPatchContext();
@@ -2899,7 +2899,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
-        final JsonNode stylePatch = TextStylePropertyName.COLOR.patch(
+        final JsonNode stylePatch = TextStylePropertyName.COLOR.makePatch(
                 Color.parse("#123456")
         );
         final TextStyle patchStyle = beforeStyle.patch(
