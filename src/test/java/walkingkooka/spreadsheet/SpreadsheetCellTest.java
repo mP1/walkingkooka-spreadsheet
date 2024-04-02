@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -66,7 +67,6 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -74,6 +74,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetCell>,
         ClassTesting2<SpreadsheetCell>,
+        CanReplaceReferencesTesting<SpreadsheetCell>,
         ComparableTesting2<SpreadsheetCell>,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
         HasSpreadsheetReferenceTesting,
@@ -470,15 +471,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     // replaceReferences................................................................................................
 
     @Test
-    public void testReplaceReferencesWithNullMapper() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .replaceReferences(null)
-        );
-    }
-
-    @Test
     public void testReplaceReferencesWithMapperReturnsEmptyForReference() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
@@ -496,14 +488,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
                 parseFormula("=1+B2")
         );
-        assertSame(
+        this.replaceReferencesAndCheck(
                 cell,
-                cell.replaceReferences(
-                        (c) ->
-                                Optional.of(
-                                        c
-                                )
-                )
+                (c) ->
+                        Optional.of(
+                                c
+                        )
         );
     }
 
@@ -524,15 +514,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         .setFormula(
                                 parseFormula("=1+C4")
                         )
-        );
-    }
-
-    private void replaceReferencesAndCheck(final SpreadsheetCell cell,
-                                           final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
-                                           final SpreadsheetCell expected) {
-        this.checkEquals(
-                expected,
-                cell.replaceReferences(mapper)
         );
     }
 
@@ -564,7 +545,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         );
     }
 
-    // equals .............................................................................................
+
+    @Override
+    public SpreadsheetCell createReplaceReference() {
+        return this.createCell();
+    }
+
+    // equals ..........................................................................................................
 
     @Test
     public void testCompareDifferentParsePattern() {
