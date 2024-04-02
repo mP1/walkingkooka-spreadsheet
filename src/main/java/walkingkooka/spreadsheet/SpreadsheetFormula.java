@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -62,6 +63,7 @@ import java.util.function.Function;
  * A spreadsheet formula, including its compiled {@link Expression} and possibly its {@link Object value} or {@link SpreadsheetError}.
  */
 public final class SpreadsheetFormula implements CanBeEmpty,
+        CanReplaceReferences<SpreadsheetFormula>,
         HasText,
         Patchable<SpreadsheetFormula>,
         TreePrintable,
@@ -347,6 +349,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * If the {@link Function} returns an {@link Optional#empty()}, that {@link SpreadsheetCellReference} will be replaced with
      * a {@link SpreadsheetErrorKind#REF}.
      */
+    @Override
     public SpreadsheetFormula replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
         Objects.requireNonNull(mapper, "mapper");
 
