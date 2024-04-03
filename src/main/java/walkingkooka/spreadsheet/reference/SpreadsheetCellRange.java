@@ -52,6 +52,7 @@ import java.util.stream.Stream;
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         implements Comparable<SpreadsheetCellRange>,
+        CanReplaceReferences<SpreadsheetCellRange>,
         HasRange<SpreadsheetCellReference>,
         HasRangeBounds<SpreadsheetCellReference>,
         Iterable<SpreadsheetCellReference> {
@@ -745,6 +746,52 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                 this.rowRange()
                         .addIfRelative(rowDelta)
         );
+    }
+
+    // CanReplaceReferences.............................................................................................
+
+    @Override
+    public SpreadsheetCellRange replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
+        Objects.requireNonNull(mapper, "mapper");
+
+        final Function<SpreadsheetCellReference, SpreadsheetCellReference> mapper2 =
+                (cell) -> mapper.apply(cell)
+                        .orElseThrow(() -> new IllegalArgumentException("Mapper must return a cell"));
+
+        final SpreadsheetCellReference begin = this.begin();
+        final SpreadsheetCellReference end = this.end();
+
+        final SpreadsheetCellReference begin2 = mapper2.apply(begin);
+        final SpreadsheetCellReference end2 = mapper2.apply(end);
+
+        SpreadsheetCellRange replaced = this;
+
+        if (false == begin.equals(begin2) && false == end.equals(end2)) {
+            SpreadsheetColumnReference left = begin2.column();
+            SpreadsheetColumnReference right = end2.column();
+
+            if (left.compareTo(right) > 0) {
+                final SpreadsheetColumnReference swap = left;
+                left = right;
+                right = swap;
+            }
+
+            SpreadsheetRowReference top = begin2.row();
+            SpreadsheetRowReference bottom = end2.row();
+
+            if (top.compareTo(bottom) > 0) {
+                final SpreadsheetRowReference swap = top;
+                top = bottom;
+                bottom = swap;
+            }
+
+            replaced = left.setRow(top)
+                    .cellRange(
+                            right.setRow(bottom)
+                    );
+        }
+
+        return replaced;
     }
 
     // testXXXX.........................................................................................................
