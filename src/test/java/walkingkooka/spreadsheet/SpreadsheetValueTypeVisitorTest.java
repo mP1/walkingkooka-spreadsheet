@@ -22,11 +22,11 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.visit.Visiting;
@@ -374,7 +374,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     @Test
     public void testAcceptColumnReferenceRange() {
         final StringBuilder b = new StringBuilder();
-        final Class<SpreadsheetColumnReferenceRange> type = SpreadsheetColumnReferenceRange.class;
+        final Class<SpreadsheetColumnRangeReference> type = SpreadsheetColumnRangeReference.class;
 
         new FakeSpreadsheetValueTypeVisitor() {
             @Override
@@ -402,7 +402,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     @Test
     public void testAcceptColumnReferenceRange2() {
         new SpreadsheetValueTypeVisitor() {
-        }.accept(SpreadsheetColumnReferenceRange.class);
+        }.accept(SpreadsheetColumnRangeReference.class);
     }
 
     @Test
@@ -795,7 +795,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     @Test
     public void testAcceptRowReferenceRange() {
         final StringBuilder b = new StringBuilder();
-        final Class<SpreadsheetRowReferenceRange> type = SpreadsheetRowReferenceRange.class;
+        final Class<SpreadsheetRowRangeReference> type = SpreadsheetRowRangeReference.class;
 
         new FakeSpreadsheetValueTypeVisitor() {
             @Override
@@ -823,7 +823,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     @Test
     public void testAcceptRowReferenceRange2() {
         new SpreadsheetValueTypeVisitor() {
-        }.accept(SpreadsheetRowReferenceRange.class);
+        }.accept(SpreadsheetRowRangeReference.class);
     }
 
     @Test

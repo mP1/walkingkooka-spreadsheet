@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 
 /**
@@ -55,7 +55,7 @@ final class SpreadsheetValueVisitorSpreadsheetSelectionVisitor extends Spreadshe
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReferenceRange range) {
+    protected void visit(final SpreadsheetColumnRangeReference range) {
         this.visitor.visit(range);
     }
 
@@ -70,7 +70,7 @@ final class SpreadsheetValueVisitorSpreadsheetSelectionVisitor extends Spreadshe
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReferenceRange range) {
+    protected void visit(final SpreadsheetRowRangeReference range) {
         this.visitor.visit(range);
     }
 

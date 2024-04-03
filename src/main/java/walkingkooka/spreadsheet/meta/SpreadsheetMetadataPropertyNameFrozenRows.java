@@ -19,7 +19,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -27,7 +27,7 @@ import java.util.Optional;
 /**
  * Tracks how many rows are frozen.
  */
-final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadataPropertyName<SpreadsheetRowReferenceRange> {
+final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadataPropertyName<SpreadsheetRowRangeReference> {
 
     /**
      * Singleton
@@ -44,10 +44,10 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     }
 
     @Override
-    SpreadsheetRowReferenceRange checkValue0(final Object value) {
-        final SpreadsheetRowReferenceRange range = this.checkValueType(
+    SpreadsheetRowRangeReference checkValue0(final Object value) {
+        final SpreadsheetRowRangeReference range = this.checkValueType(
                 value,
-                v -> v instanceof SpreadsheetRowReferenceRange
+                v -> v instanceof SpreadsheetRowRangeReference
         );
         if (range.begin().value() != 0) {
             throw new SpreadsheetMetadataPropertyValueException("Range must begin at '1'", this, range);
@@ -57,21 +57,21 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
 
     @Override
     String expected() {
-        return SpreadsheetRowReferenceRange.class.getSimpleName();
+        return SpreadsheetRowRangeReference.class.getSimpleName();
     }
 
     @Override
-    Optional<SpreadsheetRowReferenceRange> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetRowRangeReference> extractLocaleValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    Class<SpreadsheetRowReferenceRange> type() {
-        return SpreadsheetRowReferenceRange.class;
+    Class<SpreadsheetRowRangeReference> type() {
+        return SpreadsheetRowRangeReference.class;
     }
 
     @Override
-    void accept(final SpreadsheetRowReferenceRange value,
+    void accept(final SpreadsheetRowRangeReference value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitFrozenRows(value);
     }
@@ -89,7 +89,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     }
 
     @Override
-    public SpreadsheetRowReferenceRange parseValue0(final String value) {
+    public SpreadsheetRowRangeReference parseValue0(final String value) {
         return this.failParseValueUnsupported();
     }
 }

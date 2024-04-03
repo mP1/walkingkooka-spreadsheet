@@ -295,7 +295,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testParseRange() {
         this.checkEquals(
-                SpreadsheetRowReferenceRange.with(
+                SpreadsheetRowRangeReference.with(
                         Range.greaterThanEquals(SpreadsheetSelection.parseRow("2"))
                                 .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("4")))
                 ),
@@ -305,7 +305,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testParseRange2() {
         this.checkEquals(
-                SpreadsheetRowReferenceRange.with(
+                SpreadsheetRowRangeReference.with(
                         Range.greaterThanEquals(SpreadsheetSelection.parseRow("$2"))
                                 .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("$5")))
                 ),
@@ -697,7 +697,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         final SpreadsheetRowReference upper = SpreadsheetSelection.parseRow("2");
 
         this.checkEquals(
-                SpreadsheetRowReferenceRange.with(
+                SpreadsheetRowRangeReference.with(
                         Range.greaterThanEquals(lower)
                                 .and(
                                         Range.lessThanEquals(upper)
@@ -1013,7 +1013,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Override
-    SpreadsheetRowReferenceRange parseRange(final String range) {
+    SpreadsheetRowRangeReference parseRange(final String range) {
         return SpreadsheetSelection.parseRowRange(range);
     }
 

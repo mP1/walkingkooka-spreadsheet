@@ -386,7 +386,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testParseRange() {
         this.checkEquals(
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.greaterThanEquals(SpreadsheetSelection.parseColumn("B"))
                                 .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("D")))
                 ),
@@ -396,7 +396,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testParseRange2() {
         this.checkEquals(
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.greaterThanEquals(SpreadsheetSelection.parseColumn("$B"))
                                 .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("$D")))
                 ),
@@ -577,7 +577,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetColumnReference upper = SpreadsheetSelection.parseColumn("B");
 
         this.checkEquals(
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.greaterThanEquals(lower)
                                 .and(
                                         Range.lessThanEquals(upper)
@@ -607,7 +607,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetColumnReference column = this.createSelection();
 
         this.toColumnRangeAndCheck(
-                SpreadsheetColumnReferenceRange.with(Range.singleton(column)),
+                SpreadsheetColumnRangeReference.with(Range.singleton(column)),
                 column.toColumnRange()
         );
     }
@@ -1069,7 +1069,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Override
-    SpreadsheetColumnReferenceRange parseRange(final String range) {
+    SpreadsheetColumnRangeReference parseRange(final String range) {
         return SpreadsheetSelection.parseColumnRange(range);
     }
 

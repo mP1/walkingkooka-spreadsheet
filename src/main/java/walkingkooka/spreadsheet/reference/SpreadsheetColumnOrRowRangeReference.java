@@ -30,7 +30,7 @@ import java.util.stream.IntStream;
  * Base class for a range that holds a column or row range.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnOrRowReference & Comparable<T>> extends SpreadsheetSelection
+abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnOrRowReference & Comparable<T>> extends SpreadsheetSelection
         implements HasRange<T>,
         HasRangeBounds<T>,
         Iterable<T> {
@@ -38,7 +38,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     /**
      * Package private ctor
      */
-    SpreadsheetColumnOrRowReferenceRange(final Range<T> range) {
+    SpreadsheetColumnOrRowRangeReference(final Range<T> range) {
         super();
         this.range = range;
     }
@@ -105,7 +105,7 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
      * Would be setter that accepts a pair of column/row, and returns a range with those values,
      * creating a new instance if necessary.
      */
-    final <R extends SpreadsheetColumnOrRowReferenceRange<?>> R setRange0(final Range<T> range) {
+    final <R extends SpreadsheetColumnOrRowRangeReference<?>> R setRange0(final Range<T> range) {
         return Cast.to(
                 this.range.equals(range) ?
                         this :
@@ -113,17 +113,17 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
         );
     }
 
-    abstract SpreadsheetColumnOrRowReferenceRange<?> replace(final Range<T> range);
+    abstract SpreadsheetColumnOrRowRangeReference<?> replace(final Range<T> range);
 
     // add..............................................................................................................
 
-    final SpreadsheetColumnOrRowReferenceRange<?> add0(final int value) {
+    final SpreadsheetColumnOrRowRangeReference<?> add0(final int value) {
         return 0 == value ?
                 this :
                 this.addNonZero(value);
     }
 
-    abstract SpreadsheetColumnOrRowReferenceRange<?> addNonZero(final int value);
+    abstract SpreadsheetColumnOrRowRangeReference<?> addNonZero(final int value);
 
     // addSaturated.....................................................................................................
 
@@ -131,22 +131,22 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
      * Adds a delta to the value and returns an instance with the result.
      */
     @Override
-    public abstract SpreadsheetColumnOrRowReferenceRange<?> addSaturated(final int value);
+    public abstract SpreadsheetColumnOrRowRangeReference<?> addSaturated(final int value);
 
-    final SpreadsheetColumnOrRowReferenceRange<?> addSaturated0(final int value) {
+    final SpreadsheetColumnOrRowRangeReference<?> addSaturated0(final int value) {
         return 0 == value ?
                 this :
                 this.addSaturatedNonZero(value);
     }
 
-    abstract SpreadsheetColumnOrRowReferenceRange<?> addSaturatedNonZero(final int value);
+    abstract SpreadsheetColumnOrRowRangeReference<?> addSaturatedNonZero(final int value);
 
     // addIfRelative....................................................................................................
 
     /**
      * If this column or row is a relative reference add the given delta or return this if absolute.
      */
-    public abstract SpreadsheetColumnOrRowReferenceRange<?> addIfRelative(final int delta);
+    public abstract SpreadsheetColumnOrRowRangeReference<?> addIfRelative(final int delta);
 
     // isSingle.........................................................................................................
 
@@ -205,12 +205,12 @@ abstract class SpreadsheetColumnOrRowReferenceRange<T extends SpreadsheetColumnO
     boolean equals0(final Object other,
                     final boolean includeKind) {
         return this.equals1(
-                (SpreadsheetColumnOrRowReferenceRange<?>) other,
+                (SpreadsheetColumnOrRowRangeReference<?>) other,
                 includeKind
         );
     }
 
-    private boolean equals1(final SpreadsheetColumnOrRowReferenceRange<?> other,
+    private boolean equals1(final SpreadsheetColumnOrRowRangeReference<?> other,
                             final boolean includeKind) {
         return this.begin().equals0(other.begin(), includeKind) &&
                 this.end().equals0(other.end(), includeKind);

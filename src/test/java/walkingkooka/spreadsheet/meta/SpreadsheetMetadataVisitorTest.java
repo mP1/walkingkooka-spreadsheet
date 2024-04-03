@@ -34,8 +34,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.text.TextStyle;
@@ -238,7 +238,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitFrozenColumns() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitFrozenColumns(final SpreadsheetColumnReferenceRange r) {
+            protected void visitFrozenColumns(final SpreadsheetColumnRangeReference r) {
                 this.visited = r;
             }
         }.accept(
@@ -251,7 +251,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitFrozenRows() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitFrozenRows(final SpreadsheetRowReferenceRange r) {
+            protected void visitFrozenRows(final SpreadsheetRowRangeReference r) {
                 this.visited = r;
             }
         }.accept(

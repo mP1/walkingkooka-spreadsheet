@@ -269,10 +269,10 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     /**
-     * Creates a {@link SpreadsheetColumnReferenceRange} using the given {@link SpreadsheetColumnReference}.
+     * Creates a {@link SpreadsheetColumnRangeReference} using the given {@link SpreadsheetColumnReference}.
      */
-    public SpreadsheetColumnReferenceRange columnRange(final SpreadsheetColumnReference other) {
-        return SpreadsheetColumnReferenceRange.with(
+    public SpreadsheetColumnRangeReference columnRange(final SpreadsheetColumnReference other) {
+        return SpreadsheetColumnRangeReference.with(
                 this.range(other)
         );
     }
@@ -283,10 +283,10 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     /**
-     * Returns a {@link SpreadsheetColumnReferenceRange} holding only this column.
+     * Returns a {@link SpreadsheetColumnRangeReference} holding only this column.
      */
     @Override
-    public SpreadsheetColumnReferenceRange toColumnRange() {
+    public SpreadsheetColumnRangeReference toColumnRange() {
         return this.columnRange(this);
     }
 
@@ -296,7 +296,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    public SpreadsheetRowReferenceRange toRowRange() {
+    public SpreadsheetRowRangeReference toRowRange() {
         throw new UnsupportedOperationException(this.toString());
     }
 

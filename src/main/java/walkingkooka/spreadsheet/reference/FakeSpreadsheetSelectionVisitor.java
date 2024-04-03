@@ -52,7 +52,7 @@ public class FakeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReferenceRange range) {
+    protected void visit(final SpreadsheetColumnRangeReference range) {
         throw new UnsupportedOperationException();
     }
 
@@ -67,7 +67,7 @@ public class FakeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReferenceRange range) {
+    protected void visit(final SpreadsheetRowRangeReference range) {
         throw new UnsupportedOperationException();
     }
 }

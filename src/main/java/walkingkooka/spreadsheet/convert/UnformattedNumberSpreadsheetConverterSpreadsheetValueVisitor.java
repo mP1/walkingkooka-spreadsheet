@@ -21,11 +21,11 @@ import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -159,7 +159,7 @@ final class UnformattedNumberSpreadsheetConverterSpreadsheetValueVisitor extends
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReferenceRange value) {
+    protected void visit(final SpreadsheetColumnRangeReference value) {
         this.converted = value.toString();
     }
 
@@ -174,7 +174,7 @@ final class UnformattedNumberSpreadsheetConverterSpreadsheetValueVisitor extends
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReferenceRange value) {
+    protected void visit(final SpreadsheetRowRangeReference value) {
         this.converted = value.toString();
     }
 

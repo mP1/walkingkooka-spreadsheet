@@ -43,7 +43,7 @@ final class SpreadsheetViewportWindowsCellSpreadsheetSelectionVisitor extends Sp
 //    }
 //
 //    @Override
-//    protected void visit(final SpreadsheetColumnReferenceRange range) {
+//    protected void visit(final SpreadsheetColumnRangeReference range) {
 //        super.visit( final range);
 //    }
 //
@@ -58,7 +58,7 @@ final class SpreadsheetViewportWindowsCellSpreadsheetSelectionVisitor extends Sp
 //    }
 //
 //    @Override
-//    protected void visit(final SpreadsheetRowReferenceRange rows) {
+//    protected void visit(final SpreadsheetRowRangeReference rows) {
 //        this.visit(rows.);
 //    }
 

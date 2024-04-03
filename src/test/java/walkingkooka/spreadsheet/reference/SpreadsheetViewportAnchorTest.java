@@ -614,7 +614,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     private void columnAndCheck(final String range,
                                      final SpreadsheetViewportAnchor anchor,
                                      final String column) {
-        final SpreadsheetColumnReferenceRange parsed = SpreadsheetSelection.parseColumnRange(range);
+        final SpreadsheetColumnRangeReference parsed = SpreadsheetSelection.parseColumnRange(range);
         final SpreadsheetColumnReference fixed = SpreadsheetSelection.parseColumn(column);
 
         this.checkEquals(
@@ -654,7 +654,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     private void rowAndCheck(final String range,
                              final SpreadsheetViewportAnchor anchor,
                              final String row) {
-        final SpreadsheetRowReferenceRange parsed = SpreadsheetSelection.parseRowRange(range);
+        final SpreadsheetRowRangeReference parsed = SpreadsheetSelection.parseRowRange(range);
         final SpreadsheetRowReference fixed = SpreadsheetSelection.parseRow(row);
 
         this.checkEquals(

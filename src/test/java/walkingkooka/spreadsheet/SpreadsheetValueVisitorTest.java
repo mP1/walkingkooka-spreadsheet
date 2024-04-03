@@ -22,11 +22,11 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -317,7 +317,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptColumnReferenceRange() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetColumnReferenceRange value = SpreadsheetSelection.parseColumnRange("E:F" );
+        final SpreadsheetColumnRangeReference value = SpreadsheetSelection.parseColumnRange("E:F");
 
         new FakeSpreadsheetValueVisitor() {
             @Override
@@ -334,7 +334,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
 
             @Override
-            protected void visit(final SpreadsheetColumnReferenceRange v) {
+            protected void visit(final SpreadsheetColumnRangeReference v) {
                 assertSame(value, v);
                 b.append("3" );
             }
@@ -702,7 +702,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptRowReferenceRange() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetRowReferenceRange value = SpreadsheetSelection.parseRowRange("2:3" );
+        final SpreadsheetRowRangeReference value = SpreadsheetSelection.parseRowRange("2:3");
 
         new FakeSpreadsheetValueVisitor() {
             @Override
@@ -719,7 +719,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
 
             @Override
-            protected void visit(final SpreadsheetRowReferenceRange v) {
+            protected void visit(final SpreadsheetRowRangeReference v) {
                 assertSame(value, v);
                 b.append("3" );
             }

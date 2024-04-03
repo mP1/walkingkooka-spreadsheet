@@ -378,7 +378,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     @Test
     public void testSetColumnRangeDifferent() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
-        final SpreadsheetColumnReferenceRange columns = SpreadsheetSelection.parseColumnRange("F:G");
+        final SpreadsheetColumnRangeReference columns = SpreadsheetSelection.parseColumnRange("F:G");
         final SpreadsheetCellRange different = range.setColumnRange(columns);
 
         assertNotSame(range, different);
@@ -430,7 +430,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     @Test
     public void testSetRowRangeDifferent() {
         final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
-        final SpreadsheetRowReferenceRange rows = SpreadsheetSelection.parseRowRange("6:7");
+        final SpreadsheetRowRangeReference rows = SpreadsheetSelection.parseRowRange("6:7");
         final SpreadsheetCellRange different = range.setRowRange(rows);
 
         assertNotSame(range, different);

@@ -23,11 +23,11 @@ import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 /**
@@ -51,10 +51,10 @@ final class StringToSpreadsheetSelectionConverter implements Converter<Spreadshe
                         type == SpreadsheetCellReferenceOrRange.class ||
                         type == SpreadsheetCellRange.class ||
                         type == SpreadsheetColumnReference.class ||
-                        type == SpreadsheetColumnReferenceRange.class ||
+                        type == SpreadsheetColumnRangeReference.class ||
                         type == SpreadsheetLabelName.class ||
                         type == SpreadsheetRowReference.class ||
-                        type == SpreadsheetRowReferenceRange.class);
+                        type == SpreadsheetRowRangeReference.class);
     }
 
     @Override

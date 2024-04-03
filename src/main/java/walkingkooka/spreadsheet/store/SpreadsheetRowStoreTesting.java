@@ -21,8 +21,8 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRow;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 
 import java.util.Set;
 
@@ -39,7 +39,7 @@ public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> exten
     }
 
     default void loadRowsAndCheck(final S store,
-                                  final SpreadsheetRowReferenceRange range,
+                                  final SpreadsheetRowRangeReference range,
                                   final SpreadsheetRow... expected) {
         this.loadRowsAndCheck(
                 store,
@@ -49,7 +49,7 @@ public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> exten
     }
 
     default void loadRowsAndCheck(final S store,
-                                  final SpreadsheetRowReferenceRange range,
+                                  final SpreadsheetRowRangeReference range,
                                   final Set<SpreadsheetRow> expected) {
         this.checkEquals(
                 expected,

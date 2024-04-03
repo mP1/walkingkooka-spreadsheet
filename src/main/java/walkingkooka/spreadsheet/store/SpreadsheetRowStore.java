@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRow;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -33,9 +33,9 @@ import java.util.Set;
 public interface SpreadsheetRowStore extends SpreadsheetColumnOrRowStore<SpreadsheetRowReference, SpreadsheetRow> {
 
     /**
-     * Attempts to load all the rows in the given {@link SpreadsheetRowReferenceRange}.
+     * Attempts to load all the rows in the given {@link SpreadsheetRowRangeReference}.
      */
-    default Set<SpreadsheetRow> loadRows(final SpreadsheetRowReferenceRange range) {
+    default Set<SpreadsheetRow> loadRows(final SpreadsheetRowRangeReference range) {
         Objects.requireNonNull(range, "ranges");
 
         final Set<SpreadsheetRow> rows = Sets.sorted();

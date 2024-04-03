@@ -19,12 +19,12 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameFrozenColumns, SpreadsheetColumnReferenceRange> {
+public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameFrozenColumns, SpreadsheetColumnRangeReference> {
 
     @Test
     public void testInvalidSpreadsheetColumnReferenceRangeFails() {
@@ -53,13 +53,13 @@ public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends Spre
     }
 
     @Override
-    SpreadsheetColumnReferenceRange propertyValue() {
+    SpreadsheetColumnRangeReference propertyValue() {
         return SpreadsheetSelection.parseColumnRange("A:B");
     }
 
     @Override
     String propertyValueType() {
-        return SpreadsheetColumnReferenceRange.class.getSimpleName();
+        return SpreadsheetColumnRangeReference.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................
