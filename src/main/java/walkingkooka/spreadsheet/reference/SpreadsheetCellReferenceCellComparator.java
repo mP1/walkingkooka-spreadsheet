@@ -32,7 +32,7 @@ final class SpreadsheetCellReferenceCellComparator implements Comparator<Spreads
         return new SpreadsheetCellReferenceCellComparator(comparator);
     }
 
-    public SpreadsheetCellReferenceCellComparator(Comparator<SpreadsheetCellReference> comparator) {
+    public SpreadsheetCellReferenceCellComparator(final Comparator<SpreadsheetCellReference> comparator) {
         this.comparator = comparator;
     }
 
