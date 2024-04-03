@@ -29,14 +29,12 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
@@ -373,11 +371,11 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                                 SpreadsheetSelection.A1,
                                 SpreadsheetSelection.A1
                                         .setFormula(
-                                                parseFormula("=100+B2")
+                                                SpreadsheetMetadataTesting.parseFormula("=100+B2")
                                         ),
                                 B2,
                                 B2.setFormula(
-                                        parseFormula("=200+B3")
+                                        SpreadsheetMetadataTesting.parseFormula("=200+B3")
                                 )
                         )
                 ),
@@ -386,11 +384,11 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         Maps.of(
                                 B2,
                                 B2.setFormula(
-                                        parseFormula("=100+C3")
+                                        SpreadsheetMetadataTesting.parseFormula("=100+C3")
                                 ),
                                 C3,
                                 C3.setFormula(
-                                        parseFormula("=200+C4")
+                                        SpreadsheetMetadataTesting.parseFormula("=200+C4")
                                 )
                         )
                 )
@@ -408,11 +406,11 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                                 SpreadsheetSelection.A1,
                                 SpreadsheetSelection.A1
                                         .setFormula(
-                                                parseFormula("=100+B2")
+                                                SpreadsheetMetadataTesting.parseFormula("=100+B2")
                                         ),
                                 B2,
                                 B2.setFormula(
-                                        parseFormula("=200+B3")
+                                        SpreadsheetMetadataTesting.parseFormula("=200+B3")
                                 )
                         )
                 ),
@@ -421,7 +419,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         Maps.of(
                                 B2,
                                 B2.setFormula(
-                                        parseFormula("=100+C3")
+                                        SpreadsheetMetadataTesting.parseFormula("=100+C3")
                                 )
                         )
                 )
@@ -437,18 +435,18 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         RANGE,
                         Maps.of(
                                 SpreadsheetSelection.A1,
-                                parseFormula("=100+B2"),
+                                SpreadsheetMetadataTesting.parseFormula("=100+B2"),
                                 B2,
-                                parseFormula("=200+B3")
+                                SpreadsheetMetadataTesting.parseFormula("=200+B3")
                         )
                 ),
                 moveTo,
                 moveTo.setValue(
                         Maps.of(
                                 B2,
-                                parseFormula("=100+C3"),
+                                SpreadsheetMetadataTesting.parseFormula("=100+C3"),
                                 C3,
-                                parseFormula("=200+C4")
+                                SpreadsheetMetadataTesting.parseFormula("=200+C4")
                         )
                 )
         );
@@ -593,16 +591,6 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.checkEquals(
                 expected,
                 moved
-        );
-    }
-
-    private static SpreadsheetFormula parseFormula(final String text) {
-        return SpreadsheetFormula.parse(
-                TextCursors.charSequence(text),
-                METADATA_EN_AU
-                        .parser(),
-                METADATA_EN_AU
-                        .parserContext(LocalDateTime::now)
         );
     }
 

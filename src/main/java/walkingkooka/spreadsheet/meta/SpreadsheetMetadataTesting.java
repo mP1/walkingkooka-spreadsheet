@@ -20,8 +20,10 @@ package walkingkooka.spreadsheet.meta;
 import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.convert.Converters;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.test.Testing;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
@@ -67,4 +69,14 @@ public interface SpreadsheetMetadataTesting extends Testing {
                         .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
                         .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
                 ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 1);
+
+    static SpreadsheetFormula parseFormula(final String text) {
+        return SpreadsheetFormula.parse(
+                TextCursors.charSequence(text),
+                METADATA_EN_AU
+                        .parser(),
+                METADATA_EN_AU
+                        .parserContext(LocalDateTime::now)
+        );
+    }
 }
