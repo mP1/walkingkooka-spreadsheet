@@ -61,7 +61,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      * A {@link SpreadsheetColumnRangeReference} that includes all cells.
      */
     public static final SpreadsheetCellRange ALL = SpreadsheetColumnRangeReference.ALL
-            .setRowReferenceRange(SpreadsheetRowRangeReference.ALL);
+            .setRowRangeReference(SpreadsheetRowRangeReference.ALL);
 
     /**
      * Computes the range of the given cells.
@@ -208,7 +208,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      * returning a {@link SpreadsheetCellRange} with the result.
      */
     public SpreadsheetCellRange setColumnRange(final SpreadsheetColumnRangeReference columnRange) {
-        checkColumnReferenceRange(columnRange);
+        checkColumnRangeReference(columnRange);
 
         return this.setRange(
                 Range.greaterThanEquals(
@@ -242,7 +242,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      * returning a {@link SpreadsheetCellRange} with the result.
      */
     public SpreadsheetCellRange setRowRange(final SpreadsheetRowRangeReference rowRange) {
-        checkRowReferenceRange(rowRange);
+        checkRowRangeReference(rowRange);
 
         return this.setRange(
                 Range.greaterThanEquals(this.begin().column().setRow(rowRange.begin()))

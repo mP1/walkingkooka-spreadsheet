@@ -393,7 +393,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // rowRange.........................................................................................................
 
     @Test
-    public void testRowReferenceRange() {
+    public void testRowRangeReference() {
         this.rowRangeAndCheck("B2:D4", "2:4");
     }
 

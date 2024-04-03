@@ -79,7 +79,7 @@ final class SpreadsheetValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetV
     }
 
     @Override
-    protected void visitColumnReferenceRange() {
+    protected void visitColumnRangeReference() {
         this.typeName(SpreadsheetValueType.COLUMN_RANGE);
     }
 
@@ -144,7 +144,7 @@ final class SpreadsheetValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetV
     }
 
     @Override
-    protected void visitRowReferenceRange() {
+    protected void visitRowRangeReference() {
         this.typeName(SpreadsheetValueType.ROW_RANGE);
     }
 

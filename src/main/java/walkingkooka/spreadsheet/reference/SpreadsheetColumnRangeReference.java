@@ -70,8 +70,8 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
     /**
      * Creates a {@link SpreadsheetCellRange} combining this column range and the given row range.
      */
-    public SpreadsheetCellRange setRowReferenceRange(final SpreadsheetRowRangeReference row) {
-        checkRowReferenceRange(row);
+    public SpreadsheetCellRange setRowRangeReference(final SpreadsheetRowRangeReference row) {
+        checkRowRangeReference(row);
 
         final SpreadsheetColumnReference columnBegin = this.begin();
         final SpreadsheetRowReference rowBegin = row.begin();

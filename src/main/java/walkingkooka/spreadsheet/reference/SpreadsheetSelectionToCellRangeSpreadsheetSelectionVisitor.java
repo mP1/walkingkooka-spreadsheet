@@ -62,7 +62,7 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
 
     @Override
     protected void visit(final SpreadsheetColumnRangeReference columns) {
-        this.cellRange = columns.setRowReferenceRange(SpreadsheetSelection.ALL_ROWS);
+        this.cellRange = columns.setRowRangeReference(SpreadsheetSelection.ALL_ROWS);
     }
 
     @Override
@@ -82,7 +82,7 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
 
     @Override
     protected void visit(final SpreadsheetRowRangeReference rows) {
-        this.cellRange = rows.setColumnReferenceRange(SpreadsheetSelection.ALL_COLUMNS);
+        this.cellRange = rows.setColumnRangeReference(SpreadsheetSelection.ALL_COLUMNS);
     }
 
     /**

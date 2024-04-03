@@ -1230,7 +1230,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testParseCellReferenceRangeFails() {
+    public void testParseCellRangeReferenceFails() {
         final String text = "A1:B2";
 
         this.parseStringFails(

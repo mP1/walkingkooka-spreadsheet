@@ -315,7 +315,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Test
-    public void testAcceptColumnReferenceRange() {
+    public void testAcceptColumnRangeReference() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetColumnRangeReference value = SpreadsheetSelection.parseColumnRange("E:F");
 
@@ -344,7 +344,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Test
-    public void testAcceptColumnReferenceRange2() {
+    public void testAcceptColumnRangeReference2() {
         new SpreadsheetValueVisitor() {
         }.accept(SpreadsheetSelection.parseColumnRange("E:F" ));
     }
@@ -700,7 +700,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Test
-    public void testAcceptRowReferenceRange() {
+    public void testAcceptRowRangeReference() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetRowRangeReference value = SpreadsheetSelection.parseRowRange("2:3");
 
@@ -729,7 +729,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Test
-    public void testAcceptRowReferenceRange2() {
+    public void testAcceptRowRangeReference2() {
         new SpreadsheetValueVisitor() {
         }.accept(SpreadsheetSelection.parseRowRange("2:3" ));
     }

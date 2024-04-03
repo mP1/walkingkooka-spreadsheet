@@ -71,7 +71,7 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
     }
 
     @Override
-    protected void visitColumnReferenceRange() {
+    protected void visitColumnRangeReference() {
         throw new UnsupportedOperationException();
     }
 
@@ -141,7 +141,7 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
     }
 
     @Override
-    protected void visitRowReferenceRange() {
+    protected void visitRowRangeReference() {
         throw new UnsupportedOperationException();
     }
 

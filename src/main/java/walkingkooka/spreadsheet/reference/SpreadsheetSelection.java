@@ -1479,8 +1479,8 @@ public abstract class SpreadsheetSelection implements HasText,
         return Objects.requireNonNull(column, "column");
     }
 
-    static SpreadsheetColumnRangeReference checkColumnReferenceRange(final SpreadsheetColumnRangeReference columnReferenceRange) {
-        return Objects.requireNonNull(columnReferenceRange, "columnReferenceRange");
+    static SpreadsheetColumnRangeReference checkColumnRangeReference(final SpreadsheetColumnRangeReference columnRangeReference) {
+        return Objects.requireNonNull(columnRangeReference, "columnRangeReference");
     }
 
     static void checkReferenceKind(final SpreadsheetReferenceKind referenceKind) {
@@ -1491,8 +1491,8 @@ public abstract class SpreadsheetSelection implements HasText,
         return Objects.requireNonNull(row, "row");
     }
 
-    static void checkRowReferenceRange(final SpreadsheetRowRangeReference rowReferenceRange) {
-        Objects.requireNonNull(rowReferenceRange, "rowReferenceRange");
+    static void checkRowRangeReference(final SpreadsheetRowRangeReference rowRangeReference) {
+        Objects.requireNonNull(rowRangeReference, "rowRangeReference");
     }
 
     static String checkText(final String text) {

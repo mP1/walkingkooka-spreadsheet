@@ -55,7 +55,7 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
     /**
      * Loads all the {@link SpreadsheetCellRange} that cover the cell
      */
-    Set<SpreadsheetCellRange> loadCellReferenceRanges(final SpreadsheetCellReference cell);
+    Set<SpreadsheetCellRange> loadCellRangeReferences(final SpreadsheetCellReference cell);
 
     /**
      * Load all the values for a single cell.

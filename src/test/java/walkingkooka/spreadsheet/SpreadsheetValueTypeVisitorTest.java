@@ -372,7 +372,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
-    public void testAcceptColumnReferenceRange() {
+    public void testAcceptColumnRangeReference() {
         final StringBuilder b = new StringBuilder();
         final Class<SpreadsheetColumnRangeReference> type = SpreadsheetColumnRangeReference.class;
 
@@ -391,7 +391,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
 
             @Override
-            protected void visitColumnReferenceRange() {
+            protected void visitColumnRangeReference() {
                 b.append("3" );
             }
         }.accept(type);
@@ -400,7 +400,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
-    public void testAcceptColumnReferenceRange2() {
+    public void testAcceptColumnRangeReference2() {
         new SpreadsheetValueTypeVisitor() {
         }.accept(SpreadsheetColumnRangeReference.class);
     }
@@ -793,7 +793,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
-    public void testAcceptRowReferenceRange() {
+    public void testAcceptRowRangeReference() {
         final StringBuilder b = new StringBuilder();
         final Class<SpreadsheetRowRangeReference> type = SpreadsheetRowRangeReference.class;
 
@@ -812,7 +812,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             }
 
             @Override
-            protected void visitRowReferenceRange() {
+            protected void visitRowRangeReference() {
                 b.append("3" );
             }
         }.accept(type);
@@ -821,7 +821,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
-    public void testAcceptRowReferenceRange2() {
+    public void testAcceptRowRangeReference2() {
         new SpreadsheetValueTypeVisitor() {
         }.accept(SpreadsheetRowRangeReference.class);
     }
