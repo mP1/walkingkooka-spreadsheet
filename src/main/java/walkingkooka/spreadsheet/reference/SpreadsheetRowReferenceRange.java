@@ -47,7 +47,7 @@ public final class SpreadsheetRowReferenceRange extends SpreadsheetColumnOrRowRe
      * Factory that creates a {@link SpreadsheetRowReferenceRange}
      */
     static SpreadsheetRowReferenceRange with(final Range<SpreadsheetRowReference> range) {
-        SpreadsheetRangeRangeVisitor.check(range);
+        SpreadsheetSelectionRangeRangeVisitor.check(range);
 
         return new SpreadsheetRowReferenceRange(range);
     }

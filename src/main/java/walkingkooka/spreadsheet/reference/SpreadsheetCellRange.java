@@ -118,7 +118,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      * Factory that creates a {@link SpreadsheetCellRange}
      */
     static SpreadsheetCellRange with(final Range<SpreadsheetCellReference> range) {
-        SpreadsheetRangeRangeVisitor.check(range);
+        SpreadsheetSelectionRangeRangeVisitor.check(range);
 
         return new SpreadsheetCellRange(range);
     }
