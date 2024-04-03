@@ -84,9 +84,9 @@ public abstract class SpreadsheetSelection implements HasText,
             );
 
     /**
-     * {@see SpreadsheetCellRange#ALL}
+     * {@see SpreadsheetCellRangeReference#ALL}
      */
-    public final static SpreadsheetCellRange ALL_CELLS = SpreadsheetCellRange.ALL;
+    public final static SpreadsheetCellRangeReference ALL_CELLS = SpreadsheetCellRangeReference.ALL;
 
     /**
      * {@see SpreadsheetColumnRangeReference#ALL}
@@ -198,10 +198,10 @@ public abstract class SpreadsheetSelection implements HasText,
     // sub class factories..............................................................................................
 
     /**
-     * {@see SpreadsheetCellRange}
+     * {@see SpreadsheetCellRangeReference}
      */
-    public static SpreadsheetCellRange cellRange(final Range<SpreadsheetCellReference> range) {
-        return SpreadsheetCellRange.with(range);
+    public static SpreadsheetCellRangeReference cellRange(final Range<SpreadsheetCellReference> range) {
+        return SpreadsheetCellRangeReference.with(range);
     }
 
     /**
@@ -339,7 +339,7 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Parsers the text expecting a valid {@link SpreadsheetCell} or {@link SpreadsheetCellRange} or fails.
+     * Parsers the text expecting a valid {@link SpreadsheetCell} or {@link SpreadsheetCellRangeReference} or fails.
      * eg
      * <pre>
      * A1, // cell
@@ -359,25 +359,25 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Parsers the text expecting a valid {@link SpreadsheetCellRange} or fails.
+     * Parsers the text expecting a valid {@link SpreadsheetCellRangeReference} or fails.
      * eg
      * <pre>
      * A1,
      * B2:C3
      * </pre>
      */
-    public static SpreadsheetCellRange parseCellRange(final String text) {
+    public static SpreadsheetCellRangeReference parseCellRange(final String text) {
         return parseRange(
                 text,
                 ALL_CELLS,
                 SpreadsheetParsers.cell(),
                 (t) -> t.cast(SpreadsheetCellReferenceParserToken.class).cell(),
-                SpreadsheetCellRange::with
+                SpreadsheetCellRangeReference::with
         );
     }
 
     /**
-     * Parses text expecting either a {@link SpreadsheetCellRange} or {@link SpreadsheetLabelName}
+     * Parses text expecting either a {@link SpreadsheetCellRangeReference} or {@link SpreadsheetLabelName}
      */
     public static SpreadsheetExpressionReference parseCellRangeOrLabel(final String text) {
         checkText(text);
@@ -690,13 +690,13 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Tests if the selection be it a column, row or cell is within the given range.
      */
-    public final boolean testCellRange(final SpreadsheetCellRange range) {
+    public final boolean testCellRange(final SpreadsheetCellRangeReference range) {
         return this.testCellRange0(
                 checkCellRange(range)
         );
     }
 
-    abstract boolean testCellRange0(final SpreadsheetCellRange range);
+    abstract boolean testCellRange0(final SpreadsheetCellRangeReference range);
 
     /**
      * Tests if the selection includes the given {@link SpreadsheetColumnReference}.<br>
@@ -725,7 +725,7 @@ public abstract class SpreadsheetSelection implements HasText,
     // containsAll(SpreadsheetViewportWidget)...........................................................................
 
     /**
-     * Can only return true for {@link SpreadsheetCell} or {@link SpreadsheetCellRange} if they contain all the given
+     * Can only return true for {@link SpreadsheetCell} or {@link SpreadsheetCellRangeReference} if they contain all the given
      * {@link SpreadsheetViewportWindows}. If this is a {@link SpreadsheetLabelName} a {@link UnsupportedOperationException}
      * will be thrown while other selection sub types will return false.
      */
@@ -736,13 +736,13 @@ public abstract class SpreadsheetSelection implements HasText,
             throw new UnsupportedOperationException(this.toString());
         }
 
-        return (this.isCellReference() || this.isCellRange()) &&
+        return (this.isCellReference() || this.isCellRangeReference()) &&
                 this.toCellRange().containsAll0(windows);
     }
     // isXXX............................................................................................................
 
-    public final boolean isCellRange() {
-        return this instanceof SpreadsheetCellRange;
+    public final boolean isCellRangeReference() {
+        return this instanceof SpreadsheetCellRangeReference;
     }
 
     public final boolean isCellReference() {
@@ -770,30 +770,30 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Not really a cast operation but only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRange} will
+     * Not really a cast operation but only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRangeReference} will
      * succeed all other types will throw {@link UnsupportedOperationException}.
      */
     public abstract SpreadsheetCellReference toCell();
 
     /**
-     * Attempts to conver this selection to a {@link SpreadsheetCellRange}.
+     * Attempts to conver this selection to a {@link SpreadsheetCellRangeReference}.
      * This only returns for cell and cell-range, other selections will throw a {@link UnsupportedOperationException}.
      */
-    public final SpreadsheetCellRange toCellRange() {
+    public final SpreadsheetCellRangeReference toCellRange() {
         return this.toCellRange(LABEL_TO_CELL_RANGE_UOE)
                 .get(); // always works because Labels will throw UOE.
     }
 
-    private static final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> LABEL_TO_CELL_RANGE_UOE = (l) -> {
+    private static final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> LABEL_TO_CELL_RANGE_UOE = (l) -> {
         throw new UnsupportedOperationException("Unexpected label " + l);
     };
 
     /**
-     * A helper that converts any {@link SpreadsheetSelection} including labels to a {@link SpreadsheetCellRange}.
+     * A helper that converts any {@link SpreadsheetSelection} including labels to a {@link SpreadsheetCellRangeReference}.
      * <br>
      * A {@link SpreadsheetCellReference} will become a range with a single cell, a column will become a range that includes all cells etc.
      */
-    public final Optional<SpreadsheetCellRange> toCellRange(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange) {
+    public final Optional<SpreadsheetCellRangeReference> toCellRange(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
         return SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor.toCellRange(
                 this,
                 labelToCellRange
@@ -804,7 +804,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * A cell or cell ranges will return this otherwise a {@link UnsupportedOperationException} will be thrown.
      */
     public final SpreadsheetSelection toCellOrCellRange() {
-        if (false == this.isCellReference() && false == this.isCellRange()) {
+        if (false == this.isCellReference() && false == this.isCellRangeReference()) {
             throw new UnsupportedOperationException(this.toString());
         }
         return this;
@@ -841,7 +841,7 @@ public abstract class SpreadsheetSelection implements HasText,
         if (this.isCellReference() || this.isColumnReference()) {
             selection = this.toColumn();
         } else {
-            if (this.isCellRange() || this.isColumnRangeReference()) {
+            if (this.isCellRangeReference() || this.isColumnRangeReference()) {
                 selection = this.toColumnRange();
             } else {
                 throw new UnsupportedOperationException(this.toString());
@@ -872,7 +872,7 @@ public abstract class SpreadsheetSelection implements HasText,
         if (this.isCellReference() || this.isRowReference()) {
             selection = this.toRow();
         } else {
-            if (this.isCellRange() || this.isRowRangeReference()) {
+            if (this.isCellRangeReference() || this.isRowRangeReference()) {
                 selection = this.toRowRange();
             } else {
                 throw new UnsupportedOperationException(this.toString());
@@ -1153,7 +1153,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * Returns the value when a {@link SpreadsheetSelection} is not found.
      */
     public final Object notFound(final ExpressionNumberKind expressionNumberKind) {
-        return this.isCellReference() || this.isCellRange() ?
+        return this.isCellReference() || this.isCellRangeReference() ?
                 expressionNumberKind.zero() :
                 this.isLabelName() ?
                         SpreadsheetError.selectionNotFound(
@@ -1197,7 +1197,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * <br>
      * <pre>
      * {@link SpreadsheetCellReference} returns <pre>cell</pre>
-     * {@link SpreadsheetCellRange} returns <pre>cell-range</pre>
+     * {@link SpreadsheetCellRangeReference} returns <pre>cell-range</pre>
      * {@link SpreadsheetColumnReference} returns <pre>column</pre>
      * </pre>
      */
@@ -1304,7 +1304,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
     // UsesToStringBuilder..............................................................................................
 
-    // this is necessary otherwise ToStringBuilder will expand SpreadsheetCellRange etc because they implement Iterable
+    // this is necessary otherwise ToStringBuilder will expand SpreadsheetCellRangeReference etc because they implement Iterable
     // rather than using their compact toString.
     @Override
     public final void buildToString(final ToStringBuilder builder) {
@@ -1320,10 +1320,10 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Accepts a json string and returns a {@link SpreadsheetCellRange} or fails.
+     * Accepts a json string and returns a {@link SpreadsheetCellRangeReference} or fails.
      */
-    static SpreadsheetCellRange unmarshallCellRange(final JsonNode node,
-                                                    final JsonNodeUnmarshallContext context) {
+    static SpreadsheetCellRangeReference unmarshallCellRange(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
         return unmarshall0(
                 node, SpreadsheetExpressionReference::parseCellRange
         );
@@ -1413,7 +1413,7 @@ public abstract class SpreadsheetSelection implements HasText,
         //noinspection StaticInitializerReferencesSubClass
         register(
                 SpreadsheetSelection::unmarshallCellRange,
-                SpreadsheetCellRange.class
+                SpreadsheetCellRangeReference.class
         );
 
 
@@ -1467,7 +1467,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
     // guards............................................................................................................
 
-    static SpreadsheetCellRange checkCellRange(final SpreadsheetCellRange range) {
+    static SpreadsheetCellRangeReference checkCellRange(final SpreadsheetCellRangeReference range) {
         return Objects.requireNonNull(range, "range");
     }
 

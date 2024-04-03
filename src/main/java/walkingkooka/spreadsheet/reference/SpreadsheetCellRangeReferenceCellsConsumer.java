@@ -26,23 +26,23 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * A {@link Consumer} used by {@link SpreadsheetCellRange#cells(Collection, Consumer, Consumer)}.
+ * A {@link Consumer} used by {@link SpreadsheetCellRangeReference#cells(Collection, Consumer, Consumer)}.
  */
-final class SpreadsheetCellRangeCellsConsumer implements Consumer<SpreadsheetCellReference> {
+final class SpreadsheetCellRangeReferenceCellsConsumer implements Consumer<SpreadsheetCellReference> {
 
-    static SpreadsheetCellRangeCellsConsumer with(final Collection<SpreadsheetCell> cells,
-                                                  final Consumer<? super SpreadsheetCell> present,
-                                                  final Consumer<? super SpreadsheetCellReference> absent) {
+    static SpreadsheetCellRangeReferenceCellsConsumer with(final Collection<SpreadsheetCell> cells,
+                                                           final Consumer<? super SpreadsheetCell> present,
+                                                           final Consumer<? super SpreadsheetCellReference> absent) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(present, "present");
         Objects.requireNonNull(absent, "absent");
 
-        return new SpreadsheetCellRangeCellsConsumer(cells, present, absent);
+        return new SpreadsheetCellRangeReferenceCellsConsumer(cells, present, absent);
     }
 
-    private SpreadsheetCellRangeCellsConsumer(final Collection<SpreadsheetCell> cells,
-                                              final Consumer<? super SpreadsheetCell> present,
-                                              final Consumer<? super SpreadsheetCellReference> absent) {
+    private SpreadsheetCellRangeReferenceCellsConsumer(final Collection<SpreadsheetCell> cells,
+                                                       final Consumer<? super SpreadsheetCell> present,
+                                                       final Consumer<? super SpreadsheetCellReference> absent) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(present, "present");
         Objects.requireNonNull(absent, "absent");

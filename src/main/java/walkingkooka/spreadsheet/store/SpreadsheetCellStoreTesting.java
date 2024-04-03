@@ -23,8 +23,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -43,7 +43,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                 () -> this.createStore()
                         .loadCells(
                                 null, // range
-                                SpreadsheetCellRangePath.LRTD,
+                                SpreadsheetCellRangeReferencePath.LRTD,
                                 0, // offset
                                 1 // max
                         )
@@ -71,7 +71,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                 () -> this.createStore()
                         .loadCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangePath.LRTD,
+                                SpreadsheetCellRangeReferencePath.LRTD,
                                 -1, // offset
                                 1 // max
                         )
@@ -85,7 +85,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                 () -> this.createStore()
                         .loadCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangePath.LRTD,
+                                SpreadsheetCellRangeReferencePath.LRTD,
                                 0, // offset
                                 -1 // max
                         )
@@ -93,8 +93,8 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     default void loadCellsAndCheck(final SpreadsheetCellStore store,
-                                   final SpreadsheetCellRange range,
-                                   final SpreadsheetCellRangePath path,
+                                   final SpreadsheetCellRangeReference range,
+                                   final SpreadsheetCellRangeReferencePath path,
                                    final int offset,
                                    final int max,
                                    final SpreadsheetCell... cells) {
@@ -111,8 +111,8 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     default void loadCellsAndCheck(final SpreadsheetCellStore store,
-                                   final SpreadsheetCellRange range,
-                                   final SpreadsheetCellRangePath path,
+                                   final SpreadsheetCellRangeReference range,
+                                   final SpreadsheetCellRangeReferencePath path,
                                    final int offset,
                                    final int max,
                                    final Set<SpreadsheetCell> cells) {
@@ -257,7 +257,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     default void findCellsWithValueTypeAndCheck(final S store,
-                                                final SpreadsheetCellRange cellRange,
+                                                final SpreadsheetCellRangeReference cellRange,
                                                 final String valueTypeName,
                                                 final int max,
                                                 final SpreadsheetCell... expected) {
@@ -271,7 +271,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     default void findCellsWithValueTypeAndCheck(final S store,
-                                                final SpreadsheetCellRange cellRange,
+                                                final SpreadsheetCellRangeReference cellRange,
                                                 final String valueTypeName,
                                                 final int max,
                                                 final Set<SpreadsheetCell> expected) {
@@ -311,7 +311,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     default void countCellsWithValueTypeAndCheck(final S store,
-                                                 final SpreadsheetCellRange cellRange,
+                                                 final SpreadsheetCellRangeReference cellRange,
                                                  final String valueTypeName,
                                                  final int expected) {
         this.checkEquals(

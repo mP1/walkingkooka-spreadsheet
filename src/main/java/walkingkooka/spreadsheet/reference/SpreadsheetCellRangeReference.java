@@ -46,13 +46,13 @@ import java.util.stream.Stream;
 /**
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  * <br>
- * When {@link #compareTo(SpreadsheetCellRange)} the {@link SpreadsheetReferenceKind} is ignored, which is also true
+ * When {@link #compareTo(SpreadsheetCellRangeReference)} the {@link SpreadsheetReferenceKind} is ignored, which is also true
  * of other {@link SpreadsheetSelection}.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
-        implements Comparable<SpreadsheetCellRange>,
-        CanReplaceReferences<SpreadsheetCellRange>,
+public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenceOrRange
+        implements Comparable<SpreadsheetCellRangeReference>,
+        CanReplaceReferences<SpreadsheetCellRangeReference>,
         HasRange<SpreadsheetCellReference>,
         HasRangeBounds<SpreadsheetCellReference>,
         Iterable<SpreadsheetCellReference> {
@@ -60,18 +60,18 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     /**
      * A {@link SpreadsheetColumnRangeReference} that includes all cells.
      */
-    public static final SpreadsheetCellRange ALL = SpreadsheetColumnRangeReference.ALL
+    public static final SpreadsheetCellRangeReference ALL = SpreadsheetColumnRangeReference.ALL
             .setRowRangeReference(SpreadsheetRowRangeReference.ALL);
 
     /**
      * Computes the range of the given cells.
      */
-    public static SpreadsheetCellRange fromCells(final List<SpreadsheetCellReference> cells) {
+    public static SpreadsheetCellRangeReference fromCells(final List<SpreadsheetCellReference> cells) {
         Objects.requireNonNull(cells, "cells");
 
         final List<SpreadsheetCellReference> copy = Lists.immutable(cells);
 
-        SpreadsheetCellRange range;
+        SpreadsheetCellRangeReference range;
         switch (copy.size()) {
             case 0:
                 throw new IllegalArgumentException("Cells empty");
@@ -87,7 +87,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @SuppressWarnings("lgtm[java/dereferenced-value-may-be-null]")
-    private static SpreadsheetCellRange computeEnclosingRange(final List<SpreadsheetCellReference> cells) {
+    private static SpreadsheetCellRangeReference computeEnclosingRange(final List<SpreadsheetCellReference> cells) {
         SpreadsheetColumnReference left = null;
         SpreadsheetRowReference top = null;
 
@@ -116,18 +116,18 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetCellRange}
+     * Factory that creates a {@link SpreadsheetCellRangeReference}
      */
-    static SpreadsheetCellRange with(final Range<SpreadsheetCellReference> range) {
+    static SpreadsheetCellRangeReference with(final Range<SpreadsheetCellReference> range) {
         SpreadsheetSelectionRangeRangeVisitor.check(range);
 
-        return new SpreadsheetCellRange(range);
+        return new SpreadsheetCellRangeReference(range);
     }
 
     /**
      * Private ctor
      */
-    private SpreadsheetCellRange(final Range<SpreadsheetCellReference> range) {
+    private SpreadsheetCellRangeReference(final Range<SpreadsheetCellReference> range) {
         super();
         this.range = range;
     }
@@ -185,7 +185,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      * Would be setter that accepts a pair of coordinates, and returns a range with those values,
      * creating a new instance if necessary.
      */
-    public SpreadsheetCellRange setRange(final Range<SpreadsheetCellReference> range) {
+    public SpreadsheetCellRangeReference setRange(final Range<SpreadsheetCellReference> range) {
         return this.range.equals(range) ?
                 this :
                 with(range);
@@ -205,9 +205,9 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
 
     /**
      * Would be setter that combines the new column reference range and the current row reference range,
-     * returning a {@link SpreadsheetCellRange} with the result.
+     * returning a {@link SpreadsheetCellRangeReference} with the result.
      */
-    public SpreadsheetCellRange setColumnRange(final SpreadsheetColumnRangeReference columnRange) {
+    public SpreadsheetCellRangeReference setColumnRange(final SpreadsheetColumnRangeReference columnRange) {
         checkColumnRangeReference(columnRange);
 
         return this.setRange(
@@ -239,9 +239,9 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
 
     /**
      * Would be setter that combines the new column reference range and the current column reference range,
-     * returning a {@link SpreadsheetCellRange} with the result.
+     * returning a {@link SpreadsheetCellRangeReference} with the result.
      */
-    public SpreadsheetCellRange setRowRange(final SpreadsheetRowRangeReference rowRange) {
+    public SpreadsheetCellRangeReference setRowRange(final SpreadsheetRowRangeReference rowRange) {
         checkRowRangeReference(rowRange);
 
         return this.setRange(
@@ -342,14 +342,14 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                       final Consumer<? super SpreadsheetCell> present,
                       final Consumer<? super SpreadsheetCellReference> absent) {
         this.cellStream()
-                .forEach(SpreadsheetCellRangeCellsConsumer.with(cells, present, absent));
+                .forEach(SpreadsheetCellRangeReferenceCellsConsumer.with(cells, present, absent));
     }
 
     /**
-     * {@see SpreadsheetCellRangeSortedMapSpreadsheetCellIterator}
+     * {@see SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator}
      */
     public Iterator<SpreadsheetCell> cellsIterator(final SortedMap<SpreadsheetCellReference, SpreadsheetCell> referenceToCell) {
-        return SpreadsheetCellRangeSortedMapSpreadsheetCellIterator.with(
+        return SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
                 this,
                 referenceToCell
         );
@@ -715,7 +715,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     // add column/row...................................................................................................
 
     @Override
-    public SpreadsheetCellRange add(final int column, final int row) {
+    public SpreadsheetCellRangeReference add(final int column, final int row) {
         return this.setColumnRange(
                 this.columnRange().add(column)
         ).setRowRange(
@@ -724,8 +724,8 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @Override
-    public SpreadsheetCellRange addSaturated(final int column,
-                                             final int row) {
+    public SpreadsheetCellRangeReference addSaturated(final int column,
+                                                      final int row) {
         return this.setColumnRange(
                 this.columnRange().addSaturated(column)
         ).setRowRange(
@@ -734,11 +734,11 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     /**
-     * Adds the given deltas to the relative components of this {@link SpreadsheetCellRange}.
+     * Adds the given deltas to the relative components of this {@link SpreadsheetCellRangeReference}.
      */
     @Override
-    public SpreadsheetCellRange addIfRelative(final int columnDelta,
-                                              final int rowDelta) {
+    public SpreadsheetCellRangeReference addIfRelative(final int columnDelta,
+                                                       final int rowDelta) {
         return this.setColumnRange(
                 this.columnRange()
                         .addIfRelative(columnDelta)
@@ -751,7 +751,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     // CanReplaceReferences.............................................................................................
 
     @Override
-    public SpreadsheetCellRange replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
+    public SpreadsheetCellRangeReference replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
         Objects.requireNonNull(mapper, "mapper");
 
         final Function<SpreadsheetCellReference, SpreadsheetCellReference> mapper2 =
@@ -764,7 +764,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         final SpreadsheetCellReference begin2 = mapper2.apply(begin);
         final SpreadsheetCellReference end2 = mapper2.apply(end);
 
-        SpreadsheetCellRange replaced = this;
+        SpreadsheetCellRangeReference replaced = this;
 
         if (false == begin.equals(begin2) && false == end.equals(end2)) {
             SpreadsheetColumnReference left = begin2.column();
@@ -807,10 +807,10 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
 
     /**
      * Returns true if any part of the given range intersects this range.
-     * {@link SpreadsheetCellRange} that overlaps and contain cells inside and outside this range will return true.
+     * {@link SpreadsheetCellRangeReference} that overlaps and contain cells inside and outside this range will return true.
      */
     @Override
-    boolean testCellRange0(final SpreadsheetCellRange range) {
+    boolean testCellRange0(final SpreadsheetCellRangeReference range) {
         checkCellRange(range);
 
         return this.columnRange().testCellRange0(range) &&
@@ -838,7 +838,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     // containsAll......................................................................................................
 
     /**
-     * Only returns true if the given {@link SpreadsheetViewportWindows} is entirely within this {@link SpreadsheetCellRange}.
+     * Only returns true if the given {@link SpreadsheetViewportWindows} is entirely within this {@link SpreadsheetCellRangeReference}.
      */
     boolean containsAll0(final SpreadsheetViewportWindows windows) {
         return this.equalsIgnoreReferenceKind(ALL_CELLS) ||
@@ -851,9 +851,9 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     // containsAll......................................................................................................
 
     /**
-     * Only returns true if the given {@link SpreadsheetCellRange} is entirely within this {@link SpreadsheetCellRange}.
+     * Only returns true if the given {@link SpreadsheetCellRangeReference} is entirely within this {@link SpreadsheetCellRangeReference}.
      */
-    public boolean containsAll(final SpreadsheetCellRange range) {
+    public boolean containsAll(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
 
         return this.testCell0(
@@ -887,19 +887,19 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetCellRange;
+        return other instanceof SpreadsheetCellRangeReference;
     }
 
     @Override
     boolean equals0(final Object other,
                     final boolean includeKind) {
         return this.equals1(
-                (SpreadsheetCellRange) other,
+                (SpreadsheetCellRangeReference) other,
                 includeKind
         );
     }
 
-    private boolean equals1(final SpreadsheetCellRange other,
+    private boolean equals1(final SpreadsheetCellRangeReference other,
                             final boolean includeKind) {
         return this.begin().equals0(other.begin(), includeKind) &&
                 this.end().equals0(other.end(), includeKind);
@@ -917,8 +917,8 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     // toRelative.......................................................................................................
 
     @Override
-    public SpreadsheetCellRange toRelative() {
-        final SpreadsheetCellRange relative = this.begin()
+    public SpreadsheetCellRangeReference toRelative() {
+        final SpreadsheetCellRangeReference relative = this.begin()
                 .toRelative()
                 .cellRange(this.end()
                         .toRelative());
@@ -930,10 +930,10 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     // Comparable......................................................................................................
 
     /**
-     * Compares two {@link SpreadsheetCellRange} where the {@link SpreadsheetReferenceKind} is irrelevant.
+     * Compares two {@link SpreadsheetCellRangeReference} where the {@link SpreadsheetReferenceKind} is irrelevant.
      */
     @Override
-    public int compareTo(final SpreadsheetCellRange other) {
+    public int compareTo(final SpreadsheetCellRangeReference other) {
         final int compare = this.begin().compareTo(other.begin());
         return 0 == compare ?
                 this.end().compareTo(other.end()) :

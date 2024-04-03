@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
@@ -614,8 +614,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     /**
      * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary,
-     * only if all {@link SpreadsheetCellRange} are all {@link SpreadsheetCellRange ranges}. Filtering is not possible if a
-     * {@link SpreadsheetCellRange} is present because it is not possible to determine if a cell is within those
+     * only if all {@link SpreadsheetCellRangeReference} are all {@link SpreadsheetCellRangeReference ranges}. Filtering is not possible if a
+     * {@link SpreadsheetCellRangeReference} is present because it is not possible to determine if a cell is within those
      * boundaries.
      */
     public final SpreadsheetDelta setWindow(final SpreadsheetViewportWindows window) {
@@ -1110,7 +1110,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Creates a {@link JsonObject} which can then be used to as an argument to {@link #patchStyle(SpreadsheetCellRange, Set, JsonNode, JsonNodeUnmarshallContext)}.
+     * Creates a {@link JsonObject} which can then be used to as an argument to {@link #patchStyle(SpreadsheetCellRangeReference, Set, JsonNode, JsonNodeUnmarshallContext)}.
      */
     public static JsonNode stylePatch(final JsonNode style) {
         Objects.requireNonNull(style, "style");
@@ -1569,7 +1569,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchFormula(final SpreadsheetCellRange cellRange,
+    private static Set<SpreadsheetCell> patchFormula(final SpreadsheetCellRangeReference cellRange,
                                                      final Set<SpreadsheetCell> cells,
                                                      final JsonNode patch,
                                                      final JsonNodeUnmarshallContext context) {
@@ -1598,7 +1598,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchFormatPattern(final SpreadsheetCellRange cellRange,
+    private static Set<SpreadsheetCell> patchFormatPattern(final SpreadsheetCellRangeReference cellRange,
                                                            final Set<SpreadsheetCell> cells,
                                                            final JsonNode patch,
                                                            final JsonNodeUnmarshallContext context) {
@@ -1629,7 +1629,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchParsePattern(final SpreadsheetCellRange cellRange,
+    private static Set<SpreadsheetCell> patchParsePattern(final SpreadsheetCellRangeReference cellRange,
                                                           final Set<SpreadsheetCell> cells,
                                                           final JsonNode patch,
                                                           final JsonNodeUnmarshallContext context) {
@@ -1755,7 +1755,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchStyle(final SpreadsheetCellRange cellRange,
+    private static Set<SpreadsheetCell> patchStyle(final SpreadsheetCellRangeReference cellRange,
                                                    final Set<SpreadsheetCell> cells,
                                                    final JsonNode patch,
                                                    final JsonNodeUnmarshallContext context) {
@@ -1779,7 +1779,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private static Set<SpreadsheetCell> patchAllCells(final SpreadsheetCellRange cellRange,
+    private static Set<SpreadsheetCell> patchAllCells(final SpreadsheetCellRangeReference cellRange,
                                                       final Set<SpreadsheetCell> cells,
                                                       final Function<SpreadsheetCell, SpreadsheetCell> patcher,
                                                       final Function<SpreadsheetCellReference, SpreadsheetCell> creator) {

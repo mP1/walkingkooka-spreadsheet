@@ -28,7 +28,7 @@ import java.util.Objects;
  */
 final class SpreadsheetSelectionRangeRangeVisitor<S extends SpreadsheetSelection & Comparable<S>> extends RangeVisitor<S> {
 
-    // called by SpreadsheetCellRange
+    // called by SpreadsheetCellRangeReference
     static <S extends SpreadsheetSelection & Comparable<S>> void check(final Range<S> range) {
         Objects.requireNonNull(range, "range");
 

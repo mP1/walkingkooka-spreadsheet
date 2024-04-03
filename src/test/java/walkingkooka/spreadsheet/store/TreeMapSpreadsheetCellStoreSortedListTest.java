@@ -24,7 +24,7 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -47,7 +47,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceNew() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -60,7 +60,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceNew2() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -75,7 +75,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceNew3() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(B2);
@@ -90,7 +90,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceNew4() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -108,7 +108,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceNew5() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(B2);
@@ -126,7 +126,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceNew6() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(C3);
@@ -145,7 +145,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceNew7() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(C3);
@@ -163,7 +163,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceReplace() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -183,7 +183,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceReplace2() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -207,7 +207,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceReplace3() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -231,7 +231,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceReplace4() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -261,7 +261,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceRLBU() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.RLBU
+                SpreadsheetCellRangeReferencePath.RLBU
         );
 
         list.addOrReplace(A1);
@@ -279,7 +279,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testAddOrReplaceRLBU2() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.RLBU
+                SpreadsheetCellRangeReferencePath.RLBU
         );
 
         list.addOrReplace(C3);
@@ -299,7 +299,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testGet() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -328,7 +328,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testGetUnknown() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -344,7 +344,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testGetUnknown2() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -391,7 +391,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testGetOrNextEmpty() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         this.getOrNextAndCheck(
@@ -408,7 +408,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testGetOrNext() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -437,7 +437,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testGetOrNextUnknownAfter() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -453,7 +453,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testGetOrNextUnknownBefore() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -513,7 +513,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testIndexOfOrNextEmpty() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         this.indexOfOrNextAndCheck(
@@ -532,7 +532,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testIndexOfOrNext() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -567,7 +567,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testIndexOfOrNextUnknownAfter() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -584,7 +584,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testIndexOfOrNextBefore() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -613,7 +613,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testIndexOfOrNextBefore2() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(B2);
@@ -653,7 +653,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testOffset() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -682,7 +682,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testOffsetUnknown() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -729,7 +729,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testRemove() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -754,7 +754,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testRemoveUnknown() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -772,7 +772,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testRemoveAll() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);
@@ -799,7 +799,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Test
     public void testToString() {
         final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
 
         list.addOrReplace(A1);

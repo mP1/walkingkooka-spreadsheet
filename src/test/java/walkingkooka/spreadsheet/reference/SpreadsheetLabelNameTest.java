@@ -546,7 +546,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testToCellRange2() {
         final SpreadsheetLabelName name = SpreadsheetLabelName.with("Label123");
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("C3:D4");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("C3:D4");
 
         this.toCellRangeAndCheck(
                 name,

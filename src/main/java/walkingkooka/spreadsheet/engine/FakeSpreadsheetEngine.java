@@ -23,8 +23,8 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -119,7 +119,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> range,
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> range,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
@@ -128,8 +128,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
     public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                      final SpreadsheetCellRange from,
-                                      final SpreadsheetCellRange to,
+                                      final SpreadsheetCellRangeReference from,
+                                      final SpreadsheetCellRangeReference to,
                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
@@ -197,8 +197,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
-                                          final SpreadsheetCellRangePath path,
+    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference range,
+                                          final SpreadsheetCellRangeReferencePath path,
                                           final int offset, final int max, final String valueType,
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {

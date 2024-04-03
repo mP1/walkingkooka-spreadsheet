@@ -21,13 +21,13 @@ import walkingkooka.compare.Comparators;
 
 import java.util.Comparator;
 
-final class SpreadsheetCellRangePathComparator implements Comparator<SpreadsheetCellReference> {
+final class SpreadsheetCellRangeReferencePathComparator implements Comparator<SpreadsheetCellReference> {
 
-    static SpreadsheetCellRangePathComparator with(final boolean xFirst,
-                                                   final int reverseX,
-                                                   final int reverseY,
-                                                   final String toString) {
-        return new SpreadsheetCellRangePathComparator(
+    static SpreadsheetCellRangeReferencePathComparator with(final boolean xFirst,
+                                                            final int reverseX,
+                                                            final int reverseY,
+                                                            final String toString) {
+        return new SpreadsheetCellRangeReferencePathComparator(
                 xFirst,
                 reverseX,
                 reverseY,
@@ -35,10 +35,10 @@ final class SpreadsheetCellRangePathComparator implements Comparator<Spreadsheet
         );
     }
 
-    private SpreadsheetCellRangePathComparator(final boolean xFirst,
-                                               final int reverseX,
-                                               final int reverseY,
-                                               final String toString) {
+    private SpreadsheetCellRangeReferencePathComparator(final boolean xFirst,
+                                                        final int reverseX,
+                                                        final int reverseY,
+                                                        final String toString) {
         this.xFirst = xFirst;
         this.reverseX = reverseX;
         this.reverseY = reverseY;
@@ -77,7 +77,7 @@ final class SpreadsheetCellRangePathComparator implements Comparator<Spreadsheet
         return result;
     }
 
-    // required by SpreadsheetCellRangePathCellsIterator
+    // required by SpreadsheetCellRangeReferencePathCellsIterator
 
     final boolean xFirst;
 

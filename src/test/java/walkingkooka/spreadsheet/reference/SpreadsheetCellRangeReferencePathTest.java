@@ -28,13 +28,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellRangePathTest implements ClassTesting<SpreadsheetCellRangePath> {
+public final class SpreadsheetCellRangeReferencePathTest implements ClassTesting<SpreadsheetCellRangeReferencePath> {
 
     @Test
     public void testFromKebabCaseWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetCellRangePath.fromKebabCase(null)
+                () -> SpreadsheetCellRangeReferencePath.fromKebabCase(null)
         );
     }
 
@@ -42,7 +42,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     public void testFromKebabCaseWithUnknownFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetCellRangePath.fromKebabCase("123?")
+                () -> SpreadsheetCellRangeReferencePath.fromKebabCase("123?")
         );
         this.checkEquals(
                 "Got \"123?\" expected one of lrtd, rltd, lrbu, rlbu, tdlr, tdrl, bulr, burl",
@@ -54,13 +54,13 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     public void testFromKebabCaseLRTD() {
         this.fromKebabCaseAndCheck(
                 "lrtd",
-                SpreadsheetCellRangePath.LRTD
+                SpreadsheetCellRangeReferencePath.LRTD
         );
     }
 
     @Test
     public void testFromKebabCaseAllValues() {
-        for (final SpreadsheetCellRangePath path : SpreadsheetCellRangePath.values()) {
+        for (final SpreadsheetCellRangeReferencePath path : SpreadsheetCellRangeReferencePath.values()) {
             this.fromKebabCaseAndCheck(
                     path.name()
                             .toLowerCase(),
@@ -70,10 +70,10 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     }
 
     private void fromKebabCaseAndCheck(final String text,
-                                       final SpreadsheetCellRangePath expected) {
+                                       final SpreadsheetCellRangeReferencePath expected) {
         this.checkEquals(
                 expected,
-                SpreadsheetCellRangePath.fromKebabCase(text),
+                SpreadsheetCellRangeReferencePath.fromKebabCase(text),
                 () -> "from " + CharSequences.quoteAndEscape(text)
         );
     }
@@ -100,7 +100,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLRTD() {
         this.sortAndCompare(
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 List.of(
                         C3,
                         C2,
@@ -127,7 +127,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testRLTD() {
         this.sortAndCompare(
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 List.of(
                         C3,
                         C2,
@@ -154,7 +154,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLRBU() {
         this.sortAndCompare(
-                SpreadsheetCellRangePath.LRBU,
+                SpreadsheetCellRangeReferencePath.LRBU,
                 List.of(
                         C3,
                         C2,
@@ -181,7 +181,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testRLBU() {
         this.sortAndCompare(
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 List.of(
                         C3,
                         C2,
@@ -208,7 +208,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testTDLR() {
         this.sortAndCompare(
-                SpreadsheetCellRangePath.TDLR,
+                SpreadsheetCellRangeReferencePath.TDLR,
                 List.of(
                         C3,
                         C2,
@@ -235,7 +235,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testTDRL() {
         this.sortAndCompare(
-                SpreadsheetCellRangePath.TDRL,
+                SpreadsheetCellRangeReferencePath.TDRL,
                 List.of(
                         C3,
                         C2,
@@ -262,7 +262,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testBULR() {
         this.sortAndCompare(
-                SpreadsheetCellRangePath.BULR,
+                SpreadsheetCellRangeReferencePath.BULR,
                 List.of(
                         C3,
                         C2,
@@ -289,7 +289,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testBURL() {
         this.sortAndCompare(
-                SpreadsheetCellRangePath.BURL,
+                SpreadsheetCellRangeReferencePath.BURL,
                 List.of(
                         C3,
                         C2,
@@ -313,7 +313,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
-    private void sortAndCompare(final SpreadsheetCellRangePath direction,
+    private void sortAndCompare(final SpreadsheetCellRangeReferencePath direction,
                                 final List<SpreadsheetCellReference> in,
                                 final SpreadsheetCellReference... expected) {
         final SpreadsheetCellReference[] inArray = in.toArray(new SpreadsheetCellReference[0]);
@@ -339,15 +339,15 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
                 A2,
                 A1
         );
-        final List<SpreadsheetCellRangePath> directions = Lists.of(
-                SpreadsheetCellRangePath.values()
+        final List<SpreadsheetCellRangeReferencePath> directions = Lists.of(
+                SpreadsheetCellRangeReferencePath.values()
         );
-        for (final SpreadsheetCellRangePath direction1 : directions) {
+        for (final SpreadsheetCellRangeReferencePath direction1 : directions) {
             final List<SpreadsheetCellReference> sorted1 = Lists.array();
             sorted1.addAll(input);
             sorted1.sort(direction1.comparator());
 
-            for (final SpreadsheetCellRangePath direction2 : directions) {
+            for (final SpreadsheetCellRangeReferencePath direction2 : directions) {
                 if (direction1 != direction2) {
                     final List<SpreadsheetCellReference> sorted2 = Lists.array();
                     sorted2.addAll(input);
@@ -365,7 +365,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
 
     @Test
     public void testComparatorToString() {
-        for (final SpreadsheetCellRangePath path : SpreadsheetCellRangePath.values()) {
+        for (final SpreadsheetCellRangeReferencePath path : SpreadsheetCellRangeReferencePath.values()) {
             this.checkEquals(
                     path.toString(),
                     path.comparator().toString()
@@ -378,7 +378,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLRTDLabelText() {
         this.labelTextAndCheck(
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 "left-right top-down"
         );
     }
@@ -386,7 +386,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testRLTDLabelText() {
         this.labelTextAndCheck(
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 "right-left top-down"
         );
     }
@@ -394,12 +394,12 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLRBULabelText() {
         this.labelTextAndCheck(
-                SpreadsheetCellRangePath.LRBU,
+                SpreadsheetCellRangeReferencePath.LRBU,
                 "left-right bottom-up"
         );
     }
 
-    private void labelTextAndCheck(final SpreadsheetCellRangePath path,
+    private void labelTextAndCheck(final SpreadsheetCellRangeReferencePath path,
                                    final String expected) {
         this.checkEquals(
                 expected,
@@ -413,7 +413,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testFirstLRTD() {
         this.firstAndCheck(
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 "A1:C3",
                 "A1"
         );
@@ -422,7 +422,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testFirstRLTD() {
         this.firstAndCheck(
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 "A1:C3",
                 "C1"
         );
@@ -431,7 +431,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testFirstLRBU() {
         this.firstAndCheck(
-                SpreadsheetCellRangePath.LRBU,
+                SpreadsheetCellRangeReferencePath.LRBU,
                 "A1:C3",
                 "A3"
         );
@@ -440,7 +440,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testFirstRLBU() {
         this.firstAndCheck(
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 "A1:C3",
                 "C3"
         );
@@ -449,7 +449,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testFirstTDLR() {
         this.firstAndCheck(
-                SpreadsheetCellRangePath.TDLR,
+                SpreadsheetCellRangeReferencePath.TDLR,
                 "A1:C3",
                 "A1"
         );
@@ -458,7 +458,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testFirstTDRL() {
         this.firstAndCheck(
-                SpreadsheetCellRangePath.TDRL,
+                SpreadsheetCellRangeReferencePath.TDRL,
                 "A1:C3",
                 "C1"
         );
@@ -467,7 +467,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testFirstBULR() {
         this.firstAndCheck(
-                SpreadsheetCellRangePath.BULR,
+                SpreadsheetCellRangeReferencePath.BULR,
                 "A1:C3",
                 "A3"
         );
@@ -476,14 +476,14 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testFirstBURL() {
         this.firstAndCheck(
-                SpreadsheetCellRangePath.BURL,
+                SpreadsheetCellRangeReferencePath.BURL,
                 "A1:C3",
                 "C3"
         );
     }
 
 
-    private void firstAndCheck(final SpreadsheetCellRangePath path,
+    private void firstAndCheck(final SpreadsheetCellRangeReferencePath path,
                                final String range,
                                final String cell) {
         this.firstAndCheck(
@@ -493,8 +493,8 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
-    private void firstAndCheck(final SpreadsheetCellRangePath path,
-                               final SpreadsheetCellRange range,
+    private void firstAndCheck(final SpreadsheetCellRangeReferencePath path,
+                               final SpreadsheetCellRangeReference range,
                                final SpreadsheetCellReference cell) {
         this.checkEquals(
                 cell,
@@ -508,7 +508,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLastColumnLRTD() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 "A1",
                 "A1:C3",
                 "C1"
@@ -518,7 +518,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLastColumnRLTD() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 "C1",
                 "A1:C3",
                 "A1"
@@ -528,7 +528,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLastColumnLRBU() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangePath.LRBU,
+                SpreadsheetCellRangeReferencePath.LRBU,
                 "A3",
                 "A1:C3",
                 "A1"
@@ -538,7 +538,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLastColumnRLBU() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 "C3",
                 "A1:C3",
                 "C1"
@@ -548,7 +548,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLastColumnTDLR() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangePath.TDLR,
+                SpreadsheetCellRangeReferencePath.TDLR,
                 "A1",
                 "A1:C3",
                 "A3"
@@ -558,7 +558,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLastColumnTDRL() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangePath.TDRL,
+                SpreadsheetCellRangeReferencePath.TDRL,
                 "C1",
                 "A1:C3",
                 "C3"
@@ -568,7 +568,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLastColumnBULR() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangePath.BULR,
+                SpreadsheetCellRangeReferencePath.BULR,
                 "A3",
                 "A1:C3",
                 "A1"
@@ -578,14 +578,14 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testLastColumnBURL() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangePath.BURL,
+                SpreadsheetCellRangeReferencePath.BURL,
                 "C3",
                 "A1:C3",
                 "C1"
         );
     }
 
-    private void lastColumnAndCheck(final SpreadsheetCellRangePath path,
+    private void lastColumnAndCheck(final SpreadsheetCellRangeReferencePath path,
                                     final String cell,
                                     final String range,
                                     final String lastColumn) {
@@ -597,9 +597,9 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
-    private void lastColumnAndCheck(final SpreadsheetCellRangePath path,
+    private void lastColumnAndCheck(final SpreadsheetCellRangeReferencePath path,
                                     final SpreadsheetCellReference cell,
-                                    final SpreadsheetCellRange range,
+                                    final SpreadsheetCellRangeReference range,
                                     final SpreadsheetCellReference lastColumn) {
         this.checkEquals(
                 lastColumn,
@@ -616,7 +616,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testNextRowLRTD() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 "A1",
                 "A1:C3",
                 "A2"
@@ -626,7 +626,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testNextRowRLTD() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 "C1",
                 "A1:C3",
                 "C2"
@@ -636,7 +636,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testNextRowLRBU() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangePath.LRBU,
+                SpreadsheetCellRangeReferencePath.LRBU,
                 "A3",
                 "A1:C3",
                 "A2"
@@ -646,7 +646,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testNextRowRLBU() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 "C3",
                 "A1:C3",
                 "B3"
@@ -656,7 +656,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testNextRowTDLR() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangePath.TDLR,
+                SpreadsheetCellRangeReferencePath.TDLR,
                 "A1",
                 "A1:C3",
                 "B1"
@@ -666,7 +666,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testNextRowTDRL() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangePath.TDRL,
+                SpreadsheetCellRangeReferencePath.TDRL,
                 "C1",
                 "A1:C3",
                 "B1"
@@ -676,7 +676,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testNextRowBULR() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangePath.BULR,
+                SpreadsheetCellRangeReferencePath.BULR,
                 "A3",
                 "A1:C3",
                 "B3"
@@ -686,7 +686,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testNextRowBURL() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangePath.BURL,
+                SpreadsheetCellRangeReferencePath.BURL,
                 "C3",
                 "A1:C3",
                 "B3"
@@ -694,7 +694,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     }
 
 
-    private void nextRowAndCheck(final SpreadsheetCellRangePath path,
+    private void nextRowAndCheck(final SpreadsheetCellRangeReferencePath path,
                                  final String cell,
                                  final String range,
                                  final String nextRow) {
@@ -706,9 +706,9 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
-    private void nextRowAndCheck(final SpreadsheetCellRangePath path,
+    private void nextRowAndCheck(final SpreadsheetCellRangeReferencePath path,
                                  final SpreadsheetCellReference cell,
-                                 final SpreadsheetCellRange range,
+                                 final SpreadsheetCellRangeReference range,
                                  final SpreadsheetCellReference nextRow) {
         this.checkEquals(
                 nextRow,
@@ -725,7 +725,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testWidthLRTD() {
         this.widthAndCheck(
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 "A1:D2",
                 4
         );
@@ -734,7 +734,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testWidthRLTD() {
         this.widthAndCheck(
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 "A1:D2",
                 4
         );
@@ -743,7 +743,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testWidthLRBU() {
         this.widthAndCheck(
-                SpreadsheetCellRangePath.LRBU,
+                SpreadsheetCellRangeReferencePath.LRBU,
                 "A1:D2",
                 4
         );
@@ -752,7 +752,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testWidthRLBU() {
         this.widthAndCheck(
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 "A1:D2",
                 4
         );
@@ -761,7 +761,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testWidthTDLR() {
         this.widthAndCheck(
-                SpreadsheetCellRangePath.TDLR,
+                SpreadsheetCellRangeReferencePath.TDLR,
                 "A1:D2",
                 2
         );
@@ -770,7 +770,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testWidthTDRL() {
         this.widthAndCheck(
-                SpreadsheetCellRangePath.TDRL,
+                SpreadsheetCellRangeReferencePath.TDRL,
                 "A1:D2",
                 2
         );
@@ -779,7 +779,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testWidthBULR() {
         this.widthAndCheck(
-                SpreadsheetCellRangePath.BULR,
+                SpreadsheetCellRangeReferencePath.BULR,
                 "A1:D2",
                 2
         );
@@ -788,13 +788,13 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testWidthBURL() {
         this.widthAndCheck(
-                SpreadsheetCellRangePath.BURL,
+                SpreadsheetCellRangeReferencePath.BURL,
                 "A1:D2",
                 2
         );
     }
 
-    private void widthAndCheck(final SpreadsheetCellRangePath path,
+    private void widthAndCheck(final SpreadsheetCellRangeReferencePath path,
                                final String range,
                                final int width) {
         this.widthAndCheck(
@@ -804,8 +804,8 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
-    private void widthAndCheck(final SpreadsheetCellRangePath path,
-                               final SpreadsheetCellRange range,
+    private void widthAndCheck(final SpreadsheetCellRangeReferencePath path,
+                               final SpreadsheetCellRangeReference range,
                                final int width) {
         this.checkEquals(
                 width,
@@ -819,7 +819,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testHeightLRTD() {
         this.heightAndCheck(
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 "A1:D2",
                 2
         );
@@ -828,7 +828,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testHeightRLTD() {
         this.heightAndCheck(
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 "A1:D2",
                 2
         );
@@ -837,7 +837,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testHeightLRBU() {
         this.heightAndCheck(
-                SpreadsheetCellRangePath.LRBU,
+                SpreadsheetCellRangeReferencePath.LRBU,
                 "A1:D2",
                 2
         );
@@ -846,7 +846,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testHeightRLBU() {
         this.heightAndCheck(
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 "A1:D2",
                 2
         );
@@ -855,7 +855,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testHeightTDLR() {
         this.heightAndCheck(
-                SpreadsheetCellRangePath.TDLR,
+                SpreadsheetCellRangeReferencePath.TDLR,
                 "A1:D2",
                 4
         );
@@ -864,7 +864,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testHeightTDRL() {
         this.heightAndCheck(
-                SpreadsheetCellRangePath.TDRL,
+                SpreadsheetCellRangeReferencePath.TDRL,
                 "A1:D2",
                 4
         );
@@ -873,7 +873,7 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testHeightBULR() {
         this.heightAndCheck(
-                SpreadsheetCellRangePath.BULR,
+                SpreadsheetCellRangeReferencePath.BULR,
                 "A1:D2",
                 4
         );
@@ -882,13 +882,13 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     @Test
     public void testHeightBURL() {
         this.heightAndCheck(
-                SpreadsheetCellRangePath.BURL,
+                SpreadsheetCellRangeReferencePath.BURL,
                 "A1:D2",
                 4
         );
     }
 
-    private void heightAndCheck(final SpreadsheetCellRangePath path,
+    private void heightAndCheck(final SpreadsheetCellRangeReferencePath path,
                                 final String range,
                                 final int height) {
         this.heightAndCheck(
@@ -898,8 +898,8 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
         );
     }
 
-    private void heightAndCheck(final SpreadsheetCellRangePath path,
-                                final SpreadsheetCellRange range,
+    private void heightAndCheck(final SpreadsheetCellRangeReferencePath path,
+                                final SpreadsheetCellRangeReference range,
                                 final int height) {
         this.checkEquals(
                 height,
@@ -911,8 +911,8 @@ public final class SpreadsheetCellRangePathTest implements ClassTesting<Spreadsh
     // ClassTesting....................................................................................................
 
     @Override
-    public Class<SpreadsheetCellRangePath> type() {
-        return SpreadsheetCellRangePath.class;
+    public Class<SpreadsheetCellRangeReferencePath> type() {
+        return SpreadsheetCellRangeReferencePath.class;
     }
 
     @Override

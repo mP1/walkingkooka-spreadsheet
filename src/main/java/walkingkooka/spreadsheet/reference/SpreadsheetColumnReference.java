@@ -217,7 +217,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     }
 
     @Override
-    boolean testCellRange0(final SpreadsheetCellRange range) {
+    boolean testCellRange0(final SpreadsheetCellRangeReference range) {
         checkCellRange(range);
 
         return this.compareTo(range.begin().column()) >= 0 &&

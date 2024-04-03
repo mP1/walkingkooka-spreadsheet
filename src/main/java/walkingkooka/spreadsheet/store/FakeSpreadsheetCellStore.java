@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -31,15 +31,15 @@ import java.util.Set;
 public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference, SpreadsheetCell> implements SpreadsheetCellStore, Fake {
 
     @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
-                                          final SpreadsheetCellRangePath path,
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
+                                          final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
                                           final int max) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void deleteCells(final SpreadsheetCellRange range) {
+    public void deleteCells(final SpreadsheetCellRangeReference range) {
         throw new UnsupportedOperationException();
     }
 
@@ -80,14 +80,14 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     }
 
     @Override
-    public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
+    public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
                                                        final String valueType,
                                                        final int max) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public int countCellsWithValueType(final SpreadsheetCellRange range,
+    public int countCellsWithValueType(final SpreadsheetCellRangeReference range,
                                        final String valueType) {
         throw new UnsupportedOperationException();
     }

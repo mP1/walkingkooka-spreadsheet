@@ -22,15 +22,15 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * This visitor is used to turn any {@link SpreadsheetSelection} into a {@link SpreadsheetCellRange}.
+ * This visitor is used to turn any {@link SpreadsheetSelection} into a {@link SpreadsheetCellRangeReference}.
  * <br>
  * Labels will be resolved until the final destination cell or cell-range is found. A single column wll be made into
- * a {@link SpreadsheetCellRange} that includes all cells for that column.
+ * a {@link SpreadsheetCellRangeReference} that includes all cells for that column.
  */
 final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static Optional<SpreadsheetCellRange> toCellRange(final SpreadsheetSelection selection,
-                                                      final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange) {
+    static Optional<SpreadsheetCellRangeReference> toCellRange(final SpreadsheetSelection selection,
+                                                               final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
         Objects.requireNonNull(labelToCellRange, "labelToCellRange");
 
         final SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor visitor = new SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor(labelToCellRange);
@@ -41,12 +41,12 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
         );
     }
 
-    private SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange) {
+    private SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
         this.labelToCellRange = labelToCellRange;
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange cells) {
+    protected void visit(final SpreadsheetCellRangeReference cells) {
         this.cellRange = cells;
     }
 
@@ -67,13 +67,13 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
-        final Optional<SpreadsheetCellRange> maybeCellRange = this.labelToCellRange.apply(label);
+        final Optional<SpreadsheetCellRangeReference> maybeCellRange = this.labelToCellRange.apply(label);
         if (maybeCellRange.isPresent()) {
             this.accept(maybeCellRange.get());
         }
     }
 
-    private final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange;
+    private final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange;
 
     @Override
     protected void visit(final SpreadsheetRowReference row) {
@@ -88,7 +88,7 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
     /**
      * The final result or null if an unknown label was encountered.
      */
-    private SpreadsheetCellRange cellRange;
+    private SpreadsheetCellRangeReference cellRange;
 
     @Override
     public String toString() {

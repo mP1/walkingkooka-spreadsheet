@@ -575,7 +575,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     private void cellAndCheck(final String range,
                                    final SpreadsheetViewportAnchor anchor,
                                    final String cell) {
-        final SpreadsheetCellRange parsed = SpreadsheetSelection.parseCellRange(range);
+        final SpreadsheetCellRangeReference parsed = SpreadsheetSelection.parseCellRange(range);
         final SpreadsheetCellReference fixed = SpreadsheetSelection.parseCell(cell);
 
         this.checkEquals(

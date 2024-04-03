@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -49,7 +49,7 @@ final class StringToSpreadsheetSelectionConverter implements Converter<Spreadshe
         return (value instanceof Character || value instanceof String) &&
                 (type == SpreadsheetCellReference.class ||
                         type == SpreadsheetCellReferenceOrRange.class ||
-                        type == SpreadsheetCellRange.class ||
+                        type == SpreadsheetCellRangeReference.class ||
                         type == SpreadsheetColumnReference.class ||
                         type == SpreadsheetColumnRangeReference.class ||
                         type == SpreadsheetLabelName.class ||

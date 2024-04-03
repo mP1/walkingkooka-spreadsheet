@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -119,7 +119,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
         return SpreadsheetSelection.labelName("labelRangeC1D2");
     }
 
-    private SpreadsheetCellRange rangeC1C2() {
+    private SpreadsheetCellRangeReference rangeC1C2() {
         return this.cellC1().cellRange(this.cellC2());
     }
 

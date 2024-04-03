@@ -27,25 +27,25 @@ import java.util.SortedMap;
 import java.util.function.BiFunction;
 
 /**
- * An {@link Iterator} that returns cells, row by row for a given {@link SpreadsheetCellRange} from a large {@link SortedMap},
- * in an efficient manner, with the iterator skipping cells outside the {@link SpreadsheetCellRange}.
+ * An {@link Iterator} that returns cells, row by row for a given {@link SpreadsheetCellRangeReference} from a large {@link SortedMap},
+ * in an efficient manner, with the iterator skipping cells outside the {@link SpreadsheetCellRangeReference}.
  * <br>
  * Note for performance reasons the {@link Map} is NOT defensively copied.
  */
-final class SpreadsheetCellRangeSortedMapSpreadsheetCellIterator implements Iterator<SpreadsheetCell> {
+final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator implements Iterator<SpreadsheetCell> {
 
-    static SpreadsheetCellRangeSortedMapSpreadsheetCellIterator with(final SpreadsheetCellRange range,
-                                                                     final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cells) {
+    static SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator with(final SpreadsheetCellRangeReference range,
+                                                                              final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cells) {
         Objects.requireNonNull(cells, "cells");
 
-        return new SpreadsheetCellRangeSortedMapSpreadsheetCellIterator(
+        return new SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator(
                 range,
                 cells
         );
     }
 
-    private SpreadsheetCellRangeSortedMapSpreadsheetCellIterator(final SpreadsheetCellRange range,
-                                                                 final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cells) {
+    private SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator(final SpreadsheetCellRangeReference range,
+                                                                          final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cells) {
         this.range = range;
         this.cells = cells;
 
@@ -98,7 +98,7 @@ final class SpreadsheetCellRangeSortedMapSpreadsheetCellIterator implements Iter
     /**
      * The range of cells that will be returned by this {@link Iterator}.
      */
-    private final SpreadsheetCellRange range;
+    private final SpreadsheetCellRangeReference range;
 
     /**
      * The first cell in the current row. This is advanced each time a new {@link #rowIterator} is created.

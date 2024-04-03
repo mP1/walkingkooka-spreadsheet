@@ -31,7 +31,7 @@ public final class SpreadsheetCellReferenceComparatorTest implements ComparatorT
         ClassTesting<SpreadsheetCellReferenceComparator>,
         ToStringTesting<SpreadsheetCellReferenceComparator> {
 
-    private final static Comparator<SpreadsheetCellReference> COMPARATOR = SpreadsheetCellRangePath.RLTD.comparator();
+    private final static Comparator<SpreadsheetCellReference> COMPARATOR = SpreadsheetCellRangeReferencePath.RLTD.comparator();
 
     @Test
     public void testSortLRTD() {
@@ -48,7 +48,7 @@ public final class SpreadsheetCellReferenceComparatorTest implements ComparatorT
 
         this.comparatorArraySortAndCheck(
                 SpreadsheetCellReferenceComparator.with(
-                        SpreadsheetCellRangePath.LRTD.comparator()
+                        SpreadsheetCellRangeReferencePath.LRTD.comparator()
                 ),
                 a1,
                 b1,
@@ -76,7 +76,7 @@ public final class SpreadsheetCellReferenceComparatorTest implements ComparatorT
 
         this.comparatorArraySortAndCheck(
                 SpreadsheetCellReferenceComparator.with(
-                        SpreadsheetCellRangePath.RLTD.comparator()
+                        SpreadsheetCellRangeReferencePath.RLTD.comparator()
                 ),
                 a1,
                 b3,

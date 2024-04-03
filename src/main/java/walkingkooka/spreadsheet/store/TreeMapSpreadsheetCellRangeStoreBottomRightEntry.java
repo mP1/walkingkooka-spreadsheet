@@ -17,18 +17,18 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
 import java.util.Comparator;
 
 final class TreeMapSpreadsheetCellRangeStoreBottomRightEntry<V> extends TreeMapSpreadsheetCellRangeStoreEntry<V> {
 
-    static <V> TreeMapSpreadsheetCellRangeStoreBottomRightEntry<V> with(final SpreadsheetCellRange range, final V value) {
+    static <V> TreeMapSpreadsheetCellRangeStoreBottomRightEntry<V> with(final SpreadsheetCellRangeReference range, final V value) {
         return new TreeMapSpreadsheetCellRangeStoreBottomRightEntry<>(range, value);
     }
 
-    private TreeMapSpreadsheetCellRangeStoreBottomRightEntry(final SpreadsheetCellRange range, final V value) {
+    private TreeMapSpreadsheetCellRangeStoreBottomRightEntry(final SpreadsheetCellRangeReference range, final V value) {
         super(range, value);
     }
 
@@ -38,12 +38,12 @@ final class TreeMapSpreadsheetCellRangeStoreBottomRightEntry<V> extends TreeMapS
     }
 
     @Override
-    SpreadsheetCellReference primaryCellReference(final SpreadsheetCellRange range) {
+    SpreadsheetCellReference primaryCellReference(final SpreadsheetCellRangeReference range) {
         return range.end();
     }
 
     @Override
-    SpreadsheetCellReference secondaryCellReference(final SpreadsheetCellRange range) {
+    SpreadsheetCellReference secondaryCellReference(final SpreadsheetCellRangeReference range) {
         return range.begin();
     }
 }

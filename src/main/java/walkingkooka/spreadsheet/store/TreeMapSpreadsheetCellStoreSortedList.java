@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
 import java.util.Collections;
@@ -31,15 +31,15 @@ import java.util.Optional;
 
 /**
  * A very simple abstraction that holds {@link SpreadsheetCell cells} sorted by the given {@link Comparator} only exists
- * to support {@link TreeMapSpreadsheetCellStore#loadCells(SpreadsheetCellRange, SpreadsheetCellRangePath, int, int)}.
+ * to support {@link TreeMapSpreadsheetCellStore#loadCells(SpreadsheetCellRangeReference, SpreadsheetCellRangeReferencePath, int, int)}.
  */
 final class TreeMapSpreadsheetCellStoreSortedList {
 
-    static TreeMapSpreadsheetCellStoreSortedList with(final SpreadsheetCellRangePath path) {
+    static TreeMapSpreadsheetCellStoreSortedList with(final SpreadsheetCellRangeReferencePath path) {
         return new TreeMapSpreadsheetCellStoreSortedList(path);
     }
 
-    private TreeMapSpreadsheetCellStoreSortedList(final SpreadsheetCellRangePath path) {
+    private TreeMapSpreadsheetCellStoreSortedList(final SpreadsheetCellRangeReferencePath path) {
         super();
         this.comparator = SpreadsheetCellReference.cellComparator(
                 path.comparator()

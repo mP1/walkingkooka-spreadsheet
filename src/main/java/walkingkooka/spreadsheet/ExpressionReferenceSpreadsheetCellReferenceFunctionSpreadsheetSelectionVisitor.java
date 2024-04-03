@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -54,7 +54,7 @@ final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetSelect
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange range) {
+    protected void visit(final SpreadsheetCellRangeReference range) {
         this.function.rangeToCellStore.load(range).ifPresent(cells -> this.accept(cells.get(0)));
     }
 

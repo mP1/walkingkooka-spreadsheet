@@ -22,7 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -109,7 +109,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 4, // max
                 a1,
@@ -146,7 +146,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 0 // max
         );
@@ -179,7 +179,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 3, // max
                 a1,
@@ -215,7 +215,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 0, // offset
                 4, // max
                 d1,
@@ -252,7 +252,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 1, // offset
                 3, // max
                 c1,
@@ -288,7 +288,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 2, // offset
                 2, // max
                 b1,
@@ -323,7 +323,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 0, // offset
                 3, // max
                 d1,
@@ -364,7 +364,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangePath.BULR,
+                SpreadsheetCellRangeReferencePath.BULR,
                 0, // offset
                 5, // max
                 a3,
@@ -403,7 +403,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 4, // max
                 a1,
@@ -441,7 +441,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.loadCellsAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
-                SpreadsheetCellRangePath.BULR,
+                SpreadsheetCellRangeReferencePath.BULR,
                 0, // offset
                 4, // max
                 last,

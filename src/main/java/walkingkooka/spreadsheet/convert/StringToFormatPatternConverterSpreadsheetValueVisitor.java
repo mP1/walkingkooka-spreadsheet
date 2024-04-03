@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -147,7 +147,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange value) {
+    protected void visit(final SpreadsheetCellRangeReference value) {
         this.formatText(value);
     }
 

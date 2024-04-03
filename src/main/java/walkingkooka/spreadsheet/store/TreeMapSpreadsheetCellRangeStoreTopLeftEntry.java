@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
 import java.util.Comparator;
@@ -26,11 +26,11 @@ import java.util.Set;
 
 final class TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> extends TreeMapSpreadsheetCellRangeStoreEntry<V> {
 
-    static <V> TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> with(final SpreadsheetCellRange range, final V value) {
+    static <V> TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> with(final SpreadsheetCellRangeReference range, final V value) {
         return new TreeMapSpreadsheetCellRangeStoreTopLeftEntry<>(range, value);
     }
 
-    private TreeMapSpreadsheetCellRangeStoreTopLeftEntry(final SpreadsheetCellRange range, final V value) {
+    private TreeMapSpreadsheetCellRangeStoreTopLeftEntry(final SpreadsheetCellRangeReference range, final V value) {
         super(range, value);
     }
 
@@ -40,20 +40,20 @@ final class TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> extends TreeMapSprea
     }
 
     @Override
-    SpreadsheetCellReference primaryCellReference(final SpreadsheetCellRange range) {
+    SpreadsheetCellReference primaryCellReference(final SpreadsheetCellRangeReference range) {
         return range.begin();
     }
 
     @Override
-    SpreadsheetCellReference secondaryCellReference(SpreadsheetCellRange range) {
+    SpreadsheetCellReference secondaryCellReference(SpreadsheetCellRangeReference range) {
         return range.end();
     }
 
     /**
      * Rebuilds all the ranges within this entry.
      */
-    Set<SpreadsheetCellRange> ranges() {
-        final Set<SpreadsheetCellRange> ranges = Sets.ordered();
+    Set<SpreadsheetCellRangeReference> ranges() {
+        final Set<SpreadsheetCellRangeReference> ranges = Sets.ordered();
 
         final SpreadsheetCellReference topLeft = this.range.begin();
 

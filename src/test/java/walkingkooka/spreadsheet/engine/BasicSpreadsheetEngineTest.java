@@ -58,8 +58,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -4502,7 +4502,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11");
         final SpreadsheetCellReference a16 = SpreadsheetSelection.parseCell("$A$16");
 
-        final SpreadsheetCellRange ab = a1.cellRange(a6);
+        final SpreadsheetCellRangeReference ab = a1.cellRange(a6);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, ab));
 
         engine.saveCell(this.cell(a1, "=1+0"), context);
@@ -4563,7 +4563,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell(a1, "=1+0"), context);
 
-        final SpreadsheetCellRange bc = a6.cellRange(a11);
+        final SpreadsheetCellRangeReference bc = a6.cellRange(a11);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
         final int count = a11.row().value() - a6.row().value() + 1;
@@ -4597,7 +4597,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11");
         final SpreadsheetCellReference a21 = SpreadsheetSelection.parseCell("$A$21");
 
-        final SpreadsheetCellRange bc = a6.cellRange(a11);
+        final SpreadsheetCellRangeReference bc = a6.cellRange(a11);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
         engine.saveCell(this.cell(a1, "=1+0"), context);
@@ -4658,7 +4658,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a6 = SpreadsheetSelection.parseCell("$A$6");
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11");
 
-        final SpreadsheetCellRange a6a11 = a6.cellRange(a11);
+        final SpreadsheetCellRangeReference a6a11 = a6.cellRange(a11);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a6a11));
 
         engine.saveCell(this.cell(a1, "=1+0+" + LABEL), context);
@@ -4720,7 +4720,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a16 = SpreadsheetSelection.parseCell("$A$16");
         final SpreadsheetCellReference a21 = SpreadsheetSelection.parseCell("$A$21");
 
-        final SpreadsheetCellRange a16a21 = a16.cellRange(a21);
+        final SpreadsheetCellRangeReference a16a21 = a16.cellRange(a21);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a16a21));
 
         engine.saveCell(this.cell(a1, "=1+0+" + LABEL), context);
@@ -4794,7 +4794,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a16 = SpreadsheetSelection.parseCell("$A$16");
         final SpreadsheetCellReference a21 = SpreadsheetSelection.parseCell("$A$21");
 
-        final SpreadsheetCellRange a11a21 = a11.cellRange(a21);
+        final SpreadsheetCellRangeReference a11a21 = a11.cellRange(a21);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a11a21));
 
         final int count = a21.row().value() - a16.row().value() + 1;
@@ -4819,7 +4819,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11");
         final SpreadsheetCellReference a16 = SpreadsheetSelection.parseCell("$A$16");
 
-        final SpreadsheetCellRange a6a16 = a6.cellRange(a16);
+        final SpreadsheetCellRangeReference a6a16 = a6.cellRange(a16);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a6a16));
 
         final int count = 1;
@@ -4849,7 +4849,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a21 = SpreadsheetSelection.parseCell("$A$21"); // range
         final SpreadsheetCellReference a26 = SpreadsheetSelection.parseCell("$A$26"); // range
 
-        final SpreadsheetCellRange a11ToA26 = a11.cellRange(a26);
+        final SpreadsheetCellRangeReference a11ToA26 = a11.cellRange(a26);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a11ToA26));
 
         final int count = a16.row().value() - a6.row().value();
@@ -5413,7 +5413,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1");
         final SpreadsheetCellReference p1 = SpreadsheetSelection.parseCell("$P$1");
 
-        final SpreadsheetCellRange ab = a1.cellRange(f1);
+        final SpreadsheetCellRangeReference ab = a1.cellRange(f1);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, ab));
 
         engine.saveCell(this.cell(a1, "=1+0"), context);
@@ -5473,7 +5473,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference f1 = SpreadsheetSelection.parseCell("$F$1");
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1");
 
-        final SpreadsheetCellRange f1k1 = f1.cellRange(k1);
+        final SpreadsheetCellRangeReference f1k1 = f1.cellRange(k1);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, f1k1));
 
         engine.saveCell(this.cell(a1, "=1+0"), context);
@@ -5509,7 +5509,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1");
         final SpreadsheetCellReference u1 = SpreadsheetSelection.parseCell("$U$1");
 
-        final SpreadsheetCellRange bc = f1.cellRange(k1);
+        final SpreadsheetCellRangeReference bc = f1.cellRange(k1);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
         engine.saveCell(this.cell(a1, "=1+0"), context);
@@ -5563,7 +5563,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference f1 = SpreadsheetSelection.parseCell("$F$1");
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1");
 
-        final SpreadsheetCellRange f1k1 = f1.cellRange(k1);
+        final SpreadsheetCellRangeReference f1k1 = f1.cellRange(k1);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, f1k1));
 
         engine.saveCell(this.cell(a1, "=1+0+" + LABEL), context);
@@ -5625,7 +5625,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference p1 = SpreadsheetSelection.parseCell("$P$1");
         final SpreadsheetCellReference u1 = SpreadsheetSelection.parseCell("$U$1");
 
-        final SpreadsheetCellRange p1u1 = p1.cellRange(u1);
+        final SpreadsheetCellRangeReference p1u1 = p1.cellRange(u1);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, p1u1));
 
         engine.saveCell(this.cell(a1, "=1+0+" + LABEL), context);
@@ -5699,7 +5699,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference p1 = SpreadsheetSelection.parseCell("$P$1");
         final SpreadsheetCellReference u1 = SpreadsheetSelection.parseCell("$U$1");
 
-        final SpreadsheetCellRange k1u1 = k1.cellRange(u1);
+        final SpreadsheetCellRangeReference k1u1 = k1.cellRange(u1);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, k1u1));
 
         final int count = u1.column().value() - p1.column().value() + 1;
@@ -5724,7 +5724,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1");
         final SpreadsheetCellReference p1 = SpreadsheetSelection.parseCell("$P$1");
 
-        final SpreadsheetCellRange bd = f1.cellRange(p1);
+        final SpreadsheetCellRangeReference bd = f1.cellRange(p1);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bd));
 
         final int count = 1;
@@ -5754,7 +5754,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference u1 = SpreadsheetSelection.parseCell("$U$1");
         final SpreadsheetCellReference z1 = SpreadsheetSelection.parseCell("$Z$1"); // range
 
-        final SpreadsheetCellRange k1z1 = k1.cellRange(z1);
+        final SpreadsheetCellRangeReference k1z1 = k1.cellRange(z1);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, k1z1));
 
         final int count = p1.column().value() - f1.column().value();
@@ -6062,7 +6062,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference f6 = SpreadsheetSelection.parseCell("$F$6"); // moved
 
-        final SpreadsheetCellRange a1b2 = a1.cellRange(a1.add(1, 1));
+        final SpreadsheetCellRangeReference a1b2 = a1.cellRange(a1.add(1, 1));
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a1b2));
 
         engine.saveCell(this.cell(a1, "=99+0"), context);
@@ -6828,7 +6828,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); //
         final SpreadsheetCellReference f6 = SpreadsheetSelection.parseCell("$F$6"); // moved
 
-        final SpreadsheetCellRange a1b2 = a1.cellRange(a1.add(1, 1));
+        final SpreadsheetCellRangeReference a1b2 = a1.cellRange(a1.add(1, 1));
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a1b2));
 
         engine.saveCell(this.cell(a1, "=99+0"), context);
@@ -7766,7 +7766,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels();
 
         final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
-        final SpreadsheetCellRange c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
+        final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
         final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(labelC3d4.mapping(c3d4));
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
@@ -7801,7 +7801,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelMapping mappingC3 = labelStore.save(labelC3.mapping(c3));
 
         final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
-        final SpreadsheetCellRange c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
+        final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
         final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(labelC3d4.mapping(c3d4));
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
@@ -8028,7 +8028,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         cellStore.save(cell);
 
-        final SpreadsheetCellRange f6f6 = f6.cellRange(f6);
+        final SpreadsheetCellRangeReference f6f6 = f6.cellRange(f6);
 
         this.fillCellsAndCheck(
                 engine,
@@ -8069,7 +8069,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell cellK11 = this.cell(k11, "=2+0");
         cellStore.save(cellK11);
 
-        final SpreadsheetCellRange f6f6 = f6.cellRange(f6);
+        final SpreadsheetCellRangeReference f6f6 = f6.cellRange(f6);
 
         this.fillCellsAndCheck(
                 engine,
@@ -8132,7 +8132,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell cellG7 = this.cell(g7, "=2+0");
         cellStore.save(cellG7);
 
-        final SpreadsheetCellRange rangeAtoB = f6.cellRange(g7);
+        final SpreadsheetCellRangeReference rangeAtoB = f6.cellRange(g7);
 
         this.fillCellsAndCheck(
                 engine,
@@ -8172,7 +8172,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell cellg7 = this.cell(g7, "=2+0");
         cellStore.save(cellg7);
 
-        final SpreadsheetCellRange rangeAtoB = f6.cellRange(g7);
+        final SpreadsheetCellRangeReference rangeAtoB = f6.cellRange(g7);
 
         final SpreadsheetCellReference k11 = SpreadsheetSelection.parseCell("$K$11");
         final SpreadsheetCell cellK11 = this.cell(k11, "=3+0");
@@ -8236,7 +8236,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell cellB2 = this.cell(b2, "=1+0");
         final SpreadsheetCell cellC3 = this.cell(c3, "=2+0");
 
-        final SpreadsheetCellRange range = b2.cellRange(c3);
+        final SpreadsheetCellRangeReference range = b2.cellRange(c3);
 
         this.fillCellsAndCheck(
                 engine,
@@ -8322,7 +8322,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell cellB2 = this.cell(b2, "=1+0");
         final SpreadsheetCell cellC3 = this.cell(c3, "=2+0");
 
-        final SpreadsheetCellRange range = b2.cellRange(c3);
+        final SpreadsheetCellRangeReference range = b2.cellRange(c3);
 
         final SpreadsheetCellReference k11 = SpreadsheetSelection.parseCell("$K$11");
         final SpreadsheetCell cellK11 = this.cell(k11, "=3+0");
@@ -8446,7 +8446,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetDelta.NO_CELLS,
                 b2.cellRange(b2),
-                SpreadsheetCellRange.fromCells(Lists.of(c2)),
+                SpreadsheetCellRangeReference.fromCells(Lists.of(c2)),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setDeletedCells(
@@ -8533,7 +8533,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetDelta.NO_CELLS,
                 b2.cellRange(b2),
-                SpreadsheetCellRange.fromCells(Lists.of(b2, c2)),
+                SpreadsheetCellRangeReference.fromCells(Lists.of(b2, c2)),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setDeletedCells(
@@ -8767,7 +8767,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellK21, cellL22),
-                SpreadsheetCellRange.fromCells(Lists.of(k21, l22)),
+                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
                 ae41.cellRange(ae41.add(2, 2)),
                 context,
                 SpreadsheetDelta.EMPTY
@@ -8815,7 +8815,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellK21, cellL22),
-                SpreadsheetCellRange.fromCells(Lists.of(k21, l22)),
+                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
                 d.cellRange(d.add(1, 1)),
                 context,
                 SpreadsheetDelta.EMPTY
@@ -8863,7 +8863,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellK21, cellL22),
-                SpreadsheetCellRange.fromCells(Lists.of(k21, l22)),
+                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
                 d.cellRange(d.add(2, 2)),
                 context,
                 SpreadsheetDelta.EMPTY
@@ -8911,7 +8911,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellK21, cellL22),
-                SpreadsheetCellRange.fromCells(Lists.of(k21, l22)),
+                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
                 ae41.cellRange(ae41.add(6, 1)),
                 context,
                 SpreadsheetDelta.EMPTY
@@ -8963,7 +8963,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellK21, cellL22),
-                SpreadsheetCellRange.fromCells(Lists.of(k21, l22)),
+                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
                 d.cellRange(d.add(1, 6)),
                 context,
                 SpreadsheetDelta.EMPTY
@@ -12020,7 +12020,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCellRange selection = SpreadsheetSelection.parseCellRange("A1:B1");
+        final SpreadsheetCellRangeReference selection = SpreadsheetSelection.parseCellRange("A1:B1");
 
         context.storeRepository()
                 .labels()
@@ -12269,7 +12269,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 10, // max
                 SpreadsheetValueType.ANY,
@@ -12314,7 +12314,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A1:C2"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 20, // max
                 SpreadsheetValueType.ANY,
@@ -12353,7 +12353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A1:C2"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 20, // max
                 SpreadsheetValueType.ANY,
@@ -12421,7 +12421,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 3, // max
                 SpreadsheetValueType.ANY,
@@ -12520,7 +12520,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 10, // max
                 SpreadsheetValueType.NUMBER,
@@ -12623,7 +12623,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 3, //max
                 SpreadsheetValueType.NUMBER,
@@ -12722,7 +12722,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 3, // max
                 SpreadsheetValueType.NUMBER,
@@ -12802,7 +12802,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 0, // offset
                 3, // max
                 SpreadsheetValueType.NUMBER,
@@ -12882,7 +12882,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 0, // offset
                 3, // max
                 SpreadsheetValueType.NUMBER,
@@ -12896,7 +12896,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 1, // offset
                 2, // max
                 SpreadsheetValueType.NUMBER,
@@ -12909,7 +12909,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 2, // offset
                 1, // max
                 SpreadsheetValueType.NUMBER,
@@ -12921,7 +12921,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 3, // offset
                 0, // max
                 SpreadsheetValueType.NUMBER,

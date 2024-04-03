@@ -26,14 +26,14 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 
 import java.util.function.Consumer;
 
-public final class SpreadsheetCellRangeCellsConsumerTest implements ClassTesting2<SpreadsheetCellRangeCellsConsumer>, ToStringTesting<SpreadsheetCellRangeCellsConsumer> {
+public final class SpreadsheetCellRangeReferenceCellsConsumerTest implements ClassTesting2<SpreadsheetCellRangeReferenceCellsConsumer>, ToStringTesting<SpreadsheetCellRangeReferenceCellsConsumer> {
 
     @Test
     public void testToString() {
         final Consumer<SpreadsheetCell> present = this::present;
         final Consumer<SpreadsheetCellReference> absent = this::absent;
 
-        this.toStringAndCheck(SpreadsheetCellRangeCellsConsumer.with(Lists.empty(), present, absent), present + " " + absent);
+        this.toStringAndCheck(SpreadsheetCellRangeReferenceCellsConsumer.with(Lists.empty(), present, absent), present + " " + absent);
     }
 
     @SuppressWarnings("EmptyMethod")
@@ -45,8 +45,8 @@ public final class SpreadsheetCellRangeCellsConsumerTest implements ClassTesting
     }
 
     @Override
-    public Class<SpreadsheetCellRangeCellsConsumer> type() {
-        return SpreadsheetCellRangeCellsConsumer.class;
+    public Class<SpreadsheetCellRangeReferenceCellsConsumer> type() {
+        return SpreadsheetCellRangeReferenceCellsConsumer.class;
     }
 
     @Override

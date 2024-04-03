@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
 import java.util.List;
@@ -37,7 +37,7 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
         this.store = store;
     }
 
-    public Optional<List<V>> load(final SpreadsheetCellRange id) {
+    public Optional<List<V>> load(final SpreadsheetCellRangeReference id) {
         return store.load(id);
     }
 
@@ -52,13 +52,13 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
         throw new UnsupportedOperationException();
     }
 
-    public void delete(final SpreadsheetCellRange id) {
+    public void delete(final SpreadsheetCellRangeReference id) {
         Objects.requireNonNull(id, "id");
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellRange> deleted) {
+    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellRangeReference> deleted) {
         Objects.requireNonNull(deleted, "saved");
         throw new UnsupportedOperationException();
     }
@@ -69,18 +69,18 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Set<SpreadsheetCellRange> ids(final int from, final int count) {
+    public Set<SpreadsheetCellRangeReference> ids(final int from, final int count) {
         return store.ids(from, count);
     }
 
     @Override
-    public List<List<V>> values(final SpreadsheetCellRange from, final int count) {
+    public List<List<V>> values(final SpreadsheetCellRangeReference from, final int count) {
         return store.values(from, count);
     }
 
     @Override
-    public List<List<V>> between(final SpreadsheetCellRange from,
-                                 final SpreadsheetCellRange to) {
+    public List<List<V>> between(final SpreadsheetCellRangeReference from,
+                                 final SpreadsheetCellRangeReference to) {
         return store.between(
                 from,
                 to
@@ -88,7 +88,7 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Set<SpreadsheetCellRange> loadCellRangeReferences(final SpreadsheetCellReference cell) {
+    public Set<SpreadsheetCellRangeReference> loadCellRangeReferences(final SpreadsheetCellReference cell) {
         return store.loadCellRangeReferences(cell);
     }
 
@@ -98,7 +98,7 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public void addValue(final SpreadsheetCellRange range, final V value) {
+    public void addValue(final SpreadsheetCellRangeReference range, final V value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
@@ -106,7 +106,7 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public boolean replaceValue(final SpreadsheetCellRange range, final V newValue, final V oldValue) {
+    public boolean replaceValue(final SpreadsheetCellRangeReference range, final V newValue, final V oldValue) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(newValue, "newValue");
         Objects.requireNonNull(oldValue, "oldValue");
@@ -115,7 +115,7 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public void removeValue(final SpreadsheetCellRange range, final V value) {
+    public void removeValue(final SpreadsheetCellRangeReference range, final V value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
@@ -123,7 +123,7 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Set<SpreadsheetCellRange> rangesWithValue(final V value) {
+    public Set<SpreadsheetCellRangeReference> rangesWithValue(final V value) {
         Objects.requireNonNull(value, "value");
 
         return this.store.rangesWithValue(value);

@@ -877,7 +877,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testToCellRangeOne() {
         final SpreadsheetCellReference lower = this.cell(1, 1);
-        final SpreadsheetCellRange range = lower.cellRange(lower);
+        final SpreadsheetCellRangeReference range = lower.cellRange(lower);
 
         this.checkEquals(
                 Range.singleton(lower),
@@ -953,7 +953,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
 
         this.checkEquals(
-                SpreadsheetCellRange.with(expected),
+                SpreadsheetCellRangeReference.with(expected),
                 cell.cellRange(other),
                 () -> cell + " cellRange " + other
         );
@@ -980,7 +980,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     private void toCellRangeAndCheck(final SpreadsheetCellReference reference,
-                                     final SpreadsheetCellRange range) {
+                                     final SpreadsheetCellRangeReference range) {
         this.checkEquals(
                 range,
                 reference.toCellRange(),
@@ -1624,7 +1624,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Override
-    SpreadsheetCellRange parseRange(final String range) {
+    SpreadsheetCellRangeReference parseRange(final String range) {
         return SpreadsheetSelection.parseCellRange(range);
     }
 

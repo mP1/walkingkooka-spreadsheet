@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.store.Store;
 
@@ -27,12 +27,12 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * A {@link Store} that holds one or more values for {@link SpreadsheetCellRange}.
- * For parameter types {@link SpreadsheetCellReference} and {@link SpreadsheetCellRange} the {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind}
+ * A {@link Store} that holds one or more values for {@link SpreadsheetCellRangeReference}.
+ * For parameter types {@link SpreadsheetCellReference} and {@link SpreadsheetCellRangeReference} the {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind}
  * is ignored passing either variant must return the same results.
- * All returned {@link SpreadsheetCellReference} including those within a {@link SpreadsheetCellRange} will be relative and never absolute.
+ * All returned {@link SpreadsheetCellReference} including those within a {@link SpreadsheetCellRangeReference} will be relative and never absolute.
  */
-public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<SpreadsheetCellRange, List<V>> {
+public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<SpreadsheetCellRangeReference, List<V>> {
 
     /**
      * Values dont include the actual range, therefore this {@link Store} method is invalid and throws {@link UnsupportedOperationException}.
@@ -53,9 +53,9 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
     }
 
     /**
-     * Loads all the {@link SpreadsheetCellRange} that cover the cell
+     * Loads all the {@link SpreadsheetCellRangeReference} that cover the cell
      */
-    Set<SpreadsheetCellRange> loadCellRangeReferences(final SpreadsheetCellReference cell);
+    Set<SpreadsheetCellRangeReference> loadCellRangeReferences(final SpreadsheetCellReference cell);
 
     /**
      * Load all the values for a single cell.
@@ -63,23 +63,23 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
     Set<V> loadCellReferenceValues(final SpreadsheetCellReference cell);
 
     /**
-     * Add a single value to the given {@link SpreadsheetCellRange}. If the mapping exists nothing happens.
+     * Add a single value to the given {@link SpreadsheetCellRangeReference}. If the mapping exists nothing happens.
      */
-    void addValue(final SpreadsheetCellRange range, final V value);
+    void addValue(final SpreadsheetCellRangeReference range, final V value);
 
     /**
      * If the old value exists replace it with the new value. If old does not exist the replace fails.
      */
     @SuppressWarnings("UnusedReturnValue")
-    boolean replaceValue(final SpreadsheetCellRange range, final V newValue, final V oldValue);
+    boolean replaceValue(final SpreadsheetCellRangeReference range, final V newValue, final V oldValue);
 
     /**
-     * Removes a single value if it exists for the given {@link SpreadsheetCellRange}
+     * Removes a single value if it exists for the given {@link SpreadsheetCellRangeReference}
      */
-    void removeValue(final SpreadsheetCellRange range, final V value);
+    void removeValue(final SpreadsheetCellRangeReference range, final V value);
 
     /**
-     * Returns all the {@link SpreadsheetCellRange ranges} containing the given value.
+     * Returns all the {@link SpreadsheetCellRangeReference ranges} containing the given value.
      */
-    Set<SpreadsheetCellRange> rangesWithValue(final V value);
+    Set<SpreadsheetCellRangeReference> rangesWithValue(final V value);
 }

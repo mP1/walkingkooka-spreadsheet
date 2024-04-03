@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -28,7 +29,7 @@ import java.util.function.Function;
 /**
  * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic}
  * and acts as a bridge resolving {@link ExpressionReference} to a {@link Expression}.
- * Note a {@link walkingkooka.spreadsheet.reference.SpreadsheetCellRange} will have missing cells given a {@link walkingkooka.spreadsheet.SpreadsheetErrorKind#NAME}.
+ * Note a {@link SpreadsheetCellRangeReference} will have missing cells given a {@link walkingkooka.spreadsheet.SpreadsheetErrorKind#NAME}.
  */
 final class SpreadsheetEnginesExpressionReferenceFunction implements Function<ExpressionReference, Optional<Optional<Object>>> {
 

@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -212,7 +212,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptCellRange() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetCellRange value = SpreadsheetSelection.parseCellRange("A1:B2" );
+        final SpreadsheetCellRangeReference value = SpreadsheetSelection.parseCellRange("A1:B2");
 
         new FakeSpreadsheetValueVisitor() {
             @Override
@@ -229,7 +229,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             }
 
             @Override
-            protected void visit(final SpreadsheetCellRange v) {
+            protected void visit(final SpreadsheetCellRangeReference v) {
                 assertSame(value, v);
                 b.append("3" );
             }

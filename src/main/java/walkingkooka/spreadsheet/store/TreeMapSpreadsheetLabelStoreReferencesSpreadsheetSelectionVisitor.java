@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A {@link SpreadsheetSelectionVisitor} that visits all label targets, and aims to return only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRange}.
+ * A {@link SpreadsheetSelectionVisitor} that visits all label targets, and aims to return only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRangeReference}.
  */
 final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
@@ -64,7 +64,7 @@ final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor ex
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange range) {
+    protected void visit(final SpreadsheetCellRangeReference range) {
         this.references.add(range);
     }
 

@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -109,7 +109,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
 
     @Test
     public void testCellRange() {
-        final SpreadsheetCellRange range = this.range();
+        final SpreadsheetCellRangeReference range = this.range();
         final SpreadsheetLabelName label = this.label();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
@@ -125,7 +125,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     @Test
     public void testLabelToCellRange() {
         final SpreadsheetLabelName label = this.label();
-        final SpreadsheetCellRange range = this.range();
+        final SpreadsheetCellRangeReference range = this.range();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
         store.save(label.mapping(range));
@@ -145,7 +145,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
         return SpreadsheetLabelName.labelName("label123");
     }
 
-    private SpreadsheetCellRange range() {
+    private SpreadsheetCellRangeReference range() {
         return SpreadsheetSelection.parseCellRange("B2:C3");
     }
 

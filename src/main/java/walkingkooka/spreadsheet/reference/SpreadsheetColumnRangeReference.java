@@ -68,9 +68,9 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
     }
 
     /**
-     * Creates a {@link SpreadsheetCellRange} combining this column range and the given row range.
+     * Creates a {@link SpreadsheetCellRangeReference} combining this column range and the given row range.
      */
-    public SpreadsheetCellRange setRowRangeReference(final SpreadsheetRowRangeReference row) {
+    public SpreadsheetCellRangeReference setRowRangeReference(final SpreadsheetRowRangeReference row) {
         checkRowRangeReference(row);
 
         final SpreadsheetColumnReference columnBegin = this.begin();
@@ -169,7 +169,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
     }
 
     @Override
-    boolean testCellRange0(final SpreadsheetCellRange range) {
+    boolean testCellRange0(final SpreadsheetCellRangeReference range) {
         return this.end().compareTo(range.begin().column()) >= 0 &&
                 this.begin().compareTo(range.end().column()) <= 0;
     }

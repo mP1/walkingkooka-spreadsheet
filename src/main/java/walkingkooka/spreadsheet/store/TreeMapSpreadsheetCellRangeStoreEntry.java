@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
 import java.util.Collection;
@@ -40,7 +40,7 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
     /**
      * Package private ctor to limit subclassing.
      */
-    TreeMapSpreadsheetCellRangeStoreEntry(final SpreadsheetCellRange range, final V value) {
+    TreeMapSpreadsheetCellRangeStoreEntry(final SpreadsheetCellRangeReference range, final V value) {
         super();
 
         this.range = range;
@@ -51,13 +51,13 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
         this.secondaryCellReferenceToValues.put(this.secondaryCellReference(range), values);
     }
 
-    final SpreadsheetCellRange range;
+    final SpreadsheetCellRangeReference range;
 
     abstract Comparator<SpreadsheetCellReference> comparator();
 
     // load............................................................................................
 
-    final Optional<List<V>> load(final SpreadsheetCellRange range) {
+    final Optional<List<V>> load(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
 
         final Set<V> values = this.secondaryCellReferenceToValues.get(range.end());
@@ -78,7 +78,7 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
      * Add values for entries that include the given cell.
      */
     final void loadCellRangeReferences(final SpreadsheetCellReference cell,
-                                       final Collection<SpreadsheetCellRange> ranges) {
+                                       final Collection<SpreadsheetCellRangeReference> ranges) {
 
         if (this.range.testCell(cell)) {
             ranges.add(this.range);
@@ -107,7 +107,7 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
 
     // save...................................................................................................
 
-    final void save(final SpreadsheetCellRange range, final V value) {
+    final void save(final SpreadsheetCellRangeReference range, final V value) {
         final SpreadsheetCellReference ref = this.secondaryCellReference(range);
         Set<V> values = this.secondaryCellReferenceToValues.get(ref);
         //noinspection Java8MapApi
@@ -118,7 +118,7 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
         values.add(value);
     }
 
-    final boolean replace(final SpreadsheetCellRange range, final V newValue, final V oldValue) {
+    final boolean replace(final SpreadsheetCellRangeReference range, final V newValue, final V oldValue) {
         boolean replaced = false;
 
         final Set<V> values = this.secondaryCellReferenceToValues.get(this.secondaryCellReference(range));
@@ -137,7 +137,7 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
     /**
      * Deletes/removes all values that match the given range, and returns true if there are no longer any values.
      */
-    final boolean delete(final SpreadsheetCellRange range, final V value) {
+    final boolean delete(final SpreadsheetCellRangeReference range, final V value) {
         boolean empty = false;
 
         final SpreadsheetCellReference end = this.secondaryCellReference(range);
@@ -158,9 +158,9 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
         return this.primaryCellReference(this.range);
     }
 
-    abstract SpreadsheetCellReference primaryCellReference(final SpreadsheetCellRange range);
+    abstract SpreadsheetCellReference primaryCellReference(final SpreadsheetCellRangeReference range);
 
-    abstract SpreadsheetCellReference secondaryCellReference(final SpreadsheetCellRange range);
+    abstract SpreadsheetCellReference secondaryCellReference(final SpreadsheetCellRangeReference range);
 
     // count....................................................................................................
 

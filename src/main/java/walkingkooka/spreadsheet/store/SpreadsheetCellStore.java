@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -38,29 +38,29 @@ import java.util.Set;
 public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellReference, SpreadsheetCell> {
 
     /**
-     * Attempts to load all the cells in the given {@link SpreadsheetCellRange}.
+     * Attempts to load all the cells in the given {@link SpreadsheetCellRangeReference}.
      */
-    default Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range) {
+    default Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
         return this.loadCells(
                 range,
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
                 Integer.MAX_VALUE // max
         );
     }
 
     /**
-     * Attempts to load all the cells in the given {@link SpreadsheetCellRange}.
+     * Attempts to load all the cells in the given {@link SpreadsheetCellRangeReference}.
      */
-    Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
-                                   final SpreadsheetCellRangePath path,
+    Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
+                                   final SpreadsheetCellRangeReferencePath path,
                                    final int offset,
                                    final int max);
 
     /**
-     * Default implementation that deletes all the cells in the given {@link SpreadsheetCellRange}.
+     * Default implementation that deletes all the cells in the given {@link SpreadsheetCellRangeReference}.
      */
-    void deleteCells(final SpreadsheetCellRange range);
+    void deleteCells(final SpreadsheetCellRangeReference range);
 
     /**
      * Clears the parsed formula for all existing cells.
@@ -119,7 +119,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      */
     double maxRowHeight(final SpreadsheetRowReference row);
 
-    static void checkFindCellsWithValueType(final SpreadsheetCellRange range,
+    static void checkFindCellsWithValueType(final SpreadsheetCellRangeReference range,
                                             final String valueTypeName,
                                             final int max) {
         Objects.requireNonNull(range, "range");
@@ -133,11 +133,11 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * Finds all cells with a value type equal to the given. This means empty cells without a formula will never be found,
      * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
      */
-    Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
+    Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
                                                 final String valueTypeName,
                                                 final int max);
 
-    static void checkCountCellsWithValueType(final SpreadsheetCellRange range,
+    static void checkCountCellsWithValueType(final SpreadsheetCellRangeReference range,
                                              final String valueTypeName) {
         Objects.requireNonNull(range, "range");
         CharSequences.failIfNullOrEmpty(valueTypeName, "valueTypeName");
@@ -147,6 +147,6 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * Counts all cells with a value type equal to the given. This means empty cells without a formula will never be found,
      * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
      */
-    int countCellsWithValueType(final SpreadsheetCellRange range,
+    int countCellsWithValueType(final SpreadsheetCellRangeReference range,
                                 final String valueTypeName);
 }

@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * A {@link Comparator} provider that may be used to sort {@link SpreadsheetCellReference} in a variety of arrangements.
  */
-public enum SpreadsheetCellRangePath {
+public enum SpreadsheetCellRangeReferencePath {
 
     /**
      * <pre>
@@ -43,13 +43,13 @@ public enum SpreadsheetCellRangePath {
             1 //reverseY,
     ) {
         @Override
-        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+        public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.begin();
         }
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
-                                                   final SpreadsheetCellRange range) {
+                                                   final SpreadsheetCellRangeReference range) {
             return startOfRow.setColumn(
                     range.end()
                             .column()
@@ -58,7 +58,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
-                                                final SpreadsheetCellRange range) {
+                                                final SpreadsheetCellRangeReference range) {
             return startOfRow.addRow(1);
         }
     },
@@ -76,7 +76,7 @@ public enum SpreadsheetCellRangePath {
             1//reverseY
     ) {
         @Override
-        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+        public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.begin()
                     .setColumn(
                             range.end()
@@ -86,7 +86,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
-                                                   final SpreadsheetCellRange range) {
+                                                   final SpreadsheetCellRangeReference range) {
             return startOfRow.setColumn(
                     range.begin()
                             .column()
@@ -95,7 +95,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
-                                                final SpreadsheetCellRange range) {
+                                                final SpreadsheetCellRangeReference range) {
             return startOfRow.addRow(1);
         }
     },
@@ -113,7 +113,7 @@ public enum SpreadsheetCellRangePath {
             -1 //reverseY
     ) {
         @Override
-        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+        public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.begin()
                     .setRow(
                             range.end()
@@ -123,7 +123,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
-                                                   final SpreadsheetCellRange range) {
+                                                   final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
                     range.begin()
                             .row()
@@ -132,7 +132,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
-                                                final SpreadsheetCellRange range) {
+                                                final SpreadsheetCellRangeReference range) {
             return startOfRow.addRow(-1);
         }
     },
@@ -150,13 +150,13 @@ public enum SpreadsheetCellRangePath {
             -1 //reverseY
     ) {
         @Override
-        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+        public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.end();
         }
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
-                                                   final SpreadsheetCellRange range) {
+                                                   final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
                     range.begin()
                             .row()
@@ -165,7 +165,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
-                                                final SpreadsheetCellRange range) {
+                                                final SpreadsheetCellRangeReference range) {
             return startOfRow.addColumn(-1);
         }
     },
@@ -183,13 +183,13 @@ public enum SpreadsheetCellRangePath {
             1 //reverseY
     ) {
         @Override
-        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+        public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.begin();
         }
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
-                                                   final SpreadsheetCellRange range) {
+                                                   final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
                     range.end()
                             .row()
@@ -198,7 +198,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
-                                                final SpreadsheetCellRange range) {
+                                                final SpreadsheetCellRangeReference range) {
             return startOfRow.addColumn(1);
         }
     },
@@ -216,7 +216,7 @@ public enum SpreadsheetCellRangePath {
             1//reverseY
     ) {
         @Override
-        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+        public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.end()
                     .setRow(
                             range.begin()
@@ -226,7 +226,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
-                                                   final SpreadsheetCellRange range) {
+                                                   final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
                     range.end()
                             .row()
@@ -235,7 +235,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
-                                                final SpreadsheetCellRange range) {
+                                                final SpreadsheetCellRangeReference range) {
             return startOfRow.addColumn(-1);
         }
     },
@@ -253,7 +253,7 @@ public enum SpreadsheetCellRangePath {
             -1 //reverseY
     ) {
         @Override
-        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+        public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.begin()
                     .setRow(
                             range.end()
@@ -263,7 +263,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
-                                                   final SpreadsheetCellRange range) {
+                                                   final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
                     range.begin()
                             .row()
@@ -272,7 +272,7 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
-                                                final SpreadsheetCellRange range) {
+                                                final SpreadsheetCellRangeReference range) {
             return startOfRow.addColumn(1);
         }
     },
@@ -290,13 +290,13 @@ public enum SpreadsheetCellRangePath {
             -1 //reverseY"
     ) {
         @Override
-        public SpreadsheetCellReference first(final SpreadsheetCellRange range) {
+        public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.end();
         }
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
-                                                   final SpreadsheetCellRange range) {
+                                                   final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
                     range.begin()
                             .row()
@@ -305,17 +305,17 @@ public enum SpreadsheetCellRangePath {
 
         @Override
         public SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
-                                                final SpreadsheetCellRange range) {
+                                                final SpreadsheetCellRangeReference range) {
             return startOfRow.addColumn(-1);
         }
     };
 
-    SpreadsheetCellRangePath(final boolean xFirst,
-                             final int reverseX,
-                             final int reverseY) {
+    SpreadsheetCellRangeReferencePath(final boolean xFirst,
+                                      final int reverseX,
+                                      final int reverseY) {
         final String name = this.name();
 
-        this.comparator = SpreadsheetCellRangePathComparator.with(
+        this.comparator = SpreadsheetCellRangeReferencePathComparator.with(
                 xFirst,
                 reverseX,
                 reverseY,
@@ -344,46 +344,46 @@ public enum SpreadsheetCellRangePath {
     private final String kebabCase;
 
     /**
-     * A {@link Comparator} that may be used to sort {@link SpreadsheetCellReference} honouring this {@link SpreadsheetCellRangePath}.
+     * A {@link Comparator} that may be used to sort {@link SpreadsheetCellReference} honouring this {@link SpreadsheetCellRangeReferencePath}.
      */
     public Comparator<SpreadsheetCellReference> comparator() {
         return this.comparator;
     }
 
-    // SpreadsheetCellRangePathCellsIterator
-    final SpreadsheetCellRangePathComparator comparator;
+    // SpreadsheetCellRangeReferencePathCellsIterator
+    final SpreadsheetCellRangeReferencePathComparator comparator;
 
     /**
-     * Returns an {@link Iterator} for the given {@link SpreadsheetCellRange} for this {@link SpreadsheetCellRangePath}.
+     * Returns an {@link Iterator} for the given {@link SpreadsheetCellRangeReference} for this {@link SpreadsheetCellRangeReferencePath}.
      */
-    public Iterator<SpreadsheetCellReference> cells(final SpreadsheetCellRange cells) {
-        return SpreadsheetCellRangePathCellsIterator.with(
+    public Iterator<SpreadsheetCellReference> cells(final SpreadsheetCellRangeReference cells) {
+        return SpreadsheetCellRangeReferencePathCellsIterator.with(
                 cells,
                 this
         );
     }
 
     /**
-     * Returns the first {@link SpreadsheetCellReference} for this {@link SpreadsheetCellRangePath}.
+     * Returns the first {@link SpreadsheetCellReference} for this {@link SpreadsheetCellRangeReferencePath}.
      */
-    public abstract SpreadsheetCellReference first(final SpreadsheetCellRange range);
+    public abstract SpreadsheetCellReference first(final SpreadsheetCellRangeReference range);
 
     /**
      * Computes the last cell for the current row given a {@link SpreadsheetCellReference}.
      */
     public abstract SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
-                                                        final SpreadsheetCellRange range);
+                                                        final SpreadsheetCellRangeReference range);
 
     /**
      * Computes the first cell for the next row given a {@link SpreadsheetCellReference}.
      */
     public abstract SpreadsheetCellReference nextRow(final SpreadsheetCellReference startOfRow,
-                                                     final SpreadsheetCellRange range);
+                                                     final SpreadsheetCellRangeReference range);
 
     /**
      * The number of cells across. This always returns a value of 1 or greater.
      */
-    public final int width(final SpreadsheetCellRange range) {
+    public final int width(final SpreadsheetCellRangeReference range) {
         return this.comparator.xFirst ?
                 range.height() :
                 range.width();
@@ -392,20 +392,20 @@ public enum SpreadsheetCellRangePath {
     /**
      * The number of cells down. This always returns a value of 1 or greater.
      */
-    public final int height(final SpreadsheetCellRange range) {
+    public final int height(final SpreadsheetCellRangeReference range) {
         return this.comparator.xFirst ?
                 range.width() :
                 range.height();
     }
 
     /**
-     * Finds the matching {@link SpreadsheetCellRangePath} given its name in camel-case form.
+     * Finds the matching {@link SpreadsheetCellRangeReferencePath} given its name in camel-case form.
      */
-    public static SpreadsheetCellRangePath fromKebabCase(final String text) {
+    public static SpreadsheetCellRangeReferencePath fromKebabCase(final String text) {
         Objects.requireNonNull(text, "text");
 
-        final SpreadsheetCellRangePath[] values = SpreadsheetCellRangePath.values();
-        for (final SpreadsheetCellRangePath possible : values) {
+        final SpreadsheetCellRangeReferencePath[] values = SpreadsheetCellRangeReferencePath.values();
+        for (final SpreadsheetCellRangeReferencePath possible : values) {
             if (text.equals(possible.kebabCase)) {
                 return possible;
             }

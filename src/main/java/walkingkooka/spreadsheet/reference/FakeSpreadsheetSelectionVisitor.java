@@ -37,7 +37,7 @@ public class FakeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange range) {
+    protected void visit(final SpreadsheetCellRangeReference range) {
         throw new UnsupportedOperationException();
     }
 

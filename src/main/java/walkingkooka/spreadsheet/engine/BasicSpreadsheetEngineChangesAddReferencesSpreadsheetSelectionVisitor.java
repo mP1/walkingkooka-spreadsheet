@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
@@ -56,7 +56,7 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange range) {
+    protected void visit(final SpreadsheetCellRangeReference range) {
         this.context.storeRepository()
                 .rangeToCells()
                 .addValue(range, this.target);

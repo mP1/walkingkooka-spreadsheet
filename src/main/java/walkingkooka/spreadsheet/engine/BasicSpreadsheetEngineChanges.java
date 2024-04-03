@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -395,9 +395,9 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     private Set<SpreadsheetCell> updatedCells;
 
     /**
-     * Returns a {@link SpreadsheetCellRange} that includes all the {@link #deletedCells()} and {@link #updatedCells()}
+     * Returns a {@link SpreadsheetCellRangeReference} that includes all the {@link #deletedCells()} and {@link #updatedCells()}
      */
-    Optional<SpreadsheetCellRange> deletedAndUpdatedCellRange() {
+    Optional<SpreadsheetCellRangeReference> deletedAndUpdatedCellRange() {
         SpreadsheetColumnReference left = null;
         SpreadsheetColumnReference right = null;
 
@@ -580,7 +580,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
                 .ifPresent(r -> r.forEach(this::batchCell));
     }
 
-    private void batchRange(final SpreadsheetCellRange range) {
+    private void batchRange(final SpreadsheetCellRangeReference range) {
         this.repository.rangeToCells()
                 .load(range)
                 .ifPresent(c -> c.forEach(this::batchCell));

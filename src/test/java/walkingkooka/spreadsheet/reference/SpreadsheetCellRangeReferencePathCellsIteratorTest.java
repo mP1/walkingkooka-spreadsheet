@@ -23,9 +23,9 @@ import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetCellRangePathCellsIteratorTest implements IteratorTesting,
-        ClassTesting<SpreadsheetCellRangePathCellsIterator>,
-        ToStringTesting<SpreadsheetCellRangePathCellsIterator> {
+public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements IteratorTesting,
+        ClassTesting<SpreadsheetCellRangeReferencePathCellsIterator>,
+        ToStringTesting<SpreadsheetCellRangeReferencePathCellsIterator> {
 
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 
@@ -48,7 +48,7 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
     @Test
     public void testLRTD() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangePath.LRTD,
+                SpreadsheetCellRangeReferencePath.LRTD,
                 A1,
                 B1,
                 C1,
@@ -64,7 +64,7 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
     @Test
     public void testRLTD() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangePath.RLTD,
+                SpreadsheetCellRangeReferencePath.RLTD,
                 C1,
                 B1,
                 A1,
@@ -80,7 +80,7 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
     @Test
     public void testLRBU() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangePath.LRBU,
+                SpreadsheetCellRangeReferencePath.LRBU,
                 A3,
                 B3,
                 C3,
@@ -96,7 +96,7 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
     @Test
     public void testRLBU() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangePath.RLBU,
+                SpreadsheetCellRangeReferencePath.RLBU,
                 C3,
                 B3,
                 A3,
@@ -112,7 +112,7 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
     @Test
     public void testTDLR() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangePath.TDLR,
+                SpreadsheetCellRangeReferencePath.TDLR,
                 A1,
                 A2,
                 A3,
@@ -135,7 +135,7 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
     @Test
     public void testTDRL() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangePath.TDRL,
+                SpreadsheetCellRangeReferencePath.TDRL,
                 C1,
                 C2,
                 C3,
@@ -158,7 +158,7 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
     @Test
     public void testBULR() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangePath.BULR,
+                SpreadsheetCellRangeReferencePath.BULR,
                 A3,
                 A2,
                 A1,
@@ -181,7 +181,7 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
     @Test
     public void testBURL() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangePath.BURL,
+                SpreadsheetCellRangeReferencePath.BURL,
                 C3,
                 C2,
                 C1,
@@ -194,10 +194,10 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
         );
     }
 
-    private void iterateAndCheck2(final SpreadsheetCellRangePath path,
+    private void iterateAndCheck2(final SpreadsheetCellRangeReferencePath path,
                                   final SpreadsheetCellReference... expected) {
         this.iterateAndCheck(
-                SpreadsheetCellRangePathCellsIterator.with(
+                SpreadsheetCellRangeReferencePathCellsIterator.with(
                         SpreadsheetSelection.parseCellRange("A1:C3"),
                         path
                 ),
@@ -209,11 +209,11 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
 
     @Test
     public void testToString() {
-        final SpreadsheetCellRange cells = SpreadsheetSelection.parseCellRange("A1:C3");
-        final SpreadsheetCellRangePath path = SpreadsheetCellRangePath.BULR;
+        final SpreadsheetCellRangeReference cells = SpreadsheetSelection.parseCellRange("A1:C3");
+        final SpreadsheetCellRangeReferencePath path = SpreadsheetCellRangeReferencePath.BULR;
 
         this.toStringAndCheck(
-                SpreadsheetCellRangePathCellsIterator.with(cells, path),
+                SpreadsheetCellRangeReferencePathCellsIterator.with(cells, path),
                 cells + " " + path
         );
     }
@@ -221,8 +221,8 @@ public final class SpreadsheetCellRangePathCellsIteratorTest implements Iterator
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetCellRangePathCellsIterator> type() {
-        return SpreadsheetCellRangePathCellsIterator.class;
+    public Class<SpreadsheetCellRangeReferencePathCellsIterator> type() {
+        return SpreadsheetCellRangeReferencePathCellsIterator.class;
     }
 
     @Override

@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -103,7 +104,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
 
     /**
      * If the {@link SpreadsheetSelection} is a {@link walkingkooka.spreadsheet.reference.SpreadsheetLabelName}
-     * resolve to a {@link SpreadsheetCellReference} or {@link walkingkooka.spreadsheet.reference.SpreadsheetCellRange}.
+     * resolve to a {@link SpreadsheetCellReference} or {@link SpreadsheetCellRangeReference}.
      */
     SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection);
 

@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -80,7 +80,7 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor extend
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange range) {
+    protected void visit(final SpreadsheetCellRangeReference range) {
         this.add = this.add | range.cellStream()
                 .anyMatch(this.filter::testCell);
     }

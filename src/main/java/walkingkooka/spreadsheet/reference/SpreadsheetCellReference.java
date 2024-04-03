@@ -331,7 +331,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    boolean testCellRange0(final SpreadsheetCellRange range) {
+    boolean testCellRange0(final SpreadsheetCellRangeReference range) {
         return range.testCell0(this);
     }
 
@@ -372,10 +372,10 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     /**
-     * Creates a {@link SpreadsheetCellRange} with the given {@link SpreadsheetCellReference}.
+     * Creates a {@link SpreadsheetCellRangeReference} with the given {@link SpreadsheetCellReference}.
      */
-    public SpreadsheetCellRange cellRange(final SpreadsheetCellReference other) {
-        return SpreadsheetCellRange.with(this.range(other));
+    public SpreadsheetCellRangeReference cellRange(final SpreadsheetCellReference other) {
+        return SpreadsheetCellRangeReference.with(this.range(other));
     }
 
     // HateosResource...................................................................................................

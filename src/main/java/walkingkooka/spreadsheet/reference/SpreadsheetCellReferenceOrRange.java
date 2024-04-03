@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 /**
- * Common base class for both {@link SpreadsheetCellRange} or {@link SpreadsheetCellReference}.
+ * Common base class for both {@link SpreadsheetCellRangeReference} or {@link SpreadsheetCellReference}.
  */
 public abstract class SpreadsheetCellReferenceOrRange extends SpreadsheetExpressionReference {
 

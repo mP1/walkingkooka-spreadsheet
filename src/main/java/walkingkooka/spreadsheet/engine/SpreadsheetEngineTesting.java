@@ -38,8 +38,8 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -288,7 +288,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testFillCellsNullCellsFails() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
-        final SpreadsheetCellRange range = reference.cellRange(reference);
+        final SpreadsheetCellRangeReference range = reference.cellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(null,
                 range,
@@ -303,7 +303,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRange range = reference.cellRange(reference);
+        final SpreadsheetCellRangeReference range = reference.cellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 null,
@@ -318,7 +318,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRange range = reference.cellRange(reference);
+        final SpreadsheetCellRangeReference range = reference.cellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -333,7 +333,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRange range = reference.cellRange(reference);
+        final SpreadsheetCellRangeReference range = reference.cellRange(reference);
 
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -348,7 +348,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(SpreadsheetSelection.parseCell("C3")));
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(SpreadsheetSelection.parseCell("C3")));
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -367,7 +367,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.parseCellRange("C3:D4");
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
                 range,
@@ -398,7 +398,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 .setText("3")
                 );
 
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.parseCellRange("C3:D4");
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4),
                 range,
@@ -434,7 +434,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 .setText("4")
                 );
 
-        final SpreadsheetCellRange range = SpreadsheetCellRange.parseCellRange("C3:D4");
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.parseCellRange("C3:D4");
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4, e5),
                 range,
@@ -1161,7 +1161,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Set<SpreadsheetCellRange> ranges,
+                                   final Set<SpreadsheetCellRangeReference> ranges,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
@@ -1196,7 +1196,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Set<SpreadsheetCellRange> ranges,
+                                   final Set<SpreadsheetCellRangeReference> ranges,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
@@ -1215,8 +1215,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,
                                    final Collection<SpreadsheetCell> cells,
-                                   final SpreadsheetCellRange from,
-                                   final SpreadsheetCellRange to,
+                                   final SpreadsheetCellRangeReference from,
+                                   final SpreadsheetCellRangeReference to,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta delta) {
         checkEquals(
@@ -1358,7 +1358,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             final boolean includeFrozenColumnsRows,
             final Optional<SpreadsheetSelection> selection,
             final SpreadsheetEngineContext context,
-            final SpreadsheetCellRange... window) {
+            final SpreadsheetCellRangeReference... window) {
         this.windowAndCheck(
                 engine,
                 viewport,
@@ -1564,7 +1564,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .findCells(
                                 null, // range
-                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
                                 100, // max
                                 SpreadsheetValueType.ANY, // valueType
@@ -1598,7 +1598,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetCellRangeReferencePath.LRTD, // path
                                 -1, // offset
                                 0,  // max
                                 SpreadsheetValueType.ANY, // valueType
@@ -1615,7 +1615,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
                                 -1, // max
                                 SpreadsheetValueType.ANY, // valueType
@@ -1632,7 +1632,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
                                 100, // max
                                 null, // valueType
@@ -1649,7 +1649,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
                                 100, // max
                                 SpreadsheetValueType.ANY, // valueType
@@ -1666,7 +1666,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .findCells(
                                 SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangePath.LRTD, // path
+                                SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
                                 100, // max
                                 SpreadsheetValueType.ANY, // valueType
@@ -1678,8 +1678,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void findCellsAndCheck(
             final SpreadsheetEngine engine,
-            final SpreadsheetCellRange range,
-            final SpreadsheetCellRangePath path,
+            final SpreadsheetCellRangeReference range,
+            final SpreadsheetCellRangeReferencePath path,
             final int offset,
             final int max,
             final String valueType,
@@ -1703,8 +1703,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void findCellsAndCheck(
             final SpreadsheetEngine engine,
-            final SpreadsheetCellRange range,
-            final SpreadsheetCellRangePath path,
+            final SpreadsheetCellRangeReference range,
+            final SpreadsheetCellRangeReferencePath path,
             final int offset,
             final int max,
             final String valueType,

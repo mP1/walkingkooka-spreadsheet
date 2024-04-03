@@ -31,7 +31,7 @@ final class SpreadsheetSelectionTestSpreadsheetSelectionVisitor extends Spreadsh
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange range) {
+    protected void visit(final SpreadsheetCellRangeReference range) {
         this.test = this.selection.testCellRange(range);
     }
 

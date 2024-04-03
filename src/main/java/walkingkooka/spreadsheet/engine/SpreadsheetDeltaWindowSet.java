@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 
 import java.util.AbstractSet;
 import java.util.Arrays;
@@ -27,25 +27,25 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * An immutable {@link java.util.Set} holding the {@link SpreadsheetCellRange} of a {@link SpreadsheetDelta#window()}.
+ * An immutable {@link java.util.Set} holding the {@link SpreadsheetCellRangeReference} of a {@link SpreadsheetDelta#window()}.
  * It also includes logic to verify that the window ranges do not overlap.
  */
-final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRange> {
+final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeReference> {
 
     static {
         Sets.registerImmutableType(SpreadsheetDeltaWindowSet.class);
     }
 
     @SuppressWarnings("lgtm[java/abstract-to-concrete-cast]")
-    static SpreadsheetDeltaWindowSet with(final Set<SpreadsheetCellRange> window) {
+    static SpreadsheetDeltaWindowSet with(final Set<SpreadsheetCellRangeReference> window) {
         return window instanceof SpreadsheetDeltaWindowSet ?
                 (SpreadsheetDeltaWindowSet)window :
                 new SpreadsheetDeltaWindowSet(
-                        window.toArray(new SpreadsheetCellRange[window.size()]) // TODO Array.clone.
+                        window.toArray(new SpreadsheetCellRangeReference[window.size()]) // TODO Array.clone.
                 );
     }
 
-    private SpreadsheetDeltaWindowSet(final SpreadsheetCellRange[] ranges) {
+    private SpreadsheetDeltaWindowSet(final SpreadsheetCellRangeReference[] ranges) {
         final int length = ranges.length;
 
         switch (length) {
@@ -66,9 +66,9 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRange> 
         this.ranges = ranges;
     }
 
-    private static void failIfOverlaps(final SpreadsheetCellRange[] ranges,
+    private static void failIfOverlaps(final SpreadsheetCellRangeReference[] ranges,
                                        final int index) {
-        final SpreadsheetCellRange range = ranges[index];
+        final SpreadsheetCellRangeReference range = ranges[index];
 
         final int length = ranges.length;
         for (int i = index + 1; i < length; i++) {
@@ -80,15 +80,15 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRange> 
         }
     }
 
-    private static void failIfOverlaps(final SpreadsheetCellRange left,
-                                       final SpreadsheetCellRange right) {
+    private static void failIfOverlaps(final SpreadsheetCellRangeReference left,
+                                       final SpreadsheetCellRangeReference right) {
         if (left.testCellRange(right)) {
             throw new IllegalArgumentException("Window contains overlapping ranges " + left + " and " + right);
         }
     }
 
     @Override
-    public Iterator<SpreadsheetCellRange> iterator() {
+    public Iterator<SpreadsheetCellRangeReference> iterator() {
         return Iterators.array(this.ranges);
     }
 
@@ -97,7 +97,7 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRange> 
         return this.ranges.length;
     }
 
-    private final SpreadsheetCellRange[] ranges;
+    private final SpreadsheetCellRangeReference[] ranges;
 
     @Override
     public String toString() {

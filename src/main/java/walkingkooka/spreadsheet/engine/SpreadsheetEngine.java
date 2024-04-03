@@ -22,8 +22,8 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -130,7 +130,7 @@ public interface SpreadsheetEngine {
     /**
      * Loads a range of cells. This is useful to fill a range that fills the viewportRectangle.
      */
-    SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> range,
+    SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> range,
                                final SpreadsheetEngineEvaluation evaluation,
                                final Set<SpreadsheetDeltaProperties> deltaProperties,
                                final SpreadsheetEngineContext context);
@@ -138,14 +138,14 @@ public interface SpreadsheetEngine {
     /**
      * Fill may be used to perform several operations.
      * <ul>
-     * <li>If $cells are empty the $parse is ignored and the {@link SpreadsheetCellRange $to} has all cells deleted, aka DELETE</li>
+     * <li>If $cells are empty the $parse is ignored and the {@link SpreadsheetCellRangeReference $to} has all cells deleted, aka DELETE</li>
      * <li>If $cells is NOT empty and $parse and $to are equal the cells are saved without modification, aka SAVE</li>
      * <li>If $cells is NOT empty and $parse is smaller than $to cells are repeated and ABSOLUTE references updated aka FILL or COPY then PASTE</li>
      * </ul>
      */
     SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                               final SpreadsheetCellRange from,
-                               final SpreadsheetCellRange to,
+                               final SpreadsheetCellRangeReference from,
+                               final SpreadsheetCellRangeReference to,
                                final SpreadsheetEngineContext context);
 
     /**
@@ -235,8 +235,8 @@ public interface SpreadsheetEngine {
      * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
      * the given {@link Expression}.
      */
-    Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
-                                   final SpreadsheetCellRangePath path,
+    Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference range,
+                                   final SpreadsheetCellRangeReferencePath path,
                                    final int offset,
                                    final int max,
                                    final String valueType,

@@ -43,10 +43,10 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellRange>
-        implements ComparableTesting2<SpreadsheetCellRange>,
-        CanReplaceReferencesTesting<SpreadsheetCellRange>,
-        IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference> {
+public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellRangeReference>
+        implements ComparableTesting2<SpreadsheetCellRangeReference>,
+        CanReplaceReferencesTesting<SpreadsheetCellRangeReference>,
+        IterableTesting<SpreadsheetCellRangeReference, SpreadsheetCellReference> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -55,7 +55,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testWithNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetCellRange.with(null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetCellRangeReference.with(null));
     }
 
     @Test
@@ -86,7 +86,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     private void withFails(final Range<SpreadsheetCellReference> range) {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellRange.with(range));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellRangeReference.with(range));
     }
 
     @Test
@@ -95,11 +95,11 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final SpreadsheetCellReference end = this.cellReference(3, 4);
         final Range<SpreadsheetCellReference> range = begin.range(end);
 
-        final SpreadsheetCellRange spreadsheetCellRange = SpreadsheetCellRange.with(range);
-        assertSame(range, spreadsheetCellRange.range(), "range");
-        this.checkEquals(begin, spreadsheetCellRange.begin(), "begin");
-        this.checkEquals(end, spreadsheetCellRange.end(), "end");
-        this.isSingleCellAndCheck(spreadsheetCellRange, false);
+        final SpreadsheetCellRangeReference spreadsheetCellRangeReference = SpreadsheetCellRangeReference.with(range);
+        assertSame(range, spreadsheetCellRangeReference.range(), "range");
+        this.checkEquals(begin, spreadsheetCellRangeReference.begin(), "begin");
+        this.checkEquals(end, spreadsheetCellRangeReference.end(), "end");
+        this.isSingleCellAndCheck(spreadsheetCellRangeReference, false);
     }
 
     @Test
@@ -109,7 +109,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final int column2 = 3;
         final int row2 = 4;
 
-        final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
+        final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
         this.check(range, column2, row1, column1, row2, 99 - 3 + 1, 4 - 2 + 1);
         this.isSingleCellAndCheck(range, false);
     }
@@ -121,7 +121,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final int column2 = 3;
         final int row2 = 4;
 
-        final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
+        final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
         this.check(range, column1, row2, column2, row1, 3 - 1 + 1, 99 - 4 + 1);
         this.isSingleCellAndCheck(range, false);
     }
@@ -133,7 +133,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final int column2 = 3;
         final int row2 = 4;
 
-        final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
+        final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
         this.check(range, column2, row2, column1, row1, 88 - 3 + 1, 99 - 4 + 1);
         this.isSingleCellAndCheck(range, false);
     }
@@ -148,7 +148,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final int column2 = column1;
         final int row2 = row1;
 
-        final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
+        final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
         this.check(range, column1, row1, column2, row2, 1, 1);
         this.isSingleCellAndCheck(range, true);
     }
@@ -160,7 +160,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final int column2 = 88;
         final int row2 = 99;
 
-        final SpreadsheetCellRange range = this.range(column1, row1, column2, row2);
+        final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
         this.isSingleCellAndCheck(range, false);
     }
 
@@ -291,50 +291,50 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testSetRangeWithSame() {
-        final SpreadsheetCellRange range = this.range();
+        final SpreadsheetCellRangeReference range = this.range();
         assertSame(range, range.setRange(this.begin().cellRange(this.end()).range()));
     }
 
     @Test
     public void testSetRangeWithDifferent() {
-        final SpreadsheetCellRange range = this.range();
+        final SpreadsheetCellRangeReference range = this.range();
         final SpreadsheetCellReference differentBegin = this.cellReference(1, 2);
-        final SpreadsheetCellRange different = range.setRange(differentBegin.range(this.end()));
+        final SpreadsheetCellRangeReference different = range.setRange(differentBegin.range(this.end()));
         this.check(different, 1, 2, COLUMN2, ROW2);
     }
 
     @Test
     public void testSetRangeWithDifferent2() {
-        final SpreadsheetCellRange range = this.range();
-        final SpreadsheetCellRange different = range.setRange(this.end().range(this.cellReference(1, 2)));
+        final SpreadsheetCellRangeReference range = this.range();
+        final SpreadsheetCellRangeReference different = range.setRange(this.end().range(this.cellReference(1, 2)));
         this.check(different, 1, 2, COLUMN2, ROW2);
     }
 
     @Test
     public void testSetRangeWithDifferent3() {
-        final SpreadsheetCellRange range = this.range();
-        final SpreadsheetCellRange different = range.setRange(this.begin().range(this.cellReference(88, 99)));
+        final SpreadsheetCellRangeReference range = this.range();
+        final SpreadsheetCellRangeReference different = range.setRange(this.begin().range(this.cellReference(88, 99)));
         this.check(different, COLUMN1, ROW1, 88, 99);
     }
 
     @Test
     public void testSetRangeWithDifferent4() {
-        final SpreadsheetCellRange range = this.range();
-        final SpreadsheetCellRange different = range.setRange(this.cellReference(88, 99).range(this.begin()));
+        final SpreadsheetCellRangeReference range = this.range();
+        final SpreadsheetCellRangeReference different = range.setRange(this.cellReference(88, 99).range(this.begin()));
         this.check(different, COLUMN1, ROW1, 88, 99);
     }
 
     @Test
     public void testSetRangeWithDifferent5() {
-        final SpreadsheetCellRange range = this.range();
-        final SpreadsheetCellRange different = range.setRange(this.cellReference(1, 2).range(this.cellReference(88, 99)));
+        final SpreadsheetCellRangeReference range = this.range();
+        final SpreadsheetCellRangeReference different = range.setRange(this.cellReference(1, 2).range(this.cellReference(88, 99)));
         this.check(different, 1, 2, 88, 99);
     }
 
     @Test
     public void testSetRangeWithDifferent6() {
-        final SpreadsheetCellRange range = this.range();
-        final SpreadsheetCellRange different = range.setRange(this.cellReference(88, 99).range(this.cellReference(1, 2)));
+        final SpreadsheetCellRangeReference range = this.range();
+        final SpreadsheetCellRangeReference different = range.setRange(this.cellReference(88, 99).range(this.cellReference(1, 2)));
         this.check(different, 1, 2, 88, 99);
     }
 
@@ -371,15 +371,15 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testSetColumnRangeSame() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:D4");
         assertSame(range, range.setColumnRange(SpreadsheetSelection.parseColumnRange("B:D")));
     }
 
     @Test
     public void testSetColumnRangeDifferent() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:D4");
         final SpreadsheetColumnRangeReference columns = SpreadsheetSelection.parseColumnRange("F:G");
-        final SpreadsheetCellRange different = range.setColumnRange(columns);
+        final SpreadsheetCellRangeReference different = range.setColumnRange(columns);
 
         assertNotSame(range, different);
         this.checkEquals(
@@ -423,15 +423,15 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testSetRowRangeSame() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:D4");
         assertSame(range, range.setRowRange(SpreadsheetSelection.parseRowRange("2:4")));
     }
 
     @Test
     public void testSetRowRangeDifferent() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:D4");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:D4");
         final SpreadsheetRowRangeReference rows = SpreadsheetSelection.parseRowRange("6:7");
-        final SpreadsheetCellRange different = range.setRowRange(rows);
+        final SpreadsheetCellRangeReference different = range.setRowRange(rows);
 
         assertNotSame(range, different);
         this.checkEquals(
@@ -655,12 +655,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    private void replaceReferencesAndCheck(final SpreadsheetCellRange range,
+    private void replaceReferencesAndCheck(final SpreadsheetCellRangeReference range,
                                            final SpreadsheetCellReference begin,
                                            final SpreadsheetCellReference beginReplacement,
                                            final SpreadsheetCellReference end,
                                            final SpreadsheetCellReference endReplacement,
-                                           final SpreadsheetCellRange expected) {
+                                           final SpreadsheetCellRangeReference expected) {
         this.replaceReferencesAndCheck(
                 range,
                 (r) -> {
@@ -681,8 +681,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public SpreadsheetCellRange createReplaceReference() {
-        return SpreadsheetCellRange.parseCellRange("B2:C3");
+    public SpreadsheetCellRangeReference createReplaceReference() {
+        return SpreadsheetCellRangeReference.parseCellRange("B2:C3");
     }
 
     // toScalar.........................................................................................................
@@ -721,7 +721,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testToCell() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
 
         this.toCellAndCheck(
                 range,
@@ -771,7 +771,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testToColumnOrColumnRange() {
-        final SpreadsheetCellRange selection = this.createSelection();
+        final SpreadsheetCellRangeReference selection = this.createSelection();
         this.toColumnOrColumnRangeAndCheck(
                 selection,
                 selection.toColumnRange()
@@ -810,7 +810,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testToRowOrRowRange() {
-        final SpreadsheetCellRange selection = this.createSelection();
+        final SpreadsheetCellRangeReference selection = this.createSelection();
         this.toRowOrRowRangeAndCheck(
                 selection,
                 selection.toRowRange()
@@ -1353,7 +1353,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    private void containsAllSpreadsheetViewportWindowsAndCheck(final SpreadsheetCellRange range,
+    private void containsAllSpreadsheetViewportWindowsAndCheck(final SpreadsheetCellRangeReference range,
                                                                final SpreadsheetViewportWindows windows,
                                                                final boolean expected) {
         this.containsAllAndCheck(
@@ -1456,8 +1456,8 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    private void containsAllAndCheck(final SpreadsheetCellRange range,
-                                     final SpreadsheetCellRange test,
+    private void containsAllAndCheck(final SpreadsheetCellRangeReference range,
+                                     final SpreadsheetCellRangeReference test,
                                      final boolean expected) {
         this.checkEquals(
                 expected,
@@ -1470,7 +1470,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testColumnStream() {
-        final SpreadsheetCellRange range = this.range(5, 10, 8, 10);
+        final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 10);
 
         this.checkStream(range,
                 range.columnStream(),
@@ -1479,7 +1479,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testColumnStreamFilterAndMapAndCollect() {
-        final SpreadsheetCellRange range = this.range(5, 10, 8, 10);
+        final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 10);
         this.checkStream(range,
                 range.columnStream()
                         .map(SpreadsheetColumnOrRowReference::value)
@@ -1489,7 +1489,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testRowStream() {
-        final SpreadsheetCellRange range = this.range(10, 5, 10, 8);
+        final SpreadsheetCellRangeReference range = this.range(10, 5, 10, 8);
 
         this.checkStream(range,
                 range.rowStream(),
@@ -1498,7 +1498,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testRowStreamFilterAndMapAndCollect() {
-        final SpreadsheetCellRange range = this.range(5, 10, 8, 20);
+        final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 20);
         this.checkStream(range,
                 range.rowStream()
                         .map(SpreadsheetColumnOrRowReference::value)
@@ -1508,7 +1508,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellStream() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("A1:A2");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("A1:A2");
 
         this.checkStream(
                 range,
@@ -1520,7 +1520,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellStream2() {
-        final SpreadsheetCellRange range = this.range(3, 7, 5, 10);
+        final SpreadsheetCellRangeReference range = this.range(3, 7, 5, 10);
 
         this.checkStream(
                 range,
@@ -1533,7 +1533,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellStreamAllCells() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.ALL_CELLS;
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.ALL_CELLS;
 
         final long count = range.cellStream()
                 .count();
@@ -1551,14 +1551,14 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellStreamFilterAndMapAndCollect() {
-        final SpreadsheetCellRange range = this.range(5, 10, 8, 20);
+        final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 20);
         this.checkStream(range,
                 range.cellStream()
                         .filter(cell -> cell.column().value() == 5 && cell.row().value() < 13),
                 this.cellReference(5, 10), this.cellReference(5, 11), this.cellReference(5, 12));
     }
 
-    private void checkStream(final SpreadsheetCellRange range, final Stream<?> stream, final Object... expected) {
+    private void checkStream(final SpreadsheetCellRangeReference range, final Stream<?> stream, final Object... expected) {
         final List<Object> actual = stream.collect(Collectors.toList());
         this.checkEquals(Lists.of(expected), actual, range::toString);
     }
@@ -1594,7 +1594,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellsEmpty() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final List<SpreadsheetCellReference> absent = Lists.array();
         range.cells(Lists.empty(), this::cellsPresent, absent::add);
@@ -1604,7 +1604,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellsFull() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final List<SpreadsheetCell> present = Lists.array();
 
@@ -1624,7 +1624,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellsMixed() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
         final SpreadsheetCell b2 = this.b2();
@@ -1649,7 +1649,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellsMixed2() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCellReference b1 = this.cellReference("B1");
         final SpreadsheetCellReference b2 = this.cellReference("B2");
@@ -1674,7 +1674,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellsMixed3() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
         final SpreadsheetCellReference b2 = this.cellReference("B2");
@@ -1700,7 +1700,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellsMixedAbsoluteCellReferences() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("$B$1:$C$3"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("$B$1:$C$3"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
         final SpreadsheetCellReference b2 = this.cellReference("B2");
@@ -1725,7 +1725,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCellsIgnoresOutOfRange() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B1:C2"); // B1, B2, B3, C1, C2, C3
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B1:C2"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
         final SpreadsheetCellReference b2 = this.cellReference("B2");
@@ -1789,7 +1789,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testTestCellRangeOrFail() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("C3:Z99");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("C3:Z99");
 
         assertSame(
                 range.toCellRange(),
@@ -1839,7 +1839,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         );
     }
 
-    private void isSingleCellAndCheck(final SpreadsheetCellRange range,
+    private void isSingleCellAndCheck(final SpreadsheetCellRangeReference range,
                                       final boolean expected) {
         this.checkEquals(
                 expected,
@@ -2147,7 +2147,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    SpreadsheetCellRange parseRange(final String range) {
+    SpreadsheetCellRangeReference parseRange(final String range) {
         return SpreadsheetSelection.parseCellRange(range);
     }
 
@@ -2847,7 +2847,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testToRelative() {
-        final SpreadsheetCellRange range = this.createSelection();
+        final SpreadsheetCellRangeReference range = this.createSelection();
         assertSame(range, range.toRelative());
     }
 
@@ -2868,7 +2868,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     private void toRelativeAndCheck(final String start,
                                     final String expected) {
-        final SpreadsheetCellRange actual = SpreadsheetSelection.parseCellRange(start).toRelative();
+        final SpreadsheetCellRangeReference actual = SpreadsheetSelection.parseCellRange(start).toRelative();
         this.checkEquals(SpreadsheetSelection.parseCellRange(expected),
                 actual,
                 () -> start + " toRelative");
@@ -2879,7 +2879,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     @Test
     public void testSpreadsheetSelectionVisitorAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetCellRange selection = this.createSelection();
+        final SpreadsheetCellRangeReference selection = this.createSelection();
 
         new FakeSpreadsheetSelectionVisitor() {
             @Override
@@ -2896,7 +2896,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
             }
 
             @Override
-            protected void visit(final SpreadsheetCellRange s) {
+            protected void visit(final SpreadsheetCellRangeReference s) {
                 assertSame(selection, s);
                 b.append("3");
             }
@@ -3004,7 +3004,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     // helpers .........................................................................................................
 
     @Override
-    SpreadsheetCellRange createSelection() {
+    SpreadsheetCellRangeReference createSelection() {
         return this.range(COLUMN1, ROW1, COLUMN2, ROW2);
     }
 
@@ -3012,12 +3012,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testFromCellsWithNullCellsFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetCellRange.fromCells(null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetCellRangeReference.fromCells(null));
     }
 
     @Test
     public void testFromCellsEmptyCellsFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellRange.fromCells(Lists.empty()));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellRangeReference.fromCells(Lists.empty()));
     }
 
     @Test
@@ -3027,7 +3027,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
         final SpreadsheetCellReference a = this.cellReference(column, row);
 
-        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(a));
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(a));
         this.check(range, column, row, column, row);
         this.checkEquals(Range.singleton(a), range.range(), "range");
     }
@@ -3040,7 +3040,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final SpreadsheetCellReference d = this.cellReference(114, 24);
         final SpreadsheetCellReference e = this.cellReference(115, 24);
 
-        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(a, b, c, d, e));
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(a, b, c, d, e));
         this.check(range, 111, 11, 115, 24);
     }
 
@@ -3052,7 +3052,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         final SpreadsheetCellReference d = this.cellReference(114, 24);
         final SpreadsheetCellReference e = this.cellReference(115, 24);
 
-        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(e, d, c, b, a));
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(e, d, c, b, a));
         this.check(range, 111, 11, 115, 24);
     }
 
@@ -3060,7 +3060,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testFromCells3() {
         final SpreadsheetCellReference a = this.cellReference(111, 11);
 
-        final SpreadsheetCellRange range = SpreadsheetCellRange.fromCells(Lists.of(a));
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(a));
         this.check(range, 111, 11, 111, 11);
     }
 
@@ -3070,7 +3070,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testParseMissingSeparatorSingleton() {
         this.parseStringAndCheck(
                 "A1",
-                SpreadsheetCellRange.with(Range.singleton(SpreadsheetSelection.A1))
+                SpreadsheetCellRangeReference.with(Range.singleton(SpreadsheetSelection.A1))
         );
     }
 
@@ -3110,7 +3110,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testParse() {
         this.parseStringAndCheck(
                 "A2:C4",
-                SpreadsheetCellRange.with(SpreadsheetSelection.parseCell("A2")
+                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("A2")
                         .range(SpreadsheetSelection.parseCell("C4")))
         );
     }
@@ -3119,7 +3119,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testParseEquivalent() {
         this.parseStringAndCheck(
                 "A1:$A$1",
-                SpreadsheetCellRange.with(
+                SpreadsheetCellRangeReference.with(
                         Range.singleton(
                                 SpreadsheetSelection.A1
                         )
@@ -3131,7 +3131,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testParseEquivalent2() {
         this.parseStringAndCheck(
                 "$A$1:A1",
-                SpreadsheetCellRange.with(
+                SpreadsheetCellRangeReference.with(
                         Range.singleton(
                                 SpreadsheetSelection.parseCell("$A$1")
                         )
@@ -3142,28 +3142,28 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     @Test
     public void testParseAbsoluteBegin() {
         this.parseStringAndCheck("$A$2:C4",
-                SpreadsheetCellRange.with(SpreadsheetSelection.parseCell("$A$2")
+                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("$A$2")
                         .range(SpreadsheetSelection.parseCell("C4"))));
     }
 
     @Test
     public void testParseAbsoluteBegin2() {
         this.parseStringAndCheck("$A2:C4",
-                SpreadsheetCellRange.with(SpreadsheetSelection.parseCell("$A2")
+                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("$A2")
                         .range(SpreadsheetSelection.parseCell("C4"))));
     }
 
     @Test
     public void testParseAbsoluteEnd() {
         this.parseStringAndCheck("A2:$C4",
-                SpreadsheetCellRange.with(SpreadsheetSelection.parseCell("A2")
+                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("A2")
                         .range(SpreadsheetSelection.parseCell("$C4"))));
     }
 
     @Test
     public void testParseAbsoluteEnd2() {
         this.parseStringAndCheck("A2:$C$4",
-                SpreadsheetCellRange.with(SpreadsheetSelection.parseCell("A2")
+                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("A2")
                         .range(SpreadsheetSelection.parseCell("$C$4"))));
     }
 
@@ -3171,7 +3171,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testParseSwap() {
         this.parseStringAndCheck(
                 "B2:A1",
-                SpreadsheetCellRange.with(
+                SpreadsheetCellRangeReference.with(
                         SpreadsheetSelection.A1
                                 .range(SpreadsheetSelection.parseCell("B2")
                                 )
@@ -3183,7 +3183,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
     public void testParseSwap2() {
         this.parseStringAndCheck(
                 "B2:$A$1",
-                SpreadsheetCellRange.with(
+                SpreadsheetCellRangeReference.with(
                         SpreadsheetSelection.parseCell("$A$1")
                                 .range(SpreadsheetSelection.parseCell("B2")
                                 )
@@ -3232,9 +3232,9 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCompareSort() {
-        final SpreadsheetCellRange a1b2 = SpreadsheetSelection.parseCellRange("A1:B2");
-        final SpreadsheetCellRange b2c3 = SpreadsheetSelection.parseCellRange("B2:C3");
-        final SpreadsheetCellRange c3d4 = SpreadsheetSelection.parseCellRange("C3:D4");
+        final SpreadsheetCellRangeReference a1b2 = SpreadsheetSelection.parseCellRange("A1:B2");
+        final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("B2:C3");
+        final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("C3:D4");
 
         this.compareToArraySortAndCheck(
                 c3d4,
@@ -3248,9 +3248,9 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     @Test
     public void testCompareSort2() {
-        final SpreadsheetCellRange a1b2 = SpreadsheetSelection.parseCellRange("A1:B2");
-        final SpreadsheetCellRange b2c3 = SpreadsheetSelection.parseCellRange("B2:C3");
-        final SpreadsheetCellRange b2d4 = SpreadsheetSelection.parseCellRange("B2:D4");
+        final SpreadsheetCellRangeReference a1b2 = SpreadsheetSelection.parseCellRange("A1:B2");
+        final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("B2:C3");
+        final SpreadsheetCellRangeReference b2d4 = SpreadsheetSelection.parseCellRange("B2:D4");
 
         this.compareToArraySortAndCheck(
                 b2d4,
@@ -3281,7 +3281,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
 
     //helper.................................................................................................
 
-    private SpreadsheetCellRange range() {
+    private SpreadsheetCellRangeReference range() {
         return this.range(this.begin(), this.end());
     }
 
@@ -3293,12 +3293,12 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         return this.cellReference(COLUMN2, ROW2);
     }
 
-    private SpreadsheetCellRange range(final int column1, final int row1, final int column2, final int row2) {
+    private SpreadsheetCellRangeReference range(final int column1, final int row1, final int column2, final int row2) {
         return this.range(this.cellReference(column1, row1), this.cellReference(column2, row2));
     }
 
-    private SpreadsheetCellRange range(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
-        return SpreadsheetCellRange.with(begin.range(end));
+    private SpreadsheetCellRangeReference range(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
+        return SpreadsheetCellRangeReference.with(begin.range(end));
     }
 
     private SpreadsheetCellReference cellReference(final String text) {
@@ -3318,7 +3318,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         return SpreadsheetReferenceKind.RELATIVE.row(row);
     }
 
-    private void check(final SpreadsheetCellRange range,
+    private void check(final SpreadsheetCellRangeReference range,
                        final int column1,
                        final int row1,
                        final int column2,
@@ -3327,7 +3327,7 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.checkEnd(range, column2, row2);
     }
 
-    private void check(final SpreadsheetCellRange range,
+    private void check(final SpreadsheetCellRangeReference range,
                        final int column1,
                        final int row1,
                        final int column2,
@@ -3339,63 +3339,63 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
         this.checkHeight(range, height);
     }
 
-    private void checkBegin(final SpreadsheetCellRange range, final int column, final int row) {
+    private void checkBegin(final SpreadsheetCellRangeReference range, final int column, final int row) {
         this.checkBegin(range, this.cellReference(column, row));
     }
 
-    private void checkBegin(final SpreadsheetCellRange range, final SpreadsheetCellReference begin) {
+    private void checkBegin(final SpreadsheetCellRangeReference range, final SpreadsheetCellReference begin) {
         this.checkEquals(begin, range.begin(), () -> "range begin=" + range);
     }
 
-    private void checkEnd(final SpreadsheetCellRange range, final int column, final int row) {
+    private void checkEnd(final SpreadsheetCellRangeReference range, final int column, final int row) {
         this.checkEnd(range, this.cellReference(column, row));
     }
 
-    private void checkEnd(final SpreadsheetCellRange range, final SpreadsheetCellReference end) {
+    private void checkEnd(final SpreadsheetCellRangeReference range, final SpreadsheetCellReference end) {
         this.checkEquals(end, range.end(), () -> "range end=" + range);
     }
 
-    private void checkWidth(final SpreadsheetCellRange range, final int width) {
+    private void checkWidth(final SpreadsheetCellRangeReference range, final int width) {
         this.checkEquals(width, range.width(), () -> "range width=" + range);
     }
 
-    private void checkHeight(final SpreadsheetCellRange range, final int height) {
+    private void checkHeight(final SpreadsheetCellRangeReference range, final int height) {
         this.checkEquals(height, range.height(), () -> "range height=" + range);
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetCellRange> type() {
-        return SpreadsheetCellRange.class;
+    public Class<SpreadsheetCellRangeReference> type() {
+        return SpreadsheetCellRangeReference.class;
     }
 
     // ComparableTesting.................................................................................................
 
     @Override
-    public SpreadsheetCellRange createComparable() {
+    public SpreadsheetCellRangeReference createComparable() {
         return this.createSelection();
     }
 
     // IterableTesting.................................................................................................
 
     @Override
-    public SpreadsheetCellRange createIterable() {
+    public SpreadsheetCellRangeReference createIterable() {
         return SpreadsheetSelection.parseCellRange("B2:C3");
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetCellRange unmarshall(final JsonNode node,
-                                           final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellRange.unmarshallCellRange(node, context);
+    public SpreadsheetCellRangeReference unmarshall(final JsonNode node,
+                                                    final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellRangeReference.unmarshallCellRange(node, context);
     }
 
     // ParseStringTesting..................................................................................................
 
     @Override
-    public SpreadsheetCellRange parseString(final String text) {
+    public SpreadsheetCellRangeReference parseString(final String text) {
         return SpreadsheetSelection.parseCellRange(text);
     }
 }

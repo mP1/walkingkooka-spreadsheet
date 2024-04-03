@@ -20,12 +20,12 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.SetTesting2;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<SpreadsheetDeltaWindowSet, SpreadsheetCellRange> {
+public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<SpreadsheetDeltaWindowSet, SpreadsheetCellRangeReference> {
 
     @Test
     public void testWithOverlapFails() {
@@ -49,7 +49,7 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
     }
 
     private void withFails(final String message,
-                           final SpreadsheetCellRange... ranges) {
+                           final SpreadsheetCellRangeReference... ranges) {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetDeltaWindowSet.with(Sets.of(ranges))
@@ -59,7 +59,7 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
 
     @Test
     public void testWithOne() {
-        final SpreadsheetCellRange a1b2 = this.a1b2();
+        final SpreadsheetCellRangeReference a1b2 = this.a1b2();
 
         SpreadsheetDeltaWindowSet.with(
                 Sets.of(a1b2)
@@ -68,8 +68,8 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
 
     @Test
     public void testWithTwo() {
-        final SpreadsheetCellRange a1b2 = this.a1b2();
-        final SpreadsheetCellRange c1e2 = this.c1e2();
+        final SpreadsheetCellRangeReference a1b2 = this.a1b2();
+        final SpreadsheetCellRangeReference c1e2 = this.c1e2();
 
         SpreadsheetDeltaWindowSet.with(
                 Sets.of(a1b2, c1e2)
@@ -82,8 +82,8 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
     //   B5
     @Test
     public void testWithTwo2() {
-        final SpreadsheetCellRange a1b2 = this.a1b2();
-        final SpreadsheetCellRange a3b5 = this.a3b5();
+        final SpreadsheetCellRangeReference a1b2 = this.a1b2();
+        final SpreadsheetCellRangeReference a3b5 = this.a3b5();
 
         SpreadsheetDeltaWindowSet.with(
                 Sets.of(a1b2, a3b5)
@@ -96,9 +96,9 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
     //   B5
     @Test
     public void testWithThree() {
-        final SpreadsheetCellRange a1b2 = this.a1b2();
-        final SpreadsheetCellRange c1e2 = this.c1e2();
-        final SpreadsheetCellRange a3b5 = this.a3b5();
+        final SpreadsheetCellRangeReference a1b2 = this.a1b2();
+        final SpreadsheetCellRangeReference c1e2 = this.c1e2();
+        final SpreadsheetCellRangeReference a3b5 = this.a3b5();
 
         SpreadsheetDeltaWindowSet.with(
                 Sets.of(a1b2, c1e2, a3b5)
@@ -107,10 +107,10 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
 
     @Test
     public void testWithFour() {
-        final SpreadsheetCellRange a1b2 = this.a1b2();
-        final SpreadsheetCellRange c1e2 = this.c1e2();
-        final SpreadsheetCellRange a3b5 = this.a3b5();
-        final SpreadsheetCellRange c3e5 = this.c3e5();
+        final SpreadsheetCellRangeReference a1b2 = this.a1b2();
+        final SpreadsheetCellRangeReference c1e2 = this.c1e2();
+        final SpreadsheetCellRangeReference a3b5 = this.a3b5();
+        final SpreadsheetCellRangeReference c3e5 = this.c3e5();
 
         SpreadsheetDeltaWindowSet.with(
                 Sets.of(a1b2, c1e2, a3b5, c3e5)
@@ -119,10 +119,10 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
 
     @Test
     public void testContains() {
-        final SpreadsheetCellRange a1b2 = this.a1b2();
-        final SpreadsheetCellRange c1e2 = this.c1e2();
-        final SpreadsheetCellRange a3b5 = this.a3b5();
-        final SpreadsheetCellRange c3e5 = this.c3e5();
+        final SpreadsheetCellRangeReference a1b2 = this.a1b2();
+        final SpreadsheetCellRangeReference c1e2 = this.c1e2();
+        final SpreadsheetCellRangeReference a3b5 = this.a3b5();
+        final SpreadsheetCellRangeReference c3e5 = this.c3e5();
 
         this.containsAndCheck(
                 SpreadsheetDeltaWindowSet.with(
@@ -134,10 +134,10 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
 
     @Test
     public void testContains2() {
-        final SpreadsheetCellRange a1b2 = this.a1b2();
-        final SpreadsheetCellRange c1e2 = this.c1e2();
-        final SpreadsheetCellRange a3b5 = this.a3b5();
-        final SpreadsheetCellRange c3e5 = this.c3e5();
+        final SpreadsheetCellRangeReference a1b2 = this.a1b2();
+        final SpreadsheetCellRangeReference c1e2 = this.c1e2();
+        final SpreadsheetCellRangeReference a3b5 = this.a3b5();
+        final SpreadsheetCellRangeReference c3e5 = this.c3e5();
 
         this.containsAndCheck(
                 SpreadsheetDeltaWindowSet.with(
@@ -154,19 +154,19 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
         );
     }
 
-    private SpreadsheetCellRange a1b2() {
+    private SpreadsheetCellRangeReference a1b2() {
         return SpreadsheetSelection.parseCellRange("a1:b2");
     }
 
-    private SpreadsheetCellRange c1e2() {
+    private SpreadsheetCellRangeReference c1e2() {
         return SpreadsheetSelection.parseCellRange("c1:e2");
     }
 
-    private SpreadsheetCellRange a3b5() {
+    private SpreadsheetCellRangeReference a3b5() {
         return SpreadsheetSelection.parseCellRange("a3:b5");
     }
 
-    private SpreadsheetCellRange c3e5() {
+    private SpreadsheetCellRangeReference c3e5() {
         return SpreadsheetSelection.parseCellRange("c3:e5");
     }
 

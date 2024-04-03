@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -204,7 +204,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     @Test
     public void testAcceptCellRange() {
         final StringBuilder b = new StringBuilder();
-        final Class<SpreadsheetCellRange> type = SpreadsheetCellRange.class;
+        final Class<SpreadsheetCellRangeReference> type = SpreadsheetCellRangeReference.class;
 
         new FakeSpreadsheetValueTypeVisitor() {
             @Override
@@ -232,7 +232,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     @Test
     public void testAcceptCellRange2() {
         new SpreadsheetValueTypeVisitor() {
-        }.accept(SpreadsheetCellRange.class);
+        }.accept(SpreadsheetCellRangeReference.class);
     }
 
     @Test
