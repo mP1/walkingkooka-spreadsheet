@@ -22,15 +22,21 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.text.TextAlign;
+import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
@@ -40,31 +46,40 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetCellRange>,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellRange>,
+        SpreadsheetMetadataTesting,
         TreePrintableTesting {
 
     private final static SpreadsheetCellRangeReference RANGE = SpreadsheetSelection.parseCellRange("A1:b2");
 
+    private final static SpreadsheetCell A1_CELL = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1")
+    );
+
     private final static SpreadsheetCellReference B2 = SpreadsheetSelection.parseCell("B2");
+
+    private final static SpreadsheetCell B2_CELL = B2.setFormula(SpreadsheetFormula.EMPTY.setText("=22"))
+            .setFormatPattern(
+                    Optional.of(
+                            SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN
+                    )
+            ).setParsePattern(
+                    Optional.of(
+                            SpreadsheetPattern.parseNumberParsePattern("#.##")
+                    )
+            ).setStyle(
+                    TextStyle.EMPTY.set(
+                            TextStylePropertyName.TEXT_ALIGN,
+                            TextAlign.LEFT
+                    )
+            );
+
+    private final static SpreadsheetCellReference C3 = SpreadsheetSelection.parseCell("C3");
 
     private final static Map<SpreadsheetCellReference, Object> VALUE = Maps.of(
             SpreadsheetSelection.A1,
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY.setText("=1")),
+            A1_CELL,
             B2,
-            B2.setFormula(SpreadsheetFormula.EMPTY.setText("=22"))
-                    .setFormatPattern(
-                            Optional.of(
-                                    SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN
-                            )
-                    ).setParsePattern(
-                            Optional.of(
-                                    SpreadsheetPattern.parseNumberParsePattern("#.##")
-                            )
-                    ).setStyle(
-                            TextStyle.EMPTY.set(
-                                    TextStylePropertyName.TEXT_ALIGN,
-                                    TextAlign.LEFT
-                            )
-                    )
+            B2_CELL
     );
 
     @Test
@@ -297,6 +312,308 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.checkEquals(
                 value,
                 spreadsheetCellRange.value()
+        );
+    }
+
+    // move.............................................................................................................
+
+    @Test
+    public void testMoveNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject().move(null)
+        );
+    }
+
+    @Test
+    public void testMoveSame() {
+        final SpreadsheetCellRange range = this.createObject();
+
+        assertSame(
+                range,
+                range.move(RANGE)
+        );
+    }
+
+    @Test
+    public void testMoveSame2() {
+        final SpreadsheetCellRangeReference moveToRange = SpreadsheetSelection.parseCellRange("$A1:B2");
+
+        this.moveAndCheck(
+                this.createObject(),
+                moveToRange,
+                SpreadsheetCellRange.with(
+                        moveToRange,
+                        VALUE
+                )
+        );
+    }
+
+    @Test
+    public void testMoveSameOriginSmallerDimensions() {
+        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("A1:A2");
+
+        this.moveAndCheck(
+                this.createObject(),
+                moveTo,
+                SpreadsheetCellRange.with(
+                        moveTo,
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                A1_CELL
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testMoveCell() {
+        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
+
+        this.moveAndCheck(
+                SpreadsheetCellRange.with(
+                        RANGE,
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                SpreadsheetSelection.A1
+                                        .setFormula(
+                                                parseFormula("=100+B2")
+                                        ),
+                                B2,
+                                B2.setFormula(
+                                        parseFormula("=200+B3")
+                                )
+                        )
+                ),
+                moveTo,
+                SpreadsheetCellRange.with(
+                        moveTo,
+                        Maps.of(
+                                B2,
+                                B2.setFormula(
+                                        parseFormula("=100+C3")
+                                ),
+                                C3,
+                                C3.setFormula(
+                                        parseFormula("=200+C4")
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testMoveCellSmallerRange() {
+        final SpreadsheetCellRangeReference moveTo = B2.toCellRange();
+
+        this.moveAndCheck(
+                SpreadsheetCellRange.with(
+                        RANGE,
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                SpreadsheetSelection.A1
+                                        .setFormula(
+                                                parseFormula("=100+B2")
+                                        ),
+                                B2,
+                                B2.setFormula(
+                                        parseFormula("=200+B3")
+                                )
+                        )
+                ),
+                moveTo,
+                SpreadsheetCellRange.with(
+                        moveTo,
+                        Maps.of(
+                                B2,
+                                B2.setFormula(
+                                        parseFormula("=100+C3")
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testMoveFormula() {
+        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
+
+        this.moveAndCheck(
+                SpreadsheetCellRange.with(
+                        RANGE,
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                parseFormula("=100+B2"),
+                                B2,
+                                parseFormula("=200+B3")
+                        )
+                ),
+                moveTo,
+                SpreadsheetCellRange.with(
+                        moveTo,
+                        Maps.of(
+                                B2,
+                                parseFormula("=100+C3"),
+                                C3,
+                                parseFormula("=200+C4")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testMoveFormatPattern() {
+        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
+
+        final Optional<SpreadsheetFormatPattern> formatPattern1 = Optional.of(
+                SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
+        );
+
+        final Optional<SpreadsheetFormatPattern> formatPattern2 = Optional.empty();
+
+        this.moveAndCheck(
+                SpreadsheetCellRange.with(
+                        RANGE,
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                formatPattern1,
+                                B2,
+                                formatPattern2
+                        )
+                ),
+                moveTo,
+                SpreadsheetCellRange.with(
+                        moveTo,
+                        Maps.of(
+                                B2,
+                                formatPattern1,
+                                C3,
+                                formatPattern2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testMoveParsePattern() {
+        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
+
+        final Optional<SpreadsheetParsePattern> parsePattern1 = Optional.of(
+                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+        );
+
+        final Optional<SpreadsheetParsePattern> parsePattern2 = Optional.empty();
+
+        this.moveAndCheck(
+                SpreadsheetCellRange.with(
+                        RANGE,
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                parsePattern1,
+                                B2,
+                                parsePattern2
+                        )
+                ),
+                moveTo,
+                SpreadsheetCellRange.with(
+                        moveTo,
+                        Maps.of(
+                                B2,
+                                parsePattern1,
+                                C3,
+                                parsePattern2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testMoveStyle() {
+        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
+
+        final TextStyle style1 = TextStyle.EMPTY.set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT);
+        final TextStyle style2 = TextStyle.EMPTY;
+
+        this.moveAndCheck(
+                SpreadsheetCellRange.with(
+                        RANGE,
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                style1,
+                                B2,
+                                style2
+                        )
+                ),
+                moveTo,
+                SpreadsheetCellRange.with(
+                        moveTo,
+                        Maps.of(
+                                B2,
+                                style1,
+                                C3,
+                                style2
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testMoveFormattedValue() {
+        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
+
+        final Optional<TextNode> formattedValue1 = Optional.of(
+                TextNode.text("'Hello")
+        );
+
+        final Optional<TextNode> formattedValue2 = Optional.empty();
+
+        this.moveAndCheck(
+                SpreadsheetCellRange.with(
+                        RANGE,
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                formattedValue1,
+                                B2,
+                                formattedValue2
+                        )
+                ),
+                moveTo,
+                SpreadsheetCellRange.with(
+                        moveTo,
+                        Maps.of(
+                                B2,
+                                formattedValue1,
+                                C3,
+                                formattedValue2
+                        )
+                )
+        );
+    }
+
+    private void moveAndCheck(final SpreadsheetCellRange from,
+                              final SpreadsheetCellRangeReference moveTo,
+                              final SpreadsheetCellRange expected) {
+        final SpreadsheetCellRange moved = from.move(moveTo);
+        assertNotSame(
+                expected,
+                moved
+        );
+
+        this.checkRange(from);
+
+        this.checkEquals(
+                expected,
+                moved
+        );
+    }
+
+    private static SpreadsheetFormula parseFormula(final String text) {
+        return SpreadsheetFormula.parse(
+                TextCursors.charSequence(text),
+                METADATA_EN_AU
+                        .parser(),
+                METADATA_EN_AU
+                        .parserContext(LocalDateTime::now)
         );
     }
 

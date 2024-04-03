@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -28,7 +29,9 @@ import walkingkooka.text.printer.TreePrintable;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -132,6 +135,69 @@ public final class SpreadsheetCellRange implements Value<Map<SpreadsheetCellRefe
                                     .collect(Collectors.joining(", "))
             );
         }
+    }
+
+    // move.............................................................................................................
+
+    /**
+     * Moves all the values from this range to the new given {@link SpreadsheetCellRangeReference}.
+     * This will be used by a PASTE from the clipboard to a new range. The target could be smaller and the extra
+     * cells will be clipped and lost.
+     */
+    public SpreadsheetCellRange move(final SpreadsheetCellRangeReference range) {
+        checkRange(range);
+
+        return this.range.equalsIgnoreReferenceKind(range) ?
+                this.setRange(range) :
+                move0(range);
+    }
+
+    private SpreadsheetCellRange move0(final SpreadsheetCellRangeReference to) {
+        final SpreadsheetCellRangeReference from = this.range;
+
+        final SpreadsheetCellReference fromBegin = from.begin();
+        final SpreadsheetCellReference toBegin = to.begin();
+
+        final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper = SpreadsheetCellRangeMoveMapper.with(
+                toBegin.column()
+                        .value() -
+                        fromBegin.column()
+                                .value(),
+                toBegin.row()
+                        .value() -
+                        fromBegin.row()
+                                .value()
+        );
+
+        final Map<SpreadsheetCellReference, Object> cellToValue = Maps.sorted();
+
+        for (final Entry<SpreadsheetCellReference, ?> cellAndValue : this.value.entrySet()) {
+            final Optional<SpreadsheetCellReference> maybeCell = mapper.apply(cellAndValue.getKey());
+
+            // destination could be out of bounds, ignore those.
+            if (maybeCell.isPresent()) {
+                final SpreadsheetCellReference cell = maybeCell.get();
+
+                // destination range could be smaller, ignore values outside
+                if (to.testCell(cell)) {
+                    Object value = cellAndValue.getValue();
+                    if (value instanceof CanReplaceReferences) {
+                        final CanReplaceReferences<?> can = (CanReplaceReferences<?>) value;
+                        value = can.replaceReferences(mapper);
+                    }
+
+                    cellToValue.put(
+                            cell,
+                            value
+                    );
+                }
+            }
+        }
+
+        return new SpreadsheetCellRange(
+                to,
+                cellToValue
+        );
     }
 
     // TreePrintable....................................................................................................
