@@ -346,7 +346,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void toColumnRangeAndCheck(final SpreadsheetSelection selection,
-                                     final SpreadsheetColumnReferenceRange expected) {
+                                     final SpreadsheetColumnRangeReference expected) {
         this.checkEquals(
                 expected,
                 selection.toColumnRange(),
@@ -400,7 +400,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void toRowRangeAndCheck(final SpreadsheetSelection selection,
-                                  final SpreadsheetRowReferenceRange expected) {
+                                  final SpreadsheetRowRangeReference expected) {
         this.checkEquals(
                 expected,
                 selection.toRowRange(),

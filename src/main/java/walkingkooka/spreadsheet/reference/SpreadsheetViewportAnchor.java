@@ -139,9 +139,9 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
                 selection :
                 selection.isCellRange() ?
                         this.cell(selection.toCellRange()) :
-                        selection.isColumnReferenceRange() ?
+                        selection.isColumnRangeReference() ?
                                 this.column(selection.toColumnRange()) :
-                                selection.isRowReferenceRange() ?
+                                selection.isRowRangeReference() ?
                                         this.row(selection.toRowRange()) :
                                         this.selectionFail(selection);
     }
@@ -163,7 +163,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     /**
      * Uses this anchor to select the {@link SpreadsheetColumnReference} that will remain fixed.
      */
-    final SpreadsheetColumnReference column(final SpreadsheetColumnReferenceRange range) {
+    final SpreadsheetColumnReference column(final SpreadsheetColumnRangeReference range) {
         this.failIfNone();
 
         return this.isLeft() ?
@@ -174,7 +174,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     /**
      * Uses this anchor to select the {@link SpreadsheetRowReference}
      */
-    final SpreadsheetRowReference row(final SpreadsheetRowReferenceRange range) {
+    final SpreadsheetRowReference row(final SpreadsheetRowRangeReference range) {
         this.failIfNone();
 
         return this.isTop() ?

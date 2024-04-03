@@ -32,8 +32,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextStyle;
@@ -150,11 +150,11 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitFrozenColumns(final SpreadsheetColumnReferenceRange range) {
+    protected void visitFrozenColumns(final SpreadsheetColumnRangeReference range) {
         // nop
     }
 
-    protected void visitFrozenRows(final SpreadsheetRowReferenceRange range) {
+    protected void visitFrozenRows(final SpreadsheetRowRangeReference range) {
         // nop
     }
 

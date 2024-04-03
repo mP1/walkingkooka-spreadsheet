@@ -89,14 +89,14 @@ public abstract class SpreadsheetSelection implements HasText,
     public final static SpreadsheetCellRange ALL_CELLS = SpreadsheetCellRange.ALL;
 
     /**
-     * {@see SpreadsheetColumnReferenceRange#ALL}
+     * {@see SpreadsheetColumnRangeReference#ALL}
      */
-    public final static SpreadsheetColumnReferenceRange ALL_COLUMNS = SpreadsheetColumnReferenceRange.ALL;
+    public final static SpreadsheetColumnRangeReference ALL_COLUMNS = SpreadsheetColumnRangeReference.ALL;
 
     /**
-     * {@see SpreadsheetRowReferenceRange#ALL}
+     * {@see SpreadsheetRowRangeReference#ALL}
      */
-    public final static SpreadsheetRowReferenceRange ALL_ROWS = SpreadsheetRowReferenceRange.ALL;
+    public final static SpreadsheetRowRangeReference ALL_ROWS = SpreadsheetRowRangeReference.ALL;
 
     /**
      * The star character represents all cells/columns/rows depending on context.
@@ -220,10 +220,10 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Creates a new {@link SpreadsheetColumnReferenceRange}
+     * Creates a new {@link SpreadsheetColumnRangeReference}
      */
-    public static SpreadsheetColumnReferenceRange columnRange(final Range<SpreadsheetColumnReference> range) {
-        return SpreadsheetColumnReferenceRange.with(range);
+    public static SpreadsheetColumnRangeReference columnRange(final Range<SpreadsheetColumnReference> range) {
+        return SpreadsheetColumnRangeReference.with(range);
     }
 
     /**
@@ -241,10 +241,10 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Creates a new {@link SpreadsheetRowReferenceRange}
+     * Creates a new {@link SpreadsheetRowRangeReference}
      */
-    public static SpreadsheetRowReferenceRange rowRange(final Range<SpreadsheetRowReference> range) {
-        return SpreadsheetRowReferenceRange.with(range);
+    public static SpreadsheetRowRangeReference rowRange(final Range<SpreadsheetRowReference> range) {
+        return SpreadsheetRowRangeReference.with(range);
     }
 
     // parse............................................................................................................
@@ -402,10 +402,10 @@ public abstract class SpreadsheetSelection implements HasText,
             .orReport(ParserReporters.invalidCharacterException());
 
     /**
-     * Parses the text into a {@link SpreadsheetColumnReference} or {@link SpreadsheetColumnReferenceRange}.
+     * Parses the text into a {@link SpreadsheetColumnReference} or {@link SpreadsheetColumnRangeReference}.
      */
     public static SpreadsheetSelection parseColumnOrColumnRange(final String text) {
-        final SpreadsheetColumnReferenceRange range = parseColumnRange(text);
+        final SpreadsheetColumnRangeReference range = parseColumnRange(text);
         return range.isSingle() ?
                 range.begin() :
                 range;
@@ -414,13 +414,13 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Parsers a range of columns.
      */
-    public static SpreadsheetColumnReferenceRange parseColumnRange(final String text) {
+    public static SpreadsheetColumnRangeReference parseColumnRange(final String text) {
         return parseRange(
                 text,
                 ALL_COLUMNS,
                 SpreadsheetParsers.column(),
                 (t) -> t.cast(SpreadsheetColumnReferenceParserToken.class).value(),
-                SpreadsheetColumnReferenceRange::with
+                SpreadsheetColumnRangeReference::with
         );
     }
 
@@ -461,21 +461,21 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Parsers a range of rows.
      */
-    public static SpreadsheetRowReferenceRange parseRowRange(final String text) {
+    public static SpreadsheetRowRangeReference parseRowRange(final String text) {
         return parseRange(
                 text,
                 ALL_ROWS,
                 SpreadsheetParsers.row(),
                 (t) -> t.cast(SpreadsheetRowReferenceParserToken.class).value(),
-                SpreadsheetRowReferenceRange::with
+                SpreadsheetRowRangeReference::with
         );
     }
 
     /**
-     * Parses the text into a {@link SpreadsheetRowReference} or {@link SpreadsheetRowReferenceRange}.
+     * Parses the text into a {@link SpreadsheetRowReference} or {@link SpreadsheetRowRangeReference}.
      */
     public static SpreadsheetSelection parseRowOrRowRange(final String text) {
-        final SpreadsheetRowReferenceRange range = parseRowRange(text);
+        final SpreadsheetRowRangeReference range = parseRowRange(text);
         return range.isSingle() ?
                 range.begin() :
                 range;
@@ -700,7 +700,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
     /**
      * Tests if the selection includes the given {@link SpreadsheetColumnReference}.<br>
-     * {@link SpreadsheetRowReference} and {@link SpreadsheetRowReferenceRange} both return false.
+     * {@link SpreadsheetRowReference} and {@link SpreadsheetRowRangeReference} both return false.
      */
     public final boolean testColumn(final SpreadsheetColumnReference column) {
         return this.testColumn0(
@@ -712,7 +712,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
     /**
      * Tests if the selection includes the given {@link SpreadsheetRowReference}.<br>
-     * {@link SpreadsheetColumnReference} and {@link SpreadsheetColumnReferenceRange} both return false.
+     * {@link SpreadsheetColumnReference} and {@link SpreadsheetColumnRangeReference} both return false.
      */
     public final boolean testRow(final SpreadsheetRowReference row) {
         return this.testRow0(
@@ -753,8 +753,8 @@ public abstract class SpreadsheetSelection implements HasText,
         return this instanceof SpreadsheetColumnReference;
     }
 
-    public final boolean isColumnReferenceRange() {
-        return this instanceof SpreadsheetColumnReferenceRange;
+    public final boolean isColumnRangeReference() {
+        return this instanceof SpreadsheetColumnRangeReference;
     }
 
     public final boolean isLabelName() {
@@ -765,8 +765,8 @@ public abstract class SpreadsheetSelection implements HasText,
         return this instanceof SpreadsheetRowReference;
     }
 
-    public final boolean isRowReferenceRange() {
-        return this instanceof SpreadsheetRowReferenceRange;
+    public final boolean isRowRangeReference() {
+        return this instanceof SpreadsheetRowRangeReference;
     }
 
     /**
@@ -833,7 +833,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * A1 -> A:A
      * </pre>
      */
-    public abstract SpreadsheetColumnReferenceRange toColumnRange();
+    public abstract SpreadsheetColumnRangeReference toColumnRange();
 
     public final SpreadsheetSelection toColumnOrColumnRange() {
         final SpreadsheetSelection selection;
@@ -841,7 +841,7 @@ public abstract class SpreadsheetSelection implements HasText,
         if (this.isCellReference() || this.isColumnReference()) {
             selection = this.toColumn();
         } else {
-            if (this.isCellRange() || this.isColumnReferenceRange()) {
+            if (this.isCellRange() || this.isColumnRangeReference()) {
                 selection = this.toColumnRange();
             } else {
                 throw new UnsupportedOperationException(this.toString());
@@ -864,7 +864,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * A1 -> 1:1
      * </pre>
      */
-    public abstract SpreadsheetRowReferenceRange toRowRange();
+    public abstract SpreadsheetRowRangeReference toRowRange();
 
     public final SpreadsheetSelection toRowOrRowRange() {
         final SpreadsheetSelection selection;
@@ -872,7 +872,7 @@ public abstract class SpreadsheetSelection implements HasText,
         if (this.isCellReference() || this.isRowReference()) {
             selection = this.toRow();
         } else {
-            if (this.isCellRange() || this.isRowReferenceRange()) {
+            if (this.isCellRange() || this.isRowRangeReference()) {
                 selection = this.toRowRange();
             } else {
                 throw new UnsupportedOperationException(this.toString());
@@ -1107,8 +1107,8 @@ public abstract class SpreadsheetSelection implements HasText,
      * Returns either cell for cell/cell-range/label, column for column/column-range and row for row/row-range.
      */
     public final String cellColumnOrRowText() {
-        return this.isColumnReference() || this.isColumnReferenceRange() ? "column" :
-                this.isRowReference() || this.isRowReferenceRange() ? "row" :
+        return this.isColumnReference() || this.isColumnRangeReference() ? "column" :
+                this.isRowReference() || this.isRowRangeReference() ? "row" :
                         "cell";
     }
 
@@ -1216,7 +1216,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
     /**
      * Returns the {@link SpreadsheetParserToken} equivalent of this {@link SpreadsheetSelection}.
-     * Note {@link SpreadsheetColumnReferenceRange} and {@link SpreadsheetRowReferenceRange} will throw {@link UnsupportedOperationException}.
+     * Note {@link SpreadsheetColumnRangeReference} and {@link SpreadsheetRowRangeReference} will throw {@link UnsupportedOperationException}.
      */
     public abstract SpreadsheetParserToken toParserToken();
 
@@ -1349,9 +1349,9 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Expects a {@link JsonNode} and returns a {@link SpreadsheetColumnReferenceRange}.
+     * Expects a {@link JsonNode} and returns a {@link SpreadsheetColumnRangeReference}.
      */
-    static SpreadsheetColumnReferenceRange unmarshallColumnRange(final JsonNode from,
+    static SpreadsheetColumnRangeReference unmarshallColumnRange(final JsonNode from,
                                                                  final JsonNodeUnmarshallContext context) {
         return SpreadsheetSelection.parseColumnRange(from.stringOrFail());
     }
@@ -1389,7 +1389,7 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Expects a {@link JsonNode} and returns a {@link SpreadsheetRowReference}.
      */
-    static SpreadsheetRowReferenceRange unmarshallRowRange(final JsonNode from,
+    static SpreadsheetRowRangeReference unmarshallRowRange(final JsonNode from,
                                                            final JsonNodeUnmarshallContext context) {
         return SpreadsheetSelection.parseRowRange(from.stringOrFail());
     }
@@ -1424,7 +1424,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
         register(
                 SpreadsheetSelection::unmarshallColumnRange,
-                SpreadsheetColumnReferenceRange.class
+                SpreadsheetColumnRangeReference.class
         );
 
         //noinspection StaticInitializerReferencesSubClass
@@ -1446,7 +1446,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
         register(
                 SpreadsheetSelection::unmarshallRowRange,
-                SpreadsheetRowReferenceRange.class
+                SpreadsheetRowRangeReference.class
         );
 
         SpreadsheetCell.NO_FORMATTED_VALUE_CELL.isPresent();
@@ -1479,7 +1479,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return Objects.requireNonNull(column, "column");
     }
 
-    static SpreadsheetColumnReferenceRange checkColumnReferenceRange(final SpreadsheetColumnReferenceRange columnReferenceRange) {
+    static SpreadsheetColumnRangeReference checkColumnReferenceRange(final SpreadsheetColumnRangeReference columnReferenceRange) {
         return Objects.requireNonNull(columnReferenceRange, "columnReferenceRange");
     }
 
@@ -1491,7 +1491,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return Objects.requireNonNull(row, "row");
     }
 
-    static void checkRowReferenceRange(final SpreadsheetRowReferenceRange rowReferenceRange) {
+    static void checkRowReferenceRange(final SpreadsheetRowRangeReference rowReferenceRange) {
         Objects.requireNonNull(rowReferenceRange, "rowReferenceRange");
     }
 

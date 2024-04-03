@@ -58,10 +58,10 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
         Iterable<SpreadsheetCellReference> {
 
     /**
-     * A {@link SpreadsheetColumnReferenceRange} that includes all cells.
+     * A {@link SpreadsheetColumnRangeReference} that includes all cells.
      */
-    public static final SpreadsheetCellRange ALL = SpreadsheetColumnReferenceRange.ALL
-            .setRowReferenceRange(SpreadsheetRowReferenceRange.ALL);
+    public static final SpreadsheetCellRange ALL = SpreadsheetColumnRangeReference.ALL
+            .setRowReferenceRange(SpreadsheetRowRangeReference.ALL);
 
     /**
      * Computes the range of the given cells.
@@ -192,9 +192,9 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     /**
-     * Getter that returns the {@link SpreadsheetColumnReferenceRange} component.
+     * Getter that returns the {@link SpreadsheetColumnRangeReference} component.
      */
-    public SpreadsheetColumnReferenceRange columnRange() {
+    public SpreadsheetColumnRangeReference columnRange() {
         return columnRange(
                 Range.greaterThanEquals(this.begin().column())
                         .and(
@@ -207,7 +207,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      * Would be setter that combines the new column reference range and the current row reference range,
      * returning a {@link SpreadsheetCellRange} with the result.
      */
-    public SpreadsheetCellRange setColumnRange(final SpreadsheetColumnReferenceRange columnRange) {
+    public SpreadsheetCellRange setColumnRange(final SpreadsheetColumnRangeReference columnRange) {
         checkColumnReferenceRange(columnRange);
 
         return this.setRange(
@@ -226,9 +226,9 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     /**
-     * Getter that returns the {@link SpreadsheetRowReferenceRange} component.
+     * Getter that returns the {@link SpreadsheetRowRangeReference} component.
      */
-    public SpreadsheetRowReferenceRange rowRange() {
+    public SpreadsheetRowRangeReference rowRange() {
         return rowRange(
                 Range.greaterThanEquals(this.begin().row())
                         .and(
@@ -241,7 +241,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
      * Would be setter that combines the new column reference range and the current column reference range,
      * returning a {@link SpreadsheetCellRange} with the result.
      */
-    public SpreadsheetCellRange setRowRange(final SpreadsheetRowReferenceRange rowRange) {
+    public SpreadsheetCellRange setRowRange(final SpreadsheetRowRangeReference rowRange) {
         checkRowReferenceRange(rowRange);
 
         return this.setRange(
@@ -285,7 +285,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange toColumnRange() {
+    public SpreadsheetColumnRangeReference toColumnRange() {
         return this.columnRange();
     }
 
@@ -295,7 +295,7 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
     }
 
     @Override
-    public SpreadsheetRowReferenceRange toRowRange() {
+    public SpreadsheetRowRangeReference toRowRange() {
         return this.rowRange();
     }
 
@@ -552,8 +552,8 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                                                 final Function<SpreadsheetColumnReference, Optional<SpreadsheetColumnReference>> move,
                                                                 final Supplier<SpreadsheetViewportAnchor> singleColumnAnchor,
                                                                 final SpreadsheetViewportNavigationContext context) {
-        final SpreadsheetRowReferenceRange rowRange = this.rowRange();
-        final SpreadsheetColumnReferenceRange columnRange = this.columnRange();
+        final SpreadsheetRowRangeReference rowRange = this.rowRange();
+        final SpreadsheetColumnRangeReference columnRange = this.columnRange();
 
         return rowRange.isHidden(context) ?
                 Optional.empty() :
@@ -645,8 +645,8 @@ public final class SpreadsheetCellRange extends SpreadsheetCellReferenceOrRange
                                                              final Function<SpreadsheetRowReference, Optional<SpreadsheetRowReference>> move,
                                                              final Supplier<SpreadsheetViewportAnchor> singleRowAnchor,
                                                              final SpreadsheetViewportNavigationContext context) {
-        final SpreadsheetColumnReferenceRange columnRange = this.columnRange();
-        final SpreadsheetRowReferenceRange rowRange = this.rowRange();
+        final SpreadsheetColumnRangeReference columnRange = this.columnRange();
+        final SpreadsheetRowRangeReference rowRange = this.rowRange();
 
         return columnRange.isHidden(context) ?
                 Optional.empty() :

@@ -37,14 +37,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigation;
@@ -1174,15 +1174,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         double width = viewportRectangle.width();
         double height = viewportRectangle.height();
 
-        SpreadsheetColumnReferenceRange frozenColumns = null;
-        SpreadsheetRowReferenceRange frozenRows = null;
+        SpreadsheetColumnRangeReference frozenColumns = null;
+        SpreadsheetRowRangeReference frozenRows = null;
 
         if (includeFrozenColumnsRows) {
             final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
 
             // compute actual frozenColumns, metadata.FROZEN_COLUMNS might be higher than requested width...............
 
-            final Optional<SpreadsheetColumnReferenceRange> maybeFrozenColumns = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS);
+            final Optional<SpreadsheetColumnRangeReference> maybeFrozenColumns = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS);
             if (maybeFrozenColumns.isPresent()) {
                 final SpreadsheetColumnReference lastFrozenColumn = maybeFrozenColumns.get()
                         .end();
@@ -1206,7 +1206,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             // compute actual frozenRows, metadata.FROZEN_ROWS might be higher than requested height....................
-            final Optional<SpreadsheetRowReferenceRange> maybeFrozenRows = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_ROWS);
+            final Optional<SpreadsheetRowRangeReference> maybeFrozenRows = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_ROWS);
 
             if (maybeFrozenRows.isPresent()) {
 
@@ -1249,7 +1249,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
         }
 
-        final SpreadsheetColumnReferenceRange nonFrozenColumns = width > 0 ?
+        final SpreadsheetColumnRangeReference nonFrozenColumns = width > 0 ?
                 this.columnRange(
                         nonFrozenHome.column(),
                         0,
@@ -1258,7 +1258,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context
                 ) : null;
 
-        final SpreadsheetRowReferenceRange nonFrozenRows = height > 0 ?
+        final SpreadsheetRowRangeReference nonFrozenRows = height > 0 ?
                 this.rowRange(
                         nonFrozenHome.row(),
                         0,
@@ -1341,7 +1341,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Uses the given home cell of the viewport and a X offset and width to compute the start and end columns.
      * Note if the selection matches the left or right columns incompletely then that will advance left/right.
      */
-    SpreadsheetColumnReferenceRange columnRange(final SpreadsheetColumnReference column,
+    SpreadsheetColumnRangeReference columnRange(final SpreadsheetColumnReference column,
                                                 final double xOffset,
                                                 final double width,
                                                 final Optional<SpreadsheetSelection> selection,
@@ -1440,7 +1440,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Uses the given home cell of the viewport and a Y offset and height to compute the start and end rows.
      * Note if the selection matches the top or bottom rows incompletely then that will advance up/down.
      */
-    SpreadsheetRowReferenceRange rowRange(final SpreadsheetRowReference row,
+    SpreadsheetRowRangeReference rowRange(final SpreadsheetRowReference row,
                                           final double yOffset,
                                           final double height,
                                           final Optional<SpreadsheetSelection> selection,

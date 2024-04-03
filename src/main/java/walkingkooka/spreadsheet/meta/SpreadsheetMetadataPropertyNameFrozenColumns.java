@@ -18,7 +18,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * Tracks how many columns are frozen.
  */
-final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMetadataPropertyName<SpreadsheetColumnReferenceRange> {
+final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMetadataPropertyName<SpreadsheetColumnRangeReference> {
 
     /**
      * Singleton
@@ -43,10 +43,10 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     }
 
     @Override
-    SpreadsheetColumnReferenceRange checkValue0(final Object value) {
-        final SpreadsheetColumnReferenceRange range = this.checkValueType(
+    SpreadsheetColumnRangeReference checkValue0(final Object value) {
+        final SpreadsheetColumnRangeReference range = this.checkValueType(
                 value,
-                v -> v instanceof SpreadsheetColumnReferenceRange
+                v -> v instanceof SpreadsheetColumnRangeReference
         );
         if (range.begin().value() != 0) {
             throw new SpreadsheetMetadataPropertyValueException("Range must begin at 'A'", this, range);
@@ -56,21 +56,21 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
 
     @Override
     String expected() {
-        return SpreadsheetColumnReferenceRange.class.getSimpleName();
+        return SpreadsheetColumnRangeReference.class.getSimpleName();
     }
 
     @Override
-    Optional<SpreadsheetColumnReferenceRange> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetColumnRangeReference> extractLocaleValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    Class<SpreadsheetColumnReferenceRange> type() {
-        return SpreadsheetColumnReferenceRange.class;
+    Class<SpreadsheetColumnRangeReference> type() {
+        return SpreadsheetColumnRangeReference.class;
     }
 
     @Override
-    void accept(final SpreadsheetColumnReferenceRange value,
+    void accept(final SpreadsheetColumnRangeReference value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitFrozenColumns(value);
     }
@@ -88,7 +88,7 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange parseValue0(final String value) {
+    public SpreadsheetColumnRangeReference parseValue0(final String value) {
         return this.failParseValueUnsupported();
     }
 }

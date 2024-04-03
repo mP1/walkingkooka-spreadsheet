@@ -21,8 +21,8 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 
 import java.util.Set;
 
@@ -39,7 +39,7 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
     }
 
     default void loadColumnsAndCheck(final S store,
-                                     final SpreadsheetColumnReferenceRange range,
+                                     final SpreadsheetColumnRangeReference range,
                                      final SpreadsheetColumn... expected) {
         this.loadColumnsAndCheck(
                 store,
@@ -49,7 +49,7 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
     }
 
     default void loadColumnsAndCheck(final S store,
-                                     final SpreadsheetColumnReferenceRange range,
+                                     final SpreadsheetColumnRangeReference range,
                                      final Set<SpreadsheetColumn> expected) {
         this.checkEquals(
                 expected,

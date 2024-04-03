@@ -24,12 +24,12 @@ import walkingkooka.compare.ComparableTesting2;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetColumnOrRowReferenceRangeTestCase<S extends SpreadsheetColumnOrRowReferenceRange<R> & Comparable<S>,
+public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends SpreadsheetColumnOrRowRangeReference<R> & Comparable<S>,
         R extends SpreadsheetColumnOrRowReference & Comparable<R>>
         extends SpreadsheetSelectionTestCase<S>
         implements ComparableTesting2<S> {
 
-    SpreadsheetColumnOrRowReferenceRangeTestCase() {
+    SpreadsheetColumnOrRowRangeReferenceTestCase() {
         super();
     }
 

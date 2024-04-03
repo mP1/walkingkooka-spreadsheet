@@ -31,46 +31,46 @@ import java.util.function.Predicate;
  * Holds a column range.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRowReferenceRange<SpreadsheetColumnReference>
-        implements Comparable<SpreadsheetColumnReferenceRange> {
+public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRowRangeReference<SpreadsheetColumnReference>
+        implements Comparable<SpreadsheetColumnRangeReference> {
 
     /**
-     * A {@link SpreadsheetColumnReferenceRange} that includes all columns.
+     * A {@link SpreadsheetColumnRangeReference} that includes all columns.
      */
-    public static final SpreadsheetColumnReferenceRange ALL = SpreadsheetReferenceKind.RELATIVE.firstColumn()
+    public static final SpreadsheetColumnRangeReference ALL = SpreadsheetReferenceKind.RELATIVE.firstColumn()
             .columnRange(
                     SpreadsheetReferenceKind.RELATIVE.lastColumn()
             );
 
     /**
-     * Factory that creates a {@link SpreadsheetColumnReferenceRange}
+     * Factory that creates a {@link SpreadsheetColumnRangeReference}
      */
-    static SpreadsheetColumnReferenceRange with(final Range<SpreadsheetColumnReference> range) {
+    static SpreadsheetColumnRangeReference with(final Range<SpreadsheetColumnReference> range) {
         SpreadsheetSelectionRangeRangeVisitor.check(range);
 
-        return new SpreadsheetColumnReferenceRange(range);
+        return new SpreadsheetColumnRangeReference(range);
     }
 
     /**
      * Private ctor
      */
-    private SpreadsheetColumnReferenceRange(final Range<SpreadsheetColumnReference> range) {
+    private SpreadsheetColumnRangeReference(final Range<SpreadsheetColumnReference> range) {
         super(range);
     }
 
-    public SpreadsheetColumnReferenceRange setRange(final Range<SpreadsheetColumnReference> range) {
+    public SpreadsheetColumnRangeReference setRange(final Range<SpreadsheetColumnReference> range) {
         return this.setRange0(range);
     }
 
     @Override
-    SpreadsheetColumnReferenceRange replace(final Range<SpreadsheetColumnReference> range) {
+    SpreadsheetColumnRangeReference replace(final Range<SpreadsheetColumnReference> range) {
         return with(range);
     }
 
     /**
      * Creates a {@link SpreadsheetCellRange} combining this column range and the given row range.
      */
-    public SpreadsheetCellRange setRowReferenceRange(final SpreadsheetRowReferenceRange row) {
+    public SpreadsheetCellRange setRowReferenceRange(final SpreadsheetRowRangeReference row) {
         checkRowReferenceRange(row);
 
         final SpreadsheetColumnReference columnBegin = this.begin();
@@ -88,13 +88,13 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     // add..............................................................................................................
 
     @Override
-    public SpreadsheetColumnReferenceRange add(final int value) {
+    public SpreadsheetColumnRangeReference add(final int value) {
         return this.add0(value)
                 .toColumnRange();
     }
 
     @Override
-    SpreadsheetColumnReferenceRange addNonZero(final int value) {
+    SpreadsheetColumnRangeReference addNonZero(final int value) {
         return this.setRange(
                 Range.with(
                         RangeBound.inclusive(
@@ -110,13 +110,13 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     // addSaturated.....................................................................................................
 
     @Override
-    public SpreadsheetColumnReferenceRange addSaturated(final int value) {
+    public SpreadsheetColumnRangeReference addSaturated(final int value) {
         return this.addSaturated0(value)
                 .toColumnRange();
     }
 
     @Override
-    SpreadsheetColumnReferenceRange addSaturatedNonZero(final int value) {
+    SpreadsheetColumnRangeReference addSaturatedNonZero(final int value) {
         return this.setRange(
                 Range.with(
                         RangeBound.inclusive(
@@ -132,21 +132,21 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange add(final int column,
+    public SpreadsheetColumnRangeReference add(final int column,
                                                final int row) {
         checkRowDeltaIsZero(row);
         return this.add(column);
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange addSaturated(final int column,
+    public SpreadsheetColumnRangeReference addSaturated(final int column,
                                                         final int row) {
         checkRowDeltaIsZero(row);
         return this.addSaturated(column);
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange addIfRelative(final int delta) {
+    public SpreadsheetColumnRangeReference addIfRelative(final int delta) {
         return this.setRange(
                 Range.with(
                         RangeBound.inclusive(
@@ -175,7 +175,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     /**
-     * Tests if the given {@link SpreadsheetColumnReference} is within this {@link SpreadsheetColumnReferenceRange}.
+     * Tests if the given {@link SpreadsheetColumnReference} is within this {@link SpreadsheetColumnRangeReference}.
      */
     @Override
     boolean testColumn0(final SpreadsheetColumnReference column) {
@@ -193,7 +193,7 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange toColumnRange() {
+    public SpreadsheetColumnRangeReference toColumnRange() {
         return this;
     }
 
@@ -203,13 +203,13 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
     }
 
     @Override
-    public SpreadsheetRowReferenceRange toRowRange() {
+    public SpreadsheetRowRangeReference toRowRange() {
         throw new UnsupportedOperationException(this.toString());
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange toRelative() {
-        final SpreadsheetColumnReferenceRange relative = this.begin()
+    public SpreadsheetColumnRangeReference toRelative() {
+        final SpreadsheetColumnRangeReference relative = this.begin()
                 .toRelative()
                 .columnRange(this.end()
                         .toRelative());
@@ -470,13 +470,13 @@ public final class SpreadsheetColumnReferenceRange extends SpreadsheetColumnOrRo
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetColumnReferenceRange;
+        return other instanceof SpreadsheetColumnRangeReference;
     }
 
     // Comparable.......................................................................................................
 
     @Override
-    public int compareTo(final SpreadsheetColumnReferenceRange other) {
+    public int compareTo(final SpreadsheetColumnRangeReference other) {
         int result = this.begin().compareTo(other.begin());
         if (0 == result) {
             result = this.end().compareTo(other.end());

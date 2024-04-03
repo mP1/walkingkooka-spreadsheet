@@ -40,8 +40,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
 import walkingkooka.text.CaseKind;
@@ -154,14 +154,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnReferenceRange}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnRangeReference}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetColumnReferenceRange> FROZEN_COLUMNS = registerConstant(SpreadsheetMetadataPropertyNameFrozenColumns.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetColumnRangeReference> FROZEN_COLUMNS = registerConstant(SpreadsheetMetadataPropertyNameFrozenColumns.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-rows {@link .SpreadsheetRow}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetRowReferenceRange> FROZEN_ROWS = registerConstant(SpreadsheetMetadataPropertyNameFrozenRows.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetRowRangeReference> FROZEN_ROWS = registerConstant(SpreadsheetMetadataPropertyNameFrozenRows.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>general-number-format-digit-count {@link Integer}</code>

@@ -258,7 +258,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange toColumnRange() {
+    public SpreadsheetColumnRangeReference toColumnRange() {
         return this.toColumn().toColumnRange();
     }
 
@@ -268,7 +268,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public SpreadsheetRowReferenceRange toRowRange() {
+    public SpreadsheetRowRangeReference toRowRange() {
         return this.row().toRowRange();
     }
 

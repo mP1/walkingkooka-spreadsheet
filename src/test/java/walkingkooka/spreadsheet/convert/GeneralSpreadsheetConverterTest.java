@@ -44,12 +44,12 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -400,13 +400,13 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         );
     }
 
-    // SpreadsheetColumnReferenceRange..................................................................................
+    // SpreadsheetColumnRangeReference..................................................................................
 
     @Test
     public void testSpreadsheetColumnReferenceRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseColumnRange("D:E"),
-                SpreadsheetColumnReferenceRange.class
+                SpreadsheetColumnRangeReference.class
         );
     }
 
@@ -510,13 +510,13 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         );
     }
 
-    // SpreadsheetRowReferenceRange..................................................................................
+    // SpreadsheetRowRangeReference..................................................................................
 
     @Test
     public void testSpreadsheetRowReferenceRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseRowRange("6:7"),
-                SpreadsheetRowReferenceRange.class
+                SpreadsheetRowRangeReference.class
         );
     }
 
@@ -696,7 +696,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testCharacterToSpreadsheetColumnReferenceRange() {
-        final SpreadsheetColumnReferenceRange range = SpreadsheetSelection.parseColumnRange("X");
+        final SpreadsheetColumnRangeReference range = SpreadsheetSelection.parseColumnRange("X");
 
         this.convertAndCheck(
                 'X',
@@ -716,7 +716,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testCharacterToSpreadsheetRowReferenceRange() {
-        final SpreadsheetRowReferenceRange range = SpreadsheetSelection.parseRowRange("1");
+        final SpreadsheetRowRangeReference range = SpreadsheetSelection.parseRowRange("1");
 
         this.convertAndCheck(
                 '1',
@@ -1077,7 +1077,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testStringToSpreadsheetColumnReferenceRange() {
-        final SpreadsheetColumnReferenceRange range = SpreadsheetSelection.parseColumnRange("X:Y");
+        final SpreadsheetColumnRangeReference range = SpreadsheetSelection.parseColumnRange("X:Y");
 
         this.convertAndCheck(
                 range.toString(),
@@ -1107,7 +1107,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testStringToSpreadsheetRowReferenceRange() {
-        final SpreadsheetRowReferenceRange range = SpreadsheetSelection.parseRowRange("123:456");
+        final SpreadsheetRowRangeReference range = SpreadsheetSelection.parseRowRange("123:456");
 
         this.convertAndCheck(
                 range.toString(),

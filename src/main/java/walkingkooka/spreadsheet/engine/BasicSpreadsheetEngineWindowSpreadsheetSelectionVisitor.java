@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 
@@ -83,11 +83,11 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReferenceRange range) {
+    protected void visit(final SpreadsheetColumnRangeReference range) {
         this.columnRange(range);
     }
 
-    private void columnRange(final SpreadsheetColumnReferenceRange columnRange) {
+    private void columnRange(final SpreadsheetColumnRangeReference columnRange) {
         final SpreadsheetCellRange cellRange = this.range;
         final SpreadsheetColumnReference beginColumn = cellRange.begin().column();
 
@@ -146,11 +146,11 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReferenceRange range) {
+    protected void visit(final SpreadsheetRowRangeReference range) {
         this.rowRange(range);
     }
 
-    private void rowRange(SpreadsheetRowReferenceRange rowRange) {
+    private void rowRange(SpreadsheetRowRangeReference rowRange) {
         final SpreadsheetCellRange celRange = this.range;
         final SpreadsheetRowReference beginRow = celRange.begin().row();
 

@@ -32,8 +32,8 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumnOrRowReferenceRangeTestCase<SpreadsheetColumnReferenceRange, SpreadsheetColumnReference>
-        implements IterableTesting<SpreadsheetColumnReferenceRange, SpreadsheetColumnReference> {
+public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumnOrRowRangeReferenceTestCase<SpreadsheetColumnRangeReference, SpreadsheetColumnReference>
+        implements IterableTesting<SpreadsheetColumnRangeReference, SpreadsheetColumnReference> {
 
     @Test
     public void testWith() {
@@ -45,7 +45,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
                 RangeBound.inclusive(upper)
         );
 
-        final SpreadsheetColumnReferenceRange selection = SpreadsheetColumnReferenceRange.with(range);
+        final SpreadsheetColumnRangeReference selection = SpreadsheetColumnRangeReference.with(range);
         assertSame(range, selection.range(), "range");
         assertSame(lower, selection.begin(), "begin");
         assertSame(upper, selection.end(), "end");
@@ -64,7 +64,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testParseSingleColumn() {
         this.parseStringAndCheck(
                 "A",
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.singleton(
                                 SpreadsheetSelection.parseColumn("A")
                         )
@@ -76,7 +76,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testParseSingleColumn2() {
         this.parseStringAndCheck(
                 "BC",
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.singleton(
                                 SpreadsheetSelection.parseColumn("BC")
                         )
@@ -88,7 +88,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testParseSame() {
         this.parseStringAndCheck(
                 "A:A",
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.singleton(
                                 SpreadsheetSelection.parseColumn("A")
                         )
@@ -100,7 +100,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testParseEquivalent() {
         this.parseStringAndCheck(
                 "A:A",
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.singleton(
                                 SpreadsheetSelection.parseColumn("A")
                         )
@@ -112,7 +112,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testParseEquivalent2() {
         this.parseStringAndCheck(
                 "A:$A",
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.singleton(
                                 SpreadsheetSelection.parseColumn("A")
                         )
@@ -124,7 +124,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testParseEquivalent3() {
         this.parseStringAndCheck(
                 "$BC:BC",
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.singleton(
                                 SpreadsheetSelection.parseColumn("$BC")
                         )
@@ -136,7 +136,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testParse() {
         this.parseStringAndCheck(
                 "A:BC",
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.greaterThanEquals(
                                 SpreadsheetSelection.parseColumn("A")
                         ).and(
@@ -152,7 +152,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testParse2() {
         this.parseStringAndCheck(
                 "A:$BC",
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.greaterThanEquals(
                                 SpreadsheetSelection.parseColumn("A")
                         ).and(
@@ -168,7 +168,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     public void testParseSwap() {
         this.parseStringAndCheck(
                 "BC:A",
-                SpreadsheetColumnReferenceRange.with(
+                SpreadsheetColumnRangeReference.with(
                         Range.greaterThanEquals(
                                 SpreadsheetSelection.parseColumn("A")
                         ).and(
@@ -951,7 +951,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Override
-    SpreadsheetColumnReferenceRange parseRange(final String range) {
+    SpreadsheetColumnRangeReference parseRange(final String range) {
         return SpreadsheetSelection.parseColumnRange(range);
     }
 
@@ -1194,7 +1194,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     @Test
     public void testSpreadsheetSelectionVisitorAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetColumnReferenceRange selection = this.createSelection();
+        final SpreadsheetColumnRangeReference selection = this.createSelection();
 
         new FakeSpreadsheetSelectionVisitor() {
             @Override
@@ -1211,7 +1211,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
             }
 
             @Override
-            protected void visit(final SpreadsheetColumnReferenceRange s) {
+            protected void visit(final SpreadsheetColumnRangeReference s) {
                 assertSame(selection, s);
                 b.append("3");
             }
@@ -1338,7 +1338,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testToColumnRange() {
-        final SpreadsheetColumnReferenceRange range = SpreadsheetSelection.parseColumnRange("A:B");
+        final SpreadsheetColumnRangeReference range = SpreadsheetSelection.parseColumnRange("A:B");
 
         this.toColumnRangeAndCheck(
                 range,
@@ -1350,7 +1350,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
 
     @Test
     public void testToColumnOrColumnRange() {
-        final SpreadsheetColumnReferenceRange selection = this.createSelection();
+        final SpreadsheetColumnRangeReference selection = this.createSelection();
         this.toColumnOrColumnRangeAndCheck(
                 selection,
                 selection.toColumnRange()
@@ -1482,7 +1482,7 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
                 RangeBound.inclusive(upper)
         );
 
-        this.toStringAndCheck(SpreadsheetColumnReferenceRange.with(range), "B:D");
+        this.toStringAndCheck(SpreadsheetColumnRangeReference.with(range), "B:D");
     }
 
     @Test
@@ -1511,11 +1511,11 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Override
-    SpreadsheetColumnReferenceRange createSelection() {
+    SpreadsheetColumnRangeReference createSelection() {
         final SpreadsheetColumnReference lower = SpreadsheetSelection.parseColumn("B");
         final SpreadsheetColumnReference upper = SpreadsheetSelection.parseColumn("D");
 
-        return SpreadsheetColumnReferenceRange.with(
+        return SpreadsheetColumnRangeReference.with(
                 Range.with(
                         RangeBound.inclusive(lower),
                         RangeBound.inclusive(upper)
@@ -1524,30 +1524,30 @@ public final class SpreadsheetColumnReferenceRangeTest extends SpreadsheetColumn
     }
 
     @Override
-    SpreadsheetColumnReferenceRange createSelection(final Range<SpreadsheetColumnReference> range) {
-        return SpreadsheetColumnReferenceRange.with(range);
+    SpreadsheetColumnRangeReference createSelection(final Range<SpreadsheetColumnReference> range) {
+        return SpreadsheetColumnRangeReference.with(range);
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange parseString(final String text) {
+    public SpreadsheetColumnRangeReference parseString(final String text) {
         return SpreadsheetSelection.parseColumnRange(text);
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange unmarshall(final JsonNode node,
+    public SpreadsheetColumnRangeReference unmarshall(final JsonNode node,
                                                       final JsonNodeUnmarshallContext context) {
         return SpreadsheetSelection.unmarshallColumnRange(node, context);
     }
 
     @Override
-    public Class<SpreadsheetColumnReferenceRange> type() {
-        return SpreadsheetColumnReferenceRange.class;
+    public Class<SpreadsheetColumnRangeReference> type() {
+        return SpreadsheetColumnRangeReference.class;
     }
 
     // IterableTesting..................................................................................................
 
     @Override
-    public SpreadsheetColumnReferenceRange createIterable() {
+    public SpreadsheetColumnRangeReference createIterable() {
         return SpreadsheetSelection.parseColumnRange("$B:$D");
     }
 }

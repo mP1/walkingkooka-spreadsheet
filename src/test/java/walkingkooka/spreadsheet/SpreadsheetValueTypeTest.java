@@ -22,11 +22,11 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -72,7 +72,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     @Test
     public void testColumnRange() {
         this.typeNameAndCheck(
-                SpreadsheetColumnReferenceRange.class,
+                SpreadsheetColumnRangeReference.class,
                 SpreadsheetValueType.COLUMN_RANGE
         );
     }
@@ -144,7 +144,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     @Test
     public void testRowRange() {
         this.typeNameAndCheck(
-                SpreadsheetRowReferenceRange.class,
+                SpreadsheetRowRangeReference.class,
                 SpreadsheetValueType.ROW_RANGE
         );
     }

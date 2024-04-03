@@ -60,7 +60,7 @@ public abstract class SpreadsheetSelectionVisitor extends Visitor<SpreadsheetSel
         // nop
     }
 
-    protected void visit(final SpreadsheetColumnReferenceRange range) {
+    protected void visit(final SpreadsheetColumnRangeReference range) {
         // nop
     }
 
@@ -72,7 +72,7 @@ public abstract class SpreadsheetSelectionVisitor extends Visitor<SpreadsheetSel
         // nop
     }
 
-    protected void visit(final SpreadsheetRowReferenceRange range) {
+    protected void visit(final SpreadsheetRowRangeReference range) {
         // nop
     }
 }

@@ -249,10 +249,10 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     /**
-     * Creates a {@link SpreadsheetRowReferenceRange} using the given {@link SpreadsheetRowReference}.
+     * Creates a {@link SpreadsheetRowRangeReference} using the given {@link SpreadsheetRowReference}.
      */
-    public SpreadsheetRowReferenceRange rowRange(final SpreadsheetRowReference other) {
-        return SpreadsheetRowReferenceRange.with(this.range(other));
+    public SpreadsheetRowRangeReference rowRange(final SpreadsheetRowReference other) {
+        return SpreadsheetRowRangeReference.with(this.range(other));
     }
 
     @Override
@@ -261,7 +261,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     @Override
-    public SpreadsheetColumnReferenceRange toColumnRange() {
+    public SpreadsheetColumnRangeReference toColumnRange() {
         throw new UnsupportedOperationException(this.toString());
     }
 
@@ -271,10 +271,10 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     /**
-     * Returns a {@link SpreadsheetRowReferenceRange} holding only this row.
+     * Returns a {@link SpreadsheetRowRangeReference} holding only this row.
      */
-    public SpreadsheetRowReferenceRange toRowRange() {
-        return SpreadsheetRowReferenceRange.with(Range.singleton(this));
+    public SpreadsheetRowRangeReference toRowRange() {
+        return SpreadsheetRowRangeReference.with(Range.singleton(this));
     }
 
     // toRelative.......................................................................................................

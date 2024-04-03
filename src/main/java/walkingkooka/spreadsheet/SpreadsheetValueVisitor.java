@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.visit.Visiting;
@@ -163,7 +163,7 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
         // nop
     }
 
-    protected void visit(final SpreadsheetColumnReferenceRange value) {
+    protected void visit(final SpreadsheetColumnRangeReference value) {
         // nop
     }
 
@@ -179,7 +179,7 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
         // nop
     }
 
-    protected void visit(final SpreadsheetRowReferenceRange value) {
+    protected void visit(final SpreadsheetRowRangeReference value) {
         // nop
     }
 
