@@ -25,14 +25,14 @@ import java.util.Objects;
 /**
  * A {@link Comparator} that wraps a {@link Comparator} that compares {@link SpreadsheetCell#reference()}.
  */
-final class SpreadsheetCellReferenceCellComparator implements Comparator<SpreadsheetCell> {
+final class SpreadsheetCellReferenceComparator implements Comparator<SpreadsheetCell> {
 
-    static SpreadsheetCellReferenceCellComparator with(final Comparator<SpreadsheetCellReference> comparator) {
+    static SpreadsheetCellReferenceComparator with(final Comparator<SpreadsheetCellReference> comparator) {
         Objects.requireNonNull(comparator, "comparator");
-        return new SpreadsheetCellReferenceCellComparator(comparator);
+        return new SpreadsheetCellReferenceComparator(comparator);
     }
 
-    public SpreadsheetCellReferenceCellComparator(final Comparator<SpreadsheetCellReference> comparator) {
+    public SpreadsheetCellReferenceComparator(final Comparator<SpreadsheetCellReference> comparator) {
         this.comparator = comparator;
     }
 
