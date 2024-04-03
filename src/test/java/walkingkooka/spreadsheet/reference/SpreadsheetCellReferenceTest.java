@@ -37,13 +37,15 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellReference>
         implements ComparableTesting2<SpreadsheetCellReference>,
-        HateosResourceTesting<SpreadsheetCellReference> {
+        HateosResourceTesting<SpreadsheetCellReference>,
+        CanReplaceReferencesTesting<SpreadsheetCellReference> {
 
     private final static int COLUMN = 123;
     private final static int ROW = 456;
@@ -736,6 +738,45 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                 -2,
                 SpreadsheetSelection.parseCell("C2")
         );
+    }
+
+    // CanReplaceReference..............................................................................................
+
+    @Test
+    public void testReplaceReferenceMapperReturnsEmpty() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.A1.replaceReferences(
+                        (r) -> Optional.empty()
+                )
+        );
+
+        this.checkEquals(
+                "Mapper must return a cell",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testReplaceReferenceSelf() {
+        this.replaceReferencesAndCheck(
+                SpreadsheetSelection.parseCell("B2"),
+                (r) -> Optional.of(r)
+        );
+    }
+
+    @Test
+    public void testReplaceReference() {
+        this.replaceReferencesAndCheck(
+                SpreadsheetSelection.parseCell("B2"),
+                (r) -> Optional.of(r.add(1, 2)),
+                SpreadsheetSelection.parseCell("C4")
+        );
+    }
+
+    @Override
+    public SpreadsheetCellReference createReplaceReference() {
+        return this.createSelection();
     }
 
     // Compare..........................................................................................................

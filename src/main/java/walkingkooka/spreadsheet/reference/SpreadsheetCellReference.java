@@ -51,6 +51,7 @@ import java.util.function.Predicate;
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRange
         implements Comparable<SpreadsheetCellReference>,
+        CanReplaceReferences<SpreadsheetCellReference>,
         HateosResource<String> {
 
     /**
@@ -282,6 +283,19 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     private final static Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
+
+    // CanReplaceReferences.............................................................................................
+
+    @Override
+    public SpreadsheetCellReference replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
+        Objects.requireNonNull(mapper, "mapper");
+
+        final SpreadsheetCellReference replaced = mapper.apply(this)
+                .orElseThrow(() -> new IllegalArgumentException("Mapper must return a cell"));
+        return this.equals(replaced) ?
+                this :
+                replaced;
+    }
 
     // SpreadsheetViewportRectangle.....................................................................................
 
