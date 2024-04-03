@@ -22,27 +22,27 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
- * An {@link Iterator} that maybe used to iterate over a {@link SpreadsheetCellRange} in the order given by the
- * {@link SpreadsheetCellRangePath}.
+ * An {@link Iterator} that maybe used to iterate over a {@link SpreadsheetCellRangeReference} in the order given by the
+ * {@link SpreadsheetCellRangeReferencePath}.
  */
-final class SpreadsheetCellRangePathCellsIterator implements Iterator<SpreadsheetCellReference> {
+final class SpreadsheetCellRangeReferencePathCellsIterator implements Iterator<SpreadsheetCellReference> {
 
-    static SpreadsheetCellRangePathCellsIterator with(final SpreadsheetCellRange cells,
-                                                      final SpreadsheetCellRangePath path) {
+    static SpreadsheetCellRangeReferencePathCellsIterator with(final SpreadsheetCellRangeReference cells,
+                                                               final SpreadsheetCellRangeReferencePath path) {
         Objects.requireNonNull(cells, "cells");
 
-        return new SpreadsheetCellRangePathCellsIterator(
+        return new SpreadsheetCellRangeReferencePathCellsIterator(
                 cells,
                 path
         );
     }
 
-    private SpreadsheetCellRangePathCellsIterator(final SpreadsheetCellRange cells,
-                                                  final SpreadsheetCellRangePath path) {
+    private SpreadsheetCellRangeReferencePathCellsIterator(final SpreadsheetCellRangeReference cells,
+                                                           final SpreadsheetCellRangeReferencePath path) {
         this.cells = cells;
         this.path = path;
 
-        final SpreadsheetCellRangePathComparator comparator = this.path.comparator;
+        final SpreadsheetCellRangeReferencePathComparator comparator = this.path.comparator;
         this.origin = (comparator.reverseX == 1 ?
                 cells.begin() :
                 cells.end()
@@ -59,7 +59,7 @@ final class SpreadsheetCellRangePathCellsIterator implements Iterator<Spreadshee
 
     @Override
     public boolean hasNext() {
-        final SpreadsheetCellRange cells = this.cells;
+        final SpreadsheetCellRangeReference cells = this.cells;
 
         return this.path.comparator.xFirst ?
             this.x <  cells.width() :
@@ -75,8 +75,8 @@ final class SpreadsheetCellRangePathCellsIterator implements Iterator<Spreadshee
         final int x = this.x;
         final int y = this.y;
 
-        final SpreadsheetCellRange cells = this.cells;
-        final SpreadsheetCellRangePathComparator comparator = this.path.comparator;
+        final SpreadsheetCellRangeReference cells = this.cells;
+        final SpreadsheetCellRangeReferencePathComparator comparator = this.path.comparator;
 
         if (comparator.xFirst) {
             if (y + 1>= cells.height()) {
@@ -100,9 +100,9 @@ final class SpreadsheetCellRangePathCellsIterator implements Iterator<Spreadshee
         );
     }
 
-    private final SpreadsheetCellRange cells;
+    private final SpreadsheetCellRangeReference cells;
 
-    private final SpreadsheetCellRangePath path;
+    private final SpreadsheetCellRangeReferencePath path;
 
     final SpreadsheetCellReference origin;
 

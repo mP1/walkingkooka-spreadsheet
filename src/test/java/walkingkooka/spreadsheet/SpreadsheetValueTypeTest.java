@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -56,7 +56,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     @Test
     public void testCellRange() {
         this.typeNameAndCheck(
-                SpreadsheetCellRange.class,
+                SpreadsheetCellRangeReference.class,
                 SpreadsheetValueType.CELL_RANGE
         );
     }

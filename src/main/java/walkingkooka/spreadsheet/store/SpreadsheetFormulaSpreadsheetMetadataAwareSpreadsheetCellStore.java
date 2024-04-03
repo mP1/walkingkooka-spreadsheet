@@ -24,8 +24,8 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -165,8 +165,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     // batch............................................................................................................
 
     @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
-                                          final SpreadsheetCellRangePath path,
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
+                                          final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
                                           final int max) {
         return this.store.loadCells(
@@ -178,7 +178,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
-    public void deleteCells(final SpreadsheetCellRange range) {
+    public void deleteCells(final SpreadsheetCellRangeReference range) {
         this.store.deleteCells(range);
     }
 
@@ -258,7 +258,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
-    public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
+    public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
                                                        final String valueType,
                                                        final int max) {
         return this.fixFormulaTextSet(
@@ -271,7 +271,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
-    public int countCellsWithValueType(final SpreadsheetCellRange range,
+    public int countCellsWithValueType(final SpreadsheetCellRangeReference range,
                                        final String valueType) {
         return this.store.countCellsWithValueType(
                 range,

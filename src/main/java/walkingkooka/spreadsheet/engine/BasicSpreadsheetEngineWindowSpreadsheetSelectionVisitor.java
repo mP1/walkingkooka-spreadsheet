@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -31,16 +31,16 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 import java.util.Optional;
 
 /**
- * A visitor which accepts an original {@link SpreadsheetCellRange} and then attempts to do a minimal pan to include
+ * A visitor which accepts an original {@link SpreadsheetCellRangeReference} and then attempts to do a minimal pan to include
  * the given {@link SpreadsheetSelection}.
  */
 final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static SpreadsheetCellRange pan(final SpreadsheetCellRange range,
-                                    final SpreadsheetViewportRectangle viewportRectangle,
-                                    final SpreadsheetSelection selection,
-                                    final BasicSpreadsheetEngine engine,
-                                    final SpreadsheetEngineContext context) {
+    static SpreadsheetCellRangeReference pan(final SpreadsheetCellRangeReference range,
+                                             final SpreadsheetViewportRectangle viewportRectangle,
+                                             final SpreadsheetSelection selection,
+                                             final BasicSpreadsheetEngine engine,
+                                             final SpreadsheetEngineContext context) {
         final BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor visitor = new BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor(
                 range,
                 viewportRectangle,
@@ -51,7 +51,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
         return visitor.range;
     }
 
-    BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor(final SpreadsheetCellRange range,
+    BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor(final SpreadsheetCellRangeReference range,
                                                             final SpreadsheetViewportRectangle viewportRectangle,
                                                             final BasicSpreadsheetEngine engine,
                                                             final SpreadsheetEngineContext context) {
@@ -66,7 +66,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override
-    protected void visit(final SpreadsheetCellRange range) {
+    protected void visit(final SpreadsheetCellRangeReference range) {
         this.columnRange(range.columnRange());
         this.rowRange(range.rowRange());
     }
@@ -88,7 +88,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     }
 
     private void columnRange(final SpreadsheetColumnRangeReference columnRange) {
-        final SpreadsheetCellRange cellRange = this.range;
+        final SpreadsheetCellRangeReference cellRange = this.range;
         final SpreadsheetColumnReference beginColumn = cellRange.begin().column();
 
         final SpreadsheetColumnReference left = columnRange.begin();
@@ -151,7 +151,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     }
 
     private void rowRange(SpreadsheetRowRangeReference rowRange) {
-        final SpreadsheetCellRange celRange = this.range;
+        final SpreadsheetCellRangeReference celRange = this.range;
         final SpreadsheetRowReference beginRow = celRange.begin().row();
 
         final SpreadsheetRowReference top = rowRange.begin();
@@ -197,10 +197,10 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     }
 
     /**
-     * Starts with the initial {@link SpreadsheetCellRange} and then possibly due to the selection is adjusted
+     * Starts with the initial {@link SpreadsheetCellRangeReference} and then possibly due to the selection is adjusted
      * to enable minimum movement of the viewportRectangle but with the selection included.
      */
-    private SpreadsheetCellRange range;
+    private SpreadsheetCellRangeReference range;
     private final SpreadsheetViewportRectangle viewportRectangle;
     private final BasicSpreadsheetEngine engine;
     private final SpreadsheetEngineContext context;

@@ -23,7 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -207,7 +207,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
 
     @Test
     public void testCellRange() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:B3");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:B3");
         final String b2Value = "B2Value";
         final Integer b3Value = 123;
 
@@ -263,7 +263,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
 
     @Test
     public void testCellRangeMissingCells() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
         final String b2Value = "B2Value";
         final Integer c3Value = 123;
 

@@ -23,7 +23,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -137,7 +137,7 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange value) {
+    protected void visit(final SpreadsheetCellRangeReference value) {
         this.converter(this.mapping.selection);
     }
 

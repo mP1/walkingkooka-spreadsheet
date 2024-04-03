@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -155,7 +155,7 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
         // nop
     }
 
-    protected void visit(final SpreadsheetCellRange value) {
+    protected void visit(final SpreadsheetCellRangeReference value) {
         // nop
     }
 

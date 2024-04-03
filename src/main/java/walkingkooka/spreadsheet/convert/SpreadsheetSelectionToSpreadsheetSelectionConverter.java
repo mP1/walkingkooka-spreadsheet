@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -28,8 +28,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 /**
  * A {@link Converter} that only handles the following selection to selection conversions.
  * <ul>
- *     <li>{@link SpreadsheetCellRange} to {@link SpreadsheetCellReference}</li>
- *     <li>{@link SpreadsheetCellReference} to {@link SpreadsheetCellRange}</li>
+ *     <li>{@link SpreadsheetCellRangeReference} to {@link SpreadsheetCellReference}</li>
+ *     <li>{@link SpreadsheetCellReference} to {@link SpreadsheetCellRangeReference}</li>
  * </ul>
  */
 final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Converter<SpreadsheetConverterContext> {
@@ -65,7 +65,7 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Conve
                 ) :
                 isCellRangeToCell(value, type) ?
                         this.successfulConversion(
-                                cellRangeToCell((SpreadsheetCellRange) value),
+                                cellRangeToCell((SpreadsheetCellRangeReference) value),
                                 type
                         ) :
                         isCellOrCellRange(value, type) ?
@@ -91,19 +91,19 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Conve
         return value instanceof SpreadsheetSelection &&
                 (
                         SpreadsheetCellReference.class == type ||
-                                SpreadsheetCellRange.class == type ||
+                                SpreadsheetCellRangeReference.class == type ||
                                 SpreadsheetCellReferenceOrRange.class == type
                 );
     }
 
     private static boolean isCellToCellRange(final Object value,
                                              final Class<?> type) {
-        return value instanceof SpreadsheetCellReference && SpreadsheetCellRange.class == type;
+        return value instanceof SpreadsheetCellReference && SpreadsheetCellRangeReference.class == type;
     }
 
     private static boolean isCellRangeToCell(final Object value,
                                              final Class<?> type) {
-        return value instanceof SpreadsheetCellRange && SpreadsheetCellReference.class == type;
+        return value instanceof SpreadsheetCellRangeReference && SpreadsheetCellReference.class == type;
     }
 
     private static boolean isExpressionReference(final Object value,
@@ -116,11 +116,11 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Conve
         return value instanceof SpreadsheetSelection && SpreadsheetSelection.class == type;
     }
 
-    private static SpreadsheetCellRange cellToCellRange(final SpreadsheetCellReference cell) {
+    private static SpreadsheetCellRangeReference cellToCellRange(final SpreadsheetCellReference cell) {
         return cell.toCellRange();
     }
 
-    private static SpreadsheetCellReference cellRangeToCell(final SpreadsheetCellRange range) {
+    private static SpreadsheetCellReference cellRangeToCell(final SpreadsheetCellRangeReference range) {
         return range.toCell();
     }
 

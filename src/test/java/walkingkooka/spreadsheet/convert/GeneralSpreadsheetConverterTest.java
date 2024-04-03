@@ -41,7 +41,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -308,7 +308,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testSpreadsheetCellReferenceToRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
-                SpreadsheetCellRange.class,
+                SpreadsheetCellRangeReference.class,
                 SpreadsheetSelection.parseCellRange("Z99")
         );
     }
@@ -327,7 +327,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         );
     }
 
-    // SpreadsheetCellRange.............................................................................................
+    // SpreadsheetCellRangeReference.............................................................................................
 
     @Test
     public void testSpreadsheetCellRangeToCellOrCellRange() {
@@ -341,7 +341,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testSpreadsheetCellRangeToCellRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetCellRange.class
+                SpreadsheetCellRangeReference.class
         );
     }
 
@@ -450,11 +450,11 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetLabelNameToCellRange() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123Range");
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("Z9:Z99");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("Z9:Z99");
 
         this.convertAndCheck(
                 label,
-                SpreadsheetCellRange.class,
+                SpreadsheetCellRangeReference.class,
                 this.createContext(label, range),
                 range
         );
@@ -476,7 +476,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testSpreadsheetLabelNameToCellOrRangeCellRange() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123CellRange");
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:c3");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:c3");
 
         this.convertAndCheck(
                 label,
@@ -1044,7 +1044,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testStringToSpreadsheetCellRange() {
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("Z99:Z100");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("Z99:Z100");
 
         this.convertAndCheck(
                 range.toString(),
@@ -1055,11 +1055,11 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testStringLabelToSpreadsheetCellRange() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("Z9:Z99");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("Z9:Z99");
 
         this.convertAndCheck(
                 range.toString(),
-                SpreadsheetCellRange.class,
+                SpreadsheetCellRangeReference.class,
                 this.createContext(label, range),
                 range
         );

@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -292,7 +292,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             }
 
             @Override
-            protected void visit(final SpreadsheetCellRange range) {
+            protected void visit(final SpreadsheetCellRangeReference range) {
                 BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetCellRange(range, mapping);
             }
         }.accept(mapping.target());
@@ -310,7 +310,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
         }
     }
 
-    private void deleteOrFixSpreadsheetCellRange(final SpreadsheetCellRange range,
+    private void deleteOrFixSpreadsheetCellRange(final SpreadsheetCellRangeReference range,
                                                  final SpreadsheetLabelMapping mapping) {
 
         SpreadsheetCellReference rangeEnd = range.end();
@@ -379,7 +379,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             }
 
             @Override
-            protected void visit(final SpreadsheetCellRange range) {
+            protected void visit(final SpreadsheetCellRangeReference range) {
                 BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetCellRange(range, mapping);
             }
         }.accept(mapping.target());
@@ -393,7 +393,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
         }
     }
 
-    private void insertFixSpreadsheetCellRange(final SpreadsheetCellRange range,
+    private void insertFixSpreadsheetCellRange(final SpreadsheetCellRangeReference range,
                                                final SpreadsheetLabelMapping mapping) {
         SpreadsheetCellReference begin = range.begin();
         SpreadsheetCellReference end = range.end();

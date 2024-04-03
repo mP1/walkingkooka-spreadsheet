@@ -270,7 +270,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void toCellRangeAndCheck(final SpreadsheetSelection selection,
-                                   final SpreadsheetCellRange expected) {
+                                   final SpreadsheetCellRangeReference expected) {
         this.toCellRangeAndCheck(
                 selection,
                 (l) -> {
@@ -281,8 +281,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void toCellRangeAndCheck(final SpreadsheetSelection selection,
-                                   final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange,
-                                   final SpreadsheetCellRange expected) {
+                                   final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange,
+                                   final SpreadsheetCellRangeReference expected) {
         this.toCellRangeAndCheck(
                 selection,
                 labelToCellRange,
@@ -291,8 +291,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void toCellRangeAndCheck(final SpreadsheetSelection selection,
-                                   final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRange>> labelToCellRange,
-                                   final Optional<SpreadsheetCellRange> expected) {
+                                   final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange,
+                                   final Optional<SpreadsheetCellRangeReference> expected) {
         this.checkEquals(
                 expected,
                 selection.toCellRange(labelToCellRange),
@@ -528,7 +528,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void testCellRangeAndCheck(final S selection,
-                                     final SpreadsheetCellRange range,
+                                     final SpreadsheetCellRangeReference range,
                                      final boolean expected) {
         this.checkEquals(
                 expected,

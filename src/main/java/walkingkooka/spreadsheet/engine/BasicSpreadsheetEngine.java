@@ -33,8 +33,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -109,7 +109,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkDeltaProperties(deltaProperties);
         checkContext(context);
 
-        final Optional<SpreadsheetCellRange> cells = selection.toCellRange(context.storeRepository().labels()::cellRange);
+        final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRange(context.storeRepository().labels()::cellRange);
 
         return cells.isPresent() ?
                 this.loadCells0(
@@ -121,7 +121,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 SpreadsheetDelta.EMPTY;
     }
 
-    private SpreadsheetDelta loadCells0(final SpreadsheetCellRange cellRange,
+    private SpreadsheetDelta loadCells0(final SpreadsheetCellRangeReference cellRange,
                                         final SpreadsheetEngineEvaluation evaluation,
                                         final Set<SpreadsheetDeltaProperties> deltaProperties,
                                         final SpreadsheetEngineContext context) {
@@ -273,7 +273,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
             final SpreadsheetStoreRepository repository = context.storeRepository();
-            final Optional<SpreadsheetCellRange> cells = selection.toCellRange(
+            final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRange(
                     repository.labels()::cellRange
             );
             if (cells.isPresent()) {
@@ -462,7 +462,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRange> ranges,
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> ranges,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
@@ -475,7 +475,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetCellStore store = context.storeRepository()
                     .cells();
 
-            for (final SpreadsheetCellRange range : ranges) {
+            for (final SpreadsheetCellRangeReference range : ranges) {
                 range.cellStream()
                         .forEach(reference -> {
                                     if (!changes.isLoaded(reference)) {
@@ -501,8 +501,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                      final SpreadsheetCellRange from,
-                                      final SpreadsheetCellRange to,
+                                      final SpreadsheetCellRangeReference from,
+                                      final SpreadsheetCellRangeReference to,
                                       final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(from, "parse");
@@ -639,7 +639,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 final Set<SpreadsheetCellReference> cellReferences = Sets.hash();
 
 
-                for (final SpreadsheetCellRange range : window.cellRanges()) {
+                for (final SpreadsheetCellRangeReference range : window.cellRanges()) {
 
                     // include all columns and rows within the window.
                     range.cellStream()
@@ -1267,9 +1267,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context
                 ) : null;
 
-        final Set<SpreadsheetCellRange> window = Sets.ordered();
+        final Set<SpreadsheetCellRangeReference> window = Sets.ordered();
 
-        SpreadsheetCellRange nonFrozenCells = null;
+        SpreadsheetCellRangeReference nonFrozenCells = null;
         if (null != nonFrozenColumns && null != nonFrozenRows) {
             nonFrozenCells = nonFrozenColumns.setRowRangeReference(nonFrozenRows);
         }
@@ -1282,7 +1282,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // FCR fr fr fr
             // fc  n  n  n
             // fc  n  n  n
-            final SpreadsheetCellRange frozenColumnsRowsCells = frozenColumns.setRowRangeReference(frozenRows);
+            final SpreadsheetCellRangeReference frozenColumnsRowsCells = frozenColumns.setRowRangeReference(frozenRows);
 
             window.add(frozenColumnsRowsCells);
 
@@ -1294,7 +1294,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // fcr FR FR FR
             // fc  n  n  n
             // fc  n  n  n
-            final SpreadsheetCellRange frozenRowsCells = frozenRows.setColumnRangeReference(nonFrozenColumns);
+            final SpreadsheetCellRangeReference frozenRowsCells = frozenRows.setColumnRangeReference(nonFrozenColumns);
 
             window.add(frozenRowsCells);
 
@@ -1306,7 +1306,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // fcr fr fr fr
             // FC  n  n  n
             // FC  n  n  n
-            final SpreadsheetCellRange frozenColumnCells = frozenColumns.setRowRangeReference(nonFrozenRows);
+            final SpreadsheetCellRangeReference frozenColumnCells = frozenColumns.setRowRangeReference(nonFrozenRows);
             window.add(frozenColumnCells);
 
             skipPan = skipPan ||
@@ -1720,8 +1720,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRange range,
-                                          final SpreadsheetCellRangePath path,
+    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference range,
+                                          final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
                                           final int max,
                                           final String valueType,

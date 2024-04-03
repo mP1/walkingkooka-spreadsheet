@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -170,7 +170,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetLabelName label2 = this.label2();
 
         final SpreadsheetCellReference a1 = this.a1();
-        final SpreadsheetCellRange a2 = SpreadsheetSelection.parseCellRange("a2:b3");
+        final SpreadsheetCellRangeReference a2 = SpreadsheetSelection.parseCellRange("a2:b3");
 
         store.save(label1.mapping(a1));
         final SpreadsheetLabelMapping mapping = store.save(label2.mapping(a2));
@@ -408,7 +408,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         return SpreadsheetSelection.parseCell("A2");
     }
 
-    private SpreadsheetCellRange range1() {
+    private SpreadsheetCellRangeReference range1() {
         return SpreadsheetSelection.parseCellRange("A1:A3");
     }
 

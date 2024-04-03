@@ -32,14 +32,14 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellRangeSortedMapSpreadsheetCellIteratorTest implements IteratorTesting,
-        ClassTesting<SpreadsheetCellRangeSortedMapSpreadsheetCellIterator> {
+public final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIteratorTest implements IteratorTesting,
+        ClassTesting<SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator> {
 
     @Test
     public void testWithNullMapFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetCellRangeSortedMapSpreadsheetCellIterator.with(
+                () -> SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
                         SpreadsheetSelection.ALL_CELLS,
                         null
                 )
@@ -249,7 +249,7 @@ public final class SpreadsheetCellRangeSortedMapSpreadsheetCellIteratorTest impl
         );
     }
 
-    private void iteratorCheck(final SpreadsheetCellRange range,
+    private void iteratorCheck(final SpreadsheetCellRangeReference range,
                                final Set<SpreadsheetCell> cells) {
         final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cellMap = Maps.sorted();
         final Set<SpreadsheetCell> iterated = Sets.sorted();
@@ -274,7 +274,7 @@ public final class SpreadsheetCellRangeSortedMapSpreadsheetCellIteratorTest impl
         );
 
         this.iterateUsingHasNextAndCheck(
-                SpreadsheetCellRangeSortedMapSpreadsheetCellIterator.with(
+                SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
                         range,
                         cellMap
                 ),
@@ -282,7 +282,7 @@ public final class SpreadsheetCellRangeSortedMapSpreadsheetCellIteratorTest impl
         );
 
         this.iterateAndCheck(
-                SpreadsheetCellRangeSortedMapSpreadsheetCellIterator.with(
+                SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
                         range,
                         cellMap
                 ),
@@ -293,8 +293,8 @@ public final class SpreadsheetCellRangeSortedMapSpreadsheetCellIteratorTest impl
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetCellRangeSortedMapSpreadsheetCellIterator> type() {
-        return SpreadsheetCellRangeSortedMapSpreadsheetCellIterator.class;
+    public Class<SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator> type() {
+        return SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.class;
     }
 
     @Override

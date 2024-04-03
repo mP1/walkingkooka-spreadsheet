@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.tree.expression.Expression;
@@ -53,8 +53,8 @@ final class SpreadsheetFormulaReplaceReferencesFunctionExpression extends Spread
 
             ).orElse(SELECTION_DELETED);
         } else {
-            if (cellOrRange.isCellRange()) {
-                final SpreadsheetCellRange range = cellOrRange.toCellRange();
+            if (cellOrRange.isCellRangeReference()) {
+                final SpreadsheetCellRangeReference range = cellOrRange.toCellRange();
                 final Optional<SpreadsheetCellReference> begin = mapper.apply(
                         range.begin()
                 );

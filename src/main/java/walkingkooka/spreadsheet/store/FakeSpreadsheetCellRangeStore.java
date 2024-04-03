@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellRange, List<V>> implements SpreadsheetCellRangeStore<V>, Fake {
+public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellRangeReference, List<V>> implements SpreadsheetCellRangeStore<V>, Fake {
 
     @Override
-    public Set<SpreadsheetCellRange> loadCellRangeReferences(final SpreadsheetCellReference cell) {
+    public Set<SpreadsheetCellRangeReference> loadCellRangeReferences(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         throw new UnsupportedOperationException();
@@ -43,7 +43,7 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
     }
 
     @Override
-    public void addValue(final SpreadsheetCellRange range, final V value) {
+    public void addValue(final SpreadsheetCellRangeReference range, final V value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
@@ -51,7 +51,7 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
     }
 
     @Override
-    public boolean replaceValue(final SpreadsheetCellRange range, final V newValue, final V oldValue) {
+    public boolean replaceValue(final SpreadsheetCellRangeReference range, final V newValue, final V oldValue) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(newValue, "newValue");
         Objects.requireNonNull(oldValue, "oldValue");
@@ -60,7 +60,7 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
     }
 
     @Override
-    public void removeValue(final SpreadsheetCellRange range, final V value) {
+    public void removeValue(final SpreadsheetCellRangeReference range, final V value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
@@ -68,7 +68,7 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
     }
 
     @Override
-    public Set<SpreadsheetCellRange> rangesWithValue(final V value) {
+    public Set<SpreadsheetCellRangeReference> rangesWithValue(final V value) {
         Objects.requireNonNull(value, "value");
 
         throw new UnsupportedOperationException();

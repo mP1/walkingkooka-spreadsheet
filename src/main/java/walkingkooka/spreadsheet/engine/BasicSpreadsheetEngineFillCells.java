@@ -21,7 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
@@ -32,8 +32,8 @@ import java.util.stream.Collectors;
 final class BasicSpreadsheetEngineFillCells {
 
     static void execute(final Collection<SpreadsheetCell> cells,
-                        final SpreadsheetCellRange from,
-                        final SpreadsheetCellRange to,
+                        final SpreadsheetCellRangeReference from,
+                        final SpreadsheetCellRangeReference to,
                         final BasicSpreadsheetEngine engine,
                         final SpreadsheetEngineContext context) {
         new BasicSpreadsheetEngineFillCells(engine, context)
@@ -48,8 +48,8 @@ final class BasicSpreadsheetEngineFillCells {
     }
 
     private void execute(final Collection<SpreadsheetCell> cells,
-                         final SpreadsheetCellRange from,
-                         final SpreadsheetCellRange to) {
+                         final SpreadsheetCellRangeReference from,
+                         final SpreadsheetCellRangeReference to) {
         if (cells.isEmpty()) {
             this.deleteCell(to);
         } else {
@@ -69,8 +69,8 @@ final class BasicSpreadsheetEngineFillCells {
      * deletion in the $to.
      */
     private void fill(final Collection<SpreadsheetCell> cells,
-                      final SpreadsheetCellRange from,
-                      final SpreadsheetCellRange to) {
+                      final SpreadsheetCellRangeReference from,
+                      final SpreadsheetCellRangeReference to) {
         final List<Object> referencesAndCells = Lists.array();
         from.cells(cells,
                 referencesAndCells::add,

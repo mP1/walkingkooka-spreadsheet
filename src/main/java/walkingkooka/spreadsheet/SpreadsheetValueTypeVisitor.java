@@ -51,7 +51,7 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                 case "java.lang.Byte":
                     this.visitByte();
                     break;
-                case "walkingkooka.spreadsheet.reference.SpreadsheetCellRange":
+                case "walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference":
                     this.visitCellRange();
                     break;
                 case "walkingkooka.spreadsheet.reference.SpreadsheetCellReference":

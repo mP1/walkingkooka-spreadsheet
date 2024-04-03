@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.TypeNameTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -33,7 +33,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRangeStore<V>, V> extends SpreadsheetStoreTesting<S, SpreadsheetCellRange, List<V>>,
+public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRangeStore<V>, V> extends SpreadsheetStoreTesting<S, SpreadsheetCellRangeReference, List<V>>,
         TypeNameTesting<S> {
 
     /**
@@ -42,7 +42,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     SpreadsheetCellReference TOPLEFT = cell(10, 20);
     SpreadsheetCellReference CENTER = TOPLEFT.add(1, 1);
     SpreadsheetCellReference BOTTOMRIGHT = CENTER.add(1, 1);
-    SpreadsheetCellRange RANGE = TOPLEFT.cellRange(BOTTOMRIGHT);
+    SpreadsheetCellRangeReference RANGE = TOPLEFT.cellRange(BOTTOMRIGHT);
 
     // tests.......................................................................................................
 
@@ -77,12 +77,12 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     @Test
     default void testAddDeleteWatcherAndDelete() {
-        final SpreadsheetCellRange range = this.id();
+        final SpreadsheetCellRangeReference range = this.id();
         final V value = this.valueValue();
 
         final S store = this.createStore();
 
-        final List<SpreadsheetCellRange> fired = Lists.array();
+        final List<SpreadsheetCellRangeReference> fired = Lists.array();
         store.addDeleteWatcher(fired::add);
 
         store.addValue(range, value);
@@ -136,7 +136,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     default void testRangesWithValue() {
         final S store = this.createStore();
 
-        final SpreadsheetCellRange range = this.id();
+        final SpreadsheetCellRangeReference range = this.id();
         final V value = this.valueValue();
         this.rangesWithValuesAndCheck(store, value);
 
@@ -152,7 +152,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
                 .setRow(SpreadsheetReferenceKind.RELATIVE.row(row));
     }
 
-    default void loadRangeFails(final SpreadsheetCellRangeStore<V> store, final SpreadsheetCellRange range) {
+    default void loadRangeFails(final SpreadsheetCellRangeStore<V> store, final SpreadsheetCellRangeReference range) {
         this.checkEquals(Optional.empty(),
                 store.load(range),
                 () -> "load range " + range + " should have returned no values");
@@ -160,7 +160,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     @SuppressWarnings({"OptionalGetWithoutIsPresent", "unchecked"})
     default void loadRangeAndCheck(final SpreadsheetCellRangeStore<V> store,
-                                   final SpreadsheetCellRange range,
+                                   final SpreadsheetCellRangeReference range,
                                    final V... expected) {
         final Optional<List<V>> values = store.load(range);
         this.checkNotEquals(Optional.empty(), values, () -> "load of " + range + " failed");
@@ -182,15 +182,15 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     default void loadCellRangeReferencesAndCheck(final SpreadsheetCellRangeStore<V> store,
                                                  final SpreadsheetCellReference cell,
-                                                 final SpreadsheetCellRange... ranges) {
+                                                 final SpreadsheetCellRangeReference... ranges) {
         this.checkEquals(Sets.of(ranges),
                 this.loadCellRangeReferences(store, cell),
                 () -> "load cell reference ranges for " + cell);
     }
 
-    default Set<SpreadsheetCellRange> loadCellRangeReferences(final SpreadsheetCellRangeStore<V> store,
-                                                              final SpreadsheetCellReference cell) {
-        final Set<SpreadsheetCellRange> ranges = store.loadCellRangeReferences(cell);
+    default Set<SpreadsheetCellRangeReference> loadCellRangeReferences(final SpreadsheetCellRangeStore<V> store,
+                                                                       final SpreadsheetCellReference cell) {
+        final Set<SpreadsheetCellRangeReference> ranges = store.loadCellRangeReferences(cell);
         assertNotNull(ranges, "ranges");
         return ranges;
     }
@@ -226,15 +226,15 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     default void rangesWithValuesAndCheck(final SpreadsheetCellRangeStore<V> store,
                                           final V value,
-                                          final SpreadsheetCellRange... ranges) {
+                                          final SpreadsheetCellRangeReference... ranges) {
         this.checkEquals(Sets.of(ranges),
                 this.rangesWithValues(store, value),
                 () -> "ranges with values for " + value);
     }
 
-    default Set<SpreadsheetCellRange> rangesWithValues(final SpreadsheetCellRangeStore<V> store,
-                                                       final V value) {
-        final Set<SpreadsheetCellRange> ranges = store.rangesWithValue(value);
+    default Set<SpreadsheetCellRangeReference> rangesWithValues(final SpreadsheetCellRangeStore<V> store,
+                                                                final V value) {
+        final Set<SpreadsheetCellRangeReference> ranges = store.rangesWithValue(value);
         assertNotNull(ranges, "ranges");
         return ranges;
     }
@@ -244,7 +244,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     // StoreTesting...........................................................
 
     @Override
-    default SpreadsheetCellRange id() {
+    default SpreadsheetCellRangeReference id() {
         return SpreadsheetSelection.parseCellRange("A1:B2");
     }
 

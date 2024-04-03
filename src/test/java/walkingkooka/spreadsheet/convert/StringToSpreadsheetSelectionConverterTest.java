@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterTesting2;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -82,7 +82,7 @@ public final class StringToSpreadsheetSelectionConverterTest implements Converte
     @Test
     public void testStringLabelToSpreadsheetCellOrCellRangeWithCellRange() {
         final String label = "Label123";
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
 
         this.convertAndCheck(
                 label,
@@ -113,11 +113,11 @@ public final class StringToSpreadsheetSelectionConverterTest implements Converte
     @Test
     public void testStringLabelToSpreadsheetCellRangeWithCellRange() {
         final String label = "Label123";
-        final SpreadsheetCellRange range = SpreadsheetSelection.parseCellRange("B2:C3");
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
 
         this.convertAndCheck(
                 label,
-                SpreadsheetCellRange.class,
+                SpreadsheetCellRangeReference.class,
                 this.createContext(label, range),
                 range
         );

@@ -679,7 +679,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRange only allowing begin/end cells")
+    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testRangeLabelToLabel() {
         final SpreadsheetLabelNameParserToken from = this.label("parse");
         final SpreadsheetLabelNameParserToken to = this.label("to");
@@ -691,7 +691,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRange only allowing begin/end cells")
+    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testRangeCellToLabel() {
         final SpreadsheetCellReferenceParserToken from = this.cell(0, "A", 0);
         final SpreadsheetLabelNameParserToken to = this.label("to");
@@ -703,7 +703,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRange only allowing begin/end cells")
+    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testRangeLabelToCell() {
         final SpreadsheetLabelNameParserToken from = this.label("to");
         final SpreadsheetCellReferenceParserToken to = this.cell(0, "A", 0);

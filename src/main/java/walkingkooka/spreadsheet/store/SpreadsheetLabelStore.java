@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -62,10 +62,10 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
     }
 
     /**
-     * Attempts to resolve the given {@link SpreadsheetExpressionReference} which may be a label to a {@link SpreadsheetCellRange}.
+     * Attempts to resolve the given {@link SpreadsheetExpressionReference} which may be a label to a {@link SpreadsheetCellRangeReference}.
      * This exists primarily so this can be passed as a method reference to {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection#toCellRange(Function)}.
      */
-    default Optional<SpreadsheetCellRange> cellRange(final SpreadsheetExpressionReference reference) {
+    default Optional<SpreadsheetCellRangeReference> cellRange(final SpreadsheetExpressionReference reference) {
         return this.cellReferenceOrRange(reference)
                 .map(SpreadsheetCellReferenceOrRange::toCellRange);
     }

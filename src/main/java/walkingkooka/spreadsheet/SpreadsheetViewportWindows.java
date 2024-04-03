@@ -21,7 +21,7 @@ import walkingkooka.CanBeEmpty;
 import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -63,7 +63,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     public final static SpreadsheetViewportWindows EMPTY = new SpreadsheetViewportWindows(Sets.empty());
 
     /**
-     * Parses a window query parameter or other string representation into a {@link Set} or {@link SpreadsheetCellRange}.
+     * Parses a window query parameter or other string representation into a {@link Set} or {@link SpreadsheetCellRangeReference}.
      * eg
      * <pre>
      * A1
@@ -86,22 +86,22 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
                 );
     }
 
-    public static SpreadsheetViewportWindows with(final Set<SpreadsheetCellRange> cellRanges) {
+    public static SpreadsheetViewportWindows with(final Set<SpreadsheetCellRangeReference> cellRanges) {
         Objects.requireNonNull(cellRanges, "cellRanges");
 
-        final Set<SpreadsheetCellRange> copy = copy(cellRanges);
+        final Set<SpreadsheetCellRangeReference> copy = copy(cellRanges);
         return copy.isEmpty() ?
                 EMPTY :
                 new SpreadsheetViewportWindows(copy);
     }
 
     /**
-     * While taking a copy of the given {@link Collection} test if there are any overlapping {@link SpreadsheetCellRange}.
+     * While taking a copy of the given {@link Collection} test if there are any overlapping {@link SpreadsheetCellRangeReference}.
      */
-    private static Set<SpreadsheetCellRange> copy(final Collection<SpreadsheetCellRange> cellRanges) {
+    private static Set<SpreadsheetCellRangeReference> copy(final Collection<SpreadsheetCellRangeReference> cellRanges) {
         return overlapCheckAndCreate(
                 cellRanges.toArray(
-                        new SpreadsheetCellRange[
+                        new SpreadsheetCellRangeReference[
                                 cellRanges.size()
                                 ]
                 )
@@ -111,15 +111,15 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     /**
      * Assumes the ranges have been copied, and checks that there are no overlaps.
      */
-    private static Set<SpreadsheetCellRange> overlapCheckAndCreate(final SpreadsheetCellRange[] cellRanges) {
+    private static Set<SpreadsheetCellRangeReference> overlapCheckAndCreate(final SpreadsheetCellRangeReference[] cellRanges) {
         Arrays.sort(cellRanges);
         final int count = cellRanges.length;
 
         for (int i = 0; i < count; i++) {
-            final SpreadsheetCellRange first = cellRanges[i];
+            final SpreadsheetCellRangeReference first = cellRanges[i];
 
             for (int j = i + 1; j < count; j++) {
-                final SpreadsheetCellRange other = cellRanges[j];
+                final SpreadsheetCellRangeReference other = cellRanges[j];
                 if (first.testCellRange(other)) {
                     throw new IllegalArgumentException("Window component cell-ranges overlap " + first + " and " + other);
                 }
@@ -129,20 +129,20 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
         return Sets.of(cellRanges);
     }
 
-    private SpreadsheetViewportWindows(final Set<SpreadsheetCellRange> cellRanges) {
+    private SpreadsheetViewportWindows(final Set<SpreadsheetCellRangeReference> cellRanges) {
         super();
 
         this.cellRanges = cellRanges;
     }
 
-    public Set<SpreadsheetCellRange> cellRanges() {
+    public Set<SpreadsheetCellRangeReference> cellRanges() {
         return this.cellRanges;
     }
 
-    private final Set<SpreadsheetCellRange> cellRanges;
+    private final Set<SpreadsheetCellRangeReference> cellRanges;
 
     /**
-     * Returns true if there are no {@link SpreadsheetCellRange ranges}
+     * Returns true if there are no {@link SpreadsheetCellRangeReference ranges}
      */
     @Override
     public boolean isEmpty() {
@@ -153,11 +153,11 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
      * Returns the last window, and because the {@link #cellRanges} is sorted this will be the bottom right window,
      * which is also often the window that maybe scrolled by the user in the UI.
      */
-    public Optional<SpreadsheetCellRange> last() {
+    public Optional<SpreadsheetCellRangeReference> last() {
         if (null == this.last) {
-            SpreadsheetCellRange last = null;
+            SpreadsheetCellRangeReference last = null;
 
-            for (final SpreadsheetCellRange possible : this.cellRanges) {
+            for (final SpreadsheetCellRangeReference possible : this.cellRanges) {
                 last = possible;
             }
 
@@ -167,22 +167,22 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
         return this.last;
     }
 
-    private Optional<SpreadsheetCellRange> last;
+    private Optional<SpreadsheetCellRangeReference> last;
 
     /**
      * Returns the home cell if one is present.
      */
     public Optional<SpreadsheetCellReference> home() {
         return this.last()
-                .map(SpreadsheetCellRange::begin);
+                .map(SpreadsheetCellRangeReference::begin);
     }
 
     // bounds...........................................................................................................
 
     /**
-     * Returns a {@link SpreadsheetCellRange} or bounds that includes all the {@link SpreadsheetCellRange ranges}.
+     * Returns a {@link SpreadsheetCellRangeReference} or bounds that includes all the {@link SpreadsheetCellRangeReference ranges}.
      */
-    public Optional<SpreadsheetCellRange> bounds() {
+    public Optional<SpreadsheetCellRangeReference> bounds() {
         if (null == this.bounds) {
             this.bounds = this.isEmpty() ?
                     Optional.empty() :
@@ -192,16 +192,16 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
         return this.bounds;
     }
 
-    private Optional<SpreadsheetCellRange> bounds;
+    private Optional<SpreadsheetCellRangeReference> bounds;
 
-    private Optional<SpreadsheetCellRange> boundsNotEmpty() {
+    private Optional<SpreadsheetCellRangeReference> boundsNotEmpty() {
         SpreadsheetColumnReference left = SpreadsheetReferenceKind.RELATIVE.lastColumn();
         SpreadsheetRowReference top = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         SpreadsheetColumnReference right = SpreadsheetReferenceKind.RELATIVE.firstColumn();
         SpreadsheetRowReference bottom = SpreadsheetReferenceKind.RELATIVE.firstRow();
 
-        for (final SpreadsheetCellRange range : this.cellRanges()) {
+        for (final SpreadsheetCellRangeReference range : this.cellRanges()) {
             final SpreadsheetCellReference begin = range.begin();
             left = left.min(begin.column());
             top = top.min(begin.row());
@@ -222,7 +222,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
 
     @Override
     public Iterator<SpreadsheetCellReference> iterator() {
-        final Set<SpreadsheetCellRange> cellRanges = this.cellRanges;
+        final Set<SpreadsheetCellRangeReference> cellRanges = this.cellRanges;
 
         final Iterable<SpreadsheetCellReference>[] iterables = new Iterable[cellRanges.size()];
         cellRanges.toArray(iterables);
@@ -241,11 +241,11 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
                 this.cells0(nonLabel.toCellRange());
     }
 
-    private Iterator<SpreadsheetCellReference> cells0(final SpreadsheetCellRange cells) {
+    private Iterator<SpreadsheetCellReference> cells0(final SpreadsheetCellRangeReference cells) {
         final SpreadsheetCellReference cellsBegin = cells.begin();
         final SpreadsheetCellReference cellsEnd = cells.end();
 
-        final SpreadsheetCellRange bounds = this.bounds()
+        final SpreadsheetCellRangeReference bounds = this.bounds()
                 .get();
 
         final SpreadsheetCellReference boundsBegin = bounds.begin();
@@ -263,7 +263,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
         final SpreadsheetRowReference bottom = cellsEnd.row()
                 .min(boundsEnd.row());
 
-        final SpreadsheetCellRange selection = left.setRow(top)
+        final SpreadsheetCellRangeReference selection = left.setRow(top)
                 .cellRange(
                         right.setRow(bottom)
                 );
@@ -284,7 +284,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     public boolean test(final SpreadsheetSelection selection) {
         Objects.requireNonNull(selection, "selection");
 
-        final Set<SpreadsheetCellRange> cellRanges = this.cellRanges;
+        final Set<SpreadsheetCellRangeReference> cellRanges = this.cellRanges;
         return cellRanges.isEmpty() ||
                 cellRanges.stream()
                         .anyMatch(r -> r.test(selection));
@@ -294,12 +294,12 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     // containsAll......................................................................................................
 
     /**
-     * Returns true only if this window contains the entire given {@link SpreadsheetCellRange}.
+     * Returns true only if this window contains the entire given {@link SpreadsheetCellRangeReference}.
      */
-    public boolean containsAll(final SpreadsheetCellRange cells) {
+    public boolean containsAll(final SpreadsheetCellRangeReference cells) {
         Objects.requireNonNull(cells, "cells");
 
-        final Set<SpreadsheetCellRange> cellRanges = this.cellRanges;
+        final Set<SpreadsheetCellRangeReference> cellRanges = this.cellRanges;
         return cellRanges.isEmpty() ||
                 cellRanges.stream()
                         .anyMatch(r -> r.containsAll(cells));
@@ -345,7 +345,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     public String toString() {
         return SEPARATOR.toSeparatedString(
                 this.cellRanges,
-                SpreadsheetCellRange::toStringMaybeStar
+                SpreadsheetCellRangeReference::toStringMaybeStar
         );
     }
 

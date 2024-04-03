@@ -26,7 +26,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
@@ -104,7 +104,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
 
     @Test
     public void testWith() {
-        final Set<SpreadsheetCellRange> cellRanges = Sets.of(
+        final Set<SpreadsheetCellRangeReference> cellRanges = Sets.of(
                 SpreadsheetSelection.parseCellRange("A1:C3")
         );
         final SpreadsheetViewportWindows windows = SpreadsheetViewportWindows.with(cellRanges);
@@ -121,7 +121,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
 
     @Test
     public void testWithEmpty() {
-        final Set<SpreadsheetCellRange> cellRanges = Sets.empty();
+        final Set<SpreadsheetCellRangeReference> cellRanges = Sets.empty();
         final SpreadsheetViewportWindows windows = SpreadsheetViewportWindows.with(cellRanges);
         this.checkEquals(
                 cellRanges,
@@ -142,7 +142,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
 
     @Test
     public void testCellRangesWith() {
-        final Set<SpreadsheetCellRange> set = Sets.hash();
+        final Set<SpreadsheetCellRangeReference> set = Sets.hash();
         set.add(SpreadsheetSelection.parseCellRange("A1"));
 
         this.cellRangesReadOnly(
@@ -215,12 +215,12 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
                 text,
                 Arrays.stream(windows)
                         .map(SpreadsheetSelection::parseCellRange)
-                        .toArray(SpreadsheetCellRange[]::new)
+                        .toArray(SpreadsheetCellRangeReference[]::new)
         );
     }
 
     private SpreadsheetViewportWindows parseStringAndCheck(final String text,
-                                                           final SpreadsheetCellRange... window) {
+                                                           final SpreadsheetCellRangeReference... window) {
         return this.parseStringAndCheck(
                 text,
                 Sets.of(window)
@@ -228,7 +228,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
     }
 
     private SpreadsheetViewportWindows parseStringAndCheck(final String text,
-                                                           final Set<SpreadsheetCellRange> window) {
+                                                           final Set<SpreadsheetCellRangeReference> window) {
         return this.parseStringAndCheck(
                 text,
                 SpreadsheetViewportWindows.with(window)
@@ -300,7 +300,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
     }
 
     private void lastAndCheck(final SpreadsheetViewportWindows windows,
-                              final Optional<SpreadsheetCellRange> last) {
+                              final Optional<SpreadsheetCellRangeReference> last) {
         this.checkEquals(
                 last,
                 windows.last(),
@@ -438,7 +438,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
     }
 
     private void boundsAndCheck(final SpreadsheetViewportWindows windows,
-                                final Optional<SpreadsheetCellRange> bounds) {
+                                final Optional<SpreadsheetCellRangeReference> bounds) {
         this.checkEquals(
                 bounds,
                 windows.bounds(),
@@ -727,7 +727,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
     }
 
     private void containsAllAndCheck(final SpreadsheetViewportWindows windows,
-                                     final SpreadsheetCellRange test,
+                                     final SpreadsheetCellRangeReference test,
                                      final boolean expected) {
         this.checkEquals(
                 expected,

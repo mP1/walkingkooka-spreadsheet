@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.ReadOnlyStoreTesting;
 
@@ -28,9 +28,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetCellRangeStoreTesting<ReadOnlySpreadsheetCellRangeStore<String>, String>,
-        ReadOnlyStoreTesting<ReadOnlySpreadsheetCellRangeStore<String>, SpreadsheetCellRange, List<String>> {
+        ReadOnlyStoreTesting<ReadOnlySpreadsheetCellRangeStore<String>, SpreadsheetCellRangeReference, List<String>> {
 
-    private final static SpreadsheetCellRange RANGE = SpreadsheetSelection.parseCellRange("a1:b2");
+    private final static SpreadsheetCellRangeReference RANGE = SpreadsheetSelection.parseCellRange("a1:b2");
     private final static String VALUE = "value";
 
     @Test

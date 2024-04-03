@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -35,26 +35,26 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     private final static SpreadsheetCellReference TOPLEFT1 = SpreadsheetCellRangeStoreTesting.cell(10, 20);
     private final static SpreadsheetCellReference CENTER1 = TOPLEFT1.add(1, 1);
     private final static SpreadsheetCellReference BOTTOMRIGHT1 = CENTER1.add(1, 1);
-    private final static SpreadsheetCellRange RANGE1A = TOPLEFT1.cellRange(BOTTOMRIGHT1);
-    private final static SpreadsheetCellRange RANGE1B = TOPLEFT1.cellRange(BOTTOMRIGHT1.add(1, 1));
-    private final static SpreadsheetCellRange RANGE1C = CENTER1.cellRange(BOTTOMRIGHT1);
+    private final static SpreadsheetCellRangeReference RANGE1A = TOPLEFT1.cellRange(BOTTOMRIGHT1);
+    private final static SpreadsheetCellRangeReference RANGE1B = TOPLEFT1.cellRange(BOTTOMRIGHT1.add(1, 1));
+    private final static SpreadsheetCellRangeReference RANGE1C = CENTER1.cellRange(BOTTOMRIGHT1);
 
-    private final static SpreadsheetCellRange RANGE1AABSOLUTE = TOPLEFT1.toAbsolute()
+    private final static SpreadsheetCellRangeReference RANGE1AABSOLUTE = TOPLEFT1.toAbsolute()
             .cellRange(BOTTOMRIGHT1.toAbsolute());
 
     private final static SpreadsheetCellReference TOPLEFT2 = SpreadsheetCellRangeStoreTesting.cell(30, 40);
     private final static SpreadsheetCellReference CENTER2 = TOPLEFT2.add(1, 1);
     private final static SpreadsheetCellReference BOTTOMRIGHT2 = CENTER2.add(2, 2);
-    private final static SpreadsheetCellRange RANGE2A = TOPLEFT2.cellRange(BOTTOMRIGHT2);
+    private final static SpreadsheetCellRangeReference RANGE2A = TOPLEFT2.cellRange(BOTTOMRIGHT2);
 
-    private final static SpreadsheetCellRange RANGE2B = CENTER1.cellRange(BOTTOMRIGHT2);
+    private final static SpreadsheetCellRangeReference RANGE2B = CENTER1.cellRange(BOTTOMRIGHT2);
 
     private final static SpreadsheetCellReference TOPLEFT3 = SpreadsheetCellRangeStoreTesting.cell(50, 60);
     private final static SpreadsheetCellReference CENTER3 = TOPLEFT3.add(1, 1);
     private final static SpreadsheetCellReference BOTTOMRIGHT3 = CENTER3.add(2, 2);
-    private final static SpreadsheetCellRange RANGE3 = TOPLEFT3.cellRange(BOTTOMRIGHT3);
+    private final static SpreadsheetCellRangeReference RANGE3 = TOPLEFT3.cellRange(BOTTOMRIGHT3);
 
-    private final static SpreadsheetCellRange RANGE4 = SpreadsheetCellRangeStoreTesting.cell(70, 70)
+    private final static SpreadsheetCellRangeReference RANGE4 = SpreadsheetCellRangeStoreTesting.cell(70, 70)
             .cellRange(SpreadsheetCellRangeStoreTesting.cell(80, 80));
 
     private final static String VALUE1 = "value1";
@@ -1073,7 +1073,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueUnknownValue() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
 
@@ -1084,11 +1084,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValue2() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
 
-        final SpreadsheetCellRange range2 = SpreadsheetSelection.parseCellRange("A2:A2");
+        final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
         final String value2 = "value2";
         store.addValue(range2, value2);
 
@@ -1100,7 +1100,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueAddValueRemoveValue() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
         store.removeValue(range1, value1);
@@ -1112,7 +1112,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueAddValueRemoveValueAddValue() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
         store.removeValue(range1, value1);
@@ -1127,7 +1127,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueAddValueReplaceValue() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
 
@@ -1142,8 +1142,8 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueAddValueRemoveValue2() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
-        @SuppressWarnings("unused") final SpreadsheetCellRange range2 = SpreadsheetSelection.parseCellRange("A2:A2");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        @SuppressWarnings("unused") final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
 
         final String value1 = "value1";
         store.addValue(range1, value1);
@@ -1156,11 +1156,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueAddValueManyRanges() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
 
-        final SpreadsheetCellRange range2 = SpreadsheetSelection.parseCellRange("A2:A2");
+        final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
         store.addValue(range2, value1);
 
         this.rangesWithValuesAndCheck(store, value1, range1, range2);
@@ -1171,11 +1171,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueAddValueManyRanges2() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
 
-        final SpreadsheetCellRange range2 = SpreadsheetSelection.parseCellRange("A2:A2");
+        final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
         store.addValue(range2, value1);
 
         final String value2 = "value2";
@@ -1190,11 +1190,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueAddValueReplaceValueManyRanges() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
 
-        final SpreadsheetCellRange range2 = SpreadsheetSelection.parseCellRange("A2:A2");
+        final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
         final String value2 = "value2";
         store.addValue(range2, value2);
 
@@ -1210,11 +1210,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueAddValueReplaceValueManyRanges2() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
 
-        final SpreadsheetCellRange range2 = SpreadsheetSelection.parseCellRange("A2:A2");
+        final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
         final String value2 = "value2";
         store.addValue(range2, value2);
 
@@ -1234,11 +1234,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testRangesWithValueAddValueRemoveValueManyRanges() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
 
-        final SpreadsheetCellRange range2 = SpreadsheetSelection.parseCellRange("A2:A2");
+        final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
         final String value2 = "value2";
         store.addValue(range2, value2);
 
@@ -1256,11 +1256,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testToString() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
-        final SpreadsheetCellRange range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
         final String value1 = "value1";
         store.addValue(range1, value1);
 
-        final SpreadsheetCellRange range2 = SpreadsheetSelection.parseCellRange("A2:A2");
+        final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
         final String value2 = "value2";
         store.addValue(range2, value2);
 

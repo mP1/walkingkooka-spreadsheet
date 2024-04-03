@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -87,7 +87,7 @@ final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVis
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRange range) {
+    protected void visit(final SpreadsheetCellRangeReference range) {
         final SpreadsheetDelta delta = this.engine.loadCells(
                 range,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,

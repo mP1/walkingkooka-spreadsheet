@@ -21,8 +21,8 @@ import walkingkooka.NeverError;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -57,7 +57,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         return new TreeMapSpreadsheetCellStore();
     }
 
-    private static SpreadsheetCellRange checkCellRange(final SpreadsheetCellRange range) {
+    private static SpreadsheetCellRangeReference checkCellRange(final SpreadsheetCellRangeReference range) {
         return Objects.requireNonNull(range, "range");
     }
 
@@ -120,8 +120,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRange range,
-                                          final SpreadsheetCellRangePath path,
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
+                                          final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
                                           final int max) {
         checkCellRange(range);
@@ -143,8 +143,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 );
     }
 
-    private Set<SpreadsheetCell> loadCellsNonZeroMax(final SpreadsheetCellRange range,
-                                                     final SpreadsheetCellRangePath path,
+    private Set<SpreadsheetCell> loadCellsNonZeroMax(final SpreadsheetCellRangeReference range,
+                                                     final SpreadsheetCellRangeReferencePath path,
                                                      final int offset,
                                                      final int max) {
         final Set<SpreadsheetCell> loaded = Sets.sorted(
@@ -183,7 +183,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
             default:
                 list = NeverError.unhandledEnum(
                         path,
-                        SpreadsheetCellRangePath.values()
+                        SpreadsheetCellRangeReferencePath.values()
                 );
                 break;
         }
@@ -245,7 +245,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public void deleteCells(final SpreadsheetCellRange range) {
+    public void deleteCells(final SpreadsheetCellRangeReference range) {
         checkCellRange(range);
 
         this.store.all()
@@ -286,7 +286,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 to
         );
 
-        final SpreadsheetCellRange window = from.cellRange(to);
+        final SpreadsheetCellRangeReference window = from.cellRange(to);
 
         return cells.stream()
                 .filter(c -> window.test(c.reference()))
@@ -367,7 +367,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRange range,
+    public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
                                                        final String valueTypeName,
                                                        final int max) {
         SpreadsheetCellStore.checkFindCellsWithValueType(
@@ -384,7 +384,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public int countCellsWithValueType(final SpreadsheetCellRange range,
+    public int countCellsWithValueType(final SpreadsheetCellRangeReference range,
                                        final String valueTypeName) {
         SpreadsheetCellStore.checkCountCellsWithValueType(
                 range,
@@ -400,7 +400,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     /**
      * If the valueTypeName is {@link SpreadsheetValueType#ANY} this will match all cells with a value.
      */
-    private Stream<SpreadsheetCell> valueTypeStream(final SpreadsheetCellRange range,
+    private Stream<SpreadsheetCell> valueTypeStream(final SpreadsheetCellRangeReference range,
                                                     final String valueTypeName) {
         final Function<Object, Boolean> filter = SpreadsheetValueType.ANY.equals(valueTypeName) ?
                 v -> Boolean.TRUE :
@@ -424,34 +424,34 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     private final Store<SpreadsheetCellReference, SpreadsheetCell> store;
 
     private final TreeMapSpreadsheetCellStoreSortedList lrtd = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangePath.LRTD
+            SpreadsheetCellRangeReferencePath.LRTD
     );
     private final TreeMapSpreadsheetCellStoreSortedList rltd = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangePath.RLTD
+            SpreadsheetCellRangeReferencePath.RLTD
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList lrbu = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangePath.LRBU
+            SpreadsheetCellRangeReferencePath.LRBU
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList rlbu = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangePath.RLBU
+            SpreadsheetCellRangeReferencePath.RLBU
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList tdlr = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangePath.TDLR
+            SpreadsheetCellRangeReferencePath.TDLR
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList tdrl = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangePath.TDRL
+            SpreadsheetCellRangeReferencePath.TDRL
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList bulr = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangePath.BULR
+            SpreadsheetCellRangeReferencePath.BULR
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList burl = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangePath.BURL
+            SpreadsheetCellRangeReferencePath.BURL
     );
 
     @Override
