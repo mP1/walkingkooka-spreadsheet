@@ -342,10 +342,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.moveAndCheck(
                 this.createObject(),
                 moveToRange,
-                SpreadsheetCellRange.with(
-                        moveToRange,
-                        VALUE
-                )
+                moveToRange.setValue(VALUE)
         );
     }
 
@@ -356,8 +353,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.moveAndCheck(
                 this.createObject(),
                 moveTo,
-                SpreadsheetCellRange.with(
-                        moveTo,
+                moveTo.setValue(
                         Maps.of(
                                 SpreadsheetSelection.A1,
                                 A1_CELL
@@ -386,8 +382,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         )
                 ),
                 moveTo,
-                SpreadsheetCellRange.with(
-                        moveTo,
+                moveTo.setValue(
                         Maps.of(
                                 B2,
                                 B2.setFormula(
@@ -422,8 +417,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         )
                 ),
                 moveTo,
-                SpreadsheetCellRange.with(
-                        moveTo,
+                moveTo.setValue(
                         Maps.of(
                                 B2,
                                 B2.setFormula(
@@ -449,8 +443,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         )
                 ),
                 moveTo,
-                SpreadsheetCellRange.with(
-                        moveTo,
+                moveTo.setValue(
                         Maps.of(
                                 B2,
                                 parseFormula("=100+C3"),
@@ -482,8 +475,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         )
                 ),
                 moveTo,
-                SpreadsheetCellRange.with(
-                        moveTo,
+                moveTo.setValue(
                         Maps.of(
                                 B2,
                                 formatPattern1,
@@ -515,8 +507,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         )
                 ),
                 moveTo,
-                SpreadsheetCellRange.with(
-                        moveTo,
+                moveTo.setValue(
                         Maps.of(
                                 B2,
                                 parsePattern1,
@@ -545,8 +536,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         )
                 ),
                 moveTo,
-                SpreadsheetCellRange.with(
-                        moveTo,
+                moveTo.setValue(
                         Maps.of(
                                 B2,
                                 style1,
@@ -578,8 +568,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         )
                 ),
                 moveTo,
-                SpreadsheetCellRange.with(
-                        moveTo,
+                moveTo.setValue(
                         Maps.of(
                                 B2,
                                 formattedValue1,
