@@ -416,35 +416,35 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
         );
     }
 
-    // setColumnReferenceRange............................................................................................
+    // setColumnRangeReference............................................................................................
 
     @Test
-    public void testSetColumnReferenceRangeNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSelection().setColumnReferenceRange(null));
+    public void testSetColumnRangeReferenceNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createSelection().setColumnRangeReference(null));
     }
 
     @Test
-    public void testSetColumnReferenceRange() {
-        this.setColumnReferenceRangeAndCheck("2:4", "B:D", "B2:D4");
+    public void testSetColumnRangeReference() {
+        this.setColumnRangeReferenceAndCheck("2:4", "B:D", "B2:D4");
     }
 
     @Test
-    public void testSetColumnReferenceRange2() {
-        this.setColumnReferenceRangeAndCheck("2", "B", "B2");
+    public void testSetColumnRangeReference2() {
+        this.setColumnRangeReferenceAndCheck("2", "B", "B2");
     }
 
     @Test
-    public void testSetColumnReferenceRange3() {
-        this.setColumnReferenceRangeAndCheck("2", "B:D", "B2:D2");
+    public void testSetColumnRangeReference3() {
+        this.setColumnRangeReferenceAndCheck("2", "B:D", "B2:D2");
     }
 
-    private void setColumnReferenceRangeAndCheck(final String row,
+    private void setColumnRangeReferenceAndCheck(final String row,
                                                  final String column,
                                                  final String range) {
         this.checkEquals(
                 SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseColumnRange(column).setRowReferenceRange(SpreadsheetSelection.parseRowRange(row)),
-                () -> column + " setRowReferenceRange " + row
+                SpreadsheetSelection.parseColumnRange(column).setRowRangeReference(SpreadsheetSelection.parseRowRange(row)),
+                () -> column + " setRowRangeReference " + row
         );
     }
 

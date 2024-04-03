@@ -77,7 +77,7 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
     /**
      * Add values for entries that include the given cell.
      */
-    final void loadCellReferenceRanges(final SpreadsheetCellReference cell,
+    final void loadCellRangeReferences(final SpreadsheetCellReference cell,
                                        final Collection<SpreadsheetCellRange> ranges) {
 
         if (this.range.testCell(cell)) {

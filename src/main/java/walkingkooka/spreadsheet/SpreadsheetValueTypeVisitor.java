@@ -67,7 +67,7 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                     this.visitColumnReference();
                     break;
                 case "walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference":
-                    this.visitColumnReferenceRange();
+                    this.visitColumnRangeReference();
                     break;
                 case "java.lang.Double":
                     this.visitDouble();
@@ -111,7 +111,7 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                     this.visitRowReference();
                     break;
                 case "walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference":
-                    this.visitRowReferenceRange();
+                    this.visitRowRangeReference();
                     break;
                 case "walkingkooka.spreadsheet.SpreadsheetError":
                     this.visitSpreadsheetError();
@@ -174,7 +174,7 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
 
     }
 
-    protected void visitColumnReferenceRange() {
+    protected void visitColumnRangeReference() {
 
     }
 
@@ -226,7 +226,7 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
 
     }
 
-    protected void visitRowReferenceRange() {
+    protected void visitRowRangeReference() {
 
     }
 

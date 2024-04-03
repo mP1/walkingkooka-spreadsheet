@@ -81,7 +81,7 @@ final class StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor ext
     }
 
     @Override
-    protected void visitColumnReferenceRange() {
+    protected void visitColumnRangeReference() {
         this.selection = SpreadsheetSelection.parseColumnRange(this.string);
     }
 
@@ -96,7 +96,7 @@ final class StringToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor ext
     }
 
     @Override
-    protected void visitRowReferenceRange() {
+    protected void visitRowRangeReference() {
         this.selection = SpreadsheetSelection.parseRowRange(this.string);
     }
 

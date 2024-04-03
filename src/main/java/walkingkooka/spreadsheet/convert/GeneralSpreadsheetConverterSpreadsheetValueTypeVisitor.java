@@ -86,7 +86,7 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
-    protected void visitColumnReferenceRange() {
+    protected void visitColumnRangeReference() {
         this.converter = this.mapping.selection;
     }
 
@@ -151,7 +151,7 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
-    protected void visitRowReferenceRange() {
+    protected void visitRowRangeReference() {
         this.converter = this.mapping.selection;
     }
 

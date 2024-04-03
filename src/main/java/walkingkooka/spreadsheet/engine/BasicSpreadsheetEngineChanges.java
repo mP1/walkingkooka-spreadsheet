@@ -442,7 +442,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         return null != left ?
                 Optional.of(
                         left.columnRange(right)
-                                .setRowReferenceRange(
+                                .setRowRangeReference(
                                         top.rowRange(bottom)
                                 )
                 ) :
@@ -598,7 +598,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
                 .forEach(m -> this.batchLabel(m.label()));
 
         repository.rangeToCells()
-                .loadCellReferenceRanges(reference)
+                .loadCellRangeReferences(reference)
                 .forEach(this::batchRange);
     }
 

@@ -167,30 +167,30 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         this.checkEquals(Lists.of(expected), values.get(), () -> "load range " + range);
     }
 
-    // loadCellReferenceRanges.........................................................................................
+    // loadCellRangeReferences.........................................................................................
 
-    default void loadCellReferenceRangesFails(final SpreadsheetCellReference cell) {
-        this.loadCellReferenceRangesFails(this.createStore(), cell);
+    default void loadCellRangeReferencesFails(final SpreadsheetCellReference cell) {
+        this.loadCellRangeReferencesFails(this.createStore(), cell);
     }
 
-    default void loadCellReferenceRangesFails(final SpreadsheetCellRangeStore<V> store,
+    default void loadCellRangeReferencesFails(final SpreadsheetCellRangeStore<V> store,
                                               final SpreadsheetCellReference cell) {
         this.checkEquals(Sets.empty(),
-                this.loadCellReferenceRanges(store, cell),
+                this.loadCellRangeReferences(store, cell),
                 () -> "load cell " + cell + " should have returned no ranges");
     }
 
-    default void loadCellReferenceRangesAndCheck(final SpreadsheetCellRangeStore<V> store,
+    default void loadCellRangeReferencesAndCheck(final SpreadsheetCellRangeStore<V> store,
                                                  final SpreadsheetCellReference cell,
                                                  final SpreadsheetCellRange... ranges) {
         this.checkEquals(Sets.of(ranges),
-                this.loadCellReferenceRanges(store, cell),
+                this.loadCellRangeReferences(store, cell),
                 () -> "load cell reference ranges for " + cell);
     }
 
-    default Set<SpreadsheetCellRange> loadCellReferenceRanges(final SpreadsheetCellRangeStore<V> store,
+    default Set<SpreadsheetCellRange> loadCellRangeReferences(final SpreadsheetCellRangeStore<V> store,
                                                               final SpreadsheetCellReference cell) {
-        final Set<SpreadsheetCellRange> ranges = store.loadCellReferenceRanges(cell);
+        final Set<SpreadsheetCellRange> ranges = store.loadCellRangeReferences(cell);
         assertNotNull(ranges, "ranges");
         return ranges;
     }

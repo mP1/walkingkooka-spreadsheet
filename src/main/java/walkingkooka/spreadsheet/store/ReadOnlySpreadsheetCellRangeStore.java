@@ -88,8 +88,8 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Set<SpreadsheetCellRange> loadCellReferenceRanges(final SpreadsheetCellReference cell) {
-        return store.loadCellReferenceRanges(cell);
+    public Set<SpreadsheetCellRange> loadCellRangeReferences(final SpreadsheetCellReference cell) {
+        return store.loadCellRangeReferences(cell);
     }
 
     @Override

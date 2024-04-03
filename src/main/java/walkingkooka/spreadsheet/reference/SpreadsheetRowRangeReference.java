@@ -62,10 +62,10 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
     /**
      * Creates a {@link SpreadsheetCellRange} combining this row range and the given column range.
      */
-    public SpreadsheetCellRange setColumnReferenceRange(final SpreadsheetColumnRangeReference columnReferenceRange) {
-        checkColumnReferenceRange(columnReferenceRange);
+    public SpreadsheetCellRange setColumnRangeReference(final SpreadsheetColumnRangeReference columnRangeReference) {
+        checkColumnRangeReference(columnRangeReference);
 
-        return columnReferenceRange.setRowReferenceRange(this);
+        return columnRangeReference.setRowRangeReference(this);
     }
 
     public SpreadsheetRowRangeReference setRange(final Range<SpreadsheetRowReference> range) {
