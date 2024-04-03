@@ -18,10 +18,16 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
-public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadataTesting {
+public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadataTesting,
+        TreePrintableTesting {
 
     @Test
     public void testConverter() {
@@ -77,5 +83,36 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testParserContext() {
         METADATA_EN_AU
                 .parserContext(LocalDateTime::now);
+    }
+
+    @Test
+    public void testParseFormula() {
+        this.checkEquals(
+                SpreadsheetFormula.EMPTY.setToken(
+                        Optional.of(
+                                SpreadsheetParserToken.expression(
+                                        Lists.of(
+                                                SpreadsheetParserToken.equalsSymbol(
+                                                        "=",
+                                                        "="
+                                                ),
+                                                SpreadsheetParserToken.number(
+                                                        Lists.of(
+                                                                SpreadsheetParserToken.digits(
+                                                                        "1",
+                                                                        "1"
+                                                                )
+                                                        ),
+                                                        "1"
+                                                )
+                                        ),
+                                        "=1"
+                                )
+                        )
+                ),
+                SpreadsheetMetadataTesting.parseFormula(
+                        "=1"
+                )
+        );
     }
 }
