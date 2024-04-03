@@ -23,6 +23,7 @@ import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -31,6 +32,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -354,6 +356,19 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                 referenceToCell
         );
     }
+
+    // SpreadsheetCellRange.............................................................................................
+
+    /**
+     * {@see SpreadsheetCellRange}
+     */
+    public SpreadsheetCellRange setValue(final Map<SpreadsheetCellReference, ?> value) {
+        return SpreadsheetCellRange.with(
+                this,
+                value
+        );
+    }
+
 
     // navigation.......................................................................................................
 
