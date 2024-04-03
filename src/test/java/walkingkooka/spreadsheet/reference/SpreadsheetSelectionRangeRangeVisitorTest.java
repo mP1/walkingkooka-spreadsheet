@@ -21,11 +21,11 @@ import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetRangeRangeVisitorTest implements ClassTesting<SpreadsheetRangeRangeVisitor<?>> {
+public final class SpreadsheetSelectionRangeRangeVisitorTest implements ClassTesting<SpreadsheetSelectionRangeRangeVisitor<?>> {
 
     @Override
-    public Class<SpreadsheetRangeRangeVisitor<?>> type() {
-        return Cast.to(SpreadsheetRangeRangeVisitor.class);
+    public Class<SpreadsheetSelectionRangeRangeVisitor<?>> type() {
+        return Cast.to(SpreadsheetSelectionRangeRangeVisitor.class);
     }
 
     @Override

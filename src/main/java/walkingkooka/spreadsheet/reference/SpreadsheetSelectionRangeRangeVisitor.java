@@ -26,17 +26,17 @@ import java.util.Objects;
  * A {@link RangeVisitor} used to validate the range is both bounds and they are inclusive. All other forms will
  * throw a {@link IllegalArgumentException}.
  */
-final class SpreadsheetRangeRangeVisitor<S extends SpreadsheetSelection & Comparable<S>> extends RangeVisitor<S> {
+final class SpreadsheetSelectionRangeRangeVisitor<S extends SpreadsheetSelection & Comparable<S>> extends RangeVisitor<S> {
 
     // called by SpreadsheetCellRange
     static <S extends SpreadsheetSelection & Comparable<S>> void check(final Range<S> range) {
         Objects.requireNonNull(range, "range");
 
-        new SpreadsheetRangeRangeVisitor<S>()
+        new SpreadsheetSelectionRangeRangeVisitor<S>()
                 .accept(range);
     }
 
-    private SpreadsheetRangeRangeVisitor() {
+    private SpreadsheetSelectionRangeRangeVisitor() {
         super();
     }
 
