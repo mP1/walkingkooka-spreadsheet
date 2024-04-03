@@ -55,10 +55,10 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         HateosResource<String> {
 
     /**
-     * {@see SpreadsheetCellReferenceCellComparator}.
+     * {@see SpreadsheetCellReferenceComparator}.
      */
     public static Comparator<SpreadsheetCell> cellComparator(final Comparator<SpreadsheetCellReference> comparator) {
-        return SpreadsheetCellReferenceCellComparator.with(comparator);
+        return SpreadsheetCellReferenceComparator.with(comparator);
     }
 
     /**

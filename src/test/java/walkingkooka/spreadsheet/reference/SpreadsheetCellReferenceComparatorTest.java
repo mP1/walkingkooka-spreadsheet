@@ -27,9 +27,9 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 
 import java.util.Comparator;
 
-public final class SpreadsheetCellReferenceCellComparatorTest implements ComparatorTesting2<SpreadsheetCellReferenceCellComparator, SpreadsheetCell>,
-        ClassTesting<SpreadsheetCellReferenceCellComparator>,
-        ToStringTesting<SpreadsheetCellReferenceCellComparator> {
+public final class SpreadsheetCellReferenceComparatorTest implements ComparatorTesting2<SpreadsheetCellReferenceComparator, SpreadsheetCell>,
+        ClassTesting<SpreadsheetCellReferenceComparator>,
+        ToStringTesting<SpreadsheetCellReferenceComparator> {
 
     private final static Comparator<SpreadsheetCellReference> COMPARATOR = SpreadsheetCellRangePath.RLTD.comparator();
 
@@ -47,7 +47,7 @@ public final class SpreadsheetCellReferenceCellComparatorTest implements Compara
                 .setFormula(SpreadsheetFormula.EMPTY);
 
         this.comparatorArraySortAndCheck(
-                SpreadsheetCellReferenceCellComparator.with(
+                SpreadsheetCellReferenceComparator.with(
                         SpreadsheetCellRangePath.LRTD.comparator()
                 ),
                 a1,
@@ -75,7 +75,7 @@ public final class SpreadsheetCellReferenceCellComparatorTest implements Compara
                 .setFormula(SpreadsheetFormula.EMPTY);
 
         this.comparatorArraySortAndCheck(
-                SpreadsheetCellReferenceCellComparator.with(
+                SpreadsheetCellReferenceComparator.with(
                         SpreadsheetCellRangePath.RLTD.comparator()
                 ),
                 a1,
@@ -95,15 +95,15 @@ public final class SpreadsheetCellReferenceCellComparatorTest implements Compara
     }
 
     @Override
-    public SpreadsheetCellReferenceCellComparator createComparator() {
-        return SpreadsheetCellReferenceCellComparator.with(
+    public SpreadsheetCellReferenceComparator createComparator() {
+        return SpreadsheetCellReferenceComparator.with(
                 COMPARATOR
         );
     }
 
     @Override
-    public Class<SpreadsheetCellReferenceCellComparator> type() {
-        return SpreadsheetCellReferenceCellComparator.class;
+    public Class<SpreadsheetCellReferenceComparator> type() {
+        return SpreadsheetCellReferenceComparator.class;
     }
 
     @Override
