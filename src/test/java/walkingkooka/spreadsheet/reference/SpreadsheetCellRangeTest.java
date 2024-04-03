@@ -34,6 +34,7 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -44,6 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellRange>
         implements ComparableTesting2<SpreadsheetCellRange>,
+        CanReplaceReferencesTesting<SpreadsheetCellRange>,
         IterableTesting<SpreadsheetCellRange, SpreadsheetCellReference> {
 
     private final static int COLUMN1 = 10;
@@ -551,6 +553,136 @@ public final class SpreadsheetCellRangeTest extends SpreadsheetCellReferenceOrRa
                 2,
                 SpreadsheetSelection.parseCellRange("B4:E7")
         );
+    }
+
+    // CanReferenceReplace..............................................................................................
+
+    @Test
+    public void testReplaceReferenceEmptyBeginFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createReplaceReference()
+                        .replaceReferences(
+                                (r) -> Optional.empty()
+                        )
+        );
+    }
+
+    @Test
+    public void testReplaceReferenceEmptyEndFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createReplaceReference()
+                        .replaceReferences(
+                                (r) -> Optional.ofNullable(
+                                        r.toString().equals("B2") ?
+                                                r :
+                                                null
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testReplaceReferenceSame() {
+        this.replaceReferencesAndCheck(
+                this.createReplaceReference(),
+                r -> Optional.of(r)
+        );
+    }
+
+    @Test
+    public void testReplaceReferenceChange() {
+        this.replaceReferencesAndCheck(
+                "B2:C3",
+                "B2",
+                "A1",
+                "C3",
+                "B2",
+                "A1:B2"
+        );
+    }
+
+    @Test
+    public void testReplaceReferenceChange2() {
+        this.replaceReferencesAndCheck(
+                "B2:C3",
+                "B2",
+                "D4",
+                "C3",
+                "E5",
+                "D4:E5"
+        );
+    }
+
+    @Test
+    public void testReplaceReferenceSwap() {
+        this.replaceReferencesAndCheck(
+                "B2:C3",
+                "B2",
+                "D4",
+                "C3",
+                "A1",
+                "A1:D4"
+        );
+    }
+
+    @Test
+    public void testReplaceReferenceSwap2() {
+        this.replaceReferencesAndCheck(
+                "B2:C3",
+                "B2",
+                "D1",
+                "C3",
+                "A5",
+                "A1:D5"
+        );
+    }
+
+    private void replaceReferencesAndCheck(final String range,
+                                           final String begin,
+                                           final String beginReplacement,
+                                           final String end,
+                                           final String endReplacement,
+                                           final String expected) {
+        this.replaceReferencesAndCheck(
+                SpreadsheetSelection.parseCellRange(range),
+                SpreadsheetSelection.parseCell(begin),
+                SpreadsheetSelection.parseCell(beginReplacement),
+                SpreadsheetSelection.parseCell(end),
+                SpreadsheetSelection.parseCell(endReplacement),
+                SpreadsheetSelection.parseCellRange(expected)
+        );
+    }
+
+    private void replaceReferencesAndCheck(final SpreadsheetCellRange range,
+                                           final SpreadsheetCellReference begin,
+                                           final SpreadsheetCellReference beginReplacement,
+                                           final SpreadsheetCellReference end,
+                                           final SpreadsheetCellReference endReplacement,
+                                           final SpreadsheetCellRange expected) {
+        this.replaceReferencesAndCheck(
+                range,
+                (r) -> {
+                    if (r.equals(begin)) {
+                        return Optional.of(
+                                beginReplacement
+                        );
+                    }
+                    if (r.equals(end)) {
+                        return Optional.of(
+                                endReplacement
+                        );
+                    }
+                    throw new IllegalArgumentException(r.toString());
+                },
+                expected
+        );
+    }
+
+    @Override
+    public SpreadsheetCellRange createReplaceReference() {
+        return SpreadsheetCellRange.parseCellRange("B2:C3");
     }
 
     // toScalar.........................................................................................................
