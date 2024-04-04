@@ -32,7 +32,6 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -362,7 +361,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     /**
      * {@see SpreadsheetCellRange}
      */
-    public SpreadsheetCellRange setValue(final Map<SpreadsheetCellReference, ?> value) {
+    public SpreadsheetCellRange setValue(final Set<SpreadsheetCell> value) {
         return SpreadsheetCellRange.with(
                 this,
                 value

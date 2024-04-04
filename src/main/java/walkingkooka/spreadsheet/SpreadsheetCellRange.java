@@ -18,16 +18,12 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Value;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -37,16 +33,15 @@ import java.util.stream.Collectors;
 /**
  * A container for cells within a {@link SpreadsheetCellRangeReference}.
  */
-public final class SpreadsheetCellRange implements Value<Map<SpreadsheetCellReference, ?>>,
+public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         TreePrintable {
 
     public static SpreadsheetCellRange with(final SpreadsheetCellRangeReference range,
-                                            final Map<SpreadsheetCellReference, ?> value) {
+                                            final Set<SpreadsheetCell> value) {
         checkRange(range);
         Objects.requireNonNull(value, "value");
 
-        final Map<SpreadsheetCellReference, ?> copy = Maps.immutable(value);
-
+        final Set<SpreadsheetCell> copy = Sets.immutable(value);
         checkValues(range, copy);
 
         return new SpreadsheetCellRange(
@@ -56,7 +51,7 @@ public final class SpreadsheetCellRange implements Value<Map<SpreadsheetCellRefe
     }
 
     private SpreadsheetCellRange(final SpreadsheetCellRangeReference range,
-                                 final Map<SpreadsheetCellReference, ?> value) {
+                                 final Set<SpreadsheetCell> value) {
         this.range = range;
         this.value = value;
     }
@@ -74,7 +69,7 @@ public final class SpreadsheetCellRange implements Value<Map<SpreadsheetCellRefe
     }
 
     private SpreadsheetCellRange setRange0(final SpreadsheetCellRangeReference range) {
-        final Map<SpreadsheetCellReference, ?> value = this.value;
+        final Set<SpreadsheetCell> value = this.value;
 
         if (false == range.containsAll(this.range)) {
             checkValues(
@@ -96,14 +91,14 @@ public final class SpreadsheetCellRange implements Value<Map<SpreadsheetCellRefe
     }
 
     @Override
-    public Map<SpreadsheetCellReference, ?> value() {
+    public Set<SpreadsheetCell> value() {
         return this.value;
     }
 
-    public SpreadsheetCellRange setValue(final Map<SpreadsheetCellReference, ?> value) {
+    public SpreadsheetCellRange setValue(final Set<SpreadsheetCell> value) {
         checkRange(range);
 
-        final Map<SpreadsheetCellReference, ?> copy = Maps.immutable(value);
+        final Set<SpreadsheetCell> copy = Sets.immutable(value);
         checkValues(this.range, copy);
 
         return this.value.equals(copy) ?
@@ -114,12 +109,12 @@ public final class SpreadsheetCellRange implements Value<Map<SpreadsheetCellRefe
                 );
     }
 
-    private final Map<SpreadsheetCellReference, ?> value;
+    private final Set<SpreadsheetCell> value;
 
     private static void checkValues(final SpreadsheetCellRangeReference range,
-                                    final Map<SpreadsheetCellReference, ?> value) {
-        final Set<SpreadsheetCellReference> outOfBounds = value.keySet()
-                .stream()
+                                    final Set<SpreadsheetCell> value) {
+        final Set<SpreadsheetCellReference> outOfBounds = value.stream()
+                .map(SpreadsheetCell::reference)
                 .filter(c -> false == range.testCell(c))
                 .collect(Collectors.toCollection(Sets::sorted));
 
@@ -169,26 +164,19 @@ public final class SpreadsheetCellRange implements Value<Map<SpreadsheetCellRefe
                                 .value()
         );
 
-        final Map<SpreadsheetCellReference, Object> cellToValue = Maps.sorted();
+        final Set<SpreadsheetCell> movedCells = Sets.sorted();
 
-        for (final Entry<SpreadsheetCellReference, ?> cellAndValue : this.value.entrySet()) {
-            final Optional<SpreadsheetCellReference> maybeCell = mapper.apply(cellAndValue.getKey());
+        for (final SpreadsheetCell cell : this.value) {
+            final Optional<SpreadsheetCellReference> maybeMoved = mapper.apply(cell.reference());
 
             // destination could be out of bounds, ignore those.
-            if (maybeCell.isPresent()) {
-                final SpreadsheetCellReference cell = maybeCell.get();
+            if (maybeMoved.isPresent()) {
+                final SpreadsheetCellReference moved = maybeMoved.get();
 
                 // destination range could be smaller, ignore values outside
-                if (to.testCell(cell)) {
-                    Object value = cellAndValue.getValue();
-                    if (value instanceof CanReplaceReferences) {
-                        final CanReplaceReferences<?> can = (CanReplaceReferences<?>) value;
-                        value = can.replaceReferences(mapper);
-                    }
-
-                    cellToValue.put(
-                            cell,
-                            value
+                if (to.testCell(moved)) {
+                    movedCells.add(
+                            cell.replaceReferences(mapper)
                     );
                 }
             }
@@ -196,7 +184,7 @@ public final class SpreadsheetCellRange implements Value<Map<SpreadsheetCellRefe
 
         return new SpreadsheetCellRange(
                 to,
-                cellToValue
+                movedCells
         );
     }
 
@@ -208,21 +196,8 @@ public final class SpreadsheetCellRange implements Value<Map<SpreadsheetCellRefe
 
         printer.indent();
         {
-            for (final Entry<SpreadsheetCellReference, ?> cellAndValue : this.value.entrySet()) {
-                printer.println(
-                        cellAndValue.getKey()
-                                .toString()
-                );
-
-                printer.indent();
-                {
-                    TreePrintable.printTreeOrToString(
-                            cellAndValue.getValue(),
-                            printer
-                    );
-                    printer.lineStart();
-                }
-                printer.outdent();
+            for (final SpreadsheetCell cell : this.value) {
+                cell.printTree(printer);
             }
         }
         printer.outdent();
