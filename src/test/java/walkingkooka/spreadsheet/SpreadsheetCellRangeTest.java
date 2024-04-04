@@ -19,11 +19,9 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -31,12 +29,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.text.TextAlign;
-import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
-import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -73,10 +70,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
     private final static SpreadsheetCellReference C3 = SpreadsheetSelection.parseCell("C3");
 
-    private final static Map<SpreadsheetCellReference, Object> VALUE = Maps.of(
-            SpreadsheetSelection.A1,
+    private final static Set<SpreadsheetCell> VALUE = Sets.of(
             A1_CELL,
-            B2,
             B2_CELL
     );
 
@@ -111,19 +106,16 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 IllegalArgumentException.class,
                 () -> SpreadsheetCellRange.with(
                         RANGE,
-                        Maps.of(
-                                SpreadsheetSelection.A1,
+                        Sets.of(
                                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                                c3,
                                 c3.setFormula(SpreadsheetFormula.EMPTY),
-                                d4,
                                 d4.setFormula(SpreadsheetFormula.EMPTY)
                         )
                 )
         );
 
         this.checkEquals(
-                "Found 2 cells out of range A1:B2 got $C$3, D4",
+                "Found 2 cells out of range A1:B2 got C3, D4",
                 thrown.getMessage(),
                 "message"
         );
@@ -242,10 +234,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 IllegalArgumentException.class,
                 () -> this.createObject()
                         .setValue(
-                                Maps.of(
-                                        SpreadsheetSelection.A1,
+                                Sets.of(
                                         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                                        c3,
                                         c3.setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
                                 )
                         )
@@ -260,8 +250,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     @Test
     public void testSetValueDifferent() {
         final SpreadsheetCellRange spreadsheetCellRange = this.createObject();
-        final Map<SpreadsheetCellReference, Object> differentValue = Maps.of(
-                SpreadsheetSelection.A1,
+        final Set<SpreadsheetCell> differentValue = Sets.of(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("'different")
                 )
@@ -306,7 +295,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     }
 
     private void checkValue(final SpreadsheetCellRange spreadsheetCellRange,
-                            final Map<SpreadsheetCellReference, Object> value) {
+                            final Set<SpreadsheetCell> value) {
         this.checkEquals(
                 value,
                 spreadsheetCellRange.value()
@@ -352,8 +341,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 this.createObject(),
                 moveTo,
                 moveTo.setValue(
-                        Maps.of(
-                                SpreadsheetSelection.A1,
+                        Sets.of(
                                 A1_CELL
                         )
                 )
@@ -367,13 +355,11 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.moveAndCheck(
                 SpreadsheetCellRange.with(
                         RANGE,
-                        Maps.of(
-                                SpreadsheetSelection.A1,
+                        Sets.of(
                                 SpreadsheetSelection.A1
                                         .setFormula(
                                                 SpreadsheetMetadataTesting.parseFormula("=100+B2")
                                         ),
-                                B2,
                                 B2.setFormula(
                                         SpreadsheetMetadataTesting.parseFormula("=200+B3")
                                 )
@@ -381,12 +367,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 ),
                 moveTo,
                 moveTo.setValue(
-                        Maps.of(
-                                B2,
+                        Sets.of(
                                 B2.setFormula(
                                         SpreadsheetMetadataTesting.parseFormula("=100+C3")
                                 ),
-                                C3,
                                 C3.setFormula(
                                         SpreadsheetMetadataTesting.parseFormula("=200+C4")
                                 )
@@ -402,13 +386,11 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.moveAndCheck(
                 SpreadsheetCellRange.with(
                         RANGE,
-                        Maps.of(
-                                SpreadsheetSelection.A1,
+                        Sets.of(
                                 SpreadsheetSelection.A1
                                         .setFormula(
                                                 SpreadsheetMetadataTesting.parseFormula("=100+B2")
                                         ),
-                                B2,
                                 B2.setFormula(
                                         SpreadsheetMetadataTesting.parseFormula("=200+B3")
                                 )
@@ -416,162 +398,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 ),
                 moveTo,
                 moveTo.setValue(
-                        Maps.of(
-                                B2,
+                        Sets.of(
                                 B2.setFormula(
                                         SpreadsheetMetadataTesting.parseFormula("=100+C3")
                                 )
-                        )
-                )
-        );
-    }
-
-    @Test
-    public void testMoveFormula() {
-        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
-
-        this.moveAndCheck(
-                SpreadsheetCellRange.with(
-                        RANGE,
-                        Maps.of(
-                                SpreadsheetSelection.A1,
-                                SpreadsheetMetadataTesting.parseFormula("=100+B2"),
-                                B2,
-                                SpreadsheetMetadataTesting.parseFormula("=200+B3")
-                        )
-                ),
-                moveTo,
-                moveTo.setValue(
-                        Maps.of(
-                                B2,
-                                SpreadsheetMetadataTesting.parseFormula("=100+C3"),
-                                C3,
-                                SpreadsheetMetadataTesting.parseFormula("=200+C4")
-                        )
-                )
-        );
-    }
-
-    @Test
-    public void testMoveFormatPattern() {
-        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
-
-        final Optional<SpreadsheetFormatPattern> formatPattern1 = Optional.of(
-                SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
-        );
-
-        final Optional<SpreadsheetFormatPattern> formatPattern2 = Optional.empty();
-
-        this.moveAndCheck(
-                SpreadsheetCellRange.with(
-                        RANGE,
-                        Maps.of(
-                                SpreadsheetSelection.A1,
-                                formatPattern1,
-                                B2,
-                                formatPattern2
-                        )
-                ),
-                moveTo,
-                moveTo.setValue(
-                        Maps.of(
-                                B2,
-                                formatPattern1,
-                                C3,
-                                formatPattern2
-                        )
-                )
-        );
-    }
-
-    @Test
-    public void testMoveParsePattern() {
-        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
-
-        final Optional<SpreadsheetParsePattern> parsePattern1 = Optional.of(
-                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-        );
-
-        final Optional<SpreadsheetParsePattern> parsePattern2 = Optional.empty();
-
-        this.moveAndCheck(
-                SpreadsheetCellRange.with(
-                        RANGE,
-                        Maps.of(
-                                SpreadsheetSelection.A1,
-                                parsePattern1,
-                                B2,
-                                parsePattern2
-                        )
-                ),
-                moveTo,
-                moveTo.setValue(
-                        Maps.of(
-                                B2,
-                                parsePattern1,
-                                C3,
-                                parsePattern2
-                        )
-                )
-        );
-    }
-
-    @Test
-    public void testMoveStyle() {
-        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
-
-        final TextStyle style1 = TextStyle.EMPTY.set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT);
-        final TextStyle style2 = TextStyle.EMPTY;
-
-        this.moveAndCheck(
-                SpreadsheetCellRange.with(
-                        RANGE,
-                        Maps.of(
-                                SpreadsheetSelection.A1,
-                                style1,
-                                B2,
-                                style2
-                        )
-                ),
-                moveTo,
-                moveTo.setValue(
-                        Maps.of(
-                                B2,
-                                style1,
-                                C3,
-                                style2
-                        )
-                )
-        );
-    }
-
-    @Test
-    public void testMoveFormattedValue() {
-        final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
-
-        final Optional<TextNode> formattedValue1 = Optional.of(
-                TextNode.text("'Hello")
-        );
-
-        final Optional<TextNode> formattedValue2 = Optional.empty();
-
-        this.moveAndCheck(
-                SpreadsheetCellRange.with(
-                        RANGE,
-                        Maps.of(
-                                SpreadsheetSelection.A1,
-                                formattedValue1,
-                                B2,
-                                formattedValue2
-                        )
-                ),
-                moveTo,
-                moveTo.setValue(
-                        Maps.of(
-                                B2,
-                                formattedValue1,
-                                C3,
-                                formattedValue2
                         )
                 )
         );
@@ -601,22 +431,20 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.treePrintAndCheck(
                 this.createObject(),
                 "A1:B2\n" +
-                        "  A1\n" +
-                        "    Cell A1\n" +
-                        "      Formula\n" +
-                        "        text: \"=1\"\n" +
-                        "  B2\n" +
-                        "    Cell B2\n" +
-                        "      Formula\n" +
-                        "        text: \"=22\"\n" +
-                        "      formatPattern:\n" +
-                        "        text-format-pattern\n" +
-                        "          \"@\"\n" +
-                        "      parsePattern:\n" +
-                        "        number-parse-pattern\n" +
-                        "          \"#.##\"\n" +
-                        "      TextStyle\n" +
-                        "        text-align=LEFT (walkingkooka.tree.text.TextAlign)\n"
+                        "  Cell A1\n" +
+                        "    Formula\n" +
+                        "      text: \"=1\"\n" +
+                        "  Cell B2\n" +
+                        "    Formula\n" +
+                        "      text: \"=22\"\n" +
+                        "    formatPattern:\n" +
+                        "      text-format-pattern\n" +
+                        "        \"@\"\n" +
+                        "    parsePattern:\n" +
+                        "      number-parse-pattern\n" +
+                        "        \"#.##\"\n" +
+                        "    TextStyle\n" +
+                        "      text-align=LEFT (walkingkooka.tree.text.TextAlign)\n"
         );
     }
 
