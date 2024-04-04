@@ -469,6 +469,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 .set(
                         propertyName,
                         value
+                ).setName(
+                        JsonPropertyName.with(
+                                this.reference()
+                                        .toString()
+                        )
                 );
     }
 

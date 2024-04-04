@@ -1177,12 +1177,25 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(formula)
                 .setFormatPattern(formatPattern);
 
+        final JsonNode patch = cell.formulaPatch(
+                this.jsonNodeMarshallContext()
+        );
+
+        this.checkEquals(
+                patch,
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=1+2\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
+
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                         .setFormatPattern(formatPattern),
-                cell.formulaPatch(
-                        this.jsonNodeMarshallContext()
-                ),
+                patch,
                 cell
         );
     }
@@ -1204,12 +1217,25 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .setFormatPattern(formatPattern);
 
+        final JsonNode patch = cell.formatPatternPatch(
+                this.jsonNodeMarshallContext()
+        );
+        this.checkEquals(
+                patch,
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"format-pattern\": {\n" +
+                        "      \"type\": \"spreadsheet-date-format-pattern\",\n" +
+                        "      \"value\": \"dd/mm/yyyy\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
+
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                         .setFormatPattern(formatPattern),
-                cell.formatPatternPatch(
-                        this.jsonNodeMarshallContext()
-                ),
+                patch,
                 cell
         );
     }
@@ -1220,12 +1246,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .setFormatPattern(formatPattern);
 
+        final JsonNode patch = cell.formatPatternPatch(
+                this.jsonNodeMarshallContext()
+        );
+        this.checkEquals(
+                patch,
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"format-pattern\": null\n" +
+                        "  }\n" +
+                        "}"
+        );
+
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                         .setFormatPattern(formatPattern),
-                cell.formatPatternPatch(
-                        this.jsonNodeMarshallContext()
-                ),
+                patch,
                 cell
         );
     }
@@ -1247,12 +1283,25 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .setParsePattern(parsePattern);
 
+        final JsonNode patch = cell.parsePatternPatch(
+                this.jsonNodeMarshallContext()
+        );
+        this.checkEquals(
+                patch,
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"parse-pattern\": {\n" +
+                        "      \"type\": \"spreadsheet-date-parse-pattern\",\n" +
+                        "      \"value\": \"dd/mm/yyyy\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
+
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                         .setParsePattern(parsePattern),
-                cell.parsePatternPatch(
-                        this.jsonNodeMarshallContext()
-                ),
+                patch,
                 cell
         );
     }
@@ -1263,12 +1312,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .setParsePattern(parsePattern);
 
+        final JsonNode patch = cell.parsePatternPatch(
+                this.jsonNodeMarshallContext()
+        );
+        this.checkEquals(
+                patch,
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"parse-pattern\": null\n" +
+                        "  }\n" +
+                        "}"
+        );
+
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                         .setParsePattern(parsePattern),
-                cell.parsePatternPatch(
-                        this.jsonNodeMarshallContext()
-                ),
+                patch,
                 cell
         );
     }
@@ -1288,7 +1347,28 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 TextStylePropertyName.TEXT_ALIGN,
                 TextAlign.CENTER
         );
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2"));
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1+2")
+        ).setStyle(
+                TextStyle.EMPTY.set(
+                        TextStylePropertyName.TEXT_ALIGN,
+                        TextAlign.CENTER
+                )
+        );
+
+        final JsonNode patch = cell.stylePatch(
+                this.jsonNodeMarshallContext()
+        );
+        this.checkEquals(
+                patch,
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"style\": {\n" +
+                        "      \"text-align\": \"CENTER\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
 
         this.patchAndCheck(
                 cell.setStyle(
@@ -1297,10 +1377,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                                 TextAlign.CENTER
                         )
                 ),
-                cell.stylePatch(
-                        this.jsonNodeMarshallContext()
-                ),
+                patch,
                 cell.setStyle(style)
+        );
+    }
+
+    private void checkEquals(final JsonNode node,
+                             final String expected) {
+        this.checkEquals(
+                JsonNode.parse(expected),
+                JsonNode.object()
+                        .appendChild(node)
         );
     }
 
