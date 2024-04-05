@@ -23,7 +23,7 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceLoadStoreException;
+import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceMissingStoreException;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
@@ -134,7 +134,7 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
 
         this.translateAndCheck(
-                new SpreadsheetExpressionReferenceLoadStoreException(
+                new SpreadsheetExpressionReferenceMissingStoreException(
                         MESSAGE,
                         cell
                 ),
