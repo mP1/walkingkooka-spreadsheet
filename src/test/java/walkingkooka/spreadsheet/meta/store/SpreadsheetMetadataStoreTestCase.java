@@ -129,10 +129,14 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(c);
 
         //noinspection OptionalGetWithoutIsPresent
-        this.valuesAndCheck(store,
-                a.id().get(),
+        this.valuesAndCheck(
+                store,
+                0,
                 3,
-                a, b, c);
+                a,
+                b,
+                c
+        );
     }
 
     @Test
@@ -150,9 +154,13 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(d);
 
         //noinspection OptionalGetWithoutIsPresent
-        this.valuesAndCheck(store,
-                b.id().get(),
-                2, b, c);
+        this.valuesAndCheck(
+                store,
+                1,
+                2,
+                b,
+                c
+        );
     }
 
     final SpreadsheetMetadata metadata(final long id, final String creator) {

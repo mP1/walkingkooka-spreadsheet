@@ -92,7 +92,7 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
     }
 
     @Override
-    public List<SpreadsheetRow> values(final SpreadsheetRowReference from,
+    public List<SpreadsheetRow> values(final int from,
                                        final int count) {
         return this.store.values(from, count);
     }

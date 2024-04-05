@@ -74,7 +74,8 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public List<List<V>> values(final SpreadsheetCellRangeReference from, final int count) {
+    public List<List<V>> values(final int from,
+                                final int count) {
         return store.values(from, count);
     }
 

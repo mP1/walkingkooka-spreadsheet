@@ -155,10 +155,14 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(store,
-                a.reference(),
+        this.valuesAndCheck(
+                store,
+                0,
                 3,
-                a, b, c);
+                a,
+                b,
+                c
+        );
     }
 
     @Test
@@ -177,9 +181,10 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
 
         this.valuesAndCheck(
                 store,
-                b.reference(),
+                1,
                 2,
-                b, c
+                b,
+                c
         );
     }
 

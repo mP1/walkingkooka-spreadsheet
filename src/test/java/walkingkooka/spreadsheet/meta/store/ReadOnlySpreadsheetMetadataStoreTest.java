@@ -116,10 +116,14 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(ReadOnlySpreadsheetMetadataStore.with(store),
-                a.id().get(),
+        this.valuesAndCheck(
+                ReadOnlySpreadsheetMetadataStore.with(store),
+                0,
                 3,
-                a, b, c);
+                a,
+                b,
+                c
+        );
     }
 
     @Override

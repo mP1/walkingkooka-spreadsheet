@@ -340,7 +340,14 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(c, hi);
 
         //noinspection unchecked
-        this.valuesAndCheck(store, a, 3, f, g, hi);
+        this.valuesAndCheck(
+                store,
+                0,
+                3,
+                f,
+                g,
+                hi
+        );
     }
 
     @Test
@@ -360,7 +367,14 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(c, hi);
 
         //noinspection unchecked
-        this.valuesAndCheck(store, a, 3, f, g, hi);
+        this.valuesAndCheck(
+                store,
+                0,
+                3,
+                f,
+                g,
+                hi
+        );
     }
 
     @Test
@@ -383,7 +397,13 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(d, i);
 
         //noinspection unchecked
-        this.valuesAndCheck(store, b, 2, g, h);
+        this.valuesAndCheck(
+                store,
+                1,
+                2,
+                g,
+                h
+        );
     }
 
     @Test
@@ -402,7 +422,12 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadReferredAndCheck(store, a1); // a1 --> nothing
 
         //noinspection unchecked
-        this.valuesAndCheck(store, a1, 2, Sets.of(b1));
+        this.valuesAndCheck(
+                store,
+                0,
+                2,
+                Sets.of(b1)
+        );
     }
 
     // saveReference ......................................................................................

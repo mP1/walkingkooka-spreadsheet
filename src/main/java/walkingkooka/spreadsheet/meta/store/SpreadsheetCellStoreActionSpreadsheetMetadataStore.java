@@ -166,10 +166,10 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
     }
 
     @Override
-    public List<SpreadsheetMetadata> values(final SpreadsheetId spreadsheetId,
+    public List<SpreadsheetMetadata> values(final int from,
                                             final int count) {
         return this.metadataStore.values(
-                spreadsheetId,
+                from,
                 count
         );
     }

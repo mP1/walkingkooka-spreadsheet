@@ -307,9 +307,12 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(c);
 
         this.valuesAndCheck(store,
-                a.reference(),
+                0,
                 3,
-                a, b, c);
+                a,
+                b,
+                c
+        );
     }
 
     @Test
@@ -327,9 +330,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(d);
 
         this.valuesAndCheck(store,
-                b.reference(),
+                1,
                 2,
-                b, c);
+                b,
+                c
+        );
     }
 
     @Override

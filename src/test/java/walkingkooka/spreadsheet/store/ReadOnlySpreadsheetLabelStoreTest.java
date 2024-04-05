@@ -111,7 +111,14 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(ReadOnlySpreadsheetLabelStore.with(store), a.label(), 3, a, b, c);
+        this.valuesAndCheck(
+                ReadOnlySpreadsheetLabelStore.with(store),
+                0,
+                3,
+                a,
+                b,
+                c
+        );
     }
 
     @Override

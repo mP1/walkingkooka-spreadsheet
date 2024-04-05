@@ -273,7 +273,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public List<SpreadsheetCell> values(final SpreadsheetCellReference from,
+    public List<SpreadsheetCell> values(final int from,
                                         final int count) {
         return this.store.values(from, count);
     }
