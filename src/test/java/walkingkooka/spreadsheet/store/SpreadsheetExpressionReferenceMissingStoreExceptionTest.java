@@ -23,24 +23,24 @@ import walkingkooka.reflect.StandardThrowableTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionReference;
 
-public final class SpreadsheetExpressionReferenceLoadStoreExceptionTest implements StandardThrowableTesting<SpreadsheetExpressionReferenceLoadStoreException> {
+public final class SpreadsheetExpressionReferenceMissingStoreExceptionTest implements StandardThrowableTesting<SpreadsheetExpressionReferenceMissingStoreException> {
 
     private final static ExpressionReference EXPRESSION_REFERENCE = new FakeExpressionReference() {
     };
 
     @Override
-    public SpreadsheetExpressionReferenceLoadStoreException createThrowable(final String message) {
-        return new SpreadsheetExpressionReferenceLoadStoreException(message, EXPRESSION_REFERENCE);
+    public SpreadsheetExpressionReferenceMissingStoreException createThrowable(final String message) {
+        return new SpreadsheetExpressionReferenceMissingStoreException(message, EXPRESSION_REFERENCE);
     }
 
     @Override
-    public SpreadsheetExpressionReferenceLoadStoreException createThrowable(final String message, final Throwable cause) {
-        return new SpreadsheetExpressionReferenceLoadStoreException(message, EXPRESSION_REFERENCE, cause);
+    public SpreadsheetExpressionReferenceMissingStoreException createThrowable(final String message, final Throwable cause) {
+        return new SpreadsheetExpressionReferenceMissingStoreException(message, EXPRESSION_REFERENCE, cause);
     }
 
     @Override
-    public Class<SpreadsheetExpressionReferenceLoadStoreException> type() {
-        return SpreadsheetExpressionReferenceLoadStoreException.class;
+    public Class<SpreadsheetExpressionReferenceMissingStoreException> type() {
+        return SpreadsheetExpressionReferenceMissingStoreException.class;
     }
 
     @Override
