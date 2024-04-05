@@ -103,7 +103,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     }
 
     @Override
-    public List<SpreadsheetMetadata> values(final SpreadsheetId from,
+    public List<SpreadsheetMetadata> values(final int from,
                                             final int count) {
         return this.store.values(from, count);
     }

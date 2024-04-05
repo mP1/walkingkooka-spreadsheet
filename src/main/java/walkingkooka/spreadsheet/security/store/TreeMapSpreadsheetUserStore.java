@@ -87,7 +87,7 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     }
 
     @Override
-    public List<User> values(final UserId from,
+    public List<User> values(final int from,
                              final int count) {
         return this.store.values(from, count);
     }
@@ -103,7 +103,7 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
 
     @Override
     public Optional<User> loadWithEmail(final EmailAddress email) {
-        return this.store.values(UserId.with(0), Integer.MAX_VALUE)
+        return this.store.all()
                 .stream()
                 .filter(u -> email.equals(u.email()))
                 .findFirst();

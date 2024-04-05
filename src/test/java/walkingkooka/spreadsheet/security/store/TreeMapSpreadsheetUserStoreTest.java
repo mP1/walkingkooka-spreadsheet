@@ -140,10 +140,14 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(store,
-                a.id().get(),
+        this.valuesAndCheck(
+                store,
+                0,
                 3,
-                a, b, c);
+                a,
+                b,
+                c
+        );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -161,10 +165,13 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
         store.save(c);
         store.save(d);
 
-        this.valuesAndCheck(store,
-                b.id().get(),
+        this.valuesAndCheck(
+                store,
+                1,
                 2,
-                b, c);
+                b,
+                c
+        );
     }
 
     @Test

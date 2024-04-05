@@ -298,7 +298,7 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
     @Override
     public Set<SpreadsheetCellRangeReference> ids(final int from,
                                                   final int count) {
-        Store.checkFromAndTo(from, count);
+        Store.checkFromAndCount(from, count);
 
         final Set<SpreadsheetCellRangeReference> ids = Sets.ordered();
         int i = 0;
@@ -321,28 +321,28 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
     }
 
     @Override
-    public List<List<V>> values(final SpreadsheetCellRangeReference from,
+    public List<List<V>> values(final int from,
                                 final int count) {
-        Store.checkFromAndToIds(from, count);
+        Store.checkFromAndCount(from, count);
 
         final List<List<V>> values = Lists.array();
-        boolean copy = false;
+        int i = 0;
 
         Exit:
 //
         for (final TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
             for (final SpreadsheetCellRangeReference range : entry.ranges()) {
-                copy = copy | range.equalsIgnoreReferenceKind(from); // doesnt find > parse must be ==
-
-                if (copy) {
-                    if (values.size() == count) {
-                        break Exit;
-                    }
-
+                if (i >= from) {
                     final List<V> v = Lists.array();
                     v.addAll(entry.secondaryCellReferenceToValues.get(range.end()));
                     values.add(v);
+
+                    if (i == count) {
+                        break Exit;
+                    }
                 }
+
+                i++;
             }
         }
 

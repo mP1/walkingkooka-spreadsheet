@@ -112,7 +112,14 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         store.saveReferences(c, hi);
 
         //noinspection unchecked
-        this.valuesAndCheck(ReadOnlySpreadsheetExpressionReferenceStore.with(store), a, 3, f, g, hi);
+        this.valuesAndCheck(
+                ReadOnlySpreadsheetExpressionReferenceStore.with(store),
+                0,
+                3,
+                f,
+                g,
+                hi
+        );
     }
 
     @Test

@@ -90,7 +90,7 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     }
 
     @Override
-    public List<Group> values(final GroupId from,
+    public List<Group> values(final int from,
                               final int count) {
         return this.store.values(from, count);
     }

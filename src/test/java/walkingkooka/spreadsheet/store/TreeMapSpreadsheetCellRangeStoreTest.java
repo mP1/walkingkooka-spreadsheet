@@ -302,7 +302,14 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE2A, VALUE3);
 
         //noinspection unchecked
-        this.valuesAndCheck(store, RANGE1A, 3, Lists.of(VALUE1), Lists.of(VALUE2, VALUE2B), Lists.of(VALUE3));
+        this.valuesAndCheck(
+                store,
+                0,
+                3,
+                Lists.of(VALUE1),
+                Lists.of(VALUE2, VALUE2B),
+                Lists.of(VALUE3)
+        );
     }
 
     @Test
@@ -315,7 +322,14 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE2A, VALUE3);
 
         //noinspection unchecked
-        this.valuesAndCheck(store, RANGE1AABSOLUTE, 3, Lists.of(VALUE1), Lists.of(VALUE2, VALUE2B), Lists.of(VALUE3));
+        this.valuesAndCheck(
+                store,
+                0,
+                3,
+                Lists.of(VALUE1),
+                Lists.of(VALUE2, VALUE2B),
+                Lists.of(VALUE3)
+        );
     }
 
     @Test
@@ -328,7 +342,14 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE2A, VALUE3);
 
         //noinspection unchecked
-        this.valuesAndCheck(store, RANGE1A, 3, Lists.of(VALUE1), Lists.of(VALUE2, VALUE2B), Lists.of(VALUE3));
+        this.valuesAndCheck(
+                store,
+                0,
+                3,
+                Lists.of(VALUE1),
+                Lists.of(VALUE2, VALUE2B),
+                Lists.of(VALUE3)
+        );
     }
 
     @Test
@@ -342,7 +363,13 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE2B, VALUE4); // 2
 
         //noinspection unchecked
-        this.valuesAndCheck(store, RANGE1B, 2, Lists.of(VALUE2, VALUE2B), Lists.of(VALUE4));
+        this.valuesAndCheck(
+                store,
+                1,
+                2,
+                Lists.of(VALUE2, VALUE2B),
+                Lists.of(VALUE4)
+        );
     }
 
     // load cell reference ranges....................................................................................

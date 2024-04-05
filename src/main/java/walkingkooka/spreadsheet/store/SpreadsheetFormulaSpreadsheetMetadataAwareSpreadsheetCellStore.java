@@ -211,9 +211,14 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
-    public List<SpreadsheetCell> values(final SpreadsheetCellReference cellReference,
+    public List<SpreadsheetCell> values(final int from,
                                         final int count) {
-        return this.fixFormulaTextList(this.store.values(cellReference, count));
+        return this.fixFormulaTextList(
+                this.store.values(
+                        from,
+                        count
+                )
+        );
     }
 
     @Override

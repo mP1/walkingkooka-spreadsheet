@@ -80,7 +80,8 @@ final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore
     }
 
     @Override
-    public List<SpreadsheetMetadata> values(final SpreadsheetId from, final int count) {
+    public List<SpreadsheetMetadata> values(final int from,
+                                            final int count) {
         return this.store.values(from, count);
     }
 

@@ -151,10 +151,14 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(store,
-                a.reference(),
+        this.valuesAndCheck(
+                store,
+                0,
                 3,
-                a, b, c);
+                a,
+                b,
+                c
+        );
     }
 
     @Test
@@ -171,10 +175,13 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         store.save(c);
         store.save(d);
 
-        this.valuesAndCheck(store,
-                b.reference(),
+        this.valuesAndCheck(
+                store,
+                1,
                 2,
-                b, c);
+                b,
+                c
+        );
     }
 
     @Override
