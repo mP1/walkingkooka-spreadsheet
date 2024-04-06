@@ -41,6 +41,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -294,21 +295,27 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
      */
     public Set<SpreadsheetColumnReference> columns() {
         if (null == this.columns) {
-            final Set<SpreadsheetColumnReference> columns = Sets.sorted();
-
-            for (final SpreadsheetCellRangeReference range : this.cellRanges()) {
-                for (final SpreadsheetCellReference cell : range) {
-                    columns.add(cell.column());
-                }
-            }
-
-            this.columns = Sets.readOnly(columns);
+            this.columns = this.extract(SpreadsheetCellReference::column);
         }
 
         return this.columns;
     }
 
     private Set<SpreadsheetColumnReference> columns;
+
+    private <T extends SpreadsheetSelection> Set<T> extract(final Function<SpreadsheetCellReference, T> mapper) {
+        final Set<T> selections = Sets.sorted();
+
+        for (final SpreadsheetCellRangeReference range : this.cellRanges()) {
+            for (final SpreadsheetCellReference cell : range) {
+                selections.add(
+                        mapper.apply(cell)
+                );
+            }
+        }
+
+        return Sets.readOnly(selections);
+    }
 
     // Predicate........................................................................................................
 
