@@ -22,12 +22,14 @@ import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.iterable.IterableTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -36,6 +38,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -1119,6 +1122,82 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
         this.iterateAndCheck(
                 windows.cells(selection),
                 cells
+        );
+    }
+
+    // columns..........................................................................................................
+
+    @Test
+    public void testColumnEmpty() {
+        this.columnsAndCheck(
+                SpreadsheetViewportWindows.EMPTY
+        );
+    }
+
+    @Test
+    public void testColumnOneRange() {
+        this.columnsAndCheck(
+                "A1:B2",
+                "A",
+                "B"
+        );
+    }
+
+    @Test
+    public void testColumnSeveralRanges() {
+        this.columnsAndCheck(
+                "A1:B2,C1:D2",
+                "A",
+                "B",
+                "C",
+                "D"
+        );
+    }
+
+    @Test
+    public void testColumnSeveralRanges2() {
+        this.columnsAndCheck(
+                "A1:B2,A3:B4,C1:D4",
+                "A",
+                "B",
+                "C",
+                "D"
+        );
+    }
+
+    @Test
+    public void testColumnsCached() {
+        final SpreadsheetViewportWindows windows = SpreadsheetViewportWindows.parse("A1:B2,C3:D4");
+        assertSame(
+                windows.columns(),
+                windows.columns()
+        );
+    }
+
+    private void columnsAndCheck(final String windows,
+                                 final String... columns) {
+        this.columnsAndCheck(
+                SpreadsheetViewportWindows.parse(windows),
+                Arrays.stream(columns)
+                        .map(SpreadsheetSelection::parseColumn)
+                        .toArray(SpreadsheetColumnReference[]::new)
+        );
+    }
+
+    private void columnsAndCheck(final SpreadsheetViewportWindows windows,
+                                 final SpreadsheetColumnReference... columns) {
+        this.columnsAndCheck(
+                windows,
+                Lists.of(columns)
+        );
+    }
+
+    private void columnsAndCheck(final SpreadsheetViewportWindows windows,
+                                 final List<SpreadsheetColumnReference> columns) {
+        this.checkEquals(
+                columns,
+                windows.columns(),
+                () -> windows.toString()
         );
     }
 
