@@ -220,6 +220,19 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
 
     // Iterable.........................................................................................................
 
+    /**
+     * Returns an {@link Iterator} which returns all the cells in all the {@link #cellRanges} within this
+     * {@link SpreadsheetViewportWindows}.
+     * <pre>
+     * A1:A3
+     * ->
+     * A1, A2, A3
+     *
+     * A1,A4:A6
+     * ->
+     * A1, A4, A5, A6
+     * </pre>
+     */
     @Override
     public Iterator<SpreadsheetCellReference> iterator() {
         final Set<SpreadsheetCellRangeReference> cellRanges = this.cellRanges;
