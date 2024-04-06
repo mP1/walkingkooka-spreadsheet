@@ -303,6 +303,21 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
 
     private Set<SpreadsheetColumnReference> columns;
 
+    // rows..........................................................................................................
+
+    /**
+     * Returns all the rows in this window.
+     */
+    public Set<SpreadsheetRowReference> rows() {
+        if (null == this.rows) {
+            this.rows = this.extract(SpreadsheetCellReference::row);
+        }
+
+        return this.rows;
+    }
+
+    private Set<SpreadsheetRowReference> rows;
+
     private <T extends SpreadsheetSelection> Set<T> extract(final Function<SpreadsheetCellReference, T> mapper) {
         final Set<T> selections = Sets.sorted();
 
