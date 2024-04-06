@@ -287,6 +287,29 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
         );
     }
 
+    // columns..........................................................................................................
+
+    /**
+     * Returns all the columns in this window.
+     */
+    public Set<SpreadsheetColumnReference> columns() {
+        if (null == this.columns) {
+            final Set<SpreadsheetColumnReference> columns = Sets.sorted();
+
+            for (final SpreadsheetCellRangeReference range : this.cellRanges()) {
+                for (final SpreadsheetCellReference cell : range) {
+                    columns.add(cell.column());
+                }
+            }
+
+            this.columns = Sets.readOnly(columns);
+        }
+
+        return this.columns;
+    }
+
+    private Set<SpreadsheetColumnReference> columns;
+
     // Predicate........................................................................................................
 
     /**
