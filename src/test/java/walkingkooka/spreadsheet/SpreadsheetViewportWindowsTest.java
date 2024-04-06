@@ -30,6 +30,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -1197,6 +1198,82 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
         this.checkEquals(
                 columns,
                 windows.columns(),
+                () -> windows.toString()
+        );
+    }
+
+    // rows..........................................................................................................
+
+    @Test
+    public void testRowEmpty() {
+        this.rowsAndCheck(
+                SpreadsheetViewportWindows.EMPTY
+        );
+    }
+
+    @Test
+    public void testRowOneRange() {
+        this.rowsAndCheck(
+                "A1:B2",
+                "1",
+                "2"
+        );
+    }
+
+    @Test
+    public void testRowSeveralRanges() {
+        this.rowsAndCheck(
+                "A1:B2,C3:D4",
+                "1",
+                "2",
+                "3",
+                "4"
+        );
+    }
+
+    @Test
+    public void testRowSeveralRanges2() {
+        this.rowsAndCheck(
+                "A1:B2,A3:B4,C1:D4",
+                "1",
+                "2",
+                "3",
+                "4"
+        );
+    }
+
+    @Test
+    public void testRowsCached() {
+        final SpreadsheetViewportWindows windows = SpreadsheetViewportWindows.parse("A1:B2,C3:D4");
+        assertSame(
+                windows.rows(),
+                windows.rows()
+        );
+    }
+
+    private void rowsAndCheck(final String windows,
+                              final String... rows) {
+        this.rowsAndCheck(
+                SpreadsheetViewportWindows.parse(windows),
+                Arrays.stream(rows)
+                        .map(SpreadsheetSelection::parseRow)
+                        .toArray(SpreadsheetRowReference[]::new)
+        );
+    }
+
+    private void rowsAndCheck(final SpreadsheetViewportWindows windows,
+                              final SpreadsheetRowReference... rows) {
+        this.rowsAndCheck(
+                windows,
+                Lists.of(rows)
+        );
+    }
+
+    private void rowsAndCheck(final SpreadsheetViewportWindows windows,
+                              final List<SpreadsheetRowReference> rows) {
+        this.checkEquals(
+                rows,
+                windows.rows(),
                 () -> windows.toString()
         );
     }
