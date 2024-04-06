@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.CanBeEmpty;
-import walkingkooka.collect.iterable.Iterables;
-import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -37,7 +35,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -48,7 +45,6 @@ import java.util.function.Predicate;
  * Captures one or more windows that define the cells within a viewport.
  */
 public final class SpreadsheetViewportWindows implements CanBeEmpty,
-        Iterable<SpreadsheetCellReference>,
         Predicate<SpreadsheetSelection>,
         TreePrintable {
 
@@ -216,75 +212,6 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
                 .cellRange(
                         right.setRow(bottom)
                 )
-        );
-    }
-
-    // Iterable.........................................................................................................
-
-    /**
-     * Returns an {@link Iterator} which returns all the cells in all the {@link #cellRanges} within this
-     * {@link SpreadsheetViewportWindows}.
-     * <pre>
-     * A1:A3
-     * ->
-     * A1, A2, A3
-     *
-     * A1,A4:A6
-     * ->
-     * A1, A4, A5, A6
-     * </pre>
-     */
-    @Override
-    public Iterator<SpreadsheetCellReference> iterator() {
-        final Set<SpreadsheetCellRangeReference> cellRanges = this.cellRanges;
-
-        final Iterable<SpreadsheetCellReference>[] iterables = new Iterable[cellRanges.size()];
-        cellRanges.toArray(iterables);
-
-        return Iterables.chain(iterables).iterator();
-    }
-
-    /**
-     * This {@link Iterator} returns all the {@link SpreadsheetCellReference} present within this {@link SpreadsheetViewportWindows}.
-     */
-    public Iterator<SpreadsheetCellReference> cells(final SpreadsheetSelection nonLabel) {
-        Objects.requireNonNull(nonLabel, "nonLabel");
-
-        return this.isEmpty() ?
-                Iterators.empty() :
-                this.cells0(nonLabel.toCellRange());
-    }
-
-    private Iterator<SpreadsheetCellReference> cells0(final SpreadsheetCellRangeReference cells) {
-        final SpreadsheetCellReference cellsBegin = cells.begin();
-        final SpreadsheetCellReference cellsEnd = cells.end();
-
-        final SpreadsheetCellRangeReference bounds = this.bounds()
-                .get();
-
-        final SpreadsheetCellReference boundsBegin = bounds.begin();
-        final SpreadsheetCellReference boundsEnd = bounds.end();
-
-        final SpreadsheetColumnReference left = cellsBegin.column()
-                .max(boundsBegin.column());
-
-        final SpreadsheetRowReference top = cellsBegin.row()
-                .max(boundsBegin.row());
-
-        final SpreadsheetColumnReference right = cellsEnd.column()
-                .min(boundsEnd.column());
-
-        final SpreadsheetRowReference bottom = cellsEnd.row()
-                .min(boundsEnd.row());
-
-        final SpreadsheetCellRangeReference selection = left.setRow(top)
-                .cellRange(
-                        right.setRow(bottom)
-                );
-
-        return Iterators.predicated(
-                this.iterator(),
-                selection::testCell
         );
     }
 
