@@ -288,6 +288,21 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
         );
     }
 
+    // cells..........................................................................................................
+
+    /**
+     * Returns all the cells in this window.
+     */
+    public Set<SpreadsheetCellReference> cells() {
+        if (null == this.cells) {
+            this.cells = this.extract(Function.identity());
+        }
+
+        return this.cells;
+    }
+
+    private Set<SpreadsheetCellReference> cells;
+    
     // columns..........................................................................................................
 
     /**

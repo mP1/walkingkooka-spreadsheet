@@ -1126,6 +1126,102 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
         );
     }
 
+    // cellss..........................................................................................................
+
+    @Test
+    public void testCellsEmpty() {
+        this.cellsAndCheck(
+                SpreadsheetViewportWindows.EMPTY
+        );
+    }
+
+    @Test
+    public void testCellsOneRange() {
+        this.cellsAndCheck(
+                "A1:B2",
+                "A1",
+                "B1",
+                "A2",
+                "B2"
+        );
+    }
+
+    @Test
+    public void testCellsSeveralRanges() {
+        this.cellsAndCheck(
+                "A1:B2,C1:D2",
+                "A1",
+                "B1",
+                "C1",
+                "D1",
+                "A2",
+                "B2",
+                "C2",
+                "D2"
+        );
+    }
+
+    // A1    C1 D1
+    //       C2 D2
+    // A3 B3 C3 D3
+    // A4 B4 C4 D4
+    //
+    @Test
+    public void testCellsSeveralRanges2() {
+        this.cellsAndCheck(
+                "A1,A3:B4,C1:D4",
+                "A1",
+                "C1",
+                "D1",
+                "C2",
+                "D2",
+                "A3",
+                "B3",
+                "C3",
+                "D3",
+                "A4",
+                "B4",
+                "C4",
+                "D4"
+        );
+    }
+
+    @Test
+    public void testCellsCached() {
+        final SpreadsheetViewportWindows windows = SpreadsheetViewportWindows.parse("A1:B2,C3:D4");
+        assertSame(
+                windows.cells(),
+                windows.cells()
+        );
+    }
+
+    private void cellsAndCheck(final String windows,
+                               final String... cells) {
+        this.cellsAndCheck(
+                SpreadsheetViewportWindows.parse(windows),
+                Arrays.stream(cells)
+                        .map(SpreadsheetSelection::parseCell)
+                        .toArray(SpreadsheetCellReference[]::new)
+        );
+    }
+
+    private void cellsAndCheck(final SpreadsheetViewportWindows windows,
+                               final SpreadsheetCellReference... cells) {
+        this.cellsAndCheck(
+                windows,
+                Lists.of(cells)
+        );
+    }
+
+    private void cellsAndCheck(final SpreadsheetViewportWindows windows,
+                               final List<SpreadsheetCellReference> cells) {
+        this.checkEquals(
+                cells,
+                windows.cells(),
+                () -> windows.toString()
+        );
+    }
+    
     // columns..........................................................................................................
 
     @Test
