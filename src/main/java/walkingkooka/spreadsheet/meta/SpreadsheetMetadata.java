@@ -30,6 +30,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.locale.HasLocale;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
@@ -100,6 +101,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         HasConverter<SpreadsheetConverterContext>,
         HasDecimalNumberContext,
         HasExpressionNumberKind,
+        HasLocale,
         HasMathContext,
         HasParser<SpreadsheetParserContext>,
         HasSpreadsheetFormatter,
@@ -1069,5 +1071,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
             printer.lineStart();
         }
+    }
+
+    // HasLocale.......................................................................................................
+
+    @Override
+    public Locale locale() {
+        return this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
     }
 }
