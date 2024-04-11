@@ -22,7 +22,7 @@ import walkingkooka.compare.ComparatorTesting2;
 public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>, T> extends ComparatorTesting2<C, T> {
 
     default void typeAndCheck(final C comparator,
-                              final T expected) {
+                              final Class<T> expected) {
         this.checkEquals(
                 expected,
                 comparator.type(),
