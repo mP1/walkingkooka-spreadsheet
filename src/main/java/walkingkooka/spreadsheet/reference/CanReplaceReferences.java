@@ -26,7 +26,7 @@ import java.util.function.Function;
  * Describes a value such as a {@link walkingkooka.spreadsheet.SpreadsheetCell} or {@link SpreadsheetFormula}
  * that supports visiting all references and replacing or removing them one by one.
  */
-public interface CanReplaceReferences<T extends CanReplaceReferences> {
+public interface CanReplaceReferences<T extends CanReplaceReferences<T>> {
 
     T replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper);
 }
