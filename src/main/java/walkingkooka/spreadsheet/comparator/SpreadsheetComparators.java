@@ -137,6 +137,13 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         );
     }
 
+    /**
+     * {@see ReverseSpreadsheetComparator}
+     */
+    public static <T> SpreadsheetComparator<T> reverse(final SpreadsheetComparator<T> comparator) {
+        return ReverseSpreadsheetComparator.with(comparator);
+    }
+
     public static SpreadsheetComparator<LocalTime> secondsOfMinute() {
         return SECONDS_OF_MINUTE;
     }
