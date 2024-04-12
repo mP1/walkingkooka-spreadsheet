@@ -17,8 +17,13 @@
 
 package walkingkooka.spreadsheet.comparator;
 
+import walkingkooka.Cast;
+import walkingkooka.compare.Comparators;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.tree.expression.ExpressionNumber;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Comparator;
 
 public final class SpreadsheetComparators implements PublicStaticHelper {
@@ -33,6 +38,137 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                 comparator
         );
     }
+
+    public static SpreadsheetComparator<LocalDate> dayOfMonth() {
+        return DAY_OF_MONTH;
+    }
+
+    private final static SpreadsheetComparator<LocalDate> DAY_OF_MONTH = basic(
+            LocalDate.class,
+            Cast.to(
+                    Comparators.dayOfMonth()
+            )
+    );
+
+    public static SpreadsheetComparator<ExpressionNumber> expressionNumber() {
+        return EXPRESSION_NUMBER;
+    }
+
+    private final static SpreadsheetComparator<ExpressionNumber> EXPRESSION_NUMBER = basic(
+            ExpressionNumber.class,
+            Comparator.naturalOrder()
+    );
+
+    public static SpreadsheetComparator<LocalTime> hourOfAmPm() {
+        return HOUR_OF_AMPM;
+    }
+
+    private final static SpreadsheetComparator<LocalTime> HOUR_OF_AMPM = basic(
+            LocalTime.class,
+            Cast.to(
+                    Comparators.hourOfAmPm()
+            )
+    );
+
+    public static SpreadsheetComparator<LocalTime> hourOfDay() {
+        return HOUR_OF_DAY;
+    }
+
+    private final static SpreadsheetComparator<LocalTime> HOUR_OF_DAY = basic(
+            LocalTime.class,
+            Cast.to(
+                    Comparators.hourOfDay()
+            )
+    );
+
+    public static SpreadsheetComparator<LocalTime> minuteOfHour() {
+        return MINUTE_OF_HOUR;
+    }
+
+    private final static SpreadsheetComparator<LocalTime> MINUTE_OF_HOUR = basic(
+            LocalTime.class,
+            Cast.to(
+                    Comparators.minuteOfHour()
+            )
+    );
+
+    public static SpreadsheetComparator<LocalDate> monthOfYear() {
+        return MONTH_OF_YEAR;
+    }
+
+    private final static SpreadsheetComparator<LocalDate> MONTH_OF_YEAR = basic(
+            LocalDate.class,
+            Cast.to(
+                    Comparators.monthOfYear()
+            )
+    );
+
+    public static SpreadsheetComparator<LocalTime> nanoOfSecond() {
+        return NANO_OF_SECOND;
+    }
+
+    private final static SpreadsheetComparator<LocalTime> NANO_OF_SECOND = basic(
+            LocalTime.class,
+            Cast.to(
+                    Comparators.nanoOfSecond()
+            )
+    );
+
+    public static <T> SpreadsheetComparator<T> nullAfter(final Class<T> type,
+                                                         final Comparator<T> comparator) {
+        return basic(
+                type,
+                Comparators.nullAfter(comparator)
+        );
+    }
+
+    public static <T> SpreadsheetComparator<T> nullBefore(final Class<T> type,
+                                                          final Comparator<T> comparator) {
+        return basic(
+                type,
+                Comparators.nullBefore(comparator)
+        );
+    }
+
+    public static SpreadsheetComparator<LocalTime> secondsOfMinute() {
+        return SECONDS_OF_MINUTE;
+    }
+
+    private final static SpreadsheetComparator<LocalTime> SECONDS_OF_MINUTE = basic(
+            LocalTime.class,
+            Cast.to(
+                    Comparators.secondOfMinute()
+            )
+    );
+
+    public static SpreadsheetComparator<String> string() {
+        return STRING;
+    }
+
+    private final static SpreadsheetComparator<String> STRING = basic(
+            String.class,
+            Comparator.naturalOrder()
+    );
+
+    public static SpreadsheetComparator<String> stringCaseInsensitive() {
+        return STRING_CASE_INSENSITIVE;
+    }
+
+    private final static SpreadsheetComparator<String> STRING_CASE_INSENSITIVE = basic(
+            String.class,
+            String.CASE_INSENSITIVE_ORDER
+    );
+
+    public static SpreadsheetComparator<LocalDate> year() {
+        return YEAR;
+    }
+
+    private final static SpreadsheetComparator<LocalDate> YEAR = basic(
+            LocalDate.class,
+            Cast.to(
+                    Comparators.year()
+            )
+    );
 
     /**
      * Stop creation
