@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.comparator;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
+import walkingkooka.datetime.compare.DateTimeComparators;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -51,7 +52,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalDate> DAY_OF_MONTH = basic(
             LocalDate.class,
             Cast.to(
-                    Comparators.dayOfMonth()
+                    DateTimeComparators.dayOfMonth()
             )
     );
 
@@ -78,7 +79,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalTime> HOUR_OF_AMPM = basic(
             LocalTime.class,
             Cast.to(
-                    Comparators.hourOfAmPm()
+                    DateTimeComparators.hourOfAmPm()
             )
     );
 
@@ -89,7 +90,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalTime> HOUR_OF_DAY = basic(
             LocalTime.class,
             Cast.to(
-                    Comparators.hourOfDay()
+                    DateTimeComparators.hourOfDay()
             )
     );
 
@@ -100,7 +101,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalTime> MINUTE_OF_HOUR = basic(
             LocalTime.class,
             Cast.to(
-                    Comparators.minuteOfHour()
+                    DateTimeComparators.minuteOfHour()
             )
     );
 
@@ -111,7 +112,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalDate> MONTH_OF_YEAR = basic(
             LocalDate.class,
             Cast.to(
-                    Comparators.monthOfYear()
+                    DateTimeComparators.monthOfYear()
             )
     );
 
@@ -122,7 +123,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalTime> NANO_OF_SECOND = basic(
             LocalTime.class,
             Cast.to(
-                    Comparators.nanoOfSecond()
+                    DateTimeComparators.nanoOfSecond()
             )
     );
 
@@ -244,7 +245,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalDate> YEAR = basic(
             LocalDate.class,
             Cast.to(
-                    Comparators.year()
+                    DateTimeComparators.year()
             )
     );
 
