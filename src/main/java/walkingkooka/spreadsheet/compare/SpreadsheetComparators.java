@@ -216,7 +216,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalTime> SECONDS_OF_MINUTE = basic(
             LocalTime.class,
             Cast.to(
-                    Comparators.secondOfMinute()
+                    DateTimeComparators.secondOfMinute()
             )
     );
 
