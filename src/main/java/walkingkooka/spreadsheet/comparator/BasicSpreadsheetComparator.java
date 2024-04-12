@@ -28,7 +28,7 @@ import java.util.Objects;
 final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
     static <T> BasicSpreadsheetComparator<T> with(final Class<T> type,
-                                                  final Comparator<T> comparator) {
+                                                  final Comparator<? super T> comparator) {
         return new BasicSpreadsheetComparator<>(
                 Objects.requireNonNull(type, "type"),
                 Objects.requireNonNull(comparator, "comparator")
@@ -36,7 +36,7 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
     }
 
     private BasicSpreadsheetComparator(final Class<T> type,
-                                       final Comparator<T> comparator) {
+                                       final Comparator<? super T> comparator) {
         this.type = type;
         this.comparator = comparator;
     }
@@ -57,7 +57,7 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
         );
     }
 
-    private final Comparator<T> comparator;
+    private final Comparator<? super T> comparator;
 
     // Object..........................................................................................................
 

@@ -27,7 +27,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see BasicSpreadsheetComparator}
      */
     public static <T> SpreadsheetComparator<T> basic(final Class<T> type,
-                                                     final Comparator<T> comparator) {
+                                                     final Comparator<? super T> comparator) {
         return BasicSpreadsheetComparator.with(
                 type,
                 comparator
