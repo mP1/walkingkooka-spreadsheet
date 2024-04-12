@@ -59,6 +59,13 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             Comparator.naturalOrder()
     );
 
+    /**
+     * {@see FakeSpreadsheetComparatorContext}
+     */
+    public static <T> SpreadsheetComparator<T> fake() {
+        return new FakeSpreadsheetComparator<>();
+    }
+
     public static SpreadsheetComparator<LocalTime> hourOfAmPm() {
         return HOUR_OF_AMPM;
     }
