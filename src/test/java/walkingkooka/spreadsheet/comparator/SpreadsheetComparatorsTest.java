@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.comparator;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
@@ -27,6 +28,10 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesting<SpreadsheetComparators>,
         ComparatorTesting {
@@ -208,6 +213,156 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 comparator,
                 left,
                 right
+        );
+    }
+
+    // parse............................................................................................................
+
+    @Test
+    public void testParseNullComparatorsStringFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetComparators.parse(
+                        null,
+                        (n) -> {
+                            throw new UnsupportedOperationException();
+                        }
+                )
+        );
+    }
+
+    @Test
+    public void testParseEmptyComparatorsStringFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetComparators.parse(
+                        "",
+                        (n) -> {
+                            throw new UnsupportedOperationException();
+                        }
+                )
+        );
+    }
+
+    @Test
+    public void testParseNullFunctionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetComparators.parse(
+                        "hello",
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testParseInvalidUpOrDownFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetComparators.parse(
+                        "string XYZ",
+                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                )
+        );
+        this.checkEquals(
+                "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"string XYZ\"",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testParseInvalidUpOrDownFails2() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetComparators.parse(
+                        "day-of-month,month-of-year XYZ,year",
+                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                )
+        );
+        this.checkEquals(
+                "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"month-of-year XYZ\"",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testParseString() {
+        this.parseAndCheck(
+                "string",
+                SpreadsheetComparators.string()
+        );
+    }
+
+    @Test
+    public void testParseStringUp() {
+        this.parseAndCheck(
+                "string UP",
+                SpreadsheetComparators.string()
+        );
+    }
+
+    @Test
+    public void testParseStringDown() {
+        this.parseAndCheck(
+                "string DOWN",
+                SpreadsheetComparators.reverse(
+                        SpreadsheetComparators.string()
+                )
+        );
+    }
+
+    @Test
+    public void testParseDayOfMonth_MonthOfYear_Year() {
+        this.parseAndCheck(
+                "day-of-month,month-of-year,year",
+                SpreadsheetComparators.dayOfMonth(),
+                SpreadsheetComparators.monthOfYear(),
+                SpreadsheetComparators.year()
+        );
+    }
+
+    @Test
+    public void testParseDayOfMonth_Up_MonthOfYear_Down_Year_Up() {
+        this.parseAndCheck(
+                "day-of-month UP,month-of-year DOWN,year UP",
+                SpreadsheetComparators.dayOfMonth(),
+                SpreadsheetComparators.reverse(
+                        SpreadsheetComparators.monthOfYear()
+                ),
+                SpreadsheetComparators.year()
+        );
+    }
+
+    private void parseAndCheck(final String comparators,
+                               final SpreadsheetComparator<?>... expected) {
+        this.parseAndCheck(
+                comparators,
+                SpreadsheetComparators.nameToSpreadsheetComparator(),
+                expected
+        );
+    }
+
+    private void parseAndCheck(final String comparators,
+                               final Function<String, SpreadsheetComparator<?>> nameToSpreadsheetComparator,
+                               final SpreadsheetComparator<?>... expected) {
+        this.parseAndCheck(
+                comparators,
+                nameToSpreadsheetComparator,
+                Lists.of(
+                        expected
+                )
+        );
+    }
+
+    private void parseAndCheck(final String comparators,
+                               final Function<String, SpreadsheetComparator<?>> nameToSpreadsheetComparator,
+                               final List<SpreadsheetComparator<?>> expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetComparators.parse(
+                        comparators,
+                        nameToSpreadsheetComparator
+                )
         );
     }
 

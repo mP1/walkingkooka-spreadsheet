@@ -18,13 +18,17 @@
 package walkingkooka.spreadsheet.comparator;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 public final class SpreadsheetComparators implements PublicStaticHelper {
@@ -143,6 +147,58 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                 type,
                 Comparators.nullBefore(comparator)
         );
+    }
+
+    /**
+     * Accepts a string with comparator names and optional UP or DOWN separated by commas.
+     * <pre>
+     * string DOWN, string-case-insensitive UP
+     *
+     * day-of-month UP, month-of-year UP, year
+     * </pre>
+     */
+    public static List<SpreadsheetComparator<?>> parse(final String comparators,
+                                                       final Function<String, SpreadsheetComparator<?>> nameToSpreadsheetComparator) {
+        CharSequences.failIfNullOrEmpty(comparators, "comparators");
+        Objects.requireNonNull(nameToSpreadsheetComparator, "nameToSpreadsheetComparator");
+
+        final List<SpreadsheetComparator<?>> result = Lists.array();
+
+        for (final String nameAndMaybeUpOrDown : comparators.split(",")) {
+            String name = nameAndMaybeUpOrDown;
+            final int upOrDownStartIndex = name.lastIndexOf(' ');
+            boolean down = false;
+
+            if (-1 != upOrDownStartIndex) {
+                String upOrDown = nameAndMaybeUpOrDown.substring(upOrDownStartIndex + 1);
+                String nameOnly = nameAndMaybeUpOrDown.substring(0, upOrDownStartIndex);
+                switch (upOrDown) {
+                    case "UP":
+                        name = nameOnly;
+                        break;
+                    case "DOWN":
+                        name = nameOnly;
+                        down = true;
+                        break;
+                    default:
+                        throw new IllegalArgumentException(
+                                "Expected \"UP\" or \"DOWN\" and got " +
+                                        CharSequences.quoteAndEscape(upOrDown) +
+                                        " in " +
+                                        CharSequences.quoteAndEscape(nameAndMaybeUpOrDown)
+                        );
+                }
+            }
+
+            SpreadsheetComparator<?> comparatorForName = nameToSpreadsheetComparator.apply(name);
+            if (down) {
+                comparatorForName = reverse(comparatorForName);
+            }
+
+            result.add(comparatorForName);
+        }
+
+        return result;
     }
 
     /**
