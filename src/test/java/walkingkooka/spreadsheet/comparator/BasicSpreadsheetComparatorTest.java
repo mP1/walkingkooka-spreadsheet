@@ -23,6 +23,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.compare.Comparators;
 
+import java.time.temporal.Temporal;
 import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -50,6 +51,15 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
                         String.class,
                         null
                 )
+        );
+    }
+
+    @Test
+    public void testWith() {
+        BasicSpreadsheetComparator.with(
+                Temporal.class,
+                Comparators.dayOfMonth()
+
         );
     }
 
