@@ -15,19 +15,9 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
-import java.util.Comparator;
+import walkingkooka.convert.ConverterContextTesting;
 
-/**
- * A {@link Comparator} that includes a type property. Sorting cells is a two phase operation, first all cell values are
- * converted to the {@link SpreadsheetComparator#type()} and then converted cell values are sorted using this {@link Comparator}.
- * Cells that could not be converted will be placed before or after the sorted list of cells.
- */
-public interface SpreadsheetComparator<T> extends Comparator<T> {
-
-    /**
-     * The type handled by this {@link Comparator}.
-     */
-    Class<T> type();
+public interface SpreadsheetComparatorContextTesting<C extends SpreadsheetComparatorContext> extends ConverterContextTesting<C> {
 }

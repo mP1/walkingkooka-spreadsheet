@@ -15,27 +15,23 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.reflect.PublicStaticHelper;
 
-import java.lang.reflect.Method;
+public final class SpreadsheetComparatorContexts implements PublicStaticHelper {
 
-public final class SpreadsheetComparatorContextsTest implements PublicStaticHelperTesting<SpreadsheetComparatorContexts> {
-
-    @Override
-    public Class<SpreadsheetComparatorContexts> type() {
-        return SpreadsheetComparatorContexts.class;
+    /**
+     * {@see FakeSpreadsheetComparatorContext}
+     */
+    public static SpreadsheetComparatorContext fake() {
+        return new FakeSpreadsheetComparatorContext();
     }
 
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    @Override
-    public boolean canHavePublicTypes(final Method method) {
-        return false;
+    /**
+     * Stop creation
+     */
+    private SpreadsheetComparatorContexts() {
+        throw new UnsupportedOperationException();
     }
 }

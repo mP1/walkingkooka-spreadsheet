@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.compare.Comparators;
@@ -23,7 +23,7 @@ import walkingkooka.compare.Comparators;
 import java.util.Objects;
 
 /**
- * Wraps another {@link SpreadsheetComparator} and reverses the comparator result.
+ * Wraps another {@link SpreadsheetComparator} and reverses the compare result.
  */
 final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
@@ -31,7 +31,7 @@ final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> 
         return comparator instanceof ReverseSpreadsheetComparator ?
                 ((ReverseSpreadsheetComparator) comparator).comparator :
                 new ReverseSpreadsheetComparator<>(
-                        Objects.requireNonNull(comparator, "comparator")
+                        Objects.requireNonNull(comparator, "compare")
                 );
     }
 

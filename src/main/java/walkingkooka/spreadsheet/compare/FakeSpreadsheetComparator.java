@@ -15,18 +15,22 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.compare.ComparatorTesting2;
+class FakeSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
-public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>, T> extends ComparatorTesting2<C, T> {
+    FakeSpreadsheetComparator() {
+        super();
+    }
 
-    default <TT> void typeAndCheck(final SpreadsheetComparator<TT> comparator,
-                                   final Class<TT> expected) {
-        this.checkEquals(
-                expected,
-                comparator.type(),
-                () -> comparator.toString()
-        );
+    @Override
+    public Class<T> type() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int compare(final T left,
+                       final T right) {
+        throw new UnsupportedOperationException();
     }
 }

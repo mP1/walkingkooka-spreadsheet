@@ -16,7 +16,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
