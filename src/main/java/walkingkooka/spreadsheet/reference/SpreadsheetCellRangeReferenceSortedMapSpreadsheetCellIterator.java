@@ -175,7 +175,7 @@ final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator implem
     /**
      * A Function that produces the to key parameter a ({@link SpreadsheetCellReference} for {@link SortedMap#subMap(Object, Object)}.
      */
-    private BiFunction<SpreadsheetCellReference, SpreadsheetCellReference, Map<SpreadsheetCellReference, SpreadsheetCell>> rowSubMap;
+    private final BiFunction<SpreadsheetCellReference, SpreadsheetCellReference, Map<SpreadsheetCellReference, SpreadsheetCell>> rowSubMap;
 
     // Object...........................................................................................................
 
