@@ -47,8 +47,6 @@ final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator implem
     private SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator(final SpreadsheetCellRangeReference range,
                                                                           final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cells) {
         this.range = range;
-        this.cells = cells;
-
         this.nextRowFirstColumn = range.begin();
 
         final SpreadsheetColumnReference lastColumn = range.end()
@@ -89,11 +87,6 @@ final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator implem
         }
         return cell;
     }
-
-    /**
-     * The source {@link Map}.
-     */
-    private final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cells;
 
     /**
      * The range of cells that will be returned by this {@link Iterator}.
