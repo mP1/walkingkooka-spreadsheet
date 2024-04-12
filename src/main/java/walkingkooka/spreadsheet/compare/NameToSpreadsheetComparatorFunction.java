@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.text.CharSequences;
 

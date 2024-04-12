@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 
@@ -31,7 +31,7 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
                                                   final Comparator<? super T> comparator) {
         return new BasicSpreadsheetComparator<>(
                 Objects.requireNonNull(type, "type"),
-                Objects.requireNonNull(comparator, "comparator")
+                Objects.requireNonNull(comparator, "compare")
         );
     }
 

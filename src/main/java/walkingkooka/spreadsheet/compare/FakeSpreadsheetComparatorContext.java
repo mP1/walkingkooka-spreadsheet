@@ -15,22 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
-class FakeSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
+import walkingkooka.convert.FakeConverterContext;
 
-    FakeSpreadsheetComparator() {
+public class FakeSpreadsheetComparatorContext extends FakeConverterContext implements SpreadsheetComparatorContext {
+    public FakeSpreadsheetComparatorContext() {
         super();
-    }
-
-    @Override
-    public Class<T> type() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int compare(final T left,
-                       final T right) {
-        throw new UnsupportedOperationException();
     }
 }

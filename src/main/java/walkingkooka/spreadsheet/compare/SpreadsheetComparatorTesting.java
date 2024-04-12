@@ -15,12 +15,18 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.convert.FakeConverterContext;
+import walkingkooka.compare.ComparatorTesting2;
 
-public class FakeSpreadsheetComparatorContext extends FakeConverterContext implements SpreadsheetComparatorContext {
-    public FakeSpreadsheetComparatorContext() {
-        super();
+public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>, T> extends ComparatorTesting2<C, T> {
+
+    default <TT> void typeAndCheck(final SpreadsheetComparator<TT> comparator,
+                                   final Class<TT> expected) {
+        this.checkEquals(
+                expected,
+                comparator.type(),
+                () -> comparator.toString()
+        );
     }
 }

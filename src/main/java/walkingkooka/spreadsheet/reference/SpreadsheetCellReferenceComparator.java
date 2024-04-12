@@ -28,7 +28,7 @@ import java.util.Objects;
 final class SpreadsheetCellReferenceComparator implements Comparator<SpreadsheetCell> {
 
     static SpreadsheetCellReferenceComparator with(final Comparator<SpreadsheetCellReference> comparator) {
-        Objects.requireNonNull(comparator, "comparator");
+        Objects.requireNonNull(comparator, "compare");
         return new SpreadsheetCellReferenceComparator(comparator);
     }
 

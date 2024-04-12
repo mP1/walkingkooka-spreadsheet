@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
@@ -151,7 +151,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
-     * Accepts a string with comparator names and optional UP or DOWN separated by commas.
+     * Accepts a string with compare names and optional UP or DOWN separated by commas.
      * <pre>
      * string DOWN, string-case-insensitive UP
      *

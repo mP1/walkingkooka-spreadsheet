@@ -15,23 +15,14 @@
  *
  */
 
-package walkingkooka.spreadsheet.comparator;
+package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.Context;
+import walkingkooka.convert.ConverterContext;
 
-public final class SpreadsheetComparatorContexts implements PublicStaticHelper {
-
-    /**
-     * {@see FakeSpreadsheetComparatorContext}
-     */
-    public static SpreadsheetComparatorContext fake() {
-        return new FakeSpreadsheetComparatorContext();
-    }
-
-    /**
-     * Stop creation
-     */
-    private SpreadsheetComparatorContexts() {
-        throw new UnsupportedOperationException();
-    }
+/**
+ * A {@link Context} that accompanies comparisons between two values. This might require converting values to a type
+ * compatible with the actual {@link java.util.Comparator}.
+ */
+public interface SpreadsheetComparatorContext extends ConverterContext {
 }
