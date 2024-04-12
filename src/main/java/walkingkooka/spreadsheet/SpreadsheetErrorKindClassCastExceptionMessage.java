@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet;
 /**
  * TODO create a sub class that extracts the source and destination types parse a {@link ClassCastException#getMessage()}.
  * <br>
- * https://github.com/mP1/walkingkooka-spreadsheet/issues/2302
+ * <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/2302">issues/2302</a>
  */
 final class SpreadsheetErrorKindClassCastExceptionMessage {
 

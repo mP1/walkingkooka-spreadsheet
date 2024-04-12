@@ -40,33 +40,33 @@ import java.util.Optional;
 /**
  * The type of {@link SpreadsheetError}.
  * <br>
- * https://exceljet.net/excel-functions/excel-errortype-function
+ * <a href="https://exceljet.net/excel-functions/excel-errortype-function">Excel error-type function</a>
  */
 public enum SpreadsheetErrorKind implements HasText {
 
     /**
-     * https://support.microsoft.com/en-us/office/correct-a-null-error-11a15515-5df3-4a82-899e-e4c0070ea9c4
+     * <a href="https://support.microsoft.com/en-us/office/correct-a-null-error-11a15515-5df3-4a82-899e-e4c0070ea9c4">null error</a>
      * <br>
      * This error indicates an incorrect range operator within a formula.
      */
     NULL("#NULL!", 1),
 
     /**
-     * https://support.microsoft.com/en-us/office/how-to-correct-a-div-0-error-3a5a18a9-8d80-4ebb-a908-39e759a009a5
+     * <a href="https://support.microsoft.com/en-us/office/how-to-correct-a-div-0-error-3a5a18a9-8d80-4ebb-a908-39e759a009a5">div0 error</a>
      * <br>
      * This error indicates a divide by zero within a formula.
      */
     DIV0("#DIV/0!", 2),
 
     /**
-     * https://support.microsoft.com/en-us/office/how-to-correct-a-value-error-15e1b616-fbf2-4147-9c0b-0a11a20e409e
+     * <a href="https://support.microsoft.com/en-us/office/how-to-correct-a-value-error-15e1b616-fbf2-4147-9c0b-0a11a20e409e">value error</a>
      * <br>
      * General purpose error with a value.
      */
     VALUE("#VALUE!", 3),
 
     /**
-     * https://support.microsoft.com/en-us/office/how-to-correct-a-ref-error-822c8e46-e610-4d02-bf29-ec4b8c5ff4be
+     * <a href="https://support.microsoft.com/en-us/office/how-to-correct-a-ref-error-822c8e46-e610-4d02-bf29-ec4b8c5ff4be">ref error</a>
      * <br>
      * This error indicates a reference to a cell that was deleted.
      */
@@ -84,14 +84,14 @@ public enum SpreadsheetErrorKind implements HasText {
     NAME_STRING("#NAME?", 5),
 
     /**
-     * https://support.microsoft.com/en-us/office/how-to-correct-a-num-error-f5193bfc-4400-43f4-88c4-8e1dcca0428b
+     * <a href="https://support.microsoft.com/en-us/office/how-to-correct-a-num-error-f5193bfc-4400-43f4-88c4-8e1dcca0428b">num error</a>
      * <br>
      * An incorrect number literal within a formula.
      */
     NUM("#NUM!", 6),
 
     /**
-     * https://support.microsoft.com/en-us/office/na-function-5469c2d1-a90c-4fb5-9bbc-64bd9bb6b47c
+     * <a href="https://support.microsoft.com/en-us/office/na-function-5469c2d1-a90c-4fb5-9bbc-64bd9bb6b47c">na function</a>
      * <br>
      * An error that indicates a value is NOT AVAILABLE
      */
