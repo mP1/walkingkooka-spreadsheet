@@ -29,7 +29,7 @@ final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> 
 
     static <T> SpreadsheetComparator<T> with(final SpreadsheetComparator<T> comparator) {
         return comparator instanceof ReverseSpreadsheetComparator ?
-                ((ReverseSpreadsheetComparator) comparator).comparator :
+                ((ReverseSpreadsheetComparator<T>) comparator).comparator :
                 new ReverseSpreadsheetComparator<>(
                         Objects.requireNonNull(comparator, "compare")
                 );
