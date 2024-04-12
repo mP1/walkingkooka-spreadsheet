@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.compare.Comparators;
+import walkingkooka.datetime.compare.DateTimeComparators;
 
 import java.time.temporal.Temporal;
 import java.util.Comparator;
@@ -58,7 +59,7 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
     public void testWith() {
         BasicSpreadsheetComparator.with(
                 Temporal.class,
-                Comparators.dayOfMonth()
+                DateTimeComparators.dayOfMonth()
 
         );
     }
