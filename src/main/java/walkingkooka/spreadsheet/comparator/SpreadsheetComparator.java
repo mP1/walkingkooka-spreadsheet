@@ -29,5 +29,5 @@ public interface SpreadsheetComparator<T> extends Comparator<T> {
     /**
      * The type handled by this {@link Comparator}.
      */
-    T type();
+    Class<T> type();
 }
