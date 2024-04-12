@@ -518,7 +518,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     /**
      * Takes a {@link DecimalFormat} and returns its {@link SpreadsheetNumberParsePattern} equivalent.
      * This method may be used to extract locale aware {@link SpreadsheetNumberParsePattern}. This will be used by
-     * https://github.com/mP1/walkingkooka-spreadsheet-dominokit to source locale aware number and currency patterns.
+     * <a href="https://github.com/mP1/walkingkooka-spreadsheet-dominokit">to source locale aware number and currency patterns.</a>
      * <br>
      * Note it does not include text literals, doing so will cause failures when the {@link DecimalFormat#toPattern()}
      * is parsed.
