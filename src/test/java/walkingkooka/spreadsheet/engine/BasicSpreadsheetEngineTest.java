@@ -4101,9 +4101,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute(); //
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2");
         final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("$A$3");
-        ; // DELETED
+        // DELETED
         final SpreadsheetCellReference b10 = SpreadsheetSelection.parseCell("$B$10");
-        ; // moved
+        // moved
 
         engine.saveCell(this.cell(a1, "=1+2"), context);
         engine.saveCell(this.cell(a2, "=3+4"), context);
