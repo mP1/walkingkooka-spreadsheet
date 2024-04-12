@@ -25,6 +25,7 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
+import java.util.function.Function;
 
 public final class SpreadsheetComparators implements PublicStaticHelper {
 
@@ -120,6 +121,13 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     Comparators.nanoOfSecond()
             )
     );
+
+    /**
+     * {see NameToSpreadsheetComparatorFunction}
+     */
+    public static Function<String, SpreadsheetComparator<?>> nameToSpreadsheetComparator() {
+        return NameToSpreadsheetComparatorFunction.INSTANCE;
+    }
 
     public static <T> SpreadsheetComparator<T> nullAfter(final Class<T> type,
                                                          final Comparator<T> comparator) {
