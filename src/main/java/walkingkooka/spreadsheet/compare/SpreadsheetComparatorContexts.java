@@ -17,9 +17,17 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.reflect.PublicStaticHelper;
 
 public final class SpreadsheetComparatorContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetComparatorContext}
+     */
+    public static SpreadsheetComparatorContext basic(final ConverterContext converterContext) {
+        return BasicSpreadsheetComparatorContext.with(converterContext);
+    }
 
     /**
      * {@see FakeSpreadsheetComparatorContext}
