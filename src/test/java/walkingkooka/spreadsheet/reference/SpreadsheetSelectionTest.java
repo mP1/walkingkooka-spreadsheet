@@ -1205,6 +1205,105 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // toCellRange.......................................................................................................
+
+    @Test
+    public void testToCellRangeCell() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.A1,
+                "A1:A1"
+        );
+    }
+
+    @Test
+    public void testToCellRangeCellB2() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.parseCell("B2"),
+                "B2:B2"
+        );
+    }
+
+    @Test
+    public void testToCellRangeColumn() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.parseColumn("A"),
+                "A1:A1048576"
+        );
+    }
+
+    @Test
+    public void testToCellRangeColumn2() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.parseColumn("B"),
+                "B1:B1048576"
+        );
+    }
+
+    @Test
+    public void testToCellRangeColumnRange() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                "A1:B1048576"
+        );
+    }
+
+    @Test
+    public void testToCellRangeColumnRange2() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.parseColumnRange("B:C"),
+                "B1:C1048576"
+        );
+    }
+
+    @Test
+    public void testToCellRangeRow() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.parseRow("1"),
+                "A1:XFD1"
+        );
+    }
+
+    @Test
+    public void testToCellRangeRow2() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.parseRow("2"),
+                "A2:XFD2"
+        );
+    }
+
+    @Test
+    public void testToCellRangeRowRange() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.parseRowRange("1:2"),
+                "A1:XFD2"
+        );
+    }
+
+    @Test
+    public void testToCellRangeRowRange2() {
+        this.toCellRangeAndCheck(
+                SpreadsheetSelection.parseRowRange("2:3"),
+                "A2:XFD3"
+        );
+    }
+
+    private void toCellRangeAndCheck(final SpreadsheetSelection selection,
+                                     final String expected) {
+        this.toCellRangeAndCheck(
+                selection,
+                SpreadsheetSelection.parseCellRange(expected)
+        );
+    }
+
+    private void toCellRangeAndCheck(final SpreadsheetSelection selection,
+                                     final SpreadsheetCellRangeReference expected) {
+        this.checkEquals(
+                expected,
+                selection.toCellRange(),
+                () -> selection.toString()
+        );
+    }
+
     // deletedText.......................................................................................................
 
     @Test
