@@ -289,6 +289,28 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     private final static Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
 
+    // replaceReferencesMapper..........................................................................................
+
+    @Override
+    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection moveTo) {
+        final SpreadsheetSelection moveToScalar = moveTo.toScalar();
+
+        int deltaX = 0;
+        if (moveToScalar.isColumnReference() || moveToScalar.isCellReference()) {
+            deltaX = moveTo.toColumn().value() - this.column().value();
+        }
+
+        int deltaY = 0;
+        if (moveToScalar.isRowReference() || moveToScalar.isCellReference()) {
+            deltaY = moveTo.toRow().value() - this.row().value();
+        }
+
+        return SpreadsheetSelectionReplaceReferencesMapperFunction.with(
+                deltaX,
+                deltaY
+        );
+    }
+
     // CanReplaceReferences.............................................................................................
 
     @Override

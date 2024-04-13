@@ -15,23 +15,24 @@
  *
  */
 
-package walkingkooka.spreadsheet;
-
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+package walkingkooka.spreadsheet.reference;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
-final class SpreadsheetCellRangeMoveMapper implements Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> {
+/**
+ * The {@link Function} returned by {@link SpreadsheetSelection#replaceReferencesMapper(SpreadsheetSelection)}.
+ */
+final class SpreadsheetSelectionReplaceReferencesMapperFunction implements Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> {
 
-    static SpreadsheetCellRangeMoveMapper with(final int deltaX,
-                                               final int deltaY) {
-        return new SpreadsheetCellRangeMoveMapper(deltaX, deltaY);
+    static SpreadsheetSelectionReplaceReferencesMapperFunction with(final int deltaX,
+                                                                    final int deltaY) {
+        return new SpreadsheetSelectionReplaceReferencesMapperFunction(deltaX, deltaY);
     }
 
-    private SpreadsheetCellRangeMoveMapper(final int deltaX,
-                                           final int deltaY) {
+    private SpreadsheetSelectionReplaceReferencesMapperFunction(final int deltaX,
+                                                                final int deltaY) {
         this.deltaX = deltaX;
         this.deltaY = deltaY;
     }
@@ -67,10 +68,11 @@ final class SpreadsheetCellRangeMoveMapper implements Function<SpreadsheetCellRe
                 );
     }
 
-    private final int deltaX;
+    final int deltaX;
 
-    private final int deltaY;
+    final int deltaY;
 
+    @Override
     public String toString() {
         return this.deltaX + " " + this.deltaY;
     }

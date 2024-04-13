@@ -24,6 +24,8 @@ import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 /**
@@ -60,6 +62,16 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
     public final T end() {
         return this.range.upperBound().value().get(); // must exist
     }
+
+    // replaceReferencesMapper..........................................................................................
+
+    @Override
+    final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
+        return this.toScalar()
+                .replaceReferencesMapper0(movedTo);
+    }
+
+    // count............................................................................................................
 
     /**
      * Returns the number of columns or rows in this range.

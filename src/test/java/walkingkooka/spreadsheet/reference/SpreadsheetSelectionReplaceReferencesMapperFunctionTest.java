@@ -15,16 +15,16 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetCellRangeMoveMapperTest implements ClassTesting<SpreadsheetCellRangeMoveMapper> {
+public final class SpreadsheetSelectionReplaceReferencesMapperFunctionTest implements ClassTesting<SpreadsheetSelectionReplaceReferencesMapperFunction> {
 
     @Override
-    public Class<SpreadsheetCellRangeMoveMapper> type() {
-        return SpreadsheetCellRangeMoveMapper.class;
+    public Class<SpreadsheetSelectionReplaceReferencesMapperFunction> type() {
+        return SpreadsheetSelectionReplaceReferencesMapperFunction.class;
     }
 
     @Override

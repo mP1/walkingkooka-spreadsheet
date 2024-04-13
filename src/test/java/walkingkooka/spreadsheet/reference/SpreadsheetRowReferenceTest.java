@@ -393,6 +393,55 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // replaceReferencesMapper..........................................................................................
+
+    @Test
+    public void testReplaceReferenceMapperColumnFails() {
+        this.replaceReferencesMapperFails(
+                SpreadsheetSelection.parseColumn("B"),
+                "Expected rows(s) or cell(s) but got B"
+        );
+    }
+
+    @Test
+    public void testReplaceReferenceMapperColumnRangeFails() {
+        this.replaceReferencesMapperFails(
+                SpreadsheetSelection.parseColumnRange("C:D"),
+                "Expected rows(s) or cell(s) but got C:D"
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperRow() {
+        this.replaceReferencesMapperAndCheck(
+                "1",
+                SpreadsheetSelection.parseRow("3"),
+                0,
+                2
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperRow2() {
+        this.replaceReferencesMapperAndCheck(
+                "2",
+                SpreadsheetSelection.parseRow("5"),
+                0,
+                3
+        );
+    }
+
+
+    @Test
+    public void testReplaceReferencesMapperRowRange() {
+        this.replaceReferencesMapperAndCheck(
+                "2",
+                SpreadsheetSelection.parseRowRange("5:7"),
+                0,
+                3
+        );
+    }
+
     // max.............................................................................................................
 
     private final static boolean LEFT = true;

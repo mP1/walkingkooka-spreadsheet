@@ -279,6 +279,38 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
+    // replaceReferencesMapper..........................................................................................
+
+    @Test
+    public void testReplaceReferencesMapperColumn() {
+        this.replaceReferencesMapperAndCheck(
+                "A:B",
+                SpreadsheetSelection.parseColumn("C"),
+                2,
+                0
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperColumn2() {
+        this.replaceReferencesMapperAndCheck(
+                "B",
+                SpreadsheetSelection.parseColumn("E"),
+                3,
+                0
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperRangeColumn() {
+        this.replaceReferencesMapperAndCheck(
+                "B:D",
+                SpreadsheetSelection.parseColumn("E"),
+                3,
+                0
+        );
+    }
+
     // count............................................................................................................
 
     @Test

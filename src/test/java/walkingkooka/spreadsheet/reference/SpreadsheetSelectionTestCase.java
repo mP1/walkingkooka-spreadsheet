@@ -437,6 +437,69 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // ReplaceReferencesMapper..........................................................................................
+
+    @Test
+    public final void testReplaceReferencesMapperNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.A1.replaceReferencesMapper(null)
+        );
+    }
+
+    @Test
+    public final void testReplaceReferencesMapperLabelFails() {
+        this.replaceReferencesMapperFails(
+                SpreadsheetSelection.labelName("Label123"),
+                "Expected non label but got Label123"
+        );
+    }
+
+    final void replaceReferencesMapperFails(final SpreadsheetSelection moveTo,
+                                            final String message) {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSelection()
+                        .replaceReferencesMapper(moveTo)
+        );
+
+        this.checkEquals(
+                message,
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    final void replaceReferencesMapperAndCheck(final String selection,
+                                               final SpreadsheetSelection moveTo,
+                                               final int deltaX,
+                                               final int deltaY) {
+        this.replaceReferencesMapperAndCheck(
+                this.parseString(selection),
+                moveTo,
+                deltaX,
+                deltaY
+        );
+    }
+
+    final void replaceReferencesMapperAndCheck(final SpreadsheetSelection selection,
+                                               final SpreadsheetSelection moveTo,
+                                               final int deltaX,
+                                               final int deltaY) {
+        final SpreadsheetSelectionReplaceReferencesMapperFunction mapper = (SpreadsheetSelectionReplaceReferencesMapperFunction)
+                selection.replaceReferencesMapper(moveTo);
+        this.checkEquals(
+                deltaX,
+                mapper.deltaX,
+                "deltaX"
+        );
+        this.checkEquals(
+                deltaY,
+                mapper.deltaY,
+                "deltaY"
+        );
+    }
+
     // containsAll.......................................................................................................
 
     @Test

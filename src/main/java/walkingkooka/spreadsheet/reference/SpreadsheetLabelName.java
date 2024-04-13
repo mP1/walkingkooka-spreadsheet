@@ -31,6 +31,7 @@ import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -217,6 +218,13 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     public SpreadsheetLabelName addIfRelative(final int column,
                                               final int row) {
         return this;
+    }
+
+    // replaceReferencesMapper..........................................................................................
+
+    @Override
+    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
+        throw new UnsupportedOperationException();
     }
 
     // testXXX..........................................................................................................
