@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
 import walkingkooka.datetime.compare.DateTimeComparators;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 
@@ -46,6 +47,19 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         );
     }
 
+    /**
+     * {@see SpreadsheetCellComparator}
+     */
+    public static Comparator<SpreadsheetCell> cell(final List<SpreadsheetComparator<?>> spreadsheetComparators,
+                                                   final boolean missingIsBefore,
+                                                   final SpreadsheetComparatorContext context) {
+        return SpreadsheetCellComparator.with(
+                spreadsheetComparators,
+                missingIsBefore,
+                context
+        );
+    }
+
     public static SpreadsheetComparator<LocalDate> date() {
         return DATE;
     }
@@ -63,7 +77,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             LocalDateTime.class,
             Comparator.naturalOrder()
     );
-    
+
 
     public static SpreadsheetComparator<LocalDate> dayOfMonth() {
         return DAY_OF_MONTH;
