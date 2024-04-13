@@ -36,7 +36,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<BasicSpreadsheetConverterContext> {
+public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetConverterContextTesting<BasicSpreadsheetConverterContext> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DEFAULT;
 
