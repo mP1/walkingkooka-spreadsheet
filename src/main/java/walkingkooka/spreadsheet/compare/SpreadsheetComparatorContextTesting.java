@@ -20,4 +20,9 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.convert.ConverterContextTesting;
 
 public interface SpreadsheetComparatorContextTesting<C extends SpreadsheetComparatorContext> extends ConverterContextTesting<C> {
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetComparatorContext.class.getSimpleName();
+    }
 }
