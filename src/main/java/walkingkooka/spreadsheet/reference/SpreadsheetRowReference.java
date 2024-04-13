@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -139,6 +140,21 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
                 this :
                 this.add(delta);
     }
+
+    // replaceReferencesMapper..........................................................................................
+
+    @Override
+    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection moveTo) {
+        if (moveTo.isColumnReference() || moveTo.isColumnRangeReference()) {
+            throw new IllegalArgumentException("Expected rows(s) or cell(s) but got " + moveTo);
+        }
+        return SpreadsheetSelectionReplaceReferencesMapperFunction.with(
+                0,
+                moveTo.toRow().value() - this.value
+        );
+    }
+
+    // max..............................................................................................................
 
     @Override
     int max() {

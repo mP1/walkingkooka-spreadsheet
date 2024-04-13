@@ -740,6 +740,68 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // replaceReferencesMapper..........................................................................................
+
+    @Test
+    public void testReplaceReferencesMapperCell() {
+        this.replaceReferencesMapperAndCheck(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.parseCell("B4"),
+                1,
+                3
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperCell2() {
+        this.replaceReferencesMapperAndCheck(
+                SpreadsheetSelection.parseCell("B4"),
+                SpreadsheetSelection.A1,
+                -1,
+                -3
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperCell3() {
+        this.replaceReferencesMapperAndCheck(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.A1,
+                0,
+                0
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperColumn() {
+        this.replaceReferencesMapperAndCheck(
+                "B4",
+                SpreadsheetSelection.parseColumn("E"),
+                3,
+                0
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperRow() {
+        this.replaceReferencesMapperAndCheck(
+                "B4",
+                SpreadsheetSelection.parseRow("8"),
+                0,
+                4
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperCellRange() {
+        this.replaceReferencesMapperAndCheck(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.parseCellRange("B4:D9"),
+                1,
+                3
+        );
+    }
+
     // CanReplaceReference..............................................................................................
 
     @Test

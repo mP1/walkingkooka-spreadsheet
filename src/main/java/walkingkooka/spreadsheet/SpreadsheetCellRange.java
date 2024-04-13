@@ -148,21 +148,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
     }
 
     private SpreadsheetCellRange move0(final SpreadsheetCellRangeReference to) {
-        final SpreadsheetCellRangeReference from = this.range;
-
-        final SpreadsheetCellReference fromBegin = from.begin();
-        final SpreadsheetCellReference toBegin = to.begin();
-
-        final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper = SpreadsheetCellRangeMoveMapper.with(
-                toBegin.column()
-                        .value() -
-                        fromBegin.column()
-                                .value(),
-                toBegin.row()
-                        .value() -
-                        fromBegin.row()
-                                .value()
-        );
+        final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper = this.range.replaceReferencesMapper(to);
 
         final Set<SpreadsheetCell> movedCells = Sets.sorted();
 

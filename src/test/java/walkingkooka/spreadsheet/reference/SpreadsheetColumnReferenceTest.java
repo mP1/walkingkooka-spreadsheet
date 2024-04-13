@@ -57,6 +57,54 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.textAndCheck("B");
     }
 
+    // replaceReferencesMapper..........................................................................................
+
+    @Test
+    public void testReplaceReferenceMapperRowFails() {
+        this.replaceReferencesMapperFails(
+                SpreadsheetSelection.parseRow("2"),
+                "Expected column(s) or cell(s) but got 2"
+        );
+    }
+
+    @Test
+    public void testReplaceReferenceMapperRowRangeFails() {
+        this.replaceReferencesMapperFails(
+                SpreadsheetSelection.parseRowRange("3:4"),
+                "Expected column(s) or cell(s) but got 3:4"
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperColumn() {
+        this.replaceReferencesMapperAndCheck(
+                "A",
+                SpreadsheetSelection.parseColumn("C"),
+                2,
+                0
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperColumn2() {
+        this.replaceReferencesMapperAndCheck(
+                "B",
+                SpreadsheetSelection.parseColumn("E"),
+                3,
+                0
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperRangeColumn() {
+        this.replaceReferencesMapperAndCheck(
+                "B",
+                SpreadsheetSelection.parseColumnRange("E:Z"),
+                3,
+                0
+        );
+    }
+
     // count............................................................................................................
 
     @Test

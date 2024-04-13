@@ -639,6 +639,26 @@ public abstract class SpreadsheetSelection implements HasText,
         }
     }
 
+    // replaceReferencesMapper..........................................................................................
+
+    /**
+     * Returns a {@link Function} which can be used as an argument to {@link SpreadsheetCellReference#replaceReferences(Function)},
+     * moving any cell-references by the delta amount.
+     */
+    public final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper(final SpreadsheetSelection movedTo) {
+        Objects.requireNonNull(movedTo, "movedTo");
+
+        if (movedTo.isLabelName()) {
+            throw new IllegalArgumentException("Expected non label but got " + movedTo);
+        }
+
+        return this.replaceReferencesMapper0(movedTo);
+    }
+
+    abstract Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection movedTo);
+
+    // count............................................................................................................
+
     /**
      * Returns the number of elements in this {@link SpreadsheetSelection}, where element may be cells, columns or rows.
      * <pre>

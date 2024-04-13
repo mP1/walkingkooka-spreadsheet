@@ -538,7 +538,39 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
                 SpreadsheetSelection.parseRowRange("$4:7")
         );
     }
-    
+
+    // replaceReferencesMapper..........................................................................................
+
+    @Test
+    public void testReplaceReferencesMapperRow() {
+        this.replaceReferencesMapperAndCheck(
+                "1",
+                SpreadsheetSelection.parseRow("3"),
+                0,
+                2
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperRow2() {
+        this.replaceReferencesMapperAndCheck(
+                "2",
+                SpreadsheetSelection.parseRow("5"),
+                0,
+                3
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperRowRange() {
+        this.replaceReferencesMapperAndCheck(
+                "2:3",
+                SpreadsheetSelection.parseRowRange("5:7"),
+                0,
+                3
+        );
+    }
+
     // frozenRowsCheck...............................................................................................
 
     @Test
