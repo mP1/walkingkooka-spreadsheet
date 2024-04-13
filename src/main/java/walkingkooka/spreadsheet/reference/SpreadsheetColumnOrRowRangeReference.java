@@ -171,7 +171,8 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
 
     @Override
     public final SpreadsheetCellReference toCell() {
-        throw new UnsupportedOperationException();
+        return this.toScalar()
+                .toCell();
     }
 
     // Iterable.........................................................................................................

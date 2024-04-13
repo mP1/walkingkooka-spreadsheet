@@ -1245,6 +1245,24 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
+    // toCell...........................................................................................................
+
+    @Test
+    public void testToCell() {
+        this.toCellAndCheck(
+                "A:B",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testToCell2() {
+        this.toCellAndCheck(
+                "B:C",
+                "B1"
+        );
+    }
+
     // IterableTesting..................................................................................................
 
     @Test

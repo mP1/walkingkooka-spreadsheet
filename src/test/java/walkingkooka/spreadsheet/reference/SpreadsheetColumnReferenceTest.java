@@ -569,6 +569,24 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    // toCell...........................................................................................................
+
+    @Test
+    public void testToCell() {
+        this.toCellAndCheck(
+                "A",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testToCell2() {
+        this.toCellAndCheck(
+                "B",
+                "B1"
+        );
+    }
+
     // columnRange...................................................................................................,,,
 
     @Test
