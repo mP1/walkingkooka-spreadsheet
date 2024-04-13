@@ -183,6 +183,11 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
+    SpreadsheetSelection toScalarIfUnit() {
+        return this;
+    }
+
+    @Override
     Set<SpreadsheetViewportAnchor> anchors() {
         return ANCHORS;
     }

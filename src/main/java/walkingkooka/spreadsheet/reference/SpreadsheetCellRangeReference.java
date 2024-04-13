@@ -686,7 +686,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
         return other.map(
                 s -> anchor.cell(this)
                         .cellRange((SpreadsheetCellReference) s)
-                        .toScalar()
+                        .toScalarIfUnit()
         );
     }
 
@@ -706,6 +706,11 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
 
     @Override
     public SpreadsheetSelection toScalar() {
+        return this.begin();
+    }
+
+    @Override
+    SpreadsheetSelection toScalarIfUnit() {
         return this.isSingleCell() ?
                 this.begin() :
                 this;

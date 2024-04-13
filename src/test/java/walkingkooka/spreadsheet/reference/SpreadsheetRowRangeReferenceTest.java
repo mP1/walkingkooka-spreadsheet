@@ -1216,40 +1216,26 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     // toScalar.........................................................................................................
 
     @Test
-    public void testToScalarDifferentBeginAndEnd() {
+    public void testToScalar() {
         this.toScalarAndCheck(
-                "1:2"
-        );
-    }
-
-    @Test
-    public void testToScalarBeginAndEndDifferentKind() {
-        this.toScalarAndCheck(
-                "1:$2"
-        );
-    }
-
-    @Test
-    public void testToScalarBeginAndEndSame() {
-        this.toScalarAndCheck(
-                "1:1",
+                "1:2",
                 SpreadsheetSelection.parseRow("1")
         );
     }
 
     @Test
-    public void testToScalarBeginAndEndSame2() {
+    public void testToScalar2() {
         this.toScalarAndCheck(
-                "$1:1",
+                "$1:2",
                 SpreadsheetSelection.parseRow("$1")
         );
     }
 
     @Test
-    public void testToScalarBeginAndEndSame3() {
+    public void testToScalar3() {
         this.toScalarAndCheck(
-                "1:$1",
-                SpreadsheetSelection.parseRow("1")
+                "2:3",
+                SpreadsheetSelection.parseRow("2")
         );
     }
 

@@ -464,7 +464,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
         return other.map(
                 s -> anchor.row(this)
                         .rowRange((SpreadsheetRowReference) s)
-                        .toScalar()
+                        .toScalarIfUnit()
         );
     }
 

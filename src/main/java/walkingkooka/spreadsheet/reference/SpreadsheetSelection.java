@@ -889,9 +889,15 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetSelection toRelative();
 
     /**
-     * If this selection has a range and the lower and upper bounds are the same return the bound otherwise return this.
+     * Always returns a non range {@link SpreadsheetSelection}, ranges will return the lower bounds, and
+     * {@link SpreadsheetLabelName} which fails and throws a {@link UnsupportedOperationException}.
      */
     public abstract SpreadsheetSelection toScalar();
+
+    /**
+     * If a non range selection returns this, ranges if they have a coubt of 1 returns the begin, otherwise they return this..
+     */
+    abstract SpreadsheetSelection toScalarIfUnit();
 
     /**
      * Returns true if this selection matches everything. Non range selections will always return false.
