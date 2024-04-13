@@ -28,6 +28,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -1304,6 +1305,134 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // toCellRange(Label->CellRange.....................................................................................
+
+    @Test
+    public void testToCellRangeLabelsCell() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.A1,
+                "A1:A1"
+        );
+    }
+
+    @Test
+    public void testToCellRangeLabelsCellB2() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.parseCell("B2"),
+                "B2:B2"
+        );
+    }
+
+    @Test
+    public void testToCellRangeLabelsColumn() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.parseColumn("A"),
+                "A1:A1048576"
+        );
+    }
+
+    @Test
+    public void testToCellRangeLabelsColumn2() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.parseColumn("B"),
+                "B1:B1048576"
+        );
+    }
+
+    @Test
+    public void testToCellRangeLabelsColumnRange() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                "A1:B1048576"
+        );
+    }
+
+    @Test
+    public void testToCellRangeLabelsColumnRange2() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.parseColumnRange("B:C"),
+                "B1:C1048576"
+        );
+    }
+
+    @Test
+    public void testToCellRangeLabelsRow() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.parseRow("1"),
+                "A1:XFD1"
+        );
+    }
+
+    @Test
+    public void testToCellRangeLabelsRow2() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.parseRow("2"),
+                "A2:XFD2"
+        );
+    }
+
+    @Test
+    public void testToCellRangeLabelsRowRange() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.parseRowRange("1:2"),
+                "A1:XFD2"
+        );
+    }
+
+    @Test
+    public void testToCellRangeLabelsRowRange2() {
+        this.toCellRangeLabelsAndCheck(
+                SpreadsheetSelection.parseRowRange("2:3"),
+                "A2:XFD3"
+        );
+    }
+
+    private void toCellRangeLabelsAndCheck(final SpreadsheetSelection selection,
+                                           final String expected) {
+        this.toCellRangeLabelsAndCheck(
+                selection,
+                (l) -> {
+                    throw new UnsupportedOperationException();
+                },
+                SpreadsheetSelection.parseCellRange(expected)
+        );
+    }
+
+
+    private void toCellRangeLabelsAndCheck(final SpreadsheetSelection selection,
+                                           final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRangeLabels,
+                                           final String expected) {
+        this.toCellRangeLabelsAndCheck(
+                selection,
+                labelToCellRangeLabels,
+                SpreadsheetSelection.parseCellRange(expected)
+        );
+    }
+
+    private void toCellRangeLabelsAndCheck(final SpreadsheetSelection selection,
+                                           final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRangeLabels,
+                                           final SpreadsheetCellRangeReference expected) {
+        this.toCellRangeLabelsAndCheck(
+                selection,
+                labelToCellRangeLabels,
+                Optional.of(
+                        expected
+                )
+        );
+    }
+
+    private void toCellRangeLabelsAndCheck(final SpreadsheetSelection selection,
+                                           final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRangeLabels,
+                                           final Optional<SpreadsheetCellRangeReference> expected) {
+        this.checkEquals(
+                expected,
+                selection.toCellRange(
+                        labelToCellRangeLabels
+                ),
+                () -> selection.toString()
+        );
+    }
+    
     // deletedText.......................................................................................................
 
     @Test
