@@ -26,6 +26,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
@@ -44,6 +45,25 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                 comparator
         );
     }
+
+    public static SpreadsheetComparator<LocalDate> date() {
+        return DATE;
+    }
+
+    private final static SpreadsheetComparator<LocalDate> DATE = basic(
+            LocalDate.class,
+            Comparator.naturalOrder()
+    );
+
+    public static SpreadsheetComparator<LocalDateTime> dateTime() {
+        return DATETIME;
+    }
+
+    private final static SpreadsheetComparator<LocalDateTime> DATETIME = basic(
+            LocalDateTime.class,
+            Comparator.naturalOrder()
+    );
+    
 
     public static SpreadsheetComparator<LocalDate> dayOfMonth() {
         return DAY_OF_MONTH;
@@ -236,6 +256,15 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<String> STRING_CASE_INSENSITIVE = basic(
             String.class,
             String.CASE_INSENSITIVE_ORDER
+    );
+
+    public static SpreadsheetComparator<LocalTime> time() {
+        return TIME;
+    }
+
+    private final static SpreadsheetComparator<LocalTime> TIME = basic(
+            LocalTime.class,
+            Comparator.naturalOrder()
     );
 
     public static SpreadsheetComparator<LocalDate> year() {

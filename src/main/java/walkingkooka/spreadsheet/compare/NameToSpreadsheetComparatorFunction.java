@@ -39,6 +39,12 @@ final class NameToSpreadsheetComparatorFunction implements Function<String, Spre
         final SpreadsheetComparator<?> comparator;
 
         switch (name) {
+            case "date":
+                comparator = SpreadsheetComparators.date();
+                break;
+            case "date-time":
+                comparator = SpreadsheetComparators.dateTime();
+                break;
             case "day-of-month":
                 comparator = SpreadsheetComparators.dayOfMonth();
                 break;
@@ -68,6 +74,9 @@ final class NameToSpreadsheetComparatorFunction implements Function<String, Spre
                 break;
             case "string-case-insensitive":
                 comparator = SpreadsheetComparators.stringCaseInsensitive();
+                break;
+            case "time":
+                comparator = SpreadsheetComparators.time();
                 break;
             case "year":
                 comparator = SpreadsheetComparators.year();

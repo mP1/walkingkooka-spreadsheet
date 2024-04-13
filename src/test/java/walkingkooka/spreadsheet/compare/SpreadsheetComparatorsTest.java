@@ -27,6 +27,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.function.Function;
@@ -35,6 +36,36 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesting<SpreadsheetComparators>,
         ComparatorTesting {
+
+    @Test
+    public void testDate() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.date(),
+                LocalDate.class,
+                LocalDate.of(1999, 1, 31),
+                LocalDate.of(2001, 12, 1)
+        );
+    }
+
+    @Test
+    public void testDate2() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.date(),
+                LocalDate.class,
+                LocalDate.of(1999, 1, 1),
+                LocalDate.of(2001, 2, 2)
+        );
+    }
+
+    @Test
+    public void testDateTime() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.dateTime(),
+                LocalDateTime.class,
+                LocalDateTime.of(1999, 1, 31, 12, 58, 59),
+                LocalDateTime.of(2001, 12, 1, 12, 58, 59)
+        );
+    }
 
     @Test
     public void testDayOfMonth() {
@@ -187,6 +218,16 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 String.class,
                 "abc",
                 "BCD"
+        );
+    }
+
+    @Test
+    public void testTime() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.time(),
+                LocalTime.class,
+                LocalTime.of(1, 58, 59),
+                LocalTime.of(2, 58, 59)
         );
     }
 
