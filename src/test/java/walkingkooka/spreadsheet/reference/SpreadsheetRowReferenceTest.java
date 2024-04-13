@@ -562,6 +562,24 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 () -> "min of " + reference + " and " + other);
     }
 
+    // toCell...........................................................................................................
+
+    @Test
+    public void testToCell() {
+        this.toCellAndCheck(
+                "1",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testToCell2() {
+        this.toCellAndCheck(
+                "2",
+                "A2"
+        );
+    }
+
     // toCellRange.....................................................................................................
 
     @Test

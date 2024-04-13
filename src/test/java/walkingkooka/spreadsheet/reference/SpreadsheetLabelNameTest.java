@@ -268,8 +268,12 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     // toCellOrFail.....................................................................................................
 
     @Test
-    public void testToCellOrFailFails() {
-        this.toCellFails();
+    public void testToCellFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection()
+                        .toCell()
+        );
     }
 
     // toCellOrCellRange................................................................................................

@@ -234,6 +234,15 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return false;
     }
 
+    // toCell............................................................................................................
+
+    @Override
+    public SpreadsheetCellReference toCell() {
+        return this.setRow(
+                SpreadsheetReferenceKind.RELATIVE.firstRow()
+        );
+    }
+
     // toRelative.......................................................................................................
 
     @Override

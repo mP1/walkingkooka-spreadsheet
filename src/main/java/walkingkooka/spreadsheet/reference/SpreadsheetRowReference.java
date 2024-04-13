@@ -255,6 +255,15 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return SpreadsheetRowRangeReference.with(this.range(other));
     }
 
+    // toCell............................................................................................................
+
+    @Override
+    public SpreadsheetCellReference toCell() {
+        return this.setColumn(
+                SpreadsheetReferenceKind.RELATIVE.firstColumn()
+        );
+    }
+
     @Override
     public SpreadsheetColumnReference toColumn() {
         throw new UnsupportedOperationException(this.toString());
