@@ -38,7 +38,21 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
                 NullPointerException.class,
                 () -> SpreadsheetCellComparator.with(
                         null,
-                        true,
+                        SpreadsheetComparatorMissingValues.BEFORE,
+                        SpreadsheetComparatorContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullMissingValuesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetCellComparator.with(
+                        Lists.of(
+                                SpreadsheetComparators.fake()
+                        ),
+                        null,
                         SpreadsheetComparatorContexts.fake()
                 )
         );
@@ -52,7 +66,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
                         Lists.of(
                                 SpreadsheetComparators.fake()
                         ),
-                        true,
+                        SpreadsheetComparatorMissingValues.BEFORE,
                         null
                 )
         );
@@ -66,7 +80,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "string",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 text1,
                 text2,
@@ -83,7 +97,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "string",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 text2,
                 text1,
@@ -100,7 +114,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "string",
-                        false // missingBefore
+                        SpreadsheetComparatorMissingValues.AFTER
                 ),
                 text1,
                 date2,
@@ -117,7 +131,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "string",
-                        false // missingBefore
+                        SpreadsheetComparatorMissingValues.AFTER
                 ),
                 date2,
                 text1,
@@ -134,7 +148,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "string",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 text2,
                 date1,
@@ -151,7 +165,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "string",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 date1,
                 text2,
@@ -168,7 +182,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "date",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 date1,
                 date2,
@@ -186,7 +200,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "day-of-month,month-of-year,year",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 date3,
                 date2,
@@ -206,7 +220,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "day-of-month DOWN,month-of-year DOWN,year DOWN",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 date3,
                 date2,
@@ -226,7 +240,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "day-of-month UP,month-of-year UP,year UP",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 date3,
                 date2,
@@ -239,7 +253,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "day-of-month UP,month-of-year UP,year UP",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 date3,
                 date1,
@@ -260,7 +274,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "day-of-month UP,month-of-year UP,year UP",
-                        true // missingBefore
+                        SpreadsheetComparatorMissingValues.BEFORE
                 ),
                 date3,
                 date2,
@@ -283,7 +297,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "day-of-month UP,month-of-year UP,year UP",
-                        false // missingBefore
+                        SpreadsheetComparatorMissingValues.AFTER
                 ),
                 date3,
                 date2,
@@ -307,7 +321,7 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
         this.comparatorArraySortAndCheck(
                 this.createComparator(
                         "day-of-month UP,month-of-year UP,year UP",
-                        false // missingBefore
+                        SpreadsheetComparatorMissingValues.AFTER
                 ),
                 date3,
                 date2,
@@ -337,18 +351,18 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
     public SpreadsheetCellComparator createComparator() {
         return this.createComparator(
                 "day-of-month UP,month-of-year UP,year",
-                true // missingBefore=true
+                SpreadsheetComparatorMissingValues.BEFORE
         );
     }
 
     private SpreadsheetCellComparator createComparator(final String comparators,
-                                                       final boolean missingBefore) {
+                                                       final SpreadsheetComparatorMissingValues missingValues) {
         return SpreadsheetCellComparator.with(
                 SpreadsheetComparators.parse(
                         comparators,
                         SpreadsheetComparators.nameToSpreadsheetComparator()
                 ),
-                missingBefore,
+                missingValues,
                 new FakeSpreadsheetComparatorContext() {
                     @Override
                     public <T> Either<T, String> convert(final Object value,
