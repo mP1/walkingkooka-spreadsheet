@@ -63,7 +63,7 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
 
     /**
      * Attempts to resolve the given {@link SpreadsheetExpressionReference} which may be a label to a {@link SpreadsheetCellRangeReference}.
-     * This exists primarily so this can be passed as a method reference to {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection#toCellRange(Function)}.
+     * This exists primarily so this can be passed as a method reference to {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection#toCellRangeResolvingLabels(Function)}.
      */
     default Optional<SpreadsheetCellRangeReference> cellRange(final SpreadsheetExpressionReference reference) {
         return this.cellReferenceOrRange(reference)

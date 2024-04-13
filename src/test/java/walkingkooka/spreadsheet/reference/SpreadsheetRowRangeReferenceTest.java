@@ -1257,13 +1257,6 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
         );
     }
 
-    // toCellRange.....................................................................................................
-
-    @Test
-    public void testToCellRangeFails() {
-        this.toCellRangeWithNullFunctionFails();
-    }
-
     // toColumn.........................................................................................................
 
     @Test

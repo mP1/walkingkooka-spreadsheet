@@ -27,13 +27,13 @@ import java.util.function.Function;
  * Labels will be resolved until the final destination cell or cell-range is found. A single column wll be made into
  * a {@link SpreadsheetCellRangeReference} that includes all cells for that column.
  */
-final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static Optional<SpreadsheetCellRangeReference> toCellRange(final SpreadsheetSelection selection,
                                                                final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
         Objects.requireNonNull(labelToCellRange, "labelToCellRange");
 
-        final SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor visitor = new SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor(labelToCellRange);
+        final SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor visitor = new SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor(labelToCellRange);
         visitor.accept(selection);
 
         return Optional.ofNullable(
@@ -41,7 +41,7 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
         );
     }
 
-    private SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
+    private SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
         this.labelToCellRange = labelToCellRange;
     }
 
@@ -52,7 +52,7 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
 
     @Override
     protected void visit(final SpreadsheetCellReference reference) {
-        this.cellRange = reference.cellRange(reference); // toCellRange will result in StackOverflowError
+        this.cellRange = reference.cellRange(reference); // toCellRangeResolvingLabels will result in StackOverflowError
     }
 
     @Override

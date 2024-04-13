@@ -780,7 +780,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * This only returns for cell and cell-range, other selections will throw a {@link UnsupportedOperationException}.
      */
     public final SpreadsheetCellRangeReference toCellRange() {
-        return this.toCellRange(LABEL_TO_CELL_RANGE_UOE)
+        return this.toCellRangeResolvingLabels(LABEL_TO_CELL_RANGE_UOE)
                 .get(); // always works because Labels will throw UOE.
     }
 
@@ -793,8 +793,8 @@ public abstract class SpreadsheetSelection implements HasText,
      * <br>
      * A {@link SpreadsheetCellReference} will become a range with a single cell, a column will become a range that includes all cells etc.
      */
-    public final Optional<SpreadsheetCellRangeReference> toCellRange(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
-        return SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor.toCellRange(
+    public final Optional<SpreadsheetCellRangeReference> toCellRangeResolvingLabels(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
+        return SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor.toCellRange(
                 this,
                 labelToCellRange
         );

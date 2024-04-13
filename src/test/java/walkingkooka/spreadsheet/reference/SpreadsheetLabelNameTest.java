@@ -513,14 +513,14 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
                 false);
     }
 
-    // toCellRange.....................................................................................................
+    // toCellRangeResolvingLabels.......................................................................................
 
     @Test
-    public void testToCellRangeUnknownLabel() {
+    public void testToCellRangeResolvingLabelsUnknownLabel() {
         final SpreadsheetLabelName name = SpreadsheetLabelName.with("Label123");
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
 
-        this.toCellRangeAndCheck(
+        this.toCellRangeResolvingLabelsAndCheck(
                 name,
                 (l) -> {
                     this.checkEquals(name, l);
@@ -531,11 +531,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testToCellRange() {
+    public void testToCellRangeResolvingLabels() {
         final SpreadsheetLabelName name = SpreadsheetLabelName.with("Label123");
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
 
-        this.toCellRangeAndCheck(
+        this.toCellRangeResolvingLabelsAndCheck(
                 name,
                 (l) -> {
                     this.checkEquals(name, l);
@@ -548,11 +548,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testToCellRange2() {
+    public void testToCellRangeResolvingLabels2() {
         final SpreadsheetLabelName name = SpreadsheetLabelName.with("Label123");
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("C3:D4");
 
-        this.toCellRangeAndCheck(
+        this.toCellRangeResolvingLabelsAndCheck(
                 name,
                 (l) -> {
                     this.checkEquals(name, l);

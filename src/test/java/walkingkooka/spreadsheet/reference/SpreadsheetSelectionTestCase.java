@@ -261,26 +261,28 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // toCellRange.....................................................................................................
+    // toCellRangeResolvingLabels.......................................................................................
 
-    final void toCellRangeWithNullFunctionFails() {
+    @Test
+    public final void testToCellRangeResolvingLabelsWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createSelection().toCellRange(null)
+                () -> this.createSelection()
+                        .toCellRangeResolvingLabels(null)
         );
     }
 
-    final void toCellRangeAndCheck(final String selection,
-                                   final String expected) {
-        this.toCellRangeAndCheck(
+    final void toCellRangeResolvingLabelsAndCheck(final String selection,
+                                                  final String expected) {
+        this.toCellRangeResolvingLabelsAndCheck(
                 this.parseString(selection),
                 SpreadsheetSelection.parseCellRange(expected)
         );
     }
 
-    final void toCellRangeAndCheck(final SpreadsheetSelection selection,
-                                   final SpreadsheetCellRangeReference expected) {
-        this.toCellRangeAndCheck(
+    final void toCellRangeResolvingLabelsAndCheck(final SpreadsheetSelection selection,
+                                                  final SpreadsheetCellRangeReference expected) {
+        this.toCellRangeResolvingLabelsAndCheck(
                 selection,
                 (l) -> {
                     throw new UnsupportedOperationException(l.toString());
@@ -289,23 +291,23 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void toCellRangeAndCheck(final SpreadsheetSelection selection,
-                                   final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange,
-                                   final SpreadsheetCellRangeReference expected) {
-        this.toCellRangeAndCheck(
+    final void toCellRangeResolvingLabelsAndCheck(final SpreadsheetSelection selection,
+                                                  final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange,
+                                                  final SpreadsheetCellRangeReference expected) {
+        this.toCellRangeResolvingLabelsAndCheck(
                 selection,
                 labelToCellRange,
                 Optional.of(expected)
         );
     }
 
-    final void toCellRangeAndCheck(final SpreadsheetSelection selection,
-                                   final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange,
-                                   final Optional<SpreadsheetCellRangeReference> expected) {
+    final void toCellRangeResolvingLabelsAndCheck(final SpreadsheetSelection selection,
+                                                  final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange,
+                                                  final Optional<SpreadsheetCellRangeReference> expected) {
         this.checkEquals(
                 expected,
-                selection.toCellRange(labelToCellRange),
-                () -> selection + " toCellRange"
+                selection.toCellRangeResolvingLabels(labelToCellRange),
+                () -> selection + " toCellRangeResolvingLabels"
         );
     }
 
