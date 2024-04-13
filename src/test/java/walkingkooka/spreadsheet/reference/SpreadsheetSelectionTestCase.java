@@ -788,7 +788,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalar),
+                expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.leftColumn(
                         anchor,
                         SpreadsheetViewportNavigationContexts.basic(
@@ -834,7 +834,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Function<SpreadsheetRowReference, Double> rowHeight,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalar),
+                expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.leftPixels(
                         anchor,
                         count,
@@ -872,7 +872,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                              final Predicate<SpreadsheetRowReference> hiddenRows,
                              final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalar),
+                expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.upRow(
                         anchor,
                         SpreadsheetViewportNavigationContexts.basic(
@@ -918,7 +918,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Function<SpreadsheetRowReference, Double> rowHeight,
                                    final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalar),
+                expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.upPixels(
                         anchor,
                         count,
@@ -956,7 +956,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalar),
+                expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.rightColumn(
                         anchor,
                         SpreadsheetViewportNavigationContexts.basic(
@@ -1002,7 +1002,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Function<SpreadsheetRowReference, Double> rowHeight,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalar),
+                expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.rightPixels(
                         anchor,
                         count,
@@ -1040,7 +1040,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final Predicate<SpreadsheetRowReference> hiddenRows,
                                final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalar),
+                expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.downRow(
                         anchor,
                         SpreadsheetViewportNavigationContexts.basic(
@@ -1086,7 +1086,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Function<SpreadsheetRowReference, Double> rowHeight,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalar),
+                expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.downPixels(
                         anchor,
                         count,
@@ -1120,7 +1120,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
         this.extendRangeAndCheck(
                 parsed,
-                this.parseString(moved).toScalar(),
+                this.parseString(moved)
+                        .toScalarIfUnit(),
                 anchor,
                 parsed
         );
@@ -1143,7 +1144,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final String expected) {
         this.extendRangeAndCheck(
                 this.parseString(selection),
-                this.parseString(moved).toScalar(),
+                this.parseString(moved)
+                        .toScalarIfUnit(),
                 anchor,
                 this.parseRange(expected)
         );
@@ -1173,7 +1175,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             );
         }
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalar),
+                expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.extendRange(Cast.to(moved), anchor),
                 () -> selection + " extendRange " + moved + " " + anchor
         );
@@ -1285,7 +1287,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 this.hiddenColumns(hiddenColumns),
                 this.hiddenRows(hiddenRows),
                 this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.toScalar()
+                        s -> s.toScalarIfUnit()
                                 .setAnchor(expectedAnchor)
                 )
         );
@@ -1564,7 +1566,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         return Optional.ofNullable(
                 CharSequences.isNullOrEmpty(text) ?
                         null :
-                        this.parseRange(text).toScalar()
+                        this.parseRange(text)
+                                .toScalarIfUnit()
         );
     }
 
@@ -1641,7 +1644,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.focusedAndCheck(
                 this.parseString(selection),
                 anchor,
-                this.parseString(expected).toScalar()
+                this.parseString(expected)
+                        .toScalarIfUnit()
         );
     }
 
@@ -1686,9 +1690,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void toScalarAndCheck(final S selection,
                                 final SpreadsheetSelection expected) {
+        final SpreadsheetSelection scalar = selection.toScalar();
+
+        if (scalar.isCellRangeReference() || scalar.isColumnRangeReference() || scalar.isRowRangeReference()) {
+            throw new IllegalStateException("Scalar " + scalar + " of " + selection + " must not be a range");
+        }
+
         this.checkEquals(
                 expected,
-                selection.toScalar(),
+                scalar,
                 () -> "toScalar " + selection
         );
     }

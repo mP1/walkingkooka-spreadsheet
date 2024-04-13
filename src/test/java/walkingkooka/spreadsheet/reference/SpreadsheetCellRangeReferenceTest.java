@@ -688,32 +688,26 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     // toScalar.........................................................................................................
 
     @Test
-    public void testToScalarDifferentBeginAndEnd() {
+    public void testToScalar() {
         this.toScalarAndCheck(
-                "A1:B2"
-        );
-    }
-
-    @Test
-    public void testToScalarBeginAndEndDifferentKind() {
-        this.toScalarAndCheck(
-                "A1:$B$2"
-        );
-    }
-
-    @Test
-    public void testToScalarBeginAndEndSame() {
-        this.toScalarAndCheck(
-                "A1:A1",
+                "A1:B2",
                 SpreadsheetSelection.A1
         );
     }
 
     @Test
-    public void testToScalarBeginAndEndSame2() {
+    public void testToScalar2() {
         this.toScalarAndCheck(
-                "$A$1:A1",
-                SpreadsheetSelection.parseCell("$A$1")
+                "B2:C3",
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    public void testToScalar3() {
+        this.toScalarAndCheck(
+                "$C$3:D4",
+                SpreadsheetSelection.parseCell("$C$3")
         );
     }
 

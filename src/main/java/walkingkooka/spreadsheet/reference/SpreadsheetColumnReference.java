@@ -491,7 +491,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
-                o -> this.columnRange((SpreadsheetColumnReference) o).toScalar()
+                o -> this.columnRange((SpreadsheetColumnReference) o)
+                        .toScalarIfUnit()
         );
     }
 

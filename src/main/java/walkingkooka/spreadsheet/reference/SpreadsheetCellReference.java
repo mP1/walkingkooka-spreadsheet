@@ -278,6 +278,11 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
+    SpreadsheetSelection toScalarIfUnit() {
+        return this;
+    }
+
+    @Override
     Set<SpreadsheetViewportAnchor> anchors() {
         return ANCHORS;
     }
@@ -653,7 +658,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
                 o -> this.cellRange((SpreadsheetCellReference) o)
-                        .toScalar()
+                        .toScalarIfUnit()
         );
     }
 

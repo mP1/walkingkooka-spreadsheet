@@ -158,6 +158,11 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     }
 
     @Override
+    final SpreadsheetSelection toScalarIfUnit() {
+        return this;
+    }
+
+    @Override
     public final SpreadsheetCellReference toCell() {
         throw new UnsupportedOperationException();
     }

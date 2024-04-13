@@ -88,15 +88,6 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
         );
     }
 
-    // toScalar.........................................................................................................
-
-    @Test
-    public final void testToScalar() {
-        this.toScalarAndCheck(
-                this.createSelection()
-        );
-    }
-
     // toCellOrFail.....................................................................................................
 
     @Test
