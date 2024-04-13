@@ -109,7 +109,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkDeltaProperties(deltaProperties);
         checkContext(context);
 
-        final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRange(context.storeRepository().labels()::cellRange);
+        final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRangeResolvingLabels(
+                context.storeRepository()
+                        .labels()::cellRange
+        );
 
         return cells.isPresent() ?
                 this.loadCells0(
@@ -273,7 +276,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
             final SpreadsheetStoreRepository repository = context.storeRepository();
-            final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRange(
+            final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRangeResolvingLabels(
                     repository.labels()::cellRange
             );
             if (cells.isPresent()) {

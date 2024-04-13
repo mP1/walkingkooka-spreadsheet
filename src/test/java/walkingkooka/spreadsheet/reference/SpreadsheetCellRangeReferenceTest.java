@@ -723,19 +723,19 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         );
     }
 
-    // toCellRange.....................................................................................................
+    // toCellRangeResolvingLabels.......................................................................................
 
     @Test
-    public void testToCellRange() {
-        this.toCellRangeAndCheck(
+    public void testToCellRangeResolvingLabels() {
+        this.toCellRangeResolvingLabelsAndCheck(
                 "A1:B2",
                 "A1:B2"
         );
     }
 
     @Test
-    public void testToCellRange2() {
-        this.toCellRangeAndCheck(
+    public void testToCellRangeResolvgLabels2() {
+        this.toCellRangeResolvingLabelsAndCheck(
                 "C3",
                 "C3"
         );

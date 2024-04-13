@@ -209,19 +209,19 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    // toCellRange.....................................................................................................
+    // toCellRangeResolvingLabels........................................................................................
 
     @Test
-    public void testToCellRange() {
-        this.toCellRangeAndCheck(
+    public void testToCellRangeResolvingLabels() {
+        this.toCellRangeResolvingLabelsAndCheck(
                 "A1",
                 "A1"
         );
     }
 
     @Test
-    public void testToCellRange2() {
-        this.toCellRangeAndCheck(
+    public void testToCellRangeResolvingLabels2() {
+        this.toCellRangeResolvingLabelsAndCheck(
                 "B2",
                 "B2"
         );
@@ -959,7 +959,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    // toCellRange......................................................................................................
+    // toCellRangeResolvingLabels......................................................................................................
 
     @Test
     public void testToCellRangeAbsolute() {

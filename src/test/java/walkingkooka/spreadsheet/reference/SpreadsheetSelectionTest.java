@@ -1206,7 +1206,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // toCellRange.......................................................................................................
+    // toCellRangeResolvingLabels.......................................................................................................
 
     @Test
     public void testToCellRangeCell() {
@@ -1305,7 +1305,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // toCellRange(Label->CellRange.....................................................................................
+    // toCellRangeResolvingLabels(Label->CellRange.....................................................................................
 
     @Test
     public void testToCellRangeLabelsCell() {
@@ -1426,7 +1426,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                                            final Optional<SpreadsheetCellRangeReference> expected) {
         this.checkEquals(
                 expected,
-                selection.toCellRange(
+                selection.toCellRangeResolvingLabels(
                         labelToCellRangeLabels
                 ),
                 () -> selection.toString()
