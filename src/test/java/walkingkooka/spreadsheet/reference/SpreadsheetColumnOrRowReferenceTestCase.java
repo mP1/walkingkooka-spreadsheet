@@ -151,6 +151,19 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         );
     }
 
+    // columnOrRowReferenceKind.........................................................................................
+
+    public abstract void testColumnOrRowReferenceKind();
+
+    final void columnOrRowReferenceKindAndCheck(final R selection,
+                                                final SpreadsheetColumnOrRowReferenceKind expected) {
+        this.checkEquals(
+                expected,
+                selection.columnOrRowReferenceKind(),
+                () -> selection.toString()
+        );
+    }
+
     // setReferenceKind.................................................................................................
 
     @Test

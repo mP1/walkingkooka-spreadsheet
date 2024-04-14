@@ -105,6 +105,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    // columnOrRowReferenceKind.........................................................................................
+
+    @Test
+    public void testColumnOrRowReferenceKind() {
+        this.columnOrRowReferenceKindAndCheck(
+                this.createSelection(),
+                SpreadsheetColumnOrRowReferenceKind.COLUMN
+        );
+    }
+
     // count............................................................................................................
 
     @Test
