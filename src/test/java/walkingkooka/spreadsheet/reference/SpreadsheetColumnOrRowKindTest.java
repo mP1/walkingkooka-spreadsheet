@@ -20,8 +20,10 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.test.ParseStringTesting;
 
-public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<SpreadsheetColumnOrRowKind> {
+public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<SpreadsheetColumnOrRowKind>,
+        ParseStringTesting<SpreadsheetColumnOrRowReference> {
 
     // firstAbsolute....................................................................................................
 
@@ -173,6 +175,64 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
         );
     }
 
+    // parse............................................................................................................
+
+    @Test
+    public void testParseCellFails() {
+        this.parseStringFails(
+                "A1",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
+    public void testParseCellRangeFails() {
+        this.parseStringFails(
+                "B2:C3",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
+    public void testParseColumn() {
+        this.parseStringAndCheck(
+                "C",
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
+    @Test
+    public void testParseColumnRangeFails() {
+        this.parseStringFails(
+                "B:C",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
+    public void testParseLabelFails() {
+        this.parseStringFails(
+                "Label123",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
+    public void testParseRow() {
+        this.parseStringAndCheck(
+                "4",
+                SpreadsheetSelection.parseRow("4")
+        );
+    }
+
+    @Test
+    public void testParseRowRangeFails() {
+        this.parseStringFails(
+                "2:3",
+                IllegalArgumentException.class
+        );
+    }
+
     // ClassTesting2....................................................................................................
 
     @Override
@@ -183,5 +243,20 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    @Override
+    public SpreadsheetColumnOrRowReference parseString(final String text) {
+        return SpreadsheetColumnOrRowKind.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
+        return type;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
+        return cause;
     }
 }
