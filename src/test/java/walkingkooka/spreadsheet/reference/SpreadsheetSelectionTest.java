@@ -415,6 +415,92 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // parseColumnOrRow.................................................................................................
+
+    @Test
+    public void testParseColumnOrRowWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.parseColumnOrRow(null)
+        );
+    }
+
+    @Test
+    public void testParseColumnOrRowWithCellFails() {
+        this.parseColumnOrRowFails("F6");
+    }
+
+    @Test
+    public void testParseColumnOrRowWithCellRangeFails() {
+        this.parseColumnOrRowFails("D4:E5");
+    }
+
+    @Test
+    public void testParseColumnOrRowWithColumnRangeFails() {
+        this.parseColumnOrRowFails("A:B");
+    }
+
+    @Test
+    public void testParseColumnOrRowWithLabelFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseColumnOrRow("Label123")
+        );
+    }
+
+    @Test
+    public void testParseColumnOrRowWithRowRangeFails() {
+        this.parseColumnOrRowFails("2:3");
+    }
+
+    private void parseColumnOrRowFails(final String text) {
+        assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetSelection.parseColumnOrRow(text)
+        );
+    }
+
+    @Test
+    public void testParseColumnOrRowWithAbsoluteColumn() {
+        this.parseColumnOrRowAndCheck(
+                "$C",
+                SpreadsheetReferenceKind.ABSOLUTE.column(2)
+        );
+    }
+
+    @Test
+    public void testParseColumnOrRowWithRelativeColumn() {
+        this.parseColumnOrRowAndCheck(
+                "D",
+                SpreadsheetReferenceKind.RELATIVE.column(3)
+        );
+    }
+
+    @Test
+    public void testParseColumnOrRowWithAbsoluteRow() {
+        this.parseColumnOrRowAndCheck(
+                "$3",
+                SpreadsheetReferenceKind.ABSOLUTE.row(2)
+        );
+    }
+
+    @Test
+    public void testParseColumnOrRowWithRelativeRow() {
+        this.parseColumnOrRowAndCheck(
+                "4",
+                SpreadsheetReferenceKind.RELATIVE.row(3)
+        );
+    }
+
+    private void parseColumnOrRowAndCheck(final String text,
+                                          final SpreadsheetColumnOrRowReference expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetSelection.parseColumnOrRow(text),
+                () -> "parseColumnOrRow " + CharSequences.quoteAndEscape(text)
+        );
+    }
+
     // parseColumnRange.................................................................................................
 
     @Test

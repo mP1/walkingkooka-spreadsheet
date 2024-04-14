@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.Cast;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
@@ -32,6 +33,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetLeafParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -404,6 +406,27 @@ public abstract class SpreadsheetSelection implements HasText,
     private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetParsers.column()
             .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
             .orReport(ParserReporters.invalidCharacterException());
+
+
+    /**
+     * Parses the text as a column or row.
+     */
+    public static SpreadsheetColumnOrRowReference parseColumnOrRow(final String text) {
+        return Cast.to(
+                parseTextOrFail(
+                        text,
+                        COLUMN_OR_ROW_PARSER
+                ).cast(SpreadsheetLeafParserToken.class)
+                        .value()
+        );
+    }
+
+    private static final Parser<SpreadsheetParserContext> COLUMN_OR_ROW_PARSER = SpreadsheetParsers.column()
+            .or(
+                    SpreadsheetParsers.row()
+            ).orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
+            .orReport(ParserReporters.invalidCharacterException());
+
 
     /**
      * Parses the text into a {@link SpreadsheetColumnReference} or {@link SpreadsheetColumnRangeReference}.
