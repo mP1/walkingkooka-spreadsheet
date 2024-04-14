@@ -178,7 +178,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     // parse............................................................................................................
 
     @Test
-    public void testParseCellFails() {
+    public void testParseColumnOrRowCellFails() {
         this.parseStringFails(
                 "A1",
                 IllegalArgumentException.class
@@ -186,7 +186,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     }
 
     @Test
-    public void testParseCellRangeFails() {
+    public void testParseColumnOrRowCellRangeFails() {
         this.parseStringFails(
                 "B2:C3",
                 IllegalArgumentException.class
@@ -194,7 +194,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     }
 
     @Test
-    public void testParseColumn() {
+    public void testParseColumnOrRowColumn() {
         this.parseStringAndCheck(
                 "C",
                 SpreadsheetSelection.parseColumn("C")
@@ -202,7 +202,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     }
 
     @Test
-    public void testParseColumnRangeFails() {
+    public void testParseColumnOrRowColumnRangeFails() {
         this.parseStringFails(
                 "B:C",
                 IllegalArgumentException.class
@@ -210,7 +210,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     }
 
     @Test
-    public void testParseLabelFails() {
+    public void testParseColumnOrRowLabelFails() {
         this.parseStringFails(
                 "Label123",
                 IllegalArgumentException.class
@@ -218,7 +218,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     }
 
     @Test
-    public void testParseRow() {
+    public void testParseColumnOrRowRow() {
         this.parseStringAndCheck(
                 "4",
                 SpreadsheetSelection.parseRow("4")
@@ -226,7 +226,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     }
 
     @Test
-    public void testParseRowRangeFails() {
+    public void testParseColumnOrRowRowRangeFails() {
         this.parseStringFails(
                 "2:3",
                 IllegalArgumentException.class
