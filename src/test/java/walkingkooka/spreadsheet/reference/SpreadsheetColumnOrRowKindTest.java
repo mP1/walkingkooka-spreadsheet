@@ -23,6 +23,32 @@ import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<SpreadsheetColumnOrRowKind> {
 
+    // firstAbsolute....................................................................................................
+
+    @Test
+    public void testFirstAbsoluteColumn() {
+        this.firstAbsoluteAndCheck(
+                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetSelection.parseColumn("$A")
+        );
+    }
+
+    @Test
+    public void testFirstAbsoluteRow() {
+        this.firstAbsoluteAndCheck(
+                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetSelection.parseRow("$1")
+        );
+    }
+
+    private void firstAbsoluteAndCheck(final SpreadsheetColumnOrRowKind kind,
+                                       final SpreadsheetColumnOrRowReference expected) {
+        this.checkEquals(
+                expected,
+                kind.firstAbsolute()
+        );
+    }
+    
     // firstRelative....................................................................................................
 
     @Test
