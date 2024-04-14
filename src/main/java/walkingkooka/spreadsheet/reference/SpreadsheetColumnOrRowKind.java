@@ -42,6 +42,12 @@ public enum SpreadsheetColumnOrRowKind {
         public SpreadsheetColumnReference lastRelative() {
             return SpreadsheetReferenceKind.RELATIVE.lastColumn();
         }
+
+        @Override
+        public SpreadsheetColumnReference setValue(final SpreadsheetReferenceKind kind,
+                                                   final int value) {
+            return kind.column(value);
+        }
     },
 
 
@@ -65,6 +71,12 @@ public enum SpreadsheetColumnOrRowKind {
         public SpreadsheetRowReference lastRelative() {
             return SpreadsheetReferenceKind.RELATIVE.lastRow();
         }
+
+        @Override
+        public SpreadsheetRowReference setValue(final SpreadsheetReferenceKind kind,
+                                                final int value) {
+            return kind.row(value);
+        }
     };
 
     /**
@@ -86,4 +98,10 @@ public enum SpreadsheetColumnOrRowKind {
      * Returns the last RELATIVE column or row.
      */
     public abstract SpreadsheetColumnOrRowReference lastRelative();
+
+    /**
+     * Creates a column or row for example a value of 0 returns the first column for {@link #COLUMN}.
+     */
+    public abstract SpreadsheetColumnOrRowReference setValue(final SpreadsheetReferenceKind kind,
+                                                             final int value);
 }
