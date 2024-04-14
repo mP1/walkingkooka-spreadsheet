@@ -75,6 +75,32 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
         );
     }
 
+    // lastAbsolute....................................................................................................
+
+    @Test
+    public void testLastAbsoluteColumn() {
+        this.lastAbsoluteAndCheck(
+                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetSelection.parseColumn("$XFD")
+        );
+    }
+
+    @Test
+    public void testLastAbsoluteRow() {
+        this.lastAbsoluteAndCheck(
+                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetSelection.parseRow("$1048576")
+        );
+    }
+
+    private void lastAbsoluteAndCheck(final SpreadsheetColumnOrRowKind kind,
+                                      final SpreadsheetColumnOrRowReference expected) {
+        this.checkEquals(
+                expected,
+                kind.lastAbsolute()
+        );
+    }
+    
     // ClassTesting2....................................................................................................
 
     @Override
