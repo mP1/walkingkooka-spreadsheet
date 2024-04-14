@@ -104,4 +104,12 @@ public enum SpreadsheetColumnOrRowKind {
      */
     public abstract SpreadsheetColumnOrRowReference setValue(final SpreadsheetReferenceKind kind,
                                                              final int value);
+
+
+    /**
+     * Parses the given text as a column or row.
+     */
+    public static SpreadsheetColumnOrRowReference parse(final String text) {
+        return SpreadsheetSelection.parseColumnOrRow(text);
+    }
 }
