@@ -72,6 +72,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         );
     }
 
+    @Override
     public boolean equals(final Object other) {
         return this == other ||
                 other instanceof SpreadsheetColumnOrRowSpreadsheetComparators && this.equals0((SpreadsheetColumnOrRowSpreadsheetComparators) other);
