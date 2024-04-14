@@ -245,6 +245,8 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         return JavaVisibility.PUBLIC;
     }
 
+    // parseColumnOrRow.................................................................................................
+
     @Override
     public SpreadsheetColumnOrRowReference parseString(final String text) {
         return SpreadsheetColumnOrRowReferenceKind.parseColumnOrRow(text);
