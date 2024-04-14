@@ -22,7 +22,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 
-public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<SpreadsheetColumnOrRowKind>,
+public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesting2<SpreadsheetColumnOrRowReferenceKind>,
         ParseStringTesting<SpreadsheetColumnOrRowReference> {
 
     // firstAbsolute....................................................................................................
@@ -30,7 +30,7 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testFirstAbsoluteColumn() {
         this.firstAbsoluteAndCheck(
-                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 SpreadsheetSelection.parseColumn("$A")
         );
     }
@@ -38,12 +38,12 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testFirstAbsoluteRow() {
         this.firstAbsoluteAndCheck(
-                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetColumnOrRowReferenceKind.ROW,
                 SpreadsheetSelection.parseRow("$1")
         );
     }
 
-    private void firstAbsoluteAndCheck(final SpreadsheetColumnOrRowKind kind,
+    private void firstAbsoluteAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                        final SpreadsheetColumnOrRowReference expected) {
         this.checkEquals(
                 expected,
@@ -56,7 +56,7 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testFirstRelativeColumn() {
         this.firstRelativeAndCheck(
-                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 SpreadsheetSelection.parseColumn("A")
         );
     }
@@ -64,12 +64,12 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testFirstRelativeRow() {
         this.firstRelativeAndCheck(
-                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetColumnOrRowReferenceKind.ROW,
                 SpreadsheetSelection.parseRow("1")
         );
     }
 
-    private void firstRelativeAndCheck(final SpreadsheetColumnOrRowKind kind,
+    private void firstRelativeAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                        final SpreadsheetColumnOrRowReference expected) {
         this.checkEquals(
                 expected,
@@ -82,7 +82,7 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testLastAbsoluteColumn() {
         this.lastAbsoluteAndCheck(
-                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 SpreadsheetSelection.parseColumn("$XFD")
         );
     }
@@ -90,12 +90,12 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testLastAbsoluteRow() {
         this.lastAbsoluteAndCheck(
-                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetColumnOrRowReferenceKind.ROW,
                 SpreadsheetSelection.parseRow("$1048576")
         );
     }
 
-    private void lastAbsoluteAndCheck(final SpreadsheetColumnOrRowKind kind,
+    private void lastAbsoluteAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                       final SpreadsheetColumnOrRowReference expected) {
         this.checkEquals(
                 expected,
@@ -108,7 +108,7 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testLastRelativeColumn() {
         this.lastRelativeAndCheck(
-                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 SpreadsheetSelection.parseColumn("XFD")
         );
     }
@@ -116,12 +116,12 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testLastRelativeRow() {
         this.lastRelativeAndCheck(
-                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetColumnOrRowReferenceKind.ROW,
                 SpreadsheetSelection.parseRow("1048576")
         );
     }
 
-    private void lastRelativeAndCheck(final SpreadsheetColumnOrRowKind kind,
+    private void lastRelativeAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                       final SpreadsheetColumnOrRowReference expected) {
         this.checkEquals(
                 expected,
@@ -134,7 +134,7 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testSetValueColumnRelative() {
         this.setValueAndCheck(
-                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 SpreadsheetReferenceKind.RELATIVE,
                 2,
                 SpreadsheetSelection.parseColumn("C")
@@ -144,7 +144,7 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testSetValueRowRelative() {
         this.setValueAndCheck(
-                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetColumnOrRowReferenceKind.ROW,
                 SpreadsheetReferenceKind.RELATIVE,
                 2,
                 SpreadsheetSelection.parseRow("3")
@@ -154,14 +154,14 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     @Test
     public void testSetValueRowAbsolute() {
         this.setValueAndCheck(
-                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetColumnOrRowReferenceKind.ROW,
                 SpreadsheetReferenceKind.ABSOLUTE,
                 3,
                 SpreadsheetSelection.parseRow("$4")
         );
     }
 
-    private void setValueAndCheck(final SpreadsheetColumnOrRowKind kind,
+    private void setValueAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                   final SpreadsheetReferenceKind referenceKind,
                                   final int value,
                                   final SpreadsheetColumnOrRowReference expected) {
@@ -236,8 +236,8 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
     // ClassTesting2....................................................................................................
 
     @Override
-    public Class<SpreadsheetColumnOrRowKind> type() {
-        return SpreadsheetColumnOrRowKind.class;
+    public Class<SpreadsheetColumnOrRowReferenceKind> type() {
+        return SpreadsheetColumnOrRowReferenceKind.class;
     }
 
     @Override
@@ -247,7 +247,7 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
 
     @Override
     public SpreadsheetColumnOrRowReference parseString(final String text) {
-        return SpreadsheetColumnOrRowKind.parse(text);
+        return SpreadsheetColumnOrRowReferenceKind.parse(text);
     }
 
     @Override
