@@ -22,8 +22,23 @@ package walkingkooka.spreadsheet.reference;
  */
 public enum SpreadsheetColumnOrRowKind {
 
-    COLUMN,
+    COLUMN {
+        @Override
+        public SpreadsheetColumnReference firstRelative() {
+            return SpreadsheetReferenceKind.RELATIVE.firstColumn();
+        }
+    },
 
 
-    ROW;
+    ROW {
+        @Override
+        public SpreadsheetRowReference firstRelative() {
+            return SpreadsheetReferenceKind.RELATIVE.firstRow();
+        }
+    };
+
+    /**
+     * Returns the first column or row.
+     */
+    public abstract SpreadsheetColumnOrRowReference firstRelative();
 }
