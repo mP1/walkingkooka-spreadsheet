@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * Base class for a leaf token. A leaf has no further breakdown into more detailed tokens.
  */
-abstract class SpreadsheetLeafParserToken<T> extends SpreadsheetParserToken
+abstract public class SpreadsheetLeafParserToken<T> extends SpreadsheetParserToken
         implements Value<T> {
 
     static <T> T checkValue(final T value) {

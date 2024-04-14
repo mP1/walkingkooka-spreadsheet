@@ -29,6 +29,6 @@ public final class SpreadsheetLeafParserTokenTest implements ClassTesting2<Sprea
 
     @Override
     public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+        return JavaVisibility.PUBLIC;
     }
 }
