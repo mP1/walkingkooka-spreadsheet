@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference;
 /**
  * An enum that represents the two axis within a spreadsheet. This will be useful when sorting a cell-range.
  */
-public enum SpreadsheetColumnOrRowKind {
+public enum SpreadsheetColumnOrRowReferenceKind {
 
     COLUMN {
         @Override
