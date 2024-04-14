@@ -17,10 +17,39 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<SpreadsheetColumnOrRowKind> {
+
+    // firstRelative....................................................................................................
+
+    @Test
+    public void testFirstRelativeColumn() {
+        this.firstRelativeAndCheck(
+                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetSelection.parseColumn("A")
+        );
+    }
+
+    @Test
+    public void testFirstRelativeRow() {
+        this.firstRelativeAndCheck(
+                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetSelection.parseRow("1")
+        );
+    }
+
+    private void firstRelativeAndCheck(final SpreadsheetColumnOrRowKind kind,
+                                       final SpreadsheetColumnOrRowReference expected) {
+        this.checkEquals(
+                expected,
+                kind.firstRelative()
+        );
+    }
+
+    // ClassTesting2....................................................................................................
 
     @Override
     public Class<SpreadsheetColumnOrRowKind> type() {
