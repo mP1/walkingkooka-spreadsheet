@@ -90,6 +90,55 @@ public class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements ClassTe
         );
     }
 
+    // hashcode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentColumnOrRow() {
+        this.checkNotEquals(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseColumnOrRow("C"),
+                        COMPARATORS
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentColumnOrRowSpreadsheetReferenceKind() {
+        this.checkNotEquals(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseColumnOrRow("$B"),
+                        COMPARATORS
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentComparators() {
+        this.checkNotEquals(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        COLUMN_OR_ROW,
+                        Lists.of(
+                                SpreadsheetComparators.monthOfYear()
+                        )
+                )
+        );
+    }
+
+    private final static SpreadsheetColumnOrRowReference COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("B");
+
+    private final static List<SpreadsheetComparator<?>> COMPARATORS = Lists.of(
+            SpreadsheetComparators.dayOfMonth()
+    );
+
+    @Override
+    public SpreadsheetColumnOrRowSpreadsheetComparators createObject() {
+        return SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                COLUMN_OR_ROW,
+                COMPARATORS
+        );
+    }
+
+    // Object...........................................................................................................
     @Test
     public void testToString() {
         this.toStringAndCheck(
@@ -113,16 +162,6 @@ public class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements ClassTe
                 comparators,
                 columnOrRowComparators.comparators(),
                 "comparators"
-        );
-    }
-
-    @Override
-    public SpreadsheetColumnOrRowSpreadsheetComparators createObject() {
-        return SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                SpreadsheetSelection.parseColumnOrRow("B"),
-                Lists.of(
-                        SpreadsheetComparators.dayOfMonth()
-                )
         );
     }
 
