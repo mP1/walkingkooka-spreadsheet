@@ -48,6 +48,11 @@ public enum SpreadsheetColumnOrRowReferenceKind {
                                                    final int value) {
             return kind.column(value);
         }
+
+        @Override
+        public SpreadsheetColumnReference parse(final String text) {
+            return SpreadsheetSelection.parseColumn(text);
+        }
     },
 
 
@@ -77,6 +82,11 @@ public enum SpreadsheetColumnOrRowReferenceKind {
                                                 final int value) {
             return kind.row(value);
         }
+
+        @Override
+        public SpreadsheetRowReference parse(final String text) {
+            return SpreadsheetSelection.parseRow(text);
+        }
     };
 
     /**
@@ -105,6 +115,10 @@ public enum SpreadsheetColumnOrRowReferenceKind {
     public abstract SpreadsheetColumnOrRowReference setValue(final SpreadsheetReferenceKind kind,
                                                              final int value);
 
+    /**
+     * Parses the text into a {@link SpreadsheetColumnReference} for {@link #COLUMN} and {@link SpreadsheetRowReference} for {@link #ROW}.
+     */
+    public abstract SpreadsheetColumnOrRowReference parse(final String text);
 
     /**
      * Parses the given text as a column or row.

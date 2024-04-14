@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.CharSequences;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesting2<SpreadsheetColumnOrRowReferenceKind>,
         ParseStringTesting<SpreadsheetColumnOrRowReference> {
@@ -230,6 +233,122 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseStringFails(
                 "2:3",
                 IllegalArgumentException.class
+        );
+    }
+
+    // parse...........................................................................................................
+
+    @Test
+    public void testParseColumnWithCellFails() {
+        this.parseFails(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                "A1",
+                "Invalid character '1' at 1 in \"A1\""
+        );
+    }
+
+    @Test
+    public void testParseColumnWithColumn() {
+        this.parseAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                "A",
+                SpreadsheetSelection.parseColumn("A")
+        );
+    }
+
+    @Test
+    public void testParseRowWithColumnRangeFails() {
+        this.parseFails(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                "B:C",
+                "Invalid character ':' at 1 in \"B:C\""
+        );
+    }
+
+    @Test
+    public void testParseColumnWithLabelFails() {
+        this.parseFails(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                "Label123",
+                "Invalid column value 5502781 expected between 0 and 16384"
+        );
+    }
+
+    @Test
+    public void testParseColumnWithRowFails() {
+        this.parseFails(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                "321",
+                "Invalid character '3' at 0 in \"321\""
+        );
+    }
+
+    @Test
+    public void testParseRowWithCellFails() {
+        this.parseFails(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                "A1",
+                "Invalid character 'A' at 0 in \"A1\""
+        );
+    }
+
+    @Test
+    public void testParseRowWithColumnFails() {
+        this.parseFails(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                "A",
+                "Invalid character 'A' at 0 in \"A\""
+        );
+    }
+
+    @Test
+    public void testParseRowWithLabelFails() {
+        this.parseFails(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                "Label123",
+                "Invalid character 'L' at 0 in \"Label123\""
+        );
+    }
+
+    @Test
+    public void testParseRowWithRow() {
+        this.parseAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                "12",
+                SpreadsheetSelection.parseRow("12")
+        );
+    }
+
+    @Test
+    public void testParseRowWithRowRangeFails() {
+        this.parseFails(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                "1:2",
+                "Invalid character ':' at 1 in \"1:2\""
+        );
+    }
+
+    private void parseFails(final SpreadsheetColumnOrRowReferenceKind kind,
+                            final String text,
+                            final String expected) {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> kind.parse(text)
+        );
+        this.checkEquals(
+                expected,
+                thrown.getMessage()
+        );
+    }
+
+
+    private void parseAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
+                               final String text,
+                               final SpreadsheetColumnOrRowReference expected) {
+        this.checkEquals(
+                expected,
+                kind.parse(text),
+                () -> kind + ".parse " + CharSequences.quoteAndEscape(text)
         );
     }
 
