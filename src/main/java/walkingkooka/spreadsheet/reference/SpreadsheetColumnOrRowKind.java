@@ -24,6 +24,11 @@ public enum SpreadsheetColumnOrRowKind {
 
     COLUMN {
         @Override
+        public SpreadsheetColumnReference firstAbsolute() {
+            return SpreadsheetReferenceKind.ABSOLUTE.firstColumn();
+        }
+
+        @Override
         public SpreadsheetColumnReference firstRelative() {
             return SpreadsheetReferenceKind.RELATIVE.firstColumn();
         }
@@ -32,13 +37,23 @@ public enum SpreadsheetColumnOrRowKind {
 
     ROW {
         @Override
+        public SpreadsheetRowReference firstAbsolute() {
+            return SpreadsheetReferenceKind.ABSOLUTE.firstRow();
+        }
+
+        @Override
         public SpreadsheetRowReference firstRelative() {
             return SpreadsheetReferenceKind.RELATIVE.firstRow();
         }
     };
 
     /**
-     * Returns the first column or row.
+     * Returns the first ABSOLUTE column or row.
+     */
+    public abstract SpreadsheetColumnOrRowReference firstAbsolute();
+
+    /**
+     * Returns the first RELATIVE column or row.
      */
     public abstract SpreadsheetColumnOrRowReference firstRelative();
 }
