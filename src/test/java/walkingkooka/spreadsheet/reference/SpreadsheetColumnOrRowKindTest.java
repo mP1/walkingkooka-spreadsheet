@@ -100,6 +100,32 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
                 kind.lastAbsolute()
         );
     }
+
+    // lastRelative....................................................................................................
+
+    @Test
+    public void testLastRelativeColumn() {
+        this.lastRelativeAndCheck(
+                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetSelection.parseColumn("XFD")
+        );
+    }
+
+    @Test
+    public void testLastRelativeRow() {
+        this.lastRelativeAndCheck(
+                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetSelection.parseRow("1048576")
+        );
+    }
+
+    private void lastRelativeAndCheck(final SpreadsheetColumnOrRowKind kind,
+                                      final SpreadsheetColumnOrRowReference expected) {
+        this.checkEquals(
+                expected,
+                kind.lastRelative()
+        );
+    }
     
     // ClassTesting2....................................................................................................
 
