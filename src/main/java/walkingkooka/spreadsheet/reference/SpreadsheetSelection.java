@@ -391,7 +391,11 @@ public abstract class SpreadsheetSelection implements HasText,
      * Parsers the text expecting a valid {@link SpreadsheetColumnReference} or fails.
      */
     public static SpreadsheetColumnReference parseColumn(final String text) {
-        return parseColumnOrRow(text, COLUMN_PARSER, SpreadsheetColumnReferenceParserToken.class).value();
+        return parseTextOrFail(
+                text,
+                COLUMN_PARSER
+        ).cast(SpreadsheetColumnReferenceParserToken.class)
+                .value();
     }
 
     /**
@@ -428,10 +432,10 @@ public abstract class SpreadsheetSelection implements HasText,
      * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
      */
     public static SpreadsheetRowReference parseRow(final String text) {
-        return parseColumnOrRow(
+        return parseTextOrFail(
                 text,
-                ROW_PARSER,
-                SpreadsheetRowReferenceParserToken.class)
+                ROW_PARSER
+        ).cast(SpreadsheetRowReferenceParserToken.class)
                 .value();
     }
 
@@ -443,16 +447,17 @@ public abstract class SpreadsheetSelection implements HasText,
             .orReport(ParserReporters.invalidCharacterException());
 
     /**
-     * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
+     * Parsers the text into a {@link ParserToken} or fails.
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    static <T extends SpreadsheetParserToken> T parseColumnOrRow(final String text,
-                                                                 final Parser<SpreadsheetParserContext> parser,
-                                                                 final Class<T> type) {
+    static ParserToken parseTextOrFail(final String text,
+                                       final Parser<SpreadsheetParserContext> parser) {
         try {
-            return parser.parse(TextCursors.charSequence(text), SpreadsheetParserContexts.fake())
-                    .get()
-                    .cast(type);
+            return parser.parse(
+                            TextCursors.charSequence(text),
+                            SpreadsheetParserContexts.fake()
+                    )
+                    .get();
         } catch (final ParserException cause) {
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
