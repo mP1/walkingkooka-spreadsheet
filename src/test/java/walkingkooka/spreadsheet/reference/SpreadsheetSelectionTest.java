@@ -370,7 +370,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     // parseColumn......................................................................................................
 
     @Test
-    public void testParseColumnWithCellails() {
+    public void testParseColumnWithCellFails() {
         final String text = "ZY99";
 
         final InvalidCharacterException thrown = assertThrows(
