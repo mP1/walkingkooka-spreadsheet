@@ -48,7 +48,7 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
                 kind.firstAbsolute()
         );
     }
-    
+
     // firstRelative....................................................................................................
 
     @Test
@@ -126,7 +126,53 @@ public final class SpreadsheetColumnOrRowKindTest implements ClassTesting2<Sprea
                 kind.lastRelative()
         );
     }
-    
+
+    // setValue.........................................................................................................
+
+    @Test
+    public void testSetValueColumnRelative() {
+        this.setValueAndCheck(
+                SpreadsheetColumnOrRowKind.COLUMN,
+                SpreadsheetReferenceKind.RELATIVE,
+                2,
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
+    @Test
+    public void testSetValueRowRelative() {
+        this.setValueAndCheck(
+                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetReferenceKind.RELATIVE,
+                2,
+                SpreadsheetSelection.parseRow("3")
+        );
+    }
+
+    @Test
+    public void testSetValueRowAbsolute() {
+        this.setValueAndCheck(
+                SpreadsheetColumnOrRowKind.ROW,
+                SpreadsheetReferenceKind.ABSOLUTE,
+                3,
+                SpreadsheetSelection.parseRow("$4")
+        );
+    }
+
+    private void setValueAndCheck(final SpreadsheetColumnOrRowKind kind,
+                                  final SpreadsheetReferenceKind referenceKind,
+                                  final int value,
+                                  final SpreadsheetColumnOrRowReference expected) {
+        this.checkEquals(
+                expected,
+                kind.setValue(
+                        referenceKind,
+                        value
+                ),
+                () -> kind + " setValue " + referenceKind + ", " + value
+        );
+    }
+
     // ClassTesting2....................................................................................................
 
     @Override
