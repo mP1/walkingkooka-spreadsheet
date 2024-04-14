@@ -109,7 +109,7 @@ public enum SpreadsheetColumnOrRowReferenceKind {
     /**
      * Parses the given text as a column or row.
      */
-    public static SpreadsheetColumnOrRowReference parse(final String text) {
+    public static SpreadsheetColumnOrRowReference parseColumnOrRow(final String text) {
         return SpreadsheetSelection.parseColumnOrRow(text);
     }
 }

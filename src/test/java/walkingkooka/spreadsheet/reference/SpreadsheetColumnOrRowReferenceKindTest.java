@@ -247,7 +247,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
 
     @Override
     public SpreadsheetColumnOrRowReference parseString(final String text) {
-        return SpreadsheetColumnOrRowReferenceKind.parse(text);
+        return SpreadsheetColumnOrRowReferenceKind.parseColumnOrRow(text);
     }
 
     @Override
