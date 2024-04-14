@@ -37,6 +37,11 @@ public enum SpreadsheetColumnOrRowKind {
         public SpreadsheetColumnReference lastAbsolute() {
             return SpreadsheetReferenceKind.ABSOLUTE.lastColumn();
         }
+
+        @Override
+        public SpreadsheetColumnReference lastRelative() {
+            return SpreadsheetReferenceKind.RELATIVE.lastColumn();
+        }
     },
 
 
@@ -55,6 +60,11 @@ public enum SpreadsheetColumnOrRowKind {
         public SpreadsheetRowReference lastAbsolute() {
             return SpreadsheetReferenceKind.ABSOLUTE.lastRow();
         }
+
+        @Override
+        public SpreadsheetRowReference lastRelative() {
+            return SpreadsheetReferenceKind.RELATIVE.lastRow();
+        }
     };
 
     /**
@@ -71,4 +81,9 @@ public enum SpreadsheetColumnOrRowKind {
      * Returns the last ABSOLUTE column or row.
      */
     public abstract SpreadsheetColumnOrRowReference lastAbsolute();
+
+    /**
+     * Returns the last RELATIVE column or row.
+     */
+    public abstract SpreadsheetColumnOrRowReference lastRelative();
 }
