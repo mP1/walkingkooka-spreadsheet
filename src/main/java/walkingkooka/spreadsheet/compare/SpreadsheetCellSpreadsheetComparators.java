@@ -163,6 +163,12 @@ public final class SpreadsheetCellSpreadsheetComparators {
                                             )
                                     )
                             );
+                            columnOrRowComparators.add(
+                                    SpreadsheetCellSpreadsheetComparators.with(
+                                            columnOrRow,
+                                            comparators
+                                    )
+                            );
                             columnOrRow = null;
                             comparator = null;
                             mode = modeColumnOrRowStart;
