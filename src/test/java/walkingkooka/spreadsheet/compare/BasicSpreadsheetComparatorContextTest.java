@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 import java.time.LocalDate;
@@ -69,13 +71,13 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     @Test
     public void testToString() {
         final SpreadsheetComparatorMissingValues missing = SpreadsheetComparatorMissingValues.BEFORE;
-        final ConverterContext converterContext = ConverterContexts.fake();
+        final SpreadsheetConverterContext SpreadsheetConverterContext = SpreadsheetConverterContexts.fake();
         this.toStringAndCheck(
                 BasicSpreadsheetComparatorContext.with(
                         missing,
-                        converterContext
+                        SpreadsheetConverterContext
                 ),
-                missing + " " + converterContext
+                missing + " " + SpreadsheetConverterContext
         );
     }
 
@@ -87,16 +89,26 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
         );
     }
 
-    private final ConverterContext CONVERTER_CONTEXT = ConverterContexts.basic(
+    private final SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
             Converters.objectString(),
-            DateTimeContexts.locale(
-                    Locale.forLanguageTag("EN-AU"),
-                    1950, // default year
-                    50, // two-digit-year
-                    LocalDateTime::now
-            ),
-            DecimalNumberContexts.american(
-                    MathContext.DECIMAL32
+            (label) -> {
+                throw new UnsupportedOperationException();
+            },
+            ExpressionNumberConverterContexts.basic(
+                    Converters.fake(),
+                    ConverterContexts.basic(
+                            Converters.objectString(),
+                            DateTimeContexts.locale(
+                                    Locale.forLanguageTag("EN-AU"),
+                                    1950, // default year
+                                    50, // two-digit-year
+                                    LocalDateTime::now
+                            ),
+                            DecimalNumberContexts.american(
+                                    MathContext.DECIMAL32
+                            )
+                    ),
+                    ExpressionNumberKind.BIG_DECIMAL
             )
     );
 

@@ -18,7 +18,10 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Either;
-import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -29,15 +32,15 @@ import java.util.Objects;
 final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorContext {
 
     static BasicSpreadsheetComparatorContext with(final SpreadsheetComparatorMissingValues missingValues,
-                                                  final ConverterContext converterContext) {
+                                                  final SpreadsheetConverterContext converterContext) {
         return new BasicSpreadsheetComparatorContext(
                 Objects.requireNonNull(missingValues, "missingValues"),
                 Objects.requireNonNull(converterContext, "converterContext")
         );
     }
 
-    private BasicSpreadsheetComparatorContext(SpreadsheetComparatorMissingValues missingValues,
-                                              final ConverterContext converterContext) {
+    private BasicSpreadsheetComparatorContext(final SpreadsheetComparatorMissingValues missingValues,
+                                              final SpreadsheetConverterContext converterContext) {
         this.missingValues = missingValues;
         this.converterContext = converterContext;
     }
@@ -152,7 +155,22 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
         return this.converterContext.locale();
     }
 
-    private final ConverterContext converterContext;
+    @Override
+    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        return this.converterContext.resolveIfLabel(selection);
+    }
+
+    @Override
+    public Converter<SpreadsheetConverterContext> converter() {
+        return this.converterContext.converter();
+    }
+
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.converterContext.expressionNumberKind();
+    }
+
+    private final SpreadsheetConverterContext converterContext;
 
     @Override
     public String toString() {

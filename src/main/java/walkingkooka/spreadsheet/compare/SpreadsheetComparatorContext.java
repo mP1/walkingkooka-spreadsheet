@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Context;
-import walkingkooka.convert.ConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 
 /**
  * A {@link Context} that accompanies comparisons between two values. This might require converting values to a type
  * compatible with the actual {@link java.util.Comparator}.
  */
-public interface SpreadsheetComparatorContext extends ConverterContext {
+public interface SpreadsheetComparatorContext extends SpreadsheetConverterContext {
 
     SpreadsheetComparatorMissingValues missingValues();
 }
