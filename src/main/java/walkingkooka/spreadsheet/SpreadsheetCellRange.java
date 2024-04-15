@@ -148,8 +148,17 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
     }
 
     private SpreadsheetCellRange move0(final SpreadsheetCellRangeReference to) {
-        final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper = this.range.replaceReferencesMapper(to);
+        final Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> maybeMapper = this.range.replaceReferencesMapper(to);
+        return maybeMapper.isPresent() ?
+                this.move1(
+                        to,
+                        maybeMapper.get()
+                ) :
+                this.keepCellsWithinBounds(to);
+    }
 
+    private SpreadsheetCellRange move1(final SpreadsheetCellRangeReference to,
+                                       final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
         final Set<SpreadsheetCell> movedCells = Sets.sorted();
 
         for (final SpreadsheetCell cell : this.value) {
@@ -170,6 +179,25 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
 
         return new SpreadsheetCellRange(
                 to,
+                movedCells
+        );
+    }
+
+    private SpreadsheetCellRange keepCellsWithinBounds(final SpreadsheetCellRangeReference bounds) {
+        final Set<SpreadsheetCell> movedCells = Sets.sorted();
+
+        for (final SpreadsheetCell cell : this.value) {
+
+            // destination range could be smaller, ignore values outside
+            if (bounds.testCell(cell.reference())) {
+                movedCells.add(
+                        cell
+                );
+            }
+        }
+
+        return new SpreadsheetCellRange(
+                bounds,
                 movedCells
         );
     }

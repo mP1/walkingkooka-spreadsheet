@@ -486,18 +486,28 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                                final SpreadsheetSelection moveTo,
                                                final int deltaX,
                                                final int deltaY) {
-        final SpreadsheetSelectionReplaceReferencesMapperFunction mapper = (SpreadsheetSelectionReplaceReferencesMapperFunction)
-                selection.replaceReferencesMapper(moveTo);
-        this.checkEquals(
-                deltaX,
-                mapper.deltaX,
-                "deltaX"
+        final Optional<SpreadsheetSelectionReplaceReferencesMapperFunction> maybeMapper = Cast.to(
+                selection.replaceReferencesMapper(moveTo)
         );
-        this.checkEquals(
-                deltaY,
-                mapper.deltaY,
-                "deltaY"
-        );
+
+        if (0 != deltaX || 0 != deltaY) {
+            final SpreadsheetSelectionReplaceReferencesMapperFunction mapper = maybeMapper.get();
+            this.checkEquals(
+                    deltaX,
+                    mapper.deltaX,
+                    "deltaX"
+            );
+            this.checkEquals(
+                    deltaY,
+                    mapper.deltaY,
+                    "deltaY"
+            );
+        } else {
+            this.checkEquals(
+                    Optional.empty(),
+                    maybeMapper
+            );
+        }
     }
 
     // containsAll.......................................................................................................

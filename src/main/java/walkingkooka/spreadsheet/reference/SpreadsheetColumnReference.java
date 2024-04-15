@@ -152,13 +152,21 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     // replaceReferencesMapper..........................................................................................
 
     @Override
-    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection moveTo) {
+    Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection moveTo) {
         if (moveTo.isRowReference() || moveTo.isRowRangeReference()) {
             throw new IllegalArgumentException("Expected column(s) or cell(s) but got " + moveTo);
         }
-        return SpreadsheetSelectionReplaceReferencesMapperFunction.with(
-                moveTo.toColumn().value() - this.value,
-                0
+        final int delta = moveTo.toColumn()
+                .value() -
+                this.value;
+
+        return Optional.of(
+                0 != delta ?
+                        SpreadsheetSelectionReplaceReferencesMapperFunction.with(
+                                delta,
+                                0
+                        ) :
+                        null
         );
     }
 

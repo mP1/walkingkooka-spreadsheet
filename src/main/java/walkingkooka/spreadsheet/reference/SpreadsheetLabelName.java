@@ -223,7 +223,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     // replaceReferencesMapper..........................................................................................
 
     @Override
-    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
+    Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
         throw new UnsupportedOperationException();
     }
 

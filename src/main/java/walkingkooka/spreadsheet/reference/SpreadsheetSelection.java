@@ -673,7 +673,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * Returns a {@link Function} which can be used as an argument to {@link SpreadsheetCellReference#replaceReferences(Function)},
      * moving any cell-references by the delta amount.
      */
-    public final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper(final SpreadsheetSelection movedTo) {
+    public final Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper(final SpreadsheetSelection movedTo) {
         Objects.requireNonNull(movedTo, "movedTo");
 
         if (movedTo.isLabelName()) {
@@ -683,7 +683,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return this.replaceReferencesMapper0(movedTo);
     }
 
-    abstract Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection movedTo);
+    abstract Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection movedTo);
 
     // count............................................................................................................
 
