@@ -352,6 +352,33 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         );
     }
 
+    // flip.............................................................................................................
+
+    @Test
+    public void testFlipColumn() {
+        this.flipAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReferenceKind.ROW
+        );
+    }
+
+    @Test
+    public void testFlipRow() {
+        this.flipAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                SpreadsheetColumnOrRowReferenceKind.COLUMN
+        );
+    }
+
+    private void flipAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
+                              final SpreadsheetColumnOrRowReferenceKind expected) {
+        this.checkEquals(
+                expected,
+                kind.flip(),
+                () -> kind + " flip"
+        );
+    }
+
     // ClassTesting2....................................................................................................
 
     @Override
