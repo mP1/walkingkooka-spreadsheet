@@ -37,22 +37,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting<BasicSpreadsheetComparatorContext> {
 
     @Test
-    public void testWithNullMissingValuesFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetComparatorContext.with(
-                        null,
-                        SpreadsheetConverterContexts.fake()
-                )
-        );
-    }
-
-    @Test
     public void testWithNullConverterContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetComparatorContext.with(
-                        SpreadsheetComparatorMissingValues.BEFORE,
                         null
                 )
         );
@@ -70,21 +58,18 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
 
     @Test
     public void testToString() {
-        final SpreadsheetComparatorMissingValues missing = SpreadsheetComparatorMissingValues.BEFORE;
         final SpreadsheetConverterContext SpreadsheetConverterContext = SpreadsheetConverterContexts.fake();
         this.toStringAndCheck(
                 BasicSpreadsheetComparatorContext.with(
-                        missing,
                         SpreadsheetConverterContext
                 ),
-                missing + " " + SpreadsheetConverterContext
+                SpreadsheetConverterContext.toString()
         );
     }
 
     @Override
     public BasicSpreadsheetComparatorContext createContext() {
         return BasicSpreadsheetComparatorContext.with(
-                SpreadsheetComparatorMissingValues.BEFORE,
                 CONVERTER_CONTEXT
         );
     }

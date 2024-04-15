@@ -359,7 +359,6 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
                         SpreadsheetComparators.nameToSpreadsheetComparator()
                 ),
                 SpreadsheetComparatorContexts.basic(
-                        SpreadsheetComparatorMissingValues.AFTER,
                         SpreadsheetConverterContexts.basic(
                                 converter,
                                 (label) -> {

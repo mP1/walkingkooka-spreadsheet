@@ -576,7 +576,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=string",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 text1,
                 text2,
                 text1,
@@ -591,11 +590,10 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=string",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 text1,
                 text2,
-                text1, // null before
-                text2
+                text2, // expected null is always AFTER
+                text1
         );
     }
 
@@ -606,11 +604,10 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=string",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 text1,
                 text2,
-                text2, // null before
-                text1
+                text1, // null always AFTER
+                text2
         );
     }
 
@@ -621,7 +618,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=string",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 text1,
                 text2,
                 text1,
@@ -636,7 +632,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=string",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 text2,
                 text1,
                 text1,
@@ -645,13 +640,12 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
     }
 
     @Test
-    public void testCompareWithStringUnConvertibleAfter() {
+    public void testCompareWithStringUnConvertible() {
         final SpreadsheetCell text1 = this.cell("A1", "1a");
         final SpreadsheetCell date2 = this.cell("A2", LocalDate.now());
 
         this.comparatorArraySortAndCheck(
                 "A=string",
-                SpreadsheetComparatorMissingValues.AFTER,
                 text1,
                 date2,
                 text1,
@@ -660,47 +654,16 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
     }
 
     @Test
-    public void testCompareWithStringUnConvertibleAfter2() {
+    public void testCompareWithStringUnConvertible2() {
         final SpreadsheetCell text1 = this.cell("A1", "1a");
         final SpreadsheetCell date2 = this.cell("A2", LocalDate.now());
 
         this.comparatorArraySortAndCheck(
                 "A=string",
-                SpreadsheetComparatorMissingValues.AFTER,
                 date2,
                 text1,
                 text1,
                 date2
-        );
-    }
-
-    @Test
-    public void testCompareWithStringUnConvertibleBefore() {
-        final SpreadsheetCell text2 = this.cell("A2", "1a");
-        final SpreadsheetCell date1 = this.cell("A1", LocalDate.now());
-
-        this.comparatorArraySortAndCheck(
-                "A=string",
-                SpreadsheetComparatorMissingValues.BEFORE,
-                text2,
-                date1,
-                date1,
-                text2
-        );
-    }
-
-    @Test
-    public void testCompareWithStringUnConvertibleBefore2() {
-        final SpreadsheetCell text2 = this.cell("A2", "1a");
-        final SpreadsheetCell date1 = this.cell("A1", LocalDate.now());
-
-        this.comparatorArraySortAndCheck(
-                "A=string",
-                SpreadsheetComparatorMissingValues.BEFORE,
-                date1,
-                text2,
-                date1,
-                text2
         );
     }
 
@@ -711,7 +674,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=date",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 date1,
                 date2,
                 date1,
@@ -727,7 +689,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=day-of-month,month-of-year,year",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 date3,
                 date2,
                 date1,
@@ -745,7 +706,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=day-of-month DOWN,month-of-year DOWN,year DOWN",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 date3,
                 date2,
                 date1,
@@ -763,7 +723,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=day-of-month UP,month-of-year UP,year UP",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 date3,
                 date2,
                 date1,
@@ -774,7 +733,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=day-of-month UP,month-of-year UP,year UP",
-                SpreadsheetComparatorMissingValues.BEFORE,
                 date3,
                 date1,
                 date2,
@@ -785,28 +743,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
     }
 
     @Test
-    public void testCompareWithDateDateDateStringDayOfMonthMonthOfYearYearBefore() {
-        final SpreadsheetCell text1 = this.cell("A1", "first");
-        final SpreadsheetCell date2 = this.cell("A2", "1999-01-31");
-        final SpreadsheetCell date3 = this.cell("A3", "2000-01-31");
-        final SpreadsheetCell date4 = this.cell("A4", "2022-01-31");
-
-        this.comparatorArraySortAndCheck(
-                "A=day-of-month UP,month-of-year UP,year UP",
-                SpreadsheetComparatorMissingValues.BEFORE,
-                date3,
-                date2,
-                text1,
-                date4,
-                text1,
-                date2,
-                date3,
-                date4
-        );
-    }
-
-    @Test
-    public void testCompareWithDateDateDateStringDayOfMonthMonthOfYearYearAfter() {
+    public void testCompareWithDateDateDateStringDayOfMonthMonthOfYearYear() {
         final SpreadsheetCell date1 = this.cell("A1", "1999-01-31");
         final SpreadsheetCell date2 = this.cell("A2", "2000-01-31");
         final SpreadsheetCell date3 = this.cell("A3", "2022-01-31");
@@ -814,7 +751,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=day-of-month UP,month-of-year UP,year UP",
-                SpreadsheetComparatorMissingValues.AFTER,
                 date3,
                 date2,
                 text4,
@@ -827,7 +763,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
     }
 
     @Test
-    public void testCompareWithDateDateDateStringStringDayOfMonthMonthOfYearYearAfter() {
+    public void testCompareWithDateDateDateStringStringDayOfMonthMonthOfYearYear() {
         final SpreadsheetCell date1 = this.cell("A1", "1999-01-31");
         final SpreadsheetCell date2 = this.cell("A2", "2000-01-31");
         final SpreadsheetCell date3 = this.cell("A3", "2022-01-31");
@@ -836,7 +772,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         this.comparatorArraySortAndCheck(
                 "A=day-of-month UP,month-of-year UP,year UP",
-                SpreadsheetComparatorMissingValues.AFTER,
                 date3,
                 date2,
                 text4,
@@ -862,7 +797,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
     private void comparatorArraySortAndCheck(
             final String comparators,
-            final SpreadsheetComparatorMissingValues missingValues,
             final SpreadsheetCell... values) {
 
         final List<SpreadsheetCellSpreadsheetComparators> columnOrRowSpreadsheetComparators = SpreadsheetCellSpreadsheetComparators.parse(
@@ -871,11 +805,6 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
         );
 
         final SpreadsheetComparatorContext context = new FakeSpreadsheetComparatorContext() {
-
-            @Override
-            public SpreadsheetComparatorMissingValues missingValues() {
-                return missingValues;
-            }
 
             @Override
             public <T> Either<T, String> convert(final Object value,

@@ -372,12 +372,8 @@ public final class SpreadsheetCellSpreadsheetComparators {
                 result = missingLeft && missingRight ?
                         Comparators.EQUAL :
                         missingLeft ?
-                                SpreadsheetComparatorMissingValues.BEFORE == context.missingValues() ?
-                                        Comparators.LESS :
                                         Comparators.MORE :
-                                SpreadsheetComparatorMissingValues.BEFORE == context.missingValues() ?
-                                        Comparators.MORE :
-                                        Comparators.LESS;
+                                Comparators.LESS; // missing | nulls etc come AFTER
             } else {
                 result = comparator.compare(
                         Cast.to(convertedLeftValue),
