@@ -51,11 +51,9 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetCellComparator}
      */
     public static Comparator<SpreadsheetCell> cell(final List<SpreadsheetComparator<?>> spreadsheetComparators,
-                                                   final SpreadsheetComparatorMissingValues missingValues,
                                                    final SpreadsheetComparatorContext context) {
         return SpreadsheetCellComparator.with(
                 spreadsheetComparators,
-                missingValues,
                 context
         );
     }

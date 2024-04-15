@@ -34,25 +34,19 @@ import java.util.Objects;
 final class SpreadsheetCellComparator implements Comparator<SpreadsheetCell> {
 
     static SpreadsheetCellComparator with(final List<SpreadsheetComparator<?>> spreadsheetComparators,
-                                          final SpreadsheetComparatorMissingValues missingValues,
                                           final SpreadsheetComparatorContext context) {
 
         return new SpreadsheetCellComparator(
                 Lists.immutable(
                         Objects.requireNonNull(spreadsheetComparators, "spreadsheetComparators")
                 ),
-                Objects.requireNonNull(
-                        missingValues, "missingValues"
-                ),
                 Objects.requireNonNull(context, "context")
         );
     }
 
     private SpreadsheetCellComparator(final List<SpreadsheetComparator<?>> spreadsheetComparators,
-                                      final SpreadsheetComparatorMissingValues missingValues,
                                       final SpreadsheetComparatorContext context) {
         this.spreadsheetComparators = spreadsheetComparators;
-        this.missingValues = missingValues;
         this.context = context;
     }
 
@@ -98,10 +92,10 @@ final class SpreadsheetCellComparator implements Comparator<SpreadsheetCell> {
                 result = missingLeft && missingRight ?
                         Comparators.EQUAL :
                         missingLeft ?
-                                SpreadsheetComparatorMissingValues.BEFORE == this.missingValues ?
+                                SpreadsheetComparatorMissingValues.BEFORE == context.missingValues() ?
                                         Comparators.LESS :
                                         Comparators.MORE :
-                                SpreadsheetComparatorMissingValues.BEFORE == this.missingValues ?
+                                SpreadsheetComparatorMissingValues.BEFORE == context.missingValues() ?
                                         Comparators.MORE :
                                         Comparators.LESS;
             } else {
@@ -121,11 +115,6 @@ final class SpreadsheetCellComparator implements Comparator<SpreadsheetCell> {
 
     private final List<SpreadsheetComparator<?>> spreadsheetComparators;
 
-    /**
-     * Null or unconvertable values should appear before if this is true.
-     */
-    private final SpreadsheetComparatorMissingValues missingValues;
-
     // TODO should cache converted values key=value+target-type value=converted-value
     private final SpreadsheetComparatorContext context;
 
@@ -134,7 +123,6 @@ final class SpreadsheetCellComparator implements Comparator<SpreadsheetCell> {
     @Override
     public String toString() {
         return this.spreadsheetComparators + " " +
-                this.missingValues + " " +
                 this.context;
     }
 }
