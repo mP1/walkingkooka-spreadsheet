@@ -37,7 +37,7 @@ import java.util.function.Function;
 /**
  * For a single column or row holds a list of {@link SpreadsheetComparator}.
  */
-public final class SpreadsheetColumnOrRowSpreadsheetComparators {
+public final class SpreadsheetCellSpreadsheetComparators {
 
     private final static char COLUMN_ROW_ASSIGNMENT = '=';
 
@@ -47,8 +47,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
 
     private final static char COLUMN_ROW_SEPARATOR = ';';
 
-    public static List<SpreadsheetColumnOrRowSpreadsheetComparators> parse(final String text,
-                                                                           final Function<String, SpreadsheetComparator<?>> nameToComparator) {
+    public static List<SpreadsheetCellSpreadsheetComparators> parse(final String text,
+                                                                    final Function<String, SpreadsheetComparator<?>> nameToComparator) {
         CharSequences.failIfNullOrEmpty(text, "text");
         Objects.requireNonNull(nameToComparator, "nameToComparator");
 
@@ -64,7 +64,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         final int length = text.length();
 
         final Set<SpreadsheetColumnOrRowReference> duplicates = Sets.sorted();
-        final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRowComparators = Lists.array();
+        final List<SpreadsheetCellSpreadsheetComparators> columnOrRowComparators = Lists.array();
         int mode = 0;
         int tokenStart = 0;
         Function<String, SpreadsheetColumnOrRowReference> columnOrRowParser = SpreadsheetSelection::parseColumnOrRow;
@@ -214,7 +214,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                                     )
                             );
                             columnOrRowComparators.add(
-                                    SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                                    SpreadsheetCellSpreadsheetComparators.with(
                                             columnOrRow,
                                             comparators
                                     )
@@ -248,7 +248,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                         )
                 );
                 columnOrRowComparators.add(
-                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetCellSpreadsheetComparators.with(
                                 columnOrRow,
                                 comparators
                         )
@@ -264,7 +264,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                         )
                 );
                 columnOrRowComparators.add(
-                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetCellSpreadsheetComparators.with(
                                 columnOrRow,
                                 comparators
                         )
@@ -309,10 +309,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         return result;
     }
 
-    public static SpreadsheetColumnOrRowSpreadsheetComparators with(final SpreadsheetColumnOrRowReference columnOrRow,
-                                                                    final List<SpreadsheetComparator<?>> comparators) {
+    public static SpreadsheetCellSpreadsheetComparators with(final SpreadsheetColumnOrRowReference columnOrRow,
+                                                             final List<SpreadsheetComparator<?>> comparators) {
 
-        return new SpreadsheetColumnOrRowSpreadsheetComparators(
+        return new SpreadsheetCellSpreadsheetComparators(
                 Objects.requireNonNull(columnOrRow, "columnOrRows"),
                 Lists.immutable(
                         Objects.requireNonNull(comparators, "comparators")
@@ -320,8 +320,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         );
     }
 
-    private SpreadsheetColumnOrRowSpreadsheetComparators(final SpreadsheetColumnOrRowReference columnOrRow,
-                                                         final List<SpreadsheetComparator<?>> comparators) {
+    private SpreadsheetCellSpreadsheetComparators(final SpreadsheetColumnOrRowReference columnOrRow,
+                                                  final List<SpreadsheetComparator<?>> comparators) {
         if (comparators.isEmpty()) {
             throw new IllegalArgumentException("Expected at least 1 comparator got none");
         }
@@ -414,10 +414,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetColumnOrRowSpreadsheetComparators && this.equals0((SpreadsheetColumnOrRowSpreadsheetComparators) other);
+                other instanceof SpreadsheetCellSpreadsheetComparators && this.equals0((SpreadsheetCellSpreadsheetComparators) other);
     }
 
-    private boolean equals0(final SpreadsheetColumnOrRowSpreadsheetComparators other) {
+    private boolean equals0(final SpreadsheetCellSpreadsheetComparators other) {
         return this.columnOrRow.equals(other.columnOrRow) &&
                 this.comparators.equals(other.comparators);
     }
