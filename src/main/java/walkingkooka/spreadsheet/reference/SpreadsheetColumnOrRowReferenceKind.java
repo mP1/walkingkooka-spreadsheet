@@ -53,6 +53,11 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         public SpreadsheetColumnReference parse(final String text) {
             return SpreadsheetSelection.parseColumn(text);
         }
+
+        @Override
+        public SpreadsheetColumnOrRowReferenceKind flip() {
+            return ROW;
+        }
     },
 
 
@@ -86,6 +91,11 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         @Override
         public SpreadsheetRowReference parse(final String text) {
             return SpreadsheetSelection.parseRow(text);
+        }
+
+        @Override
+        public SpreadsheetColumnOrRowReferenceKind flip() {
+            return COLUMN;
         }
     };
 
@@ -126,4 +136,9 @@ public enum SpreadsheetColumnOrRowReferenceKind {
     public static SpreadsheetColumnOrRowReference parseColumnOrRow(final String text) {
         return SpreadsheetSelection.parseColumnOrRow(text);
     }
+
+    /**
+     * Returns the other {@link SpreadsheetColumnOrRowReferenceKind}, COLUMN -> ROW etc.
+     */
+    public abstract SpreadsheetColumnOrRowReferenceKind flip();
 }
