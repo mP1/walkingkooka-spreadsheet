@@ -478,6 +478,25 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
     }
 
     @Test
+    public void testParseColumnSpreadsheetNameColumnSpreadsheetName() {
+        this.parseStringAndCheck(
+                "A=day-of-month;B=month-of-year",
+                SpreadsheetCellSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseColumn("A"),
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth()
+                        )
+                ),
+                SpreadsheetCellSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseColumn("B"),
+                        Lists.of(
+                                SpreadsheetComparators.monthOfYear()
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testParseColumnSpreadsheetNameUpColumnSpreadsheetNameDown() {
         this.parseStringAndCheck(
                 "A=day-of-month UP;B=month-of-year DOWN",
