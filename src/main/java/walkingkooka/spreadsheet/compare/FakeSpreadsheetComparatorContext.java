@@ -23,9 +23,4 @@ public class FakeSpreadsheetComparatorContext extends FakeSpreadsheetConverterCo
     public FakeSpreadsheetComparatorContext() {
         super();
     }
-
-    @Override
-    public SpreadsheetComparatorMissingValues missingValues() {
-        throw new UnsupportedOperationException();
-    }
 }

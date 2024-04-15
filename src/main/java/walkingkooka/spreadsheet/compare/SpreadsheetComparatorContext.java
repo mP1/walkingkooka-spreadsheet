@@ -25,6 +25,4 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
  * compatible with the actual {@link java.util.Comparator}.
  */
 public interface SpreadsheetComparatorContext extends SpreadsheetConverterContext {
-
-    SpreadsheetComparatorMissingValues missingValues();
 }
