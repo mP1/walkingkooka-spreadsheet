@@ -18,21 +18,29 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.compare.ComparatorTesting;
+import walkingkooka.compare.Comparators;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparators>,
+        ComparatorTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetColumnOrRowSpreadsheetComparators>,
         ToStringTesting<SpreadsheetColumnOrRowSpreadsheetComparators>,
         ParseStringTesting<List<SpreadsheetColumnOrRowSpreadsheetComparators>> {
@@ -539,6 +547,325 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
     }
+
+    // compare..........................................................................................................
+
+    @Test
+    public void testCompareWithStringString() {
+        final SpreadsheetCell text1 = this.cell("A1", "1a");
+        final SpreadsheetCell text2 = this.cell("A2", "2b");
+
+        this.comparatorArraySortAndCheck(
+                "A=string",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                text1,
+                text2,
+                text1,
+                text2
+        );
+    }
+
+    @Test
+    public void testCompareWithStringString2() {
+        final SpreadsheetCell text1 = this.cell("A1", "1a");
+        final SpreadsheetCell text2 = this.cell("A2", "2b");
+
+        this.comparatorArraySortAndCheck(
+                "A=string",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                text2,
+                text1,
+                text1,
+                text2
+        );
+    }
+
+    @Test
+    public void testCompareWithStringUnConvertibleAfter() {
+        final SpreadsheetCell text1 = this.cell("A1", "1a");
+        final SpreadsheetCell date2 = this.cell("A2", LocalDate.now());
+
+        this.comparatorArraySortAndCheck(
+                "A=string",
+                SpreadsheetComparatorMissingValues.AFTER,
+                text1,
+                date2,
+                text1,
+                date2
+        );
+    }
+
+    @Test
+    public void testCompareWithStringUnConvertibleAfter2() {
+        final SpreadsheetCell text1 = this.cell("A1", "1a");
+        final SpreadsheetCell date2 = this.cell("A2", LocalDate.now());
+
+        this.comparatorArraySortAndCheck(
+                "A=string",
+                SpreadsheetComparatorMissingValues.AFTER,
+                date2,
+                text1,
+                text1,
+                date2
+        );
+    }
+
+    @Test
+    public void testCompareWithStringUnConvertibleBefore() {
+        final SpreadsheetCell text2 = this.cell("A2", "1a");
+        final SpreadsheetCell date1 = this.cell("A1", LocalDate.now());
+
+        this.comparatorArraySortAndCheck(
+                "A=string",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                text2,
+                date1,
+                date1,
+                text2
+        );
+    }
+
+    @Test
+    public void testCompareWithStringUnConvertibleBefore2() {
+        final SpreadsheetCell text2 = this.cell("A2", "1a");
+        final SpreadsheetCell date1 = this.cell("A1", LocalDate.now());
+
+        this.comparatorArraySortAndCheck(
+                "A=string",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                date1,
+                text2,
+                date1,
+                text2
+        );
+    }
+
+    @Test
+    public void testCompareWithDateDate() {
+        final SpreadsheetCell date1 = this.cell("A1", "1999-12-31");
+        final SpreadsheetCell date2 = this.cell("A2", "2000-01-01");
+
+        this.comparatorArraySortAndCheck(
+                "A=date",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                date1,
+                date2,
+                date1,
+                date2
+        );
+    }
+
+    @Test
+    public void testCompareWithDateDateDateDayOfMonthMonthOfYearYear() {
+        final SpreadsheetCell date1 = this.cell("A1", "2000-01-01");
+        final SpreadsheetCell date2 = this.cell("A2", "2022-02-02");
+        final SpreadsheetCell date3 = this.cell("A3", "1999-12-31");
+
+        this.comparatorArraySortAndCheck(
+                "A=day-of-month,month-of-year,year",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                date3,
+                date2,
+                date1,
+                date1,
+                date2,
+                date3
+        );
+    }
+
+    @Test
+    public void testCompareWithDateDateDateDayOfMonthMonthOfYearYear2() {
+        final SpreadsheetCell date1 = this.cell("A1", "1999-12-31");
+        final SpreadsheetCell date2 = this.cell("A2", "2022-02-02");
+        final SpreadsheetCell date3 = this.cell("A3", "2000-01-01");
+
+        this.comparatorArraySortAndCheck(
+                "A=day-of-month DOWN,month-of-year DOWN,year DOWN",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                date3,
+                date2,
+                date1,
+                date1,
+                date2,
+                date3
+        );
+    }
+
+    @Test
+    public void testCompareWithDateDateDateDayOfMonthMonthOfYearYear3() {
+        final SpreadsheetCell date1 = this.cell("A1", "1999-01-31");
+        final SpreadsheetCell date2 = this.cell("A2", "2000-01-31");
+        final SpreadsheetCell date3 = this.cell("A3", "2022-01-31");
+
+        this.comparatorArraySortAndCheck(
+                "A=day-of-month UP,month-of-year UP,year UP",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                date3,
+                date2,
+                date1,
+                date1,
+                date2,
+                date3
+        );
+
+        this.comparatorArraySortAndCheck(
+                "A=day-of-month UP,month-of-year UP,year UP",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                date3,
+                date1,
+                date2,
+                date1,
+                date2,
+                date3
+        );
+    }
+
+    @Test
+    public void testCompareWithDateDateDateStringDayOfMonthMonthOfYearYearBefore() {
+        final SpreadsheetCell text1 = this.cell("A1", "first");
+        final SpreadsheetCell date2 = this.cell("A2", "1999-01-31");
+        final SpreadsheetCell date3 = this.cell("A3", "2000-01-31");
+        final SpreadsheetCell date4 = this.cell("A4", "2022-01-31");
+
+        this.comparatorArraySortAndCheck(
+                "A=day-of-month UP,month-of-year UP,year UP",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                date3,
+                date2,
+                text1,
+                date4,
+                text1,
+                date2,
+                date3,
+                date4
+        );
+    }
+
+    @Test
+    public void testCompareWithDateDateDateStringDayOfMonthMonthOfYearYearAfter() {
+        final SpreadsheetCell date1 = this.cell("A1", "1999-01-31");
+        final SpreadsheetCell date2 = this.cell("A2", "2000-01-31");
+        final SpreadsheetCell date3 = this.cell("A3", "2022-01-31");
+        final SpreadsheetCell text4 = this.cell("A4", "fourth");
+
+        this.comparatorArraySortAndCheck(
+                "A=day-of-month UP,month-of-year UP,year UP",
+                SpreadsheetComparatorMissingValues.AFTER,
+                date3,
+                date2,
+                text4,
+                date1,
+                date1,
+                date2,
+                date3,
+                text4
+        );
+    }
+
+    @Test
+    public void testCompareWithDateDateDateStringStringDayOfMonthMonthOfYearYearAfter() {
+        final SpreadsheetCell date1 = this.cell("A1", "1999-01-31");
+        final SpreadsheetCell date2 = this.cell("A2", "2000-01-31");
+        final SpreadsheetCell date3 = this.cell("A3", "2022-01-31");
+        final SpreadsheetCell text4 = this.cell("A4", "fourth");
+        final SpreadsheetCell text5 = this.cell("A5", "fifth");
+
+        this.comparatorArraySortAndCheck(
+                "A=day-of-month UP,month-of-year UP,year UP",
+                SpreadsheetComparatorMissingValues.AFTER,
+                date3,
+                date2,
+                text4,
+                date1,
+                text5,
+                date1,
+                date2,
+                date3,
+                text4,
+                text5
+        );
+    }
+
+    private SpreadsheetCell cell(final String reference,
+                                 final Object value) {
+        return SpreadsheetSelection.parseCell(reference)
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.ofNullable(value)
+                        )
+                );
+    }
+
+    private void comparatorArraySortAndCheck(
+            final String comparators,
+            final SpreadsheetComparatorMissingValues missingValues,
+            final SpreadsheetCell... values) {
+
+        final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRowSpreadsheetComparators = SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                comparators,
+                SpreadsheetComparators.nameToSpreadsheetComparator()
+        );
+
+        final SpreadsheetComparatorContext context = new FakeSpreadsheetComparatorContext() {
+
+            @Override
+            public SpreadsheetComparatorMissingValues missingValues() {
+                return missingValues;
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                if (value instanceof String && LocalDate.class == target) {
+                    try {
+                        return this.successfulConversion(
+                                LocalDate.parse((String) value),
+                                target
+                        );
+                    } catch (final Exception ignore) {
+                        // eventually becomes a failConversion
+                    }
+                }
+                if (value instanceof LocalDate && LocalDate.class == target) {
+                    return this.successfulConversion(
+                            (LocalDate) value,
+                            target
+                    );
+                }
+                if (value instanceof String && String.class == target) {
+                    return this.successfulConversion(
+                            (String) value,
+                            target
+                    );
+                }
+                return this.failConversion(
+                        value,
+                        target
+                );
+            }
+        };
+
+        this.comparatorArraySortAndCheck(
+                (left, right) -> {
+                    int result = Comparators.EQUAL;
+
+                    for (final SpreadsheetColumnOrRowSpreadsheetComparators c : columnOrRowSpreadsheetComparators) {
+                        result = c.compare(
+                                left,
+                                right,
+                                context
+                        );
+                        if (Comparators.EQUAL != result) {
+                            break;
+                        }
+                    }
+
+                    return result;
+                },
+                values
+        );
+    }
+
 
     // Object...........................................................................................................
     @Test

@@ -17,11 +17,14 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.Cast;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.NeverError;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.compare.Comparators;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -325,6 +328,65 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
 
         this.columnOrRow = columnOrRow;
         this.comparators = comparators;
+    }
+
+    int compare(final SpreadsheetCell left,
+                final SpreadsheetCell right,
+                final SpreadsheetComparatorContext context) {
+        int result = Comparators.EQUAL;
+
+        final Object leftValue = left.formula()
+                .value()
+                .orElse(null);
+        final Object rightValue = right.formula()
+                .value()
+                .orElse(null);
+
+        // try one by one, until a non equal match.
+        for (final SpreadsheetComparator<?> comparator : this.comparators) {
+            final Class<?> type = comparator.type();
+
+            Object convertedLeftValue = null;
+            if (null != leftValue) {
+                convertedLeftValue = context.convert(
+                        leftValue,
+                        type
+                ).orElseLeft(null);
+            }
+
+            Object convertedRightValue = null;
+            if (null != rightValue) {
+                convertedRightValue = context.convert(
+                        rightValue,
+                        type
+                ).orElseLeft(null);
+            }
+
+            final boolean missingLeft = null == convertedLeftValue;
+            final boolean missingRight = null == convertedRightValue;
+            if (missingLeft || missingRight) {
+                result = missingLeft && missingRight ?
+                        Comparators.EQUAL :
+                        missingLeft ?
+                                SpreadsheetComparatorMissingValues.BEFORE == context.missingValues() ?
+                                        Comparators.LESS :
+                                        Comparators.MORE :
+                                SpreadsheetComparatorMissingValues.BEFORE == context.missingValues() ?
+                                        Comparators.MORE :
+                                        Comparators.LESS;
+            } else {
+                result = comparator.compare(
+                        Cast.to(convertedLeftValue),
+                        Cast.to(convertedRightValue)
+                );
+            }
+
+            if (Comparators.EQUAL != result) {
+                break;
+            }
+        }
+
+        return result;
     }
 
     public SpreadsheetColumnOrRowReference columnOrRow() {
