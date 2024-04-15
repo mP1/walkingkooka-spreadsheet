@@ -35,7 +35,9 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * For a single column or row holds a list of {@link SpreadsheetComparator}.
+ * For a single column or row holds a list of {@link SpreadsheetComparator}. Note this comparator is able to handle
+ * null values and will use {@link SpreadsheetComparatorContext#missingValues()} to compute the result when one value
+ * is null.
  */
 public final class SpreadsheetCellSpreadsheetComparators {
 
@@ -341,12 +343,8 @@ public final class SpreadsheetCellSpreadsheetComparators {
                 final SpreadsheetComparatorContext context) {
         int result = Comparators.EQUAL;
 
-        final Object leftValue = left.formula()
-                .value()
-                .orElse(null);
-        final Object rightValue = right.formula()
-                .value()
-                .orElse(null);
+        final Object leftValue = valueOf(left);
+        final Object rightValue = valueOf(right);
 
         // try one by one, until a non equal match.
         for (final SpreadsheetComparator<?> comparator : this.comparators) {
@@ -393,6 +391,14 @@ public final class SpreadsheetCellSpreadsheetComparators {
         }
 
         return result;
+    }
+
+    private static Object valueOf(final SpreadsheetCell cell) {
+        return null == cell ?
+                null :
+                cell.formula().
+                        value()
+                        .orElse(null);
     }
 
     public SpreadsheetColumnOrRowReference columnOrRow() {
