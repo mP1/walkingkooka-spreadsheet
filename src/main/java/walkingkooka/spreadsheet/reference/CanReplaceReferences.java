@@ -28,5 +28,22 @@ import java.util.function.Function;
  */
 public interface CanReplaceReferences<T extends CanReplaceReferences<T>> {
 
+    /**
+     * A mapper function that always returns the given {@link SpreadsheetCellReference}.
+     */
+    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> NULL_REPLACE_REFERENCE_MAPPER = new Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>() {
+        @Override
+        public Optional<SpreadsheetCellReference> apply(final SpreadsheetCellReference cellReference) {
+            return Optional.of(
+                    cellReference
+            );
+        }
+
+        @Override
+        public String toString() {
+            return "NULL_MAPPER";
+        }
+    };
+
     T replaceReferences(final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper);
 }
