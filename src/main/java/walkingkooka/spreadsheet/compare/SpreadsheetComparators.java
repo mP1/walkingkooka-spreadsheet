@@ -184,6 +184,10 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         );
     }
 
+    final static String UP = "UP";
+
+    final static String DOWN = "DOWN";
+
     /**
      * Accepts a string with compare names and optional UP or DOWN separated by commas.
      * <pre>
@@ -208,16 +212,16 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                 String upOrDown = nameAndMaybeUpOrDown.substring(upOrDownStartIndex + 1);
                 String nameOnly = nameAndMaybeUpOrDown.substring(0, upOrDownStartIndex);
                 switch (upOrDown) {
-                    case "UP":
+                    case UP:
                         name = nameOnly;
                         break;
-                    case "DOWN":
+                    case DOWN:
                         name = nameOnly;
                         down = true;
                         break;
                     default:
                         throw new IllegalArgumentException(
-                                "Expected \"UP\" or \"DOWN\" and got " +
+                                "Expected \"" + UP + "\" or \"" + DOWN + "\" and got " +
                                         CharSequences.quoteAndEscape(upOrDown) +
                                         " in " +
                                         CharSequences.quoteAndEscape(nameAndMaybeUpOrDown)
