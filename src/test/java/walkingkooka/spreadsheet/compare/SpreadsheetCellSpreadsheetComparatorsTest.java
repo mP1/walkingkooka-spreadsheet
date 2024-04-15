@@ -570,6 +570,51 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
     // compare..........................................................................................................
 
     @Test
+    public void testCompareWithNulNull() {
+        final SpreadsheetCell text1 = null;
+        final SpreadsheetCell text2 = null;
+
+        this.comparatorArraySortAndCheck(
+                "A=string",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                text1,
+                text2,
+                text1,
+                text2
+        );
+    }
+
+    @Test
+    public void testCompareWithNullString() {
+        final SpreadsheetCell text1 = null;
+        final SpreadsheetCell text2 = this.cell("A2", "2b");
+
+        this.comparatorArraySortAndCheck(
+                "A=string",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                text1,
+                text2,
+                text1, // null before
+                text2
+        );
+    }
+
+    @Test
+    public void testCompareWithStringNull() {
+        final SpreadsheetCell text1 = this.cell("A1", "1a");
+        final SpreadsheetCell text2 = null;
+
+        this.comparatorArraySortAndCheck(
+                "A=string",
+                SpreadsheetComparatorMissingValues.BEFORE,
+                text1,
+                text2,
+                text2, // null before
+                text1
+        );
+    }
+
+    @Test
     public void testCompareWithStringString() {
         final SpreadsheetCell text1 = this.cell("A1", "1a");
         final SpreadsheetCell text2 = this.cell("A2", "2b");
