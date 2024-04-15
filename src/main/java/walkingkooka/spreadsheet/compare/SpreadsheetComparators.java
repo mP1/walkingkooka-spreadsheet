@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
 import walkingkooka.datetime.compare.DateTimeComparators;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 
@@ -43,6 +44,18 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return BasicSpreadsheetComparator.with(
                 type,
                 comparator
+        );
+    }
+
+    /**
+     * {@see SpreadsheetCellsComparator}
+     */
+    public static Comparator<List<SpreadsheetCell>> cells(final List<SpreadsheetCellSpreadsheetComparators> spreadsheetComparators,
+                                                          final SpreadsheetComparatorContext context) {
+
+        return SpreadsheetCellsComparator.with(
+                spreadsheetComparators,
+                context
         );
     }
 
