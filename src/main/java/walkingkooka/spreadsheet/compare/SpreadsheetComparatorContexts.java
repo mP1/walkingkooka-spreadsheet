@@ -25,8 +25,12 @@ public final class SpreadsheetComparatorContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetComparatorContext}
      */
-    public static SpreadsheetComparatorContext basic(final ConverterContext converterContext) {
-        return BasicSpreadsheetComparatorContext.with(converterContext);
+    public static SpreadsheetComparatorContext basic(SpreadsheetComparatorMissingValues missingValues,
+                                                     final ConverterContext converterContext) {
+        return BasicSpreadsheetComparatorContext.with(
+                missingValues,
+                converterContext
+        );
     }
 
     /**

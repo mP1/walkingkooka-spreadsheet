@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 
 import java.math.MathContext;
 import java.time.LocalDate;
@@ -34,10 +35,24 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting<BasicSpreadsheetComparatorContext> {
 
     @Test
+    public void testWithNullMissingValuesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetComparatorContext.with(
+                        null,
+                        SpreadsheetConverterContexts.fake()
+                )
+        );
+    }
+
+    @Test
     public void testWithNullConverterContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> BasicSpreadsheetComparatorContext.with(null)
+                () -> BasicSpreadsheetComparatorContext.with(
+                        SpreadsheetComparatorMissingValues.BEFORE,
+                        null
+                )
         );
     }
 
@@ -53,16 +68,23 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
 
     @Test
     public void testToString() {
+        final SpreadsheetComparatorMissingValues missing = SpreadsheetComparatorMissingValues.BEFORE;
         final ConverterContext converterContext = ConverterContexts.fake();
         this.toStringAndCheck(
-                BasicSpreadsheetComparatorContext.with(converterContext),
-                converterContext.toString()
+                BasicSpreadsheetComparatorContext.with(
+                        missing,
+                        converterContext
+                ),
+                missing + " " + converterContext
         );
     }
 
     @Override
     public BasicSpreadsheetComparatorContext createContext() {
-        return BasicSpreadsheetComparatorContext.with(CONVERTER_CONTEXT);
+        return BasicSpreadsheetComparatorContext.with(
+                SpreadsheetComparatorMissingValues.BEFORE,
+                CONVERTER_CONTEXT
+        );
     }
 
     private final ConverterContext CONVERTER_CONTEXT = ConverterContexts.basic(
