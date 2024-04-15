@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.convert.FakeConverterContext;
+import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 
-public class FakeSpreadsheetComparatorContext extends FakeConverterContext implements SpreadsheetComparatorContext {
+public class FakeSpreadsheetComparatorContext extends FakeSpreadsheetConverterContext implements SpreadsheetComparatorContext {
     public FakeSpreadsheetComparatorContext() {
         super();
     }
