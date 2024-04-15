@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Value;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -144,20 +145,14 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
 
         return this.range.equalsIgnoreReferenceKind(range) ?
                 this.setRange(range) :
-                move0(range);
+                this.move0(
+                        range,
+                        this.range.replaceReferencesMapper(range)
+                                .orElse(CanReplaceReferences.NULL_REPLACE_REFERENCE_MAPPER)
+                );
     }
 
-    private SpreadsheetCellRange move0(final SpreadsheetCellRangeReference to) {
-        final Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> maybeMapper = this.range.replaceReferencesMapper(to);
-        return maybeMapper.isPresent() ?
-                this.move1(
-                        to,
-                        maybeMapper.get()
-                ) :
-                this.keepCellsWithinBounds(to);
-    }
-
-    private SpreadsheetCellRange move1(final SpreadsheetCellRangeReference to,
+    private SpreadsheetCellRange move0(final SpreadsheetCellRangeReference to,
                                        final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
         final Set<SpreadsheetCell> movedCells = Sets.sorted();
 
@@ -179,25 +174,6 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
 
         return new SpreadsheetCellRange(
                 to,
-                movedCells
-        );
-    }
-
-    private SpreadsheetCellRange keepCellsWithinBounds(final SpreadsheetCellRangeReference bounds) {
-        final Set<SpreadsheetCell> movedCells = Sets.sorted();
-
-        for (final SpreadsheetCell cell : this.value) {
-
-            // destination range could be smaller, ignore values outside
-            if (bounds.testCell(cell.reference())) {
-                movedCells.add(
-                        cell
-                );
-            }
-        }
-
-        return new SpreadsheetCellRange(
-                bounds,
                 movedCells
         );
     }
