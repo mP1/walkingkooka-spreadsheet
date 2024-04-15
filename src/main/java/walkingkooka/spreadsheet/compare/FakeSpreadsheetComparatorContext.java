@@ -23,4 +23,9 @@ public class FakeSpreadsheetComparatorContext extends FakeConverterContext imple
     public FakeSpreadsheetComparatorContext() {
         super();
     }
+
+    @Override
+    public SpreadsheetComparatorMissingValues missingValues() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -28,15 +28,26 @@ import java.util.Objects;
 
 final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorContext {
 
-    static BasicSpreadsheetComparatorContext with(final ConverterContext converterContext) {
+    static BasicSpreadsheetComparatorContext with(final SpreadsheetComparatorMissingValues missingValues,
+                                                  final ConverterContext converterContext) {
         return new BasicSpreadsheetComparatorContext(
+                Objects.requireNonNull(missingValues, "missingValues"),
                 Objects.requireNonNull(converterContext, "converterContext")
         );
     }
 
-    private BasicSpreadsheetComparatorContext(final ConverterContext converterContext) {
+    private BasicSpreadsheetComparatorContext(SpreadsheetComparatorMissingValues missingValues,
+                                              final ConverterContext converterContext) {
+        this.missingValues = missingValues;
         this.converterContext = converterContext;
     }
+
+    @Override
+    public SpreadsheetComparatorMissingValues missingValues() {
+        return this.missingValues;
+    }
+
+    private final SpreadsheetComparatorMissingValues missingValues;
 
     @Override
     public boolean canConvert(final Object value,
@@ -145,6 +156,8 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
 
     @Override
     public String toString() {
-        return this.converterContext.toString();
+        return this.missingValues +
+                " " +
+                this.converterContext.toString();
     }
 }
