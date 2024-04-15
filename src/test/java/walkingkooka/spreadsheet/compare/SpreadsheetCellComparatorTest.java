@@ -38,21 +38,6 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
                 NullPointerException.class,
                 () -> SpreadsheetCellComparator.with(
                         null,
-                        SpreadsheetComparatorMissingValues.BEFORE,
-                        SpreadsheetComparatorContexts.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullMissingValuesFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellComparator.with(
-                        Lists.of(
-                                SpreadsheetComparators.fake()
-                        ),
-                        null,
                         SpreadsheetComparatorContexts.fake()
                 )
         );
@@ -66,7 +51,6 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
                         Lists.of(
                                 SpreadsheetComparators.fake()
                         ),
-                        SpreadsheetComparatorMissingValues.BEFORE,
                         null
                 )
         );
@@ -362,8 +346,13 @@ public final class SpreadsheetCellComparatorTest implements ComparatorTesting2<S
                         comparators,
                         SpreadsheetComparators.nameToSpreadsheetComparator()
                 ),
-                missingValues,
                 new FakeSpreadsheetComparatorContext() {
+
+                    @Override
+                    public SpreadsheetComparatorMissingValues missingValues() {
+                        return missingValues;
+                    }
+
                     @Override
                     public <T> Either<T, String> convert(final Object value,
                                                          final Class<T> target) {
