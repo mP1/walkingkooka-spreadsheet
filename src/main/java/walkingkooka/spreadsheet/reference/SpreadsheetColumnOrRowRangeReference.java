@@ -66,7 +66,7 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
     // replaceReferencesMapper..........................................................................................
 
     @Override
-    final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
+    final Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
         return this.toScalar()
                 .replaceReferencesMapper0(movedTo);
     }

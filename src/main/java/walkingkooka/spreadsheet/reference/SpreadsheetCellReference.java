@@ -292,7 +292,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     // replaceReferencesMapper..........................................................................................
 
     @Override
-    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection moveTo) {
+    Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection moveTo) {
         final SpreadsheetSelection moveToScalar = moveTo.toScalar();
 
         int deltaX = 0;
@@ -305,9 +305,13 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
             deltaY = moveTo.toRow().value() - this.row().value();
         }
 
-        return SpreadsheetSelectionReplaceReferencesMapperFunction.with(
-                deltaX,
-                deltaY
+        return Optional.ofNullable(
+                0 != deltaX || 0 != deltaY ?
+                        SpreadsheetSelectionReplaceReferencesMapperFunction.with(
+                                deltaX,
+                                deltaY
+                        ) :
+                        null
         );
     }
 

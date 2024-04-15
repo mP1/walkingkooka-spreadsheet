@@ -770,7 +770,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     // replaceReferencesMapper..........................................................................................
 
     @Override
-    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
+    Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
         return this.toScalar()
                 .replaceReferencesMapper0(movedTo);
     }
