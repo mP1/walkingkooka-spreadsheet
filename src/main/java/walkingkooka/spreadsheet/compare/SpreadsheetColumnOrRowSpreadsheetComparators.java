@@ -272,7 +272,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
             case modeNameStart:
                 throw new IllegalArgumentException("Missing comparator name");
             case modeUpOrDownStart:
-                throw new IllegalArgumentException("Missing UP/DOWN");
+                throw new IllegalArgumentException("Missing " + SpreadsheetComparators.UP + "/" + SpreadsheetComparators.DOWN);
             default:
                 break;
         }
@@ -291,16 +291,16 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                 end
         );
         switch (upOrDown) {
-            case "UP":
+            case SpreadsheetComparators.UP:
                 result = comparator;
                 break;
-            case "DOWN":
+            case SpreadsheetComparators.DOWN:
                 result = SpreadsheetComparators.reverse(
                         comparator
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Missing UP/DOWN at " + start);
+                throw new IllegalArgumentException("Missing " + SpreadsheetComparators.UP + "/" + SpreadsheetComparators.DOWN + " at " + start);
         }
 
         return result;
