@@ -48,6 +48,10 @@ public final class SpreadsheetCellSpreadsheetComparators {
 
     private final static char COLUMN_ROW_SEPARATOR = ';';
 
+    /**
+     * Parses the text into a {@link List} of {@link SpreadsheetCellSpreadsheetComparators} using the function
+     * as a factory to transform spreadsheet comparator names into {@link SpreadsheetComparator} instances.
+     */
     public static List<SpreadsheetCellSpreadsheetComparators> parse(final String text,
                                                                     final Function<String, SpreadsheetComparator<?>> nameToComparator) {
         CharSequences.failIfNullOrEmpty(text, "text");
