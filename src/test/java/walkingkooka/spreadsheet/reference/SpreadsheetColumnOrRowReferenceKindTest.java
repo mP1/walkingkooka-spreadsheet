@@ -18,10 +18,13 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -488,6 +491,50 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                 expected,
                 kind.columnOrRowRange(selection),
                 () -> kind + " columnOrRowRange from " + selection
+        );
+    }
+
+    @Test
+    public void testColumnOrRowRangeColumnIteration() {
+        this.columnOrRowRangeIterateAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("B")
+        );
+    }
+
+    @Test
+    public void testColumnOrRowRangeRowIteration() {
+        this.columnOrRowRangeIterateAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseRow("1"),
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
+
+    private void columnOrRowRangeIterateAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
+                                                 final SpreadsheetSelection selection,
+                                                 final SpreadsheetSelection... expected) {
+        this.columnOrRowRangeIterateAndCheck(
+                kind,
+                selection,
+                Lists.of(expected)
+        );
+    }
+
+    private void columnOrRowRangeIterateAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
+                                                 final SpreadsheetSelection selection,
+                                                 final List<SpreadsheetSelection> expected) {
+        final List<SpreadsheetSelection> actual = Lists.array();
+        for (final SpreadsheetColumnOrRowReference columnOrRowReference : kind.columnOrRowRange(selection)) {
+            actual.add(columnOrRowReference);
+        }
+
+        this.checkEquals(
+                expected,
+                actual
         );
     }
 
