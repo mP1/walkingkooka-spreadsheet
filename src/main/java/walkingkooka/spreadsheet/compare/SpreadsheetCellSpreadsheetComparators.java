@@ -287,7 +287,7 @@ public final class SpreadsheetCellSpreadsheetComparators {
                 break;
         }
 
-        return Lists.immutable(columnOrRowComparators);
+        return SpreadsheetCellSpreadsheetComparatorsList.with(columnOrRowComparators);
     }
 
     private static boolean isAsciiCapitalLetter(final char c) {
