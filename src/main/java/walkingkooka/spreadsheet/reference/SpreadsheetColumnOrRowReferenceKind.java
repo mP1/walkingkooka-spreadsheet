@@ -63,6 +63,11 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         public SpreadsheetColumnReference columnOrRow(final SpreadsheetSelection selection) {
             return selection.toColumn();
         }
+
+        @Override
+        public SpreadsheetColumnRangeReference columnOrRowRange(final SpreadsheetSelection selection) {
+            return selection.toColumnRange();
+        }
     },
 
 
@@ -106,6 +111,11 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         @Override
         public SpreadsheetRowReference columnOrRow(final SpreadsheetSelection selection) {
             return selection.toRow();
+        }
+
+        @Override
+        public SpreadsheetRowRangeReference columnOrRowRange(final SpreadsheetSelection selection) {
+            return selection.toRowRange();
         }
     };
 
@@ -156,4 +166,9 @@ public enum SpreadsheetColumnOrRowReferenceKind {
      * Extracts either the column or row reference from the given {@link SpreadsheetSelection}.
      */
     public abstract SpreadsheetColumnOrRowReference columnOrRow(final SpreadsheetSelection selection);
+
+    /**
+     * Extracts either the column or row range reference from the given {@link SpreadsheetSelection}.
+     */
+    public abstract SpreadsheetColumnOrRowRangeReference<?> columnOrRowRange(final SpreadsheetSelection selection);
 }
