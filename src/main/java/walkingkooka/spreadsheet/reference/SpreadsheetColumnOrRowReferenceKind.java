@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import java.util.Objects;
+
 /**
  * An enum that represents the two axis within a spreadsheet. This will be useful when sorting a cell-range.
  */
@@ -61,12 +63,14 @@ public enum SpreadsheetColumnOrRowReferenceKind {
 
         @Override
         public SpreadsheetColumnReference columnOrRow(final SpreadsheetSelection selection) {
-            return selection.toColumn();
+            return checkSelection(selection)
+                    .toColumn();
         }
 
         @Override
         public SpreadsheetColumnRangeReference columnOrRowRange(final SpreadsheetSelection selection) {
-            return selection.toColumnRange();
+            return checkSelection(selection)
+                    .toColumnRange();
         }
     },
 
@@ -110,12 +114,14 @@ public enum SpreadsheetColumnOrRowReferenceKind {
 
         @Override
         public SpreadsheetRowReference columnOrRow(final SpreadsheetSelection selection) {
-            return selection.toRow();
+            return checkSelection(selection)
+                    .toRow();
         }
 
         @Override
         public SpreadsheetRowRangeReference columnOrRowRange(final SpreadsheetSelection selection) {
-            return selection.toRowRange();
+            return checkSelection(selection)
+                    .toRowRange();
         }
     };
 
@@ -171,4 +177,8 @@ public enum SpreadsheetColumnOrRowReferenceKind {
      * Extracts either the column or row range reference from the given {@link SpreadsheetSelection}.
      */
     public abstract SpreadsheetColumnOrRowRangeReference<?> columnOrRowRange(final SpreadsheetSelection selection);
+
+    static SpreadsheetSelection checkSelection(final SpreadsheetSelection selection) {
+        return Objects.requireNonNull(selection, "selection");
+    }
 }
