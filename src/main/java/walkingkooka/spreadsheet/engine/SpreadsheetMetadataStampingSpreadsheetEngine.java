@@ -285,7 +285,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference range,
+    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
                                           final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
                                           final int max,
@@ -293,7 +293,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {
         return this.engine.findCells(
-                range,
+                cellRange,
                 path,
                 offset,
                 max,
