@@ -282,6 +282,15 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         return this;
     }
 
+    // toRange..........................................................................................................
+
+    @Override
+    public SpreadsheetCellRangeReference toRange() {
+        return this.toCellRange();
+    }
+
+    // anchors..........................................................................................................
+
     @Override
     Set<SpreadsheetViewportAnchor> anchors() {
         return ANCHORS;

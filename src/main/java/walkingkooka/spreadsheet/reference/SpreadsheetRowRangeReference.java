@@ -201,6 +201,15 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
         return this;
     }
 
+    // toRange..........................................................................................................
+
+    @Override
+    public SpreadsheetRowRangeReference toRange() {
+        return this;
+    }
+
+    // toRelative.......................................................................................................
+
     @Override
     public SpreadsheetRowRangeReference toRelative() {
         final SpreadsheetRowRangeReference relative = this.begin()

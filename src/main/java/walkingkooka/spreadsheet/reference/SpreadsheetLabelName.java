@@ -188,6 +188,15 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         return this;
     }
 
+    // toRange..........................................................................................................
+
+    @Override
+    public SpreadsheetSelection toRange() {
+        throw new UnsupportedOperationException();
+    }
+
+    // anchors..........................................................................................................
+
     @Override
     Set<SpreadsheetViewportAnchor> anchors() {
         return ANCHORS;
