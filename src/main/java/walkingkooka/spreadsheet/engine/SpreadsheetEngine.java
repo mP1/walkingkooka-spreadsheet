@@ -106,6 +106,18 @@ public interface SpreadsheetEngine {
                                      final SpreadsheetEngineContext context);
 
     /**
+     * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
+     * the given {@link Expression}.
+     */
+    Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
+                                   final SpreadsheetCellRangeReferencePath path,
+                                   final int offset,
+                                   final int max,
+                                   final String valueType,
+                                   final Expression expression,
+                                   final SpreadsheetEngineContext context);
+
+    /**
      * Loads the given {@link SpreadsheetColumn}
      */
     SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
@@ -230,16 +242,4 @@ public interface SpreadsheetEngine {
      */
     Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                            final SpreadsheetEngineContext context);
-
-    /**
-     * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
-     * the given {@link Expression}.
-     */
-    Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
-                                   final SpreadsheetCellRangeReferencePath path,
-                                   final int offset,
-                                   final int max,
-                                   final String valueType,
-                                   final Expression expression,
-                                   final SpreadsheetEngineContext context);
 }

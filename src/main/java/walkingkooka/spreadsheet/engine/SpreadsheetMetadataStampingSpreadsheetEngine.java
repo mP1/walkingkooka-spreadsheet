@@ -149,6 +149,26 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
         );
     }
 
+
+    @Override
+    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
+                                          final SpreadsheetCellRangeReferencePath path,
+                                          final int offset,
+                                          final int max,
+                                          final String valueType,
+                                          final Expression expression,
+                                          final SpreadsheetEngineContext context) {
+        return this.engine.findCells(
+                cellRange,
+                path,
+                offset,
+                max,
+                valueType,
+                expression,
+                context
+        );
+    }
+
     @Override
     public SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
                                        final SpreadsheetEngineContext context) {
@@ -282,25 +302,6 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                                   final SpreadsheetEngineContext context) {
         return this.engine.navigate(viewport, context);
-    }
-
-    @Override
-    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
-                                          final SpreadsheetCellRangeReferencePath path,
-                                          final int offset,
-                                          final int max,
-                                          final String valueType,
-                                          final Expression expression,
-                                          final SpreadsheetEngineContext context) {
-        return this.engine.findCells(
-                cellRange,
-                path,
-                offset,
-                max,
-                valueType,
-                expression,
-                context
-        );
     }
 
     private <T> T stamp(final Supplier<T> supplier,

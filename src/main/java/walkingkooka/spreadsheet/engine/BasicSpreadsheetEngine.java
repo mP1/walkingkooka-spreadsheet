@@ -373,6 +373,82 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 ).collect(Collectors.toCollection(Sets::ordered));
     }
 
+    // FIND CELLS.......................................................................................................
+
+    @Override
+    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
+                                          final SpreadsheetCellRangeReferencePath path,
+                                          final int offset,
+                                          final int max,
+                                          final String valueType,
+                                          final Expression expression,
+                                          final SpreadsheetEngineContext context) {
+        checkCellRange(cellRange);
+        Objects.requireNonNull(path, "path");
+        if (offset < 0) {
+            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
+        }
+        if (max < 0) {
+            throw new IllegalArgumentException("Invalid max " + max + " < 0");
+        }
+        checkValueType(valueType);
+        checkExpression(expression);
+        checkContext(context);
+
+        final Set<SpreadsheetCell> found = Sets.sorted(
+                SpreadsheetCellReference.cellComparator(
+                        path.comparator()
+                )
+        );
+
+        final SpreadsheetCellStore store = context.storeRepository()
+                .cells();
+        final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
+                valueType,
+                expression,
+                context
+        );
+
+        int loadOffset = 0;
+        int skipOffset = 0;
+
+        for (; ; ) {
+            final int maxLeft = max - found.size();
+            if (maxLeft <= 0) {
+                break;
+            }
+
+            final Collection<SpreadsheetCell> loaded = store.loadCells(
+                    cellRange,
+                    path,
+                    loadOffset,
+                    maxLeft
+            );
+            if (loaded.isEmpty()) {
+                break;
+            }
+
+            for (final SpreadsheetCell possible : loaded) {
+                loadOffset++;
+
+                final SpreadsheetCell loadedAndEval = this.evaluateFormatAndStyle(
+                        possible,
+                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        context
+                );
+
+                if (filterPredicate.test(loadedAndEval)) {
+                    if (skipOffset >= offset) {
+                        found.add(loadedAndEval);
+                    }
+                    skipOffset++;
+                }
+            }
+        }
+
+        return Sets.readOnly(found);
+    }
+
     // COLUMNS..........................................................................................................
 
     @Override
@@ -1728,80 +1804,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
         }
         return Optional.ofNullable(result);
-    }
-
-    @Override
-    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
-                                          final SpreadsheetCellRangeReferencePath path,
-                                          final int offset,
-                                          final int max,
-                                          final String valueType,
-                                          final Expression expression,
-                                          final SpreadsheetEngineContext context) {
-        checkCellRange(cellRange);
-        Objects.requireNonNull(path, "path");
-        if (offset < 0) {
-            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
-        }
-        if (max < 0) {
-            throw new IllegalArgumentException("Invalid max " + max + " < 0");
-        }
-        checkValueType(valueType);
-        checkExpression(expression);
-        checkContext(context);
-
-        final Set<SpreadsheetCell> found = Sets.sorted(
-                SpreadsheetCellReference.cellComparator(
-                        path.comparator()
-                )
-        );
-
-        final SpreadsheetCellStore store = context.storeRepository()
-                .cells();
-        final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
-                valueType,
-                expression,
-                context
-        );
-
-        int loadOffset = 0;
-        int skipOffset = 0;
-
-        for (; ; ) {
-            final int maxLeft = max - found.size();
-            if (maxLeft <= 0) {
-                break;
-            }
-
-            final Collection<SpreadsheetCell> loaded = store.loadCells(
-                    cellRange,
-                    path,
-                    loadOffset,
-                    maxLeft
-            );
-            if (loaded.isEmpty()) {
-                break;
-            }
-
-            for (final SpreadsheetCell possible : loaded) {
-                loadOffset++;
-
-                final SpreadsheetCell loadedAndEval = this.evaluateFormatAndStyle(
-                        possible,
-                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                        context
-                );
-
-                if(filterPredicate.test(loadedAndEval)) {
-                    if (skipOffset >= offset) {
-                        found.add(loadedAndEval);
-                    }
-                    skipOffset++;
-                }
-            }
-        }
-
-        return Sets.readOnly(found);
     }
 
     // checkers.........................................................................................................
