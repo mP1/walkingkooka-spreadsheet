@@ -123,7 +123,7 @@ public final class SpreadsheetCellSpreadsheetComparators {
                     }
                     break;
                 case modeNameStart:
-                    if (c > 'z' || false == Character.isLetter(c)) {
+                    if (false == isAsciiLetter(c)) {
                         throw new InvalidCharacterException(
                                 text,
                                 i
@@ -179,7 +179,7 @@ public final class SpreadsheetCellSpreadsheetComparators {
                             break;
                         default:
                             // continue parsing name
-                            if (c > 'z' || false == Character.isLetterOrDigit(c)) {
+                            if (false == isAsciiLetter(c)) {
                                 throw new InvalidCharacterException(
                                         text,
                                         i
@@ -229,7 +229,7 @@ public final class SpreadsheetCellSpreadsheetComparators {
                             mode = modeColumnOrRowStart;
                             break;
                         default:
-                            if (c < 'A' || c > 'Z') {
+                            if (false == isAsciiCapitalLetter(c)) {
                                 throw new InvalidCharacterException(
                                         text,
                                         i
@@ -288,6 +288,14 @@ public final class SpreadsheetCellSpreadsheetComparators {
         }
 
         return Lists.immutable(columnOrRowComparators);
+    }
+
+    private static boolean isAsciiCapitalLetter(final char c) {
+        return c >= 'A' && c <= 'Z';
+    }
+
+    private static boolean isAsciiLetter(final char c) {
+        return isAsciiCapitalLetter(c) || c >= 'a' && c <= 'z';
     }
 
     private static SpreadsheetComparator<?> upOrDown(final int start,
