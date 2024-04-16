@@ -382,6 +382,22 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     // columnOrRow......................................................................................................
 
     @Test
+    public void testColumnOrRowWithColumnAndNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetColumnOrRowReferenceKind.COLUMN.columnOrRow(null)
+        );
+    }
+
+    @Test
+    public void testColumnOrRowWithRowAndNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetColumnOrRowReferenceKind.ROW.columnOrRow(null)
+        );
+    }
+    
+    @Test
     public void testColumnOrRowWithColumn() {
         this.columnOrRowAndCheck(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
@@ -421,6 +437,22 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     }
 
     // columnOrRowRange.................................................................................................
+
+    @Test
+    public void testColumnOrRowRangeWithColumnAndNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetColumnOrRowReferenceKind.COLUMN.columnOrRowRange(null)
+        );
+    }
+
+    @Test
+    public void testColumnOrRowRangeWithRowAndNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetColumnOrRowReferenceKind.ROW.columnOrRowRange(null)
+        );
+    }
 
     @Test
     public void testColumnOrRowRangeWithColumn() {
