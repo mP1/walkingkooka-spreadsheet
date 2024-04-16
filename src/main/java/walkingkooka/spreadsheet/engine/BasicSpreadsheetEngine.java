@@ -1730,7 +1730,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                           final String valueType,
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(range, "range");
+        checkCellRange(range);
         Objects.requireNonNull(path, "path");
         if (offset < 0) {
             throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
@@ -1797,6 +1797,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     // checkers.........................................................................................................
+
+    private static SpreadsheetCellRangeReference checkCellRange(final SpreadsheetCellRangeReference cellRange) {
+        return Objects.requireNonNull(cellRange, "cellRange");
+    }
 
     private static String checkValueType(final String valueType) {
         return CharSequences.failIfNullOrEmpty(valueType, "valueType");
