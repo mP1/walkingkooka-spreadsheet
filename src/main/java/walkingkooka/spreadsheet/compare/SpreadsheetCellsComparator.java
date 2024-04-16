@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 
@@ -36,15 +35,8 @@ public final class SpreadsheetCellsComparator implements Comparator<List<Spreads
 
     static SpreadsheetCellsComparator with(final List<SpreadsheetCellSpreadsheetComparators> comparators,
                                            final SpreadsheetComparatorContext context) {
-        final List<SpreadsheetCellSpreadsheetComparators> copy = Lists.immutable(
-                Objects.requireNonNull(comparators, "comparators")
-        );
-        if (copy.isEmpty()) {
-            throw new IllegalArgumentException("Comparators must not be empty");
-        }
-
         return new SpreadsheetCellsComparator(
-                copy,
+                SpreadsheetCellSpreadsheetComparatorsList.with(comparators),
                 Objects.requireNonNull(context, "context")
         );
     }
