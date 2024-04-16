@@ -40,6 +40,14 @@ import java.util.function.Function;
  */
 public final class SpreadsheetCellSpreadsheetComparators {
 
+    /**
+     * Creates a list of compatible {@link SpreadsheetCellSpreadsheetComparators}, which means all {@link SpreadsheetCellSpreadsheetComparators}
+     * are the same {@link walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind}.
+     */
+    public static List<SpreadsheetCellSpreadsheetComparators> list(final List<SpreadsheetCellSpreadsheetComparators> list) {
+        return SpreadsheetCellSpreadsheetComparatorsList.with(list);
+    }
+
     private final static char COLUMN_ROW_ASSIGNMENT = '=';
 
     private final static char NAME_UP_DOWN_SEPARATOR = ' ';
@@ -291,7 +299,7 @@ public final class SpreadsheetCellSpreadsheetComparators {
                 break;
         }
 
-        return SpreadsheetCellSpreadsheetComparatorsList.with(columnOrRowComparators);
+        return list(columnOrRowComparators);
     }
 
     private static boolean isAsciiCapitalLetter(final char c) {
