@@ -38,6 +38,12 @@ final class SpreadsheetCellSpreadsheetComparatorsList extends AbstractList<Sprea
     static SpreadsheetCellSpreadsheetComparatorsList with(final List<SpreadsheetCellSpreadsheetComparators> columnOrRows) {
         Objects.requireNonNull(columnOrRows, "columnOrRows");
 
+        return columnOrRows instanceof SpreadsheetCellSpreadsheetComparatorsList ?
+                (SpreadsheetCellSpreadsheetComparatorsList) columnOrRows :
+                copyAndCreate(columnOrRows);
+    }
+
+    static SpreadsheetCellSpreadsheetComparatorsList copyAndCreate(final List<SpreadsheetCellSpreadsheetComparators> columnOrRows) {
         final SpreadsheetCellSpreadsheetComparators[] copy = columnOrRows.toArray(
                 new SpreadsheetCellSpreadsheetComparators[columnOrRows.size()]
         );

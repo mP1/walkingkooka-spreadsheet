@@ -25,8 +25,19 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 public final class SpreadsheetCellSpreadsheetComparatorsListTest implements ListTesting2<SpreadsheetCellSpreadsheetComparatorsList, SpreadsheetCellSpreadsheetComparators>,
         ClassTesting<SpreadsheetCellSpreadsheetComparatorsList> {
+
+    @Test
+    public void testDoesntDoubleWrap() {
+        final SpreadsheetCellSpreadsheetComparatorsList list = this.createList();
+        assertSame(
+                list,
+                SpreadsheetCellSpreadsheetComparatorsList.with(list)
+        );
+    }
 
     @Test
     public void testGet() {
