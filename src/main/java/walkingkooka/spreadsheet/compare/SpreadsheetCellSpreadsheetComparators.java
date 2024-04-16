@@ -311,7 +311,14 @@ public final class SpreadsheetCellSpreadsheetComparators {
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Missing " + SpreadsheetComparators.UP + "/" + SpreadsheetComparators.DOWN + " at " + start);
+                throw new IllegalArgumentException(
+                        "Missing " +
+                                SpreadsheetComparators.UP +
+                                "/" +
+                                SpreadsheetComparators.DOWN +
+                                " at " +
+                                start
+                );
         }
 
         return result;
