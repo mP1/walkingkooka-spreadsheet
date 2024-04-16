@@ -84,6 +84,19 @@ public interface SpreadsheetEngine {
                                  final SpreadsheetEngineContext context);
 
     /**
+     * Fill may be used to perform several operations.
+     * <ul>
+     * <li>If $cells are empty the $parse is ignored and the {@link SpreadsheetCellRangeReference $to} has all cells deleted, aka DELETE</li>
+     * <li>If $cells is NOT empty and $parse and $to are equal the cells are saved without modification, aka SAVE</li>
+     * <li>If $cells is NOT empty and $parse is smaller than $to cells are repeated and ABSOLUTE references updated aka FILL or COPY then PASTE</li>
+     * </ul>
+     */
+    SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
+                               final SpreadsheetCellRangeReference from,
+                               final SpreadsheetCellRangeReference to,
+                               final SpreadsheetEngineContext context);
+
+    /**
      * Loads the given {@link SpreadsheetColumn}
      */
     SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
@@ -134,19 +147,6 @@ public interface SpreadsheetEngine {
     SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
                                 final int count,
                                 final SpreadsheetEngineContext context);
-
-    /**
-     * Fill may be used to perform several operations.
-     * <ul>
-     * <li>If $cells are empty the $parse is ignored and the {@link SpreadsheetCellRangeReference $to} has all cells deleted, aka DELETE</li>
-     * <li>If $cells is NOT empty and $parse and $to are equal the cells are saved without modification, aka SAVE</li>
-     * <li>If $cells is NOT empty and $parse is smaller than $to cells are repeated and ABSOLUTE references updated aka FILL or COPY then PASTE</li>
-     * </ul>
-     */
-    SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                               final SpreadsheetCellRangeReference from,
-                               final SpreadsheetCellRangeReference to,
-                               final SpreadsheetEngineContext context);
 
     /**
      * Sets a new label mapping or replaces an existing one returning a {@link SpreadsheetDelta} which may or may not

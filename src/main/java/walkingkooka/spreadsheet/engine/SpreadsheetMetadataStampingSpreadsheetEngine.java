@@ -126,6 +126,17 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
+                                      final SpreadsheetCellRangeReference from,
+                                      final SpreadsheetCellRangeReference to,
+                                      final SpreadsheetEngineContext context) {
+        return this.stamp(
+                () -> this.engine.fillCells(cells, from, to, context),
+                context
+        );
+    }
+
+    @Override
     public SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
                                        final SpreadsheetEngineContext context) {
         return this.engine.loadColumn(column, context);
@@ -191,17 +202,6 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                        final SpreadsheetEngineContext context) {
         return this.stamp(
                 () -> this.engine.insertRows(row, count, context),
-                context
-        );
-    }
-
-    @Override
-    public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                      final SpreadsheetCellRangeReference from,
-                                      final SpreadsheetCellRangeReference to,
-                                      final SpreadsheetEngineContext context) {
-        return this.stamp(
-                () -> this.engine.fillCells(cells, from, to, context),
                 context
         );
     }
