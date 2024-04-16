@@ -32,4 +32,18 @@ public abstract class SpreadsheetCellReferenceOrRangeTestCase<R extends Spreadsh
     public final void testToCellOrCellRange() {
         this.toCellOrCellRangeAndCheck();
     }
+
+    // toRange.........................................................................................................
+
+    @Test
+    public final void testToRange() {
+        final R selection = this.createSelection();
+
+        this.toRangeAndCheck(
+                selection,
+                this.parseRange(
+                        selection.toString()
+                )
+        );
+    }
 }

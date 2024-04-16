@@ -1787,6 +1787,44 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // toRange..........................................................................................................
+
+    final void toRangeAndCheck(final String selection) {
+        this.toRangeAndCheck(
+                this.parseString(selection)
+        );
+    }
+
+    final void toRangeAndCheck(final S selection) {
+        this.toRangeAndCheck(
+                selection,
+                selection
+        );
+    }
+
+    final void toRangeAndCheck(final String selection,
+                               final SpreadsheetSelection expected) {
+        this.toRangeAndCheck(
+                this.parseString(selection),
+                expected
+        );
+    }
+
+    final void toRangeAndCheck(final S selection,
+                               final SpreadsheetSelection expected) {
+        final SpreadsheetSelection range = selection.toRange();
+
+        if (range.isCellReference() || range.isColumnReference() || range.isRowReference()) {
+            throw new IllegalStateException("Range " + range + " of " + selection + " must not be a scalar");
+        }
+
+        this.checkEquals(
+                expected,
+                range,
+                () -> "toRange " + selection
+        );
+    }
+
     // HasUrlFragment...................................................................................................
 
     @Test

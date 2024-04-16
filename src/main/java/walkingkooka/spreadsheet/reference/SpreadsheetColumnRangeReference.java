@@ -207,6 +207,15 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
         throw new UnsupportedOperationException(this.toString());
     }
 
+    // toRange..........................................................................................................
+
+    @Override
+    public SpreadsheetColumnRangeReference toRange() {
+        return this;
+    }
+
+    // toRelative......................................................................................................
+
     @Override
     public SpreadsheetColumnRangeReference toRelative() {
         final SpreadsheetColumnRangeReference relative = this.begin()

@@ -345,6 +345,17 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         );
     }
 
+    // toRange..........................................................................................................
+
+    @Test
+    public void testToRange() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection()
+                        .toRange()
+        );
+    }
+
     // Comparator ......................................................................................................
 
     @Test

@@ -89,6 +89,20 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         assertNotSame(reference, this.createReference(value));
     }
 
+    // toRange.........................................................................................................
+
+    @Test
+    public final void testToRange() {
+        final R selection = this.createSelection();
+
+        this.toRangeAndCheck(
+                selection,
+                this.parseRange(
+                        selection.toString()
+                )
+        );
+    }
+
     // isAll............................................................................................................
 
     @Test

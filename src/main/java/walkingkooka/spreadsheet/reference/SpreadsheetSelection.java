@@ -948,6 +948,12 @@ public abstract class SpreadsheetSelection implements HasText,
     abstract SpreadsheetSelection toScalarIfUnit();
 
     /**
+     * Converts this {@link SpreadsheetSelection} into a range. A {@link SpreadsheetCellReference} will return {@link SpreadsheetCellRangeReference},
+     * while {@link SpreadsheetCellRangeReference} will return itself. {@link SpreadsheetLabelName} will throw {@link UnsupportedOperationException}.
+     */
+    public abstract SpreadsheetSelection toRange();
+
+    /**
      * Returns true if this selection matches everything. Non range selections will always return false.
      */
     public abstract boolean isAll();

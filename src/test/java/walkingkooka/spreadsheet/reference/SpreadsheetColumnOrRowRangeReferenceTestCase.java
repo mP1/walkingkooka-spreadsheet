@@ -95,6 +95,15 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
         this.toCellOrCellRangeFails();
     }
 
+    // toRange.........................................................................................................
+
+    @Test
+    public final void testToRange() {
+        this.toRangeAndCheck(
+                this.createSelection()
+        );
+    }
+
     // toParserToken....................................................................................................
 
     @Test

@@ -716,6 +716,13 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                 this;
     }
 
+    // toRange..........................................................................................................
+
+    @Override
+    public SpreadsheetCellRangeReference toRange() {
+        return this;
+    }
+
     // SpreadsheetSelection.............................................................................................
 
     @Override

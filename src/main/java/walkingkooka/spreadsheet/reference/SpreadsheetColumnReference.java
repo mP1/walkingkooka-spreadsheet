@@ -338,6 +338,13 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         throw new UnsupportedOperationException(this.toString());
     }
 
+    // toRange..........................................................................................................
+
+    @Override
+    public SpreadsheetColumnRangeReference toRange() {
+        return this.toColumnRange();
+    }
+
     // pick.............................................................................................................
 
     @Override

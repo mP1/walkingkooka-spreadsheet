@@ -316,6 +316,13 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return SpreadsheetRowRangeReference.with(Range.singleton(this));
     }
 
+    // toRange..........................................................................................................
+
+    @Override
+    public SpreadsheetRowRangeReference toRange() {
+        return this.toRowRange();
+    }
+
     // toRelative.......................................................................................................
 
     @Override
