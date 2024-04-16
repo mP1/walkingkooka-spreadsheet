@@ -72,6 +72,11 @@ public enum SpreadsheetColumnOrRowReferenceKind {
             return checkSelection(selection)
                     .toColumnRange();
         }
+
+        @Override
+        int length0(final SpreadsheetCellRangeReference range) {
+            return range.width();
+        }
     },
 
 
@@ -122,6 +127,11 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         public SpreadsheetRowRangeReference columnOrRowRange(final SpreadsheetSelection selection) {
             return checkSelection(selection)
                     .toRowRange();
+        }
+
+        @Override
+        int length0(final SpreadsheetCellRangeReference range) {
+            return range.height();
         }
     };
 
@@ -177,6 +187,18 @@ public enum SpreadsheetColumnOrRowReferenceKind {
      * Extracts either the column or row range reference from the given {@link SpreadsheetSelection}.
      */
     public abstract SpreadsheetColumnOrRowRangeReference<?> columnOrRowRange(final SpreadsheetSelection selection);
+
+    /**
+     * Returns the width or height for the given {@link SpreadsheetSelection}. For {@link #COLUMN} it will return the width.
+     */
+    public final int length(final SpreadsheetSelection selection) {
+        return this.length0(
+                checkSelection(selection)
+                        .toCellRange()
+        );
+    }
+
+    abstract int length0(final SpreadsheetCellRangeReference range);
 
     static SpreadsheetSelection checkSelection(final SpreadsheetSelection selection) {
         return Objects.requireNonNull(selection, "selection");

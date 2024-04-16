@@ -399,7 +399,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                 () -> SpreadsheetColumnOrRowReferenceKind.ROW.columnOrRow(null)
         );
     }
-    
+
     @Test
     public void testColumnOrRowWithColumn() {
         this.columnOrRowAndCheck(
@@ -535,6 +535,90 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.checkEquals(
                 expected,
                 actual
+        );
+    }
+
+    // length...........................................................................................................
+
+    @Test
+    public void testLengthColumnWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetColumnOrRowReferenceKind
+                        .COLUMN.length(null)
+        );
+    }
+
+    @Test
+    public void testLengthRowWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetColumnOrRowReferenceKind.ROW
+                        .length(null)
+        );
+    }
+
+    @Test
+    public void testLengthColumnWithColumn() {
+        this.lengthAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetSelection.parseColumn("A"),
+                1
+        );
+    }
+
+    @Test
+    public void testLengthRowWithColumn() {
+        this.lengthAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                SpreadsheetSelection.parseColumn("A"),
+                1048576
+        );
+    }
+
+    @Test
+    public void testLengthColumnWithRow() {
+        this.lengthAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetSelection.parseRow("2"),
+                16384
+        );
+    }
+
+    @Test
+    public void testLengthRowWithRow() {
+        this.lengthAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                SpreadsheetSelection.parseRow("3"),
+                1
+        );
+    }
+
+    @Test
+    public void testLengthColumnWithCellRange() {
+        this.lengthAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetSelection.parseCellRange("A1:C5"),
+                3
+        );
+    }
+
+    @Test
+    public void testLengthRowWithCellRange() {
+        this.lengthAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                SpreadsheetSelection.parseCellRange("A1:C5"),
+                5
+        );
+    }
+
+    private void lengthAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
+                                final SpreadsheetSelection selection,
+                                final int expected) {
+        this.checkEquals(
+                expected,
+                kind.length(selection),
+                () -> kind + " length " + selection
         );
     }
 
