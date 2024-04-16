@@ -326,6 +326,33 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // FILL CELLS.......................................................................................................
+
+    @Override
+    public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
+                                      final SpreadsheetCellRangeReference from,
+                                      final SpreadsheetCellRangeReference to,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cells, "cells");
+        Objects.requireNonNull(from, "parse");
+        Objects.requireNonNull(to, "to");
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
+            BasicSpreadsheetEngineFillCells.execute(
+                    cells,
+                    from,
+                    to,
+                    this,
+                    context
+            );
+
+            return this.prepareResponse(changes, context);
+        }
+    }
+
+    // COLUMNS..........................................................................................................
+
     @Override
     public SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
                                        final SpreadsheetEngineContext context) {
@@ -501,29 +528,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private static void checkCount(final int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Count " + count + " < 0");
-        }
-    }
-
-    @Override
-    public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                      final SpreadsheetCellRangeReference from,
-                                      final SpreadsheetCellRangeReference to,
-                                      final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(cells, "cells");
-        Objects.requireNonNull(from, "parse");
-        Objects.requireNonNull(to, "to");
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
-            BasicSpreadsheetEngineFillCells.execute(
-                    cells,
-                    from,
-                    to,
-                    this,
-                    context
-            );
-
-            return this.prepareResponse(changes, context);
         }
     }
 
