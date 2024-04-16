@@ -136,7 +136,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     evaluation,
                     changes,
                     context
-            );
+                    ).stream()
+                    .map(SpreadsheetCell::reference)
+                    .collect(Collectors.toCollection(Sets::ordered));
 
             SpreadsheetDelta delta = this.prepareResponse(
                     changes,
@@ -174,11 +176,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    private Set<SpreadsheetCellReference> loadAndEvaluateCells(final SpreadsheetCellRangeReference cellRange,
-                                                               final SpreadsheetEngineEvaluation evaluation,
-                                                               final BasicSpreadsheetEngineChanges changes,
-                                                               final SpreadsheetEngineContext context) {
-        final Set<SpreadsheetCellReference> loadedOrDeleted = Sets.sorted();
+    private Set<SpreadsheetCell> loadAndEvaluateCells(final SpreadsheetCellRangeReference cellRange,
+                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                      final BasicSpreadsheetEngineChanges changes,
+                                                      final SpreadsheetEngineContext context) {
+        final Set<SpreadsheetCell> loaded = Sets.sorted();
 
         for (final SpreadsheetCell cell : context.storeRepository()
                 .cells()
@@ -191,9 +193,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             );
             changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
 
-            loadedOrDeleted.add(cell.reference());
+            loaded.add(cell);
         }
-        return loadedOrDeleted;
+        return loaded;
     }
 
     /**
