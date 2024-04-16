@@ -82,13 +82,13 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> range,
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         return this.stamp(
                 () -> this.engine.loadCells(
-                        range,
+                        cellRanges,
                         evaluation,
                         deltaProperties,
                         context
