@@ -58,6 +58,14 @@ public interface SpreadsheetEngine {
                                final SpreadsheetEngineContext context);
 
     /**
+     * Loads a range of cells. This is useful to fill a range that fills the viewportRectangle.
+     */
+    SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
+                               final SpreadsheetEngineEvaluation evaluation,
+                               final Set<SpreadsheetDeltaProperties> deltaProperties,
+                               final SpreadsheetEngineContext context);
+
+    /**
      * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
      */
     SpreadsheetDelta saveCell(final SpreadsheetCell cell,
@@ -126,14 +134,6 @@ public interface SpreadsheetEngine {
     SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
                                 final int count,
                                 final SpreadsheetEngineContext context);
-
-    /**
-     * Loads a range of cells. This is useful to fill a range that fills the viewportRectangle.
-     */
-    SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
-                               final SpreadsheetEngineEvaluation evaluation,
-                               final Set<SpreadsheetDeltaProperties> deltaProperties,
-                               final SpreadsheetEngineContext context);
 
     /**
      * Fill may be used to perform several operations.

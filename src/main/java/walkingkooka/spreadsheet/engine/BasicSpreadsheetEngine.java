@@ -201,6 +201,46 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return loaded.isPresent();
     }
 
+    // LOAD CELLS.......................................................................................................
+
+    @Override
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
+                                      final SpreadsheetEngineEvaluation evaluation,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cellRanges, "cellRanges");
+        checkEvaluation(evaluation);
+        checkDeltaProperties(deltaProperties);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, deltaProperties, context)) {
+            final SpreadsheetCellStore store = context.storeRepository()
+                    .cells();
+
+            for (final SpreadsheetCellRangeReference cellRange : cellRanges) {
+                cellRange.cellStream()
+                        .forEach(reference -> {
+                                    if (!changes.isLoaded(reference)) {
+                                        final Optional<SpreadsheetCell> loaded = store.load(reference);
+                                        if (loaded.isPresent()) {
+                                            final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(loaded.get(), evaluation, context);
+                                            changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+                                        }
+                                    }
+                                }
+                        );
+            }
+
+            final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.with(cellRanges);
+
+            return this.prepareResponse(
+                    changes,
+                    window,
+                    context
+            ).setWindow(window);
+        }
+    }
+
     // SAVE CELL........................................................................................................
 
     /**
@@ -461,44 +501,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private static void checkCount(final int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Count " + count + " < 0");
-        }
-    }
-
-    @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
-                                      final SpreadsheetEngineEvaluation evaluation,
-                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                      final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(cellRanges, "cellRanges");
-        checkEvaluation(evaluation);
-        checkDeltaProperties(deltaProperties);
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, deltaProperties, context)) {
-            final SpreadsheetCellStore store = context.storeRepository()
-                    .cells();
-
-            for (final SpreadsheetCellRangeReference cellRange : cellRanges) {
-                cellRange.cellStream()
-                        .forEach(reference -> {
-                                    if (!changes.isLoaded(reference)) {
-                                        final Optional<SpreadsheetCell> loaded = store.load(reference);
-                                        if (loaded.isPresent()) {
-                                            final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(loaded.get(), evaluation, context);
-                                            changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
-                                        }
-                                    }
-                                }
-                        );
-            }
-
-            final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.with(cellRanges);
-
-            return this.prepareResponse(
-                    changes,
-                    window,
-                    context
-            ).setWindow(window);
         }
     }
 
