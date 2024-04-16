@@ -17,15 +17,19 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -434,6 +438,95 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
 
         return Sets.readOnly(found);
+    }
+
+    @Override
+    public SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
+                                      final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
+        checkCellRange(cellRange);
+        Objects.requireNonNull(comparators, "comparators");
+        checkDeltaProperties(deltaProperties);
+
+        final List<SpreadsheetCellSpreadsheetComparators> copy = Lists.immutable(comparators);
+
+        final String outOfBounds = comparators.stream()
+                .map(c -> c.columnOrRow())
+                .filter(c -> false == cellRange.test(c))
+                .map(SpreadsheetSelection::toString)
+                .collect(Collectors.joining(", "));
+        if (false == outOfBounds.isEmpty()) {
+            throw new IllegalArgumentException("Some sort columns/rows are not within cell-range " + cellRange + " got " + outOfBounds);
+        }
+
+        checkContext(context);
+
+        return this.sortCells0(
+                cellRange,
+                SpreadsheetCellSpreadsheetComparators.list(comparators),
+                deltaProperties,
+                context
+        );
+    }
+
+    private SpreadsheetDelta sortCells0(final SpreadsheetCellRangeReference cellRange,
+                                        final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                        final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                        final SpreadsheetEngineContext context) {
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
+            final Set<SpreadsheetCell> loaded = Sets.sorted();
+
+            for (final SpreadsheetCell cell : context.storeRepository()
+                    .cells()
+                    .loadCells(cellRange)) {
+
+                final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
+                        cell,
+                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        context
+                );
+                loaded.add(evaluated);
+            }
+
+            final SpreadsheetCellRange range = cellRange.setValue(loaded);
+
+            final Map<SpreadsheetCell, SpreadsheetCell> movedFromTo = Maps.sorted();
+
+            final SpreadsheetCellRange sorted = range.sort(
+                    comparators,
+                    movedFromTo::put, // moved cells
+                    SpreadsheetComparatorContexts.basic(
+                            context.spreadsheetMetadata()
+                                    .converterContext(
+                                            context::now, // now supplier
+                                            context::resolveIfLabel
+                                    )
+                    )
+            );
+
+            // delete old cells...
+            for (final SpreadsheetCell cell : movedFromTo.keySet()) {
+                changes.onCellDeletedBatch(
+                        cell.reference()
+                );
+            }
+
+            // save moved cells
+            for (final SpreadsheetCell to : movedFromTo.values()) {
+                final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
+                        to,
+                        SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                        context
+                );
+                changes.onCellSavedBatch(saved);
+            }
+
+            return this.prepareResponse(
+                    changes,
+                    context
+            );
+        }
     }
 
     // COLUMNS..........................................................................................................

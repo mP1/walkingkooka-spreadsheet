@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -34,6 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -116,6 +118,14 @@ public interface SpreadsheetEngine {
                                    final String valueType,
                                    final Expression expression,
                                    final SpreadsheetEngineContext context);
+
+    /**
+     * Sorts the selection of cells using the provided {@link SpreadsheetCellSpreadsheetComparators comparators}.
+     */
+    SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
+                               final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                               final Set<SpreadsheetDeltaProperties> deltaProperties,
+                               final SpreadsheetEngineContext context);
 
     /**
      * Loads the given {@link SpreadsheetColumn}

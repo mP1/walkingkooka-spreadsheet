@@ -9229,6 +9229,238 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellStore, 1 + 1);
     }
 
+    // sortCells........................................................................................................
+
+    @Test
+    public void testSortColumnsNothingChanged() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell("A1", "'1a");
+        final SpreadsheetCell b2 = this.cell("B2", "'2b");
+
+        engine.saveCells(
+                Sets.of(
+                        a1,
+                        b2
+                ),
+                context
+        );
+
+        // because the cells were not moved the result should have no cells.
+        this.sortCellsAndCheck(
+                engine,
+                "A1:B2", // cell-range
+                "A=string", // comparators
+                SpreadsheetDeltaProperties.ALL, // delta-properties
+                context,
+                SpreadsheetDelta.EMPTY.setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+    }
+
+    @Test
+    public void testSortColumnsRowsSwapped() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        engine.saveCells(
+                Sets.of(
+                        this.cell("A1", "'BBB"),
+                        this.cell("A2", "'AAA")
+                ),
+                context
+        );
+
+        this.sortCellsAndCheck(
+                engine,
+                "A1:B2", // cell-range
+                "A=string", // comparators
+                SpreadsheetDeltaProperties.ALL, // delta-properties
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formattedCell("A1", "'AAA", "AAA"),
+                                this.formattedCell("A2", "'BBB", "BBB")
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1,2")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+    }
+
+    @Test
+    public void testSortRowsColumnsSwapped() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        engine.saveCells(
+                Sets.of(
+                        this.cell("A1", "'BBB"),
+                        this.cell("B1", "'AAA")
+                ),
+                context
+        );
+
+        this.sortCellsAndCheck(
+                engine,
+                "A1:B2", // cell-range
+                "1=string", // comparators
+                SpreadsheetDeltaProperties.ALL, // delta-properties
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formattedCell("A1", "'AAA", "AAA"),
+                                this.formattedCell("B1", "'BBB", "BBB")
+                        )
+                ).setColumnWidths(
+                        columnWidths("A,B")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
+    public void testSortColumnsRowsSwappedIncludesSortedCellReferences() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        engine.saveCells(
+                Sets.of(
+                        this.cell("A1", "'BBB"),
+                        this.cell("B1", "=A1"),
+                        this.cell("A2", "'AAA"),
+                        this.cell("B2", "=A2")
+                ),
+                context
+        );
+
+        this.sortCellsAndCheck(
+                engine,
+                "A1:B2", // cell-range
+                "A=string", // comparators
+                SpreadsheetDeltaProperties.ALL, // delta-properties
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formattedCell("A1", "'AAA", "AAA"),
+                                this.formattedCell("B1", "=A1", "AAA"),
+                                this.formattedCell("A2", "'BBB", "BBB"),
+                                this.formattedCell("B2", "=A2", "BBB")
+                        )
+                ).setColumnWidths(
+                        columnWidths("A,B")
+                ).setRowHeights(
+                        rowHeights("1,2")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+    }
+
+    @Test
+    public void testSortColumnsRowsSwappedReferencedByCellsOutsideSortRange() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        engine.saveCells(
+                Sets.of(
+                        this.cell("A1", "'BBB"),
+                        this.cell("A2", "'AAA"),
+                        this.cell("B1", "=A1"),
+                        this.cell("B2", "=A2")
+                ),
+                context
+        );
+
+        this.sortCellsAndCheck(
+                engine,
+                "A1:A2", // cell-range
+                "A=string", // comparators
+                SpreadsheetDeltaProperties.ALL, // delta-properties
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formattedCell("A1", "'AAA", "AAA"),
+                                this.formattedCell("A2", "'BBB", "BBB"),
+                                this.formattedCell("B1", "=A1", "AAA"),
+                                this.formattedCell("B2", "=A2", "BBB")
+                        )
+                ).setColumnWidths(
+                        columnWidths("A,B")
+                ).setRowHeights(
+                        rowHeights("1,2")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+    }
+
+    @Test
+    public void testSortColumnsRowsSwappedLabelNotUpdated() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        engine.saveCells(
+                Sets.of(
+                        this.cell("A1", "'BBB"),
+                        this.cell("A2", "'AAA")
+                ),
+                context
+        );
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        engine.saveLabel(
+                label.mapping(SpreadsheetSelection.A1),
+                context
+        );
+
+        this.sortCellsAndCheck(
+                engine,
+                "A1:B2", // cell-range
+                "A=string", // comparators
+                SpreadsheetDeltaProperties.ALL, // delta-properties
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formattedCell("A1", "'AAA", "AAA"),
+                                this.formattedCell("A2", "'BBB", "BBB")
+                        )
+                ).setLabels(
+                        Sets.of(
+                                label.mapping(SpreadsheetSelection.A1)
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1,2")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+    }
+
+
     //  loadLabel.......................................................................................................
 
     @Test

@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
@@ -38,6 +39,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -165,6 +167,22 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                 max,
                 valueType,
                 expression,
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
+                                      final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
+        return this.stamp(
+                () -> this.engine.sortCells(
+                        cellRange,
+                        comparators,
+                        deltaProperties,
+                        context
+                ),
                 context
         );
     }

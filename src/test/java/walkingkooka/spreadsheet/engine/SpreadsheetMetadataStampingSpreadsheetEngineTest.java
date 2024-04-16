@@ -171,6 +171,21 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         this.checkMetadataUpdated(context);
     }
 
+    @Override
+    public void testSortCellsWithNullCellRangeFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSortCellsWithNullComparatorsFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSortCellsWithNullDeltaPropertiesFails() {
+        throw new UnsupportedOperationException();
+    }
+
     @Test
     public void testDeleteColumnNoop() {
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
