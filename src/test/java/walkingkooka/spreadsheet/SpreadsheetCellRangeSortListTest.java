@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.reference;
+package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
@@ -23,18 +23,18 @@ import walkingkooka.collect.list.ListTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellRangeReferenceSortListTest implements ListTesting,
-        ClassTesting<SpreadsheetCellRangeReferenceSortList>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetCellRangeReferenceSortList> {
+public final class SpreadsheetCellRangeSortListTest implements ListTesting,
+        ClassTesting<SpreadsheetCellRangeSortList>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetCellRangeSortList> {
 
     @Test
     public void testWithColumn() {
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -57,7 +57,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
 
     @Test
     public void testWithRow() {
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.ROW,
                 4
         );
@@ -80,7 +80,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
 
     @Test
     public void testSize() {
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.ROW,
                 4
         );
@@ -103,7 +103,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
         final SpreadsheetCell a3 = SpreadsheetSelection.parseCell("A3")
                 .setFormula(SpreadsheetFormula.EMPTY);
 
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -131,7 +131,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
 
     @Test
     public void testSet() {
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -158,7 +158,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
 
     @Test
     public void testSetNull() {
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -187,7 +187,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
 
     @Test
     public void testSetThatReplaced() {
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -227,7 +227,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
     public void testAddFails() {
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> SpreadsheetCellRangeReferenceSortList.with(
+                () -> SpreadsheetCellRangeSortList.with(
                         SpreadsheetColumnOrRowReferenceKind.COLUMN,
                         4
                 ).add(null)
@@ -238,7 +238,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
     public void testAddIndexFails() {
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> SpreadsheetCellRangeReferenceSortList.with(
+                () -> SpreadsheetCellRangeSortList.with(
                         SpreadsheetColumnOrRowReferenceKind.COLUMN,
                         4
                 ).add(1, null)
@@ -247,7 +247,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
 
     @Test
     public void testRemoveElementFails() {
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -274,7 +274,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
 
     @Test
     public void testRemoveIndexFails() {
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -304,7 +304,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
     @Test
     public void testEqualsDifferentSize() {
         this.checkNotEquals(
-                SpreadsheetCellRangeReferenceSortList.with(
+                SpreadsheetCellRangeSortList.with(
                         SpreadsheetColumnOrRowReferenceKind.COLUMN,
                         4
                 )
@@ -313,7 +313,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
 
     @Test
     public void testEqualsDifferentElementsSameSize() {
-        final SpreadsheetCellRangeReferenceSortList list = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -324,7 +324,7 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
                 )
         );
 
-        final SpreadsheetCellRangeReferenceSortList other = SpreadsheetCellRangeReferenceSortList.with(
+        final SpreadsheetCellRangeSortList other = SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -343,8 +343,8 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
 
 
     @Override
-    public SpreadsheetCellRangeReferenceSortList createObject() {
-        return SpreadsheetCellRangeReferenceSortList.with(
+    public SpreadsheetCellRangeSortList createObject() {
+        return SpreadsheetCellRangeSortList.with(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 3
         );
@@ -353,8 +353,8 @@ public final class SpreadsheetCellRangeReferenceSortListTest implements ListTest
     // Class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellRangeReferenceSortList> type() {
-        return SpreadsheetCellRangeReferenceSortList.class;
+    public Class<SpreadsheetCellRangeSortList> type() {
+        return SpreadsheetCellRangeSortList.class;
     }
 
     @Override

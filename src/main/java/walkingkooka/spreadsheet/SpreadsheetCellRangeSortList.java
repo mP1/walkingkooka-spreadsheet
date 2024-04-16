@@ -15,9 +15,9 @@
  *
  */
 
-package walkingkooka.spreadsheet.reference;
+package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 
 import java.util.AbstractList;
 import java.util.List;
@@ -25,18 +25,18 @@ import java.util.List;
 /**
  * A mutable {@link List} that is backed by an array and also holds the column or row containing these cells.
  */
-final class SpreadsheetCellRangeReferenceSortList extends AbstractList<SpreadsheetCell> {
+final class SpreadsheetCellRangeSortList extends AbstractList<SpreadsheetCell> {
 
-    static SpreadsheetCellRangeReferenceSortList with(final SpreadsheetColumnOrRowReferenceKind columnOrRow,
-                                                      final int size) {
-        return new SpreadsheetCellRangeReferenceSortList(
+    static SpreadsheetCellRangeSortList with(final SpreadsheetColumnOrRowReferenceKind columnOrRow,
+                                             final int size) {
+        return new SpreadsheetCellRangeSortList(
                 columnOrRow,
                 size
         );
     }
 
-    private SpreadsheetCellRangeReferenceSortList(final SpreadsheetColumnOrRowReferenceKind columnOrRow,
-                                                  final int size) {
+    private SpreadsheetCellRangeSortList(final SpreadsheetColumnOrRowReferenceKind columnOrRow,
+                                         final int size) {
         this.columnOrRow = columnOrRow;
         this.cells = new SpreadsheetCell[size];
     }
