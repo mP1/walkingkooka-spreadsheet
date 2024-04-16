@@ -97,7 +97,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
     }
 
     public SpreadsheetCellRange setValue(final Set<SpreadsheetCell> value) {
-        checkRange(range);
+        Objects.requireNonNull(value, "value");
 
         final Set<SpreadsheetCell> copy = Sets.immutable(value);
         checkValues(this.range, copy);
