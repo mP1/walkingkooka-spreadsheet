@@ -35,9 +35,8 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * For a single column or row holds a list of {@link SpreadsheetComparator}. Note this comparator is able to handle
- * null values and will use {@link SpreadsheetComparatorContext#missingValues()} to compute the result when one value
- * is null.
+ * For a single column or row holds a list of {@link SpreadsheetComparator}. Note that values that cannot be converted ond empty cells
+ * will be appended to the sorted values.
  */
 public final class SpreadsheetCellSpreadsheetComparators {
 
