@@ -1723,14 +1723,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference range,
+    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
                                           final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
                                           final int max,
                                           final String valueType,
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {
-        checkCellRange(range);
+        checkCellRange(cellRange);
         Objects.requireNonNull(path, "path");
         if (offset < 0) {
             throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
@@ -1766,7 +1766,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             final Collection<SpreadsheetCell> loaded = store.loadCells(
-                    range,
+                    cellRange,
                     path,
                     loadOffset,
                     maxLeft

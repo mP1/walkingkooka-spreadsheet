@@ -235,7 +235,7 @@ public interface SpreadsheetEngine {
      * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
      * the given {@link Expression}.
      */
-    Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference range,
+    Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
                                    final SpreadsheetCellRangeReferencePath path,
                                    final int offset,
                                    final int max,
