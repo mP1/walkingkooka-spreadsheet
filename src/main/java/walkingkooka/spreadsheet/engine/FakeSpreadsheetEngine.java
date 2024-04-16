@@ -119,7 +119,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> range,
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
