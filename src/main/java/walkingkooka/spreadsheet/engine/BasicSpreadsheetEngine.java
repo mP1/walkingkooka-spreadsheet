@@ -351,6 +351,28 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // FILTER CELLS....................................................................................................
+
+    @Override
+    public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final String valueType,
+                                            final Expression expression,
+                                            final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cells, "cells");
+        checkValueType(valueType);
+        Objects.requireNonNull(expression, "expression");
+        checkContext(context);
+
+        return cells.stream()
+                .filter(
+                        BasicSpreadsheetEngineFilterPredicate.with(
+                                valueType,
+                                expression,
+                                context
+                        )
+                ).collect(Collectors.toCollection(Sets::ordered));
+    }
+
     // COLUMNS..........................................................................................................
 
     @Override
@@ -1706,26 +1728,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
         }
         return Optional.ofNullable(result);
-    }
-
-    @Override
-    public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final String valueType,
-                                            final Expression expression,
-                                            final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(cells, "cells");
-        checkValueType(valueType);
-        Objects.requireNonNull(expression, "expression");
-        checkContext(context);
-
-        return cells.stream()
-                .filter(
-                        BasicSpreadsheetEngineFilterPredicate.with(
-                                valueType,
-                                expression,
-                                context
-                        )
-                ).collect(Collectors.toCollection(Sets::ordered));
     }
 
     @Override

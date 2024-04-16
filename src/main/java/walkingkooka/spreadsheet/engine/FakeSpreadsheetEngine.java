@@ -83,6 +83,14 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final String valueType,
+                                            final Expression expression,
+                                            final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
                                        final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
@@ -185,14 +193,6 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     @Override
     public Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                                   final SpreadsheetEngineContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final String valueType,
-                                            final Expression expression,
-                                            final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
