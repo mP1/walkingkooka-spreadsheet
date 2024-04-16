@@ -97,6 +97,15 @@ public interface SpreadsheetEngine {
                                final SpreadsheetEngineContext context);
 
     /**
+     * Executes the {@link Expression} for each and every {@link SpreadsheetCell} as the current cell. Cells are only
+     * kept if the {@link Expression} returns true.
+     */
+    Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                     final String valueType,
+                                     final Expression expression,
+                                     final SpreadsheetEngineContext context);
+
+    /**
      * Loads the given {@link SpreadsheetColumn}
      */
     SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
@@ -221,15 +230,6 @@ public interface SpreadsheetEngine {
      */
     Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                            final SpreadsheetEngineContext context);
-
-    /**
-     * Executes the {@link Expression} for each and every {@link SpreadsheetCell} as the current cell. Cells are only
-     * kept if the {@link Expression} returns true.
-     */
-    Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                     final String valueType,
-                                     final Expression expression,
-                                     final SpreadsheetEngineContext context);
 
     /**
      * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
