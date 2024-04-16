@@ -49,6 +49,14 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
+                                      final SpreadsheetEngineEvaluation evaluation,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
@@ -115,14 +123,6 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     public SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
                                        final int count,
                                        final SpreadsheetEngineContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
-                                      final SpreadsheetEngineEvaluation evaluation,
-                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
