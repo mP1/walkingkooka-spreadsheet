@@ -379,6 +379,47 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         );
     }
 
+    // columnOrRow......................................................................................................
+
+    @Test
+    public void testColumnOrRowWithColumn() {
+        this.columnOrRowAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.A1.column()
+        );
+    }
+
+    @Test
+    public void testColumnOrRowWithRow() {
+        this.columnOrRowAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.A1.row()
+        );
+    }
+
+    @Test
+    public void testColumnOrRowWithRow2() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
+
+        this.columnOrRowAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                cell,
+                cell.row()
+        );
+    }
+
+    private void columnOrRowAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
+                                     final SpreadsheetSelection selection,
+                                     final SpreadsheetColumnOrRowReference expected) {
+        this.checkEquals(
+                expected,
+                kind.columnOrRow(selection),
+                () -> kind + " columnOrRow from " + selection
+        );
+    }
+
     // ClassTesting2....................................................................................................
 
     @Override
