@@ -422,6 +422,26 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
+    public void testReplaceReferencesMapperRowSame() {
+        this.replaceReferencesMapperAndCheck(
+                "1",
+                SpreadsheetSelection.parseRow("1"),
+                0,
+                0
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperRowSame2() {
+        this.replaceReferencesMapperAndCheck(
+                "23",
+                SpreadsheetSelection.parseRow("$23"),
+                0,
+                0
+        );
+    }
+
+    @Test
     public void testReplaceReferencesMapperRow() {
         this.replaceReferencesMapperAndCheck(
                 "1",
