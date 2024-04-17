@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.compare.Comparators;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
@@ -88,6 +89,72 @@ public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<S
         assertSame(
                 expected,
                 in.flip()
+        );
+    }
+
+    // fixCompareResult.................................................................................................
+
+    @Test
+    public void testFixCompareResultUpEquals() {
+        this.fixCompareResultAndCheck(
+                SpreadsheetComparatorDirection.UP,
+                Comparators.EQUAL,
+                Comparators.EQUAL
+        );
+    }
+
+    @Test
+    public void testFixCompareResultUpLess() {
+        this.fixCompareResultAndCheck(
+                SpreadsheetComparatorDirection.UP,
+                Comparators.LESS,
+                Comparators.LESS
+        );
+    }
+
+    @Test
+    public void testFixCompareResultUpMore() {
+        this.fixCompareResultAndCheck(
+                SpreadsheetComparatorDirection.UP,
+                Comparators.MORE,
+                Comparators.MORE
+        );
+    }
+
+    @Test
+    public void testFixCompareResultDownEquals() {
+        this.fixCompareResultAndCheck(
+                SpreadsheetComparatorDirection.DOWN,
+                Comparators.EQUAL,
+                Comparators.EQUAL
+        );
+    }
+
+    @Test
+    public void testFixCompareResultDownLess() {
+        this.fixCompareResultAndCheck(
+                SpreadsheetComparatorDirection.DOWN,
+                -2,
+                Comparators.MORE
+        );
+    }
+
+    @Test
+    public void testFixCompareResultDownMore() {
+        this.fixCompareResultAndCheck(
+                SpreadsheetComparatorDirection.DOWN,
+                +2,
+                Comparators.LESS
+        );
+    }
+
+    private void fixCompareResultAndCheck(final SpreadsheetComparatorDirection direction,
+                                          final int value,
+                                          final int expected) {
+        this.checkEquals(
+                expected,
+                direction.fixCompareResult(value),
+                () -> direction + " " + value
         );
     }
 
