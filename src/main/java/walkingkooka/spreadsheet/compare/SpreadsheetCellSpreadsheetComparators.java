@@ -294,7 +294,7 @@ public final class SpreadsheetCellSpreadsheetComparators {
             case modeNameStart:
                 throw new IllegalArgumentException("Missing comparator name");
             case modeUpOrDownStart:
-                throw new IllegalArgumentException("Missing " + SpreadsheetComparators.UP + "/" + SpreadsheetComparators.DOWN);
+                throw new IllegalArgumentException("Missing " + SpreadsheetComparatorDirection.UP + "/" + SpreadsheetComparatorDirection.DOWN);
             default:
                 break;
         }
@@ -314,33 +314,26 @@ public final class SpreadsheetCellSpreadsheetComparators {
                                                      final int end,
                                                      final String text,
                                                      final SpreadsheetComparator<?> comparator) {
-        final SpreadsheetComparator<?> result;
-
         final String upOrDown = text.substring(
                 start,
                 end
         );
-        switch (upOrDown) {
-            case SpreadsheetComparators.UP:
-                result = comparator;
-                break;
-            case SpreadsheetComparators.DOWN:
-                result = SpreadsheetComparators.reverse(
-                        comparator
-                );
-                break;
-            default:
-                throw new IllegalArgumentException(
-                        "Missing " +
-                                SpreadsheetComparators.UP +
-                                "/" +
-                                SpreadsheetComparators.DOWN +
-                                " at " +
-                                start
-                );
+
+        final SpreadsheetComparatorDirection direction;
+        try {
+            direction = SpreadsheetComparatorDirection.valueOf(upOrDown);
+        } catch (final IllegalArgumentException invalid) {
+            throw new IllegalArgumentException(
+                    "Missing " +
+                            SpreadsheetComparatorDirection.UP +
+                            "/" +
+                            SpreadsheetComparatorDirection.DOWN +
+                            " at " +
+                            start
+            );
         }
 
-        return result;
+        return direction.apply(comparator);
     }
 
     public static SpreadsheetCellSpreadsheetComparators with(final SpreadsheetColumnOrRowReference columnOrRow,

@@ -198,10 +198,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         );
     }
 
-    final static String UP = "UP";
-
-    final static String DOWN = "DOWN";
-
     /**
      * Accepts a string with compare names and optional UP or DOWN separated by commas.
      * <pre>
@@ -220,35 +216,31 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         for (final String nameAndMaybeUpOrDown : comparators.split(",")) {
             String name = nameAndMaybeUpOrDown;
             final int upOrDownStartIndex = name.lastIndexOf(' ');
-            boolean down = false;
+            SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.UP;
 
             if (-1 != upOrDownStartIndex) {
                 String upOrDown = nameAndMaybeUpOrDown.substring(upOrDownStartIndex + 1);
-                String nameOnly = nameAndMaybeUpOrDown.substring(0, upOrDownStartIndex);
-                switch (upOrDown) {
-                    case UP:
-                        name = nameOnly;
-                        break;
-                    case DOWN:
-                        name = nameOnly;
-                        down = true;
-                        break;
-                    default:
-                        throw new IllegalArgumentException(
-                                "Expected \"" + UP + "\" or \"" + DOWN + "\" and got " +
-                                        CharSequences.quoteAndEscape(upOrDown) +
-                                        " in " +
-                                        CharSequences.quoteAndEscape(nameAndMaybeUpOrDown)
-                        );
+                try {
+                    direction = SpreadsheetComparatorDirection.valueOf(upOrDown);
+                } catch (final IllegalArgumentException invalid) {
+                    throw new IllegalArgumentException(
+                            "Expected \"" + SpreadsheetComparatorDirection.UP + "\" or \"" + SpreadsheetComparatorDirection.DOWN + "\" and got " +
+                                    CharSequences.quoteAndEscape(upOrDown) +
+                                    " in " +
+                                    CharSequences.quoteAndEscape(nameAndMaybeUpOrDown)
+                    );
                 }
-            }
 
-            SpreadsheetComparator<?> comparatorForName = nameToSpreadsheetComparator.apply(name);
-            if (down) {
-                comparatorForName = reverse(comparatorForName);
+                name = nameAndMaybeUpOrDown.substring(
+                        0,
+                        upOrDownStartIndex
+                );
             }
-
-            result.add(comparatorForName);
+            result.add(
+                    direction.apply(
+                            nameToSpreadsheetComparator.apply(name)
+                    )
+            );
         }
 
         return result;
