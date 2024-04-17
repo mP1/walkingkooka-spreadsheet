@@ -18,16 +18,26 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Value;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -176,6 +186,125 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
                 to,
                 movedCells
         );
+    }
+
+    // sort.............................................................................................................
+
+    /**
+     * Uses the provided {@link SpreadsheetCellSpreadsheetComparators} to sort the selected columns or rows.
+     * The {@link BiConsumer} will receive all cells that were moved by the sort. Moved cells will lose their value
+     * and will need to be re-evaluated.
+     */
+    public SpreadsheetCellRange sort(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                     final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
+                                     final SpreadsheetComparatorContext context) {
+        Objects.requireNonNull(comparators, "comparators");
+        Objects.requireNonNull(movedCells, "movedCells");
+        Objects.requireNonNull(context, "context");
+
+        return sort0(
+                SpreadsheetCellSpreadsheetComparators.list(comparators),
+                movedCells,
+                context
+        );
+    }
+
+    public SpreadsheetCellRange sort0(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                      final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCellsConsumer,
+                                      final SpreadsheetComparatorContext context) {
+        final SpreadsheetColumnOrRowReferenceKind widthKind = comparators.get(0)
+                .columnOrRow()
+                .columnOrRowReferenceKind();
+
+        final SpreadsheetCellRangeReference cellRange = this.range();
+        final SpreadsheetCellReference home = cellRange.toCell();
+        final int base = widthKind.columnOrRow(home)
+                .value();
+
+        final int width = widthKind.length(cellRange);
+
+        final SpreadsheetColumnOrRowReferenceKind heightKind = widthKind.flip();
+
+        final Map<SpreadsheetColumnOrRowReference, SpreadsheetCellRangeSortList> yToCells = Maps.sorted();
+
+        // when sorting columns this will hold rows of cells
+        // when sorting rows this will hold columns of cells
+        // this allows the comparator to loop thru the cells when the first column/row is equal
+        final List<SpreadsheetCellRangeSortList> allCells = Lists.array(); // this will the list that is sorted.
+
+        for (final SpreadsheetCell cell : this.value) {
+            final SpreadsheetColumnOrRowReference y = heightKind.columnOrRow(
+                    cell.reference()
+            );
+            SpreadsheetCellRangeSortList cells = yToCells.get(y);
+            if (null == cells) {
+                cells = SpreadsheetCellRangeSortList.with(
+                        y,
+                        width
+                );
+                yToCells.put(
+                        y,
+                        cells
+                );
+                allCells.add(cells);
+            }
+
+            final SpreadsheetColumnOrRowReference x = widthKind.columnOrRow(
+                    cell.reference()
+            );
+
+            cells.set(
+                    x.value() - base,
+                    cell
+            );
+        }
+
+        // sort $rows
+        allCells.sort(
+                SpreadsheetComparators.cells(
+                        comparators,
+                        context
+                )
+        );
+
+        final Set<SpreadsheetCell> newCells = Sets.sorted();
+        SpreadsheetColumnOrRowReference actualY = heightKind.columnOrRow(home);
+
+        for (final SpreadsheetCellRangeSortList yCells : allCells) {
+            final SpreadsheetColumnOrRowReference y = yCells.columnOrRow;
+
+            final Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> referenceMapper = y.replaceReferencesMapper(actualY);
+
+            if (referenceMapper.isPresent()) {
+                for (final SpreadsheetCell cell : yCells) {
+                    if (null != cell) {
+                        final SpreadsheetCell movedCell = cell.replaceReferences(
+                                referenceMapper.get()
+                        );
+                        // did cell move ?
+                        if (false == cell.equals(movedCell)) {
+                            movedCellsConsumer.accept(
+                                    cell,
+                                    movedCell
+                            );
+                        }
+                        // always copy movedCell
+                        newCells.add(movedCell);
+                    }
+                }
+            } else {
+                // just copy any cells in the row.
+                for (final SpreadsheetCell cell : yCells) {
+                    if (null != cell) {
+                        newCells.add(cell);
+                    }
+                }
+            }
+
+            actualY = actualY.add(1);
+        }
+
+        return this.setValue(newCells);
     }
 
     // TreePrintable....................................................................................................

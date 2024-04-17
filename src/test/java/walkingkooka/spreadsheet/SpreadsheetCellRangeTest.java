@@ -18,10 +18,17 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
+import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -32,8 +39,12 @@ import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -421,6 +432,672 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.checkEquals(
                 expected,
                 moved
+        );
+    }
+
+    // sort.............................................................................................................
+
+    private final static BiConsumer<SpreadsheetCell, SpreadsheetCell> MOVED_CELLS_BICONSUMER = (from, to) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    private final static SpreadsheetComparatorContext COMPARATOR_CONTEXT = SpreadsheetComparatorContexts.basic(
+            SpreadsheetComparatorContexts.basic(
+                    new FakeSpreadsheetConverterContext() {
+                        @Override
+                        public <T> Either<T, String> convert(final Object value,
+                                                             final Class<T> target) {
+                            if (value instanceof String && LocalDate.class == target) {
+                                try {
+                                    return this.successfulConversion(
+                                            LocalDate.parse((String) value),
+                                            target
+                                    );
+                                } catch (final Exception ignore) {
+                                    // eventually becomes a failConversion
+                                }
+                            }
+                            if (value instanceof LocalDate && LocalDate.class == target) {
+                                return this.successfulConversion(
+                                        (LocalDate) value,
+                                        target
+                                );
+                            }
+                            if (value instanceof String && String.class == target) {
+                                return this.successfulConversion(
+                                        (String) value,
+                                        target
+                                );
+                            }
+                            return this.failConversion(
+                                    value,
+                                    target
+                            );
+                        }
+                    }
+            )
+    );
+
+    @Test
+    public void testSortWithNullComparatorsFails() {
+        this.sortFails(
+                null,
+                MOVED_CELLS_BICONSUMER,
+                SpreadsheetComparatorContexts.fake()
+        );
+    }
+
+    @Test
+    public void testSortWithNullMovedCellsBiConsumerFails() {
+        this.sortFails(
+                SpreadsheetCellSpreadsheetComparators.parse(
+                        "A=string",
+                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                ),
+                null,
+                SpreadsheetComparatorContexts.fake()
+        );
+    }
+
+    @Test
+    public void testSortWithNullContextFails() {
+        this.sortFails(
+                SpreadsheetCellSpreadsheetComparators.parse(
+                        "A=string",
+                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                ),
+                MOVED_CELLS_BICONSUMER,
+                null
+        );
+    }
+
+    private void sortFails(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                           final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
+                           final SpreadsheetComparatorContext context) {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .sort(
+                                comparators,
+                                movedCells,
+                                context
+                        )
+        );
+    }
+
+    @Test
+    public void testSortColumnNoChanges() {
+        final Set<SpreadsheetCell> cells = Sets.of(
+                cellWithValue("A1", "1a"),
+                cellWithValue("B2", "2b")
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
+                .setValue(cells);
+
+        this.sortAndCheck(
+                cellRange,
+                "A=string",
+                MOVED_CELLS_BICONSUMER,
+                cellRange
+        );
+    }
+
+    @Test
+    public void testSortColumnNoChanges2() {
+        final Set<SpreadsheetCell> cells = Sets.of(
+                cell("A1"),
+                cell("B2")
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
+                .setValue(cells);
+
+        this.sortAndCheck(
+                cellRange,
+                "A=string",
+                MOVED_CELLS_BICONSUMER,
+                cellRange
+        );
+    }
+
+    @Test
+    public void testSortRowNoChanges() {
+        final Set<SpreadsheetCell> cells = Sets.of(
+                cellWithValue("A1", "1a"),
+                cellWithValue("B2", "2b")
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
+                .setValue(cells);
+
+        this.sortAndCheck(
+                cellRange,
+                "1=string",
+                MOVED_CELLS_BICONSUMER,
+                cellRange
+        );
+    }
+
+    @Test
+    public void testSortRowNoChanges2() {
+        final Set<SpreadsheetCell> cells = Sets.of(
+                cell("A1"),
+                cell("B2")
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
+                .setValue(cells);
+
+        this.sortAndCheck(
+                cellRange,
+                "1=string",
+                MOVED_CELLS_BICONSUMER,
+                cellRange
+        );
+    }
+
+    @Test
+    public void testSortColumnRowSwapped() {
+        final SpreadsheetCell a1 = cellWithValue("A1", "BBB");
+        final SpreadsheetCell a2 = cellWithValue("A2", "AAA");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                a2
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
+                .setValue(cells);
+
+        final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA");
+        final SpreadsheetCell newA2 = this.cellWithValue("A2", "BBB");
+
+        final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted();
+
+        this.sortAndCheck(
+                cellRange,
+                "A=string",
+                remapped::put,
+                cellRange.setValue(
+                        Sets.of(
+                                newA1,
+                                newA2
+                        )
+                )
+        );
+
+        this.checkEquals(
+                Maps.of(
+                        a1, newA2,
+                        a2, newA1
+                ),
+                remapped,
+                "remapped"
+        );
+    }
+
+    @Test
+    public void testSortRowColumnSwapped() {
+        final SpreadsheetCell a1 = cellWithValue("A1", "BBB");
+        final SpreadsheetCell b1 = cellWithValue("B1", "AAA");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                b1
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
+                .setValue(cells);
+
+        final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA");
+        final SpreadsheetCell newB1 = this.cellWithValue("B1", "BBB");
+
+        final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted();
+
+        this.sortAndCheck(
+                cellRange,
+                "1=string",
+                remapped::put,
+                cellRange.setValue(
+                        Sets.of(
+                                newA1,
+                                newB1
+                        )
+                )
+        );
+
+        this.checkEquals(
+                Maps.of(
+                        a1, newB1,
+                        b1, newA1
+                ),
+                remapped,
+                "remapped"
+        );
+    }
+
+    @Test
+    public void testSortColumnRowSwapped2() {
+        final SpreadsheetCell a1 = cellWithValue("A1", "BBB1");
+        final SpreadsheetCell b1 = cellWithValue("B1", "BBB2");
+        final SpreadsheetCell a2 = cellWithValue("A2", "AAA1");
+        final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                b1,
+                a2,
+                b2
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
+                .setValue(cells);
+
+        final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
+        final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
+        final SpreadsheetCell newA2 = this.cellWithValue("A2", "BBB1");
+        final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
+
+        this.sortAndCheck(
+                cellRange,
+                "A=string",
+                cellRange.setValue(
+                        Sets.of(
+                                newA1,
+                                newB1,
+                                newA2,
+                                newB2
+                        )
+                ),
+                Maps.of(
+                        a1, newA2,
+                        b1, newB2,
+                        a2, newA1,
+                        b2, newB1
+                )
+        );
+    }
+
+    @Test
+    public void testSortRowColumnSwapped2() {
+        final SpreadsheetCell a1 = cellWithValue("A1", "BBB1");
+        final SpreadsheetCell a2 = cellWithValue("A2", "BBB2");
+        final SpreadsheetCell b1 = cellWithValue("B1", "AAA1");
+        final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                a2,
+                b1,
+                b2
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
+                .setValue(cells);
+
+        final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
+        final SpreadsheetCell newA2 = this.cellWithValue("A2", "AAA2");
+        final SpreadsheetCell newB1 = this.cellWithValue("B1", "BBB1");
+        final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
+
+        this.sortAndCheck(
+                cellRange,
+                "1=string",
+                cellRange.setValue(
+                        Sets.of(
+                                newA1,
+                                newA2,
+                                newB1,
+                                newB2
+                        )
+                ),
+                Maps.of(
+                        a1, newB1,
+                        a2, newB2,
+                        b1, newA1,
+                        b2, newA2
+                )
+        );
+    }
+
+    @Test
+    public void testSortColumnRowSwappedEmptyRow() {
+        final SpreadsheetCell a1 = cellWithValue("A1", "BBB1");
+        final SpreadsheetCell b1 = cellWithValue("B1", "BBB2");
+        final SpreadsheetCell a2 = cellWithValue("A2", "AAA1");
+        final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                b1,
+                a2,
+                b2
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
+                .setValue(cells);
+
+        final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
+        final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
+        final SpreadsheetCell newA2 = this.cellWithValue("A2", "BBB1");
+        final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
+
+        this.sortAndCheck(
+                cellRange,
+                "A=string",
+                cellRange.setValue(
+                        Sets.of(
+                                newA1,
+                                newB1,
+                                newA2,
+                                newB2
+                        )
+                ),
+                Maps.of(
+                        a1, newA2,
+                        b1, newB2,
+                        a2, newA1,
+                        b2, newB1
+                )
+        );
+    }
+
+    @Test
+    public void testSortColumnRowSwappedUnmovedRow() {
+        final SpreadsheetCell a1 = cellWithValue("A1", "BBB1");
+        final SpreadsheetCell b1 = cellWithValue("B1", "BBB2");
+        final SpreadsheetCell a2 = cellWithValue("A2", "AAA1");
+        final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
+
+        final SpreadsheetCell a3 = cellWithValue("A3", "ZZZ");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                b1,
+                a2,
+                b2,
+                a3
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
+                .setValue(cells);
+
+        final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
+        final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
+        final SpreadsheetCell newA2 = this.cellWithValue("A2", "BBB1");
+        final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
+
+        this.sortAndCheck(
+                cellRange,
+                "A=string",
+                cellRange.setValue(
+                        Sets.of(
+                                newA1,
+                                newB1,
+                                newA2,
+                                newB2,
+                                a3
+                        )
+                ),
+                Maps.of(
+                        a1, newA2,
+                        b1, newB2,
+                        a2, newA1,
+                        b2, newB1
+                )
+        );
+    }
+
+    @Test
+    public void testSortColumnRowSwappedUnmovedRow2() {
+        final SpreadsheetCell a1 = cellWithValue("A1", "ZZZ1");
+        final SpreadsheetCell b1 = cellWithValue("B1", "ZZZ2");
+
+        final SpreadsheetCell a2 = cellWithValue("a2", "MMM");
+
+        final SpreadsheetCell a3 = cellWithValue("A3", "AAA1");
+        final SpreadsheetCell b3 = cellWithValue("B3", "AAA2");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                b1,
+                a2,
+                a3,
+                b3
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
+                .setValue(cells);
+
+        final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
+        final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
+        final SpreadsheetCell newA3 = this.cellWithValue("A3", "ZZZ1");
+        final SpreadsheetCell newB3 = this.cellWithValue("B3", "ZZZ2");
+
+        this.sortAndCheck(
+                cellRange,
+                "A=string",
+                cellRange.setValue(
+                        Sets.of(
+                                newA1,
+                                newB1,
+                                a2,
+                                newA3,
+                                newB3
+                        )
+                ),
+                Maps.of(
+                        a1, newA3,
+                        b1, newB3,
+                        a3, newA1,
+                        b3, newB1
+                )
+        );
+    }
+
+    @Test
+    public void testSortColumnRowSwappedFormulaExpressionReferencesUpdated() {
+        final SpreadsheetCell a1 = cellWithFormula("A1", "=B1", "BBB1");
+        final SpreadsheetCell b1 = cellWithValue("B1", "BBB2");
+        final SpreadsheetCell a2 = cellWithValue("A2", "AAA1");
+        final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                b1,
+                a2,
+                b2
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
+                .setValue(cells);
+
+        final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
+        final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
+        final SpreadsheetCell newA2 = this.cellWithFormula("A2", "=B2"); // value lost because formula rewritten
+        final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
+
+        this.sortAndCheck(
+                cellRange,
+                "A=string",
+                cellRange.setValue(
+                        Sets.of(
+                                newA1,
+                                newB1,
+                                newA2,
+                                newB2
+                        )
+                ),
+                Maps.of(
+                        a1, newA2,
+                        b1, newB2,
+                        a2, newA1,
+                        b2, newB1
+                )
+        );
+    }
+
+    @Test
+    public void testSortColumnRowSwappedFormulaExpressionAbsoluteReferences() {
+        final SpreadsheetCell a1 = cellWithFormula("A1", "=$B$1", "BBB1");
+        final SpreadsheetCell b1 = cellWithValue("B1", "BBB2");
+        final SpreadsheetCell a2 = cellWithValue("A2", "AAA1");
+        final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
+
+        final Set<SpreadsheetCell> cells = Sets.of(
+                a1,
+                b1,
+                a2,
+                b2
+        );
+
+        final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
+                .setValue(cells);
+
+        final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
+        final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
+        final SpreadsheetCell newA2 = this.cellWithFormula("A2", "=$B$1", "BBB1"); // value not LOST
+        final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
+
+        this.sortAndCheck(
+                cellRange,
+                "A=string",
+                cellRange.setValue(
+                        Sets.of(
+                                newA1,
+                                newB1,
+                                newA2,
+                                newB2
+                        )
+                ),
+                Maps.of(
+                        a1, newA2,
+                        b1, newB2,
+                        a2, newA1,
+                        b2, newB1
+                )
+        );
+    }
+
+    private SpreadsheetCell cell(final String reference) {
+        return this.cellWithValue(
+                reference,
+                Optional.empty()
+        );
+    }
+
+    private SpreadsheetCell cellWithValue(final String reference,
+                                          final Object value) {
+        return this.cellWithValue(
+                reference,
+                Optional.of(value)
+        );
+    }
+
+    private SpreadsheetCell cellWithValue(final String reference,
+                                          final Optional<Object> value) {
+        return SpreadsheetSelection.parseCell(reference)
+                .setFormula(SpreadsheetFormula.EMPTY.setValue(
+                        value
+                ));
+    }
+
+    private SpreadsheetCell cellWithFormula(final String reference,
+                                            final String formula) {
+        return this.cellWithFormula(
+                reference,
+                formula,
+                Optional.empty()
+        );
+    }
+
+    private SpreadsheetCell cellWithFormula(final String reference,
+                                            final String formula,
+                                            final Object value) {
+        return this.cellWithFormula(
+                reference,
+                formula,
+                Optional.of(value)
+        );
+    }
+
+    private SpreadsheetCell cellWithFormula(final String reference,
+                                            final String formula,
+                                            final Optional<Object> value) {
+        return SpreadsheetSelection.parseCell(reference)
+                .setFormula(
+                        SpreadsheetMetadataTesting.parseFormula(formula)
+                                .setValue(
+                                        value
+                                )
+                );
+    }
+
+    private void sortAndCheck(final SpreadsheetCellRange range,
+                              final String comparators,
+                              final SpreadsheetCellRange expected,
+                              final Map<SpreadsheetCell, SpreadsheetCell> expectedMovedCells) {
+        final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted();
+
+        this.sortAndCheck(
+                range,
+                comparators,
+                remapped::put,
+                COMPARATOR_CONTEXT,
+                expected
+        );
+
+        this.checkEquals(
+                expectedMovedCells,
+                remapped,
+                "remapped"
+        );
+    }
+
+    private void sortAndCheck(final SpreadsheetCellRange range,
+                              final String comparators,
+                              final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
+                              final SpreadsheetCellRange expected) {
+        this.sortAndCheck(
+                range,
+                comparators,
+                movedCells,
+                COMPARATOR_CONTEXT,
+                expected
+        );
+    }
+
+    private void sortAndCheck(final SpreadsheetCellRange range,
+                              final String comparators,
+                              final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
+                              final SpreadsheetComparatorContext context,
+                              final SpreadsheetCellRange expected) {
+        this.sortAndCheck(
+                range,
+                SpreadsheetCellSpreadsheetComparators.parse(
+                        comparators,
+                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                ),
+                movedCells,
+                context,
+                expected
+        );
+    }
+
+    private void sortAndCheck(final SpreadsheetCellRange range,
+                              final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                              final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
+                              final SpreadsheetComparatorContext context,
+                              final SpreadsheetCellRange expected) {
+        this.checkEquals(
+                expected,
+                range.sort(
+                        comparators,
+                        movedCells,
+                        context
+                ),
+                () -> range.range() + " sort " + comparators
         );
     }
 
