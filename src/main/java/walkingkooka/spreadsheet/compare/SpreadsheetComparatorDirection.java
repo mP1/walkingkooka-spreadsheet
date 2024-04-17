@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.compare.Comparators;
+
+import java.util.Comparator;
 import java.util.Objects;
 
 public enum SpreadsheetComparatorDirection {
@@ -31,6 +34,11 @@ public enum SpreadsheetComparatorDirection {
         public SpreadsheetComparatorDirection flip() {
             return DOWN;
         }
+
+        @Override
+        public int fixCompareResult(final int value) {
+            return value;
+        }
     },
 
     DOWN {
@@ -43,6 +51,11 @@ public enum SpreadsheetComparatorDirection {
         public SpreadsheetComparatorDirection flip() {
             return UP;
         }
+
+        @Override
+        public int fixCompareResult(final int value) {
+            return -Comparators.normalize(value);
+        }
     };
 
 
@@ -53,4 +66,9 @@ public enum SpreadsheetComparatorDirection {
      * Turns an UP to DOWN and vice versa.
      */
     abstract public SpreadsheetComparatorDirection flip();
+
+    /**
+     * Flips the sign of a {@link Comparator#compare(Object, Object)} when this is DOWN.
+     */
+    abstract public int fixCompareResult(final int value);
 }
