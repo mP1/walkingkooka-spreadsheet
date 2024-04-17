@@ -23,7 +23,9 @@ import walkingkooka.collect.list.ListTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,14 +35,16 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellRangeSortList> {
 
     @Test
-    public void testWithColumn() {
+    public void testWithColumnA() {
+        final SpreadsheetColumnReference a = SpreadsheetColumnOrRowReference.parseColumn("A");
+
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                a,
                 3
         );
 
         this.checkEquals(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                a,
                 list.columnOrRow,
                 "columnOrRow"
         );
@@ -56,14 +60,66 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     }
 
     @Test
-    public void testWithRow() {
+    public void testWithColumnB() {
+        final SpreadsheetColumnReference b = SpreadsheetColumnOrRowReference.parseColumn("B");
+
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
+                b,
+                3
+        );
+
+        this.checkEquals(
+                b,
+                list.columnOrRow,
+                "columnOrRow"
+        );
+
+        this.checkEquals(
+                Lists.of(
+                        null, null, null
+                ),
+                Lists.of(
+                        list.cells
+                )
+        );
+    }
+
+    @Test
+    public void testWithRow1() {
+        final SpreadsheetRowReference row1 = SpreadsheetColumnOrRowReference.parseRow("1");
+
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
+                row1,
                 4
         );
 
         this.checkEquals(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
+                row1,
+                list.columnOrRow,
+                "columnOrRow"
+        );
+
+        this.checkEquals(
+                Lists.of(
+                        null, null, null, null
+                ),
+                Lists.of(
+                        list.cells
+                )
+        );
+    }
+
+    @Test
+    public void testWithRow2() {
+        final SpreadsheetRowReference row2 = SpreadsheetColumnOrRowReference.parseRow("2");
+
+        final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
+                row2,
+                4
+        );
+
+        this.checkEquals(
+                row2,
                 list.columnOrRow,
                 "columnOrRow"
         );
@@ -81,7 +137,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testSize() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
+                SpreadsheetColumnOrRowReference.parseRow("2"),
                 4
         );
 
@@ -104,7 +160,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
                 .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReference.parseColumn("A"),
                 3
         );
 
@@ -132,7 +188,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testSet() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReference.parseColumn("A"),
                 3
         );
 
@@ -159,7 +215,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testSetNull() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReference.parseColumn("A"),
                 3
         );
 
@@ -188,7 +244,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testSetThatReplaced() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReference.parseColumn("A"),
                 3
         );
 
@@ -228,7 +284,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> SpreadsheetCellRangeSortList.with(
-                        SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                        SpreadsheetColumnOrRowReference.parseColumn("A"),
                         4
                 ).add(null)
         );
@@ -239,7 +295,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> SpreadsheetCellRangeSortList.with(
-                        SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                        SpreadsheetColumnOrRowReference.parseColumn("A"),
                         4
                 ).add(1, null)
         );
@@ -248,7 +304,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testRemoveElementFails() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReference.parseColumn("A"),
                 3
         );
 
@@ -275,7 +331,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testRemoveIndexFails() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReference.parseColumn("A"),
                 3
         );
 
@@ -305,7 +361,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     public void testEqualsDifferentSize() {
         this.checkNotEquals(
                 SpreadsheetCellRangeSortList.with(
-                        SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                        SpreadsheetColumnOrRowReference.parseColumn("A"),
                         4
                 )
         );
@@ -314,7 +370,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testEqualsDifferentElementsSameSize() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReference.parseColumn("A"),
                 3
         );
         list.set(
@@ -325,7 +381,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         );
 
         final SpreadsheetCellRangeSortList other = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReference.parseColumn("A"),
                 3
         );
         other.set(
@@ -345,7 +401,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Override
     public SpreadsheetCellRangeSortList createObject() {
         return SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetColumnOrRowReference.parseColumn("A"),
                 3
         );
     }
