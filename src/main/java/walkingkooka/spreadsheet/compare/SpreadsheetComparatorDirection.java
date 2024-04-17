@@ -17,10 +17,24 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import java.util.Objects;
+
 public enum SpreadsheetComparatorDirection {
 
-    UP,
+    UP {
+        @Override
+        public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator) {
+            return Objects.requireNonNull(comparator);
+        }
+    },
+
+    DOWN {
+        @Override
+        public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator) {
+            return SpreadsheetComparators.reverse(comparator);
+        }
+    };
 
 
-    DOWN
+    abstract public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator);
 }

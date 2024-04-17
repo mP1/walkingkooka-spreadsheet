@@ -17,10 +17,47 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<SpreadsheetComparatorDirection> {
+
+    // apply............................................................................................................
+
+    @Test
+    public void testApplyUp() {
+        final SpreadsheetComparator<Void> comparator = SpreadsheetComparators.fake();
+        assertSame(
+                comparator,
+                SpreadsheetComparatorDirection.UP.apply(comparator)
+        );
+    }
+
+    @Test
+    public void testApplyDown() {
+        final SpreadsheetComparator<String> comparator = SpreadsheetComparators.string();
+
+        this.checkEquals(
+                SpreadsheetComparators.reverse(comparator),
+                SpreadsheetComparatorDirection.DOWN.apply(comparator)
+        );
+    }
+
+    @Test
+    public void testApplyDownTwice() {
+        final SpreadsheetComparator<Void> comparator = SpreadsheetComparators.fake();
+        assertSame(
+                comparator,
+                SpreadsheetComparatorDirection.DOWN.apply(
+                        SpreadsheetComparatorDirection.DOWN.apply(comparator)
+                )
+        );
+    }
+
+    // ClassTesting.....................................................................................................
 
     @Override
     public Class<SpreadsheetComparatorDirection> type() {
