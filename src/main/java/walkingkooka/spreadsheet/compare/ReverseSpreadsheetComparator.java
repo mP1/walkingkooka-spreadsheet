@@ -56,6 +56,11 @@ final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> 
                 );
     }
 
+    @Override
+    public SpreadsheetComparatorDirection direction() {
+        return this.comparator.direction()
+                .flip();
+    }
 
     private final SpreadsheetComparator<T> comparator;
 

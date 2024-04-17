@@ -28,17 +28,21 @@ import java.util.Objects;
 final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
     static <T> BasicSpreadsheetComparator<T> with(final Class<T> type,
-                                                  final Comparator<? super T> comparator) {
+                                                  final Comparator<? super T> comparator,
+                                                  final SpreadsheetComparatorDirection direction) {
         return new BasicSpreadsheetComparator<>(
                 Objects.requireNonNull(type, "type"),
-                Objects.requireNonNull(comparator, "compare")
+                Objects.requireNonNull(comparator, "compare"),
+                Objects.requireNonNull(direction, "direction")
         );
     }
 
     private BasicSpreadsheetComparator(final Class<T> type,
-                                       final Comparator<? super T> comparator) {
+                                       final Comparator<? super T> comparator,
+                                       final SpreadsheetComparatorDirection direction) {
         this.type = type;
         this.comparator = comparator;
+        this.direction = direction;
     }
 
     @Override
@@ -59,6 +63,13 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
     private final Comparator<? super T> comparator;
 
+    @Override
+    public SpreadsheetComparatorDirection direction() {
+        return this.direction;
+    }
+
+    private final SpreadsheetComparatorDirection direction;
+
     // Object..........................................................................................................
 
     @Override
@@ -77,11 +88,12 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
     private boolean equals0(final BasicSpreadsheetComparator<?> other) {
         return this.type.equals(other.type) &&
-                this.comparator.equals(other.comparator);
+                this.comparator.equals(other.comparator) &&
+                this.direction.equals(other.direction);
     }
 
     @Override
     public String toString() {
-        return this.comparator.toString();
+        return this.comparator + " " + this.direction;
     }
 }

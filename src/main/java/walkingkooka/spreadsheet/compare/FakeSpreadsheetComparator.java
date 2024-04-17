@@ -33,4 +33,9 @@ class FakeSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
                        final T right) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public SpreadsheetComparatorDirection direction() {
+        throw new UnsupportedOperationException();
+    }
 }

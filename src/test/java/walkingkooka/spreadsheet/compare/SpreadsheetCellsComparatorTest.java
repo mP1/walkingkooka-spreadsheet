@@ -361,7 +361,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
                         ),
                         context
                 ),
-                "B DayOfMonth " + context
+                "B DayOfMonth UP " + context
         );
     }
 
