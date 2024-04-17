@@ -76,6 +76,26 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
+    public void testReplaceReferencesMapperColumnSame() {
+        this.replaceReferencesMapperAndCheck(
+                "A",
+                SpreadsheetSelection.parseColumn("A"),
+                0,
+                0
+        );
+    }
+
+    @Test
+    public void testReplaceReferencesMapperColumnSame2() {
+        this.replaceReferencesMapperAndCheck(
+                "B",
+                SpreadsheetSelection.parseColumn("B"),
+                0,
+                0
+        );
+    }
+
+    @Test
     public void testReplaceReferencesMapperColumn() {
         this.replaceReferencesMapperAndCheck(
                 "A",

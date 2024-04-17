@@ -160,7 +160,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
                 .value() -
                 this.value;
 
-        return Optional.of(
+        return Optional.ofNullable(
                 0 != delta ?
                         SpreadsheetSelectionReplaceReferencesMapperFunction.with(
                                 delta,
