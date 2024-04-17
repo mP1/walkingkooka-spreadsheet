@@ -273,6 +273,66 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
         );
     }
 
+    @Test
+    public void testCompareMoreColumnsThanComparators() {
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "same"
+        );
+        final SpreadsheetCell a2 = this.cell(
+                "A2",
+                "same"
+        );
+
+        final SpreadsheetCell b1 = this.cell(
+                "b1",
+                "same"
+        );
+        final SpreadsheetCell b2 = this.cell(
+                "b2",
+                "same"
+        );
+        this.comparatorArraySortAndCheck(
+                this.createComparator(
+                        "A=string"
+                ),
+                list(a1, b1),
+                list(a2, b2),
+                list(a1, b1), // expected
+                list(a2, b2)
+        );
+    }
+
+    @Test
+    public void testCompareLessColumnsThanComparators() {
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "same"
+        );
+        final SpreadsheetCell a2 = this.cell(
+                "A2",
+                "same"
+        );
+
+        final SpreadsheetCell b1 = this.cell(
+                "b1",
+                "same"
+        );
+        final SpreadsheetCell b2 = this.cell(
+                "b2",
+                "same"
+        );
+        this.comparatorArraySortAndCheck(
+                this.createComparator(
+                        "A=string;B=string;C=string"
+                ),
+                list(a1, b1),
+                list(a2, b2),
+                list(a1, b1), // expected
+                list(a2, b2)
+        );
+    }
+
     private SpreadsheetCell cell(final String reference,
                                  final Object value) {
         return SpreadsheetSelection.parseCell(reference)
@@ -307,8 +367,12 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
 
     @Override
     public SpreadsheetCellsComparator createComparator() {
+        return this.createComparator("B=day-of-month;C=string-case-insensitive;D=string-case-insensitive");
+    }
+
+    private SpreadsheetCellsComparator createComparator(final String comparators) {
         return this.createComparator(
-                "B=day-of-month;C=string-case-insensitive;D=string-case-insensitive",
+                comparators,
                 new FakeConverter<>() {
 
                     @Override

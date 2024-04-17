@@ -56,17 +56,21 @@ public final class SpreadsheetCellsComparator implements Comparator<List<Spreads
         Objects.requireNonNull(right, "right");
 
         final List<SpreadsheetCellSpreadsheetComparators> comparators = this.comparators;
+
         final SpreadsheetComparatorContext context = this.context;
 
-        // assumes size of left = right = comparators
+        final int leftCount = left.size();
+        final int rightCount = right.size();
 
         int result = Comparators.EQUAL;
 
         int i = 0;
-        for (final SpreadsheetCell cellLeft : left) {
-            result = comparators.get(i)
-                    .compare(
-                            cellLeft,
+        for (final SpreadsheetCellSpreadsheetComparators comparator : comparators) {
+            if (leftCount == i || rightCount == i) {
+                break;
+            }
+            result = comparator.compare(
+                    left.get(i),
                             right.get(i),
                             context
                     );
