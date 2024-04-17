@@ -41,31 +41,45 @@ final class SpreadsheetSelectionReplaceReferencesMapperFunction implements Funct
     public Optional<SpreadsheetCellReference> apply(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
-        final int deltaX = this.deltaX;
-        final int deltaY = this.deltaY;
+        SpreadsheetCellReference mapped = cell;
 
-        final SpreadsheetCellReference moved = cell
-                .addSaturated(
-                        deltaX,
-                        deltaY
-                );
-        // if clipped ignore this cell
-        return
-                Optional.ofNullable(
-                        cell.column()
-                                .value() +
-                                deltaX ==
-                                moved.column()
-                                        .value()
-                                &&
-                                cell.row()
-                                        .value() +
-                                        deltaY ==
-                                        moved.row()
-                                                .value() ?
-                                moved :
-                                null
-                );
+        final int deltaX = this.deltaX;
+        if (0 != deltaX) {
+            {
+                final SpreadsheetColumnReference column = cell.column();
+                if (SpreadsheetReferenceKind.RELATIVE == column.referenceKind()) {
+                    final int value = column.value() + deltaX;
+                    if (value < 0 || value > SpreadsheetColumnReference.MAX_VALUE) {
+                        mapped = null;
+                    } else {
+                        mapped = mapped.setColumn(
+                                column.setValue(value)
+                        );
+                    }
+                }
+            }
+        }
+
+        if (null != mapped) {
+            final int deltaY = this.deltaY;
+            if (0 != deltaY) {
+                {
+                    final SpreadsheetRowReference row = cell.row();
+                    if (SpreadsheetReferenceKind.RELATIVE == row.referenceKind()) {
+                        final int value = row.value() + deltaY;
+                        if (value < 0 || value > SpreadsheetRowReference.MAX_VALUE) {
+                            mapped = null;
+                        } else {
+                            mapped = mapped.setRow(
+                                    row.setValue(value)
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        return Optional.ofNullable(mapped);
     }
 
     final int deltaX;
