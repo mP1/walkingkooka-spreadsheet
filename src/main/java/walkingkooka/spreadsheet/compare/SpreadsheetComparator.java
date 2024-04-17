@@ -27,7 +27,7 @@ import java.util.Comparator;
 public interface SpreadsheetComparator<T> extends Comparator<T> {
 
     /**
-     * The type handled by this {@link Comparator}.
+     * The type handled by this {@link Comparator}. This is used to convert the left/right values before calling {@link Comparator#compare(Object, Object)}.
      */
     Class<T> type();
 
