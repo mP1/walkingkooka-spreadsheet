@@ -802,6 +802,23 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    @Test
+    public void testReplaceReferenceMapperWithAbsoluteCell() {
+        final SpreadsheetCellReference from = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference to = SpreadsheetSelection.parseCell("B4");
+
+        final SpreadsheetCellReference unmoved = SpreadsheetSelection.parseCell("$C$3");
+
+        this.checkEquals(
+                Optional.of(
+                        unmoved
+                ),
+                from.replaceReferencesMapper(to)
+                        .get()
+                        .apply(unmoved)
+        );
+    }
+
     // CanReplaceReference..............................................................................................
 
     @Test
