@@ -33,13 +33,16 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
         HashCodeEqualsDefinedTesting2<BasicSpreadsheetComparator<String>>,
         ToStringTesting<BasicSpreadsheetComparator<String>> {
 
+    private final static SpreadsheetComparatorDirection DIRECTION = SpreadsheetComparatorDirection.DOWN;
+
     @Test
     public void testWithNullTypeFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetComparator.with(
                         null,
-                        String.CASE_INSENSITIVE_ORDER
+                        String.CASE_INSENSITIVE_ORDER,
+                        DIRECTION
                 )
         );
     }
@@ -50,17 +53,53 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
                 NullPointerException.class,
                 () -> BasicSpreadsheetComparator.with(
                         String.class,
+                        null,
+                        DIRECTION
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullDirectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetComparator.with(
+                        String.class,
+                        String.CASE_INSENSITIVE_ORDER,
                         null
                 )
         );
     }
 
     @Test
-    public void testWith() {
-        BasicSpreadsheetComparator.with(
-                Temporal.class,
-                DateTimeComparators.dayOfMonth()
+    public void testWithUp() {
+        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.UP;
 
+        final BasicSpreadsheetComparator<Temporal> comparator = BasicSpreadsheetComparator.with(
+                Temporal.class,
+                DateTimeComparators.dayOfMonth(),
+                direction
+        );
+
+        this.directionAndCheck(
+                comparator,
+                direction
+        );
+    }
+
+    @Test
+    public void testWithDown() {
+        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.DOWN;
+
+        final BasicSpreadsheetComparator<Temporal> comparator = BasicSpreadsheetComparator.with(
+                Temporal.class,
+                DateTimeComparators.dayOfMonth(),
+                direction
+        );
+
+        this.directionAndCheck(
+                comparator,
+                direction
         );
     }
 
@@ -93,11 +132,29 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
         this.checkNotEquals(
                 BasicSpreadsheetComparator.with(
                         String.class,
-                        Comparators.fake()
+                        Comparators.fake(),
+                        DIRECTION
                 ),
                 BasicSpreadsheetComparator.with(
                         String.class,
-                        String.CASE_INSENSITIVE_ORDER
+                        String.CASE_INSENSITIVE_ORDER,
+                        DIRECTION
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentDirection() {
+        this.checkNotEquals(
+                BasicSpreadsheetComparator.with(
+                        String.class,
+                        String.CASE_INSENSITIVE_ORDER,
+                        DIRECTION
+                ),
+                BasicSpreadsheetComparator.with(
+                        String.class,
+                        String.CASE_INSENSITIVE_ORDER,
+                        DIRECTION.flip()
                 )
         );
     }
@@ -108,15 +165,32 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
     }
 
     @Test
-    public void tesToString() {
+    public void tesToStringUp() {
         final Comparator<String> comparator = Comparators.fake();
+        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.UP;
 
         this.toStringAndCheck(
                 BasicSpreadsheetComparator.with(
                         String.class,
-                        comparator
+                        comparator,
+                        direction
                 ),
-                comparator.toString()
+                comparator + " " + direction
+        );
+    }
+
+    @Test
+    public void tesToStringDown() {
+        final Comparator<String> comparator = Comparators.fake();
+        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.DOWN;
+
+        this.toStringAndCheck(
+                BasicSpreadsheetComparator.with(
+                        String.class,
+                        comparator,
+                        direction
+                ),
+                comparator + " " + direction
         );
     }
 
@@ -125,7 +199,8 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
     public BasicSpreadsheetComparator<String> createComparator() {
         return BasicSpreadsheetComparator.with(
                 String.class,
-                String.CASE_INSENSITIVE_ORDER
+                String.CASE_INSENSITIVE_ORDER,
+                DIRECTION
         );
     }
 

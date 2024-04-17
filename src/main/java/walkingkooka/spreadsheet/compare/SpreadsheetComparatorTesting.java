@@ -29,4 +29,13 @@ public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>
                 () -> comparator.toString()
         );
     }
+
+    default void directionAndCheck(final SpreadsheetComparator<?> comparator,
+                                   final SpreadsheetComparatorDirection direction) {
+        this.checkEquals(
+                direction,
+                comparator.direction(),
+                () -> "direction of " + comparator
+        );
+    }
 }

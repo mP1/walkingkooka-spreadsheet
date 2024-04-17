@@ -152,7 +152,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
         this.compareAndCheckLess(
                 SpreadsheetComparators.nullAfter(
                         String.class,
-                        String.CASE_INSENSITIVE_ORDER
+                        String.CASE_INSENSITIVE_ORDER,
+                        SpreadsheetComparatorDirection.UP
                 ),
                 "abc",
                 null
@@ -164,7 +165,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
         this.compareAndCheckMore(
                 SpreadsheetComparators.nullBefore(
                         String.class,
-                        String.CASE_INSENSITIVE_ORDER
+                        String.CASE_INSENSITIVE_ORDER,
+                        SpreadsheetComparatorDirection.UP
                 ),
                 "abc",
                 null
