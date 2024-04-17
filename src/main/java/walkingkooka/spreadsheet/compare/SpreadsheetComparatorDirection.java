@@ -26,6 +26,11 @@ public enum SpreadsheetComparatorDirection {
         public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator) {
             return Objects.requireNonNull(comparator);
         }
+
+        @Override
+        public SpreadsheetComparatorDirection flip() {
+            return DOWN;
+        }
     },
 
     DOWN {
@@ -33,8 +38,19 @@ public enum SpreadsheetComparatorDirection {
         public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator) {
             return SpreadsheetComparators.reverse(comparator);
         }
+
+        @Override
+        public SpreadsheetComparatorDirection flip() {
+            return UP;
+        }
     };
 
 
     abstract public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator);
+
+
+    /**
+     * Turns an UP to DOWN and vice versa.
+     */
+    abstract public SpreadsheetComparatorDirection flip();
 }

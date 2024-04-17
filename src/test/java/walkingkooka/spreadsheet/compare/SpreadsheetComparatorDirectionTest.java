@@ -57,6 +57,40 @@ public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<S
         );
     }
 
+    // flip.............................................................................................................
+
+    @Test
+    public void testFlipUp() {
+        this.flipAndCheck(
+                SpreadsheetComparatorDirection.UP,
+                SpreadsheetComparatorDirection.DOWN
+        );
+    }
+
+    @Test
+    public void testFlipDown() {
+        this.flipAndCheck(
+                SpreadsheetComparatorDirection.DOWN,
+                SpreadsheetComparatorDirection.UP
+        );
+    }
+
+    @Test
+    public void testFlipTwice() {
+        this.flipAndCheck(
+                SpreadsheetComparatorDirection.DOWN.flip(),
+                SpreadsheetComparatorDirection.DOWN
+        );
+    }
+
+    private void flipAndCheck(final SpreadsheetComparatorDirection in,
+                              final SpreadsheetComparatorDirection expected) {
+        assertSame(
+                expected,
+                in.flip()
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
