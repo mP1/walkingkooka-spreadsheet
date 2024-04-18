@@ -37,7 +37,7 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
     private final static CharPredicate PART = INITIAL.or(CharPredicates.range('0', '9').or(CharPredicates.is('.')));
 
     /**
-     * The maximum valid length of a expression name.
+     * The maximum valid length
      */
     public final static int MAX_LENGTH = 255;
 
