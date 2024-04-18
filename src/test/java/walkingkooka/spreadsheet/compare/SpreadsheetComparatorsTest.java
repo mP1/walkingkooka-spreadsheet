@@ -388,7 +388,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     }
 
     private void parseAndCheck(final String comparators,
-                               final Function<String, SpreadsheetComparator<?>> nameToSpreadsheetComparator,
+                               final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToSpreadsheetComparator,
                                final SpreadsheetComparator<?>... expected) {
         this.parseAndCheck(
                 comparators,
@@ -400,7 +400,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     }
 
     private void parseAndCheck(final String comparators,
-                               final Function<String, SpreadsheetComparator<?>> nameToSpreadsheetComparator,
+                               final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToSpreadsheetComparator,
                                final List<SpreadsheetComparator<?>> expected) {
         this.checkEquals(
                 expected,
