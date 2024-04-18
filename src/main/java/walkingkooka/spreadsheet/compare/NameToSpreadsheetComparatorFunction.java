@@ -17,14 +17,17 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.text.CharSequences;
+import walkingkooka.collect.list.Lists;
 
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
- * A function that maps names to {@link SpreadsheetComparator}.
+ * A function that maps {@link SpreadsheetComparatorName} to {@link SpreadsheetComparator}.
  */
-final class NameToSpreadsheetComparatorFunction implements Function<String, SpreadsheetComparator<?>> {
+final class NameToSpreadsheetComparatorFunction implements Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> {
 
     final static NameToSpreadsheetComparatorFunction INSTANCE = new NameToSpreadsheetComparatorFunction();
 
@@ -33,61 +36,34 @@ final class NameToSpreadsheetComparatorFunction implements Function<String, Spre
     }
 
     @Override
-    public SpreadsheetComparator<?> apply(final String name) {
-        CharSequences.failIfNullOrEmpty(name, "name");
+    public SpreadsheetComparator<?> apply(final SpreadsheetComparatorName name) {
+        Objects.requireNonNull(name, "name");
 
-        final SpreadsheetComparator<?> comparator;
-
-        switch (name) {
-            case "date":
-                comparator = SpreadsheetComparators.date();
-                break;
-            case "date-time":
-                comparator = SpreadsheetComparators.dateTime();
-                break;
-            case "day-of-month":
-                comparator = SpreadsheetComparators.dayOfMonth();
-                break;
-            case "expression-number":
-                comparator = SpreadsheetComparators.expressionNumber();
-                break;
-            case "hour-of-am-pm":
-                comparator = SpreadsheetComparators.hourOfAmPm();
-                break;
-            case "hour-of-day":
-                comparator = SpreadsheetComparators.hourOfDay();
-                break;
-            case "minute-of-hour":
-                comparator = SpreadsheetComparators.minuteOfHour();
-                break;
-            case "month-of-year":
-                comparator = SpreadsheetComparators.monthOfYear();
-                break;
-            case "nano-of-second":
-                comparator = SpreadsheetComparators.nanoOfSecond();
-                break;
-            case "seconds-of-minute":
-                comparator = SpreadsheetComparators.secondsOfMinute();
-                break;
-            case "string":
-                comparator = SpreadsheetComparators.string();
-                break;
-            case "string-case-insensitive":
-                comparator = SpreadsheetComparators.stringCaseInsensitive();
-                break;
-            case "time":
-                comparator = SpreadsheetComparators.time();
-                break;
-            case "year":
-                comparator = SpreadsheetComparators.year();
-                break;
-            default:
-                comparator = null;
-                throw new IllegalArgumentException("Unknown SpreadsheetComparator " + CharSequences.quoteAndEscape(name));
+        final SpreadsheetComparator<?> comparator = nameToComparator.get(name);
+        if (null == comparator) {
+            throw new IllegalArgumentException("Unknown SpreadsheetComparator " + name);
         }
 
         return comparator;
     }
+
+    private final Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToComparator = Lists.of(
+                    SpreadsheetComparators.date(),
+                    SpreadsheetComparators.dateTime(),
+                    SpreadsheetComparators.dayOfMonth(),
+                    SpreadsheetComparators.expressionNumber(),
+                    SpreadsheetComparators.hourOfAmPm(),
+                    SpreadsheetComparators.hourOfDay(),
+                    SpreadsheetComparators.minuteOfHour(),
+                    SpreadsheetComparators.monthOfYear(),
+                    SpreadsheetComparators.nanoOfSecond(),
+                    SpreadsheetComparators.secondsOfMinute(),
+                    SpreadsheetComparators.string(),
+                    SpreadsheetComparators.stringCaseInsensitive(),
+                    SpreadsheetComparators.time(),
+                    SpreadsheetComparators.year()
+            ).stream()
+            .collect(Collectors.toMap(n -> n.name(), n -> n));
 
     @Override
     public String toString() {

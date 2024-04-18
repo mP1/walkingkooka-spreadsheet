@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
 import walkingkooka.datetime.compare.DateTimeComparators;
@@ -185,7 +186,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     /**
      * {see NameToSpreadsheetComparatorFunction}
      */
-    public static Function<String, SpreadsheetComparator<?>> nameToSpreadsheetComparator() {
+    public static Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToSpreadsheetComparator() {
         return NameToSpreadsheetComparatorFunction.INSTANCE;
     }
 
@@ -222,11 +223,12 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * </pre>
      */
     public static List<SpreadsheetComparator<?>> parse(final String comparators,
-                                                       final Function<String, SpreadsheetComparator<?>> nameToSpreadsheetComparator) {
+                                                       final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToSpreadsheetComparator) {
         CharSequences.failIfNullOrEmpty(comparators, "comparators");
         Objects.requireNonNull(nameToSpreadsheetComparator, "nameToSpreadsheetComparator");
 
         final List<SpreadsheetComparator<?>> result = Lists.array();
+        int pos = 0;
 
         for (final String nameAndMaybeUpOrDown : comparators.split(",")) {
             String name = nameAndMaybeUpOrDown;
@@ -251,11 +253,25 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                         upOrDownStartIndex
                 );
             }
+
+            final SpreadsheetComparatorName spreadsheetComparatorName;
+
+            try {
+                spreadsheetComparatorName = SpreadsheetComparatorName.with(name);
+            } catch (final InvalidCharacterException cause) {
+                throw cause.setTextAndPosition(
+                        comparators,
+                        pos + cause.position()
+                );
+            }
+
             result.add(
                     direction.apply(
-                            nameToSpreadsheetComparator.apply(name)
+                            nameToSpreadsheetComparator.apply(spreadsheetComparatorName)
                     )
             );
+
+            pos = pos + nameAndMaybeUpOrDown.length();
         }
 
         return result;

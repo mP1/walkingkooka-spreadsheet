@@ -61,7 +61,7 @@ public final class SpreadsheetCellSpreadsheetComparators {
      * as a factory to transform spreadsheet comparator names into {@link SpreadsheetComparator} instances.
      */
     public static List<SpreadsheetCellSpreadsheetComparators> parse(final String text,
-                                                                    final Function<String, SpreadsheetComparator<?>> nameToComparator) {
+                                                                    final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToComparator) {
         CharSequences.failIfNullOrEmpty(text, "text");
         Objects.requireNonNull(nameToComparator, "nameToComparator");
 
@@ -149,9 +149,11 @@ public final class SpreadsheetCellSpreadsheetComparators {
                     switch (c) {
                         case NAME_UP_DOWN_SEPARATOR:
                             comparator = nameToComparator.apply(
-                                    text.substring(
-                                            tokenStart,
-                                            i
+                                    SpreadsheetComparatorName.with(
+                                            text.substring(
+                                                    tokenStart,
+                                                    i
+                                            )
                                     )
                             );
                             mode = modeUpOrDownStart;
@@ -159,9 +161,11 @@ public final class SpreadsheetCellSpreadsheetComparators {
                         case COMPARATOR_SEPARATOR:
                             comparators.add(
                                     nameToComparator.apply(
-                                            text.substring(
-                                                    tokenStart,
-                                                    i
+                                            SpreadsheetComparatorName.with(
+                                                    text.substring(
+                                                            tokenStart,
+                                                            i
+                                                    )
                                             )
                                     )
                             );
@@ -170,9 +174,11 @@ public final class SpreadsheetCellSpreadsheetComparators {
                         case COLUMN_ROW_SEPARATOR:
                             comparators.add(
                                     nameToComparator.apply(
-                                            text.substring(
-                                                    tokenStart,
-                                                    i
+                                            SpreadsheetComparatorName.with(
+                                                    text.substring(
+                                                            tokenStart,
+                                                            i
+                                                    )
                                             )
                                     )
                             );
@@ -260,9 +266,11 @@ public final class SpreadsheetCellSpreadsheetComparators {
             case modeName:
                 comparators.add(
                         nameToComparator.apply(
-                                text.substring(
-                                        tokenStart,
-                                        length
+                                SpreadsheetComparatorName.with(
+                                        text.substring(
+                                                tokenStart,
+                                                length
+                                        )
                                 )
                         )
                 );

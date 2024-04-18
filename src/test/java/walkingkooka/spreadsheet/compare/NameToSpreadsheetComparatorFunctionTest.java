@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class NameToSpreadsheetComparatorFunctionTest implements FunctionTesting<NameToSpreadsheetComparatorFunction, String, SpreadsheetComparator<?>>,
+public final class NameToSpreadsheetComparatorFunctionTest implements FunctionTesting<NameToSpreadsheetComparatorFunction, SpreadsheetComparatorName, SpreadsheetComparator<?>>,
         ClassTesting<NameToSpreadsheetComparatorFunction> {
 
     @Test
@@ -38,22 +38,6 @@ public final class NameToSpreadsheetComparatorFunctionTest implements FunctionTe
         assertThrows(
                 NullPointerException.class,
                 () -> this.createFunction().apply(null)
-        );
-    }
-
-    @Test
-    public void testApplyEmptyStringFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createFunction().apply("")
-        );
-    }
-
-    @Test
-    public void testApplyUnknownFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createFunction().apply("???")
         );
     }
 
@@ -72,9 +56,11 @@ public final class NameToSpreadsheetComparatorFunctionTest implements FunctionTe
                             try {
                                 this.createFunction()
                                         .apply(
-                                                CaseKind.CAMEL.change(
+                                                SpreadsheetComparatorName.with(
+                                                        CaseKind.CAMEL.change(
                                                         m.getName(),
                                                         CaseKind.KEBAB
+                                                        )
                                                 )
                                         );
                                 fails = false;
