@@ -82,7 +82,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             LocalDateTime.class,
             Comparator.naturalOrder(),
             SpreadsheetComparatorDirection.UP,
-            SpreadsheetComparatorName.with("datetime")
+            SpreadsheetComparatorName.with("date-time")
     );
 
 
@@ -127,7 +127,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.hourOfAmPm()
             ),
             SpreadsheetComparatorDirection.UP,
-            SpreadsheetComparatorName.with("hour-of-ampm")
+            SpreadsheetComparatorName.with("hour-of-am-pm")
     );
 
     public static SpreadsheetComparator<LocalTime> hourOfDay() {
