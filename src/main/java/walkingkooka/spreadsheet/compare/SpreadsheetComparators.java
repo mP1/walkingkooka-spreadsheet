@@ -71,7 +71,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             LocalDate.class,
             Comparator.naturalOrder(),
             SpreadsheetComparatorDirection.UP,
-            SpreadsheetComparatorName.with("name")
+            SpreadsheetComparatorName.with("date")
     );
 
     public static SpreadsheetComparator<LocalDateTime> dateTime() {
