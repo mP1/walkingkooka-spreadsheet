@@ -1226,197 +1226,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    default void checkFormula(final SpreadsheetCell cell, final String formula) {
-        this.checkEquals(formula,
-                cell.formula().text(),
-                () -> "formula.text parse returned cell=" + cell);
-    }
-
-    default void checkValue(final SpreadsheetCell cell, final Object value) {
-        this.checkEquals(
-                value,
-                cell.formula().value().orElse(null),
-                () -> "values parse returned cell=" + cell);
-    }
-
-    default void checkFormattedValue(final SpreadsheetCell cell) {
-        this.checkEquals(
-                Optional.empty(),
-                cell.formattedValue(),
-                "formattedValue text absent"
-        );
-    }
-
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    default void checkFormattedValue(final SpreadsheetCell cell, final String text) {
-        this.checkNotEquals(Optional.empty(), cell.formattedValue(), "formattedValue present");
-        this.checkEquals(text, cell.formattedValue().get().text(), "formattedText");
-    }
-
-    default void columnWidthAndCheck(final SpreadsheetColumnReference column,
-                                     final SpreadsheetEngineContext context,
-                                     final double expected) {
-        this.columnWidthAndCheck(this.createSpreadsheetEngine(), column, context, expected);
-    }
-
-    default void columnWidthAndCheck(final SpreadsheetEngine engine,
-                                     final SpreadsheetColumnReference column,
-                                     final SpreadsheetEngineContext context,
-                                     final double expected) {
-        this.checkEquals(expected,
-                engine.columnWidth(column, context),
-                () -> "columnWidth " + column + " of " + engine);
-    }
-
-    default void rowHeightAndCheck(final SpreadsheetRowReference row,
-                                   final SpreadsheetEngineContext context,
-                                   final double expected) {
-        this.rowHeightAndCheck(this.createSpreadsheetEngine(), row, context, expected);
-    }
-
-    default void rowHeightAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetRowReference row,
-                                   final SpreadsheetEngineContext context,
-                                   final double expected) {
-        this.checkEquals(expected,
-                engine.rowHeight(row, context),
-                () -> "rowHeight " + row + " of " + engine);
-    }
-
-    // window...........................................................................................................
-
-    @Test
-    default void testWindowWithNullRectangleFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .window(
-                                null,
-                                false,
-                                SpreadsheetEngine.NO_SELECTION,
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testWindowWithNullSelectionFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .window(
-                                SpreadsheetViewportRectangle.with(
-                                        SpreadsheetSelection.A1,
-                                        1, // width
-                                        2 // height
-                                ),
-                                false,
-                                null,
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testWindowWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .window(
-                                SpreadsheetViewportRectangle.with(
-                                        SpreadsheetSelection.A1,
-                                        1, // width
-                                        2 // height
-                                ),
-                                false,
-                                SpreadsheetEngine.NO_SELECTION,
-                                null
-                        )
-        );
-    }
-
-    default void windowAndCheck(
-            final SpreadsheetEngine engine,
-            final SpreadsheetViewportRectangle viewport,
-            final boolean includeFrozenColumnsRows,
-            final Optional<SpreadsheetSelection> selection,
-            final SpreadsheetEngineContext context,
-            final String window) {
-        this.windowAndCheck(
-                engine,
-                viewport,
-                includeFrozenColumnsRows,
-                selection,
-                context,
-                SpreadsheetViewportWindows.parse(window)
-        );
-    }
-
-    default void windowAndCheck(
-            final SpreadsheetEngine engine,
-            final SpreadsheetViewportRectangle viewport,
-            final boolean includeFrozenColumnsRows,
-            final Optional<SpreadsheetSelection> selection,
-            final SpreadsheetEngineContext context,
-            final SpreadsheetCellRangeReference... window) {
-        this.windowAndCheck(
-                engine,
-                viewport,
-                includeFrozenColumnsRows,
-                selection,
-                context,
-                SpreadsheetViewportWindows.with(
-                        Sets.of(window)
-                )
-        );
-    }
-
-    default void windowAndCheck(
-            final SpreadsheetEngine engine,
-            final SpreadsheetViewportRectangle viewport,
-            final boolean includeFrozenColumnsRows,
-            final Optional<SpreadsheetSelection> selection,
-            final SpreadsheetEngineContext context,
-            final SpreadsheetViewportWindows window) {
-        this.checkEquals(
-                window,
-                engine.window(
-                        viewport,
-                        includeFrozenColumnsRows,
-                        selection,
-                        context
-                ),
-                () -> "window " + viewport +
-                        (includeFrozenColumnsRows ? " includeFrozenColumnsRows" : "") +
-                        selection.orElse(null)
-        );
-    }
-
-    // navigate.........................................................................................................
-
-    default void navigateAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetViewport viewport,
-                                  final SpreadsheetEngineContext context,
-                                  final SpreadsheetViewport expected) {
-        this.navigateAndCheck(
-                engine,
-                viewport,
-                context,
-                Optional.of(expected)
-        );
-    }
-
-    default void navigateAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetViewport viewport,
-                                  final SpreadsheetEngineContext context,
-                                  final Optional<SpreadsheetViewport> expected) {
-        this.checkEquals(
-                expected,
-                engine.navigate(viewport, context),
-                () -> "navigate " + viewport
-        );
-    }
-
     // filterCells......................................................................................................
 
     @Test
@@ -1723,6 +1532,197 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         context
                 ),
                 () -> "findCells " + range + " " + path + " " + offset + " " + max + " " + valueType + " " + expression
+        );
+    }
+
+    default void checkFormula(final SpreadsheetCell cell, final String formula) {
+        this.checkEquals(formula,
+                cell.formula().text(),
+                () -> "formula.text parse returned cell=" + cell);
+    }
+
+    default void checkValue(final SpreadsheetCell cell, final Object value) {
+        this.checkEquals(
+                value,
+                cell.formula().value().orElse(null),
+                () -> "values parse returned cell=" + cell);
+    }
+
+    default void checkFormattedValue(final SpreadsheetCell cell) {
+        this.checkEquals(
+                Optional.empty(),
+                cell.formattedValue(),
+                "formattedValue text absent"
+        );
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    default void checkFormattedValue(final SpreadsheetCell cell, final String text) {
+        this.checkNotEquals(Optional.empty(), cell.formattedValue(), "formattedValue present");
+        this.checkEquals(text, cell.formattedValue().get().text(), "formattedText");
+    }
+
+    default void columnWidthAndCheck(final SpreadsheetColumnReference column,
+                                     final SpreadsheetEngineContext context,
+                                     final double expected) {
+        this.columnWidthAndCheck(this.createSpreadsheetEngine(), column, context, expected);
+    }
+
+    default void columnWidthAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetColumnReference column,
+                                     final SpreadsheetEngineContext context,
+                                     final double expected) {
+        this.checkEquals(expected,
+                engine.columnWidth(column, context),
+                () -> "columnWidth " + column + " of " + engine);
+    }
+
+    default void rowHeightAndCheck(final SpreadsheetRowReference row,
+                                   final SpreadsheetEngineContext context,
+                                   final double expected) {
+        this.rowHeightAndCheck(this.createSpreadsheetEngine(), row, context, expected);
+    }
+
+    default void rowHeightAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetRowReference row,
+                                   final SpreadsheetEngineContext context,
+                                   final double expected) {
+        this.checkEquals(expected,
+                engine.rowHeight(row, context),
+                () -> "rowHeight " + row + " of " + engine);
+    }
+
+    // window...........................................................................................................
+
+    @Test
+    default void testWindowWithNullRectangleFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .window(
+                                null,
+                                false,
+                                SpreadsheetEngine.NO_SELECTION,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testWindowWithNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .window(
+                                SpreadsheetViewportRectangle.with(
+                                        SpreadsheetSelection.A1,
+                                        1, // width
+                                        2 // height
+                                ),
+                                false,
+                                null,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testWindowWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .window(
+                                SpreadsheetViewportRectangle.with(
+                                        SpreadsheetSelection.A1,
+                                        1, // width
+                                        2 // height
+                                ),
+                                false,
+                                SpreadsheetEngine.NO_SELECTION,
+                                null
+                        )
+        );
+    }
+
+    default void windowAndCheck(
+            final SpreadsheetEngine engine,
+            final SpreadsheetViewportRectangle viewport,
+            final boolean includeFrozenColumnsRows,
+            final Optional<SpreadsheetSelection> selection,
+            final SpreadsheetEngineContext context,
+            final String window) {
+        this.windowAndCheck(
+                engine,
+                viewport,
+                includeFrozenColumnsRows,
+                selection,
+                context,
+                SpreadsheetViewportWindows.parse(window)
+        );
+    }
+
+    default void windowAndCheck(
+            final SpreadsheetEngine engine,
+            final SpreadsheetViewportRectangle viewport,
+            final boolean includeFrozenColumnsRows,
+            final Optional<SpreadsheetSelection> selection,
+            final SpreadsheetEngineContext context,
+            final SpreadsheetCellRangeReference... window) {
+        this.windowAndCheck(
+                engine,
+                viewport,
+                includeFrozenColumnsRows,
+                selection,
+                context,
+                SpreadsheetViewportWindows.with(
+                        Sets.of(window)
+                )
+        );
+    }
+
+    default void windowAndCheck(
+            final SpreadsheetEngine engine,
+            final SpreadsheetViewportRectangle viewport,
+            final boolean includeFrozenColumnsRows,
+            final Optional<SpreadsheetSelection> selection,
+            final SpreadsheetEngineContext context,
+            final SpreadsheetViewportWindows window) {
+        this.checkEquals(
+                window,
+                engine.window(
+                        viewport,
+                        includeFrozenColumnsRows,
+                        selection,
+                        context
+                ),
+                () -> "window " + viewport +
+                        (includeFrozenColumnsRows ? " includeFrozenColumnsRows" : "") +
+                        selection.orElse(null)
+        );
+    }
+
+    // navigate.........................................................................................................
+
+    default void navigateAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetViewport viewport,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetViewport expected) {
+        this.navigateAndCheck(
+                engine,
+                viewport,
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void navigateAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetViewport viewport,
+                                  final SpreadsheetEngineContext context,
+                                  final Optional<SpreadsheetViewport> expected) {
+        this.checkEquals(
+                expected,
+                engine.navigate(viewport, context),
+                () -> "navigate " + viewport
         );
     }
 
