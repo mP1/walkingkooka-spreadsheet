@@ -1803,40 +1803,40 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return CharSequences.failIfNullOrEmpty(valueType, "valueType");
     }
 
-    private static void checkExpression(final Expression expression) {
-        Objects.requireNonNull(expression, "expression");
+    private static Expression checkExpression(final Expression expression) {
+        return Objects.requireNonNull(expression, "expression");
     }
 
-    private static void checkLabel(final SpreadsheetLabelName name) {
-        Objects.requireNonNull(name, "name");
+    private static SpreadsheetLabelName checkLabel(final SpreadsheetLabelName name) {
+        return Objects.requireNonNull(name, "name");
     }
 
-    private static void checkMapping(final SpreadsheetLabelMapping mapping) {
-        Objects.requireNonNull(mapping, "mapping");
+    private static SpreadsheetLabelMapping checkMapping(final SpreadsheetLabelMapping mapping) {
+        return Objects.requireNonNull(mapping, "mapping");
     }
 
-    private static void checkColumn(SpreadsheetColumnReference column) {
-        Objects.requireNonNull(column, "column");
+    private static SpreadsheetColumnReference checkColumn(final SpreadsheetColumnReference column) {
+        return Objects.requireNonNull(column, "column");
     }
 
-    private static void checkRow(SpreadsheetRowReference row) {
-        Objects.requireNonNull(row, "row");
+    private static SpreadsheetRowReference checkRow(final SpreadsheetRowReference row) {
+        return Objects.requireNonNull(row, "row");
     }
 
-    private static void checkSelection(final SpreadsheetSelection selection) {
-        Objects.requireNonNull(selection, "selection");
+    private static SpreadsheetSelection checkSelection(final SpreadsheetSelection selection) {
+        return Objects.requireNonNull(selection, "selection");
     }
 
-    private static void checkEvaluation(final SpreadsheetEngineEvaluation evaluation) {
-        Objects.requireNonNull(evaluation, "evaluation");
+    private static SpreadsheetEngineEvaluation checkEvaluation(final SpreadsheetEngineEvaluation evaluation) {
+        return Objects.requireNonNull(evaluation, "evaluation");
     }
 
-    private static void checkDeltaProperties(final Set<SpreadsheetDeltaProperties> deltaProperties) {
-        Objects.requireNonNull(deltaProperties, "deltaProperties");
+    private static Set<SpreadsheetDeltaProperties> checkDeltaProperties(final Set<SpreadsheetDeltaProperties> deltaProperties) {
+        return Objects.requireNonNull(deltaProperties, "deltaProperties");
     }
 
-    private static void checkContext(final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(context, "context");
+    private static SpreadsheetEngineContext checkContext(final SpreadsheetEngineContext context) {
+        return Objects.requireNonNull(context, "context");
     }
 
     // j2cl helpers....................................................................................................
