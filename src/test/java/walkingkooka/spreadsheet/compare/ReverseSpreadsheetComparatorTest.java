@@ -109,7 +109,7 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
     }
 
     @Test
-    public void tesToString() {
+    public void testToString() {
         final SpreadsheetComparator<String> comparator = SpreadsheetComparators.stringCaseInsensitive();
 
         this.toStringAndCheck(
