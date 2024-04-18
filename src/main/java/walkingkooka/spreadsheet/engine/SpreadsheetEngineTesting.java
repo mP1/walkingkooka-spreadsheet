@@ -38,6 +38,8 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -62,6 +64,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
@@ -1532,6 +1535,110 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         context
                 ),
                 () -> "findCells " + range + " " + path + " " + offset + " " + max + " " + valueType + " " + expression
+        );
+    }
+
+    // sortCells.......................................................................................................
+
+    @Test
+    default void testSortCellsWithNullCellRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .sortCells(
+                                null,
+                                SpreadsheetCellSpreadsheetComparators.parse(
+                                        "1=string",
+                                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                                ),
+                                Sets.empty(), // deltaProperties
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSortCellsWithNullComparatorsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .sortCells(
+                                SpreadsheetSelection.A1.toCellRange(),
+                                null,
+                                Sets.empty(), // deltaProperties
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSortCellsWithNullDeltaPropertiesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .sortCells(
+                                SpreadsheetSelection.A1.toCellRange(),
+                                SpreadsheetCellSpreadsheetComparators.parse(
+                                        "1=string",
+                                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                                ),
+                                null, // deltaProperties
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSortCellsWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .sortCells(
+                                SpreadsheetSelection.A1.toCellRange(),
+                                SpreadsheetCellSpreadsheetComparators.parse(
+                                        "1=string",
+                                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                                ),
+                                Sets.empty(), // deltaProperties
+                                null
+                        )
+        );
+    }
+
+    default void sortCellsAndCheck(final SpreadsheetEngine engine,
+                                   final String cellRange,
+                                   final String comparators,
+                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta expected) {
+        this.sortCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange(cellRange),
+                SpreadsheetCellSpreadsheetComparators.parse(
+                        comparators,
+                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                ),
+                deltaProperties,
+                context,
+                expected
+        );
+    }
+
+    default void sortCellsAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetCellRangeReference cellRange,
+                                   final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.sortCells(
+                        cellRange,
+                        comparators,
+                        deltaProperties,
+                        context
+                ),
+                () -> cellRange + " " + comparators + " " + deltaProperties
         );
     }
 
