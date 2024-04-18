@@ -88,6 +88,8 @@ final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> 
 
     @Override
     public String toString() {
-        return this.comparator + " Reverse";
+        final SpreadsheetComparator<T> comparator = this.comparator;
+
+        return comparator.name() + " " + comparator.direction().flip();
     }
 }

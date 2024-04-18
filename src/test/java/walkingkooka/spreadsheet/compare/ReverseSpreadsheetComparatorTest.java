@@ -116,7 +116,7 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
                 ReverseSpreadsheetComparator.with(
                         comparator
                 ),
-                comparator + " Reverse"
+                "string-case-insensitive DOWN"
         );
     }
 
