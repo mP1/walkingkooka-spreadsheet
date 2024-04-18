@@ -41,11 +41,13 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      */
     public static <T> SpreadsheetComparator<T> basic(final Class<T> type,
                                                      final Comparator<? super T> comparator,
-                                                     final SpreadsheetComparatorDirection direction) {
+                                                     final SpreadsheetComparatorDirection direction,
+                                                     final SpreadsheetComparatorName name) {
         return BasicSpreadsheetComparator.with(
                 type,
                 comparator,
-                direction
+                direction,
+                name
         );
     }
 
@@ -68,7 +70,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalDate> DATE = basic(
             LocalDate.class,
             Comparator.naturalOrder(),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("name")
     );
 
     public static SpreadsheetComparator<LocalDateTime> dateTime() {
@@ -78,7 +81,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalDateTime> DATETIME = basic(
             LocalDateTime.class,
             Comparator.naturalOrder(),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("datetime")
     );
 
 
@@ -91,7 +95,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             Cast.to(
                     DateTimeComparators.dayOfMonth()
             ),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("day-of-month")
     );
 
     public static SpreadsheetComparator<ExpressionNumber> expressionNumber() {
@@ -101,7 +106,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<ExpressionNumber> EXPRESSION_NUMBER = basic(
             ExpressionNumber.class,
             Comparator.naturalOrder(),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("expression-number")
     );
 
     /**
@@ -120,7 +126,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             Cast.to(
                     DateTimeComparators.hourOfAmPm()
             ),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("hour-of-ampm")
     );
 
     public static SpreadsheetComparator<LocalTime> hourOfDay() {
@@ -132,7 +139,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             Cast.to(
                     DateTimeComparators.hourOfDay()
             ),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("hour-of-day")
     );
 
     public static SpreadsheetComparator<LocalTime> minuteOfHour() {
@@ -144,7 +152,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             Cast.to(
                     DateTimeComparators.minuteOfHour()
             ),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("minute-of-hour")
     );
 
     public static SpreadsheetComparator<LocalDate> monthOfYear() {
@@ -156,7 +165,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             Cast.to(
                     DateTimeComparators.monthOfYear()
             ),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("month-of-year")
     );
 
     public static SpreadsheetComparator<LocalTime> nanoOfSecond() {
@@ -168,7 +178,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             Cast.to(
                     DateTimeComparators.nanoOfSecond()
             ),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("nano-of-second")
     );
 
     /**
@@ -180,21 +191,25 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
 
     public static <T> SpreadsheetComparator<T> nullAfter(final Class<T> type,
                                                          final Comparator<T> comparator,
-                                                         final SpreadsheetComparatorDirection direction) {
+                                                         final SpreadsheetComparatorDirection direction,
+                                                         final SpreadsheetComparatorName name) {
         return basic(
                 type,
                 Comparators.nullAfter(comparator),
-                direction
+                direction,
+                name
         );
     }
 
     public static <T> SpreadsheetComparator<T> nullBefore(final Class<T> type,
                                                           final Comparator<T> comparator,
-                                                          final SpreadsheetComparatorDirection direction) {
+                                                          final SpreadsheetComparatorDirection direction,
+                                                          final SpreadsheetComparatorName name) {
         return basic(
                 type,
                 Comparators.nullBefore(comparator),
-                direction
+                direction,
+                name
         );
     }
 
@@ -262,7 +277,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             Cast.to(
                     DateTimeComparators.secondOfMinute()
             ),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("seconds-of-minute")
     );
 
     public static SpreadsheetComparator<String> string() {
@@ -272,7 +288,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<String> STRING = basic(
             String.class,
             Comparator.naturalOrder(),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("string")
     );
 
     public static SpreadsheetComparator<String> stringCaseInsensitive() {
@@ -282,7 +299,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<String> STRING_CASE_INSENSITIVE = basic(
             String.class,
             String.CASE_INSENSITIVE_ORDER,
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("string-case-insensitive")
     );
 
     public static SpreadsheetComparator<LocalTime> time() {
@@ -292,7 +310,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalTime> TIME = basic(
             LocalTime.class,
             Comparator.naturalOrder(),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("time")
     );
 
     public static SpreadsheetComparator<LocalDate> year() {
@@ -304,7 +323,8 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             Cast.to(
                     DateTimeComparators.year()
             ),
-            SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorName.with("year")
     );
 
     /**

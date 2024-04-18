@@ -865,7 +865,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
     public void testToString() {
         this.toStringAndCheck(
                 this.createObject(),
-                "B DayOfMonth UP"
+                "B day-of-month UP"
         );
     }
 

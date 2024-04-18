@@ -29,20 +29,24 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
     static <T> BasicSpreadsheetComparator<T> with(final Class<T> type,
                                                   final Comparator<? super T> comparator,
-                                                  final SpreadsheetComparatorDirection direction) {
+                                                  final SpreadsheetComparatorDirection direction,
+                                                  final SpreadsheetComparatorName name) {
         return new BasicSpreadsheetComparator<>(
                 Objects.requireNonNull(type, "type"),
                 Objects.requireNonNull(comparator, "compare"),
-                Objects.requireNonNull(direction, "direction")
+                Objects.requireNonNull(direction, "direction"),
+                Objects.requireNonNull(name, "name")
         );
     }
 
     private BasicSpreadsheetComparator(final Class<T> type,
                                        final Comparator<? super T> comparator,
-                                       final SpreadsheetComparatorDirection direction) {
+                                       final SpreadsheetComparatorDirection direction,
+                                       final SpreadsheetComparatorName name) {
         this.type = type;
         this.comparator = comparator;
         this.direction = direction;
+        this.name = name;
     }
 
     @Override
@@ -70,13 +74,21 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
     private final SpreadsheetComparatorDirection direction;
 
+    @Override
+    public SpreadsheetComparatorName name() {
+        return this.name;
+    }
+
+    private final SpreadsheetComparatorName name;
+
     // Object..........................................................................................................
 
     @Override
     public int hashCode() {
         return Objects.hash(
                 this.type,
-                this.comparator
+                this.comparator,
+                this.name
         );
     }
 
@@ -89,11 +101,12 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
     private boolean equals0(final BasicSpreadsheetComparator<?> other) {
         return this.type.equals(other.type) &&
                 this.comparator.equals(other.comparator) &&
-                this.direction.equals(other.direction);
+                this.direction.equals(other.direction) &&
+                this.name.equals(other.name);
     }
 
     @Override
     public String toString() {
-        return this.comparator + " " + this.direction;
+        return this.name + " " + this.direction;
     }
 }
