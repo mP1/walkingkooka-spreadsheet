@@ -13340,6 +13340,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return cell;
     }
 
+    /**
+     * The #formattedCell overloads parse the formulaText into tokens, set a default style and format any given value.
+     * The parsed formula text is never evaluated to produce a value
+     */
     private SpreadsheetCell formattedCell(final String reference,
                                           final String formulaText) {
         return this.formattedCell(
