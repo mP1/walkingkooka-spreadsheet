@@ -131,12 +131,24 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
             final SpreadsheetStoreRepository repository = context.storeRepository();
 
-            final Set<SpreadsheetCellReference> loadedOrDeleted = this.loadAndEvaluateCells(
-                    cellRange,
-                    evaluation,
-                    changes,
-                    context
-                    ).stream()
+            // load and evaluate cells
+            final Set<SpreadsheetCell> loaded = Sets.sorted();
+
+            for (final SpreadsheetCell cell : context.storeRepository()
+                    .cells()
+                    .loadCells(cellRange)) {
+
+                final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
+                        cell,
+                        evaluation,
+                        context
+                );
+                changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+
+                loaded.add(cell);
+            }
+
+            final Set<SpreadsheetCellReference> loadedOrDeleted = loaded.stream()
                     .map(SpreadsheetCell::reference)
                     .collect(Collectors.toCollection(Sets::ordered));
 
@@ -174,28 +186,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             return delta;
         }
-    }
-
-    private Set<SpreadsheetCell> loadAndEvaluateCells(final SpreadsheetCellRangeReference cellRange,
-                                                      final SpreadsheetEngineEvaluation evaluation,
-                                                      final BasicSpreadsheetEngineChanges changes,
-                                                      final SpreadsheetEngineContext context) {
-        final Set<SpreadsheetCell> loaded = Sets.sorted();
-
-        for (final SpreadsheetCell cell : context.storeRepository()
-                .cells()
-                .loadCells(cellRange)) {
-
-            final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
-                    cell,
-                    evaluation,
-                    context
-            );
-            changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
-
-            loaded.add(cell);
-        }
-        return loaded;
     }
 
     /**
