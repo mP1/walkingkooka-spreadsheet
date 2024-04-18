@@ -153,7 +153,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 SpreadsheetComparators.nullAfter(
                         String.class,
                         String.CASE_INSENSITIVE_ORDER,
-                        SpreadsheetComparatorDirection.UP
+                        SpreadsheetComparatorDirection.UP,
+                        SpreadsheetComparatorName.with("string-case-insensitive-null-after")
                 ),
                 "abc",
                 null
@@ -166,7 +167,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 SpreadsheetComparators.nullBefore(
                         String.class,
                         String.CASE_INSENSITIVE_ORDER,
-                        SpreadsheetComparatorDirection.UP
+                        SpreadsheetComparatorDirection.UP,
+                        SpreadsheetComparatorName.with("string-case-insensitive-null-before")
                 ),
                 "abc",
                 null

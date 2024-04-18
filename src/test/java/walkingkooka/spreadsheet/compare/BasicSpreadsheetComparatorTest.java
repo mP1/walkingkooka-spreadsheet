@@ -35,6 +35,8 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
 
     private final static SpreadsheetComparatorDirection DIRECTION = SpreadsheetComparatorDirection.DOWN;
 
+    private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("name");
+
     @Test
     public void testWithNullTypeFails() {
         assertThrows(
@@ -42,7 +44,8 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
                 () -> BasicSpreadsheetComparator.with(
                         null,
                         String.CASE_INSENSITIVE_ORDER,
-                        DIRECTION
+                        DIRECTION,
+                        NAME
                 )
         );
     }
@@ -54,7 +57,8 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
                 () -> BasicSpreadsheetComparator.with(
                         String.class,
                         null,
-                        DIRECTION
+                        DIRECTION,
+                        NAME
                 )
         );
     }
@@ -66,6 +70,20 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
                 () -> BasicSpreadsheetComparator.with(
                         String.class,
                         String.CASE_INSENSITIVE_ORDER,
+                        null,
+                        NAME
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetComparator.with(
+                        String.class,
+                        String.CASE_INSENSITIVE_ORDER,
+                        SpreadsheetComparatorDirection.UP,
                         null
                 )
         );
@@ -78,7 +96,8 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
         final BasicSpreadsheetComparator<Temporal> comparator = BasicSpreadsheetComparator.with(
                 Temporal.class,
                 DateTimeComparators.dayOfMonth(),
-                direction
+                direction,
+                NAME
         );
 
         this.directionAndCheck(
@@ -94,7 +113,8 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
         final BasicSpreadsheetComparator<Temporal> comparator = BasicSpreadsheetComparator.with(
                 Temporal.class,
                 DateTimeComparators.dayOfMonth(),
-                direction
+                direction,
+                NAME
         );
 
         this.directionAndCheck(
@@ -133,12 +153,14 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
                 BasicSpreadsheetComparator.with(
                         String.class,
                         Comparators.fake(),
-                        DIRECTION
+                        DIRECTION,
+                        NAME
                 ),
                 BasicSpreadsheetComparator.with(
                         String.class,
                         String.CASE_INSENSITIVE_ORDER,
-                        DIRECTION
+                        DIRECTION,
+                        NAME
                 )
         );
     }
@@ -149,12 +171,34 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
                 BasicSpreadsheetComparator.with(
                         String.class,
                         String.CASE_INSENSITIVE_ORDER,
-                        DIRECTION
+                        DIRECTION,
+                        NAME
                 ),
                 BasicSpreadsheetComparator.with(
                         String.class,
                         String.CASE_INSENSITIVE_ORDER,
-                        DIRECTION.flip()
+                        DIRECTION.flip(),
+                        NAME
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentName() {
+        this.checkNotEquals(
+                BasicSpreadsheetComparator.with(
+                        String.class,
+                        String.CASE_INSENSITIVE_ORDER,
+                        DIRECTION,
+                        NAME
+                ),
+                BasicSpreadsheetComparator.with(
+                        String.class,
+                        String.CASE_INSENSITIVE_ORDER,
+                        DIRECTION,
+                        SpreadsheetComparatorName.with(
+                                NAME.value() + "-different"
+                        )
                 )
         );
     }
@@ -173,9 +217,10 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
                 BasicSpreadsheetComparator.with(
                         String.class,
                         comparator,
-                        direction
+                        direction,
+                        NAME
                 ),
-                comparator + " " + direction
+                NAME + " " + direction
         );
     }
 
@@ -188,9 +233,10 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
                 BasicSpreadsheetComparator.with(
                         String.class,
                         comparator,
-                        direction
+                        direction,
+                        NAME
                 ),
-                comparator + " " + direction
+                NAME + " " + direction
         );
     }
 
@@ -200,7 +246,8 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
         return BasicSpreadsheetComparator.with(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
-                DIRECTION
+                DIRECTION,
+                NAME
         );
     }
 

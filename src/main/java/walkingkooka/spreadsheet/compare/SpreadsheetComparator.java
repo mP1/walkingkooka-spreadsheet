@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.naming.HasName;
+
 import java.util.Comparator;
 
 /**
@@ -24,7 +26,8 @@ import java.util.Comparator;
  * converted to the {@link SpreadsheetComparator#type()} and then converted cell values are sorted using this {@link Comparator}.
  * Cells that could not be converted will be placed before or after the sorted list of cells.
  */
-public interface SpreadsheetComparator<T> extends Comparator<T> {
+public interface SpreadsheetComparator<T> extends Comparator<T>,
+        HasName<SpreadsheetComparatorName> {
 
     /**
      * The type handled by this {@link Comparator}. This is used to convert the left/right values before calling {@link Comparator#compare(Object, Object)}.

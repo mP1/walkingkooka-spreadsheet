@@ -62,6 +62,11 @@ final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> 
                 .flip();
     }
 
+    @Override
+    public SpreadsheetComparatorName name() {
+        return this.comparator.name();
+    }
+
     private final SpreadsheetComparator<T> comparator;
 
     // Object...........................................................................................................
