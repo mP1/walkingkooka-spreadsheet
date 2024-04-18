@@ -145,7 +145,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
                 changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
 
-                loaded.add(cell);
+                loaded.add(evaluated);
             }
 
             final Set<SpreadsheetCellReference> loadedOrDeleted = loaded.stream()
