@@ -356,22 +356,19 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
                 continue;
             }
 
-            final SpreadsheetEngineContext context = this.context;
-
-            final Optional<SpreadsheetCell> loaded = context.storeRepository()
+            this.context.storeRepository()
                     .cells()
-                    .load(potential);
-            loaded.map(
-                    c -> {
-                        final SpreadsheetCell evaluated = this.engine.parseFormulaEvaluateFormatStyleAndSave(
-                                c,
-                                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                                context
-                        );
-                        onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
-                        return evaluated;
-                    }
-            );
+                    .load(potential)
+                    .ifPresent(
+                            c -> {
+                                final SpreadsheetCell evaluated = this.engine.parseFormulaEvaluateFormatStyleAndSave(
+                                        c,
+                                        SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                                        this.context
+                                );
+                                onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+                            }
+                    );
         }
     }
 
