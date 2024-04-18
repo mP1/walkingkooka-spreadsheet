@@ -188,25 +188,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    /**
-     * Loads the given cell, returning true if it was successful.
-     */
-    boolean loadCell0(final SpreadsheetCellReference reference,
-                      final SpreadsheetEngineEvaluation evaluation,
-                      final BasicSpreadsheetEngineChanges changes,
-                      final SpreadsheetEngineContext context) {
-        final Optional<SpreadsheetCell> loaded = context.storeRepository()
-                .cells()
-                .load(reference);
-        loaded.map(c -> {
-            final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(c, evaluation, context);
-            changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
-            return evaluated;
-        });
-
-        return loaded.isPresent();
-    }
-
     // LOAD CELLS.......................................................................................................
 
     @Override
