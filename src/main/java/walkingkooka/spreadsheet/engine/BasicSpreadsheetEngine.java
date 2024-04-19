@@ -457,16 +457,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 .map(nad -> nad.direction().apply(context.spreadsheetComparator(nad.name())))
                                 .collect(Collectors.toList())
                 )).collect(Collectors.toList());
-
-        final String outOfBounds = comparators.stream()
-                .map(c -> c.columnOrRow())
-                .filter(c -> false == cellRange.test(c))
-                .map(SpreadsheetSelection::toString)
-                .collect(Collectors.joining(", "));
-        if (false == outOfBounds.isEmpty()) {
-            throw new IllegalArgumentException("Some sort columns/rows are not within cell-range " + cellRange + " got " + outOfBounds);
-        }
-
         checkContext(context);
 
         return this.sortCells0(
