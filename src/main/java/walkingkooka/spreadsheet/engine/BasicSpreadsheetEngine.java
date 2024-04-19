@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -458,9 +457,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 .map(nad -> nad.direction().apply(context.spreadsheetComparator(nad.name())))
                                 .collect(Collectors.toList())
                 )).collect(Collectors.toList());
-
-
-        Lists.immutable(comparators);
 
         final String outOfBounds = comparators.stream()
                 .map(c -> c.columnOrRow())
