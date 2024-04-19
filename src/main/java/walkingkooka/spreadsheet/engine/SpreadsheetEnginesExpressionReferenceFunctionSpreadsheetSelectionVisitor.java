@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -63,12 +64,7 @@ final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVis
     // a cell always returns an Optional of a scalar value
     @Override
     protected void visit(final SpreadsheetCellReference reference) {
-        final SpreadsheetDelta loaded = this.engine.loadCells(
-                reference,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                SPREADSHEET_DELTA_PROPERTIES,
-                this.context
-        );
+        final SpreadsheetDelta loaded = this.loadCells(reference);
 
         this.value = loaded.cell(reference)
                 .map(c -> c.formula()
@@ -88,12 +84,7 @@ final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVis
 
     @Override
     protected void visit(final SpreadsheetCellRangeReference range) {
-        final SpreadsheetDelta delta = this.engine.loadCells(
-                range,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                SPREADSHEET_DELTA_PROPERTIES,
-                this.context
-        );
+        final SpreadsheetDelta delta = loadCells(range);
 
         this.value = Optional.of(
                 Lists.immutable(
@@ -101,6 +92,15 @@ final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVis
                                 .map(c -> this.extractValueOrNull(c, delta))
                                 .collect(Collectors.toList())
                 )
+        );
+    }
+
+    private SpreadsheetDelta loadCells(final SpreadsheetSelection range) {
+        return this.engine.loadCells(
+                range,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SPREADSHEET_DELTA_PROPERTIES,
+                this.context
         );
     }
 
