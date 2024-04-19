@@ -34,8 +34,12 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -84,6 +88,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext> {
 
+    private final static Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = SpreadsheetComparators.nameToSpreadsheetComparator();
+
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
     private final static char VALUE_SEPARATOR = ',';
@@ -97,6 +103,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
+                        null,
+                        NAME_TO_COMPARATOR,
+                        this.functions(),
+                        this.engine(),
+                        FRACTIONER,
+                        this.storeRepository(),
+                        SERVER_URL,
+                        NOW
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullNameToComparatorFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        this.metadata(),
                         null,
                         this.functions(),
                         this.engine(),
@@ -114,6 +138,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         this.metadata(),
+                        NAME_TO_COMPARATOR,
                         null,
                         this.engine(),
                         FRACTIONER,
@@ -130,6 +155,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         this.metadata(),
+                        NAME_TO_COMPARATOR,
                         this.functions(),
                         null,
                         FRACTIONER,
@@ -146,6 +172,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         this.metadata(),
+                        NAME_TO_COMPARATOR,
                         this.functions(),
                         this.engine(),
                         null,
@@ -162,6 +189,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         this.metadata(),
+                        NAME_TO_COMPARATOR,
                         this.functions(),
                         this.engine(),
                         FRACTIONER,
@@ -178,6 +206,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         this.metadata(),
+                        NAME_TO_COMPARATOR,
                         this.functions(),
                         this.engine(),
                         FRACTIONER,
@@ -194,6 +223,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         this.metadata(),
+                        NAME_TO_COMPARATOR,
                         this.functions(),
                         this.engine(),
                         FRACTIONER,
@@ -250,6 +280,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.createContext(store),
                 label1,
                 cell
+        );
+    }
+
+    // spreadsheetComparator............................................................................................
+
+    @Test
+    public void testSpreadsheetComparator() {
+        final SpreadsheetComparator<?> comparator = SpreadsheetComparators.string();
+
+        this.spreadsheetComparatorAndCheck(
+                this.createContext(),
+                comparator.name(),
+                comparator
         );
     }
 
@@ -952,6 +995,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         return BasicSpreadsheetEngineContext.with(
                 metadata,
+                NAME_TO_COMPARATOR,
                 this.functions(),
                 this.engine(),
                 FRACTIONER,

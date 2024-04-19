@@ -22,6 +22,8 @@ import walkingkooka.ContextTesting;
 import walkingkooka.locale.HasLocaleTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -108,6 +110,27 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 expected,
                 context.resolveIfLabel(selection),
                 () -> "resolveIfLabel " + selection
+        );
+    }
+
+    // spreadsheetComparator............................................................................................
+
+    @Test
+    default void testSpreadsheetomparatorNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .spreadsheetComparator(null)
+        );
+    }
+
+    default void spreadsheetComparatorAndCheck(final SpreadsheetEngineContext context,
+                                               final SpreadsheetComparatorName name,
+                                               final SpreadsheetComparator<?> comparator) {
+        this.checkEquals(
+                comparator,
+                context.spreadsheetComparator(name),
+                () -> name.toString()
         );
     }
 
