@@ -29,6 +29,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.CharSequences;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
         ComparatorTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellSpreadsheetComparatorNames>,
         ToStringTesting<SpreadsheetCellSpreadsheetComparatorNames>,
-        ParseStringTesting<List<SpreadsheetCellSpreadsheetComparatorNames>> {
+        ParseStringTesting<SpreadsheetCellSpreadsheetComparatorNames> {
 
     private final static SpreadsheetColumnOrRowReference COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("A");
 
@@ -152,9 +153,165 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
 
     @Test
     public void testParseMissingColumnOrRowFails() {
-        final String text = "=day-of-month";
+        final String text = "! string";
 
         this.parseStringFails(
+                text,
+                new IllegalArgumentException("Expected column/row")
+        );
+    }
+
+    @Test
+    public void testParseMissingColumnOrRowSeparatorFails() {
+        final String text = "C";
+
+        this.parseStringFails(
+                text,
+                new IllegalArgumentException("Expected column/row")
+        );
+    }
+
+    @Test
+    public void testParseMissingSpreadsheetComparatorNameFails() {
+        final String text = "C=";
+
+        this.parseStringFails(
+                text,
+                new IllegalArgumentException("Missing comparator name")
+        );
+    }
+
+    @Test
+    public void testParseInvalidSeparatorComparatorNameFails() {
+        final String text = "D=string!";
+
+        this.parseStringFails(
+                text,
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf('!')
+                )
+        );
+    }
+
+    @Test
+    public void testParseColumnSpreadsheetComparatorName() {
+        this.parseStringAndCheck(
+                "A=string",
+                SpreadsheetCellSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("A"),
+                        Lists.of(
+                                SpreadsheetComparators.string()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseRowSpreadsheetComparatorName() {
+        this.parseStringAndCheck(
+                "23=string",
+                SpreadsheetCellSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseRow("23"),
+                        Lists.of(
+                                SpreadsheetComparators.string()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseColumnSpreadsheetComparatorNameUp() {
+        this.parseStringAndCheck(
+                "A=string UP",
+                SpreadsheetCellSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("A"),
+                        Lists.of(
+                                SpreadsheetComparators.string()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseRowSpreadsheetComparatorNameDown() {
+        this.parseStringAndCheck(
+                "23=string DOWN",
+                SpreadsheetCellSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseRow("23"),
+                        Lists.of(
+                                SpreadsheetComparators.string()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseColumnSpreadsheetComparatorNameUpSpreadsheetComparatorNameDown() {
+        this.parseStringAndCheck(
+                "A=string UP,string-case-insensitive DOWN,xyz",
+                SpreadsheetCellSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("A"),
+                        Lists.of(
+                                SpreadsheetComparators.string()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.UP),
+                                SpreadsheetComparators.stringCaseInsensitive()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DOWN),
+                                SpreadsheetComparatorName.with("xyz")
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetCellSpreadsheetComparatorNames parseString(final String text) {
+        return SpreadsheetCellSpreadsheetComparatorNames.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
+        return type;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
+        return cause;
+    }
+
+    // parseList........................................................................................................
+
+    @Test
+    public void testParseListNullFails() {
+        this.parseStringListFails(
+                null,
+                NullPointerException.class
+        );
+    }
+
+    @Test
+    public void testParseListEmptyStringFails() {
+        this.parseStringListFails(
+                "",
+                IllegalArgumentException.class
+        );
+    }
+
+    @Test
+    public void testParseListMissingColumnOrRowFails() {
+        final String text = "=day-of-month";
+
+        this.parseStringListFails(
                 text,
                 new InvalidCharacterException(
                         text,
@@ -164,10 +321,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseMissingInvalidColumnOrRowFails() {
+    public void testParseListMissingInvalidColumnOrRowFails() {
         final String text = "A1=day-of-month";
 
-        this.parseStringFails(
+        this.parseStringListFails(
                 text,
                 new InvalidCharacterException(
                         text,
@@ -177,40 +334,40 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseInvalidSpreadsheetComparatorNameCharacterFails() {
-        this.parseStringFails(
+    public void testParseListInvalidSpreadsheetComparatorNameCharacterFails() {
+        this.parseStringListFails(
                 "A1=!day-of-month",
                 IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testParseInvalidSpreadsheetComparatorNameCharacterFails2() {
-        this.parseStringFails(
+    public void testParseListInvalidSpreadsheetComparatorNameCharacterFails2() {
+        this.parseStringListFails(
                 "A1=day-of-month!",
                 IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testParseMissingEmptySpreadsheetComparatorNameFails() {
-        this.parseStringFails(
+    public void testParseListMissingEmptySpreadsheetComparatorNameFails() {
+        this.parseStringListFails(
                 "A1=",
                 IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testParseUnknownSpreadsheetComparatorNameFails() {
-        this.parseStringFails(
+    public void testParseListUnknownSpreadsheetComparatorNameFails() {
+        this.parseStringListFails(
                 "A1=unknown",
                 IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testParseColumnSpreadsheetName() {
-        this.parseStringAndCheck(
+    public void testParseListColumnSpreadsheetComparatorName() {
+        this.parseStringListAndCheck(
                 "A=day-of-month",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
@@ -224,8 +381,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseRowSpreadsheetName() {
-        this.parseStringAndCheck(
+    public void testParseListRowSpreadsheetComparatorName() {
+        this.parseStringListAndCheck(
                 "2=day-of-month",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("2"),
@@ -239,18 +396,18 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseSpreadsheetNameSpaceFails() {
-        this.parseStringFails(
+    public void testParseListSpreadsheetComparatorNameSpaceFails() {
+        this.parseStringListFails(
                 "A=day-of-month ",
                 new IllegalArgumentException("Missing UP/DOWN")
         );
     }
 
     @Test
-    public void testParseSpreadsheetNameSpaceEmptyUpOrDownFails() {
+    public void testParseListSpreadsheetComparatorNameSpaceEmptyUpOrDownFails() {
         final String text = "A=day-of-month ,";
 
-        this.parseStringFails(
+        this.parseStringListFails(
                 text,
                 new InvalidCharacterException(
                         text,
@@ -260,10 +417,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseSpreadsheetNameSpaceInvalidUpOrDownCharacterFails() {
+    public void testParseListSpreadsheetComparatorNameSpaceInvalidUpOrDownCharacterFails() {
         final String text = "A=day-of-month !,";
 
-        this.parseStringFails(
+        this.parseStringListFails(
                 text,
                 new InvalidCharacterException(
                         text,
@@ -273,32 +430,32 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseSpreadsheetNameSpaceInvalidUpOrDownCharacterFails2() {
-        this.parseStringFails(
+    public void testParseListSpreadsheetComparatorNameSpaceInvalidUpOrDownCharacterFails2() {
+        this.parseStringListFails(
                 "A=day-of-month U!,",
                 IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testParseSpreadsheetNameSpaceInvalidUpOrDownFails() {
-        this.parseStringFails(
+    public void testParseListSpreadsheetComparatorNameSpaceInvalidUpOrDownFails() {
+        this.parseStringListFails(
                 "A=day-of-month INVALID",
                 IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testParseSpreadsheetNameSpaceInvalidUpOrDownFails2() {
-        this.parseStringFails(
+    public void testParseListSpreadsheetComparatorNameSpaceInvalidUpOrDownFails2() {
+        this.parseStringListFails(
                 "A=day-of-month INVALID,",
                 IllegalArgumentException.class
         );
     }
 
     @Test
-    public void testParseRowSpreadsheetNameCommaFails() {
-        this.parseStringFails(
+    public void testParseListRowSpreadsheetComparatorNameCommaFails() {
+        this.parseStringListFails(
                 "2=day-of-month,",
                 new IllegalArgumentException(
                         "Missing comparator name"
@@ -307,8 +464,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameUp() {
-        this.parseStringAndCheck(
+    public void testParseListColumnSpreadsheetComparatorNameUp() {
+        this.parseStringListAndCheck(
                 "A=day-of-month UP",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
@@ -322,8 +479,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameDown() {
-        this.parseStringAndCheck(
+    public void testParseListColumnSpreadsheetComparatorNameDown() {
+        this.parseStringListAndCheck(
                 "A=day-of-month DOWN",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
@@ -337,8 +494,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseRowSpreadsheetNameUp() {
-        this.parseStringAndCheck(
+    public void testParseListRowSpreadsheetComparatorNameUp() {
+        this.parseStringListAndCheck(
                 "2=day-of-month UP",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("2"),
@@ -352,8 +509,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseRowSpreadsheetNameDown() {
-        this.parseStringAndCheck(
+    public void testParseListRowSpreadsheetComparatorNameDown() {
+        this.parseStringListAndCheck(
                 "2=day-of-month DOWN",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("2"),
@@ -367,24 +524,24 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseRowSpreadsheetNameUpCommaFails() {
-        this.parseStringFails(
+    public void testParseListRowSpreadsheetComparatorNameUpCommaFails() {
+        this.parseStringListFails(
                 "2=day-of-month UP,",
                 new IllegalArgumentException("Missing comparator name")
         );
     }
 
     @Test
-    public void testParseRowSpreadsheetNameDownCommaFails() {
-        this.parseStringFails(
+    public void testParseListRowSpreadsheetComparatorNameDownCommaFails() {
+        this.parseStringListFails(
                 "2=day-of-month DOWN,",
                 new IllegalArgumentException("Missing comparator name")
         );
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameSpreadsheetName() {
-        this.parseStringAndCheck(
+    public void testParseListColumnSpreadsheetComparatorNameSpreadsheetComparatorName() {
+        this.parseStringListAndCheck(
                 "2=day-of-month,month-of-year",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("2"),
@@ -401,8 +558,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameUpSpreadsheetNameUp() {
-        this.parseStringAndCheck(
+    public void testParseListColumnSpreadsheetComparatorNameUpSpreadsheetComparatorNameUp() {
+        this.parseStringListAndCheck(
                 "2=day-of-month,month-of-year",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("2"),
@@ -419,8 +576,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseRowSpreadsheetNameUpSpreadsheetNameDown() {
-        this.parseStringAndCheck(
+    public void testParseListRowSpreadsheetComparatorNameUpSpreadsheetComparatorNameDown() {
+        this.parseStringListAndCheck(
                 "2=day-of-month UP,month-of-year DOWN",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("2"),
@@ -437,10 +594,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameRowFails() {
+    public void testParseListColumnSpreadsheetComparatorNameRowFails() {
         final String text = "A=day-of-month;1=month-of-year";
 
-        this.parseStringFails(
+        this.parseStringListFails(
                 text,
                 new InvalidCharacterException(
                         text,
@@ -450,10 +607,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseRowSpreadsheetNameColumnFails() {
+    public void testParseListRowSpreadsheetComparatorNameColumnFails() {
         final String text = "1=day-of-month;A=month-of-year";
 
-        this.parseStringFails(
+        this.parseStringListFails(
                 text,
                 new InvalidCharacterException(
                         text,
@@ -463,40 +620,40 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameDuplicateColumnFails() {
-        this.parseStringFails(
+    public void testParseListColumnSpreadsheetComparatorNameDuplicateColumnFails() {
+        this.parseStringListFails(
                 "A=day-of-month;A=month-of-year",
                 new IllegalArgumentException("Duplicate column A")
         );
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameDuplicateColumnFails2() {
-        this.parseStringFails(
+    public void testParseListColumnSpreadsheetComparatorNameDuplicateColumnFails2() {
+        this.parseStringListFails(
                 "A=day-of-month;$A=month-of-year",
                 new IllegalArgumentException("Duplicate column $A")
         );
     }
 
     @Test
-    public void testParseRowSpreadsheetNameDuplicateRowFails() {
-        this.parseStringFails(
+    public void testParseListRowSpreadsheetComparatorNameDuplicateRowFails() {
+        this.parseStringListFails(
                 "1=day-of-month;1=month-of-year",
                 new IllegalArgumentException("Duplicate row 1")
         );
     }
 
     @Test
-    public void testParseRowSpreadsheetNameDuplicateRowFails2() {
-        this.parseStringFails(
+    public void testParseListRowSpreadsheetComparatorNameDuplicateRowFails2() {
+        this.parseStringListFails(
                 "1=day-of-month;$1=month-of-year",
                 new IllegalArgumentException("Duplicate row $1")
         );
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameColumnSpreadsheetName() {
-        this.parseStringAndCheck(
+    public void testParseListColumnSpreadsheetComparatorNameColumnSpreadsheetComparatorName() {
+        this.parseStringListAndCheck(
                 "A=day-of-month;B=month-of-year",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
@@ -518,8 +675,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameUpColumnSpreadsheetNameDown() {
-        this.parseStringAndCheck(
+    public void testParseListColumnSpreadsheetComparatorNameUpColumnSpreadsheetComparatorNameDown() {
+        this.parseStringListAndCheck(
                 "A=day-of-month UP;B=month-of-year DOWN",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
@@ -541,8 +698,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     }
 
     @Test
-    public void testParseRowSpreadsheetNameUpRowSpreadsheetNameDownSpreadsheetNameUp() {
-        this.parseStringAndCheck(
+    public void testParseListRowSpreadsheetComparatorNameUpRowSpreadsheetComparatorNameDownSpreadsheetComparatorNameUp() {
+        this.parseStringListAndCheck(
                 "1=day-of-month UP;2=month-of-year DOWN,year",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("1"),
@@ -566,9 +723,9 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
         );
     }
 
-    private void parseStringAndCheck(final String text,
-                                     final SpreadsheetCellSpreadsheetComparatorNames... comparators) {
-        this.parseStringAndCheck(
+    private void parseStringListAndCheck(final String text,
+                                         final SpreadsheetCellSpreadsheetComparatorNames... comparators) {
+        this.parseStringListAndCheck(
                 text,
                 Lists.of(
                         comparators
@@ -576,20 +733,44 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
         );
     }
 
-    @Override
-    public List<SpreadsheetCellSpreadsheetComparatorNames> parseString(final String text) {
+    private void parseStringListAndCheck(final String text,
+                                         final List<SpreadsheetCellSpreadsheetComparatorNames> comparators) {
+        this.checkEquals(
+                comparators,
+                parseList(text),
+                () -> "parseList " + CharSequences.quoteAndEscape(text)
+        );
+    }
+
+    private List<SpreadsheetCellSpreadsheetComparatorNames> parseList(final String text) {
         return SpreadsheetCellSpreadsheetComparatorNames.parseList(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
+    /**
+     * Parsers the given text and verifies the expected {@link RuntimeException} was thrown
+     */
+    private void parseStringListFails(final String text,
+                                      final Class<? extends RuntimeException> expected) {
+        assertThrows(
+                expected,
+                () -> this.parseList(text)
+        );
     }
 
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
-        return cause;
+    private void parseStringListFails(final String text,
+                                      final RuntimeException expected) {
+        final RuntimeException thrown = assertThrows(
+                expected.getClass(),
+                () -> this.parseList(text)
+        );
+
+        this.checkEquals(
+                expected.getMessage(),
+                thrown.getMessage(),
+                () -> "Incorrect failure message for " + CharSequences.quoteAndEscape(text)
+        );
     }
+
 
     // Object...........................................................................................................
     @Test
