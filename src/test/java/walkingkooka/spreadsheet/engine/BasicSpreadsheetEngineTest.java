@@ -13538,8 +13538,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
-                                                  final Optional<SpreadsheetFormatter> formatter) {
+            public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
+                                                       final Optional<SpreadsheetFormatter> formatter) {
                 final Optional<Object> value = cell.formula()
                         .value();
                 return value.isPresent() ?

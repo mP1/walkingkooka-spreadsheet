@@ -267,8 +267,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * If a value is present use the {@link SpreadsheetFormatter} and apply the styling.
      */
     @Override
-    public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
-                                          final Optional<SpreadsheetFormatter> formatter) {
+    public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
+                                               final Optional<SpreadsheetFormatter> formatter) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(formatter, "formatter");
 
