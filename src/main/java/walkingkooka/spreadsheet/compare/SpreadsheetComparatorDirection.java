@@ -59,6 +59,8 @@ public enum SpreadsheetComparatorDirection {
     };
 
 
+    public final static SpreadsheetComparatorDirection DEFAULT = UP;
+
     abstract public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator);
 
 
