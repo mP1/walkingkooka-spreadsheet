@@ -95,8 +95,8 @@ public interface SpreadsheetEngineContext extends Context,
     /**
      * Combines formatting of any present value along with possibly applying conditional rules.
      */
-    SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
-                                   final Optional<SpreadsheetFormatter> formatter);
+    SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
+                                        final Optional<SpreadsheetFormatter> formatter);
 
     /**
      * Formats the {@link Throwable} into text and styles it as an error.
@@ -106,7 +106,7 @@ public interface SpreadsheetEngineContext extends Context,
         Objects.requireNonNull(cause, "cause");
         Objects.requireNonNull(cell, "cell");
 
-        return this.formatAndStyle(
+        return this.formatValueAndStyle(
                 cell.setFormula(
                         cell.formula()
                                 .setValue(
