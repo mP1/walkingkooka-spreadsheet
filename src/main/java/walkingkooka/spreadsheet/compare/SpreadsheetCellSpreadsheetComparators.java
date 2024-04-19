@@ -18,21 +18,16 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
-import walkingkooka.InvalidCharacterException;
-import walkingkooka.NeverError;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Comparators;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.text.CharSequences;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * For a single column or row holds a list of {@link SpreadsheetComparator}. Note that values that cannot be converted ond empty cells
@@ -48,300 +43,26 @@ public final class SpreadsheetCellSpreadsheetComparators {
         return SpreadsheetCellSpreadsheetComparatorsList.with(list);
     }
 
-    private final static char COLUMN_ROW_ASSIGNMENT = '=';
-
-    private final static char NAME_UP_DOWN_SEPARATOR = ' ';
-
-    private final static char COMPARATOR_SEPARATOR = ',';
-
-    private final static char COLUMN_ROW_SEPARATOR = ';';
-
     /**
      * Parses the text into a {@link List} of {@link SpreadsheetCellSpreadsheetComparators} using the function
      * as a factory to transform spreadsheet comparator names into {@link SpreadsheetComparator} instances.
      */
     public static List<SpreadsheetCellSpreadsheetComparators> parse(final String text,
                                                                     final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToComparator) {
-        CharSequences.failIfNullOrEmpty(text, "text");
-        Objects.requireNonNull(nameToComparator, "nameToComparator");
-
-        final int modeColumnOrRowStart = 0;
-        final int modeColumnOrRow = modeColumnOrRowStart + 1;
-
-        final int modeNameStart = modeColumnOrRow + 1;
-        final int modeName = modeNameStart + 1;
-
-        final int modeUpOrDownStart = modeName + 1;
-        final int modeUpOrDown = modeUpOrDownStart + 1;
-
-        final int length = text.length();
-
-        final Set<SpreadsheetColumnOrRowReference> duplicates = Sets.sorted();
-        final List<SpreadsheetCellSpreadsheetComparators> columnOrRowComparators = Lists.array();
-        int mode = 0;
-        int tokenStart = 0;
-        Function<String, SpreadsheetColumnOrRowReference> columnOrRowParser = SpreadsheetSelection::parseColumnOrRow;
-        SpreadsheetColumnOrRowReference columnOrRow = null;
-        SpreadsheetComparator<?> comparator = null;
-        List<SpreadsheetComparator<?>> comparators = null;
-
-        for (int i = 0; i < length; i++) {
-            final char c = text.charAt(i);
-
-            switch (mode) {
-                case modeColumnOrRowStart:
-                    if (COLUMN_ROW_ASSIGNMENT == c) {
-                        throw new InvalidCharacterException(
-                                text,
-                                i
-                        );
-                    }
-                    tokenStart = i;
-                    columnOrRow = null;
-                    comparators = null;
-                    mode = modeColumnOrRow;
-                    break;
-                case modeColumnOrRow:
-                    if (COLUMN_ROW_ASSIGNMENT == c) {
-                        // parse column OR row
-                        try {
-                            columnOrRow = columnOrRowParser.apply(
-                                    text.substring(
-                                            tokenStart,
-                                            i
-                                    )
-                            );
-                        } catch (final InvalidCharacterException invalid) {
-                            throw invalid.setTextAndPosition(
-                                    text,
-                                    tokenStart + invalid.position()
-                            );
-                        }
-
-                        if (false == duplicates.add(columnOrRow)) {
-                            throw new IllegalArgumentException(
-                                    "Duplicate " +
-                                            columnOrRow.cellColumnOrRowText() +
-                                            " " +
-                                            columnOrRow
-                            );
-                        }
-
-                        comparators = Lists.array();
-                        columnOrRowParser = columnOrRow.columnOrRowReferenceKind()
-                                ::parse;
-                        mode = modeNameStart;
-                        break;
-                    }
-                    break;
-                case modeNameStart:
-                    if (false == isAsciiLetter(c)) {
-                        throw new InvalidCharacterException(
-                                text,
-                                i
-                        );
-                    }
-                    tokenStart = i;
-                    comparator = null;
-                    mode = modeName;
-                    break;
-                case modeName:
-                    switch (c) {
-                        case NAME_UP_DOWN_SEPARATOR:
-                            comparator = nameToComparator.apply(
-                                    SpreadsheetComparatorName.with(
-                                            text.substring(
-                                                    tokenStart,
-                                                    i
-                                            )
-                                    )
-                            );
-                            mode = modeUpOrDownStart;
-                            break;
-                        case COMPARATOR_SEPARATOR:
-                            comparators.add(
-                                    nameToComparator.apply(
-                                            SpreadsheetComparatorName.with(
-                                                    text.substring(
-                                                            tokenStart,
-                                                            i
-                                                    )
-                                            )
-                                    )
-                            );
-                            mode = modeNameStart;
-                            break;
-                        case COLUMN_ROW_SEPARATOR:
-                            comparators.add(
-                                    nameToComparator.apply(
-                                            SpreadsheetComparatorName.with(
-                                                    text.substring(
-                                                            tokenStart,
-                                                            i
-                                                    )
-                                            )
-                                    )
-                            );
-                            columnOrRowComparators.add(
-                                    SpreadsheetCellSpreadsheetComparators.with(
-                                            columnOrRow,
-                                            comparators
-                                    )
-                            );
-                            columnOrRow = null;
-                            comparator = null;
-                            mode = modeColumnOrRowStart;
-                            break;
-                        case '-':
-                            // continue parsing name
-                            break;
-                        default:
-                            // continue parsing name
-                            if (false == isAsciiLetter(c)) {
-                                throw new InvalidCharacterException(
-                                        text,
-                                        i
-                                );
-                            }
-                            break;
-                    }
-                    break;
-                case modeUpOrDownStart:
-                    if (c > 'Z' || false == Character.isLetter(c)) {
-                        throw new InvalidCharacterException(
-                                text,
-                                i
-                        );
-                    }
-                    tokenStart = i;
-                    mode = modeUpOrDown;
-                    break;
-                case modeUpOrDown:
-                    switch (c) {
-                        case COMPARATOR_SEPARATOR:
-                            comparators.add(
-                                    upOrDown(
-                                            tokenStart,
-                                            i,
-                                            text,
-                                            comparator
-                                    )
-                            );
-                            mode = modeNameStart;
-                            break;
-                        case COLUMN_ROW_SEPARATOR:
-                            comparators.add(
-                                    upOrDown(
-                                            tokenStart,
-                                            i,
-                                            text,
-                                            comparator
-                                    )
-                            );
-                            columnOrRowComparators.add(
-                                    SpreadsheetCellSpreadsheetComparators.with(
-                                            columnOrRow,
-                                            comparators
-                                    )
-                            );
-                            mode = modeColumnOrRowStart;
-                            break;
-                        default:
-                            if (false == isAsciiCapitalLetter(c)) {
-                                throw new InvalidCharacterException(
-                                        text,
-                                        i
-                                );
-                            }
-                            // continue gathering UP or DOWN text
-                            break;
-                    }
-                    break;
-                default:
-                    throw new NeverError("Unknown mode=" + mode);
-            }
-        }
-
-        switch (mode) {
-            case modeName:
-                comparators.add(
-                        nameToComparator.apply(
-                                SpreadsheetComparatorName.with(
-                                        text.substring(
-                                                tokenStart,
-                                                length
-                                        )
-                                )
-                        )
-                );
-                columnOrRowComparators.add(
-                        SpreadsheetCellSpreadsheetComparators.with(
-                                columnOrRow,
-                                comparators
-                        )
-                );
-                break;
-            case modeUpOrDown:
-                comparators.add(
-                        upOrDown(
-                                tokenStart,
-                                length,
-                                text,
-                                comparator
-                        )
-                );
-                columnOrRowComparators.add(
-                        SpreadsheetCellSpreadsheetComparators.with(
-                                columnOrRow,
-                                comparators
-                        )
-                );
-                break;
-            case modeColumnOrRow:
-                throw new IllegalArgumentException("Expected column/row");
-            case modeNameStart:
-                throw new IllegalArgumentException("Missing comparator name");
-            case modeUpOrDownStart:
-                throw new IllegalArgumentException("Missing " + SpreadsheetComparatorDirection.UP + "/" + SpreadsheetComparatorDirection.DOWN);
-            default:
-                break;
-        }
-
-        return list(columnOrRowComparators);
-    }
-
-    private static boolean isAsciiCapitalLetter(final char c) {
-        return c >= 'A' && c <= 'Z';
-    }
-
-    private static boolean isAsciiLetter(final char c) {
-        return isAsciiCapitalLetter(c) || c >= 'a' && c <= 'z';
-    }
-
-    private static SpreadsheetComparator<?> upOrDown(final int start,
-                                                     final int end,
-                                                     final String text,
-                                                     final SpreadsheetComparator<?> comparator) {
-        final String upOrDown = text.substring(
-                start,
-                end
+        return list(
+                SpreadsheetCellSpreadsheetComparatorNames.parseList(text)
+                        .stream()
+                        .map(n -> SpreadsheetCellSpreadsheetComparators.with(
+                                n.columnOrRow(),
+                                n.comparatorNameAndDirections()
+                                        .stream()
+                                        .map(nad -> nad.direction()
+                                                .apply(
+                                                        nameToComparator.apply(nad.name())
+                                                )
+                                        ).collect(Collectors.toList())
+                        )).collect(Collectors.toList())
         );
-
-        final SpreadsheetComparatorDirection direction;
-        try {
-            direction = SpreadsheetComparatorDirection.valueOf(upOrDown);
-        } catch (final IllegalArgumentException invalid) {
-            throw new IllegalArgumentException(
-                    "Missing " +
-                            SpreadsheetComparatorDirection.UP +
-                            "/" +
-                            SpreadsheetComparatorDirection.DOWN +
-                            " at " +
-                            start
-            );
-        }
-
-        return direction.apply(comparator);
     }
 
     public static SpreadsheetCellSpreadsheetComparators with(final SpreadsheetColumnOrRowReference columnOrRow,
