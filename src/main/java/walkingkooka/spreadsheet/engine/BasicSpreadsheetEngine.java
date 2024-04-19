@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -442,14 +443,24 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
-                                      final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                      final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         checkCellRange(cellRange);
-        Objects.requireNonNull(comparators, "comparators");
+        Objects.requireNonNull(comparatorNames, "comparatorNames");
         checkDeltaProperties(deltaProperties);
 
-        final List<SpreadsheetCellSpreadsheetComparators> copy = Lists.immutable(comparators);
+        final List<SpreadsheetCellSpreadsheetComparators> comparators = comparatorNames.stream()
+                .map(n -> SpreadsheetCellSpreadsheetComparators.with(
+                        n.columnOrRow(),
+                        n.comparatorNameAndDirections()
+                                .stream()
+                                .map(nad -> nad.direction().apply(context.spreadsheetComparator(nad.name())))
+                                .collect(Collectors.toList())
+                )).collect(Collectors.toList());
+
+
+        Lists.immutable(comparators);
 
         final String outOfBounds = comparators.stream()
                 .map(c -> c.columnOrRow())
