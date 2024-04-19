@@ -48,7 +48,7 @@ public final class SpreadsheetComparatorNameAndDirection implements HasName<Spre
             );
         } else {
             name = SpreadsheetComparatorName.with(text);
-            direction = SpreadsheetComparatorDirection.UP;
+            direction = SpreadsheetComparatorDirection.DEFAULT;
         }
 
         return new SpreadsheetComparatorNameAndDirection(
