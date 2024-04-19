@@ -203,10 +203,27 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         Objects.requireNonNull(context, "context");
 
         return sort0(
-                SpreadsheetCellSpreadsheetComparators.list(comparators),
+                checkComparatorsInBounds(
+                        SpreadsheetCellSpreadsheetComparators.list(comparators)
+                ),
                 movedCells,
                 context
         );
+    }
+
+    private List<SpreadsheetCellSpreadsheetComparators> checkComparatorsInBounds(final List<SpreadsheetCellSpreadsheetComparators> comparators) {
+        final SpreadsheetCellRangeReference cellRange = this.range();
+
+        final String outOfBounds = comparators.stream()
+                .map(c -> c.columnOrRow())
+                .filter(c -> false == cellRange.test(c))
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
+        if (false == outOfBounds.isEmpty()) {
+            throw new IllegalArgumentException("Some sort columns/rows are not within cell-range " + cellRange + " got " + outOfBounds);
+        }
+
+        return comparators;
     }
 
     public SpreadsheetCellRange sort0(final List<SpreadsheetCellSpreadsheetComparators> comparators,
