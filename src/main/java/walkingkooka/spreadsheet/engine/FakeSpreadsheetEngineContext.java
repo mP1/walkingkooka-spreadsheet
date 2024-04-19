@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.FakeConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -43,6 +45,12 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     @Override
     public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
         Objects.requireNonNull(selection, "selection");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+        Objects.requireNonNull(name, "name");
         throw new UnsupportedOperationException();
     }
 
