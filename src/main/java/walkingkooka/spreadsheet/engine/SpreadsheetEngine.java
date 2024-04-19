@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -120,10 +120,10 @@ public interface SpreadsheetEngine {
                                    final SpreadsheetEngineContext context);
 
     /**
-     * Sorts the selection of cells using the provided {@link SpreadsheetCellSpreadsheetComparators comparators}.
+     * Sorts the selection of cells using the provided {@link walkingkooka.spreadsheet.compare.SpreadsheetComparator comparators}.
      */
     SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
-                               final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                               final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames,
                                final Set<SpreadsheetDeltaProperties> deltaProperties,
                                final SpreadsheetEngineContext context);
 

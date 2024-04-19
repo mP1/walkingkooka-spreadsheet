@@ -38,8 +38,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -1547,10 +1546,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .sortCells(
                                 null,
-                                SpreadsheetCellSpreadsheetComparators.parse(
-                                        "1=string",
-                                        SpreadsheetComparators.nameToSpreadsheetComparator()
-                                ),
+                                SpreadsheetCellSpreadsheetComparatorNames.parseList("1=string"),
                                 Sets.empty(), // deltaProperties
                                 SpreadsheetEngineContexts.fake()
                         )
@@ -1578,10 +1574,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .sortCells(
                                 SpreadsheetSelection.A1.toCellRange(),
-                                SpreadsheetCellSpreadsheetComparators.parse(
-                                        "1=string",
-                                        SpreadsheetComparators.nameToSpreadsheetComparator()
-                                ),
+                                SpreadsheetCellSpreadsheetComparatorNames.parseList("1=string"),
                                 null, // deltaProperties
                                 SpreadsheetEngineContexts.fake()
                         )
@@ -1595,10 +1588,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .sortCells(
                                 SpreadsheetSelection.A1.toCellRange(),
-                                SpreadsheetCellSpreadsheetComparators.parse(
-                                        "1=string",
-                                        SpreadsheetComparators.nameToSpreadsheetComparator()
-                                ),
+                                SpreadsheetCellSpreadsheetComparatorNames.parseList("1=string"),
                                 Sets.empty(), // deltaProperties
                                 null
                         )
@@ -1614,10 +1604,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.sortCellsAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange(cellRange),
-                SpreadsheetCellSpreadsheetComparators.parse(
-                        comparators,
-                        SpreadsheetComparators.nameToSpreadsheetComparator()
-                ),
+                SpreadsheetCellSpreadsheetComparatorNames.parseList(comparators),
                 deltaProperties,
                 context,
                 expected
@@ -1626,7 +1613,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void sortCellsAndCheck(final SpreadsheetEngine engine,
                                    final SpreadsheetCellRangeReference cellRange,
-                                   final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                   final List<SpreadsheetCellSpreadsheetComparatorNames> comparators,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta expected) {
