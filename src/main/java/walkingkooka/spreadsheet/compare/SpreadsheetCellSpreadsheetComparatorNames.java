@@ -47,7 +47,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
     /**
      * Parses the text into a {@link List} of {@link SpreadsheetCellSpreadsheetComparatorNames}.
      */
-    public static List<SpreadsheetCellSpreadsheetComparatorNames> parse(final String text) {
+    public static List<SpreadsheetCellSpreadsheetComparatorNames> parseList(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
         final int modeColumnOrRowStart = 0;

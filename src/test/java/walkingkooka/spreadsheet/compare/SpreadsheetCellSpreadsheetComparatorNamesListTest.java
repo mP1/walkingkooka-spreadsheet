@@ -95,7 +95,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements 
     @Override
     public SpreadsheetCellSpreadsheetComparatorNamesList createList() {
         return Cast.to(
-                SpreadsheetCellSpreadsheetComparatorNames.parse("A=string")
+                SpreadsheetCellSpreadsheetComparatorNames.parseList("A=string")
         );
     }
 
