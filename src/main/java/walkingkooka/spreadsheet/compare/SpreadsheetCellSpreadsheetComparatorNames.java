@@ -284,7 +284,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                 break;
         }
 
-        return columnOrRowComparators;
+        return SpreadsheetCellSpreadsheetComparatorNamesList.with(columnOrRowComparators);
     }
 
     private static boolean isAsciiCapitalLetter(final char c) {
