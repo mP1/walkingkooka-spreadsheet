@@ -775,7 +775,26 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     public void testToString() {
         this.toStringAndCheck(
                 this.createObject(),
-                "A string-123 DOWN"
+                "A=string-123 DOWN"
+        );
+    }
+
+    @Test
+    public void testToStringParse() {
+        final SpreadsheetCellSpreadsheetComparatorNames names = SpreadsheetCellSpreadsheetComparatorNames.with(
+                SpreadsheetSelection.parseColumn("AB"),
+                Lists.of(
+                        SpreadsheetComparatorName.with("abc123")
+                                .setDirection(SpreadsheetComparatorDirection.UP),
+                        SpreadsheetComparatorName.with("xyz456")
+                                .setDirection(SpreadsheetComparatorDirection.DOWN)
+                )
+        );
+
+        this.checkEquals(
+                names,
+                SpreadsheetCellSpreadsheetComparatorNames.parse(names.toString()),
+                () -> names.toString()
         );
     }
 

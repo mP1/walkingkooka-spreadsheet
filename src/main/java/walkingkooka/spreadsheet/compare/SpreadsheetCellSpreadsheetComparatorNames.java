@@ -409,6 +409,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
     public String toString() {
         return ToStringBuilder.empty()
                 .value(this.columnOrRow)
+                .separator(String.valueOf(COLUMN_ROW_ASSIGNMENT))
+                .valueSeparator(String.valueOf(COMPARATOR_SEPARATOR))
                 .value(this.comparatorNameAndDirections)
                 .build();
     }
