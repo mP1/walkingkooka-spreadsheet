@@ -578,7 +578,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
 
     @Override
     public List<SpreadsheetCellSpreadsheetComparatorNames> parseString(final String text) {
-        return SpreadsheetCellSpreadsheetComparatorNames.parse(text);
+        return SpreadsheetCellSpreadsheetComparatorNames.parseList(text);
     }
 
     @Override
