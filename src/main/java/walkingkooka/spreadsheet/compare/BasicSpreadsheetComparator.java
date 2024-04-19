@@ -88,6 +88,7 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
         return Objects.hash(
                 this.type,
                 this.comparator,
+                this.direction,
                 this.name
         );
     }
