@@ -32,10 +32,10 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  */
 final public class SpreadsheetComparatorName implements Name, Comparable<SpreadsheetComparatorName> {
 
-    private final static CharPredicate INITIAL = CharPredicates.range('A', 'Z')
+    final static CharPredicate INITIAL = CharPredicates.range('A', 'Z')
             .or(CharPredicates.range('a', 'z'));
 
-    private final static CharPredicate PART = INITIAL.or(CharPredicates.range('0', '9'))
+    final static CharPredicate PART = INITIAL.or(CharPredicates.range('0', '9'))
             .or(CharPredicates.is('-'));
 
     /**

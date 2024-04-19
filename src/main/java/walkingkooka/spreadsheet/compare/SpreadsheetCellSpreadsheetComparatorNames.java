@@ -148,7 +148,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                     }
                     break;
                 case modeNameStart:
-                    if (false == isAsciiLetter(c)) {
+                    if (false == SpreadsheetComparatorName.PART.test(c)) {
                         throw new InvalidCharacterException(
                                 text,
                                 i
@@ -210,7 +210,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                             break;
                         default:
                             // continue parsing name
-                            if (false == isAsciiLetter(c)) {
+                            if (false == SpreadsheetComparatorName.PART.test(c)) {
                                 throw new InvalidCharacterException(
                                         text,
                                         i
@@ -266,7 +266,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                             mode = modeColumnOrRowStart;
                             break;
                         default:
-                            if (false == isAsciiCapitalLetter(c)) {
+                            if (false == SpreadsheetComparatorName.INITIAL.test(c)) {
                                 throw new InvalidCharacterException(
                                         text,
                                         i
@@ -323,14 +323,6 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
             default:
                 break;
         }
-    }
-
-    private static boolean isAsciiCapitalLetter(final char c) {
-        return c >= 'A' && c <= 'Z';
-    }
-
-    private static boolean isAsciiLetter(final char c) {
-        return isAsciiCapitalLetter(c) || c >= 'a' && c <= 'z';
     }
 
     private static SpreadsheetComparatorNameAndDirection upOrDown(final int start,

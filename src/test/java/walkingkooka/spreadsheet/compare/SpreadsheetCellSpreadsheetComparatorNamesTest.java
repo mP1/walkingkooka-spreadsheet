@@ -197,12 +197,11 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     @Test
     public void testParseColumnSpreadsheetComparatorName() {
         this.parseStringAndCheck(
-                "A=string",
+                "A=string123",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                                SpreadsheetComparators.string()
-                                        .name()
+                                SpreadsheetComparatorName.with("string123")
                                         .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                         )
                 )
@@ -212,12 +211,11 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     @Test
     public void testParseRowSpreadsheetComparatorName() {
         this.parseStringAndCheck(
-                "23=string",
+                "23=string456",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("23"),
                         Lists.of(
-                                SpreadsheetComparators.string()
-                                        .name()
+                                SpreadsheetComparatorName.with("string456")
                                         .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                         )
                 )
