@@ -1159,9 +1159,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     formula
             );
 
-            //if error formatAndStyle
+            //if error formatValueAndStyle
             if (formula.error().isPresent()) {
-                result = context.formatAndStyle(
+                result = context.formatValueAndStyle(
                         result,
                         Optional.empty()
                 );
@@ -1205,7 +1205,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
-            result = context.formatAndStyle(
+            result = context.formatValueAndStyle(
                     result,
                     cell.formatPattern()
                             .map(SpreadsheetFormatPattern::formatter)

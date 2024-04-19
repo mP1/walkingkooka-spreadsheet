@@ -319,7 +319,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         assertThrows(
                 NullPointerException.class,
                 () -> this.createContext()
-                        .formatAndStyle(
+                        .formatValueAndStyle(
                                 null,
                                 Optional.empty() // no formatter
                         )
@@ -331,7 +331,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         assertThrows(
                 NullPointerException.class,
                 () -> this.createContext()
-                        .formatAndStyle(
+                        .formatValueAndStyle(
                                 SpreadsheetSelection.A1.setFormula(
                                         SpreadsheetFormula.EMPTY
                                 ),
@@ -371,11 +371,11 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                         final SpreadsheetCell expected) {
         this.checkEquals(
                 expected,
-                context.formatAndStyle(
+                context.formatValueAndStyle(
                         cell,
                         formatter
                 ),
-                () -> "formatAndStyle " + cell + " " + formatter);
+                () -> "formatValueAndStyle " + cell + " " + formatter);
     }
 
     // TypeNameTesting .........................................................................................

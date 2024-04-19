@@ -495,8 +495,8 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public SpreadsheetCell formatAndStyle(final SpreadsheetCell cell,
-                                                  final Optional<SpreadsheetFormatter> formatter) {
+            public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
+                                                       final Optional<SpreadsheetFormatter> formatter) {
                 return cell.setFormattedValue(
                         this.formatValue(
                                 cell.formula().value().get(),
