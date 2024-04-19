@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
@@ -484,6 +485,80 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 null,
                 MOVED_CELLS_BICONSUMER,
                 SpreadsheetComparatorContexts.fake()
+        );
+    }
+
+    @Test
+    public void testSortWithColumnComparatorsOutOfBoundsFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createObject()
+                        .sort(
+                                Lists.of(
+                                        SpreadsheetCellSpreadsheetComparators.with(
+                                                SpreadsheetSelection.parseColumn("B"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.string()
+                                                )
+                                        ),
+                                        SpreadsheetCellSpreadsheetComparators.with(
+                                                SpreadsheetSelection.parseColumn("C"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.string()
+                                                )
+                                        ),
+                                        SpreadsheetCellSpreadsheetComparators.with(
+                                                SpreadsheetSelection.parseColumn("ZZ"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.string()
+                                                )
+                                        )
+                                ),
+                                MOVED_CELLS_BICONSUMER,
+                                SpreadsheetComparatorContexts.fake()
+                        )
+        );
+
+        this.checkEquals(
+                "Some sort columns/rows are not within cell-range A1:B2 got C, ZZ",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testSortWithRowComparatorsOutOfBoundsFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createObject()
+                        .sort(
+                                Lists.of(
+                                        SpreadsheetCellSpreadsheetComparators.with(
+                                                SpreadsheetSelection.parseRow("2"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.string()
+                                                )
+                                        ),
+                                        SpreadsheetCellSpreadsheetComparators.with(
+                                                SpreadsheetSelection.parseRow("3"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.string()
+                                                )
+                                        ),
+                                        SpreadsheetCellSpreadsheetComparators.with(
+                                                SpreadsheetSelection.parseRow("99"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.string()
+                                                )
+                                        )
+                                ),
+                                MOVED_CELLS_BICONSUMER,
+                                SpreadsheetComparatorContexts.fake()
+                        )
+        );
+
+        this.checkEquals(
+                "Some sort columns/rows are not within cell-range A1:B2 got 3, 99",
+                thrown.getMessage()
         );
     }
 
