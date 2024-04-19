@@ -25,6 +25,10 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -413,5 +417,25 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                 .valueSeparator(String.valueOf(COMPARATOR_SEPARATOR))
                 .value(this.comparatorNameAndDirections)
                 .build();
+    }
+
+    // Json.............................................................................................................
+
+    static SpreadsheetCellSpreadsheetComparatorNames unmarshall(final JsonNode node,
+                                                                final JsonNodeUnmarshallContext context) {
+        return parse(node.stringOrFail());
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetCellSpreadsheetComparatorNames.class),
+                SpreadsheetCellSpreadsheetComparatorNames::unmarshall,
+                SpreadsheetCellSpreadsheetComparatorNames::marshall,
+                SpreadsheetCellSpreadsheetComparatorNames.class
+        );
     }
 }

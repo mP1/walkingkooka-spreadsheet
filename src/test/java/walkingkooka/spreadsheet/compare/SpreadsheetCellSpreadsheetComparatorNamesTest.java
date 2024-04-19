@@ -30,6 +30,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
@@ -39,7 +43,9 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
         ComparatorTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellSpreadsheetComparatorNames>,
         ToStringTesting<SpreadsheetCellSpreadsheetComparatorNames>,
-        ParseStringTesting<SpreadsheetCellSpreadsheetComparatorNames> {
+        ParseStringTesting<SpreadsheetCellSpreadsheetComparatorNames>,
+        JsonNodeMarshallingTesting<SpreadsheetCellSpreadsheetComparatorNames>,
+        TreePrintableTesting {
 
     private final static SpreadsheetColumnOrRowReference COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("A");
 
@@ -814,6 +820,49 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
                 columnOrRowComparators.comparatorNameAndDirections(),
                 "namesAndDirections"
         );
+    }
+
+    // Json...........................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+                SpreadsheetCellSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("AB"),
+                        Lists.of(
+                                SpreadsheetComparatorNameAndDirection.parse("string123 DOWN")
+                        )
+                ),
+                "\"AB=string123 DOWN\""
+        );
+    }
+
+    @Test
+    public void testUnmarshall() {
+        this.unmarshallAndCheck(
+                "\"AB=string123 DOWN,abc456 UP\"",
+                SpreadsheetCellSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("AB"),
+                        Lists.of(
+                                SpreadsheetComparatorNameAndDirection.parse("string123 DOWN"),
+                                SpreadsheetComparatorNameAndDirection.parse("abc456 UP")
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetCellSpreadsheetComparatorNames unmarshall(final JsonNode json,
+                                                                final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellSpreadsheetComparatorNames.unmarshall(
+                json,
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetCellSpreadsheetComparatorNames createJsonNodeMarshallingValue() {
+        return this.createObject();
     }
 
     // ClassTesting.....................................................................................................
