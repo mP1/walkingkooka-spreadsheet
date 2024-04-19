@@ -29,6 +29,7 @@ import walkingkooka.text.CharSequences;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -45,9 +46,37 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
     private final static char COLUMN_ROW_SEPARATOR = ';';
 
     /**
+     * Parses the text into a single {@link SpreadsheetCellSpreadsheetComparatorNames}.
+     */
+    public static SpreadsheetCellSpreadsheetComparatorNames parse(final String text) {
+        final SpreadsheetCellSpreadsheetComparatorNames[] names = new SpreadsheetCellSpreadsheetComparatorNames[1];
+        tryParse(
+                text,
+                (n) -> names[0] = n,
+                false // supportColumnRowSeparator
+        );
+        return names[0];
+    }
+
+    /**
      * Parses the text into a {@link List} of {@link SpreadsheetCellSpreadsheetComparatorNames}.
      */
     public static List<SpreadsheetCellSpreadsheetComparatorNames> parseList(final String text) {
+        final List<SpreadsheetCellSpreadsheetComparatorNames> names = Lists.array();
+        tryParse(
+                text,
+                names::add,
+                true // supportColumnRowSeparator
+        );
+        return SpreadsheetCellSpreadsheetComparatorNamesList.with(names);
+    }
+
+    /**
+     * The main parser that supports parsing one or many {@link SpreadsheetCellSpreadsheetComparatorNames}.
+     */
+    private static void tryParse(final String text,
+                                 final Consumer<SpreadsheetCellSpreadsheetComparatorNames> columnOrRowNameAndDirection,
+                                 final boolean supportColumnRowSeparator) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
         final int modeColumnOrRowStart = 0;
@@ -62,7 +91,6 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
         final int length = text.length();
 
         final Set<SpreadsheetColumnOrRowReference> duplicates = Sets.sorted();
-        final List<SpreadsheetCellSpreadsheetComparatorNames> columnOrRowComparators = Lists.array();
         int mode = 0;
         int tokenStart = 0;
         Function<String, SpreadsheetColumnOrRowReference> columnOrRowParser = SpreadsheetSelection::parseColumnOrRow;
@@ -153,6 +181,12 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                             mode = modeNameStart;
                             break;
                         case COLUMN_ROW_SEPARATOR:
+                            if (false == supportColumnRowSeparator) {
+                                throw new InvalidCharacterException(
+                                        text,
+                                        i
+                                );
+                            }
                             comparatorNameAndDirections.add(
                                     SpreadsheetComparatorName.with(
                                             text.substring(
@@ -161,7 +195,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                                             )
                                     ).setDirection(SpreadsheetComparatorDirection.DEFAULT)
                             );
-                            columnOrRowComparators.add(
+                            columnOrRowNameAndDirection.accept(
                                     SpreadsheetCellSpreadsheetComparatorNames.with(
                                             columnOrRow,
                                             comparatorNameAndDirections
@@ -209,6 +243,12 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                             mode = modeNameStart;
                             break;
                         case COLUMN_ROW_SEPARATOR:
+                            if (false == supportColumnRowSeparator) {
+                                throw new InvalidCharacterException(
+                                        text,
+                                        i
+                                );
+                            }
                             comparatorNameAndDirections.add(
                                     upOrDown(
                                             tokenStart,
@@ -217,7 +257,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                                             comparatorName
                                     )
                             );
-                            columnOrRowComparators.add(
+                            columnOrRowNameAndDirection.accept(
                                     SpreadsheetCellSpreadsheetComparatorNames.with(
                                             columnOrRow,
                                             comparatorNameAndDirections
@@ -251,7 +291,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                                 )
                         ).setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 );
-                columnOrRowComparators.add(
+                columnOrRowNameAndDirection.accept(
                         SpreadsheetCellSpreadsheetComparatorNames.with(
                                 columnOrRow,
                                 comparatorNameAndDirections
@@ -267,7 +307,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                                 comparatorName
                         )
                 );
-                columnOrRowComparators.add(
+                columnOrRowNameAndDirection.accept(
                         SpreadsheetCellSpreadsheetComparatorNames.with(
                                 columnOrRow,
                                 comparatorNameAndDirections
@@ -283,8 +323,6 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
             default:
                 break;
         }
-
-        return SpreadsheetCellSpreadsheetComparatorNamesList.with(columnOrRowComparators);
     }
 
     private static boolean isAsciiCapitalLetter(final char c) {
