@@ -21,8 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameMapper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
@@ -43,17 +42,13 @@ import java.util.Optional;
 public interface SpreadsheetEngineContext extends Context,
         ExpressionPurityContext,
         HasSpreadsheetMetadata,
-        HasNow {
+        HasNow,
+        SpreadsheetComparatorNameMapper {
 
     /**
      * Resolves a {@link SpreadsheetSelection} if it is a {@link SpreadsheetLabelName} otherwise returning the original.
      */
     SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection);
-
-    /**
-     * Resolves the given {@link SpreadsheetComparatorName} to a {@link SpreadsheetComparatorName}.
-     */
-    SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name);
 
     /**
      * Parses the formula into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
