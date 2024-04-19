@@ -77,6 +77,16 @@ final public class SpreadsheetComparatorName implements Name, Comparable<Spreads
 
     private final String name;
 
+    /**
+     * Create a {@link SpreadsheetComparatorNameAndDirection} using this name and the given {@link SpreadsheetComparatorDirection direction}
+     */
+    public SpreadsheetComparatorNameAndDirection setDirection(final SpreadsheetComparatorDirection direction) {
+        return SpreadsheetComparatorNameAndDirection.with(
+                this,
+                direction
+        );
+    }
+
     // Object..................................................................................................
 
     @Override
