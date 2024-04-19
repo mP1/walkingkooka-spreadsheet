@@ -77,6 +77,26 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
         );
     }
 
+    // setDirection.....................................................................................................
+
+    @Test
+    public void testSetDirectionUp() {
+        this.checkEquals(
+                SpreadsheetComparatorNameAndDirection.with(NAME, DIRECTION),
+                NAME.setDirection(DIRECTION)
+        );
+    }
+
+    @Test
+    public void testSetDirectionDown() {
+        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.DOWN;
+
+        this.checkEquals(
+                SpreadsheetComparatorNameAndDirection.with(NAME, direction),
+                NAME.setDirection(direction)
+        );
+    }
+
     // parseString......................................................................................................
 
     @Test
