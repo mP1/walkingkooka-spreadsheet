@@ -18,9 +18,11 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -49,7 +51,13 @@ final class BuiltInSpreadsheetComparatorProvider implements SpreadsheetComparato
         return comparator;
     }
 
-    private final static Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = Lists.of(
+    @Override
+    public Set<SpreadsheetComparatorName> spreadsheetComparatorNames() {
+        return NAME_TO_COMPARATOR.keySet();
+    }
+
+    private final static Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = Maps.readOnly(
+            Lists.of(
                     SpreadsheetComparators.date(),
                     SpreadsheetComparators.dateTime(),
                     SpreadsheetComparators.dayOfMonth(),
@@ -66,7 +74,8 @@ final class BuiltInSpreadsheetComparatorProvider implements SpreadsheetComparato
                     SpreadsheetComparators.time(),
                     SpreadsheetComparators.year()
             ).stream()
-            .collect(Collectors.toMap(n -> n.name(), n -> n));
+                    .collect(Collectors.toMap(n -> n.name(), n -> n))
+    );
 
     @Override
     public String toString() {

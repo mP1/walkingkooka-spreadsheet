@@ -23,6 +23,7 @@ import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.text.CaseKind;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public final class BuiltInSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<BuiltInSpreadsheetComparatorProvider> {
 
@@ -41,6 +42,24 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
                                 SpreadsheetComparatorName.with(n)
                         )
                 );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorNames() {
+        this.spreadsheetComparatorNamesAndCheck(
+                BuiltInSpreadsheetComparatorProvider.INSTANCE,
+                Arrays.stream(SpreadsheetComparators.class.getMethods())
+                        .filter(m -> MethodAttributes.STATIC.is(m))
+                        .filter(m -> SpreadsheetComparator.class.equals(m.getReturnType()))
+                        .filter(m -> m.getParameterTypes().length == 0)
+                        .map(m -> CaseKind.CAMEL.change(
+                                        m.getName(),
+                                        CaseKind.KEBAB
+                                ).toString()
+                        ).filter(n -> false == "fake".equals(n))
+                        .map(SpreadsheetComparatorName::with)
+                        .collect(Collectors.toSet())
+        );
     }
 
     @Override

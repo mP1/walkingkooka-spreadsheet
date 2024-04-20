@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +31,11 @@ public interface SpreadsheetComparatorProvider {
      * Resolves the given {@link SpreadsheetComparatorName} to a {@link SpreadsheetComparatorName}.
      */
     SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name);
+
+    /**
+     * Returns all available {@link SpreadsheetComparatorName}
+     */
+    Set<SpreadsheetComparatorName> spreadsheetComparatorNames();
 
     /**
      * Helper that maps a {@link List} of {@link SpreadsheetCellSpreadsheetComparatorNames} into a {@link List} of

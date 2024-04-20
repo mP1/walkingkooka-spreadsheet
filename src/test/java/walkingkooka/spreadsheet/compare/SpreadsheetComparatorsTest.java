@@ -278,9 +278,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 NullPointerException.class,
                 () -> SpreadsheetComparators.parse(
                         null,
-                        (n) -> {
-                            throw new UnsupportedOperationException();
-                        }
+                        SpreadsheetComparatorProviders.fake()
                 )
         );
     }
@@ -291,9 +289,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 IllegalArgumentException.class,
                 () -> SpreadsheetComparators.parse(
                         "",
-                        (n) -> {
-                            throw new UnsupportedOperationException();
-                        }
+                        SpreadsheetComparatorProviders.fake()
                 )
         );
     }
