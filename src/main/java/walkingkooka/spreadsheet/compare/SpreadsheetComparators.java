@@ -217,7 +217,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     /**
      * Accepts a string with compare names and optional UP or DOWN separated by commas.
      * <pre>
-     * string DOWN, string-case-insensitive UP
+     * text DOWN, string-case-insensitive UP
      *
      * day-of-month UP, month-of-year UP, year
      * </pre>
