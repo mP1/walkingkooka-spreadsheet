@@ -367,7 +367,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
 
     @Override
     public SpreadsheetCellsComparator createComparator() {
-        return this.createComparator("B=day-of-month;C=string-case-insensitive;D=string-case-insensitive");
+        return this.createComparator("B=day-of-month;C=text-case-insensitive;D=text-case-insensitive");
     }
 
     private SpreadsheetCellsComparator createComparator(final String comparators) {
