@@ -22,6 +22,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetComparatorProviders implements PublicStaticHelper {
 
     /**
+     * {@see BuiltInSpreadsheetComparatorProvider}
+     */
+    public static SpreadsheetComparatorProvider builtIn() {
+        return BuiltInSpreadsheetComparatorProvider.INSTANCE;
+    }
+
+    /**
      * {@see FakeSpreadsheetComparatorProvider}
      */
     public static SpreadsheetComparatorProvider fake() {
