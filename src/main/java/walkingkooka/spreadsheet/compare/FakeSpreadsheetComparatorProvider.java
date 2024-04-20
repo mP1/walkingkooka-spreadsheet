@@ -17,21 +17,9 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.reflect.PublicStaticHelper;
-
-public final class SpreadsheetComparatorProviders implements PublicStaticHelper {
-
-    /**
-     * {@see FakeSpreadsheetComparatorProvider}
-     */
-    public static SpreadsheetComparatorProvider fake() {
-        return new FakeSpreadsheetComparatorProvider();
-    }
-
-    /**
-     * Stop creation
-     */
-    private SpreadsheetComparatorProviders() {
+public class FakeSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
+    @Override
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
         throw new UnsupportedOperationException();
     }
 }
