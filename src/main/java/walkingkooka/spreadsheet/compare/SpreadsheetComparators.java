@@ -100,17 +100,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             SpreadsheetComparatorName.with("day-of-month")
     );
 
-    public static SpreadsheetComparator<ExpressionNumber> expressionNumber() {
-        return EXPRESSION_NUMBER;
-    }
-
-    private final static SpreadsheetComparator<ExpressionNumber> EXPRESSION_NUMBER = basic(
-            ExpressionNumber.class,
-            Comparator.naturalOrder(),
-            SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("expression-number")
-    );
-
     /**
      * {@see FakeSpreadsheetComparatorContext}
      */
@@ -213,6 +202,17 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                 name
         );
     }
+
+    public static SpreadsheetComparator<ExpressionNumber> number() {
+        return NUMBER;
+    }
+
+    private final static SpreadsheetComparator<ExpressionNumber> NUMBER = basic(
+            ExpressionNumber.class,
+            Comparator.naturalOrder(),
+            SpreadsheetComparatorDirection.DEFAULT,
+            SpreadsheetComparatorName.with("number")
+    );
 
     /**
      * Accepts a string with compare names and optional UP or DOWN separated by commas.
