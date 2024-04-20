@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -64,7 +65,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
     static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
-                                              final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToComparator,
+                                              final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
@@ -72,7 +73,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final AbsoluteUrl serverUrl,
                                               final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(metadata, "metadata");
-        Objects.requireNonNull(nameToComparator, "nameToComparator");
+        Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(fractioner, "fractioner");
@@ -82,7 +83,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         return new BasicSpreadsheetEngineContext(
                 metadata,
-                nameToComparator,
+                spreadsheetComparatorProvider,
                 functions,
                 engine,
                 fractioner,
@@ -96,7 +97,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Private ctor use factory.
      */
     private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
-                                          final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToComparator,
+                                          final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
@@ -107,7 +108,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         this.metadata = metadata;
 
-        this.nameToComparator = nameToComparator;
+        this.spreadsheetComparatorProvider = spreadsheetComparatorProvider;
 
         this.parserContext = metadata.parserContext(now);
 
@@ -145,16 +146,14 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         );
     }
 
-    // nameToComparator.................................................................................................
+    // spreadsheetComparatorProvider.................................................................................................
 
     @Override
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
-        Objects.requireNonNull(name, "name");
-
-        return this.nameToComparator.apply(name);
+        return this.spreadsheetComparatorProvider.spreadsheetComparator(name);
     }
 
-    private final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToComparator;
+    private final SpreadsheetComparatorProvider spreadsheetComparatorProvider;
 
     // parsing formula and executing.....................................................................................
 

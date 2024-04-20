@@ -20,8 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -39,7 +38,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetEngineContext}
      */
     public static SpreadsheetEngineContext basic(final SpreadsheetMetadata metadata,
-                                                 final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToComparator,
+                                                 final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
                                                  final SpreadsheetEngine engine,
                                                  final Function<BigDecimal, Fraction> fractioner,
@@ -48,7 +47,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Supplier<LocalDateTime> now) {
         return BasicSpreadsheetEngineContext.with(
                 metadata,
-                nameToComparator,
+                spreadsheetComparatorProvider,
                 functions,
                 engine,
                 fractioner,
