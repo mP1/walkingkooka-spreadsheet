@@ -80,7 +80,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     @Test
     public void testExpressionNumber() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.expressionNumber(),
+                SpreadsheetComparators.number(),
                 ExpressionNumber.class,
                 ExpressionNumberKind.BIG_DECIMAL.zero(),
                 ExpressionNumberKind.BIG_DECIMAL.one()
@@ -90,7 +90,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     @Test
     public void testExpressionNumberDifferentExpressionNumberKind() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.expressionNumber(),
+                SpreadsheetComparators.number(),
                 ExpressionNumber.class,
                 ExpressionNumberKind.BIG_DECIMAL.zero(),
                 ExpressionNumberKind.DOUBLE.one()
