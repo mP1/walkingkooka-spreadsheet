@@ -77,7 +77,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
                 () -> SpreadsheetCellsComparator.with(
                         SpreadsheetCellSpreadsheetComparators.parse(
                                 "A=text",
-                                SpreadsheetComparators.nameToSpreadsheetComparator()
+                                SpreadsheetComparatorProviders.builtIn()
                         ), // spreadsheetComparators
                         null // context
                 )
@@ -357,7 +357,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
                 SpreadsheetCellsComparator.with(
                         SpreadsheetCellSpreadsheetComparators.parse(
                                 "B=day-of-month",
-                                SpreadsheetComparators.nameToSpreadsheetComparator()
+                                SpreadsheetComparatorProviders.builtIn()
                         ),
                         context
                 ),
@@ -420,7 +420,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
         return SpreadsheetCellsComparator.with(
                 SpreadsheetCellSpreadsheetComparators.parse(
                         comparators,
-                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                        SpreadsheetComparatorProviders.builtIn()
                 ),
                 SpreadsheetComparatorContexts.basic(
                         SpreadsheetConverterContexts.basic(

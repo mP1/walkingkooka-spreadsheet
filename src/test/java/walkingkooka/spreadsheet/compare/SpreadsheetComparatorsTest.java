@@ -30,7 +30,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -306,7 +305,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 IllegalArgumentException.class,
                 () -> SpreadsheetComparators.parse(
                         "text XYZ",
-                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                        SpreadsheetComparatorProviders.builtIn()
                 )
         );
         this.checkEquals(
@@ -321,7 +320,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 IllegalArgumentException.class,
                 () -> SpreadsheetComparators.parse(
                         "day-of-month,month-of-year XYZ,year",
-                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                        SpreadsheetComparatorProviders.builtIn()
                 )
         );
         this.checkEquals(
@@ -382,17 +381,17 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                                final SpreadsheetComparator<?>... expected) {
         this.parseAndCheck(
                 comparators,
-                SpreadsheetComparators.nameToSpreadsheetComparator(),
+                SpreadsheetComparatorProviders.builtIn(),
                 expected
         );
     }
 
     private void parseAndCheck(final String comparators,
-                               final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToSpreadsheetComparator,
+                               final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                final SpreadsheetComparator<?>... expected) {
         this.parseAndCheck(
                 comparators,
-                nameToSpreadsheetComparator,
+                spreadsheetComparatorProvider,
                 Lists.of(
                         expected
                 )
@@ -400,13 +399,13 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     }
 
     private void parseAndCheck(final String comparators,
-                               final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToSpreadsheetComparator,
+                               final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                final List<SpreadsheetComparator<?>> expected) {
         this.checkEquals(
                 expected,
                 SpreadsheetComparators.parse(
                         comparators,
-                        nameToSpreadsheetComparator
+                        spreadsheetComparatorProvider
                 )
         );
     }

@@ -223,9 +223,9 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * </pre>
      */
     public static List<SpreadsheetComparator<?>> parse(final String comparators,
-                                                       final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToSpreadsheetComparator) {
+                                                       final SpreadsheetComparatorProvider spreadsheetComparatorProvider) {
         CharSequences.failIfNullOrEmpty(comparators, "comparators");
-        Objects.requireNonNull(nameToSpreadsheetComparator, "nameToSpreadsheetComparator");
+        Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider");
 
         final List<SpreadsheetComparator<?>> result = Lists.array();
         int pos = 0;
@@ -267,7 +267,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
 
             result.add(
                     direction.apply(
-                            nameToSpreadsheetComparator.apply(spreadsheetComparatorName)
+                            spreadsheetComparatorProvider.spreadsheetComparator(spreadsheetComparatorName)
                     )
             );
 

@@ -92,7 +92,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsListTest implements List
         return Cast.to(
                 SpreadsheetCellSpreadsheetComparators.parse(
                         "A=text",
-                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                        SpreadsheetComparatorProviders.builtIn()
                 )
         );
     }

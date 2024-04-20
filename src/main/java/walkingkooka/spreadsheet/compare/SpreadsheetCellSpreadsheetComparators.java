@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +47,7 @@ public final class SpreadsheetCellSpreadsheetComparators {
      * as a factory to transform spreadsheet comparator names into {@link SpreadsheetComparator} instances.
      */
     public static List<SpreadsheetCellSpreadsheetComparators> parse(final String text,
-                                                                    final Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToComparator) {
+                                                                    final SpreadsheetComparatorProvider spreadsheetComparatorProvider) {
         return list(
                 SpreadsheetCellSpreadsheetComparatorNames.parseList(text)
                         .stream()
@@ -58,7 +57,7 @@ public final class SpreadsheetCellSpreadsheetComparators {
                                         .stream()
                                         .map(nad -> nad.direction()
                                                 .apply(
-                                                        nameToComparator.apply(nad.name())
+                                                        spreadsheetComparatorProvider.spreadsheetComparator(nad.name())
                                                 )
                                         ).collect(Collectors.toList())
                         )).collect(Collectors.toList())

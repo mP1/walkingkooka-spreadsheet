@@ -41,7 +41,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -13283,8 +13283,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
-                return SpreadsheetComparators.nameToSpreadsheetComparator()
-                        .apply(name);
+                return SpreadsheetComparatorProviders.builtIn()
+                        .spreadsheetComparator(name);
             }
 
             public SpreadsheetMetadata spreadsheetMetadata() {

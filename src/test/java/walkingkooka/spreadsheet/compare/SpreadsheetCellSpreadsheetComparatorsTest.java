@@ -553,7 +553,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
     public List<SpreadsheetCellSpreadsheetComparators> parseString(final String text) {
         return SpreadsheetCellSpreadsheetComparators.parse(
                 text,
-                SpreadsheetComparators.nameToSpreadsheetComparator()
+                SpreadsheetComparatorProviders.builtIn()
         );
     }
 
@@ -801,7 +801,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
 
         final List<SpreadsheetCellSpreadsheetComparators> columnOrRowSpreadsheetComparators = SpreadsheetCellSpreadsheetComparators.parse(
                 comparators,
-                SpreadsheetComparators.nameToSpreadsheetComparator()
+                SpreadsheetComparatorProviders.builtIn()
         );
 
         final SpreadsheetComparatorContext context = new FakeSpreadsheetComparatorContext() {

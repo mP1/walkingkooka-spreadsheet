@@ -28,6 +28,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -567,7 +568,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.sortFails(
                 SpreadsheetCellSpreadsheetComparators.parse(
                         "A=text",
-                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                        SpreadsheetComparatorProviders.builtIn()
                 ),
                 null,
                 SpreadsheetComparatorContexts.fake()
@@ -579,7 +580,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.sortFails(
                 SpreadsheetCellSpreadsheetComparators.parse(
                         "A=text",
-                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                        SpreadsheetComparatorProviders.builtIn()
                 ),
                 MOVED_CELLS_BICONSUMER,
                 null
@@ -1152,7 +1153,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 range,
                 SpreadsheetCellSpreadsheetComparators.parse(
                         comparators,
-                        SpreadsheetComparators.nameToSpreadsheetComparator()
+                        SpreadsheetComparatorProviders.builtIn()
                 ),
                 movedCells,
                 context,
