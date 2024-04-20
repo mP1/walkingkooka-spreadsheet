@@ -53,6 +53,7 @@ final class BuiltInSpreadsheetComparatorProvider implements SpreadsheetComparato
                     SpreadsheetComparators.date(),
                     SpreadsheetComparators.dateTime(),
                     SpreadsheetComparators.dayOfMonth(),
+                    SpreadsheetComparators.dayOfWeek(),
                     SpreadsheetComparators.hourOfAmPm(),
                     SpreadsheetComparators.hourOfDay(),
                     SpreadsheetComparators.minuteOfHour(),

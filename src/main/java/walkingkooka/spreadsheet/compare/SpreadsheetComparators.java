@@ -99,6 +99,19 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             SpreadsheetComparatorName.with("day-of-month")
     );
 
+    public static SpreadsheetComparator<LocalDate> dayOfWeek() {
+        return DAY_OF_WEEK;
+    }
+
+    private final static SpreadsheetComparator<LocalDate> DAY_OF_WEEK = basic(
+            LocalDate.class,
+            Cast.to(
+                    DateTimeComparators.dayOfWeek()
+            ),
+            SpreadsheetComparatorDirection.DEFAULT,
+            SpreadsheetComparatorName.with("day-of-week")
+    );
+
     /**
      * {@see FakeSpreadsheetComparatorContext}
      */
