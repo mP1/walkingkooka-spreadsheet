@@ -261,14 +261,14 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     @Test
     public void testParseColumnSpreadsheetComparatorNameUpSpreadsheetComparatorNameDown() {
         this.parseStringAndCheck(
-                "A=text UP,string-case-insensitive DOWN,xyz",
+                "A=text UP,text-case-insensitive DOWN,xyz",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
                                 SpreadsheetComparators.text()
                                         .name()
                                         .setDirection(SpreadsheetComparatorDirection.UP),
-                                SpreadsheetComparators.stringCaseInsensitive()
+                                SpreadsheetComparators.textCaseInsensitive()
                                         .name()
                                         .setDirection(SpreadsheetComparatorDirection.DOWN),
                                 SpreadsheetComparatorName.with("xyz")

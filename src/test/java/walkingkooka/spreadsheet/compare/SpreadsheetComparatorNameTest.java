@@ -36,7 +36,7 @@ final public class SpreadsheetComparatorNameTest implements ClassTesting2<Spread
     public void testSort() {
         final SpreadsheetComparatorName a = SpreadsheetComparatorName.with("STRING");
         final SpreadsheetComparatorName b = SpreadsheetComparatorName.with("date-of-month");
-        final SpreadsheetComparatorName c = SpreadsheetComparatorName.with("string-case-insensitive");
+        final SpreadsheetComparatorName c = SpreadsheetComparatorName.with("text-case-insensitive");
         final SpreadsheetComparatorName d = SpreadsheetComparatorName.with("month-of-year");
 
         this.compareToArraySortAndCheck(

@@ -188,20 +188,10 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     @Test
     public void testStringCaseInsensitive() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.stringCaseInsensitive(),
+                SpreadsheetComparators.textCaseInsensitive(),
                 String.class,
                 "abc",
                 "XYZ"
-        );
-    }
-
-    @Test
-    public void testStringCaseInsensitive2() {
-        this.compareAndCheckLess(
-                SpreadsheetComparators.stringCaseInsensitive(),
-                String.class,
-                "abc",
-                "BCD"
         );
     }
 
@@ -222,6 +212,16 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 String.class,
                 "BCD",
                 "abc"
+        );
+    }
+
+    @Test
+    public void testStringCaseInsensitive2() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.textCaseInsensitive(),
+                String.class,
+                "abc",
+                "BCD"
         );
     }
 
