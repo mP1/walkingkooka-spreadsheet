@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.reflect.ClassTesting2;
 
+import java.util.Set;
+
 public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ClassTesting2<T> {
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
@@ -28,6 +30,15 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
                 expected,
                 provider.spreadsheetComparator(name),
                 () -> name.toString()
+        );
+    }
+
+    default void spreadsheetComparatorNamesAndCheck(final SpreadsheetComparatorProvider provider,
+                                                    final Set<SpreadsheetComparatorName> expected) {
+        this.checkEquals(
+                expected,
+                provider.spreadsheetComparatorNames(),
+                () -> provider.toString()
         );
     }
 }

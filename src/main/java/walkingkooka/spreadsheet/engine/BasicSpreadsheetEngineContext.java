@@ -153,6 +153,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return this.spreadsheetComparatorProvider.spreadsheetComparator(name);
     }
 
+    @Override
+    public Set<SpreadsheetComparatorName> spreadsheetComparatorNames() {
+        return this.spreadsheetComparatorProvider.spreadsheetComparatorNames();
+    }
+
     private final SpreadsheetComparatorProvider spreadsheetComparatorProvider;
 
     // parsing formula and executing.....................................................................................

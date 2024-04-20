@@ -34,6 +34,7 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 public class FakeSpreadsheetEngineContext extends FakeConverterContext implements SpreadsheetEngineContext, Fake {
 
@@ -51,6 +52,11 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     @Override
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
         Objects.requireNonNull(name, "name");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetComparatorName> spreadsheetComparatorNames() {
         throw new UnsupportedOperationException();
     }
 
