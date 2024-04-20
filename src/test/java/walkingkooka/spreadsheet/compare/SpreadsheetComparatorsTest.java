@@ -78,26 +78,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     }
 
     @Test
-    public void testExpressionNumber() {
-        this.compareAndCheckLess(
-                SpreadsheetComparators.number(),
-                ExpressionNumber.class,
-                ExpressionNumberKind.BIG_DECIMAL.zero(),
-                ExpressionNumberKind.BIG_DECIMAL.one()
-        );
-    }
-
-    @Test
-    public void testExpressionNumberDifferentExpressionNumberKind() {
-        this.compareAndCheckLess(
-                SpreadsheetComparators.number(),
-                ExpressionNumber.class,
-                ExpressionNumberKind.BIG_DECIMAL.zero(),
-                ExpressionNumberKind.DOUBLE.one()
-        );
-    }
-
-    @Test
     public void testHourOfAmpm() {
         this.compareAndCheckLess(
                 SpreadsheetComparators.hourOfAmPm(),
@@ -172,6 +152,26 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 ),
                 "abc",
                 null
+        );
+    }
+
+    @Test
+    public void testNumber() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.number(),
+                ExpressionNumber.class,
+                ExpressionNumberKind.BIG_DECIMAL.zero(),
+                ExpressionNumberKind.BIG_DECIMAL.one()
+        );
+    }
+
+    @Test
+    public void testNumberDifferentExpressionNumberKind() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.number(),
+                ExpressionNumber.class,
+                ExpressionNumberKind.BIG_DECIMAL.zero(),
+                ExpressionNumberKind.DOUBLE.one()
         );
     }
 
