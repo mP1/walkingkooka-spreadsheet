@@ -498,19 +498,19 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                                         SpreadsheetCellSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseColumn("B"),
                                                 Lists.of(
-                                                        SpreadsheetComparators.string()
+                                                        SpreadsheetComparators.text()
                                                 )
                                         ),
                                         SpreadsheetCellSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseColumn("C"),
                                                 Lists.of(
-                                                        SpreadsheetComparators.string()
+                                                        SpreadsheetComparators.text()
                                                 )
                                         ),
                                         SpreadsheetCellSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseColumn("ZZ"),
                                                 Lists.of(
-                                                        SpreadsheetComparators.string()
+                                                        SpreadsheetComparators.text()
                                                 )
                                         )
                                 ),
@@ -535,19 +535,19 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                                         SpreadsheetCellSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseRow("2"),
                                                 Lists.of(
-                                                        SpreadsheetComparators.string()
+                                                        SpreadsheetComparators.text()
                                                 )
                                         ),
                                         SpreadsheetCellSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseRow("3"),
                                                 Lists.of(
-                                                        SpreadsheetComparators.string()
+                                                        SpreadsheetComparators.text()
                                                 )
                                         ),
                                         SpreadsheetCellSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseRow("99"),
                                                 Lists.of(
-                                                        SpreadsheetComparators.string()
+                                                        SpreadsheetComparators.text()
                                                 )
                                         )
                                 ),
@@ -566,7 +566,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     public void testSortWithNullMovedCellsBiConsumerFails() {
         this.sortFails(
                 SpreadsheetCellSpreadsheetComparators.parse(
-                        "A=string",
+                        "A=text",
                         SpreadsheetComparators.nameToSpreadsheetComparator()
                 ),
                 null,
@@ -578,7 +578,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     public void testSortWithNullContextFails() {
         this.sortFails(
                 SpreadsheetCellSpreadsheetComparators.parse(
-                        "A=string",
+                        "A=text",
                         SpreadsheetComparators.nameToSpreadsheetComparator()
                 ),
                 MOVED_CELLS_BICONSUMER,
@@ -612,7 +612,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "A=string",
+                "A=text",
                 MOVED_CELLS_BICONSUMER,
                 cellRange
         );
@@ -630,7 +630,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "A=string",
+                "A=text",
                 MOVED_CELLS_BICONSUMER,
                 cellRange
         );
@@ -648,7 +648,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "1=string",
+                "1=text",
                 MOVED_CELLS_BICONSUMER,
                 cellRange
         );
@@ -666,7 +666,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "1=string",
+                "1=text",
                 MOVED_CELLS_BICONSUMER,
                 cellRange
         );
@@ -692,7 +692,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "A=string",
+                "A=text",
                 remapped::put,
                 cellRange.setValue(
                         Sets.of(
@@ -732,7 +732,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "1=string",
+                "1=text",
                 remapped::put,
                 cellRange.setValue(
                         Sets.of(
@@ -776,7 +776,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "A=string",
+                "A=text",
                 cellRange.setValue(
                         Sets.of(
                                 newA1,
@@ -818,7 +818,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "1=string",
+                "1=text",
                 cellRange.setValue(
                         Sets.of(
                                 newA1,
@@ -860,7 +860,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "A=string",
+                "A=text",
                 cellRange.setValue(
                         Sets.of(
                                 newA1,
@@ -905,7 +905,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "A=string",
+                "A=text",
                 cellRange.setValue(
                         Sets.of(
                                 newA1,
@@ -952,7 +952,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "A=string",
+                "A=text",
                 cellRange.setValue(
                         Sets.of(
                                 newA1,
@@ -995,7 +995,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "A=string",
+                "A=text",
                 cellRange.setValue(
                         Sets.of(
                                 newA1,
@@ -1037,7 +1037,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.sortAndCheck(
                 cellRange,
-                "A=string",
+                "A=text",
                 cellRange.setValue(
                         Sets.of(
                                 newA1,

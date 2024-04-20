@@ -9254,7 +9254,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.sortCellsAndCheck(
                 engine,
                 "A1:B2", // cell-range
-                "A=string", // comparators
+                "A=text", // comparators
                 SpreadsheetDeltaProperties.ALL, // delta-properties
                 context,
                 SpreadsheetDelta.EMPTY.setColumnCount(
@@ -9281,7 +9281,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.sortCellsAndCheck(
                 engine,
                 "A1:B2", // cell-range
-                "A=string", // comparators
+                "A=text", // comparators
                 SpreadsheetDeltaProperties.ALL, // delta-properties
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
@@ -9317,7 +9317,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.sortCellsAndCheck(
                 engine,
                 "A1:B2", // cell-range
-                "1=string", // comparators
+                "1=text", // comparators
                 SpreadsheetDeltaProperties.ALL, // delta-properties
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
@@ -9355,7 +9355,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.sortCellsAndCheck(
                 engine,
                 "A1:B2", // cell-range
-                "A=string", // comparators
+                "A=text", // comparators
                 SpreadsheetDeltaProperties.ALL, // delta-properties
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
@@ -9395,7 +9395,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.sortCellsAndCheck(
                 engine,
                 "A1:A2", // cell-range
-                "A=string", // comparators
+                "A=text", // comparators
                 SpreadsheetDeltaProperties.ALL, // delta-properties
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
@@ -9439,7 +9439,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.sortCellsAndCheck(
                 engine,
                 "A1:B2", // cell-range
-                "A=string", // comparators
+                "A=text", // comparators
                 SpreadsheetDeltaProperties.ALL, // delta-properties
                 context,
                 SpreadsheetDelta.EMPTY.setCells(

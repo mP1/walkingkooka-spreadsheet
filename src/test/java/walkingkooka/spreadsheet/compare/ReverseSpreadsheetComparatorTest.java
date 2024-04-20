@@ -45,14 +45,14 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
     @Test
     public void testWith() {
         ReverseSpreadsheetComparator.with(
-                SpreadsheetComparators.string()
+                SpreadsheetComparators.text()
 
         );
     }
 
     @Test
     public void testWithUnwrapsReverseSpreadsheetConverter() {
-        final SpreadsheetComparator<String> comparator = SpreadsheetComparators.string();
+        final SpreadsheetComparator<String> comparator = SpreadsheetComparators.text();
         assertSame(
                 comparator,
                 ReverseSpreadsheetComparator.with(
@@ -98,7 +98,7 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
                         SpreadsheetComparators.hourOfDay()
                 ),
                 ReverseSpreadsheetComparator.with(
-                        SpreadsheetComparators.string()
+                        SpreadsheetComparators.text()
                 )
         );
     }

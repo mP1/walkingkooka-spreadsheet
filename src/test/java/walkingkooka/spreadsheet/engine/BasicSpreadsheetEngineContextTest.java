@@ -286,7 +286,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testSpreadsheetComparator() {
-        final SpreadsheetComparator<?> comparator = SpreadsheetComparators.string();
+        final SpreadsheetComparator<?> comparator = SpreadsheetComparators.text();
 
         this.spreadsheetComparatorAndCheck(
                 this.createContext(),

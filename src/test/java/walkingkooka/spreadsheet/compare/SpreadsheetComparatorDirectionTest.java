@@ -39,7 +39,7 @@ public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<S
 
     @Test
     public void testApplyDown() {
-        final SpreadsheetComparator<String> comparator = SpreadsheetComparators.string();
+        final SpreadsheetComparator<String> comparator = SpreadsheetComparators.text();
 
         this.checkEquals(
                 SpreadsheetComparators.reverse(comparator),
