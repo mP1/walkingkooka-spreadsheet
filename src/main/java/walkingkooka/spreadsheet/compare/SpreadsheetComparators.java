@@ -33,7 +33,6 @@ import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 
 public final class SpreadsheetComparators implements PublicStaticHelper {
 
@@ -171,13 +170,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             SpreadsheetComparatorDirection.DEFAULT,
             SpreadsheetComparatorName.with("nano-of-second")
     );
-
-    /**
-     * {see NameToSpreadsheetComparatorFunction}
-     */
-    public static Function<SpreadsheetComparatorName, SpreadsheetComparator<?>> nameToSpreadsheetComparator() {
-        return NameToSpreadsheetComparatorFunction.INSTANCE;
-    }
 
     public static <T> SpreadsheetComparator<T> nullAfter(final Class<T> type,
                                                          final Comparator<T> comparator,
