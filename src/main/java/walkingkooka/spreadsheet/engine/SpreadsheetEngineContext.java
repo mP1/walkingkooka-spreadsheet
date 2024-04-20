@@ -21,7 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameMapper;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
@@ -43,7 +43,7 @@ public interface SpreadsheetEngineContext extends Context,
         ExpressionPurityContext,
         HasSpreadsheetMetadata,
         HasNow,
-        SpreadsheetComparatorNameMapper {
+        SpreadsheetComparatorProvider {
 
     /**
      * Resolves a {@link SpreadsheetSelection} if it is a {@link SpreadsheetLabelName} otherwise returning the original.
