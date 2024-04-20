@@ -77,6 +77,16 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     }
 
     @Test
+    public void testDayOfWeek() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.dayOfWeek(),
+                LocalDate.class,
+                LocalDate.of(2024, 4, 19),
+                LocalDate.of(2024, 4, 20)
+        );
+    }
+
+    @Test
     public void testHourOfAmpm() {
         this.compareAndCheckLess(
                 SpreadsheetComparators.hourOfAmPm(),
