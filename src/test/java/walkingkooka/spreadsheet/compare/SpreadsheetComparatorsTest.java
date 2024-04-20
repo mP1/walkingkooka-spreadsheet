@@ -154,7 +154,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                         String.class,
                         String.CASE_INSENSITIVE_ORDER,
                         SpreadsheetComparatorDirection.UP,
-                        SpreadsheetComparatorName.with("string-case-insensitive-null-after")
+                        SpreadsheetComparatorName.with("text-case-insensitive-null-after")
                 ),
                 "abc",
                 null
@@ -168,7 +168,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                         String.class,
                         String.CASE_INSENSITIVE_ORDER,
                         SpreadsheetComparatorDirection.UP,
-                        SpreadsheetComparatorName.with("string-case-insensitive-null-before")
+                        SpreadsheetComparatorName.with("text-case-insensitive-null-before")
                 ),
                 "abc",
                 null
@@ -182,26 +182,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 LocalTime.class,
                 LocalTime.of(11, 11, 1, 100),
                 LocalTime.of(2, 2, 22, 222)
-        );
-    }
-
-    @Test
-    public void testString() {
-        this.compareAndCheckLess(
-                SpreadsheetComparators.string(),
-                String.class,
-                "abc",
-                "xyz"
-        );
-    }
-
-    @Test
-    public void testString2() {
-        this.compareAndCheckLess(
-                SpreadsheetComparators.string(),
-                String.class,
-                "BCD",
-                "abc"
         );
     }
 
@@ -222,6 +202,26 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 String.class,
                 "abc",
                 "BCD"
+        );
+    }
+
+    @Test
+    public void testText() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.text(),
+                String.class,
+                "abc",
+                "xyz"
+        );
+    }
+
+    @Test
+    public void testText2() {
+        this.compareAndCheckLess(
+                SpreadsheetComparators.text(),
+                String.class,
+                "BCD",
+                "abc"
         );
     }
 
@@ -305,12 +305,12 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetComparators.parse(
-                        "string XYZ",
+                        "text XYZ",
                         SpreadsheetComparators.nameToSpreadsheetComparator()
                 )
         );
         this.checkEquals(
-                "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"string XYZ\"",
+                "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"text XYZ\"",
                 thrown.getMessage()
         );
     }
@@ -333,25 +333,25 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     @Test
     public void testParseString() {
         this.parseAndCheck(
-                "string",
-                SpreadsheetComparators.string()
+                "text",
+                SpreadsheetComparators.text()
         );
     }
 
     @Test
     public void testParseStringUp() {
         this.parseAndCheck(
-                "string UP",
-                SpreadsheetComparators.string()
+                "text UP",
+                SpreadsheetComparators.text()
         );
     }
 
     @Test
     public void testParseStringDown() {
         this.parseAndCheck(
-                "string DOWN",
+                "text DOWN",
                 SpreadsheetComparators.reverse(
-                        SpreadsheetComparators.string()
+                        SpreadsheetComparators.text()
                 )
         );
     }

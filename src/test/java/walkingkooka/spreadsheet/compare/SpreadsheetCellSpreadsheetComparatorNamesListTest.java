@@ -48,7 +48,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements 
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                                SpreadsheetComparators.string()
+                                SpreadsheetComparators.text()
                                         .name()
                                         .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                         )
@@ -64,7 +64,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements 
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                                SpreadsheetComparators.string()
+                                SpreadsheetComparators.text()
                                         .name()
                                         .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                         )
@@ -95,7 +95,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements 
     @Override
     public SpreadsheetCellSpreadsheetComparatorNamesList createList() {
         return Cast.to(
-                SpreadsheetCellSpreadsheetComparatorNames.parseList("A=string")
+                SpreadsheetCellSpreadsheetComparatorNames.parseList("A=text")
         );
     }
 

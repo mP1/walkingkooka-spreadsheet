@@ -76,7 +76,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
                 NullPointerException.class,
                 () -> SpreadsheetCellsComparator.with(
                         SpreadsheetCellSpreadsheetComparators.parse(
-                                "A=string",
+                                "A=text",
                                 SpreadsheetComparators.nameToSpreadsheetComparator()
                         ), // spreadsheetComparators
                         null // context
@@ -294,7 +294,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
         );
         this.comparatorArraySortAndCheck(
                 this.createComparator(
-                        "A=string"
+                        "A=text"
                 ),
                 list(a1, b1),
                 list(a2, b2),
@@ -324,7 +324,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
         );
         this.comparatorArraySortAndCheck(
                 this.createComparator(
-                        "A=string;B=string;C=string"
+                        "A=text;B=text;C=text"
                 ),
                 list(a1, b1),
                 list(a2, b2),

@@ -47,7 +47,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsListTest implements List
                 SpreadsheetCellSpreadsheetComparators.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                                SpreadsheetComparators.string()
+                                SpreadsheetComparators.text()
                         )
                 ) // expected
         );
@@ -61,7 +61,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsListTest implements List
                 SpreadsheetCellSpreadsheetComparators.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                                SpreadsheetComparators.string()
+                                SpreadsheetComparators.text()
                         )
                 ) // expected
         );
@@ -91,7 +91,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsListTest implements List
     public SpreadsheetCellSpreadsheetComparatorsList createList() {
         return Cast.to(
                 SpreadsheetCellSpreadsheetComparators.parse(
-                        "A=string",
+                        "A=text",
                         SpreadsheetComparators.nameToSpreadsheetComparator()
                 )
         );

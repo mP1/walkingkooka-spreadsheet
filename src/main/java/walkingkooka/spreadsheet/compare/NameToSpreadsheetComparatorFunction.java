@@ -58,8 +58,8 @@ final class NameToSpreadsheetComparatorFunction implements Function<SpreadsheetC
                     SpreadsheetComparators.nanoOfSecond(),
                     SpreadsheetComparators.number(),
                     SpreadsheetComparators.secondsOfMinute(),
-                    SpreadsheetComparators.string(),
                     SpreadsheetComparators.stringCaseInsensitive(),
+                    SpreadsheetComparators.text(),
                     SpreadsheetComparators.time(),
                     SpreadsheetComparators.year()
             ).stream()

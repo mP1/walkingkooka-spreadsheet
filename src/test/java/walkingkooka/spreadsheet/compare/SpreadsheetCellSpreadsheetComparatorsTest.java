@@ -575,7 +575,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
         final SpreadsheetCell text2 = null;
 
         this.comparatorArraySortAndCheck(
-                "A=string",
+                "A=text",
                 text1,
                 text2,
                 text1,
@@ -589,7 +589,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
         final SpreadsheetCell text2 = this.cell("A2", "2b");
 
         this.comparatorArraySortAndCheck(
-                "A=string",
+                "A=text",
                 text1,
                 text2,
                 text2, // expected null is always AFTER
@@ -603,7 +603,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
         final SpreadsheetCell text2 = null;
 
         this.comparatorArraySortAndCheck(
-                "A=string",
+                "A=text",
                 text1,
                 text2,
                 text1, // null always AFTER
@@ -617,7 +617,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
         final SpreadsheetCell text2 = this.cell("A2", "2b");
 
         this.comparatorArraySortAndCheck(
-                "A=string",
+                "A=text",
                 text1,
                 text2,
                 text1,
@@ -631,7 +631,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
         final SpreadsheetCell text2 = this.cell("A2", "2b");
 
         this.comparatorArraySortAndCheck(
-                "A=string",
+                "A=text",
                 text2,
                 text1,
                 text1,
@@ -645,7 +645,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
         final SpreadsheetCell date2 = this.cell("A2", LocalDate.now());
 
         this.comparatorArraySortAndCheck(
-                "A=string",
+                "A=text",
                 text1,
                 date2,
                 text1,
@@ -659,7 +659,7 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
         final SpreadsheetCell date2 = this.cell("A2", LocalDate.now());
 
         this.comparatorArraySortAndCheck(
-                "A=string",
+                "A=text",
                 date2,
                 text1,
                 text1,

@@ -49,7 +49,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
 
     private final static SpreadsheetColumnOrRowReference COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("A");
 
-    private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("string-123");
+    private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("text-123");
 
     private final static SpreadsheetComparatorDirection DIRECTION = SpreadsheetComparatorDirection.DOWN;
 
@@ -159,7 +159,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
 
     @Test
     public void testParseMissingColumnOrRowFails() {
-        final String text = "! string";
+        final String text = "! text";
 
         this.parseStringFails(
                 text,
@@ -189,7 +189,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
 
     @Test
     public void testParseInvalidSeparatorComparatorNameFails() {
-        final String text = "D=string!";
+        final String text = "D=text!";
 
         this.parseStringFails(
                 text,
@@ -203,11 +203,11 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     @Test
     public void testParseColumnSpreadsheetComparatorName() {
         this.parseStringAndCheck(
-                "A=string123",
+                "A=text123",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                                SpreadsheetComparatorName.with("string123")
+                                SpreadsheetComparatorName.with("text123")
                                         .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                         )
                 )
@@ -217,11 +217,11 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     @Test
     public void testParseRowSpreadsheetComparatorName() {
         this.parseStringAndCheck(
-                "23=string456",
+                "23=text456",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("23"),
                         Lists.of(
-                                SpreadsheetComparatorName.with("string456")
+                                SpreadsheetComparatorName.with("text456")
                                         .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                         )
                 )
@@ -231,11 +231,11 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     @Test
     public void testParseColumnSpreadsheetComparatorNameUp() {
         this.parseStringAndCheck(
-                "A=string UP",
+                "A=text UP",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                                SpreadsheetComparators.string()
+                                SpreadsheetComparators.text()
                                         .name()
                                         .setDirection(SpreadsheetComparatorDirection.UP)
                         )
@@ -246,11 +246,11 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     @Test
     public void testParseRowSpreadsheetComparatorNameDown() {
         this.parseStringAndCheck(
-                "23=string DOWN",
+                "23=text DOWN",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("23"),
                         Lists.of(
-                                SpreadsheetComparators.string()
+                                SpreadsheetComparators.text()
                                         .name()
                                         .setDirection(SpreadsheetComparatorDirection.DOWN)
                         )
@@ -261,11 +261,11 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     @Test
     public void testParseColumnSpreadsheetComparatorNameUpSpreadsheetComparatorNameDown() {
         this.parseStringAndCheck(
-                "A=string UP,string-case-insensitive DOWN,xyz",
+                "A=text UP,string-case-insensitive DOWN,xyz",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                                SpreadsheetComparators.string()
+                                SpreadsheetComparators.text()
                                         .name()
                                         .setDirection(SpreadsheetComparatorDirection.UP),
                                 SpreadsheetComparators.stringCaseInsensitive()
@@ -781,7 +781,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
     public void testToString() {
         this.toStringAndCheck(
                 this.createObject(),
-                "A=string-123 DOWN"
+                "A=text-123 DOWN"
         );
     }
 
@@ -830,21 +830,21 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("AB"),
                         Lists.of(
-                                SpreadsheetComparatorNameAndDirection.parse("string123 DOWN")
+                                SpreadsheetComparatorNameAndDirection.parse("text123 DOWN")
                         )
                 ),
-                "\"AB=string123 DOWN\""
+                "\"AB=text123 DOWN\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "\"AB=string123 DOWN,abc456 UP\"",
+                "\"AB=text123 DOWN,abc456 UP\"",
                 SpreadsheetCellSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("AB"),
                         Lists.of(
-                                SpreadsheetComparatorNameAndDirection.parse("string123 DOWN"),
+                                SpreadsheetComparatorNameAndDirection.parse("text123 DOWN"),
                                 SpreadsheetComparatorNameAndDirection.parse("abc456 UP")
                         )
                 )

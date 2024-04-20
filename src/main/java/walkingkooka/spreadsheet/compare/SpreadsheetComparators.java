@@ -297,17 +297,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             SpreadsheetComparatorName.with("seconds-of-minute")
     );
 
-    public static SpreadsheetComparator<String> string() {
-        return STRING;
-    }
-
-    private final static SpreadsheetComparator<String> STRING = basic(
-            String.class,
-            Comparator.naturalOrder(),
-            SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("string")
-    );
-
     public static SpreadsheetComparator<String> stringCaseInsensitive() {
         return STRING_CASE_INSENSITIVE;
     }
@@ -317,6 +306,17 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             String.CASE_INSENSITIVE_ORDER,
             SpreadsheetComparatorDirection.DEFAULT,
             SpreadsheetComparatorName.with("string-case-insensitive")
+    );
+
+    public static SpreadsheetComparator<String> text() {
+        return TEXT;
+    }
+
+    private final static SpreadsheetComparator<String> TEXT = basic(
+            String.class,
+            Comparator.naturalOrder(),
+            SpreadsheetComparatorDirection.DEFAULT,
+            SpreadsheetComparatorName.with("text")
     );
 
     public static SpreadsheetComparator<LocalTime> time() {
