@@ -30,6 +30,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 
@@ -146,6 +148,69 @@ public final class SpreadsheetCellSpreadsheetComparatorsTest implements ClassTes
         return SpreadsheetCellSpreadsheetComparators.with(
                 COLUMN_OR_ROW,
                 COMPARATORS
+        );
+    }
+
+    // toSpreadsheetCellSpreadsheetComparatorNames......................................................................
+
+    @Test
+    public void testToSpreadsheetCellSpreadsheetComparatorNamesWhenColumn() {
+        SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
+
+        this.toSpreadsheetCellSpreadsheetComparatorNameAndCheck(
+                SpreadsheetCellSpreadsheetComparators.with(
+                        column,
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth(),
+                                SpreadsheetComparators.reverse(
+                                        SpreadsheetComparators.monthOfYear()
+                                )
+                        )
+                ),
+                SpreadsheetCellSpreadsheetComparatorNames.with(
+                        column,
+                        Lists.of(
+                                SpreadsheetComparatorName.with("day-of-month")
+                                        .setDirection(SpreadsheetComparatorDirection.UP),
+                                SpreadsheetComparatorName.with("month-of-year")
+                                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testToSpreadsheetCellSpreadsheetComparatorNamesWhenRow() {
+        SpreadsheetRowReference row = SpreadsheetSelection.parseRow("23");
+
+        this.toSpreadsheetCellSpreadsheetComparatorNameAndCheck(
+                SpreadsheetCellSpreadsheetComparators.with(
+                        row,
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth(),
+                                SpreadsheetComparators.reverse(
+                                        SpreadsheetComparators.monthOfYear()
+                                )
+                        )
+                ),
+                SpreadsheetCellSpreadsheetComparatorNames.with(
+                        row,
+                        Lists.of(
+                                SpreadsheetComparatorName.with("day-of-month")
+                                        .setDirection(SpreadsheetComparatorDirection.UP),
+                                SpreadsheetComparatorName.with("month-of-year")
+                                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+                        )
+                )
+        );
+    }
+
+    private void toSpreadsheetCellSpreadsheetComparatorNameAndCheck(final SpreadsheetCellSpreadsheetComparators comparators,
+                                                                    final SpreadsheetCellSpreadsheetComparatorNames expected) {
+        this.checkEquals(
+                expected,
+                comparators.toSpreadsheetCellSpreadsheetComparatorNames(),
+                () -> comparators.toString()
         );
     }
 
