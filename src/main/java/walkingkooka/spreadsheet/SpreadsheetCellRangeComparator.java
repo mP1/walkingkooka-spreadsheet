@@ -15,11 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.compare;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.compare.Comparators;
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 
 import java.util.Comparator;
 import java.util.List;
@@ -31,18 +32,18 @@ import java.util.Objects;
  * sorted columns/rows and then have their references fixed.If a cell is missing the list should contain a NULL<br>
  * Note the given lists for left and right must match the number of {@link SpreadsheetCellSpreadsheetComparators}.
  */
-public final class SpreadsheetCellsComparator implements Comparator<List<SpreadsheetCell>> {
+public final class SpreadsheetCellRangeComparator implements Comparator<List<SpreadsheetCell>> {
 
-    static SpreadsheetCellsComparator with(final List<SpreadsheetCellSpreadsheetComparators> comparators,
-                                           final SpreadsheetComparatorContext context) {
-        return new SpreadsheetCellsComparator(
-                SpreadsheetCellSpreadsheetComparatorsList.with(comparators),
+    static SpreadsheetCellRangeComparator with(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                               final SpreadsheetComparatorContext context) {
+        return new SpreadsheetCellRangeComparator(
+                SpreadsheetCellSpreadsheetComparators.list(comparators),
                 Objects.requireNonNull(context, "context")
         );
     }
 
-    private SpreadsheetCellsComparator(final List<SpreadsheetCellSpreadsheetComparators> comparators,
-                                       final SpreadsheetComparatorContext context) {
+    private SpreadsheetCellRangeComparator(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                           final SpreadsheetComparatorContext context) {
         this.comparators = comparators;
         this.context = context;
     }
