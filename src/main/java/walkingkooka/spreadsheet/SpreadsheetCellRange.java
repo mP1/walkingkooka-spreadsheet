@@ -23,7 +23,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -278,7 +277,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
 
         // sort $rows
         allCells.sort(
-                SpreadsheetComparators.cells(
+                SpreadsheetCellRangeComparator.with(
                         comparators,
                         context
                 )

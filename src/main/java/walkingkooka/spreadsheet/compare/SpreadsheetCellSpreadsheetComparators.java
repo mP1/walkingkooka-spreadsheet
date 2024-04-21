@@ -85,9 +85,9 @@ public final class SpreadsheetCellSpreadsheetComparators {
         this.comparators = comparators;
     }
 
-    int compare(final SpreadsheetCell left,
-                final SpreadsheetCell right,
-                final SpreadsheetComparatorContext context) {
+    public int compare(final SpreadsheetCell left,
+                       final SpreadsheetCell right,
+                       final SpreadsheetComparatorContext context) {
         int result = Comparators.EQUAL;
 
         final Object leftValue = valueOf(left);

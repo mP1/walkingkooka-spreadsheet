@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.compare;
+package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
@@ -27,8 +27,10 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -45,14 +47,14 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<SpreadsheetCellsComparator, List<SpreadsheetCell>>,
+public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesting2<SpreadsheetCellRangeComparator, List<SpreadsheetCell>>,
         TreePrintableTesting {
 
     @Test
     public void testWithNullComparatorsFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetCellsComparator.with(
+                () -> SpreadsheetCellRangeComparator.with(
                         null, // spreadsheetComparators
                         SpreadsheetComparatorContexts.fake()
                 )
@@ -63,7 +65,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
     public void testWithEmptyComparatorsFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetCellsComparator.with(
+                () -> SpreadsheetCellRangeComparator.with(
                         Lists.empty(), // spreadsheetComparators
                         SpreadsheetComparatorContexts.fake()
                 )
@@ -74,7 +76,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
     public void testWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetCellsComparator.with(
+                () -> SpreadsheetCellRangeComparator.with(
                         SpreadsheetCellSpreadsheetComparators.parse(
                                 "A=text",
                                 SpreadsheetComparatorProviders.builtIn()
@@ -354,7 +356,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
         final SpreadsheetComparatorContext context = SpreadsheetComparatorContexts.fake();
 
         this.toStringAndCheck(
-                SpreadsheetCellsComparator.with(
+                SpreadsheetCellRangeComparator.with(
                         SpreadsheetCellSpreadsheetComparators.parse(
                                 "B=day-of-month",
                                 SpreadsheetComparatorProviders.builtIn()
@@ -366,11 +368,11 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
     }
 
     @Override
-    public SpreadsheetCellsComparator createComparator() {
+    public SpreadsheetCellRangeComparator createComparator() {
         return this.createComparator("B=day-of-month;C=text-case-insensitive;D=text-case-insensitive");
     }
 
-    private SpreadsheetCellsComparator createComparator(final String comparators) {
+    private SpreadsheetCellRangeComparator createComparator(final String comparators) {
         return this.createComparator(
                 comparators,
                 new FakeConverter<>() {
@@ -415,9 +417,9 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
         );
     }
 
-    private SpreadsheetCellsComparator createComparator(final String comparators,
-                                                        final Converter<SpreadsheetConverterContext> converter) {
-        return SpreadsheetCellsComparator.with(
+    private SpreadsheetCellRangeComparator createComparator(final String comparators,
+                                                            final Converter<SpreadsheetConverterContext> converter) {
+        return SpreadsheetCellRangeComparator.with(
                 SpreadsheetCellSpreadsheetComparators.parse(
                         comparators,
                         SpreadsheetComparatorProviders.builtIn()
@@ -448,7 +450,7 @@ public final class SpreadsheetCellsComparatorTest implements ComparatorTesting2<
     }
 
     @Override
-    public Class<SpreadsheetCellsComparator> type() {
-        return SpreadsheetCellsComparator.class;
+    public Class<SpreadsheetCellRangeComparator> type() {
+        return SpreadsheetCellRangeComparator.class;
     }
 }
