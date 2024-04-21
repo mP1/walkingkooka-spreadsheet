@@ -362,6 +362,9 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
         return SpreadsheetCellSpreadsheetComparatorNamesList.with(comparatorNames);
     }
 
+    /**
+     * Factory that creates a new {@link SpreadsheetCellSpreadsheetComparatorNames}.
+     */
     public static SpreadsheetCellSpreadsheetComparatorNames with(final SpreadsheetColumnOrRowReference columnOrRow,
                                                                  final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
 
