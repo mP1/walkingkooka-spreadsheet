@@ -47,7 +47,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
 
     private final static char COMPARATOR_SEPARATOR = ',';
 
-    private final static char COLUMN_ROW_SEPARATOR = ';';
+    final static char COLUMN_ROW_SEPARATOR = ';';
 
     /**
      * Parses the text into a single {@link SpreadsheetCellSpreadsheetComparatorNames}.
@@ -360,6 +360,11 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
      */
     public static List<SpreadsheetCellSpreadsheetComparatorNames> list(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
         return SpreadsheetCellSpreadsheetComparatorNamesList.with(comparatorNames);
+    }
+
+    public static String listToString(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
+        return SpreadsheetCellSpreadsheetComparatorNamesList.with(comparatorNames)
+                .parseString();
     }
 
     /**
