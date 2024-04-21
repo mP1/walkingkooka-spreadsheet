@@ -25,6 +25,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
@@ -40,6 +41,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -721,6 +723,31 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     @Override
     public SpreadsheetCellRangeReference toRange() {
         return this;
+    }
+
+    // sort.............................................................................................................
+
+    /**
+     * Verifies all the column/rows for each {@link SpreadsheetCellSpreadsheetComparatorNames} are the same type,
+     * not overlapping and within this {@link SpreadsheetCellRangeReference}.
+     */
+    public void comparatorNamesCheck(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
+        this.comparatorNamesCheck0(
+                SpreadsheetCellSpreadsheetComparatorNames.list(comparatorNames)
+        );
+    }
+
+    private void comparatorNamesCheck0(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
+        final SpreadsheetCellRangeReference cellRange = this;
+
+        final String outOfBounds = comparatorNames.stream()
+                .map(c -> c.columnOrRow())
+                .filter(c -> false == cellRange.test(c))
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
+        if (false == outOfBounds.isEmpty()) {
+            throw new IllegalArgumentException("Some sort columns/rows are not within cell-range " + cellRange + " got " + outOfBounds);
+        }
     }
 
     // SpreadsheetSelection.............................................................................................
