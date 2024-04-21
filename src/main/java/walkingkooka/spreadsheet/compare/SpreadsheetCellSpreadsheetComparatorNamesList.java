@@ -35,17 +35,17 @@ final class SpreadsheetCellSpreadsheetComparatorNamesList extends AbstractList<S
         Lists.registerImmutableType(SpreadsheetCellSpreadsheetComparatorNamesList.class);
     }
 
-    static SpreadsheetCellSpreadsheetComparatorNamesList with(final List<SpreadsheetCellSpreadsheetComparatorNames> columnOrRows) {
-        Objects.requireNonNull(columnOrRows, "columnOrRows");
+    static SpreadsheetCellSpreadsheetComparatorNamesList with(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
+        Objects.requireNonNull(comparatorNames, "comparatorNames");
 
-        return columnOrRows instanceof SpreadsheetCellSpreadsheetComparatorNamesList ?
-                (SpreadsheetCellSpreadsheetComparatorNamesList) columnOrRows :
-                copyAndCreate(columnOrRows);
+        return comparatorNames instanceof SpreadsheetCellSpreadsheetComparatorNamesList ?
+                (SpreadsheetCellSpreadsheetComparatorNamesList) comparatorNames :
+                copyAndCreate(comparatorNames);
     }
 
-    static SpreadsheetCellSpreadsheetComparatorNamesList copyAndCreate(final List<SpreadsheetCellSpreadsheetComparatorNames> columnOrRows) {
-        final SpreadsheetCellSpreadsheetComparatorNames[] copy = columnOrRows.toArray(
-                new SpreadsheetCellSpreadsheetComparatorNames[columnOrRows.size()]
+    static SpreadsheetCellSpreadsheetComparatorNamesList copyAndCreate(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
+        final SpreadsheetCellSpreadsheetComparatorNames[] copy = comparatorNames.toArray(
+                new SpreadsheetCellSpreadsheetComparatorNames[comparatorNames.size()]
         );
 
         if (copy.length == 0) {
@@ -55,7 +55,7 @@ final class SpreadsheetCellSpreadsheetComparatorNamesList extends AbstractList<S
         SpreadsheetColumnOrRowReferenceKind first = null;
         int i = 0;
 
-        for (final SpreadsheetCellSpreadsheetComparatorNames columnOrRowComparators : columnOrRows) {
+        for (final SpreadsheetCellSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
             final SpreadsheetColumnOrRowReference columnOrRow = columnOrRowComparators.columnOrRow();
             if (null == first) {
                 first = columnOrRow.columnOrRowReferenceKind();
