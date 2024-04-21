@@ -775,6 +775,31 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesTest implements Clas
         );
     }
 
+    // listToString.....................................................................................................
+
+    @Test
+    public void testListToStringOne() {
+        final String string = "A=day-of-month UP,month-of-year DOWN";
+
+        this.checkEquals(
+                string,
+                SpreadsheetCellSpreadsheetComparatorNames.listToString(
+                        SpreadsheetCellSpreadsheetComparatorNames.parseList(string)
+                )
+        );
+    }
+
+    @Test
+    public void testListToStringMany() {
+        final String string = "A=day-of-month UP,month-of-year UP;B=year UP;C=text DOWN";
+
+        this.checkEquals(
+                string,
+                SpreadsheetCellSpreadsheetComparatorNames.listToString(
+                        SpreadsheetCellSpreadsheetComparatorNames.parseList(string)
+                )
+        );
+    }
 
     // Object...........................................................................................................
     @Test

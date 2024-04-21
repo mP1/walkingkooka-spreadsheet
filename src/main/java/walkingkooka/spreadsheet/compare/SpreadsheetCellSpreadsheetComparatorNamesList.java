@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import java.util.AbstractList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * {@link List} that holds multiple {@link SpreadsheetCellSpreadsheetComparatorNames} typically one for each sortable
@@ -90,6 +91,12 @@ final class SpreadsheetCellSpreadsheetComparatorNamesList extends AbstractList<S
     @Override
     public int size() {
         return this.comparators.length;
+    }
+
+    String parseString() {
+        return this.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining("" + SpreadsheetCellSpreadsheetComparatorNames.COLUMN_ROW_SEPARATOR));
     }
 
     private final SpreadsheetCellSpreadsheetComparatorNames[] comparators;
