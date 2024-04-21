@@ -156,6 +156,18 @@ public final class SpreadsheetCellSpreadsheetComparators {
 
     private final List<SpreadsheetComparator<?>> comparators;
 
+    /**
+     * Converts this back to its simple form.
+     */
+    public SpreadsheetCellSpreadsheetComparatorNames toSpreadsheetCellSpreadsheetComparatorNames() {
+        return SpreadsheetCellSpreadsheetComparatorNames.with(
+                this.columnOrRow,
+                this.comparators.stream()
+                        .map(c -> c.name().setDirection(c.direction()))
+                        .collect(Collectors.toList())
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override
