@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
@@ -31,7 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorInfoTest implements ClassTesting2<SpreadsheetComparatorInfo>,
         HashCodeEqualsDefinedTesting2<SpreadsheetComparatorInfo>,
-        JsonNodeMarshallingTesting<SpreadsheetComparatorInfo> {
+        JsonNodeMarshallingTesting<SpreadsheetComparatorInfo>,
+        ComparableTesting2<SpreadsheetComparatorInfo> {
 
     private final static AbsoluteUrl URL = Url.parseAbsolute("http://example.com");
 
@@ -88,6 +90,24 @@ public final class SpreadsheetComparatorInfoTest implements ClassTesting2<Spread
                 NAME
         );
     }
+
+    // Comparable.......................................................................................................
+
+    @Test
+    public void testCompareLess() {
+        this.compareToAndCheckLess(
+                SpreadsheetComparatorInfo.with(
+                        URL,
+                        SpreadsheetComparatorName.with("xyz-456")
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorInfo createComparable() {
+        return this.createObject();
+    }
+
 
     // json.............................................................................................................
 
