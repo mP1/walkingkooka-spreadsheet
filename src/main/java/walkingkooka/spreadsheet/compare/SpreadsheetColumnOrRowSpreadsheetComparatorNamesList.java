@@ -30,13 +30,13 @@ import java.util.stream.Collectors;
  * {@link List} that holds multiple {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} typically one for each sortable
  * column with a range sort.
  */
-final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparatorNames> {
+public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparatorNames> {
 
     static {
         Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class);
     }
 
-    static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList with(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+    public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList with(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
         Objects.requireNonNull(comparatorNames, "comparatorNames");
 
         return comparatorNames instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNamesList ?
