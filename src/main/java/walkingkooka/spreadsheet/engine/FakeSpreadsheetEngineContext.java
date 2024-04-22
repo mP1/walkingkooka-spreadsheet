@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.convert.FakeConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -56,7 +57,7 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public Set<SpreadsheetComparatorName> spreadsheetComparatorNames() {
+    public Set<SpreadsheetComparatorInfo> spreadsheetComparators() {
         throw new UnsupportedOperationException();
     }
 

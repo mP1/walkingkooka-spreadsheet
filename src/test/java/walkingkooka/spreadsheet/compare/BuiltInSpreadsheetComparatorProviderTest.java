@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.text.CaseKind;
@@ -45,8 +46,8 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
     }
 
     @Test
-    public void testSpreadsheetComparatorNames() {
-        this.spreadsheetComparatorNamesAndCheck(
+    public void testSpreadsheetComparators() {
+        this.spreadsheetComparatorsAndCheck(
                 BuiltInSpreadsheetComparatorProvider.INSTANCE,
                 Arrays.stream(SpreadsheetComparators.class.getMethods())
                         .filter(m -> MethodAttributes.STATIC.is(m))
@@ -57,8 +58,11 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
                                         CaseKind.KEBAB
                                 ).toString()
                         ).filter(n -> false == "fake".equals(n))
-                        .map(SpreadsheetComparatorName::with)
-                        .collect(Collectors.toSet())
+                        .map(n -> SpreadsheetComparatorInfo.with(
+                                        Url.parseAbsolute("https://github.com/mP1/walkingkooka-spreadsheet/" + n),
+                                        SpreadsheetComparatorName.with(n)
+                                )
+                        ).collect(Collectors.toSet())
         );
     }
 

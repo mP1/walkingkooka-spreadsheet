@@ -33,11 +33,11 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
         );
     }
 
-    default void spreadsheetComparatorNamesAndCheck(final SpreadsheetComparatorProvider provider,
-                                                    final Set<SpreadsheetComparatorName> expected) {
+    default void spreadsheetComparatorsAndCheck(final SpreadsheetComparatorProvider provider,
+                                                final Set<SpreadsheetComparatorInfo> expected) {
         this.checkEquals(
                 expected,
-                provider.spreadsheetComparatorNames(),
+                provider.spreadsheetComparators(),
                 () -> provider.toString()
         );
     }

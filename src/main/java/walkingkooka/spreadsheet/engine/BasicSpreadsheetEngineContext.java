@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -154,8 +155,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     }
 
     @Override
-    public Set<SpreadsheetComparatorName> spreadsheetComparatorNames() {
-        return this.spreadsheetComparatorProvider.spreadsheetComparatorNames();
+    public Set<SpreadsheetComparatorInfo> spreadsheetComparators() {
+        return this.spreadsheetComparatorProvider.spreadsheetComparators();
     }
 
     private final SpreadsheetComparatorProvider spreadsheetComparatorProvider;
