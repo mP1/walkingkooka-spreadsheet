@@ -33,9 +33,9 @@ public interface SpreadsheetComparatorProvider {
     SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name);
 
     /**
-     * Returns all available {@link SpreadsheetComparatorName}
+     * Returns all available {@link SpreadsheetComparatorInfo}
      */
-    Set<SpreadsheetComparatorName> spreadsheetComparatorNames();
+    Set<SpreadsheetComparatorInfo> spreadsheetComparators();
 
     /**
      * Helper that maps a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} into a {@link List} of
