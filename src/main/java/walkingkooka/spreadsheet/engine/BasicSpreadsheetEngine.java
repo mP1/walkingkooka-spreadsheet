@@ -27,8 +27,8 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparatorNames;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -442,15 +442,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
-                                      final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames,
+                                      final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         checkCellRange(cellRange);
         Objects.requireNonNull(comparatorNames, "comparatorNames");
         checkDeltaProperties(deltaProperties);
 
-        final List<SpreadsheetCellSpreadsheetComparators> comparators = comparatorNames.stream()
-                .map(n -> SpreadsheetCellSpreadsheetComparators.with(
+        final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators = comparatorNames.stream()
+                .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
                         n.columnOrRow(),
                         n.comparatorNameAndDirections()
                                 .stream()
@@ -461,14 +461,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return this.sortCells0(
                 cellRange,
-                SpreadsheetCellSpreadsheetComparators.list(comparators),
+                SpreadsheetColumnOrRowSpreadsheetComparators.list(comparators),
                 deltaProperties,
                 context
         );
     }
 
     private SpreadsheetDelta sortCells0(final SpreadsheetCellRangeReference cellRange,
-                                        final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                                        final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
                                         final Set<SpreadsheetDeltaProperties> deltaProperties,
                                         final SpreadsheetEngineContext context) {
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {

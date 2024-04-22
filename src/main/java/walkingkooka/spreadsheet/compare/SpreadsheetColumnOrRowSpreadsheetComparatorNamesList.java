@@ -27,26 +27,26 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * {@link List} that holds multiple {@link SpreadsheetCellSpreadsheetComparatorNames} typically one for each sortable
+ * {@link List} that holds multiple {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} typically one for each sortable
  * column with a range sort.
  */
-final class SpreadsheetCellSpreadsheetComparatorNamesList extends AbstractList<SpreadsheetCellSpreadsheetComparatorNames> {
+final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparatorNames> {
 
     static {
-        Lists.registerImmutableType(SpreadsheetCellSpreadsheetComparatorNamesList.class);
+        Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class);
     }
 
-    static SpreadsheetCellSpreadsheetComparatorNamesList with(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
+    static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList with(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
         Objects.requireNonNull(comparatorNames, "comparatorNames");
 
-        return comparatorNames instanceof SpreadsheetCellSpreadsheetComparatorNamesList ?
-                (SpreadsheetCellSpreadsheetComparatorNamesList) comparatorNames :
+        return comparatorNames instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNamesList ?
+                (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) comparatorNames :
                 copyAndCreate(comparatorNames);
     }
 
-    static SpreadsheetCellSpreadsheetComparatorNamesList copyAndCreate(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
-        final SpreadsheetCellSpreadsheetComparatorNames[] copy = comparatorNames.toArray(
-                new SpreadsheetCellSpreadsheetComparatorNames[comparatorNames.size()]
+    static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copyAndCreate(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] copy = comparatorNames.toArray(
+                new SpreadsheetColumnOrRowSpreadsheetComparatorNames[comparatorNames.size()]
         );
 
         if (copy.length == 0) {
@@ -56,7 +56,7 @@ final class SpreadsheetCellSpreadsheetComparatorNamesList extends AbstractList<S
         SpreadsheetColumnOrRowReferenceKind first = null;
         int i = 0;
 
-        for (final SpreadsheetCellSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
+        for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
             final SpreadsheetColumnOrRowReference columnOrRow = columnOrRowComparators.columnOrRow();
             if (null == first) {
                 first = columnOrRow.columnOrRowReferenceKind();
@@ -76,15 +76,15 @@ final class SpreadsheetCellSpreadsheetComparatorNamesList extends AbstractList<S
             i++;
         }
 
-        return new SpreadsheetCellSpreadsheetComparatorNamesList(copy);
+        return new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(copy);
     }
 
-    private SpreadsheetCellSpreadsheetComparatorNamesList(final SpreadsheetCellSpreadsheetComparatorNames[] comparators) {
+    private SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] comparators) {
         this.comparators = comparators;
     }
 
     @Override
-    public SpreadsheetCellSpreadsheetComparatorNames get(final int index) {
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNames get(final int index) {
         return this.comparators[index];
     }
 
@@ -96,8 +96,8 @@ final class SpreadsheetCellSpreadsheetComparatorNamesList extends AbstractList<S
     String parseString() {
         return this.stream()
                 .map(Object::toString)
-                .collect(Collectors.joining("" + SpreadsheetCellSpreadsheetComparatorNames.COLUMN_ROW_SEPARATOR));
+                .collect(Collectors.joining("" + SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_SEPARATOR));
     }
 
-    private final SpreadsheetCellSpreadsheetComparatorNames[] comparators;
+    private final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] comparators;
 }

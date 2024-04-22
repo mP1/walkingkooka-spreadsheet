@@ -32,26 +32,26 @@ import java.util.stream.Collectors;
  * For a single column or row holds a list of {@link SpreadsheetComparator}. Note that values that cannot be converted ond empty cells
  * will be appended to the sorted values.
  */
-public final class SpreadsheetCellSpreadsheetComparators {
+public final class SpreadsheetColumnOrRowSpreadsheetComparators {
 
     /**
-     * Creates a list of compatible {@link SpreadsheetCellSpreadsheetComparators}, which means all {@link SpreadsheetCellSpreadsheetComparators}
+     * Creates a list of compatible {@link SpreadsheetColumnOrRowSpreadsheetComparators}, which means all {@link SpreadsheetColumnOrRowSpreadsheetComparators}
      * are the same {@link walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind}.
      */
-    public static List<SpreadsheetCellSpreadsheetComparators> list(final List<SpreadsheetCellSpreadsheetComparators> list) {
-        return SpreadsheetCellSpreadsheetComparatorsList.with(list);
+    public static List<SpreadsheetColumnOrRowSpreadsheetComparators> list(final List<SpreadsheetColumnOrRowSpreadsheetComparators> list) {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(list);
     }
 
     /**
-     * Parses the text into a {@link List} of {@link SpreadsheetCellSpreadsheetComparators} using the function
+     * Parses the text into a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparators} using the function
      * as a factory to transform spreadsheet comparator names into {@link SpreadsheetComparator} instances.
      */
-    public static List<SpreadsheetCellSpreadsheetComparators> parse(final String text,
-                                                                    final SpreadsheetComparatorProvider spreadsheetComparatorProvider) {
+    public static List<SpreadsheetColumnOrRowSpreadsheetComparators> parse(final String text,
+                                                                           final SpreadsheetComparatorProvider spreadsheetComparatorProvider) {
         return list(
-                SpreadsheetCellSpreadsheetComparatorNames.parseList(text)
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(text)
                         .stream()
-                        .map(n -> SpreadsheetCellSpreadsheetComparators.with(
+                        .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
                                 n.columnOrRow(),
                                 n.comparatorNameAndDirections()
                                         .stream()
@@ -64,10 +64,10 @@ public final class SpreadsheetCellSpreadsheetComparators {
         );
     }
 
-    public static SpreadsheetCellSpreadsheetComparators with(final SpreadsheetColumnOrRowReference columnOrRow,
-                                                             final List<SpreadsheetComparator<?>> comparators) {
+    public static SpreadsheetColumnOrRowSpreadsheetComparators with(final SpreadsheetColumnOrRowReference columnOrRow,
+                                                                    final List<SpreadsheetComparator<?>> comparators) {
 
-        return new SpreadsheetCellSpreadsheetComparators(
+        return new SpreadsheetColumnOrRowSpreadsheetComparators(
                 Objects.requireNonNull(columnOrRow, "columnOrRows"),
                 Lists.immutable(
                         Objects.requireNonNull(comparators, "comparators")
@@ -75,8 +75,8 @@ public final class SpreadsheetCellSpreadsheetComparators {
         );
     }
 
-    private SpreadsheetCellSpreadsheetComparators(final SpreadsheetColumnOrRowReference columnOrRow,
-                                                  final List<SpreadsheetComparator<?>> comparators) {
+    private SpreadsheetColumnOrRowSpreadsheetComparators(final SpreadsheetColumnOrRowReference columnOrRow,
+                                                         final List<SpreadsheetComparator<?>> comparators) {
         if (comparators.isEmpty()) {
             throw new IllegalArgumentException("Expected at least 1 comparator got none");
         }
@@ -159,8 +159,8 @@ public final class SpreadsheetCellSpreadsheetComparators {
     /**
      * Converts this back to its simple form.
      */
-    public SpreadsheetCellSpreadsheetComparatorNames toSpreadsheetCellSpreadsheetComparatorNames() {
-        return SpreadsheetCellSpreadsheetComparatorNames.with(
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNames toSpreadsheetColumnOrRowSpreadsheetComparatorNames() {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 this.columnOrRow,
                 this.comparators.stream()
                         .map(c -> c.name().setDirection(c.direction()))
@@ -181,10 +181,10 @@ public final class SpreadsheetCellSpreadsheetComparators {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetCellSpreadsheetComparators && this.equals0((SpreadsheetCellSpreadsheetComparators) other);
+                other instanceof SpreadsheetColumnOrRowSpreadsheetComparators && this.equals0((SpreadsheetColumnOrRowSpreadsheetComparators) other);
     }
 
-    private boolean equals0(final SpreadsheetCellSpreadsheetComparators other) {
+    private boolean equals0(final SpreadsheetColumnOrRowSpreadsheetComparators other) {
         return this.columnOrRow.equals(other.columnOrRow) &&
                 this.comparators.equals(other.comparators);
     }

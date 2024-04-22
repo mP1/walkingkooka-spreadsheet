@@ -26,26 +26,26 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * {@link List} that holds multiple {@link SpreadsheetCellSpreadsheetComparators} typically one for each sortable
+ * {@link List} that holds multiple {@link SpreadsheetColumnOrRowSpreadsheetComparators} typically one for each sortable
  * column with a range sort.
  */
-final class SpreadsheetCellSpreadsheetComparatorsList extends AbstractList<SpreadsheetCellSpreadsheetComparators> {
+final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparators> {
 
     static {
-        Lists.registerImmutableType(SpreadsheetCellSpreadsheetComparatorsList.class);
+        Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorsList.class);
     }
 
-    static SpreadsheetCellSpreadsheetComparatorsList with(final List<SpreadsheetCellSpreadsheetComparators> columnOrRows) {
+    static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
         Objects.requireNonNull(columnOrRows, "columnOrRows");
 
-        return columnOrRows instanceof SpreadsheetCellSpreadsheetComparatorsList ?
-                (SpreadsheetCellSpreadsheetComparatorsList) columnOrRows :
+        return columnOrRows instanceof SpreadsheetColumnOrRowSpreadsheetComparatorsList ?
+                (SpreadsheetColumnOrRowSpreadsheetComparatorsList) columnOrRows :
                 copyAndCreate(columnOrRows);
     }
 
-    static SpreadsheetCellSpreadsheetComparatorsList copyAndCreate(final List<SpreadsheetCellSpreadsheetComparators> columnOrRows) {
-        final SpreadsheetCellSpreadsheetComparators[] copy = columnOrRows.toArray(
-                new SpreadsheetCellSpreadsheetComparators[columnOrRows.size()]
+    static SpreadsheetColumnOrRowSpreadsheetComparatorsList copyAndCreate(final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
+        final SpreadsheetColumnOrRowSpreadsheetComparators[] copy = columnOrRows.toArray(
+                new SpreadsheetColumnOrRowSpreadsheetComparators[columnOrRows.size()]
         );
 
         if (copy.length == 0) {
@@ -55,7 +55,7 @@ final class SpreadsheetCellSpreadsheetComparatorsList extends AbstractList<Sprea
         SpreadsheetColumnOrRowReferenceKind first = null;
         int i = 0;
 
-        for (final SpreadsheetCellSpreadsheetComparators columnOrRowComparators : columnOrRows) {
+        for (final SpreadsheetColumnOrRowSpreadsheetComparators columnOrRowComparators : columnOrRows) {
             final SpreadsheetColumnOrRowReference columnOrRow = columnOrRowComparators.columnOrRow();
             if (null == first) {
                 first = columnOrRow.columnOrRowReferenceKind();
@@ -75,15 +75,15 @@ final class SpreadsheetCellSpreadsheetComparatorsList extends AbstractList<Sprea
             i++;
         }
 
-        return new SpreadsheetCellSpreadsheetComparatorsList(copy);
+        return new SpreadsheetColumnOrRowSpreadsheetComparatorsList(copy);
     }
 
-    private SpreadsheetCellSpreadsheetComparatorsList(final SpreadsheetCellSpreadsheetComparators[] comparators) {
+    private SpreadsheetColumnOrRowSpreadsheetComparatorsList(final SpreadsheetColumnOrRowSpreadsheetComparators[] comparators) {
         this.comparators = comparators;
     }
 
     @Override
-    public SpreadsheetCellSpreadsheetComparators get(final int index) {
+    public SpreadsheetColumnOrRowSpreadsheetComparators get(final int index) {
         return this.comparators[index];
     }
 
@@ -92,5 +92,5 @@ final class SpreadsheetCellSpreadsheetComparatorsList extends AbstractList<Sprea
         return this.comparators.length;
     }
 
-    private final SpreadsheetCellSpreadsheetComparators[] comparators;
+    private final SpreadsheetColumnOrRowSpreadsheetComparators[] comparators;
 }

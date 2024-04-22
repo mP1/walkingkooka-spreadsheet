@@ -38,12 +38,12 @@ public interface SpreadsheetComparatorProvider {
     Set<SpreadsheetComparatorName> spreadsheetComparatorNames();
 
     /**
-     * Helper that maps a {@link List} of {@link SpreadsheetCellSpreadsheetComparatorNames} into a {@link List} of
-     * {@link SpreadsheetCellSpreadsheetComparators} including the name to comparator lookups.
+     * Helper that maps a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} into a {@link List} of
+     * {@link SpreadsheetColumnOrRowSpreadsheetComparators} including the name to comparator lookups.
      */
-    default List<SpreadsheetCellSpreadsheetComparators> toSpreadsheetCellSpreadsheetComparators(final Collection<SpreadsheetCellSpreadsheetComparatorNames> names) {
+    default List<SpreadsheetColumnOrRowSpreadsheetComparators> toSpreadsheetColumnOrRowSpreadsheetComparators(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names) {
         return names.stream()
-                .map(n -> SpreadsheetCellSpreadsheetComparators.with(
+                .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
                         n.columnOrRow(),
                         n.comparatorNameAndDirections()
                                 .stream()
