@@ -28,7 +28,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 
-public final class SpreadsheetComparatorInfo implements HasName<SpreadsheetComparatorName> {
+public final class SpreadsheetComparatorInfo implements HasName<SpreadsheetComparatorName>,
+        Comparable<SpreadsheetComparatorInfo> {
 
     public static SpreadsheetComparatorInfo with(final AbsoluteUrl url,
                                                  final SpreadsheetComparatorName name) {
@@ -58,6 +59,13 @@ public final class SpreadsheetComparatorInfo implements HasName<SpreadsheetCompa
     }
 
     private final SpreadsheetComparatorName name;
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetComparatorInfo other) {
+        return this.name.compareTo(other.name);
+    }
 
     // Object...........................................................................................................
 
