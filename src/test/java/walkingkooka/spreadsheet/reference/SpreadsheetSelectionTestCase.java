@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
@@ -32,6 +33,9 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunctions;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorDirection;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -509,6 +513,160 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             );
         }
     }
+
+    // comparatorNamesCheck.............................................................................................
+
+    @Test
+    public final void testComparatorNamesCheckWithNullComparatorsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection()
+                        .comparatorNamesCheck(null)
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWitEmptyComparatorsFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSelection()
+                        .comparatorNamesCheck(Lists.empty())
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseCellRange("A1:B2")
+                        .comparatorNamesCheck(
+                                Lists.of(
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseColumn("B"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                                )
+                                        ),
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseColumn("C"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                                )
+                                        ),
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseColumn("ZZ"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                                )
+                                        )
+                                )
+                        )
+        );
+
+        this.checkEquals(
+                "Some sort columns/rows are not within cell-range A1:B2 got C, ZZ",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithRowComparatorsOutOfBoundsFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetSelection.parseCellRange("A1:B2")
+                        .comparatorNamesCheck(
+                                Lists.of(
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseRow("2"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                                )
+                                        ),
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseRow("3"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                                )
+                                        ),
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseRow("99"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                                )
+                                        )
+                                )
+                        )
+        );
+
+        this.checkEquals(
+                "Some sort columns/rows are not within cell-range A1:B2 got 3, 99",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithColumns() {
+        SpreadsheetSelection.parseCellRange("A1:B2")
+                .comparatorNamesCheck(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseColumn("A"),
+                                        Lists.of(
+                                                SpreadsheetComparators.text()
+                                                        .name()
+                                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                                        )
+                                ),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseColumn("B"),
+                                        Lists.of(
+                                                SpreadsheetComparators.text()
+                                                        .name()
+                                                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+                                        )
+                                )
+                        )
+                );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithRows() {
+        SpreadsheetSelection.parseCellRange("A1:C3")
+                .comparatorNamesCheck(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseRow("2"),
+                                        Lists.of(
+                                                SpreadsheetComparators.text()
+                                                        .name()
+                                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                                        )
+                                ),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseRow("3"),
+                                        Lists.of(
+                                                SpreadsheetComparators.text()
+                                                        .name()
+                                                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+                                        )
+                                )
+                        )
+                );
+    }
+
+
 
     // containsAll.......................................................................................................
 

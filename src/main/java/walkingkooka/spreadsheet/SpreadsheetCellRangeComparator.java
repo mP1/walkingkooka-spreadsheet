@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.compare.Comparators;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 
 import java.util.Comparator;
@@ -30,19 +30,19 @@ import java.util.Objects;
  * A {@link Comparator} that may be used to compare all sorted columns or rows within a large range being sorted.
  * After the sorted columns or rows are sorted, the remaining columns and rows will need to be moved around to match the
  * sorted columns/rows and then have their references fixed.If a cell is missing the list should contain a NULL<br>
- * Note the given lists for left and right must match the number of {@link SpreadsheetCellSpreadsheetComparators}.
+ * Note the given lists for left and right must match the number of {@link SpreadsheetColumnOrRowSpreadsheetComparators}.
  */
 public final class SpreadsheetCellRangeComparator implements Comparator<List<SpreadsheetCell>> {
 
-    static SpreadsheetCellRangeComparator with(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+    static SpreadsheetCellRangeComparator with(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
                                                final SpreadsheetComparatorContext context) {
         return new SpreadsheetCellRangeComparator(
-                SpreadsheetCellSpreadsheetComparators.list(comparators),
+                SpreadsheetColumnOrRowSpreadsheetComparators.list(comparators),
                 Objects.requireNonNull(context, "context")
         );
     }
 
-    private SpreadsheetCellRangeComparator(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+    private SpreadsheetCellRangeComparator(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
                                            final SpreadsheetComparatorContext context) {
         this.comparators = comparators;
         this.context = context;
@@ -56,7 +56,7 @@ public final class SpreadsheetCellRangeComparator implements Comparator<List<Spr
         Objects.requireNonNull(left, "left");
         Objects.requireNonNull(right, "right");
 
-        final List<SpreadsheetCellSpreadsheetComparators> comparators = this.comparators;
+        final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators = this.comparators;
 
         final SpreadsheetComparatorContext context = this.context;
 
@@ -66,7 +66,7 @@ public final class SpreadsheetCellRangeComparator implements Comparator<List<Spr
         int result = Comparators.EQUAL;
 
         int i = 0;
-        for (final SpreadsheetCellSpreadsheetComparators comparator : comparators) {
+        for (final SpreadsheetColumnOrRowSpreadsheetComparators comparator : comparators) {
             if (leftCount == i || rightCount == i) {
                 break;
             }
@@ -84,7 +84,7 @@ public final class SpreadsheetCellRangeComparator implements Comparator<List<Spr
         return result;
     }
 
-    private final List<SpreadsheetCellSpreadsheetComparators> comparators;
+    private final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators;
 
     // TODO should cache converted values key=value+target-type value=converted-value
     private final SpreadsheetComparatorContext context;

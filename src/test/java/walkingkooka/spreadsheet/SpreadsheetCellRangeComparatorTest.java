@@ -27,7 +27,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
@@ -77,7 +77,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetCellRangeComparator.with(
-                        SpreadsheetCellSpreadsheetComparators.parse(
+                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "A=text",
                                 SpreadsheetComparatorProviders.builtIn()
                         ), // spreadsheetComparators
@@ -357,7 +357,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
 
         this.toStringAndCheck(
                 SpreadsheetCellRangeComparator.with(
-                        SpreadsheetCellSpreadsheetComparators.parse(
+                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "B=day-of-month",
                                 SpreadsheetComparatorProviders.builtIn()
                         ),
@@ -420,7 +420,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
     private SpreadsheetCellRangeComparator createComparator(final String comparators,
                                                             final Converter<SpreadsheetConverterContext> converter) {
         return SpreadsheetCellRangeComparator.with(
-                SpreadsheetCellSpreadsheetComparators.parse(
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         comparators,
                         SpreadsheetComparatorProviders.builtIn()
                 ),

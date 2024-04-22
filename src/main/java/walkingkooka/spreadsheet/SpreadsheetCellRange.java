@@ -21,7 +21,7 @@ import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -190,11 +190,11 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
     // sort.............................................................................................................
 
     /**
-     * Uses the provided {@link SpreadsheetCellSpreadsheetComparators} to sort the selected columns or rows.
+     * Uses the provided {@link SpreadsheetColumnOrRowSpreadsheetComparators} to sort the selected columns or rows.
      * The {@link BiConsumer} will receive all cells that were moved by the sort. Moved cells will lose their value
      * and will need to be re-evaluated.
      */
-    public SpreadsheetCellRange sort(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+    public SpreadsheetCellRange sort(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
                                      final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
                                      final SpreadsheetComparatorContext context) {
         Objects.requireNonNull(comparators, "comparators");
@@ -202,13 +202,13 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         Objects.requireNonNull(context, "context");
 
         return sort0(
-                SpreadsheetCellSpreadsheetComparators.list(comparators),
+                SpreadsheetColumnOrRowSpreadsheetComparators.list(comparators),
                 movedCells,
                 context
         );
     }
 
-    public SpreadsheetCellRange sort0(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+    public SpreadsheetCellRange sort0(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
                                       final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCellsConsumer,
                                       final SpreadsheetComparatorContext context) {
         final SpreadsheetColumnOrRowReferenceKind widthKind = comparators.get(0)
@@ -218,7 +218,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         final SpreadsheetCellRangeReference cellRange = this.range();
         cellRange.comparatorNamesCheck(
                 comparators.stream()
-                        .map(c -> c.toSpreadsheetCellSpreadsheetComparatorNames())
+                        .map(c -> c.toSpreadsheetColumnOrRowSpreadsheetComparatorNames())
                         .collect(Collectors.toList())
         );
 

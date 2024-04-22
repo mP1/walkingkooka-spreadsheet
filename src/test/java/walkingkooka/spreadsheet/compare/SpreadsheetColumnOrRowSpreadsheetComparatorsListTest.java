@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -28,15 +27,15 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements ListTesting2<SpreadsheetCellSpreadsheetComparatorNamesList, SpreadsheetCellSpreadsheetComparatorNames>,
-        ClassTesting<SpreadsheetCellSpreadsheetComparatorNamesList> {
+public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implements ListTesting2<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
+        ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList> {
 
     @Test
     public void testDoesntDoubleWrap() {
-        final SpreadsheetCellSpreadsheetComparatorNamesList list = this.createList();
+        final SpreadsheetColumnOrRowSpreadsheetComparatorsList list = this.createList();
         assertSame(
                 list,
-                SpreadsheetCellSpreadsheetComparatorNamesList.with(list)
+                SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(list)
         );
     }
 
@@ -45,12 +44,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements 
         this.getAndCheck(
                 this.createList(),
                 0, // index
-                SpreadsheetCellSpreadsheetComparatorNames.with(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
                                 SpreadsheetComparators.text()
-                                        .name()
-                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                         )
                 ) // expected
         );
@@ -61,12 +58,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements 
         this.setFails(
                 this.createList(),
                 0, // index
-                SpreadsheetCellSpreadsheetComparatorNames.with(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
                                 SpreadsheetComparators.text()
-                                        .name()
-                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                         )
                 ) // expected
         );
@@ -74,7 +69,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements 
 
     @Test
     public void testRemoveIndexFails() {
-        final SpreadsheetCellSpreadsheetComparatorNamesList list = this.createList();
+        final SpreadsheetColumnOrRowSpreadsheetComparatorsList list = this.createList();
 
         this.removeIndexFails(
                 list,
@@ -84,7 +79,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements 
 
     @Test
     public void testRemoveElementFails() {
-        final SpreadsheetCellSpreadsheetComparatorNamesList list = this.createList();
+        final SpreadsheetColumnOrRowSpreadsheetComparatorsList list = this.createList();
 
         this.removeFails(
                 list,
@@ -93,15 +88,18 @@ public final class SpreadsheetCellSpreadsheetComparatorNamesListTest implements 
     }
 
     @Override
-    public SpreadsheetCellSpreadsheetComparatorNamesList createList() {
+    public SpreadsheetColumnOrRowSpreadsheetComparatorsList createList() {
         return Cast.to(
-                SpreadsheetCellSpreadsheetComparatorNames.parseList("A=text")
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                        "A=text",
+                        SpreadsheetComparatorProviders.builtIn()
+                )
         );
     }
 
     @Override
-    public Class<SpreadsheetCellSpreadsheetComparatorNamesList> type() {
-        return SpreadsheetCellSpreadsheetComparatorNamesList.class;
+    public Class<SpreadsheetColumnOrRowSpreadsheetComparatorsList> type() {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorsList.class;
     }
 
     @Override

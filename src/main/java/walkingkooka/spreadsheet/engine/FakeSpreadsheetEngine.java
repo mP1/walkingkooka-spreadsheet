@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparatorNames;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -103,7 +103,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
     public SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
-                                      final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames,
+                                      final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();

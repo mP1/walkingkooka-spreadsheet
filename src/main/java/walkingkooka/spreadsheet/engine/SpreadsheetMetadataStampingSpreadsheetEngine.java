@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparatorNames;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
@@ -173,7 +173,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
 
     @Override
     public SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
-                                      final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames,
+                                      final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         return this.stamp(

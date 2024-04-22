@@ -39,7 +39,7 @@ import java.util.function.Function;
 /**
  * A selection of {@link SpreadsheetComparatorName names} for a given {@link SpreadsheetColumnOrRowReference}.
  */
-public final class SpreadsheetCellSpreadsheetComparatorNames {
+public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
 
     private final static char COLUMN_ROW_ASSIGNMENT = '=';
 
@@ -50,10 +50,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
     final static char COLUMN_ROW_SEPARATOR = ';';
 
     /**
-     * Parses the text into a single {@link SpreadsheetCellSpreadsheetComparatorNames}.
+     * Parses the text into a single {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      */
-    public static SpreadsheetCellSpreadsheetComparatorNames parse(final String text) {
-        final SpreadsheetCellSpreadsheetComparatorNames[] names = new SpreadsheetCellSpreadsheetComparatorNames[1];
+    public static SpreadsheetColumnOrRowSpreadsheetComparatorNames parse(final String text) {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] names = new SpreadsheetColumnOrRowSpreadsheetComparatorNames[1];
         tryParse(
                 text,
                 (n) -> names[0] = n,
@@ -63,10 +63,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
     }
 
     /**
-     * Parses the text into a {@link List} of {@link SpreadsheetCellSpreadsheetComparatorNames}.
+     * Parses the text into a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      */
-    public static List<SpreadsheetCellSpreadsheetComparatorNames> parseList(final String text) {
-        final List<SpreadsheetCellSpreadsheetComparatorNames> names = Lists.array();
+    public static List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> parseList(final String text) {
+        final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names = Lists.array();
         tryParse(
                 text,
                 names::add,
@@ -76,10 +76,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
     }
 
     /**
-     * The main parser that supports parsing one or many {@link SpreadsheetCellSpreadsheetComparatorNames}.
+     * The main parser that supports parsing one or many {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      */
     private static void tryParse(final String text,
-                                 final Consumer<SpreadsheetCellSpreadsheetComparatorNames> columnOrRowNameAndDirection,
+                                 final Consumer<SpreadsheetColumnOrRowSpreadsheetComparatorNames> columnOrRowNameAndDirection,
                                  final boolean supportColumnRowSeparator) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
@@ -200,7 +200,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                                     ).setDirection(SpreadsheetComparatorDirection.DEFAULT)
                             );
                             columnOrRowNameAndDirection.accept(
-                                    SpreadsheetCellSpreadsheetComparatorNames.with(
+                                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                                             columnOrRow,
                                             comparatorNameAndDirections
                                     )
@@ -262,7 +262,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                                     )
                             );
                             columnOrRowNameAndDirection.accept(
-                                    SpreadsheetCellSpreadsheetComparatorNames.with(
+                                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                                             columnOrRow,
                                             comparatorNameAndDirections
                                     )
@@ -296,7 +296,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                         ).setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 );
                 columnOrRowNameAndDirection.accept(
-                        SpreadsheetCellSpreadsheetComparatorNames.with(
+                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                                 columnOrRow,
                                 comparatorNameAndDirections
                         )
@@ -312,7 +312,7 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
                         )
                 );
                 columnOrRowNameAndDirection.accept(
-                        SpreadsheetCellSpreadsheetComparatorNames.with(
+                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                                 columnOrRow,
                                 comparatorNameAndDirections
                         )
@@ -356,24 +356,24 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
     }
 
     /**
-     * Returns an immutable list with the given {@link SpreadsheetCellSpreadsheetComparatorNames comparator names}.
+     * Returns an immutable list with the given {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames comparator names}.
      */
-    public static List<SpreadsheetCellSpreadsheetComparatorNames> list(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
-        return SpreadsheetCellSpreadsheetComparatorNamesList.with(comparatorNames);
+    public static List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> list(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames);
     }
 
-    public static String listToString(final List<SpreadsheetCellSpreadsheetComparatorNames> comparatorNames) {
-        return SpreadsheetCellSpreadsheetComparatorNamesList.with(comparatorNames)
+    public static String listToString(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames)
                 .parseString();
     }
 
     /**
-     * Factory that creates a new {@link SpreadsheetCellSpreadsheetComparatorNames}.
+     * Factory that creates a new {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      */
-    public static SpreadsheetCellSpreadsheetComparatorNames with(final SpreadsheetColumnOrRowReference columnOrRow,
-                                                                 final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
+    public static SpreadsheetColumnOrRowSpreadsheetComparatorNames with(final SpreadsheetColumnOrRowReference columnOrRow,
+                                                                        final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
 
-        return new SpreadsheetCellSpreadsheetComparatorNames(
+        return new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
                 Objects.requireNonNull(columnOrRow, "columnOrRows"),
                 Lists.immutable(
                         Objects.requireNonNull(comparatorNameAndDirections, "comparatorNameAndDirections")
@@ -381,8 +381,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
         );
     }
 
-    private SpreadsheetCellSpreadsheetComparatorNames(final SpreadsheetColumnOrRowReference columnOrRow,
-                                                      final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
+    private SpreadsheetColumnOrRowSpreadsheetComparatorNames(final SpreadsheetColumnOrRowReference columnOrRow,
+                                                             final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
         if (comparatorNameAndDirections.isEmpty()) {
             throw new IllegalArgumentException("Expected at least 1 comparator got none");
         }
@@ -416,10 +416,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetCellSpreadsheetComparatorNames && this.equals0((SpreadsheetCellSpreadsheetComparatorNames) other);
+                other instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNames && this.equals0((SpreadsheetColumnOrRowSpreadsheetComparatorNames) other);
     }
 
-    private boolean equals0(final SpreadsheetCellSpreadsheetComparatorNames other) {
+    private boolean equals0(final SpreadsheetColumnOrRowSpreadsheetComparatorNames other) {
         return this.columnOrRow.equals(other.columnOrRow) &&
                 this.comparatorNameAndDirections.equals(other.comparatorNameAndDirections);
     }
@@ -436,8 +436,8 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
 
     // Json.............................................................................................................
 
-    static SpreadsheetCellSpreadsheetComparatorNames unmarshall(final JsonNode node,
-                                                                final JsonNodeUnmarshallContext context) {
+    static SpreadsheetColumnOrRowSpreadsheetComparatorNames unmarshall(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context) {
         return parse(node.stringOrFail());
     }
 
@@ -447,10 +447,10 @@ public final class SpreadsheetCellSpreadsheetComparatorNames {
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCellSpreadsheetComparatorNames.class),
-                SpreadsheetCellSpreadsheetComparatorNames::unmarshall,
-                SpreadsheetCellSpreadsheetComparatorNames::marshall,
-                SpreadsheetCellSpreadsheetComparatorNames.class
+                JsonNodeContext.computeTypeName(SpreadsheetColumnOrRowSpreadsheetComparatorNames.class),
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames::unmarshall,
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames::marshall,
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.class
         );
     }
 }

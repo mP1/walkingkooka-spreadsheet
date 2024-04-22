@@ -25,7 +25,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.compare.SpreadsheetCellSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
@@ -496,19 +496,19 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 () -> this.createObject()
                         .sort(
                                 Lists.of(
-                                        SpreadsheetCellSpreadsheetComparators.with(
+                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseColumn("B"),
                                                 Lists.of(
                                                         SpreadsheetComparators.text()
                                                 )
                                         ),
-                                        SpreadsheetCellSpreadsheetComparators.with(
+                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseColumn("C"),
                                                 Lists.of(
                                                         SpreadsheetComparators.text()
                                                 )
                                         ),
-                                        SpreadsheetCellSpreadsheetComparators.with(
+                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseColumn("ZZ"),
                                                 Lists.of(
                                                         SpreadsheetComparators.text()
@@ -533,19 +533,19 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 () -> this.createObject()
                         .sort(
                                 Lists.of(
-                                        SpreadsheetCellSpreadsheetComparators.with(
+                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseRow("2"),
                                                 Lists.of(
                                                         SpreadsheetComparators.text()
                                                 )
                                         ),
-                                        SpreadsheetCellSpreadsheetComparators.with(
+                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseRow("3"),
                                                 Lists.of(
                                                         SpreadsheetComparators.text()
                                                 )
                                         ),
-                                        SpreadsheetCellSpreadsheetComparators.with(
+                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
                                                 SpreadsheetSelection.parseRow("99"),
                                                 Lists.of(
                                                         SpreadsheetComparators.text()
@@ -566,7 +566,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     @Test
     public void testSortWithNullMovedCellsBiConsumerFails() {
         this.sortFails(
-                SpreadsheetCellSpreadsheetComparators.parse(
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         "A=text",
                         SpreadsheetComparatorProviders.builtIn()
                 ),
@@ -578,7 +578,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     @Test
     public void testSortWithNullContextFails() {
         this.sortFails(
-                SpreadsheetCellSpreadsheetComparators.parse(
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         "A=text",
                         SpreadsheetComparatorProviders.builtIn()
                 ),
@@ -587,7 +587,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
     }
 
-    private void sortFails(final List<SpreadsheetCellSpreadsheetComparators> comparators,
+    private void sortFails(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
                            final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
                            final SpreadsheetComparatorContext context) {
         assertThrows(
@@ -1151,7 +1151,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                               final SpreadsheetCellRange expected) {
         this.sortAndCheck(
                 range,
-                SpreadsheetCellSpreadsheetComparators.parse(
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         comparators,
                         SpreadsheetComparatorProviders.builtIn()
                 ),
@@ -1162,7 +1162,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     }
 
     private void sortAndCheck(final SpreadsheetCellRange range,
-                              final List<SpreadsheetCellSpreadsheetComparators> comparators,
+                              final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
                               final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
                               final SpreadsheetComparatorContext context,
                               final SpreadsheetCellRange expected) {

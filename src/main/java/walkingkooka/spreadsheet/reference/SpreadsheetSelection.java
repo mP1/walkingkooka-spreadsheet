@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLeafParserToken;
@@ -59,6 +60,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -684,6 +686,33 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     abstract Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection movedTo);
+
+    // comparatorNameCheck..............................................................................................
+
+    /**
+     * Verifies all the column/rows for each {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} are the same type,
+     * not overlapping and within this {@link SpreadsheetSelection}. The last check is skipped for {@link SpreadsheetLabelName}.
+     */
+    public void comparatorNamesCheck(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+        this.comparatorNamesCheck0(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.list(comparatorNames)
+        );
+    }
+
+    private void comparatorNamesCheck0(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+        if (false == this.isLabelName()) {
+            final SpreadsheetCellRangeReference cellRange = this.toCellRange();
+
+            final String outOfBounds = comparatorNames.stream()
+                    .map(c -> c.columnOrRow())
+                    .filter(c -> false == cellRange.test(c))
+                    .map(Object::toString)
+                    .collect(Collectors.joining(", "));
+            if (false == outOfBounds.isEmpty()) {
+                throw new IllegalArgumentException("Some sort columns/rows are not within cell-range " + cellRange + " got " + outOfBounds);
+            }
+        }
+    }
 
     // count............................................................................................................
 
