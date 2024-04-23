@@ -26,7 +26,7 @@ public class FakeSpreadsheetComparatorProvider implements SpreadsheetComparatorP
     }
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparators() {
+    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
         throw new UnsupportedOperationException();
     }
 }

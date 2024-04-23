@@ -57,7 +57,7 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparators() {
+    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
         throw new UnsupportedOperationException();
     }
 
