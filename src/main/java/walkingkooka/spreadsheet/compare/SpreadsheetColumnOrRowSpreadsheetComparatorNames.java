@@ -364,7 +364,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
 
     public static String listToString(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames)
-                .parseString();
+                .text();
     }
 
     /**
