@@ -27,6 +27,9 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,6 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest implements ListTesting2<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList, SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
         ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
         HasTextTesting,
+        JsonNodeMarshallingTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
         ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList> {
 
     @Test
@@ -276,6 +280,57 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
         this.textAndCheck(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
                 string
+        );
+    }
+
+    // Json...........................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("AB=text123 DOWN"),
+                "\"AB=text123 DOWN\""
+        );
+    }
+
+    @Test
+    public void testUnmarshall() {
+        this.unmarshallAndCheck(
+                "\"AB=text123 DOWN,abc456 UP\"",
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("AB=text123 DOWN,abc456 UP")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testUnmarshall2() {
+        this.unmarshallAndCheck(
+                "\"AB=text123 DOWN,abc456 UP;C=hello456 DOWN\"",
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("AB=text123 DOWN,abc456 UP"),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("C=hello456 DOWN")
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList unmarshall(final JsonNode json,
+                                                                           final JsonNodeUnmarshallContext context) {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.unmarshall(
+                json,
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList createJsonNodeMarshallingValue() {
+        return Cast.to(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("A=day-of-month;B=month-of-year;C=year")
         );
     }
 }

@@ -21,6 +21,10 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import walkingkooka.text.HasText;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractList;
 import java.util.List;
@@ -109,5 +113,25 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
         return this.stream()
                 .map(Object::toString)
                 .collect(Collectors.joining("" + SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_SEPARATOR));
+    }
+
+    // Json.............................................................................................................
+
+    static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList unmarshall(final JsonNode node,
+                                                                           final JsonNodeUnmarshallContext context) {
+        return parse(node.stringOrFail());
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.text());
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class),
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList::unmarshall,
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList::marshall,
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class
+        );
     }
 }
