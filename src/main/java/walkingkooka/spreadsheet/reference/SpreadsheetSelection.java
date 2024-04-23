@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLeafParserToken;
@@ -695,7 +696,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public void comparatorNamesCheck(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
         this.comparatorNamesCheck0(
-                SpreadsheetColumnOrRowSpreadsheetComparatorNames.list(comparatorNames)
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames)
         );
     }
 

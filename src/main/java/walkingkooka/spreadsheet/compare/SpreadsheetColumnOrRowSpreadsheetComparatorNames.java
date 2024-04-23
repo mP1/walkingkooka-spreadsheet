@@ -72,7 +72,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
                 names::add,
                 true // supportColumnRowSeparator
         );
-        return list(names);
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(names);
     }
 
     /**
@@ -353,13 +353,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
         }
 
         return name.setDirection(direction);
-    }
-
-    /**
-     * Returns an immutable list with the given {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames comparator names}.
-     */
-    public static List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> list(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
-        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames);
     }
 
     public static String listToString(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
