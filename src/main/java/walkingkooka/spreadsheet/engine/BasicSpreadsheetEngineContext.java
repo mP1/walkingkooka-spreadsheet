@@ -155,8 +155,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     }
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparators() {
-        return this.spreadsheetComparatorProvider.spreadsheetComparators();
+    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
+        return this.spreadsheetComparatorProvider.spreadsheetComparatorInfos();
     }
 
     private final SpreadsheetComparatorProvider spreadsheetComparatorProvider;

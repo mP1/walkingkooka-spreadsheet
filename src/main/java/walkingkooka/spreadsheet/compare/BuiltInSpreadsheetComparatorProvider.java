@@ -54,7 +54,7 @@ final class BuiltInSpreadsheetComparatorProvider implements SpreadsheetComparato
     }
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparators() {
+    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
         return NAME_TO_COMPARATOR.keySet()
                 .stream()
                 .map(n -> SpreadsheetComparatorInfo.with(

@@ -46,8 +46,8 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
     }
 
     @Test
-    public void testSpreadsheetComparators() {
-        this.spreadsheetComparatorsAndCheck(
+    public void testSpreadsheetComparatorInfos() {
+        this.spreadsheetComparatorInfosAndCheck(
                 BuiltInSpreadsheetComparatorProvider.INSTANCE,
                 Arrays.stream(SpreadsheetComparators.class.getMethods())
                         .filter(m -> MethodAttributes.STATIC.is(m))
