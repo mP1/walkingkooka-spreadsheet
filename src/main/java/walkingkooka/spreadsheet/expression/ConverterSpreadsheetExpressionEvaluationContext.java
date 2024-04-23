@@ -36,6 +36,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -43,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A {@link SpreadsheetExpressionEvaluationContext} that supports a custom {@link Converter} to be used to convert
@@ -260,6 +262,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
         return this.context.function(name);
+    }
+
+    @Override
+    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+        return this.context.expressionFunctionInfos();
     }
 
     @Override

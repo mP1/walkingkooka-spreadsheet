@@ -23,6 +23,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -33,13 +34,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.FunctionExpressionName;
-import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -65,10 +64,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY;
 
-    private final static Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> FUNCTIONS = (n) -> {
-        Objects.requireNonNull(n, "name");
-        throw new UnknownExpressionFunctionException(n);
-    };
+    private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.fake();
 
     private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
         Objects.requireNonNull(s, "selection");
@@ -90,7 +86,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                FUNCTIONS,
+                EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 RESOLVE_IF_LABEL,
                 NOW
@@ -104,7 +100,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 SERVER_URL,
                 METADATA,
-                FUNCTIONS,
+                EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 RESOLVE_IF_LABEL,
                 NOW
@@ -118,7 +114,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 null,
                 METADATA,
-                FUNCTIONS,
+                EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 RESOLVE_IF_LABEL,
                 NOW
@@ -132,7 +128,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 null,
-                FUNCTIONS,
+                EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 RESOLVE_IF_LABEL,
                 NOW
@@ -140,7 +136,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
-    public void testWithNullFunctionsFails() {
+    public void testWithNullExpressionFunctionProviderFails() {
         this.withFails(
                 CELL,
                 CELL_STORE,
@@ -160,7 +156,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                FUNCTIONS,
+                EXPRESSION_FUNCTION_PROVIDER,
                 null,
                 RESOLVE_IF_LABEL,
                 NOW
@@ -174,7 +170,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                FUNCTIONS,
+                EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 null,
                 NOW
@@ -188,7 +184,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                FUNCTIONS,
+                EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 RESOLVE_IF_LABEL,
                 null
@@ -199,7 +195,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final SpreadsheetCellStore cellStore,
                            final AbsoluteUrl serverUrl,
                            final SpreadsheetMetadata spreadsheetMetadata,
-                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                           final ExpressionFunctionProvider expressionFunctionProvider,
                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
                            final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                            final Supplier<LocalDateTime> now) {
@@ -210,7 +206,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         cellStore,
                         serverUrl,
                         spreadsheetMetadata,
-                        functions,
+                        expressionFunctionProvider,
                         references,
                         resolveIfLabel,
                         now
@@ -455,10 +451,32 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
                         .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@"))
                         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20),
-                FUNCTIONS,
+                EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 RESOLVE_IF_LABEL,
                 NOW
         );
+    }
+
+    // ExpressionFunctionProviderTesting................................................................................
+
+    @Override
+    public void testFunctionWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testIsPureNullNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testExpressionFunctionInfosNotEmpty() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -28,8 +28,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
@@ -70,6 +72,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
 
     @Override
     public AbsoluteUrl serverUrl() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
         throw new UnsupportedOperationException();
     }
 }

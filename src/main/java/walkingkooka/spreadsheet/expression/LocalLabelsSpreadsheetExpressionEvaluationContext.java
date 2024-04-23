@@ -39,6 +39,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -46,6 +47,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -123,6 +125,11 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         this.failIfParameterName(functionName);
 
         return this.context.function(functionName);
+    }
+
+    @Override
+    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+        return this.context.expressionFunctionInfos();
     }
 
     @Override

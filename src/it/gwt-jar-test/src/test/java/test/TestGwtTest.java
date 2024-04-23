@@ -41,13 +41,11 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
-import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -218,7 +216,7 @@ public class TestGwtTest extends GWTTestCase {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
                                 EXPRESSION_NUMBER_KIND,
-                                this.functions(),
+                                ExpressionFunctionProviders.fake()::function,
                                 (r) -> {
                                     throw new UnsupportedOperationException();
                                 },
@@ -231,12 +229,6 @@ public class TestGwtTest extends GWTTestCase {
                                 )
                         )
                 );
-            }
-
-            private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions() {
-                return (n) -> {
-                    throw new UnsupportedOperationException("unsupported expression " + n);
-                };
             }
 
             private Function<ExpressionReference, Optional<Optional<Object>>> references() {
