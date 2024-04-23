@@ -26,12 +26,14 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.HasTextTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest implements ListTesting2<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList, SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
         ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
+        HasTextTesting,
         ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList> {
 
     @Test
@@ -253,5 +255,27 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
+    }
+
+    // HasText..........................................................................................................
+
+    @Test
+    public void testTextOne() {
+        final String string = "A=day-of-month UP,month-of-year DOWN";
+
+        this.textAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
+                string
+        );
+    }
+
+    @Test
+    public void testTextMany() {
+        final String string = "A=day-of-month UP,month-of-year UP;B=year UP;C=text DOWN";
+
+        this.textAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
+                string
+        );
     }
 }
