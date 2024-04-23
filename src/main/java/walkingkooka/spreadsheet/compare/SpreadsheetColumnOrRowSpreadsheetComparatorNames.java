@@ -355,11 +355,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
         return name.setDirection(direction);
     }
 
-    public static String listToString(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
-        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames)
-                .text();
-    }
-
     /**
      * Factory that creates a new {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      */

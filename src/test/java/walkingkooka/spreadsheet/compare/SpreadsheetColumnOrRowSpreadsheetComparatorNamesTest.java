@@ -775,32 +775,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         );
     }
 
-    // listToString.....................................................................................................
-
-    @Test
-    public void testListToStringOne() {
-        final String string = "A=day-of-month UP,month-of-year DOWN";
-
-        this.checkEquals(
-                string,
-                SpreadsheetColumnOrRowSpreadsheetComparatorNames.listToString(
-                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(string)
-                )
-        );
-    }
-
-    @Test
-    public void testListToStringMany() {
-        final String string = "A=day-of-month UP,month-of-year UP;B=year UP;C=text DOWN";
-
-        this.checkEquals(
-                string,
-                SpreadsheetColumnOrRowSpreadsheetComparatorNames.listToString(
-                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(string)
-                )
-        );
-    }
-
     // Object...........................................................................................................
     @Test
     public void testToString() {
