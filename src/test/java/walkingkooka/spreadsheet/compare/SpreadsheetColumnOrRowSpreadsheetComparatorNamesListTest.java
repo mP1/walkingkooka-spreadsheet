@@ -25,12 +25,14 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.test.ParseStringTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest implements ListTesting2<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList, SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
-        ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList> {
+        ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
+        ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList> {
 
     @Test
     public void testWithNullFails() {
@@ -188,5 +190,68 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // parse............................................................................................................
+
+    @Test
+    public void testParseColumns() {
+        this.parseStringAndCheck(
+                "A=text;B=text-case-insensitive",
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseColumn("A"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text")
+                                        )
+                                ),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseColumn("B"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text-case-insensitive")
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseRows() {
+        this.parseStringAndCheck(
+                "1=text;23=text-case-insensitive",
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseRow("1"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text")
+                                        )
+                                ),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseRow("23"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text-case-insensitive")
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList parseString(final String text) {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
     }
 }
