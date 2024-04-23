@@ -36,6 +36,11 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
         Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class);
     }
 
+    public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList parse(final String text) {
+        return (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList)
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(text);
+    }
+
     public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList with(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
         Objects.requireNonNull(comparatorNames, "comparatorNames");
 
