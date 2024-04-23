@@ -23,9 +23,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
-import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -39,7 +37,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      */
     public static SpreadsheetEngineContext basic(final SpreadsheetMetadata metadata,
                                                  final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
-                                                 final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                                 final ExpressionFunctionProvider expressionFunctionProvider,
                                                  final SpreadsheetEngine engine,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetStoreRepository storeRepository,
@@ -48,7 +46,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
         return BasicSpreadsheetEngineContext.with(
                 metadata,
                 spreadsheetComparatorProvider,
-                functions,
+                expressionFunctionProvider,
                 engine,
                 fractioner,
                 storeRepository,

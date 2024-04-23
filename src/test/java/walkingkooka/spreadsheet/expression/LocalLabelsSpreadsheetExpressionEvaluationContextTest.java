@@ -23,6 +23,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
@@ -414,5 +415,17 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     @Override
     public Class<LocalLabelsSpreadsheetExpressionEvaluationContext> type() {
         return LocalLabelsSpreadsheetExpressionEvaluationContext.class;
+    }
+
+    // ExpressionFunctionProviderTesting................................................................................
+
+    @Override
+    public void testExpressionFunctionInfosNotEmpty() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

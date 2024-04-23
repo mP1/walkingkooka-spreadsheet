@@ -25,12 +25,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderTesting;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C> {
+public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C>,
+        ExpressionFunctionProviderTesting<C> {
 
     // parseExpression......................................................................................................
 
@@ -118,5 +120,12 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 context.resolveIfLabel(selection),
                 () -> "resolveIfLabel " + selection
         );
+    }
+
+    // ExpressionFunctionProvider.......................................................................................
+
+    @Override
+    default C createExpressionFunctionProvider() {
+        return this.createContext();
     }
 }

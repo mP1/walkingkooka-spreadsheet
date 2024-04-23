@@ -33,6 +33,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -43,7 +44,8 @@ import java.util.function.Function;
  */
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
         SpreadsheetConverterContext,
-        HasSpreadsheetMetadata {
+        HasSpreadsheetMetadata,
+        ExpressionFunctionProvider {
 
     @Override
     default SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {

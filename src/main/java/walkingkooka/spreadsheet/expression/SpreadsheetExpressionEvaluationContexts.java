@@ -26,12 +26,10 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.FunctionExpressionName;
-import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -47,7 +45,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetCellStore cellStore,
                                                                final AbsoluteUrl serverUrl,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
-                                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                                               final ExpressionFunctionProvider functions,
                                                                final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                                final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                                final Supplier<LocalDateTime> now) {

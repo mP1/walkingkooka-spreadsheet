@@ -43,9 +43,8 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
-import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
@@ -67,7 +66,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      */
     static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
                                               final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
-                                              final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                              final ExpressionFunctionProvider expressionFunctionProvider,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetStoreRepository storeRepository,
@@ -75,7 +74,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider");
-        Objects.requireNonNull(functions, "functions");
+        Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(storeRepository, "storeRepository");
@@ -85,7 +84,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return new BasicSpreadsheetEngineContext(
                 metadata,
                 spreadsheetComparatorProvider,
-                functions,
+                expressionFunctionProvider,
                 engine,
                 fractioner,
                 storeRepository,
@@ -99,7 +98,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      */
     private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
                                           final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
-                                          final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                          final ExpressionFunctionProvider expressionFunctionProvider,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetStoreRepository storeRepository,
@@ -113,7 +112,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         this.parserContext = metadata.parserContext(now);
 
-        this.functions = functions;
+        this.expressionFunctionProvider = expressionFunctionProvider;
         this.referenceFunction = SpreadsheetEnginesExpressionReferenceFunction.with(
                 engine,
                 this
@@ -190,7 +189,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public boolean isPure(final FunctionExpressionName function) {
-        return this.functions.apply(function)
+        return this.expressionFunctionProvider.function(function)
                 .isPure(this);
     }
 
@@ -219,7 +218,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 this.storeRepository.cells(),
                 this.serverUrl,
                 this.spreadsheetMetadata(),
-                this.functions,
+                this.expressionFunctionProvider,
                 this.referenceFunction,
                 this::resolveIfLabel,
                 this.now
@@ -229,9 +228,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     private final AbsoluteUrl serverUrl;
 
     /**
-     * Handles dispatching of functions.
+     * Handles dispatching of expressionFunctionProvider.
      */
-    private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions;
+    private final ExpressionFunctionProvider expressionFunctionProvider;
 
     private final SpreadsheetEnginesExpressionReferenceFunction referenceFunction;
 

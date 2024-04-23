@@ -42,6 +42,8 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -49,6 +51,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -58,7 +61,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetCellStore cellStore,
                                                             final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
-                                                            final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                                            final ExpressionFunctionProvider functions,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                             final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                             final Supplier<LocalDateTime> now) {
@@ -87,7 +90,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetCellStore cellStore,
                                                         final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
-                                                        final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions,
+                                                        final ExpressionFunctionProvider functions,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                         final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
                                                         final Supplier<LocalDateTime> now) {
@@ -202,7 +205,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
-        return this.functions.apply(name);
+        return this.functions.function(name);
+    }
+
+    @Override
+    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+        return this.functions.expressionFunctionInfos();
     }
 
     @Override
@@ -210,7 +218,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return this.function(name).isPure(this);
     }
 
-    private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> functions;
+    private final ExpressionFunctionProvider functions;
 
     @Override
     public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,

@@ -21,12 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -48,6 +50,8 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -55,6 +59,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -156,18 +161,35 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         }
     };
 
-    private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> FUNCTIONS = (n) -> {
-        Objects.requireNonNull(n, "name");
+    private final ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider() {
+        @Override
+        public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName n) {
+            Objects.requireNonNull(n, "name");
 
-        if (CONCAT.name().get().equals(n)) {
-            return Cast.to(CONCAT);
+            if (CONCAT.name().get().equals(n)) {
+                return Cast.to(CONCAT);
+            }
+
+            if (ECHO.name().get().equals(n)) {
+                return Cast.to(ECHO);
+            }
+
+            throw new UnknownExpressionFunctionException(n);
         }
 
-        if (ECHO.name().get().equals(n)) {
-            return Cast.to(ECHO);
+        @Override
+        public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+            return Sets.of(
+                    ExpressionFunctionInfo.with(
+                            Url.parseAbsolute("https://example.com/test/" + CONCAT),
+                            CONCAT.name().get()
+                    ),
+                    ExpressionFunctionInfo.with(
+                            Url.parseAbsolute("https://example.com/test/" + ECHO),
+                            ECHO.name().get()
+                    )
+            );
         }
-
-        throw new UnknownExpressionFunctionException(n);
     };
 
     private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
@@ -461,7 +483,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         CELL_STORE,
                         SERVER_URL,
                         METADATA,
-                        FUNCTIONS,
+                        EXPRESSION_FUNCTION_PROVIDER,
                         REFERENCES,
                         RESOLVE_IF_LABEL,
                         LocalDateTime::now
@@ -532,5 +554,10 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     @Override
     public Class<SpreadsheetExpressionEvaluationContext> type() {
         return Cast.to(ConverterSpreadsheetExpressionEvaluationContext.class);
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
