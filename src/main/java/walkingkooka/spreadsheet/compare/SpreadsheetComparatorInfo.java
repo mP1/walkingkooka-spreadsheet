@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.Cast;
 import walkingkooka.naming.HasName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -27,13 +28,15 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Provides a few bits of info describing a {@link SpreadsheetComparator}. The {@link AbsoluteUrl} must be a unique identifier,
  * with the {@link SpreadsheetComparatorName} being a shorter human friendly reference.
  */
 public final class SpreadsheetComparatorInfo implements HasName<SpreadsheetComparatorName>,
-        Comparable<SpreadsheetComparatorInfo> {
+        Comparable<SpreadsheetComparatorInfo>,
+        HateosResource<SpreadsheetComparatorName> {
 
     public static SpreadsheetComparatorInfo with(final AbsoluteUrl url,
                                                  final SpreadsheetComparatorName name) {
@@ -154,6 +157,20 @@ public final class SpreadsheetComparatorInfo implements HasName<SpreadsheetCompa
                 SpreadsheetComparatorInfo::unmarshall,
                 SpreadsheetComparatorInfo::marshall,
                 SpreadsheetComparatorInfo.class
+        );
+    }
+
+    // HateoResource....................................................................................................
+
+    @Override
+    public String hateosLinkId() {
+        return this.name.value();
+    }
+
+    @Override
+    public Optional<SpreadsheetComparatorName> id() {
+        return Optional.of(
+                this.name
         );
     }
 }

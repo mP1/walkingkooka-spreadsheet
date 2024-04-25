@@ -22,16 +22,20 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorInfoTest implements ClassTesting2<SpreadsheetComparatorInfo>,
         HashCodeEqualsDefinedTesting2<SpreadsheetComparatorInfo>,
+        HateosResourceTesting<SpreadsheetComparatorInfo, SpreadsheetComparatorName>,
         JsonNodeMarshallingTesting<SpreadsheetComparatorInfo>,
         ComparableTesting2<SpreadsheetComparatorInfo> {
 
@@ -135,5 +139,29 @@ public final class SpreadsheetComparatorInfoTest implements ClassTesting2<Spread
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // HateosResource...................................................................................................
+
+    @Test
+    public void testHateosId() {
+        this.hateosLinkIdAndCheck(
+                NAME.value()
+        );
+    }
+
+    @Test
+    public void testId() {
+        this.idAndCheck(
+                Optional.of(NAME)
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorInfo createHateosResource() {
+        return SpreadsheetComparatorInfo.with(
+                URL,
+                NAME
+        );
     }
 }
