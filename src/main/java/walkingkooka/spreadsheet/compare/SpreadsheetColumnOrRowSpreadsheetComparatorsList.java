@@ -93,4 +93,8 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     }
 
     private final SpreadsheetColumnOrRowSpreadsheetComparators[] comparators;
+
+    static {
+        Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorsList.class);
+    }
 }
