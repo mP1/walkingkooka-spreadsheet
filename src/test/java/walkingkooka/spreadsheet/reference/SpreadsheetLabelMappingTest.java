@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
         ComparableTesting2<SpreadsheetLabelMapping>,
         JsonNodeMarshallingTesting<SpreadsheetLabelMapping>,
-        HateosResourceTesting<SpreadsheetLabelMapping>,
+        HateosResourceTesting<SpreadsheetLabelMapping, SpreadsheetLabelName>,
         TreePrintableTesting,
         ToStringTesting<SpreadsheetLabelMapping> {
 

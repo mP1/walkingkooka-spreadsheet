@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellReference>
         implements ComparableTesting2<SpreadsheetCellReference>,
-        HateosResourceTesting<SpreadsheetCellReference>,
+        HateosResourceTesting<SpreadsheetCellReference, String>,
         CanReplaceReferencesTesting<SpreadsheetCellReference> {
 
     private final static int COLUMN = 123;
