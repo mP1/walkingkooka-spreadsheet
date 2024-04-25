@@ -78,7 +78,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         ComparableTesting2<SpreadsheetCell>,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
         HasSpreadsheetReferenceTesting,
-        HateosResourceTesting<SpreadsheetCell>,
+        HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
         PatchableTesting<SpreadsheetCell>,
         ToStringTesting<SpreadsheetCell>,
         TreePrintableTesting {

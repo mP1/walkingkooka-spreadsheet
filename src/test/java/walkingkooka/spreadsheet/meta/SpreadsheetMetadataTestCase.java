@@ -56,7 +56,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         ConverterTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
         JsonNodeMarshallingTesting<SpreadsheetMetadata>,
-        HateosResourceTesting<SpreadsheetMetadata>,
+        HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,
         ThrowableTesting,
         ToStringTesting<SpreadsheetMetadata>,
         TreePrintableTesting {
