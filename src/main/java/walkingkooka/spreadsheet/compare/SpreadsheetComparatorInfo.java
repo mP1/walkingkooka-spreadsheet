@@ -28,6 +28,10 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 
+/**
+ * Provides a few bits of info describing a {@link SpreadsheetComparator}. The {@link AbsoluteUrl} must be a unique identifier,
+ * with the {@link SpreadsheetComparatorName} being a shorter human friendly reference.
+ */
 public final class SpreadsheetComparatorInfo implements HasName<SpreadsheetComparatorName>,
         Comparable<SpreadsheetComparatorInfo> {
 
