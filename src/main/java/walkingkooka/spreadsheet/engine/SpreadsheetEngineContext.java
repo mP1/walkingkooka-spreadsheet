@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -40,6 +41,7 @@ import java.util.Optional;
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
 public interface SpreadsheetEngineContext extends Context,
+        ExpressionFunctionProvider,
         ExpressionPurityContext,
         HasSpreadsheetMetadata,
         HasNow,

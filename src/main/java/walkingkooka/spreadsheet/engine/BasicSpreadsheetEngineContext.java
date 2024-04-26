@@ -43,7 +43,10 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
 
@@ -160,6 +163,20 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     private final SpreadsheetComparatorProvider spreadsheetComparatorProvider;
 
+    // expressionFunctionProvider.................................................................................................
+
+    @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+        return this.expressionFunctionProvider.function(name);
+    }
+
+    @Override
+    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+        return this.expressionFunctionProvider.expressionFunctionInfos();
+    }
+
+    private final ExpressionFunctionProvider expressionFunctionProvider;
+
     // parsing formula and executing.....................................................................................
 
     @Override
@@ -226,11 +243,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     }
 
     private final AbsoluteUrl serverUrl;
-
-    /**
-     * Handles dispatching of expressionFunctionProvider.
-     */
-    private final ExpressionFunctionProvider expressionFunctionProvider;
 
     private final SpreadsheetEnginesExpressionReferenceFunction referenceFunction;
 

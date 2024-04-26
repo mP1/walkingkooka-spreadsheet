@@ -32,6 +32,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderTesting;
 
 import java.util.Optional;
 
@@ -39,7 +40,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
         ParserTesting,
-        HasLocaleTesting {
+        HasLocaleTesting,
+        ExpressionFunctionProviderTesting<C> {
 
     // resolveIfLabel...............................................................................................
 
@@ -383,5 +385,12 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     @Override
     default String typeNameSuffix() {
         return SpreadsheetEngineContext.class.getSimpleName();
+    }
+
+    // ExpressionFunctionProvider.......................................................................................
+
+    @Override
+    default C createExpressionFunctionProvider() {
+        return this.createContext();
     }
 }
