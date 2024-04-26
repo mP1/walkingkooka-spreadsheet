@@ -134,4 +134,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class
         );
     }
+
+    static {
+        Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class);
+    }
 }
