@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.collect.list.ListTesting2;
+import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implements ListTesting2<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
+public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implements ImmutableListTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
         ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList> {
 
     @Test
@@ -84,6 +84,26 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
         this.removeFails(
                 list,
                 list.get(0)
+        );
+    }
+
+    // ImmutableList....................................................................................................
+
+    @Test
+    public void testSwap() {
+        this.swapAndCheck(
+                (SpreadsheetColumnOrRowSpreadsheetComparatorsList)
+                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                                "A=day-of-month;B=month-of-year;C=year;D=text",
+                                SpreadsheetComparatorProviders.builtIn()
+                        ),
+                1,
+                3,
+                (SpreadsheetColumnOrRowSpreadsheetComparatorsList)
+                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                                "A=day-of-month;D=text;C=year;B=month-of-year",
+                                SpreadsheetComparatorProviders.builtIn()
+                        )
         );
     }
 
