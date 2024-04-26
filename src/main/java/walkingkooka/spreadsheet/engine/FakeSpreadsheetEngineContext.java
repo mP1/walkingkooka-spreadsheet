@@ -31,7 +31,10 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -75,6 +78,17 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
 
     @Override
     public boolean isPure(final FunctionExpressionName function) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+        Objects.requireNonNull(name, "name");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
         throw new UnsupportedOperationException();
     }
 

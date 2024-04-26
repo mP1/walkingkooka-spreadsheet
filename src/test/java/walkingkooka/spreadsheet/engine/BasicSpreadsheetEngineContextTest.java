@@ -30,6 +30,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
@@ -1253,5 +1254,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Override
     public Class<BasicSpreadsheetEngineContext> type() {
         return BasicSpreadsheetEngineContext.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
