@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.list.ImmutableList;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 
@@ -32,10 +31,6 @@ import java.util.Objects;
  */
 final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparators>
         implements ImmutableList<SpreadsheetColumnOrRowSpreadsheetComparators> {
-
-    static {
-        Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorsList.class);
-    }
 
     static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
         Objects.requireNonNull(columnOrRows, "columnOrRows");
@@ -95,10 +90,6 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     }
 
     private final SpreadsheetColumnOrRowSpreadsheetComparators[] comparators;
-
-    static {
-        Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorsList.class);
-    }
 
     // ImmutableList....................................................................................................
 

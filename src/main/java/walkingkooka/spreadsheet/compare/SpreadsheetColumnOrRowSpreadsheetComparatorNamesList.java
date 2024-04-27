@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import walkingkooka.text.HasText;
@@ -37,10 +36,6 @@ import java.util.stream.Collectors;
  */
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparatorNames>
         implements HasText {
-
-    static {
-        Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class);
-    }
 
     public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList parse(final String text) {
         return (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList)
@@ -133,9 +128,5 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList::marshall,
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class
         );
-    }
-
-    static {
-        Lists.registerImmutableType(SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class);
     }
 }
