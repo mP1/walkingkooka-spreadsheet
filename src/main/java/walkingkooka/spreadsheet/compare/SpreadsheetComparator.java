@@ -39,4 +39,11 @@ public interface SpreadsheetComparator<T> extends Comparator<T>,
      * Getter that returns the {@link SpreadsheetComparatorDirection} for this {@link SpreadsheetComparator}.
      */
     SpreadsheetComparatorDirection direction();
+
+    /**
+     * Returns a reversed {@link SpreadsheetComparator}
+     */
+    default SpreadsheetComparator<T> reversed() {
+        return SpreadsheetComparators.reverse(this);
+    }
 }
