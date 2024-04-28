@@ -709,7 +709,7 @@ public abstract class SpreadsheetSelection implements HasText,
                     .map(Object::toString)
                     .collect(Collectors.joining(", "));
             if (false == outOfBounds.isEmpty()) {
-                throw new IllegalArgumentException("Some sort columns/rows are not within cell-range " + cellRange + " got " + outOfBounds);
+                throw new IllegalArgumentException("Some sort columns/rows are not within " + this + " got " + outOfBounds);
             }
         }
     }

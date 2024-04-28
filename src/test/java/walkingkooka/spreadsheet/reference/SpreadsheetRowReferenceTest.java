@@ -215,6 +215,33 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // comparatorNamesCheck.............................................................................................
+
+    @Test
+    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
+        this.comparatorNamesCheckAndCheckFails(
+                "1",
+                "1=TEXT;2=TEXT;33=TEXT",
+                "Some sort columns/rows are not within 1 got 2, 33"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithColumns() {
+        this.comparatorNamesCheckAndCheck(
+                "1",
+                "A=text UP;B=text DOWN;C=text UP;D=text DOWN"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithRows() {
+        this.comparatorNamesCheckAndCheck(
+                "1",
+                "1=text"
+        );
+    }
+
     // toRelative........................................................................................................
 
     @Test

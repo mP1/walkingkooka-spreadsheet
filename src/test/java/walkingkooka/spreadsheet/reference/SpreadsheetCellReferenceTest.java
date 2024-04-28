@@ -197,6 +197,42 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
+    // comparatorNamesCheck.............................................................................................
+
+    @Test
+    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
+        this.comparatorNamesCheckAndCheckFails(
+                "A1",
+                "A=TEXT;B=TEXT;ZZ=TEXT",
+                "Some sort columns/rows are not within A1 got B, ZZ"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithRowComparatorsOutOfBoundsFails() {
+        this.comparatorNamesCheckAndCheckFails(
+                "A1",
+                "1=TEXT;2=TEXT;99=TEXT",
+                "Some sort columns/rows are not within A1 got 2, 99"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithColumns() {
+        this.comparatorNamesCheckAndCheck(
+                "A1",
+                "A=text UP"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithRows() {
+        this.comparatorNamesCheckAndCheck(
+                "A1",
+                "1=text UP"
+        );
+    }
+
     // toCell...........................................................................................................
 
     @Test

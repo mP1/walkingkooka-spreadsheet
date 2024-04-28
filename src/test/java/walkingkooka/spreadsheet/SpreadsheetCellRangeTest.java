@@ -521,7 +521,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
 
         this.checkEquals(
-                "Some sort columns/rows are not within cell-range A1:B2 got C, ZZ",
+                "Some sort columns/rows are not within A1:B2 got C, ZZ",
                 thrown.getMessage()
         );
     }
@@ -558,7 +558,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
 
         this.checkEquals(
-                "Some sort columns/rows are not within cell-range A1:B2 got 3, 99",
+                "Some sort columns/rows are not within A1:B2 got 3, 99",
                 thrown.getMessage()
         );
     }

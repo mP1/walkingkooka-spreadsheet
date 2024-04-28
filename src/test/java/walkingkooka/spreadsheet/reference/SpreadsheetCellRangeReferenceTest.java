@@ -747,6 +747,42 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         return SpreadsheetCellRangeReference.parseCellRange("B2:C3");
     }
 
+    // comparatorNamesCheck.............................................................................................
+
+    @Test
+    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
+        this.comparatorNamesCheckAndCheckFails(
+                "A1:B2",
+                "B=TEXT;C=TEXT;ZZ=TEXT",
+                "Some sort columns/rows are not within A1:B2 got C, ZZ"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithRowComparatorsOutOfBoundsFails() {
+        this.comparatorNamesCheckAndCheckFails(
+                "A1:B2",
+                "2=TEXT;3=TEXT;99=TEXT",
+                "Some sort columns/rows are not within A1:B2 got 3, 99"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithColumns() {
+        this.comparatorNamesCheckAndCheck(
+                "A1:C3",
+                "A=text UP;B=text DOWN"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithRows() {
+        this.comparatorNamesCheckAndCheck(
+                "A1:C3",
+                "2=text UP;3=text DOWN"
+        );
+    }
+
     // toScalar.........................................................................................................
 
     @Test
