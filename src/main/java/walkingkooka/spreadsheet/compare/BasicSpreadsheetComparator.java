@@ -108,6 +108,9 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
     @Override
     public String toString() {
-        return this.name + " " + this.direction;
+        return this.name.value()
+                .concat(
+                        this.direction.toStringWithEmptyDefault()
+                );
     }
 }

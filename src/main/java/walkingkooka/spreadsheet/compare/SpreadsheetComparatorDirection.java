@@ -24,6 +24,28 @@ import java.util.Objects;
 
 public enum SpreadsheetComparatorDirection {
 
+    DEFAULT {
+        @Override
+        public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator) {
+            return UP.apply(comparator);
+        }
+
+        @Override
+        public SpreadsheetComparatorDirection flip() {
+            return UP.flip();
+        }
+
+        @Override
+        public int fixCompareResult(final int value) {
+            return UP.fixCompareResult(value);
+        }
+
+        @Override
+        String toStringWithEmptyDefault() {
+            return "";
+        }
+    },
+
     UP {
         @Override
         public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator) {
@@ -38,6 +60,11 @@ public enum SpreadsheetComparatorDirection {
         @Override
         public int fixCompareResult(final int value) {
             return value;
+        }
+
+        @Override
+        String toStringWithEmptyDefault() {
+            return " " + this.name();
         }
     },
 
@@ -56,10 +83,12 @@ public enum SpreadsheetComparatorDirection {
         public int fixCompareResult(final int value) {
             return -Comparators.normalize(value);
         }
+
+        @Override
+        String toStringWithEmptyDefault() {
+            return " " + this.name();
+        }
     };
-
-
-    public final static SpreadsheetComparatorDirection DEFAULT = UP;
 
     abstract public <T> SpreadsheetComparator<T> apply(final SpreadsheetComparator<T> comparator);
 
@@ -73,4 +102,6 @@ public enum SpreadsheetComparatorDirection {
      * Flips the sign of a {@link Comparator#compare(Object, Object)} when this is DOWN.
      */
     abstract public int fixCompareResult(final int value);
+
+    abstract String toStringWithEmptyDefault();
 }

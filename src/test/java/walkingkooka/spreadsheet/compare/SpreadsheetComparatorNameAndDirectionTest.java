@@ -100,12 +100,12 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
     // parseString......................................................................................................
 
     @Test
-    public void testParseMissingDirectionDefaultsUp() {
+    public void testParseMissingDirectionDefaults() {
         this.parseStringAndCheck(
                 "name-1",
                 SpreadsheetComparatorNameAndDirection.with(
                         NAME,
-                        DIRECTION
+                        SpreadsheetComparatorDirection.DEFAULT
                 )
         );
     }
@@ -116,7 +116,7 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
                 "name-1",
                 SpreadsheetComparatorNameAndDirection.with(
                         NAME,
-                        DIRECTION
+                        SpreadsheetComparatorDirection.DEFAULT
                 )
         );
     }

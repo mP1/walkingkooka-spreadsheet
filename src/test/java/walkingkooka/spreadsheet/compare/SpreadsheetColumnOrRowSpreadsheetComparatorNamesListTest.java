@@ -290,7 +290,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
 
     @Test
     public void testUrlFragmentOne() {
-        final String string = "A=day-of-month UP,month-of-year DOWN";
+        final String string = "A=day-of-month UP,month-of-year DOWN,year";
 
         this.urlFragmentAndCheck(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
@@ -300,7 +300,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
 
     @Test
     public void testUrlFragmentMany() {
-        final String string = "A=day-of-month UP,month-of-year UP;B=year UP;C=text DOWN";
+        final String string = "A=day-of-month UP,month-of-year UP;B=year UP;C=text DOWN;D=year";
 
         this.urlFragmentAndCheck(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
@@ -319,6 +319,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     }
 
     @Test
+    public void testMarshallDefault() {
+        this.marshallAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("AB=text123"),
+                "\"AB=text123\""
+        );
+    }
+
+    @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
                 "\"AB=text123 DOWN,abc456 UP\"",
@@ -329,6 +337,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 )
         );
     }
+
+    @Test
+    public void testUnmarshallDefault() {
+        this.unmarshallAndCheck(
+                "\"AB=text123\"",
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("AB=text123")
+                        )
+                )
+        );
+    }
+
 
     @Test
     public void testUnmarshall2() {
