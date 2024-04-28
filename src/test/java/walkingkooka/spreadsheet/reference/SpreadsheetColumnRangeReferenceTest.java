@@ -311,6 +311,33 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
+    // comparatorNamesCheck.............................................................................................
+
+    @Test
+    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
+        this.comparatorNamesCheckAndCheckFails(
+                "A:C",
+                "A=TEXT;B=TEXT;ZZ=TEXT",
+                "Some sort columns/rows are not within A:C got ZZ"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithColumns() {
+        this.comparatorNamesCheckAndCheck(
+                "A:C",
+                "A=text UP;B=text DOWN;C=text UP"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithRows() {
+        this.comparatorNamesCheckAndCheck(
+                "A:C",
+                "1=text;2=text"
+        );
+    }
+
     // count............................................................................................................
 
     @Test

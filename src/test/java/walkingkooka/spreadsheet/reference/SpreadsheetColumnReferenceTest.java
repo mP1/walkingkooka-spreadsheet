@@ -125,6 +125,33 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    // comparatorNamesCheck.............................................................................................
+
+    @Test
+    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
+        this.comparatorNamesCheckAndCheckFails(
+                "A",
+                "A=TEXT;B=TEXT;ZZ=TEXT",
+                "Some sort columns/rows are not within A got B, ZZ"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithColumns() {
+        this.comparatorNamesCheckAndCheck(
+                "A",
+                "A=text UP"
+        );
+    }
+
+    @Test
+    public void testComparatorNamesCheckWithRows() {
+        this.comparatorNamesCheckAndCheck(
+                "A",
+                "1=text;2=text"
+        );
+    }
+
     // columnOrRowReferenceKind.........................................................................................
 
     @Test
