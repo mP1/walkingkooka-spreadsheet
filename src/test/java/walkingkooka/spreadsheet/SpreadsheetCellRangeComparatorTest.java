@@ -363,7 +363,23 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                         ),
                         context
                 ),
-                "B day-of-month UP " + context
+                "B day-of-month " + context
+        );
+    }
+
+    @Test
+    public void testToStringReversed() {
+        final SpreadsheetComparatorContext context = SpreadsheetComparatorContexts.fake();
+
+        this.toStringAndCheck(
+                SpreadsheetCellRangeComparator.with(
+                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                                "B=day-of-month DOWN",
+                                SpreadsheetComparatorProviders.builtIn()
+                        ),
+                        context
+                ),
+                "B day-of-month DOWN " + context
         );
     }
 

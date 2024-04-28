@@ -209,6 +209,22 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
     }
 
     @Test
+    public void tesToStringDefault() {
+        final Comparator<String> comparator = Comparators.fake();
+        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.DEFAULT;
+
+        this.toStringAndCheck(
+                BasicSpreadsheetComparator.with(
+                        String.class,
+                        comparator,
+                        direction,
+                        NAME
+                ),
+                NAME.toString()
+        );
+    }
+
+    @Test
     public void tesToStringUp() {
         final Comparator<String> comparator = Comparators.fake();
         final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.UP;

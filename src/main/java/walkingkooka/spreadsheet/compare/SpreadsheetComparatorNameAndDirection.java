@@ -108,7 +108,8 @@ public final class SpreadsheetComparatorNameAndDirection implements HasName<Spre
 
     @Override
     public String toString() {
-        return this.name + " " + this.direction;
+        return this.name.value()
+                .concat(this.direction.toStringWithEmptyDefault());
     }
 
     // Json.............................................................................................................

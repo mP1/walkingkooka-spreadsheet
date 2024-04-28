@@ -162,8 +162,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                         column,
                         Lists.of(
                                 SpreadsheetComparators.dayOfMonth(),
+                                SpreadsheetComparators.monthOfYear(),
                                 SpreadsheetComparators.reverse(
-                                        SpreadsheetComparators.monthOfYear()
+                                        SpreadsheetComparators.year()
                                 )
                         )
                 ),
@@ -171,8 +172,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                         column,
                         Lists.of(
                                 SpreadsheetComparatorName.with("day-of-month")
-                                        .setDirection(SpreadsheetComparatorDirection.UP),
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
                                 SpreadsheetComparatorName.with("month-of-year")
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
+                                SpreadsheetComparatorName.with("year")
                                         .setDirection(SpreadsheetComparatorDirection.DOWN)
                         )
                 )
@@ -188,8 +191,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                         row,
                         Lists.of(
                                 SpreadsheetComparators.dayOfMonth(),
+                                SpreadsheetComparators.monthOfYear(),
                                 SpreadsheetComparators.reverse(
-                                        SpreadsheetComparators.monthOfYear()
+                                        SpreadsheetComparators.year()
                                 )
                         )
                 ),
@@ -197,8 +201,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                         row,
                         Lists.of(
                                 SpreadsheetComparatorName.with("day-of-month")
-                                        .setDirection(SpreadsheetComparatorDirection.UP),
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
                                 SpreadsheetComparatorName.with("month-of-year")
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
+                                SpreadsheetComparatorName.with("year")
                                         .setDirection(SpreadsheetComparatorDirection.DOWN)
                         )
                 )
@@ -930,7 +936,21 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     public void testToString() {
         this.toStringAndCheck(
                 this.createObject(),
-                "B day-of-month UP"
+                "B day-of-month"
+        );
+    }
+
+    @Test
+    public void testToStringReversedComparator() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        COLUMN_OR_ROW,
+                        Lists.of(
+                                SpreadsheetComparators.monthOfYear()
+                                        .reversed()
+                        )
+                ),
+                "B month-of-year DOWN"
         );
     }
 

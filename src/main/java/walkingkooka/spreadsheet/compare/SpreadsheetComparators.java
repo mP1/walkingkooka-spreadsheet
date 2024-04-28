@@ -233,7 +233,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     direction = SpreadsheetComparatorDirection.valueOf(upOrDown);
                 } catch (final IllegalArgumentException invalid) {
                     throw new IllegalArgumentException(
-                            "Expected \"" + SpreadsheetComparatorDirection.DEFAULT + "\" or \"" + SpreadsheetComparatorDirection.DOWN + "\" and got " +
+                            "Expected \"" + SpreadsheetComparatorDirection.UP + "\" or \"" + SpreadsheetComparatorDirection.DOWN + "\" and got " +
                                     CharSequences.quoteAndEscape(upOrDown) +
                                     " in " +
                                     CharSequences.quoteAndEscape(nameAndMaybeUpOrDown)
