@@ -61,7 +61,6 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -694,13 +693,13 @@ public abstract class SpreadsheetSelection implements HasText,
      * Verifies all the column/rows for each {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} are the same type,
      * not overlapping and within this {@link SpreadsheetSelection}. The last check is skipped for {@link SpreadsheetLabelName}.
      */
-    public void comparatorNamesCheck(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+    public void comparatorNamesCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorNames) {
         this.comparatorNamesCheck0(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames)
         );
     }
 
-    private void comparatorNamesCheck0(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+    private void comparatorNamesCheck0(final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorNames) {
         if (false == this.isLabelName()) {
             final SpreadsheetCellRangeReference cellRange = this.toCellRange();
 

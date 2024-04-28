@@ -21,6 +21,7 @@ import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.reference.CanReplaceReferences;
@@ -217,9 +218,11 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
 
         final SpreadsheetCellRangeReference cellRange = this.range();
         cellRange.comparatorNamesCheck(
-                comparators.stream()
-                        .map(c -> c.toSpreadsheetColumnOrRowSpreadsheetComparatorNames())
-                        .collect(Collectors.toList())
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                        comparators.stream()
+                                .map(c -> c.toSpreadsheetColumnOrRowSpreadsheetComparatorNames())
+                                .collect(Collectors.toList())
+                )
         );
 
         final SpreadsheetCellReference home = cellRange.toCell();

@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunctions;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorDirection;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -526,43 +527,36 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     @Test
-    public void testComparatorNamesCheckWitEmptyComparatorsFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSelection()
-                        .comparatorNamesCheck(Lists.empty())
-        );
-    }
-
-    @Test
     public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetSelection.parseCellRange("A1:B2")
                         .comparatorNamesCheck(
-                                Lists.of(
-                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                                SpreadsheetSelection.parseColumn("B"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                                .name()
-                                                                .setDirection(SpreadsheetComparatorDirection.UP)
-                                                )
-                                        ),
-                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                                SpreadsheetSelection.parseColumn("C"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                                .name()
-                                                                .setDirection(SpreadsheetComparatorDirection.UP)
-                                                )
-                                        ),
-                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                                SpreadsheetSelection.parseColumn("ZZ"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                                .name()
-                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                                        Lists.of(
+                                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                        SpreadsheetSelection.parseColumn("B"),
+                                                        Lists.of(
+                                                                SpreadsheetComparators.text()
+                                                                        .name()
+                                                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                                                        )
+                                                ),
+                                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                        SpreadsheetSelection.parseColumn("C"),
+                                                        Lists.of(
+                                                                SpreadsheetComparators.text()
+                                                                        .name()
+                                                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                                                        )
+                                                ),
+                                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                        SpreadsheetSelection.parseColumn("ZZ"),
+                                                        Lists.of(
+                                                                SpreadsheetComparators.text()
+                                                                        .name()
+                                                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                                                        )
                                                 )
                                         )
                                 )
@@ -581,29 +575,31 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 IllegalArgumentException.class,
                 () -> SpreadsheetSelection.parseCellRange("A1:B2")
                         .comparatorNamesCheck(
-                                Lists.of(
-                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                                SpreadsheetSelection.parseRow("2"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                                .name()
-                                                                .setDirection(SpreadsheetComparatorDirection.UP)
-                                                )
-                                        ),
-                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                                SpreadsheetSelection.parseRow("3"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                                .name()
-                                                                .setDirection(SpreadsheetComparatorDirection.UP)
-                                                )
-                                        ),
-                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                                SpreadsheetSelection.parseRow("99"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                                .name()
-                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                                        Lists.of(
+                                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                        SpreadsheetSelection.parseRow("2"),
+                                                        Lists.of(
+                                                                SpreadsheetComparators.text()
+                                                                        .name()
+                                                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                                                        )
+                                                ),
+                                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                        SpreadsheetSelection.parseRow("3"),
+                                                        Lists.of(
+                                                                SpreadsheetComparators.text()
+                                                                        .name()
+                                                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                                                        )
+                                                ),
+                                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                        SpreadsheetSelection.parseRow("99"),
+                                                        Lists.of(
+                                                                SpreadsheetComparators.text()
+                                                                        .name()
+                                                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                                                        )
                                                 )
                                         )
                                 )
@@ -620,21 +616,23 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     public void testComparatorNamesCheckWithColumns() {
         SpreadsheetSelection.parseCellRange("A1:B2")
                 .comparatorNamesCheck(
-                        Lists.of(
-                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                        SpreadsheetSelection.parseColumn("A"),
-                                        Lists.of(
-                                                SpreadsheetComparators.text()
-                                                        .name()
-                                                        .setDirection(SpreadsheetComparatorDirection.UP)
-                                        )
-                                ),
-                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                        SpreadsheetSelection.parseColumn("B"),
-                                        Lists.of(
-                                                SpreadsheetComparators.text()
-                                                        .name()
-                                                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+                        SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                                Lists.of(
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseColumn("A"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                                )
+                                        ),
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseColumn("B"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.DOWN)
+                                                )
                                         )
                                 )
                         )
@@ -645,28 +643,28 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     public void testComparatorNamesCheckWithRows() {
         SpreadsheetSelection.parseCellRange("A1:C3")
                 .comparatorNamesCheck(
-                        Lists.of(
-                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                        SpreadsheetSelection.parseRow("2"),
-                                        Lists.of(
-                                                SpreadsheetComparators.text()
-                                                        .name()
-                                                        .setDirection(SpreadsheetComparatorDirection.UP)
-                                        )
-                                ),
-                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                        SpreadsheetSelection.parseRow("3"),
-                                        Lists.of(
-                                                SpreadsheetComparators.text()
-                                                        .name()
-                                                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+                        SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                                Lists.of(
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseRow("2"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.UP)
+                                                )
+                                        ),
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseRow("3"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                                .name()
+                                                                .setDirection(SpreadsheetComparatorDirection.DOWN)
+                                                )
                                         )
                                 )
                         )
                 );
     }
-
-
 
     // containsAll.......................................................................................................
 
