@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.net.HasUrlFragmentTesting;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -37,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest implements ListTesting2<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList, SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
         ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
         HasTextTesting,
+        HasUrlFragmentTesting,
         JsonNodeMarshallingTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
         ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList> {
 
@@ -280,6 +283,28 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
         this.textAndCheck(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
                 string
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testUrlFragmentOne() {
+        final String string = "A=day-of-month UP,month-of-year DOWN";
+
+        this.urlFragmentAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
+                UrlFragment.with(string)
+        );
+    }
+
+    @Test
+    public void testUrlFragmentMany() {
+        final String string = "A=day-of-month UP,month-of-year UP;B=year UP;C=text DOWN";
+
+        this.urlFragmentAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
+                UrlFragment.with(string)
         );
     }
 

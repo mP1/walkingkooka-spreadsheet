@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import walkingkooka.text.HasText;
@@ -35,7 +37,8 @@ import java.util.stream.Collectors;
  * column with a range sort.
  */
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparatorNames>
-        implements HasText {
+        implements HasText,
+        HasUrlFragment {
 
     public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList parse(final String text) {
         return (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList)
@@ -128,5 +131,12 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList::marshall,
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class
         );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.with(this.text());
     }
 }
