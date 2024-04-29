@@ -26,8 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
@@ -45,12 +44,8 @@ public interface SpreadsheetEngineContext extends Context,
         ExpressionPurityContext,
         HasSpreadsheetMetadata,
         HasNow,
-        SpreadsheetComparatorProvider {
-
-    /**
-     * Resolves a {@link SpreadsheetSelection} if it is a {@link SpreadsheetLabelName} otherwise returning the original.
-     */
-    SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection);
+        SpreadsheetComparatorProvider,
+        SpreadsheetLabelNameResolver {
 
     /**
      * Parses the formula into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
