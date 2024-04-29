@@ -929,6 +929,17 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
+     * Type safe cast to {@link SpreadsheetLabelName}.
+     */
+    public final SpreadsheetLabelName toLabelName() {
+        if (false == this.isLabelName()) {
+            throw new IllegalArgumentException("Required label but is " + this.textLabel() + " " + this);
+        }
+
+        return (SpreadsheetLabelName) this;
+    }
+
+    /**
      * If possible returns a {@link SpreadsheetRowReference}
      */
     public abstract SpreadsheetRowReference toRow();
