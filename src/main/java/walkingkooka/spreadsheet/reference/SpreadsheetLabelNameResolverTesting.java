@@ -17,9 +17,72 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.text.printer.TreePrintableTesting;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTesting {
+
+    @Test
+    default void testResolveIfLabelWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.spreadsheetLabelNameResolver()
+                        .resolveIfLabel(null)
+        );
+    }
+
+    @Test
+    default void testResolveIfLabelWithCell() {
+        this.resolveIfLabelAndCheck(
+                SpreadsheetSelection.parseCell("B2")
+        );
+    }
+
+    @Test
+    default void testResolveIfLabelWithColumn() {
+        this.resolveIfLabelAndCheck(
+                SpreadsheetSelection.parseColumn("Z")
+        );
+    }
+
+    @Test
+    default void testResolveIfLabelWithColumnRange() {
+        this.resolveIfLabelAndCheck(
+                SpreadsheetSelection.parseColumnRange("X:Y")
+        );
+    }
+
+    @Test
+    default void testResolveIfLabelWithRow() {
+        this.resolveIfLabelAndCheck(
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
+
+    @Test
+    default void testResolveIfLabelWithRowRange() {
+        this.resolveIfLabelAndCheck(
+                SpreadsheetSelection.parseRowRange("3:4")
+        );
+    }
+
+    default void resolveIfLabelAndCheck(final SpreadsheetSelection selection) {
+        this.resolveIfLabelAndCheck(
+                selection,
+                selection
+        );
+    }
+
+    default void resolveIfLabelAndCheck(final SpreadsheetSelection selection,
+                                        final SpreadsheetSelection expected) {
+        this.resolveIfLabelAndCheck(
+                this.spreadsheetLabelNameResolver(),
+                selection,
+                expected
+        );
+    }
 
     default void resolveIfLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
                                         final SpreadsheetSelection selection,
@@ -30,4 +93,6 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
                 () -> "resolveIfLabel " + selection
         );
     }
+
+    SpreadsheetLabelNameResolver spreadsheetLabelNameResolver();
 }
