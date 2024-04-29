@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.test.Fake;
@@ -48,8 +49,8 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
-        Objects.requireNonNull(selection, "selection");
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        Objects.requireNonNull(labelName, "labelName");
         throw new UnsupportedOperationException();
     }
 

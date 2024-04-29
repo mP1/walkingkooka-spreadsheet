@@ -94,5 +94,53 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
         );
     }
 
+    // resolveLabel.....................................................................................................
+
+    @Test
+    default void testResolveLabelWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.spreadsheetLabelNameResolver()
+                        .resolveLabel(null)
+        );
+    }
+
+    default void resolveLabelAndCheck(final String labelName,
+                                      final SpreadsheetSelection expected) {
+        this.resolveLabelAndCheck(
+                SpreadsheetSelection.labelName(labelName),
+                expected
+        );
+    }
+
+    default void resolveLabelAndCheck(final SpreadsheetLabelName labelName,
+                                      final SpreadsheetSelection expected) {
+        this.resolveLabelAndCheck(
+                this.spreadsheetLabelNameResolver(),
+                labelName,
+                expected
+        );
+    }
+
+    default void resolveLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
+                                      final String labelName,
+                                      final SpreadsheetSelection expected) {
+        this.resolveLabelAndCheck(
+                resolver,
+                SpreadsheetSelection.labelName(labelName),
+                expected
+        );
+    }
+
+    default void resolveLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
+                                      final SpreadsheetLabelName labelName,
+                                      final SpreadsheetSelection expected) {
+        this.checkEquals(
+                expected,
+                resolver.resolveLabel(labelName),
+                () -> "resolveLabel " + labelName
+        );
+    }
+
     SpreadsheetLabelNameResolver spreadsheetLabelNameResolver();
 }

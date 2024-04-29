@@ -13348,7 +13348,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.functions(), // functions
                                 this.references(), // references
                                 (s) -> {
-                                    throw new UnsupportedOperationException(s.toString()); // resolveIfLabel
+                                    throw new UnsupportedOperationException(s.toString()); // resolveLabel
                                 },
                                 () -> {
                                     throw new UnsupportedOperationException(); // now
