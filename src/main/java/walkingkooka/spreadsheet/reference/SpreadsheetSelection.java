@@ -1257,7 +1257,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 expressionNumberKind.zero() :
                 this.isLabelName() ?
                         SpreadsheetError.selectionNotFound(
-                                (SpreadsheetLabelName) this
+                                this.toLabelName()
                         ) :
                         this.unsupportedOperationException();
     }

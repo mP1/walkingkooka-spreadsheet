@@ -33,7 +33,7 @@ public interface SpreadsheetLabelNameResolver {
         Objects.requireNonNull(selection, "selection");
 
         return selection.isLabelName() ?
-                this.resolveLabel((SpreadsheetLabelName) selection) :
+                this.resolveLabel(selection.toLabelName()) :
                 selection;
     }
 

@@ -1868,7 +1868,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             value.setName(
                                     JsonPropertyName.with(
                                             labelToCell.apply(
-                                                    (SpreadsheetLabelName) cellReferenceOrLabelName
+                                                    cellReferenceOrLabelName.toLabelName()
                                             ).toString()
                                     )
                             ) :
