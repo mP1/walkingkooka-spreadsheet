@@ -27,6 +27,8 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
@@ -41,79 +43,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
         ParserTesting,
         HasLocaleTesting,
-        ExpressionFunctionProviderTesting<C> {
-
-    // resolveIfLabel...............................................................................................
-
-    @Test
-    default void testResolveIfLabelNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .resolveIfLabel(null)
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelCell() {
-        this.resolveIfLabelAndCheck(
-                SpreadsheetSelection.parseCell("B2")
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelColumn() {
-        this.resolveIfLabelAndCheck(
-                SpreadsheetSelection.parseColumn("Z")
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelColumnRange() {
-        this.resolveIfLabelAndCheck(
-                SpreadsheetSelection.parseColumnRange("X:Y")
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelRow() {
-        this.resolveIfLabelAndCheck(
-                SpreadsheetSelection.parseRow("2")
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelRowRange() {
-        this.resolveIfLabelAndCheck(
-                SpreadsheetSelection.parseRowRange("3:4")
-        );
-    }
-
-    default void resolveIfLabelAndCheck(final SpreadsheetSelection selection) {
-        this.resolveIfLabelAndCheck(
-                selection,
-                selection
-        );
-    }
-
-    default void resolveIfLabelAndCheck(final SpreadsheetSelection selection,
-                                        final SpreadsheetSelection expected) {
-        this.resolveIfLabelAndCheck(
-                this.createContext(),
-                selection,
-                expected
-        );
-    }
-
-    default void resolveIfLabelAndCheck(final SpreadsheetEngineContext context,
-                                        final SpreadsheetSelection selection,
-                                        final SpreadsheetSelection expected) {
-        this.checkEquals(
-                expected,
-                context.resolveIfLabel(selection),
-                () -> "resolveIfLabel " + selection
-        );
-    }
+        ExpressionFunctionProviderTesting<C>,
+        SpreadsheetLabelNameResolverTesting {
 
     // spreadsheetComparator............................................................................................
 
@@ -135,6 +66,14 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 () -> name.toString()
         );
     }
+
+    // SpreadsheetLabelNameResolverTesting..............................................................................
+
+    @Override
+    default SpreadsheetLabelNameResolver spreadsheetLabelNameResolver() {
+        return this.createContext();
+    }
+
 
     // parseFormula......................................................................................................
 
