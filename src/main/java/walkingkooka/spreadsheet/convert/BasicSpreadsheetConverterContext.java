@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -28,29 +30,28 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.function.Function;
 
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext {
 
     static BasicSpreadsheetConverterContext with(final Converter<SpreadsheetConverterContext> converter,
-                                                 final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+                                                 final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                  final ExpressionNumberConverterContext context) {
         Objects.requireNonNull(converter, "converter");
-        Objects.requireNonNull(resolveIfLabel, "resolveIfLabel");
+        Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
         Objects.requireNonNull(context, "context");
 
         return new BasicSpreadsheetConverterContext(
                 converter,
-                resolveIfLabel,
+                spreadsheetLabelNameResolver,
                 context
         );
     }
 
     private BasicSpreadsheetConverterContext(final Converter<SpreadsheetConverterContext> converter,
-                                             final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+                                             final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                              final ExpressionNumberConverterContext context) {
         this.converter = converter;
-        this.resolveIfLabel = resolveIfLabel;
+        this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
         this.context = context;
     }
 
@@ -82,14 +83,14 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     private final Converter<SpreadsheetConverterContext> converter;
 
-    // resolveIfLabel..................................................................................................
+    // SpreadsheetLabelNameResolver.....................................................................................
 
     @Override
-    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
-        return this.resolveIfLabel.apply(selection);
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        return this.spreadsheetLabelNameResolver.resolveLabel(labelName);
     }
 
-    private final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel;
+    private final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver;
 
     // ExpressionNumberConverterContext.................................................................................
 
@@ -189,7 +190,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     public String toString() {
         return this.converter +
                 " " +
-                this.resolveIfLabel +
+                this.spreadsheetLabelNameResolver +
                 " " +
                 this.context;
     }

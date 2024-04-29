@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -1281,7 +1282,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Override
     public SpreadsheetConverterContext createContext() {
-        return this.createContext(RESOLVE_IF_LABEL);
+        return this.createContext(LABEL_NAME_RESOLVER);
     }
 
     private SpreadsheetConverterContext createContext(final SpreadsheetLabelName label,
@@ -1294,10 +1295,10 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         );
     }
 
-    private SpreadsheetConverterContext createContext(final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
+    private SpreadsheetConverterContext createContext(final SpreadsheetLabelNameResolver labelNameResolver) {
         return SpreadsheetConverterContexts.basic(
                 SpreadsheetConverters.basic(),
-                resolveIfLabel,
+                labelNameResolver,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(

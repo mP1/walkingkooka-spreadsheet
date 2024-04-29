@@ -143,7 +143,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor.resolveLabel(
+        return BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
                 labelName,
                 this.storeRepository()
                         .labels()

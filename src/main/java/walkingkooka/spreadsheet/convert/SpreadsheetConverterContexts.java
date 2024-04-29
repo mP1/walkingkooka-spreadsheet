@@ -20,10 +20,8 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
-
-import java.util.function.Function;
 
 public final class SpreadsheetConverterContexts implements PublicStaticHelper {
 
@@ -31,11 +29,11 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetConverterContext}
      */
     public static SpreadsheetConverterContext basic(final Converter<SpreadsheetConverterContext> converter,
-                                                    final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+                                                    final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                     final ExpressionNumberConverterContext context) {
         return BasicSpreadsheetConverterContext.with(
                 converter,
-                resolveIfLabel,
+                spreadsheetLabelNameResolver,
                 context
         );
     }

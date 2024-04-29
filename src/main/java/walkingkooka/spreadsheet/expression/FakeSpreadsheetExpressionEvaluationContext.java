@@ -24,12 +24,14 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -61,7 +63,10 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        // required so SpreadsheetLabelNameResolverTesting.testResolveLabelWithNullFails passes
+        Objects.requireNonNull(labelName, "labelName");
+
         throw new UnsupportedOperationException();
     }
 

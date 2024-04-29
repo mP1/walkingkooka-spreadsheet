@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -145,8 +146,8 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
     }
 
     @Override
-    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
-        return this.converterContext.resolveIfLabel(selection);
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        return this.converterContext.resolveLabel(labelName);
     }
 
     @Override

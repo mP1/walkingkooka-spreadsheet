@@ -96,7 +96,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPatte
                                 );
                             }
                         },
-                        RESOLVE_IF_LABEL,
+                        LABEL_NAME_RESOLVER,
                         ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
                                 ConverterContexts.basic(

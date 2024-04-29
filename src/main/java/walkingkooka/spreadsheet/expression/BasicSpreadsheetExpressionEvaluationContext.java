@@ -30,6 +30,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CaseSensitivity;
@@ -63,7 +65,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final ExpressionFunctionProvider functions,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                            final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+                                                            final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
                                                             final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(cellStore, "cellStore");
@@ -71,7 +73,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(references, "references");
-        Objects.requireNonNull(resolveIfLabel, "resolveIfLabel");
+        Objects.requireNonNull(SpreadsheetLabelNameResolver, "SpreadsheetLabelNameResolver");
         Objects.requireNonNull(now, "now");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
@@ -81,7 +83,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 spreadsheetMetadata,
                 functions,
                 references,
-                resolveIfLabel,
+                SpreadsheetLabelNameResolver,
                 now
         );
     }
@@ -92,7 +94,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final ExpressionFunctionProvider functions,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                        final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+                                                        final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
                                                         final Supplier<LocalDateTime> now) {
         super();
         this.cell = cell;
@@ -101,7 +103,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.functions = functions;
         this.references = references;
-        this.resolveIfLabel = resolveIfLabel;
+        this.SpreadsheetLabelNameResolver = SpreadsheetLabelNameResolver;
         this.now = now;
     }
 
@@ -154,11 +156,11 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
-    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
-        return this.resolveIfLabel.apply(selection);
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        return this.SpreadsheetLabelNameResolver.resolveLabel(labelName);
     }
 
-    private final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel;
+    private final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver;
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
@@ -386,7 +388,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return this.spreadsheetMetadata()
                 .converterContext(
                         this.now,
-                        this.resolveIfLabel
+                        this.SpreadsheetLabelNameResolver
                 );
     }
 

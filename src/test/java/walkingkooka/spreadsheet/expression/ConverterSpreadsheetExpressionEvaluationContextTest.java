@@ -35,6 +35,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
@@ -197,10 +199,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         throw new UnsupportedOperationException();
     };
 
-    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        Objects.requireNonNull(s, "selection");
-        throw new UnsupportedOperationException();
-    };
+    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     // tests............................................................................................................
 
@@ -485,7 +484,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         METADATA,
                         EXPRESSION_FUNCTION_PROVIDER,
                         REFERENCES,
-                        RESOLVE_IF_LABEL,
+                        LABEL_NAME_RESOLVER,
                         LocalDateTime::now
                 )
         );

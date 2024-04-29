@@ -68,6 +68,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -154,9 +156,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = METADATA_EN_AU.expressionNumberKind();
 
-    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        throw new UnsupportedOperationException();
-    };
+    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://server.example.com");
 
@@ -13274,13 +13274,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return new FakeSpreadsheetEngineContext() {
 
             @Override
-            public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
-                if (selection.isLabelName()) {
-                    return this.storeRepository()
+            public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+                return this.storeRepository()
                             .labels()
-                            .cellReferenceOrRangeOrFail((SpreadsheetExpressionReference) selection);
-                }
-                return selection;
+                        .cellReferenceOrRangeOrFail(labelName);
             }
 
             @Override
@@ -13520,7 +13517,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return this.spreadsheetMetadata()
                         .converterContext(
                                 NOW,
-                                RESOLVE_IF_LABEL
+                                LABEL_NAME_RESOLVER
                         );
             }
 

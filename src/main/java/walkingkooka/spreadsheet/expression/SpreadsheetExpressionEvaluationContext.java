@@ -25,10 +25,9 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -45,7 +44,8 @@ import java.util.function.Function;
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
         SpreadsheetConverterContext,
         HasSpreadsheetMetadata,
-        ExpressionFunctionProvider {
+        ExpressionFunctionProvider,
+        SpreadsheetLabelNameResolver {
 
     @Override
     default SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
@@ -103,12 +103,6 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      * Loads the cell for the given {@link SpreadsheetCellReference}, note that the formula is not evaluated.
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell);
-
-    /**
-     * If the {@link SpreadsheetSelection} is a {@link walkingkooka.spreadsheet.reference.SpreadsheetLabelName}
-     * resolve to a {@link SpreadsheetCellReference} or {@link SpreadsheetCellRangeReference}.
-     */
-    SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection);
 
     /**
      * Returns the base server url, which can then be used to create links to cells and more.

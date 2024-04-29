@@ -74,7 +74,7 @@ public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralS
     public SpreadsheetConverterContext createContext() {
         return SpreadsheetConverterContexts.basic(
                 SpreadsheetConverters.basic(),
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 ExpressionNumberConverterContexts.fake()
         );
     }

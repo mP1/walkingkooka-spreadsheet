@@ -40,6 +40,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
@@ -83,9 +85,7 @@ public final class Sample {
 
     private static final Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
-    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        throw new UnsupportedOperationException();
-    };
+    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     public static void main(final String[] args) {
         final SpreadsheetEngine engine = engine();
@@ -219,7 +219,7 @@ public final class Sample {
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
                                         NOW,
-                                        RESOLVE_IF_LABEL
+                                        LABEL_NAME_RESOLVER
                                 )
                         )
                 );
@@ -276,7 +276,7 @@ public final class Sample {
                         value,
                         metadata.formatterContext(
                                 NOW,
-                                RESOLVE_IF_LABEL
+                                LABEL_NAME_RESOLVER
                         )
                 );
             }

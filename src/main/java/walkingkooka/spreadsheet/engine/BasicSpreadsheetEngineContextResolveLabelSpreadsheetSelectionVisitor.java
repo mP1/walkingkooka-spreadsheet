@@ -34,19 +34,19 @@ import java.util.Objects;
  * A {@link SpreadsheetSelectionVisitor} that resolves an {@link SpreadsheetSelection} to a {@link SpreadsheetSelection}
  * if it is a label..
  */
-final class BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static SpreadsheetSelection resolveLabel(final SpreadsheetSelection selection,
                                              final SpreadsheetLabelStore store) {
         Objects.requireNonNull(selection, "selection");
 
-        final BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor visitor = new BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor(store);
+        final BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor visitor = new BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor(store);
         visitor.accept(selection);
         return visitor.result;
     }
 
     // @VisibleForTesting
-    BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
+    BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
         super();
         this.store = store;
     }

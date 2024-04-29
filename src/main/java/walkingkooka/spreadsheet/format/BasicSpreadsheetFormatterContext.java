@@ -25,6 +25,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -263,8 +264,8 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     @Override
-    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
-        return this.context.resolveIfLabel(selection);
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        return this.context.resolveLabel(labelName);
     }
 
     private final SpreadsheetConverterContext context;

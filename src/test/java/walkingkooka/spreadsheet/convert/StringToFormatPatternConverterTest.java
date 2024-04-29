@@ -26,6 +26,7 @@ import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -38,17 +39,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class StringToFormatPatternConverterTest implements ConverterTesting2<StringToFormatPatternConverter, SpreadsheetConverterContext> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
-
-    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        throw new UnsupportedOperationException();
-    };
 
     @Test
     public void testWithNullPatternFails() {
@@ -286,7 +282,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
 
         return SpreadsheetConverterContexts.basic(
                 converter,
-                RESOLVE_IF_LABEL,
+                SpreadsheetLabelNameResolvers.fake(),
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(

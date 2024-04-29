@@ -17,9 +17,13 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import java.util.Objects;
+
 public class FakeSpreadsheetLabelNameResolver implements SpreadsheetLabelNameResolver {
     @Override
     public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        // required so SpreadsheetLabelNameResolverTesting.testResolveLabelWithNullFails passes
+        Objects.requireNonNull(labelName, "labelName");
         throw new UnsupportedOperationException();
     }
 }

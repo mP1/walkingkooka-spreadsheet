@@ -58,6 +58,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.HasParser;
@@ -516,10 +517,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link ExpressionNumberConverterContext}
      */
     public final SpreadsheetConverterContext converterContext(final Supplier<LocalDateTime> now,
-                                                              final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
+                                                              final SpreadsheetLabelNameResolver resolver) {
         return SpreadsheetConverterContexts.basic(
                 this.converter(),
-                resolveIfLabel,
+                resolver,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
@@ -704,7 +705,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetFormatterContext}.
      */
     public final SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now,
-                                                              final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
+                                                              final SpreadsheetLabelNameResolver labelNameResolver) {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final Integer characterWidth = components.getOrNull(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH);
@@ -720,7 +721,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 this.formatter(),
                 this.converterContext(
                         now,
-                        resolveIfLabel
+                        labelNameResolver
                 )
         );
     }

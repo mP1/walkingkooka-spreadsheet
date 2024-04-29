@@ -1691,7 +1691,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 metadata.converter(),
                 SpreadsheetConverterContexts.basic(
                         converter,
-                        RESOLVE_IF_LABEL,
+                        LABEL_NAME_RESOLVER,
                         ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
                                 ConverterContexts.basic(
@@ -1756,7 +1756,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 metadata.converter(),
                 metadata.converterContext(
                         NOW,
-                        RESOLVE_IF_LABEL
+                        LABEL_NAME_RESOLVER
                 )
         );
     }
@@ -2091,7 +2091,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 null,
                 metadata.formatterContext(
                         NOW,
-                        RESOLVE_IF_LABEL
+                        LABEL_NAME_RESOLVER
                 )
         );
     }

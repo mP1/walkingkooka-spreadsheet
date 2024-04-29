@@ -24,6 +24,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -47,7 +48,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetMetadata spreadsheetMetadata,
                                                                final ExpressionFunctionProvider functions,
                                                                final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                               final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+                                                               final SpreadsheetLabelNameResolver labelNameResolver,
                                                                final Supplier<LocalDateTime> now) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 cell,
@@ -56,7 +57,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 spreadsheetMetadata,
                 functions,
                 references,
-                resolveIfLabel,
+                labelNameResolver,
                 now
         );
     }
