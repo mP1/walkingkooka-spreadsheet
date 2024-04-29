@@ -18,17 +18,13 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.HasConverter;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
  * A {@link walkingkooka.convert.ConverterContext} that includes a few extra operations that are needed in a Spreadsheet context.
  */
-public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext, HasConverter<SpreadsheetConverterContext> {
-
-    /**
-     * Resolves a {@link SpreadsheetSelection} if it is a {@link SpreadsheetLabelName} otherwise returning the original.
-     */
-    SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection);
+public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext,
+        HasConverter<SpreadsheetConverterContext>,
+        SpreadsheetLabelNameResolver {
 }

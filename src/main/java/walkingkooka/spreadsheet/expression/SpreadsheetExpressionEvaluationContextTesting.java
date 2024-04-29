@@ -21,7 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
@@ -32,7 +33,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C>,
-        ExpressionFunctionProviderTesting<C> {
+        ExpressionFunctionProviderTesting<C>,
+        SpreadsheetLabelNameResolverTesting {
 
     // parseExpression......................................................................................................
 
@@ -102,30 +104,18 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
-    // resolveIfLabel...................................................................................................
-
-    @Test
-    default void testResolveIfLabelNullSelectionFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createContext().resolveIfLabel(null)
-        );
-    }
-
-    default void resolveIfLabel(final C context,
-                                final SpreadsheetSelection selection,
-                                final SpreadsheetSelection expected) {
-        this.checkEquals(
-                expected,
-                context.resolveIfLabel(selection),
-                () -> "resolveIfLabel " + selection
-        );
-    }
-
     // ExpressionFunctionProvider.......................................................................................
 
     @Override
     default C createExpressionFunctionProvider() {
+        return this.createContext();
+    }
+
+    // SpreadsheetLabelNameResolver.....................................................................................
+
+
+    @Override
+    default SpreadsheetLabelNameResolver spreadsheetLabelNameResolver() {
         return this.createContext();
     }
 }

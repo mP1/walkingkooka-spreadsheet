@@ -126,11 +126,6 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void testResolveIfLabelNullSelectionFails() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testEvaluateFunctionContextReferenceInheritedLabel() {
         this.checkEquals(

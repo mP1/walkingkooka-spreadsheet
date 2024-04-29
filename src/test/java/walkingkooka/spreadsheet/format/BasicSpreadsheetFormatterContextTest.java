@@ -31,6 +31,8 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -51,17 +53,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
 
-    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = new Function<>() {
-        @Override
-        public SpreadsheetSelection apply(SpreadsheetSelection selection) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public String toString() {
-            return "RESOLVE_IF_LABEL";
-        }
-    };
+    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final int GENERAL_NUMBER_FORMAT_DIGIT_COUNT = 8;
 
@@ -257,7 +249,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean | SpreadsheetError->Number RESOLVE_IF_LABEL locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean | SpreadsheetError->Number " + LABEL_NAME_RESOLVER + " locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
         );
     }
 
@@ -343,7 +335,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                                 SpreadsheetConverters.errorToNumber()
                         )
                 ),
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(Converters.fake(),

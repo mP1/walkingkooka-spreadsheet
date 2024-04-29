@@ -157,15 +157,15 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     /**
-     * Complains if the given selection is a local label with a value.
+     * Complains if the given selection is a local label with a value
      */
     @Override
-    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
-        if (selection.isLabelName() && this.findLocalLabel((SpreadsheetLabelName) selection).isPresent()) {
-            throw new IllegalArgumentException("Label " + selection + " has a value");
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        if (this.findLocalLabel(labelName).isPresent()) {
+            throw new IllegalArgumentException("Label " + labelName + " has a value");
         }
 
-        return this.context.resolveIfLabel(selection);
+        return this.context.resolveLabel(labelName);
     }
 
     /**

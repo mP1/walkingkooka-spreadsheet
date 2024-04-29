@@ -25,14 +25,14 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -42,9 +42,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.numberNumber();
 
-    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        throw new UnsupportedOperationException();
-    };
+    private final static SpreadsheetLabelNameResolver LABEL_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     @Test
     public void testWithNullConverterFails() {
@@ -52,14 +50,14 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
                         null,
-                        RESOLVE_IF_LABEL,
+                        LABEL_RESOLVER,
                         ExpressionNumberConverterContexts.fake()
                 )
         );
     }
 
     @Test
-    public void testWithNullResolveIfLabelFails() {
+    public void testWithNullSpreadsheetLabelNameResolverFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
@@ -76,7 +74,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
                         CONVERTER,
-                        RESOLVE_IF_LABEL,
+                        LABEL_RESOLVER,
                         null
                 )
         );
@@ -97,7 +95,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 this.createContext(),
                 CONVERTER +
                         " " +
-                        RESOLVE_IF_LABEL +
+                        LABEL_RESOLVER +
                         " " +
                         this.converterContext() +
                         " " +
@@ -109,7 +107,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public BasicSpreadsheetConverterContext createContext() {
         return BasicSpreadsheetConverterContext.with(
                 CONVERTER,
-                RESOLVE_IF_LABEL,
+                LABEL_RESOLVER,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         this.converterContext(),

@@ -31,6 +31,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
@@ -43,7 +45,6 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -66,10 +67,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.fake();
 
-    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        Objects.requireNonNull(s, "selection");
-        throw new UnsupportedOperationException();
-    };
+    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
         throw new UnsupportedOperationException();
@@ -88,7 +86,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 NOW
         );
     }
@@ -102,7 +100,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 NOW
         );
     }
@@ -116,7 +114,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 NOW
         );
     }
@@ -130,7 +128,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 NOW
         );
     }
@@ -144,7 +142,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 null,
                 REFERENCES,
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 NOW
         );
     }
@@ -158,13 +156,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 EXPRESSION_FUNCTION_PROVIDER,
                 null,
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 NOW
         );
     }
 
     @Test
-    public void testWithNullResolveIfLabelFails() {
+    public void testWithNullLabelNameResolverFails() {
         this.withFails(
                 CELL,
                 CELL_STORE,
@@ -186,7 +184,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 null
         );
     }
@@ -197,7 +195,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final SpreadsheetMetadata spreadsheetMetadata,
                            final ExpressionFunctionProvider expressionFunctionProvider,
                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                           final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel,
+                           final SpreadsheetLabelNameResolver labelNameResolver,
                            final Supplier<LocalDateTime> now) {
         assertThrows(
                 NullPointerException.class,
@@ -208,7 +206,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         spreadsheetMetadata,
                         expressionFunctionProvider,
                         references,
-                        resolveIfLabel,
+                        labelNameResolver,
                         now
                 )
         );
@@ -453,7 +451,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20),
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 NOW
         );
     }

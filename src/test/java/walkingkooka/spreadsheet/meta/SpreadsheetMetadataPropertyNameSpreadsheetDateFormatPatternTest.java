@@ -99,10 +99,10 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTe
                                 );
                             }
                         },
-                        RESOLVE_IF_LABEL,
+                        LABEL_NAME_RESOLVER,
                         SpreadsheetConverterContexts.basic(
                                 Converters.fake(),
-                                RESOLVE_IF_LABEL,
+                                LABEL_NAME_RESOLVER,
                                 ExpressionNumberConverterContexts.basic(
                                         Converters.fake(),
                                         ConverterContexts.basic(

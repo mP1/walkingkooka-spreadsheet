@@ -25,7 +25,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
@@ -33,15 +34,12 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.function.Function;
 
 public final class UnformattedNumberSpreadsheetConverterTest implements ConverterTesting2<UnformattedNumberSpreadsheetConverter, SpreadsheetConverterContext>,
         SpreadsheetMetadataTesting,
         ToStringTesting<UnformattedNumberSpreadsheetConverter> {
 
-    private final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        throw new UnsupportedOperationException();
-    };
+    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     @Test
     public void testConvertToNumberFails() {
@@ -201,10 +199,10 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
 
         return SpreadsheetConverterContexts.basic(
                 converter,
-                RESOLVE_IF_LABEL,
+                LABEL_NAME_RESOLVER,
                 metadata.converterContext(
                         LocalDateTime::now,
-                        RESOLVE_IF_LABEL
+                        LABEL_NAME_RESOLVER
                 )
         );
     }

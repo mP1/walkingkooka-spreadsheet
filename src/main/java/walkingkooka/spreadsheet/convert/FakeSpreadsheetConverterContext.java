@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.FakeExpressionNumberConverterContext;
 
@@ -29,7 +30,7 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
     }
 
     @Override
-    public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 }

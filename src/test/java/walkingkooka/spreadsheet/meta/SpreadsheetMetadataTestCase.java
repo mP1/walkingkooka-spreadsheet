@@ -32,7 +32,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -61,9 +62,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         ToStringTesting<SpreadsheetMetadata>,
         TreePrintableTesting {
 
-    final static Function<SpreadsheetSelection, SpreadsheetSelection> RESOLVE_IF_LABEL = (s) -> {
-        throw new UnsupportedOperationException();
-    };
+    final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     SpreadsheetMetadataTestCase() {
         super();

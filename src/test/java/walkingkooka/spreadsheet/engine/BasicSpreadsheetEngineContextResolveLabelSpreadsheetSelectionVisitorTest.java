@@ -20,15 +20,15 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
-public final class BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor> {
+public final class BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor> {
     @Override
-    public BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor createVisitor() {
-        return new BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor(null);
+    public BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor createVisitor() {
+        return new BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor(null);
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor> type() {
-        return BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor.class;
+    public Class<BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor> type() {
+        return BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor.class;
     }
 
     @Override

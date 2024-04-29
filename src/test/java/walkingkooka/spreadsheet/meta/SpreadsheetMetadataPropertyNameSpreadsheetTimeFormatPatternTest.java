@@ -103,7 +103,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
                                 );
                             }
                         },
-                        RESOLVE_IF_LABEL,
+                        LABEL_NAME_RESOLVER,
                         ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
                                 ConverterContexts.basic(Converters.fake(),
