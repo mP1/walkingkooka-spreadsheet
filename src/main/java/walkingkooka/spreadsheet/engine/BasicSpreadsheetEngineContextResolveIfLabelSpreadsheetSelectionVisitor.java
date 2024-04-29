@@ -36,8 +36,8 @@ import java.util.Objects;
  */
 final class BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection,
-                                               final SpreadsheetLabelStore store) {
+    static SpreadsheetSelection resolveLabel(final SpreadsheetSelection selection,
+                                             final SpreadsheetLabelStore store) {
         Objects.requireNonNull(selection, "selection");
 
         final BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor visitor = new BasicSpreadsheetEngineContextResolveIfLabelSpreadsheetSelectionVisitor(store);

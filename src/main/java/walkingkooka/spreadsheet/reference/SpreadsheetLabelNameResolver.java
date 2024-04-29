@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import java.util.Objects;
+
 /**
  * A SAM interface that defines a single method to resolve any {@link SpreadsheetLabelName} selections to a NON
  * {@link SpreadsheetSelection}. In the cases of an unknown label, a {@link RuntimeException} will be thrown.
@@ -27,5 +29,17 @@ public interface SpreadsheetLabelNameResolver {
      * Resolves a {@link SpreadsheetSelection} if it is a {@link SpreadsheetLabelName} otherwise returning the target.
      * This must never return a {@link SpreadsheetLabelName}.
      */
-    SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection);
+    default SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+        Objects.requireNonNull(selection, "selection");
+
+        return selection.isLabelName() ?
+                this.resolveLabel((SpreadsheetLabelName) selection) :
+                selection;
+    }
+
+    /**
+     * Resolves the given {@link SpreadsheetLabelName} into a non label {@link SpreadsheetSelection}.
+     * Unknown labels will result in an exception being thrown.
+     */
+    SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName);
 }

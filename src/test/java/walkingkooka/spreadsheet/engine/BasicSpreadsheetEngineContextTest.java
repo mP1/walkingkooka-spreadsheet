@@ -238,32 +238,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    // resolveIfLabel..............................................................................................
+    // resolveLabel.....................................................................................................
 
     @Test
-    public void testResolveIfLabelLabelUnknownFails() {
-        final RuntimeException thrown = assertThrows(
-                RuntimeException.class,
-                () -> this.createContext(
-                        SpreadsheetLabelStores.treeMap()
-                ).resolveIfLabel(SpreadsheetLabelName.labelName("UnknownLabel123"))
-        );
-        this.checkEquals(
-                "Label not found: UnknownLabel123",
-                thrown.getMessage(),
-                "message"
-        );
-    }
-
-    @Test
-    public void testResolveIfLabelLabel() {
+    public void testResolveLabelWithLabel() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label456");
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
         store.save(label.mapping(cell));
 
-        this.resolveIfLabelAndCheck(
+        this.resolveLabelAndCheck(
                 this.createContext(store),
                 label,
                 cell
@@ -271,7 +256,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testResolveIfLabelLabelToLabelToCell() {
+    public void testResolveLabelWithLabelToLabelToCell() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label222");
@@ -280,7 +265,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         store.save(label1.mapping(label2));
         store.save(label2.mapping(cell));
 
-        this.resolveIfLabelAndCheck(
+        this.resolveLabelAndCheck(
                 this.createContext(store),
                 label1,
                 cell
