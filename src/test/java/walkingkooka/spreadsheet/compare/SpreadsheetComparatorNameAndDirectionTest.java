@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -156,6 +157,18 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
+    }
+
+    // SpreadsheetColumnOrRowSpreadsheetComparatorNames.................................................................
+
+    @Test
+    public void testSetColumnOrRow() {
+        this.checkEquals(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text123 DOWN"),
+                SpreadsheetComparatorName.with("text123")
+                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+                        .setColumnOrRow(SpreadsheetSelection.parseColumn("A"))
+        );
     }
 
     // equals...........................................................................................................
