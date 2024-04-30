@@ -160,5 +160,39 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
         );
     }
 
+    // resolveLabelFails................................................................................................
+
+    default void resolveLabelFails(final String labelName) {
+        this.resolveLabelFails(
+                SpreadsheetSelection.labelName(labelName)
+        );
+    }
+
+    default void resolveLabelFails(final SpreadsheetLabelName labelName) {
+        this.resolveLabelFails(
+                this.spreadsheetLabelNameResolver(),
+                labelName
+        );
+    }
+
+    default void resolveLabelFails(final SpreadsheetLabelNameResolver resolver,
+                                   final String labelName) {
+        this.resolveLabelFails(
+                resolver,
+                SpreadsheetSelection.labelName(labelName)
+        );
+    }
+
+    default void resolveLabelFails(final SpreadsheetLabelNameResolver resolver,
+                                   final SpreadsheetLabelName labelName) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> resolver.resolveLabel(labelName),
+                () -> "resolveLabel " + labelName
+        );
+    }
+
+    // spreadsheetLabelNameResolver.....................................................................................
+
     SpreadsheetLabelNameResolver spreadsheetLabelNameResolver();
 }
