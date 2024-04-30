@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.collect.list.ImmutableList;
+import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 
@@ -30,7 +30,7 @@ import java.util.Objects;
  * column with a range sort.
  */
 final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparators>
-        implements ImmutableList<SpreadsheetColumnOrRowSpreadsheetComparators> {
+        implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators> {
 
     static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
         Objects.requireNonNull(columnOrRows, "columnOrRows");
@@ -94,8 +94,8 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     // ImmutableList....................................................................................................
 
     @Override
-    public ImmutableList<SpreadsheetColumnOrRowSpreadsheetComparators> setElements(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {
-        final ImmutableList<SpreadsheetColumnOrRowSpreadsheetComparators> copy = with(comparators);
+    public SpreadsheetColumnOrRowSpreadsheetComparatorsList setElements(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorsList copy = with(comparators);
         return this.equals(copy) ?
                 this :
                 copy;
