@@ -94,7 +94,7 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
         );
     }
 
-    // resolveIfLabelFailsAndCheck.......................................................................................
+    // resolveIfLabelFails..............................................................................................
 
     default void resolveIfLabelFails(final SpreadsheetSelection selection) {
         this.resolveIfLabelFails(
