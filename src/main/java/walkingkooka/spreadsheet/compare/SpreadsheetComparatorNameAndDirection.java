@@ -18,7 +18,9 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.naming.HasName;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -84,7 +86,21 @@ public final class SpreadsheetComparatorNameAndDirection implements HasName<Spre
 
     private final SpreadsheetComparatorDirection direction;
 
-    // Object..................................................................................................
+    // SpreadsheetColumnOrRowSpreadsheetComparatorNames.................................................................
+
+    /**
+     * Setter that creates a new {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
+     */
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNames setColumnOrRow(final SpreadsheetColumnOrRowReference columnOrRow) {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                columnOrRow,
+                Lists.of(
+                        this
+                )
+        );
+    }
+
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {
