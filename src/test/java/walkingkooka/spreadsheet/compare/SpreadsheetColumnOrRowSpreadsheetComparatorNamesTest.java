@@ -793,6 +793,18 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         );
     }
 
+    // SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.............................................................
+
+    @Test
+    public void testList() {
+        final String text = "A=text123 DOWN";
+
+        this.checkEquals(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(text),
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse(text).list()
+        );
+    }
+
     // Object...........................................................................................................
     @Test
     public void testToString() {

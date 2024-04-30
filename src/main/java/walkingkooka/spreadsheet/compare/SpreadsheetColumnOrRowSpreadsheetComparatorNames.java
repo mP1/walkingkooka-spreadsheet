@@ -391,6 +391,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
 
     private final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections;
 
+    // SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.............................................................
+
+    /**
+     * Creates a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNamesList} with this.
+     */
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList list() {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                Lists.of(
+                        this
+                )
+        );
+    }
+
     // Object...........................................................................................................
 
     @Override
