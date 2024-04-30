@@ -94,6 +94,24 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
         );
     }
 
+    // resolveIfLabelFailsAndCheck.......................................................................................
+
+    default void resolveIfLabelFails(final SpreadsheetSelection selection) {
+        this.resolveIfLabelFails(
+                this.spreadsheetLabelNameResolver(),
+                selection
+        );
+    }
+
+    default void resolveIfLabelFails(final SpreadsheetLabelNameResolver resolver,
+                                     final SpreadsheetSelection selection) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> resolver.resolveIfLabel(selection),
+                () -> "resolveIfLabelFalls " + selection
+        );
+    }
+
     // resolveLabel.....................................................................................................
 
     @Test
