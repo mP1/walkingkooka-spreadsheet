@@ -194,6 +194,10 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
         return this == TOP || this == TOP_LEFT || this == TOP_RIGHT;
     }
 
+    private boolean isBottom() {
+        return this == BOTTOM || this == BOTTOM_LEFT || this == BOTTOM_RIGHT;
+    }
+
     private void failIfNone() {
         if (this == NONE) {
             throw new IllegalArgumentException("Invalid operation for " + this);
@@ -255,5 +259,25 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
         }
 
         return column;
+    }
+
+    /**
+     * Given this anchor returns a row range compatible anchor. This is useful for converting a cell-range and its
+     * anchor to a row-range.
+     */
+    public final SpreadsheetViewportAnchor toRowRangeAnchor() {
+        final SpreadsheetViewportAnchor row;
+
+        if (this.isTop()) {
+            row = TOP;
+        } else {
+            if (this.isBottom()) {
+                row = BOTTOM;
+            } else {
+                throw new IllegalArgumentException("Cannot convert " + this + " to a row range compatible anchor");
+            }
+        }
+
+        return row;
     }
 }
