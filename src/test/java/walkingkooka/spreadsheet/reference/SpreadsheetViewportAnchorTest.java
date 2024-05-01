@@ -791,6 +791,91 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
+    // toRowRangeAnchor..............................................................................................
+
+    @Test
+    public void testToRowRangeNoneFails() {
+        this.toRowRangeAnchorFails(SpreadsheetViewportAnchor.NONE);
+    }
+
+    @Test
+    public void testToRowRangeLeftFails() {
+        this.toRowRangeAnchorFails(SpreadsheetViewportAnchor.LEFT);
+    }
+
+    @Test
+    public void testToRowRangeRightFails() {
+        this.toRowRangeAnchorFails(SpreadsheetViewportAnchor.RIGHT);
+    }
+
+    private void toRowRangeAnchorFails(final SpreadsheetViewportAnchor anchor) {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> anchor.toRowRangeAnchor()
+        );
+        this.checkEquals(
+                "Cannot convert " + anchor + " to a row range compatible anchor",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testToRowRangeAnchorTop() {
+        this.toRowRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.TOP,
+                SpreadsheetViewportAnchor.TOP
+        );
+    }
+
+    @Test
+    public void testToRowRangeAnchorTopLeft() {
+        this.toRowRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.TOP
+        );
+    }
+
+    @Test
+    public void testToRowRangeAnchorTopRight() {
+        this.toRowRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.TOP
+        );
+    }
+
+    @Test
+    public void testToRowRangeAnchorBottom() {
+        this.toRowRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.BOTTOM,
+                SpreadsheetViewportAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testToRowRangeAnchorBottomLeft() {
+        this.toRowRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.BOTTOM
+        );
+    }
+
+    @Test
+    public void testToRowRangeAnchorBottomRight() {
+        this.toRowRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+                SpreadsheetViewportAnchor.BOTTOM
+        );
+    }
+
+    private void toRowRangeAnchorAndCheck(final SpreadsheetViewportAnchor anchor,
+                                          final SpreadsheetViewportAnchor expected) {
+        assertSame(
+                expected,
+                anchor.toRowRangeAnchor(),
+                () -> anchor.toString()
+        );
+    }
+
     // ClassTesting....................................................................................................
 
     @Override
