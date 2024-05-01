@@ -767,6 +767,14 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     @Test
+    public void testToColumnRangeAnchorBottomLeft() {
+        this.toColumnRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.BOTTOM_LEFT,
+                SpreadsheetViewportAnchor.LEFT
+        );
+    }
+
+    @Test
     public void testToColumnRangeAnchorRight() {
         this.toColumnRangeAnchorAndCheck(
                 SpreadsheetViewportAnchor.RIGHT,
@@ -778,6 +786,14 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     public void testToColumnRangeAnchorTopRight() {
         this.toColumnRangeAnchorAndCheck(
                 SpreadsheetViewportAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testToColumnRangeAnchorBottomRight() {
+        this.toColumnRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
                 SpreadsheetViewportAnchor.RIGHT
         );
     }
