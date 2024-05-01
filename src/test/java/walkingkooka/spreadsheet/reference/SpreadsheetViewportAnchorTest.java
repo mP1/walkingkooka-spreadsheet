@@ -722,6 +722,75 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         return thrown;
     }
 
+    // toColumnRangeAnchor..............................................................................................
+
+    @Test
+    public void testToColumnRangeNoneFails() {
+        this.toColumnRangeAnchorFails(SpreadsheetViewportAnchor.NONE);
+    }
+
+    @Test
+    public void testToColumnRangeTopFails() {
+        this.toColumnRangeAnchorFails(SpreadsheetViewportAnchor.TOP);
+    }
+
+    @Test
+    public void testToColumnRangeBottomFails() {
+        this.toColumnRangeAnchorFails(SpreadsheetViewportAnchor.BOTTOM);
+    }
+
+    private void toColumnRangeAnchorFails(final SpreadsheetViewportAnchor anchor) {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> anchor.toColumnRangeAnchor()
+        );
+        this.checkEquals(
+                "Cannot convert " + anchor + " to a column range compatible anchor",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testToColumnRangeAnchorLeft() {
+        this.toColumnRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.LEFT,
+                SpreadsheetViewportAnchor.LEFT
+        );
+    }
+
+    @Test
+    public void testToColumnRangeAnchorTopLeft() {
+        this.toColumnRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.TOP_LEFT,
+                SpreadsheetViewportAnchor.LEFT
+        );
+    }
+
+    @Test
+    public void testToColumnRangeAnchorRight() {
+        this.toColumnRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.RIGHT,
+                SpreadsheetViewportAnchor.RIGHT
+        );
+    }
+
+    @Test
+    public void testToColumnRangeAnchorTopRight() {
+        this.toColumnRangeAnchorAndCheck(
+                SpreadsheetViewportAnchor.TOP_RIGHT,
+                SpreadsheetViewportAnchor.RIGHT
+        );
+    }
+
+    private void toColumnRangeAnchorAndCheck(final SpreadsheetViewportAnchor anchor,
+                                             final SpreadsheetViewportAnchor expected) {
+        assertSame(
+                expected,
+                anchor.toColumnRangeAnchor(),
+                () -> anchor.toString()
+        );
+    }
+
     // ClassTesting....................................................................................................
 
     @Override

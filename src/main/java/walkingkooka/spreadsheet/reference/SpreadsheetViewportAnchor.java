@@ -186,6 +186,10 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
         return this == LEFT || this == TOP_LEFT || this == BOTTOM_LEFT;
     }
 
+    private boolean isRight() {
+        return this == RIGHT || this == TOP_RIGHT || this == BOTTOM_RIGHT;
+    }
+
     private boolean isTop() {
         return this == TOP || this == TOP_LEFT || this == TOP_RIGHT;
     }
@@ -231,5 +235,25 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
         }
 
         throw new IllegalArgumentException("Invalid text=" + CharSequences.quoteAndEscape(text));
+    }
+
+    /**
+     * Given this anchor returns a column range compatible anchor. This is useful for converting a cell-range and its
+     * anchor to a column-range.
+     */
+    public final SpreadsheetViewportAnchor toColumnRangeAnchor() {
+        final SpreadsheetViewportAnchor column;
+
+        if (this.isLeft()) {
+            column = LEFT;
+        } else {
+            if (this.isRight()) {
+                column = RIGHT;
+            } else {
+                throw new IllegalArgumentException("Cannot convert " + this + " to a column range compatible anchor");
+            }
+        }
+
+        return column;
     }
 }
