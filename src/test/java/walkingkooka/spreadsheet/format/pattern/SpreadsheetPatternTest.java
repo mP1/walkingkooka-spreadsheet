@@ -1494,7 +1494,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/3951")
     @Test
     public void testDecimalFormatInternationalCurrencySymbol() throws Exception {
         this.decimalFormatParseAndCheck(
