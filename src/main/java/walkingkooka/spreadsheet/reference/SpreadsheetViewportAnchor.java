@@ -243,18 +243,22 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
 
     /**
      * Given this anchor returns a column range compatible anchor. This is useful for converting a cell-range and its
-     * anchor to a column-range.
+     * anchor to a column-range. Note NONE will return NONE, this allows code to work converting cell/cell-range to column/column-range.
      */
-    public final SpreadsheetViewportAnchor toColumnRangeAnchor() {
+    public final SpreadsheetViewportAnchor toColumnOrColumnRangeAnchor() {
         final SpreadsheetViewportAnchor column;
 
-        if (this.isLeft()) {
-            column = LEFT;
+        if (this == NONE) {
+            column = NONE;
         } else {
-            if (this.isRight()) {
-                column = RIGHT;
+            if (this.isLeft()) {
+                column = LEFT;
             } else {
-                throw new IllegalArgumentException("Cannot convert " + this + " to a column range compatible anchor");
+                if (this.isRight()) {
+                    column = RIGHT;
+                } else {
+                    throw new IllegalArgumentException("Cannot convert " + this + " to a column range compatible anchor");
+                }
             }
         }
 
@@ -263,18 +267,22 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
 
     /**
      * Given this anchor returns a row range compatible anchor. This is useful for converting a cell-range and its
-     * anchor to a row-range.
+     * anchor to a row-range. Note NONE will return NONE, this allows code to work converting cell/cell-range to row/row-range.
      */
-    public final SpreadsheetViewportAnchor toRowRangeAnchor() {
+    public final SpreadsheetViewportAnchor toRowOrRowRangeAnchor() {
         final SpreadsheetViewportAnchor row;
 
-        if (this.isTop()) {
-            row = TOP;
+        if (this == NONE) {
+            row = NONE;
         } else {
-            if (this.isBottom()) {
-                row = BOTTOM;
+            if (this.isTop()) {
+                row = TOP;
             } else {
-                throw new IllegalArgumentException("Cannot convert " + this + " to a row range compatible anchor");
+                if (this.isBottom()) {
+                    row = BOTTOM;
+                } else {
+                    throw new IllegalArgumentException("Cannot convert " + this + " to a row range compatible anchor");
+                }
             }
         }
 
