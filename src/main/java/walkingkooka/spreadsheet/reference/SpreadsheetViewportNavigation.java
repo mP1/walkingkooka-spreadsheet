@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -61,6 +62,13 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      */
     public static SpreadsheetViewportNavigation cell(final SpreadsheetCellReference selection) {
         return SpreadsheetViewportNavigationSelectionCell.with(selection);
+    }
+
+    /**
+     * {@see SpreadsheetViewportNavigationSelectionColumn}
+     */
+    public static SpreadsheetViewportNavigation column(final SpreadsheetColumnReference selection) {
+        return SpreadsheetViewportNavigationSelectionColumn.with(selection);
     }
 
     /**
@@ -501,17 +509,34 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                             .reference()
             );
         } else {
-            throw new InvalidCharacterException(
-                    text,
-                    cursor.lineInfo()
-                            .textOffset()
-            );
+            if (isMatch(COLUMN, cursor)) {
+                parseSpace(cursor);
+
+                navigation = column(
+                        COLUMN_PARSER.parse(
+                                        cursor,
+                                        PARSER_CONTEXT
+                                ).get()
+                                .cast(SpreadsheetColumnReferenceParserToken.class)
+                                .reference()
+                );
+            } else {
+                throw new InvalidCharacterException(
+                        text,
+                        cursor.lineInfo()
+                                .textOffset()
+                );
+            }
         }
 
         return navigation;
     }
 
     private final static Parser<ParserContext> CELL_PARSER = SpreadsheetParsers.cell()
+            .orReport(ParserReporters.invalidCharacterException())
+            .cast();
+
+    private final static Parser<ParserContext> COLUMN_PARSER = SpreadsheetParsers.column()
             .orReport(ParserReporters.invalidCharacterException())
             .cast();
 
