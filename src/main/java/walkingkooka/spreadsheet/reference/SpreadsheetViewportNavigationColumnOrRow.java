@@ -23,6 +23,9 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 
 import java.util.Optional;
 
+/**
+ * Base class for any navigation involving a column or row, such as a CURSOR DOWN or SHIFT CURSOR DOWN keyboard keys.
+ */
 abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewportNavigation {
 
     SpreadsheetViewportNavigationColumnOrRow() {
