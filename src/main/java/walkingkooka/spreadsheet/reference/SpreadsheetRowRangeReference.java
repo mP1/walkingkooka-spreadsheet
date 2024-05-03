@@ -472,7 +472,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
                 s -> anchor.row(this)
-                        .rowRange((SpreadsheetRowReference) s)
+                        .rowRange(s.toRow())
                         .toScalarIfUnit()
         );
     }

@@ -105,7 +105,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     public SpreadsheetRowReference setReferenceKind(final SpreadsheetReferenceKind referenceKind) {
         checkReferenceKind(referenceKind);
 
-        return (SpreadsheetRowReference) this.setReferenceKind0(referenceKind);
+        return this.setReferenceKind0(referenceKind).toRow();
     }
 
     @Override

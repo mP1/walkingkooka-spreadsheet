@@ -685,7 +685,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
                 s -> anchor.cell(this)
-                        .cellRange((SpreadsheetCellReference) s)
+                        .cellRange(s.toCell())
                         .toScalarIfUnit()
         );
     }
