@@ -32,7 +32,7 @@ final class SpreadsheetViewportNavigationSelectionRow extends SpreadsheetViewpor
         return new SpreadsheetViewportNavigationSelectionRow(selection);
     }
 
-    public SpreadsheetViewportNavigationSelectionRow(final SpreadsheetRowReference selection) {
+    private SpreadsheetViewportNavigationSelectionRow(final SpreadsheetRowReference selection) {
         super(selection);
     }
 }
