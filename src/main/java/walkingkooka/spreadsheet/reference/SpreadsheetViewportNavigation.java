@@ -21,6 +21,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.HasText;
@@ -363,9 +364,9 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
 
     private final static Parser<ParserContext> EXTEND_DOWN = stringParser("extend-down");
 
-    private final static Parser<ParserContext> SPACE = Parsers.character(
+    private final static Parser<ParserContext> SPACE = characterParserOrReport(
             CharPredicates.is(' ')
-    ).orReport(INVALID_CHARACTER_EXCEPTION);
+    );
 
     private final static Parser<ParserContext> VALUE = Parsers.longParser(10)
             .orReport(INVALID_CHARACTER_EXCEPTION);
@@ -377,14 +378,22 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     private final static Parser<ParserContext> PX = stringParser("px")
             .orReport(INVALID_CHARACTER_EXCEPTION);
 
-    private final static Parser<ParserContext> SEPARATOR = Parsers.character(
+    private final static Parser<ParserContext> SEPARATOR = characterParserOrReport(
             CharPredicates.is(SpreadsheetViewport.SEPARATOR.character())
-    ).orReport(INVALID_CHARACTER_EXCEPTION);
+    );
 
     private final static ParserContext CONTEXT = ParserContexts.basic(
             DateTimeContexts.fake(),
             DecimalNumberContexts.american(MathContext.DECIMAL32)
     );
+
+    /**
+     * Factory that creates a {@link Parsers#string(String, CaseSensitivity)}.
+     */
+    private static Parser<ParserContext> characterParserOrReport(final CharPredicate predicate) {
+        return Parsers.character(predicate)
+                .orReport(INVALID_CHARACTER_EXCEPTION);
+    }
 
     /**
      * Factory that creates a {@link Parsers#string(String, CaseSensitivity)}.
