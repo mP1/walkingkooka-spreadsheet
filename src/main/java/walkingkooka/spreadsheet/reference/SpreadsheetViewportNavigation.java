@@ -312,6 +312,12 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         final TextCursor cursor = TextCursors.charSequence(text);
         final List<SpreadsheetViewportNavigation> navigations = Lists.array();
 
+        final Supplier<IllegalArgumentException> ice = () -> new InvalidCharacterException(
+                text,
+                cursor.lineInfo()
+                        .textOffset()
+        );
+
         while (false == cursor.isEmpty()) {
             final SpreadsheetViewportNavigation navigation;
 
@@ -385,14 +391,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                                         SpreadsheetViewportNavigation::cell,
                                                         SpreadsheetViewportNavigation::column,
                                                         SpreadsheetViewportNavigation::row,
-                                                        text
+                                                        ice
                                                 );
                                             } else {
-                                                throw new InvalidCharacterException(
-                                                        text,
-                                                        cursor.lineInfo()
-                                                                .textOffset()
-                                                );
+                                                throw ice.get();
                                             }
                                         }
                                     }
@@ -508,7 +510,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                                                       final Function<SpreadsheetCellReference, SpreadsheetViewportNavigation> cell,
                                                                       final Function<SpreadsheetColumnReference, SpreadsheetViewportNavigation> column,
                                                                       final Function<SpreadsheetRowReference, SpreadsheetViewportNavigation> row,
-                                                                      final String text) {
+                                                                      final Supplier<IllegalArgumentException> invalidCharacter) {
         parseSpace(cursor);
 
         final SpreadsheetViewportNavigation navigation;
@@ -546,11 +548,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                             ).reference()
                     );
                 } else {
-                    throw new InvalidCharacterException(
-                            text,
-                            cursor.lineInfo()
-                                    .textOffset()
-                    );
+                    throw invalidCharacter.get();
                 }
             }
         }
