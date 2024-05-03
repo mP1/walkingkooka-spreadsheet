@@ -473,9 +473,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                                 tt -> tt instanceof SpreadsheetParserToken && tt instanceof HasSpreadsheetReference,
                                 ttt -> {
                                     final HasSpreadsheetReference<?> has = (HasSpreadsheetReference<?>) ttt;
-                                    consumer.accept(
-                                            (SpreadsheetExpressionReference) has.reference()
-                                    );
+                                    final Object reference = has.reference();
+                                    if (reference instanceof SpreadsheetExpressionReference) {
+                                        consumer.accept(
+                                                (SpreadsheetExpressionReference) reference
+                                        );
+                                    }
                                 }
                         )
                 );
