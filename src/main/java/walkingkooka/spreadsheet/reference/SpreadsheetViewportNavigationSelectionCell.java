@@ -30,7 +30,7 @@ final class SpreadsheetViewportNavigationSelectionCell extends SpreadsheetViewpo
         return new SpreadsheetViewportNavigationSelectionCell(selection);
     }
 
-    public SpreadsheetViewportNavigationSelectionCell(final SpreadsheetCellReference selection) {
+    private SpreadsheetViewportNavigationSelectionCell(final SpreadsheetCellReference selection) {
         super(selection);
     }
 }
