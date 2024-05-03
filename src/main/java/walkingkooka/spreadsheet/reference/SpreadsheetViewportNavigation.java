@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
@@ -71,6 +72,13 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         return SpreadsheetViewportNavigationSelectionColumn.with(selection);
     }
 
+    /**
+     * {@see SpreadsheetViewportNavigationSelectionRow}
+     */
+    public static SpreadsheetViewportNavigation row(final SpreadsheetRowReference row) {
+        return SpreadsheetViewportNavigationSelectionRow.with(row);
+    }
+    
     /**
      * {@see SpreadsheetViewportNavigationExtendDownPixel}
      */
@@ -521,11 +529,24 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                 .reference()
                 );
             } else {
-                throw new InvalidCharacterException(
-                        text,
-                        cursor.lineInfo()
-                                .textOffset()
-                );
+                if (isMatch(ROW, cursor)) {
+                    parseSpace(cursor);
+
+                    navigation = row(
+                            ROW_PARSER.parse(
+                                            cursor,
+                                            PARSER_CONTEXT
+                                    ).get()
+                                    .cast(SpreadsheetRowReferenceParserToken.class)
+                                    .reference()
+                    );
+                } else {
+                    throw new InvalidCharacterException(
+                            text,
+                            cursor.lineInfo()
+                                    .textOffset()
+                    );
+                }
             }
         }
 
@@ -537,6 +558,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
             .cast();
 
     private final static Parser<ParserContext> COLUMN_PARSER = SpreadsheetParsers.column()
+            .orReport(ParserReporters.invalidCharacterException())
+            .cast();
+
+    private final static Parser<ParserContext> ROW_PARSER = SpreadsheetParsers.row()
             .orReport(ParserReporters.invalidCharacterException())
             .cast();
 
