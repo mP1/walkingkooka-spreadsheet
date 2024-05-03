@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
@@ -381,6 +382,9 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                             if (isMatch(SELECT, cursor)) {
                                                 navigation = parseCellColumnOrRow(
                                                         cursor,
+                                                        SpreadsheetViewportNavigation::cell,
+                                                        SpreadsheetViewportNavigation::column,
+                                                        SpreadsheetViewportNavigation::row,
                                                         text
                                                 );
                                             } else {
@@ -501,6 +505,9 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     // select column AB
     // select row 23
     private static SpreadsheetViewportNavigation parseCellColumnOrRow(final TextCursor cursor,
+                                                                      final Function<SpreadsheetCellReference, SpreadsheetViewportNavigation> cell,
+                                                                      final Function<SpreadsheetColumnReference, SpreadsheetViewportNavigation> column,
+                                                                      final Function<SpreadsheetRowReference, SpreadsheetViewportNavigation> row,
                                                                       final String text) {
         parseSpace(cursor);
 
@@ -509,7 +516,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         if (isMatch(CELL, cursor)) {
             parseSpace(cursor);
 
-            navigation = cell(
+            navigation = cell.apply(
                     parseSelection(
                             CELL_PARSER,
                             cursor,
@@ -520,7 +527,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
             if (isMatch(COLUMN, cursor)) {
                 parseSpace(cursor);
 
-                navigation = column(
+                navigation = column.apply(
                         parseSelection(
                                 COLUMN_PARSER,
                                 cursor,
@@ -531,7 +538,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                 if (isMatch(ROW, cursor)) {
                     parseSpace(cursor);
 
-                    navigation = row(
+                    navigation = row.apply(
                             parseSelection(
                                     ROW_PARSER,
                                     cursor,
