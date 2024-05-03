@@ -2023,7 +2023,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
         return Predicates.setContains(
-                Sets.of("isAll", "isFirst", "isLast", "isHidden")
+                Sets.of("isAll", "isFirst", "isLast", "isHidden", "isScalar")
         );
     }
 

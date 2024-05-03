@@ -847,6 +847,14 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
+     * Tests if this selection is a scalar, note {@link SpreadsheetLabelName} returns false even if it might point to
+     * a single cell.
+     */
+    public final boolean isScalar() {
+        return this.isCellReference() || this.isColumnReference() || this.isRowReference();
+    }
+
+    /**
      * Not really a cast operation but only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRangeReference} will
      * succeed all other types will throw {@link UnsupportedOperationException}.
      */
