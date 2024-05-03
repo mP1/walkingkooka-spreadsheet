@@ -1292,6 +1292,73 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    // isScalar.........................................................................................................
+
+    @Test
+    public void testIsScalarWithCell() {
+        this.isScalarAndCheck(
+                SpreadsheetSelection.A1,
+                true
+        );
+    }
+
+    @Test
+    public void testIsScalarWithCellRange() {
+        this.isScalarAndCheck(
+                SpreadsheetSelection.parseCellRange("A1"),
+                false
+        );
+    }
+
+    @Test
+    public void testIsScalarWithColumn() {
+        this.isScalarAndCheck(
+                SpreadsheetSelection.A1.column(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsScalarWithColumnRange() {
+        this.isScalarAndCheck(
+                SpreadsheetSelection.A1.toColumnRange(),
+                false
+        );
+    }
+
+    @Test
+    public void testIsScalarWithLabel() {
+        this.isScalarAndCheck(
+                SpreadsheetSelection.labelName("Label123"),
+                false
+        );
+    }
+
+    @Test
+    public void testIsScalarWithRow() {
+        this.isScalarAndCheck(
+                SpreadsheetSelection.A1.row(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsScalarWithRowRange() {
+        this.isScalarAndCheck(
+                SpreadsheetSelection.A1.toRowRange(),
+                false
+        );
+    }
+
+    private void isScalarAndCheck(final SpreadsheetSelection selection,
+                                  final boolean expected) {
+        this.checkEquals(
+                expected,
+                selection.isScalar(),
+                selection::toString
+        );
+    }
+    
     // toCellRangeResolvingLabels.......................................................................................................
 
     @Test
