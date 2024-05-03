@@ -539,6 +539,82 @@ public final class SpreadsheetViewportNavigationTest implements ParseStringTesti
         );
     }
 
+    @Test
+    public void testCompactExtendLeftUpExtendRightDownRightExtendLeftSelectCell() {
+        final SpreadsheetViewportNavigation cell = SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1);
+
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportNavigation.extendLeftColumn(),
+                        SpreadsheetViewportNavigation.upRow(),
+                        SpreadsheetViewportNavigation.extendRightColumn(),
+                        SpreadsheetViewportNavigation.downRow(),
+                        SpreadsheetViewportNavigation.rightColumn(),
+                        SpreadsheetViewportNavigation.extendLeftColumn(),
+                        cell
+                ),
+                cell
+        );
+    }
+
+    @Test
+    public void testCompactExtendLeftUpExtendRightDownRightExtendLeftSelectCellDownRow() {
+        final SpreadsheetViewportNavigation cell = SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1);
+
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportNavigation.extendLeftColumn(),
+                        SpreadsheetViewportNavigation.upRow(),
+                        SpreadsheetViewportNavigation.extendRightColumn(),
+                        SpreadsheetViewportNavigation.downRow(),
+                        SpreadsheetViewportNavigation.rightColumn(),
+                        SpreadsheetViewportNavigation.extendLeftColumn(),
+                        cell,
+                        SpreadsheetViewportNavigation.downRow()
+                ),
+                cell,
+                SpreadsheetViewportNavigation.downRow()
+        );
+    }
+
+    @Test
+    public void testCompactExtendLeftUpExtendRightDownRightExtendLeftSelectColumn() {
+        final SpreadsheetViewportNavigation column = SpreadsheetViewportNavigation.column(SpreadsheetSelection.A1.column());
+
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportNavigation.extendLeftColumn(),
+                        SpreadsheetViewportNavigation.upRow(),
+                        SpreadsheetViewportNavigation.extendRightColumn(),
+                        SpreadsheetViewportNavigation.downRow(),
+                        SpreadsheetViewportNavigation.rightColumn(),
+                        SpreadsheetViewportNavigation.extendLeftColumn(),
+                        column
+                ),
+                column
+        );
+    }
+
+    @Test
+    public void testCompactExtendLeftUpExtendRightDownRightExtendLeftSelectColumnDownRow() {
+        final SpreadsheetViewportNavigation column = SpreadsheetViewportNavigation.column(SpreadsheetSelection.A1.column());
+
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportNavigation.extendLeftColumn(),
+                        SpreadsheetViewportNavigation.upRow(),
+                        SpreadsheetViewportNavigation.extendRightColumn(),
+                        SpreadsheetViewportNavigation.downRow(),
+                        SpreadsheetViewportNavigation.rightColumn(),
+                        SpreadsheetViewportNavigation.extendLeftColumn(),
+                        column,
+                        SpreadsheetViewportNavigation.downRow()
+                ),
+                column,
+                SpreadsheetViewportNavigation.downRow()
+        );
+    }
+
     private void compactAndCheck(final SpreadsheetViewportNavigation... expected) {
         this.compactAndCheck(
                 Lists.of(expected),

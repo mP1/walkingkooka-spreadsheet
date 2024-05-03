@@ -641,17 +641,16 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
 
                 // fill an array with non-null navigations.
                 if (null == result) {
-                    final SpreadsheetViewportNavigation[] compact = new SpreadsheetViewportNavigation[compactSize];
+                    final List<SpreadsheetViewportNavigation> compact = Lists.array();
 
                     int i = 0;
                     for (SpreadsheetViewportNavigation item : temp) {
                         if (null != item) {
-                            compact[i] = item;
-                            i++;
+                            compact.add(item);
                         }
                     }
 
-                    result = Lists.of(compact);
+                    result = Lists.immutable(compact);
                 }
 
                 break;
