@@ -32,7 +32,7 @@ final class SpreadsheetViewportNavigationSelectionColumn extends SpreadsheetView
         return new SpreadsheetViewportNavigationSelectionColumn(selection);
     }
 
-    public SpreadsheetViewportNavigationSelectionColumn(final SpreadsheetColumnReference selection) {
+    private SpreadsheetViewportNavigationSelectionColumn(final SpreadsheetColumnReference selection) {
         super(selection);
     }
 }
