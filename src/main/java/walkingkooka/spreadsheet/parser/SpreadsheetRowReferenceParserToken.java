@@ -16,12 +16,14 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 /**
  * A token that holds a row reference.
  */
-public final class SpreadsheetRowReferenceParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetRowReference> {
+public final class SpreadsheetRowReferenceParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetRowReference>
+        implements HasSpreadsheetReference<SpreadsheetRowReference> {
 
     static SpreadsheetRowReferenceParserToken with(final SpreadsheetRowReference value,
                                                    final String text) {
@@ -45,5 +47,12 @@ public final class SpreadsheetRowReferenceParserToken extends SpreadsheetNonSymb
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetRowReferenceParserToken;
+    }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Override
+    public SpreadsheetRowReference reference() {
+        return this.value();
     }
 }
