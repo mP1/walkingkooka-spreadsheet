@@ -23,13 +23,13 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
-import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
@@ -485,12 +485,12 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     // select row 23
     private static SpreadsheetViewportNavigation parseCellColumnOrRow(final TextCursor cursor,
                                                                       final String text) {
-        SPACE.parse(cursor, PARSER_CONTEXT);
+        parseSpace(cursor);
 
         final SpreadsheetViewportNavigation navigation;
 
         if (isMatch(CELL, cursor)) {
-            SPACE.parse(cursor, PARSER_CONTEXT);
+            parseSpace(cursor);
 
             navigation = cell(
                     CELL_PARSER.parse(
