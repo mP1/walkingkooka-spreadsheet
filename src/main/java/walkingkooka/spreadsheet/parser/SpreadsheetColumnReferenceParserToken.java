@@ -16,12 +16,14 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 
 /**
  * A token that holds a column reference.
  */
-public final class SpreadsheetColumnReferenceParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetColumnReference> {
+public final class SpreadsheetColumnReferenceParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetColumnReference>
+        implements HasSpreadsheetReference<SpreadsheetColumnReference> {
 
     static SpreadsheetColumnReferenceParserToken with(final SpreadsheetColumnReference value,
                                                       final String text) {
@@ -45,5 +47,12 @@ public final class SpreadsheetColumnReferenceParserToken extends SpreadsheetNonS
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetColumnReferenceParserToken;
+    }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Override
+    public SpreadsheetColumnReference reference() {
+        return this.value();
     }
 }
