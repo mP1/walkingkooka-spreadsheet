@@ -23,6 +23,10 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
@@ -33,12 +37,14 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.LongParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
-import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,6 +55,13 @@ import java.util.function.Supplier;
  * Captures a users input movement relative to another selection with a viewport
  */
 public abstract class SpreadsheetViewportNavigation implements HasText {
+
+    /**
+     * {@see SpreadsheetViewportNavigationSelectionCell}
+     */
+    public static SpreadsheetViewportNavigation cell(final SpreadsheetCellReference selection) {
+        return SpreadsheetViewportNavigationSelectionCell.with(selection);
+    }
 
     /**
      * {@see SpreadsheetViewportNavigationExtendDownPixel}
@@ -243,6 +256,13 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         return result;
     }
 
+    /**
+     * Any navigations before a previous should be ignored as the selection replaces them.
+     */
+    final boolean isClearPrevious() {
+        return this instanceof SpreadsheetViewportNavigationSelection;
+    }
+
     abstract boolean isOpposite(final SpreadsheetViewportNavigation other);
 
     /**
@@ -341,11 +361,18 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                                     SpreadsheetViewportNavigation::extendDownPixel
                                             );
                                         } else {
-                                            throw new InvalidCharacterException(
-                                                    text,
-                                                    cursor.lineInfo()
-                                                            .textOffset()
-                                            );
+                                            if (isMatch(SELECT, cursor)) {
+                                                navigation = parseCellColumnOrRow(
+                                                        cursor,
+                                                        text
+                                                );
+                                            } else {
+                                                throw new InvalidCharacterException(
+                                                        text,
+                                                        cursor.lineInfo()
+                                                                .textOffset()
+                                                );
+                                            }
                                         }
                                     }
                                 }
@@ -438,12 +465,55 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     private final static Parser<ParserContext> VALUE = Parsers.longParser(10)
             .orReport(ParserReporters.invalidCharacterException());
 
+    private final static Parser<ParserContext> CELL = stringParser("cell");
+
     private final static Parser<ParserContext> COLUMN = stringParser("column");
 
     private final static Parser<ParserContext> ROW = stringParser("row");
 
     private final static Parser<ParserContext> PX = stringParser("px")
             .orReport(ParserReporters.invalidCharacterException());
+
+
+    // select cell A1
+    // select column A
+    // select row B
+    private final static Parser<ParserContext> SELECT = stringParser("select");
+
+    // select cell A1
+    // select column AB
+    // select row 23
+    private static SpreadsheetViewportNavigation parseCellColumnOrRow(final TextCursor cursor,
+                                                                      final String text) {
+        SPACE.parse(cursor, PARSER_CONTEXT);
+
+        final SpreadsheetViewportNavigation navigation;
+
+        if (isMatch(CELL, cursor)) {
+            SPACE.parse(cursor, PARSER_CONTEXT);
+
+            navigation = cell(
+                    CELL_PARSER.parse(
+                                    cursor,
+                                    PARSER_CONTEXT
+                            ).get()
+                            .cast(SpreadsheetCellReferenceParserToken.class)
+                            .reference()
+            );
+        } else {
+            throw new InvalidCharacterException(
+                    text,
+                    cursor.lineInfo()
+                            .textOffset()
+            );
+        }
+
+        return navigation;
+    }
+
+    private final static Parser<ParserContext> CELL_PARSER = SpreadsheetParsers.cell()
+            .orReport(ParserReporters.invalidCharacterException())
+            .cast();
 
     /**
      * Parses a required space, throwing an exception if it was not found.
@@ -456,9 +526,13 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
             CharPredicates.is(' ')
     );
 
-    private final static ParserContext PARSER_CONTEXT = ParserContexts.basic(
+    private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
             DateTimeContexts.fake(),
-            DecimalNumberContexts.american(MathContext.DECIMAL32)
+            ExpressionNumberContexts.basic(
+                    ExpressionNumberKind.BIG_DECIMAL,
+                    DecimalNumberContexts.american(MathContext.DECIMAL32)
+            ),
+            ',' // value separator char
     );
 
     /**
@@ -500,6 +574,21 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                 copy.toArray(temp);
 
                 int compactSize = size;
+
+                for (int i = 0; i < size; i++) {
+                    final SpreadsheetViewportNavigation left = temp[i];
+                    if (null == left) {
+                        continue;
+                    }
+                    if (left.isClearPrevious()) {
+                        Arrays.fill(
+                                temp,
+                                0,
+                                i,
+                                null
+                        );
+                    }
+                }
 
                 for (int i = 0; i < size; i++) {
                     final SpreadsheetViewportNavigation left = temp[i];

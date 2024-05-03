@@ -177,6 +177,20 @@ public final class SpreadsheetViewportNavigationTest implements ParseStringTesti
         );
     }
 
+    @Test
+    public void testParseSelectCell() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1)
+        );
+    }
+
+    @Test
+    public void testParseSelectCell2() {
+        this.parseStringAndCheck0(
+                SpreadsheetViewportNavigation.cell(SpreadsheetSelection.parseCell("B2"))
+        );
+    }
+
     private void parseStringAndCheck0(final SpreadsheetViewportNavigation navigation) {
         this.parseStringAndCheck(
                 navigation.text(),
@@ -234,6 +248,20 @@ public final class SpreadsheetViewportNavigationTest implements ParseStringTesti
                         SpreadsheetViewportNavigation.extendRightPixel(20),
                         SpreadsheetViewportNavigation.extendUpPixel(30),
                         SpreadsheetViewportNavigation.extendDownPixel(40)
+                )
+        );
+    }
+
+    @Test
+    public void testParseExtendLeftPixelExtendRightPixelExtendUpPixelExtendDownPixelSelectCell() {
+        this.parseStringAndCheck(
+                "extend-left 10px,extend-right 20px,extend-up 30px,extend-down 40px,select cell A1",
+                Lists.of(
+                        SpreadsheetViewportNavigation.extendLeftPixel(10),
+                        SpreadsheetViewportNavigation.extendRightPixel(20),
+                        SpreadsheetViewportNavigation.extendUpPixel(30),
+                        SpreadsheetViewportNavigation.extendDownPixel(40),
+                        SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1)
                 )
         );
     }
