@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import java.util.Optional;
-
 public abstract class SpreadsheetViewportNavigationColumnOrRowTestCase<T extends SpreadsheetViewportNavigationColumnOrRow> extends
         SpreadsheetViewportNavigationTestCase2<T>  {
 
@@ -27,8 +25,6 @@ public abstract class SpreadsheetViewportNavigationColumnOrRowTestCase<T extends
     }
 
     // update...........................................................................................................
-
-    final static SpreadsheetCellReference HOME = SpreadsheetCellReference.A1;
 
     final void updateAndCheck(final SpreadsheetSelection selection) {
         this.updateAndCheck(
@@ -49,27 +45,6 @@ public abstract class SpreadsheetViewportNavigationColumnOrRowTestCase<T extends
         this.updateAndCheck(
                 selection.setDefaultAnchor(),
                 expected
-        );
-    }
-
-    final void updateAndCheck(final AnchoredSpreadsheetSelection selection,
-                              final AnchoredSpreadsheetSelection expected) {
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
-                HOME.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        selection
-                                )
-                        ),
-                HOME.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        expected
-                                )
-                        )
         );
     }
 }

@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.test.ParseStringTesting;
@@ -29,6 +30,7 @@ import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -83,6 +85,8 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
 
     // update...........................................................................................................
 
+    final static SpreadsheetCellReference HOME = SpreadsheetCellReference.A1;
+
     final static int COLUMN_WIDTH = 100;
 
     final static int ROW_HEIGHT = 30;
@@ -93,6 +97,43 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
 
     final static int ROWS_DOWN = 5;
     final static int VIEWPORT_HEIGHT = ROW_HEIGHT * ROWS_DOWN;
+
+    final static SpreadsheetViewportRectangle HOME_VIEWPORT_RECTANGLE = viewportRectangle(HOME);
+
+    static SpreadsheetViewportRectangle viewportRectangle(final SpreadsheetCellReference home) {
+        return home.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+    }
+
+    final void updateAndCheck(final AnchoredSpreadsheetSelection selection,
+                              final AnchoredSpreadsheetSelection expected) {
+        this.updateAndCheck(
+                Optional.of(selection),
+                Optional.of(expected)
+        );
+    }
+
+    final void updateAndCheck(final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
+                              final Optional<AnchoredSpreadsheetSelection> expected) {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(),
+                HOME_VIEWPORT_RECTANGLE.viewport()
+                        .setAnchoredSelection(anchoredSelection),
+                HOME_VIEWPORT_RECTANGLE.viewport()
+                        .setAnchoredSelection(expected)
+        );
+    }
+
+    final void updateAndCheck(final T navigation,
+                              final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
+                              final Optional<AnchoredSpreadsheetSelection> expected) {
+        this.updateAndCheck(
+                navigation,
+                HOME_VIEWPORT_RECTANGLE.viewport()
+                        .setAnchoredSelection(anchoredSelection),
+                HOME_VIEWPORT_RECTANGLE.viewport()
+                        .setAnchoredSelection(expected)
+        );
+    }
 
     final void updateAndCheck(final SpreadsheetViewport viewport,
                               final SpreadsheetViewport expected) {
