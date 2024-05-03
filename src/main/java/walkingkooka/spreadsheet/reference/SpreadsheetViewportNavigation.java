@@ -43,7 +43,7 @@ import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
 /**
- * Captures a users input movement relative to a selection, such as a cursor-left parse a selection in the viewport.
+ * Captures a users input movement relative to another selection with a viewport
  */
 public abstract class SpreadsheetViewportNavigation implements HasText {
 
