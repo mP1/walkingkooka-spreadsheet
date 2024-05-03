@@ -112,6 +112,16 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         );
     }
 
+    final void updateAndCheck(final SpreadsheetViewportNavigation navigation,
+                              final AnchoredSpreadsheetSelection selection,
+                              final AnchoredSpreadsheetSelection expected) {
+        this.updateAndCheck(
+                navigation,
+                Optional.of(selection),
+                Optional.of(expected)
+        );
+    }
+
     final void updateAndCheck(final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
                               final Optional<AnchoredSpreadsheetSelection> expected) {
         this.updateAndCheck(
@@ -123,7 +133,7 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         );
     }
 
-    final void updateAndCheck(final T navigation,
+    final void updateAndCheck(final SpreadsheetViewportNavigation navigation,
                               final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
                               final Optional<AnchoredSpreadsheetSelection> expected) {
         this.updateAndCheck(
