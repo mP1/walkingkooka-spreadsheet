@@ -217,7 +217,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         while (false == cursor.isEmpty()) {
             final SpreadsheetViewportNavigation navigation;
 
-            if (LEFT.parse(cursor, PARSER_CONTEXT).isPresent()) {
+            if (isMatch(LEFT, cursor)) {
                 navigation = parseSpaceColorRowOrPixels(
                         cursor,
                         COLUMN,
@@ -225,7 +225,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                         SpreadsheetViewportNavigation::leftPixel
                 );
             } else {
-                if (RIGHT.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                if (isMatch(RIGHT, cursor)) {
                     navigation = parseSpaceColorRowOrPixels(
                             cursor,
                             COLUMN,
@@ -233,7 +233,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                             SpreadsheetViewportNavigation::rightPixel
                     );
                 } else {
-                    if (UP.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                    if (isMatch(UP, cursor)) {
                         navigation = parseSpaceColorRowOrPixels(
                                 cursor,
                                 ROW,
@@ -241,7 +241,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                 SpreadsheetViewportNavigation::upPixel
                         );
                     } else {
-                        if (DOWN.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                        if (isMatch(DOWN, cursor)) {
                             navigation = parseSpaceColorRowOrPixels(
                                     cursor,
                                     ROW,
@@ -249,7 +249,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                     SpreadsheetViewportNavigation::downPixel
                             );
                         } else {
-                            if (EXTEND_LEFT.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                            if (isMatch(EXTEND_LEFT, cursor)) {
                                 navigation = parseSpaceColorRowOrPixels(
                                         cursor,
                                         COLUMN,
@@ -257,7 +257,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                         SpreadsheetViewportNavigation::extendLeftPixel
                                 );
                             } else {
-                                if (EXTEND_RIGHT.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                                if (isMatch(EXTEND_RIGHT, cursor)) {
                                     navigation = parseSpaceColorRowOrPixels(
                                             cursor,
                                             COLUMN,
@@ -265,7 +265,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                             SpreadsheetViewportNavigation::extendRightPixel
                                     );
                                 } else {
-                                    if (EXTEND_UP.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                                    if (isMatch(EXTEND_UP, cursor)) {
                                         navigation = parseSpaceColorRowOrPixels(
                                                 cursor,
                                                 ROW,
@@ -273,7 +273,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                                 SpreadsheetViewportNavigation::extendUpPixel
                                         );
                                     } else {
-                                        if (EXTEND_DOWN.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                                        if (isMatch(EXTEND_DOWN, cursor)) {
                                             navigation = parseSpaceColorRowOrPixels(
                                                     cursor,
                                                     ROW,
@@ -326,6 +326,16 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     private final static Parser<ParserContext> SEPARATOR = characterParserOrReport(
             CharPredicates.is(SpreadsheetViewport.SEPARATOR.character())
     );
+
+    /**
+     * Returns true if the parser was successful in matching text. The result is ignored.
+     */
+    private static boolean isMatch(final Parser<ParserContext> parser,
+                                   final TextCursor cursor) {
+        return parser.parse(
+                cursor,
+                PARSER_CONTEXT).isPresent();
+    }
 
     /**
      * Attempts to match the column or row suffix and if that fails expects a pixel value followed by px.
