@@ -23,6 +23,9 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
@@ -182,6 +185,63 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     abstract Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                                     final SpreadsheetViewportAnchor anchor,
                                                                     final SpreadsheetViewportNavigationContext context);
+
+    /**
+     * Takes an updated {@link AnchoredSpreadsheetSelection} and also updates the {@link SpreadsheetViewport},
+     * which may involve moving the home as necessary so the viewport includes the new selection.
+     */
+    final SpreadsheetViewport updateViewport(final AnchoredSpreadsheetSelection anchoredSelection,
+                                             final SpreadsheetViewport viewport,
+                                             final SpreadsheetViewportNavigationContext context) {
+        SpreadsheetViewport result = viewport;
+
+        final SpreadsheetViewportRectangle rectangle = viewport.rectangle();
+
+        // check if moved selection is within the original viewport
+        final SpreadsheetViewportWindows windows = context.windows(
+                rectangle,
+                true, //includeFrozenColumnsRows
+                SpreadsheetViewportWindowsFunction.NO_SELECTION
+        );
+
+        if (
+                windows.test(
+                        anchoredSelection.anchor()
+                                .opposite()
+                                .selection(
+                                        anchoredSelection.selection()
+                                )
+                )
+        ) {
+            // moved selection within windows leave home unmoved
+            result = viewport.setAnchoredSelection(
+                    Optional.of(anchoredSelection)
+            );
+        } else {
+            // moved selection is outside viewport need to move home
+            final SpreadsheetCellReference home = rectangle.home();
+            final Optional<AnchoredSpreadsheetSelection> maybeMovedHome = this.updateSelection(
+                    home,
+                    SpreadsheetViewportAnchor.CELL,
+                    context
+            );
+
+            if (maybeMovedHome.isPresent()) {
+                result = result.setRectangle(
+                        rectangle.setHome(
+                                maybeMovedHome.get()
+                                        .selection()
+                                        .toCell()
+                        )
+                );
+            } else {
+                result = result.setRectangle(
+                        rectangle.setHome(home)
+                ).setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
+            }
+        }
+        return result;
+    }
 
     abstract boolean isOpposite(final SpreadsheetViewportNavigation other);
 
