@@ -348,7 +348,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                                                             final Parser<ParserContext> columnOrRowParser,
                                                                             final Supplier<SpreadsheetViewportNavigation> columnOrRowNavigation,
                                                                             final IntFunction<SpreadsheetViewportNavigation> columnOrRowPixel) {
-        SPACE.parse(cursor, PARSER_CONTEXT);
+        parseSpace(cursor);
 
         final SpreadsheetViewportNavigation navigation;
 
@@ -375,10 +375,6 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         return navigation;
     }
 
-    private final static Parser<ParserContext> SPACE = characterParserOrReport(
-            CharPredicates.is(' ')
-    );
-
     private final static Parser<ParserContext> VALUE = Parsers.longParser(10)
             .orReport(ParserReporters.invalidCharacterException());
 
@@ -388,6 +384,17 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
 
     private final static Parser<ParserContext> PX = stringParser("px")
             .orReport(ParserReporters.invalidCharacterException());
+
+    /**
+     * Parses a required space, throwing an exception if it was not found.
+     */
+    private static void parseSpace(final TextCursor cursor) {
+        SPACE.parse(cursor, PARSER_CONTEXT);
+    }
+
+    private final static Parser<ParserContext> SPACE = characterParserOrReport(
+            CharPredicates.is(' ')
+    );
 
     private final static ParserContext PARSER_CONTEXT = ParserContexts.basic(
             DateTimeContexts.fake(),
