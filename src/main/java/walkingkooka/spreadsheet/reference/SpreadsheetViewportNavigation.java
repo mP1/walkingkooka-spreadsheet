@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.CaseSensitivity;
@@ -509,36 +510,33 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
             parseSpace(cursor);
 
             navigation = cell(
-                    CELL_PARSER.parse(
-                                    cursor,
-                                    PARSER_CONTEXT
-                            ).get()
-                            .cast(SpreadsheetCellReferenceParserToken.class)
-                            .reference()
+                    parseSelection(
+                            CELL_PARSER,
+                            cursor,
+                            SpreadsheetCellReferenceParserToken.class
+                    ).reference()
             );
         } else {
             if (isMatch(COLUMN, cursor)) {
                 parseSpace(cursor);
 
                 navigation = column(
-                        COLUMN_PARSER.parse(
-                                        cursor,
-                                        PARSER_CONTEXT
-                                ).get()
-                                .cast(SpreadsheetColumnReferenceParserToken.class)
-                                .reference()
+                        parseSelection(
+                                COLUMN_PARSER,
+                                cursor,
+                                SpreadsheetColumnReferenceParserToken.class
+                        ).reference()
                 );
             } else {
                 if (isMatch(ROW, cursor)) {
                     parseSpace(cursor);
 
                     navigation = row(
-                            ROW_PARSER.parse(
-                                            cursor,
-                                            PARSER_CONTEXT
-                                    ).get()
-                                    .cast(SpreadsheetRowReferenceParserToken.class)
-                                    .reference()
+                            parseSelection(
+                                    ROW_PARSER,
+                                    cursor,
+                                    SpreadsheetRowReferenceParserToken.class
+                            ).reference()
                     );
                 } else {
                     throw new InvalidCharacterException(
@@ -564,6 +562,16 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     private final static Parser<ParserContext> ROW_PARSER = SpreadsheetParsers.row()
             .orReport(ParserReporters.invalidCharacterException())
             .cast();
+
+    private static <T extends SpreadsheetParserToken> T parseSelection(final Parser<ParserContext> parser,
+                                                                       final TextCursor cursor,
+                                                                       final Class<T> parserToken) {
+        return parser.parse(
+                        cursor,
+                        PARSER_CONTEXT
+                ).get()
+                .cast(parserToken);
+    }
 
     /**
      * Parses a required space, throwing an exception if it was not found.
