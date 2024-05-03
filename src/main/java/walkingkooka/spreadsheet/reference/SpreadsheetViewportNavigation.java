@@ -31,7 +31,6 @@ import walkingkooka.text.cursor.parser.LongParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserContexts;
-import walkingkooka.text.cursor.parser.ParserReporter;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -218,64 +217,64 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         while (false == cursor.isEmpty()) {
             final SpreadsheetViewportNavigation navigation;
 
-            if (LEFT.parse(cursor, CONTEXT).isPresent()) {
-                navigation = parse(
+            if (LEFT.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                navigation = parseSpaceColorRowOrPixels(
                         cursor,
                         COLUMN,
                         SpreadsheetViewportNavigation::leftColumn,
                         SpreadsheetViewportNavigation::leftPixel
                 );
             } else {
-                if (RIGHT.parse(cursor, CONTEXT).isPresent()) {
-                    navigation = parse(
+                if (RIGHT.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                    navigation = parseSpaceColorRowOrPixels(
                             cursor,
                             COLUMN,
                             SpreadsheetViewportNavigation::rightColumn,
                             SpreadsheetViewportNavigation::rightPixel
                     );
                 } else {
-                    if (UP.parse(cursor, CONTEXT).isPresent()) {
-                        navigation = parse(
+                    if (UP.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                        navigation = parseSpaceColorRowOrPixels(
                                 cursor,
                                 ROW,
                                 SpreadsheetViewportNavigation::upRow,
                                 SpreadsheetViewportNavigation::upPixel
                         );
                     } else {
-                        if (DOWN.parse(cursor, CONTEXT).isPresent()) {
-                            navigation = parse(
+                        if (DOWN.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                            navigation = parseSpaceColorRowOrPixels(
                                     cursor,
                                     ROW,
                                     SpreadsheetViewportNavigation::downRow,
                                     SpreadsheetViewportNavigation::downPixel
                             );
                         } else {
-                            if (EXTEND_LEFT.parse(cursor, CONTEXT).isPresent()) {
-                                navigation = parse(
+                            if (EXTEND_LEFT.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                                navigation = parseSpaceColorRowOrPixels(
                                         cursor,
                                         COLUMN,
                                         SpreadsheetViewportNavigation::extendLeftColumn,
                                         SpreadsheetViewportNavigation::extendLeftPixel
                                 );
                             } else {
-                                if (EXTEND_RIGHT.parse(cursor, CONTEXT).isPresent()) {
-                                    navigation = parse(
+                                if (EXTEND_RIGHT.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                                    navigation = parseSpaceColorRowOrPixels(
                                             cursor,
                                             COLUMN,
                                             SpreadsheetViewportNavigation::extendRightColumn,
                                             SpreadsheetViewportNavigation::extendRightPixel
                                     );
                                 } else {
-                                    if (EXTEND_UP.parse(cursor, CONTEXT).isPresent()) {
-                                        navigation = parse(
+                                    if (EXTEND_UP.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                                        navigation = parseSpaceColorRowOrPixels(
                                                 cursor,
                                                 ROW,
                                                 SpreadsheetViewportNavigation::extendUpRow,
                                                 SpreadsheetViewportNavigation::extendUpPixel
                                         );
                                     } else {
-                                        if (EXTEND_DOWN.parse(cursor, CONTEXT).isPresent()) {
-                                            navigation = parse(
+                                        if (EXTEND_DOWN.parse(cursor, PARSER_CONTEXT).isPresent()) {
+                                            navigation = parseSpaceColorRowOrPixels(
                                                     cursor,
                                                     ROW,
                                                     SpreadsheetViewportNavigation::extendDownRow,
@@ -302,51 +301,11 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                 break;
             }
 
-            SEPARATOR.parse(cursor, CONTEXT);
+            SEPARATOR.parse(cursor, PARSER_CONTEXT);
         }
 
         return Lists.immutable(navigations);
     }
-
-    /**
-     * Attempts to match the column or row suffix and if that fails expects a pixel value followed by px.
-     * <pre>
-     * left column
-     * left 123px
-     * </pre>
-     */
-    private static SpreadsheetViewportNavigation parse(final TextCursor cursor,
-                                                       final Parser<ParserContext> columnOrRowParser,
-                                                       final Supplier<SpreadsheetViewportNavigation> columnOrRowNavigation,
-                                                       final IntFunction<SpreadsheetViewportNavigation> columnOrRowPixel) {
-        SPACE.parse(cursor, CONTEXT);
-
-        final SpreadsheetViewportNavigation navigation;
-
-        final Optional<ParserToken> maybeColumnOrRow = columnOrRowParser.parse(cursor, CONTEXT);
-        if (maybeColumnOrRow.isPresent()) {
-            navigation = columnOrRowNavigation.get();
-        } else {
-            navigation = columnOrRowPixel.apply(
-                    VALUE.parse(
-                                    cursor,
-                                    CONTEXT
-                            ).get()
-                            .cast(LongParserToken.class)
-                            .value()
-                            .intValue()
-            );
-
-            PX.parse(
-                    cursor,
-                    CONTEXT
-            );
-        }
-
-        return navigation;
-    }
-
-    private final static ParserReporter<ParserContext> INVALID_CHARACTER_EXCEPTION = ParserReporters.invalidCharacterException();
 
     private final static Parser<ParserContext> LEFT = stringParser("left");
 
@@ -364,25 +323,63 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
 
     private final static Parser<ParserContext> EXTEND_DOWN = stringParser("extend-down");
 
+    private final static Parser<ParserContext> SEPARATOR = characterParserOrReport(
+            CharPredicates.is(SpreadsheetViewport.SEPARATOR.character())
+    );
+
+    /**
+     * Attempts to match the column or row suffix and if that fails expects a pixel value followed by px.
+     * <pre>
+     * left column
+     * left 123px
+     * </pre>
+     */
+    private static SpreadsheetViewportNavigation parseSpaceColorRowOrPixels(final TextCursor cursor,
+                                                                            final Parser<ParserContext> columnOrRowParser,
+                                                                            final Supplier<SpreadsheetViewportNavigation> columnOrRowNavigation,
+                                                                            final IntFunction<SpreadsheetViewportNavigation> columnOrRowPixel) {
+        SPACE.parse(cursor, PARSER_CONTEXT);
+
+        final SpreadsheetViewportNavigation navigation;
+
+        final Optional<ParserToken> maybeColumnOrRow = columnOrRowParser.parse(cursor, PARSER_CONTEXT);
+        if (maybeColumnOrRow.isPresent()) {
+            navigation = columnOrRowNavigation.get();
+        } else {
+            navigation = columnOrRowPixel.apply(
+                    VALUE.parse(
+                                    cursor,
+                                    PARSER_CONTEXT
+                            ).get()
+                            .cast(LongParserToken.class)
+                            .value()
+                            .intValue()
+            );
+
+            PX.parse(
+                    cursor,
+                    PARSER_CONTEXT
+            );
+        }
+
+        return navigation;
+    }
+
     private final static Parser<ParserContext> SPACE = characterParserOrReport(
             CharPredicates.is(' ')
     );
 
     private final static Parser<ParserContext> VALUE = Parsers.longParser(10)
-            .orReport(INVALID_CHARACTER_EXCEPTION);
+            .orReport(ParserReporters.invalidCharacterException());
 
     private final static Parser<ParserContext> COLUMN = stringParser("column");
 
     private final static Parser<ParserContext> ROW = stringParser("row");
 
     private final static Parser<ParserContext> PX = stringParser("px")
-            .orReport(INVALID_CHARACTER_EXCEPTION);
+            .orReport(ParserReporters.invalidCharacterException());
 
-    private final static Parser<ParserContext> SEPARATOR = characterParserOrReport(
-            CharPredicates.is(SpreadsheetViewport.SEPARATOR.character())
-    );
-
-    private final static ParserContext CONTEXT = ParserContexts.basic(
+    private final static ParserContext PARSER_CONTEXT = ParserContexts.basic(
             DateTimeContexts.fake(),
             DecimalNumberContexts.american(MathContext.DECIMAL32)
     );
@@ -392,7 +389,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      */
     private static Parser<ParserContext> characterParserOrReport(final CharPredicate predicate) {
         return Parsers.character(predicate)
-                .orReport(INVALID_CHARACTER_EXCEPTION);
+                .orReport(ParserReporters.invalidCharacterException());
     }
 
     /**
