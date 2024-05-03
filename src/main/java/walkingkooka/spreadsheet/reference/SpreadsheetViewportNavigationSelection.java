@@ -37,7 +37,7 @@ abstract class SpreadsheetViewportNavigationSelection<T extends SpreadsheetSelec
     /**
      * The selected {@link SpreadsheetSelection}.
      */
-    final SpreadsheetSelection selection;
+    final T selection;
 
     @Override
     final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
