@@ -692,7 +692,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
-                o -> this.cellRange((SpreadsheetCellReference) o)
+                o -> this.cellRange(o.toCell())
                         .toScalarIfUnit()
         );
     }

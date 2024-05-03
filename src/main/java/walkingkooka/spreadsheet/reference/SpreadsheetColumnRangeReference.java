@@ -399,7 +399,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
                 s -> anchor.column(this)
-                        .columnRange((SpreadsheetColumnReference) s)
+                        .columnRange(s.toColumn())
                         .toScalarIfUnit()
         );
     }

@@ -108,7 +108,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     public SpreadsheetColumnReference setReferenceKind(final SpreadsheetReferenceKind referenceKind) {
         checkReferenceKind(referenceKind);
 
-        return (SpreadsheetColumnReference) this.setReferenceKind0(referenceKind);
+        return this.setReferenceKind0(referenceKind)
+                .toColumn();
     }
 
     @Override
@@ -536,7 +537,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
-                o -> this.columnRange((SpreadsheetColumnReference) o)
+                o -> this.columnRange(o.toColumn())
                         .toScalarIfUnit()
         );
     }
