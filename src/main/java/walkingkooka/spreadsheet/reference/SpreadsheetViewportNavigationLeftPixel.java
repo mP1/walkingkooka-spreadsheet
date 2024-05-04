@@ -31,14 +31,13 @@ final class SpreadsheetViewportNavigationLeftPixel extends SpreadsheetViewportNa
     }
 
     @Override
-    Optional<SpreadsheetSelection> updateHome(final SpreadsheetCellReference home,
-                                              final SpreadsheetViewportAnchor anchor,
+    Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                               final SpreadsheetViewportNavigationContext context) {
         return home.leftPixels(
-                anchor,
+                SpreadsheetViewportAnchor.CELL,
                 this.value,
                 context
-        );
+        ).map(SpreadsheetSelection::toCell);
     }
 
     @Override

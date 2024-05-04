@@ -57,4 +57,16 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
 
         return result;
     }
+
+    @Override
+    Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference cell,
+                                                  final SpreadsheetViewportNavigationContext context) {
+        return this.updateSelection(
+                cell,
+                SpreadsheetViewportAnchor.CELL,
+                context
+        ).map(
+                a -> a.selection().toCell()
+        );
+    }
 }

@@ -36,4 +36,12 @@ abstract class SpreadsheetViewportNavigationSelectionSelect<T extends Spreadshee
                 this.selection.setDefaultAnchor()
         );
     }
+
+    @Override
+    final Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
+                                                        final SpreadsheetViewportNavigationContext context) {
+        return Optional.of(
+                this.selection.toCell()
+        );
+    }
 }

@@ -57,9 +57,8 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
         // move home
         final SpreadsheetViewportRectangle rectangle = viewport.rectangle();
         final SpreadsheetCellReference home = rectangle.home();
-        final Optional<SpreadsheetSelection> maybeMovedHome = this.updateHome(
+        final Optional<SpreadsheetCellReference> maybeMovedHome = this.updateHome(
                 home,
-                SpreadsheetViewportAnchor.CELL,
                 context
         );
 
@@ -91,10 +90,6 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
 
         return result;
     }
-
-    abstract Optional<SpreadsheetSelection> updateHome(final SpreadsheetCellReference home,
-                                                       final SpreadsheetViewportAnchor anchor,
-                                                       final SpreadsheetViewportNavigationContext context);
 
     abstract Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection anchoredSelection,
                                                                             final SpreadsheetViewportRectangle rectangle,
