@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.collect.Range;
-
 import java.util.Optional;
 
 /**
@@ -48,8 +46,24 @@ final class SpreadsheetViewportNavigationSelectionExtendRow extends SpreadsheetV
         final SpreadsheetRowReference newRow = this.selection;
 
         if (selection.isRowReference() || selection.isRowRangeReference()) {
-            if (newRow.equalsIgnoreReferenceKind(selection.toRow()) && selection.count() == 1) {
-                anchored = selection.setAnchor(anchor);
+            if (selection.count() == 1) {
+                final SpreadsheetRowReference row = selection.toRow();
+                final int compare = newRow.compareTo(row);
+                if (0 == compare) {
+                    anchored = selection.setAnchor(anchor);
+                } else {
+                    if (compare < 0) {
+                        anchored = rowRange(
+                                newRow,
+                                row
+                        ).setAnchor(SpreadsheetViewportAnchor.BOTTOM);
+                    } else {
+                        anchored = rowRange(
+                                row,
+                                newRow
+                        ).setAnchor(SpreadsheetViewportAnchor.TOP);
+                    }
+                }
             } else {
                 final SpreadsheetRowRangeReference range = selection.toRowRange();
 
@@ -62,17 +76,17 @@ final class SpreadsheetViewportNavigationSelectionExtendRow extends SpreadsheetV
                 SpreadsheetViewportAnchor newAnchor;
 
                 // try to compute the anchor for the furthest row
-                if (newRow.compareTo(top) <= 0) {
+                if (diff(newRow, top) <= diff(newRow, bottom)) {
                     newAnchor = SpreadsheetViewportAnchor.BOTTOM;
                 } else {
                     newAnchor = SpreadsheetViewportAnchor.TOP;
                 }
 
                 anchored = range.setRange(
-                        Range.greaterThanEquals(newTop)
-                                .and(
-                                        Range.lessThanEquals(newBottom)
-                                )
+                        range(
+                                newTop,
+                                newBottom
+                        )
                 ).setAnchor(newAnchor);
             }
         } else {

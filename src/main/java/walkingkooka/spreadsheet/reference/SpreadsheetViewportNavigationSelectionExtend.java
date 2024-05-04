@@ -97,4 +97,14 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
                 )
         );
     }
+
+    static SpreadsheetRowRangeReference rowRange(final SpreadsheetRowReference left,
+                                                 final SpreadsheetRowReference right) {
+        return SpreadsheetSelection.rowRange(
+                range(
+                        left,
+                        right
+                )
+        );
+    }
 }
