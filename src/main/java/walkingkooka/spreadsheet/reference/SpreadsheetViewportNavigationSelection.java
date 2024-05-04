@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.reference;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Base class for any navigation involving a cell, column or row, such as a MOUSE click to select.
@@ -34,11 +33,6 @@ abstract class SpreadsheetViewportNavigationSelection<T extends SpreadsheetSelec
         this.selection = selection;
     }
 
-    /**
-     * The selected {@link SpreadsheetSelection}.
-     */
-    final T selection;
-
     @Override
     final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
                                       final SpreadsheetViewportNavigationContext context) {
@@ -49,14 +43,10 @@ abstract class SpreadsheetViewportNavigationSelection<T extends SpreadsheetSelec
         );
     }
 
-    @Override
-    final Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
-                                                                 final SpreadsheetViewportAnchor anchor,
-                                                                 final SpreadsheetViewportNavigationContext context) {
-        return Optional.of(
-                this.selection.setDefaultAnchor()
-        );
-    }
+    /**
+     * The selected {@link SpreadsheetSelection}.
+     */
+    final T selection;
 
     @Override
     public final String text() {

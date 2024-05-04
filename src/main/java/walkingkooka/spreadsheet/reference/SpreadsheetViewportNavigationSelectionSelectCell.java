@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -19,20 +18,19 @@
 package walkingkooka.spreadsheet.reference;
 
 /**
- * Represents a column being CLICKED in the viewport.
+ * Represents a cell being CLICKED in the viewport.
  * <br>
  * <pre>
- * select column A
- * select column BC
+ * select cell A1
  * </pre>
  */
-final class SpreadsheetViewportNavigationSelectionColumn extends SpreadsheetViewportNavigationSelection<SpreadsheetColumnReference> {
+final class SpreadsheetViewportNavigationSelectionSelectCell extends SpreadsheetViewportNavigationSelectionSelect<SpreadsheetCellReference> {
 
-    static SpreadsheetViewportNavigationSelectionColumn with(final SpreadsheetColumnReference selection) {
-        return new SpreadsheetViewportNavigationSelectionColumn(selection);
+    static SpreadsheetViewportNavigationSelectionSelectCell with(final SpreadsheetCellReference selection) {
+        return new SpreadsheetViewportNavigationSelectionSelectCell(selection);
     }
 
-    private SpreadsheetViewportNavigationSelectionColumn(final SpreadsheetColumnReference selection) {
+    private SpreadsheetViewportNavigationSelectionSelectCell(final SpreadsheetCellReference selection) {
         super(selection);
     }
 }

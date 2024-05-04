@@ -1,4 +1,5 @@
 
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -18,21 +19,11 @@
 
 package walkingkooka.spreadsheet.reference;
 
-/**
- * Represents a row being CLICKED in the viewport.
- * <br>
- * <pre>
- * select row 1
- * select row 23
- * </pre>
- */
-final class SpreadsheetViewportNavigationSelectionRow extends SpreadsheetViewportNavigationSelection<SpreadsheetRowReference> {
+import walkingkooka.Cast;
 
-    static SpreadsheetViewportNavigationSelectionRow with(final SpreadsheetRowReference selection) {
-        return new SpreadsheetViewportNavigationSelectionRow(selection);
-    }
-
-    private SpreadsheetViewportNavigationSelectionRow(final SpreadsheetRowReference selection) {
-        super(selection);
+public final class SpreadsheetViewportNavigationSelectionSelectTest extends SpreadsheetViewportNavigationTestCase<SpreadsheetViewportNavigationSelectionSelect<?>> {
+    @Override
+    public Class<SpreadsheetViewportNavigationSelectionSelect<?>> type() {
+        return Cast.to(SpreadsheetViewportNavigationSelectionSelect.class);
     }
 }
