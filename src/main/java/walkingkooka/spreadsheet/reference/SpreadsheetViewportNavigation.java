@@ -251,9 +251,8 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         } else {
             // moved selection is outside viewport need to move home
             final SpreadsheetCellReference home = rectangle.home();
-            final Optional<AnchoredSpreadsheetSelection> maybeMovedHome = this.updateSelection(
+            final Optional<SpreadsheetCellReference> maybeMovedHome = this.updateHome(
                     home,
-                    SpreadsheetViewportAnchor.CELL,
                     context
             );
 
@@ -261,8 +260,6 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                 result = result.setRectangle(
                         rectangle.setHome(
                                 maybeMovedHome.get()
-                                        .selection()
-                                        .toCell()
                         )
                 );
             } else {
@@ -273,6 +270,9 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         }
         return result;
     }
+
+    abstract Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
+                                                           final SpreadsheetViewportNavigationContext context);
 
     /**
      * Any navigations before a previous should be ignored as the selection replaces them.

@@ -32,14 +32,13 @@ final class SpreadsheetViewportNavigationDownPixel extends SpreadsheetViewportNa
     }
 
     @Override
-    Optional<SpreadsheetSelection> updateHome(final SpreadsheetCellReference home,
-                                              final SpreadsheetViewportAnchor anchor,
-                                              final SpreadsheetViewportNavigationContext context) {
+    Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
+                                                  final SpreadsheetViewportNavigationContext context) {
         return home.downPixels(
-                anchor,
+                SpreadsheetViewportAnchor.CELL,
                 this.value,
                 context
-        );
+        ).map(SpreadsheetSelection::toCell);
     }
 
     @Override
