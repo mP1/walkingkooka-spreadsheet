@@ -37,6 +37,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
         );
     }
 
+    // cell.............................................................................................................
+
     @Test
     public void testUpdateCellWhenCellSame() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
@@ -49,55 +51,54 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
     }
 
     @Test
-    public void testUpdateCellWhenDifferentCellTopLeft() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
-
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell),
-                SpreadsheetSelection.A1.setDefaultAnchor(),
-                SpreadsheetSelection.parseCellRange("A1:C3")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+    public void testUpdateCellWhenCellTopLeft() {
+        this.updateCellAndCheck(
+                "D4",
+                "C3:D4",
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
-    public void testUpdateCellWhenDifferentCellTopRight() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
-
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell),
-                SpreadsheetSelection.parseCell("E1")
-                        .setDefaultAnchor(),
-                SpreadsheetSelection.parseCellRange("C1:E3")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP_RIGHT)
+    public void testUpdateCellWhenCellTopRight() {
+        this.updateCellAndCheck(
+                "B4",
+                "B3:C4",
+                SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
     @Test
-    public void testUpdateCellWhenDifferentCellBottomLeft() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
-
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell),
-                SpreadsheetSelection.parseCell("A5")
-                        .setDefaultAnchor(),
-                SpreadsheetSelection.parseCellRange("A3:C5")
-                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_LEFT)
+    public void testUpdateCellWhenCellBottomLeft() {
+        this.updateCellAndCheck(
+                "D2",
+                "C2:D3",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
     @Test
-    public void testUpdateCellWhenDifferentCellBottomRight() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
-
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell),
-                SpreadsheetSelection.parseCell("E5")
-                        .setDefaultAnchor(),
-                SpreadsheetSelection.parseCellRange("C3:E5")
-                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+    public void testUpdateCellWhenCellBottomRight() {
+        this.updateCellAndCheck(
+                "B2",
+                "B2:C3",
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
+
+    private void updateCellAndCheck(final String cell,
+                                    final String expectedCellRange,
+                                    final SpreadsheetViewportAnchor expectedAnchor) {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(cell),
+                SpreadsheetSelection.parseCell("C3")
+                        .setDefaultAnchor(),
+                SpreadsheetSelection.parseCellRange(expectedCellRange)
+                        .setAnchor(expectedAnchor)
+        );
+    }
+
+    // cell-range.......................................................................................................
 
     @Test
     public void testUpdateCellWhenCellRangeSame() {
@@ -110,56 +111,211 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
         );
     }
 
-    @Test
-    public void testUpdateCellWhenDifferentCellRangeTopLeft() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
+    // cell-range TOP_LEFT..............................................................................................
 
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell),
-                SpreadsheetSelection.A1.setDefaultAnchor(),
-                SpreadsheetSelection.parseCellRange("A1:C3")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+    @Test
+    public void testUpdateCellWhenCellRangeTopLeft() {
+        this.updateCellRangeAndCheck(
+                "D4", // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
-    public void testUpdateCellWhenDifferentCellRangeTopRight() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
-
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell),
-                SpreadsheetSelection.parseCellRange("E1")
-                        .setDefaultAnchor(),
-                SpreadsheetSelection.parseCellRange("C1:E3")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP_RIGHT)
+    public void testUpdateCellWhenCellRangeTopLeft2() {
+        this.updateCellRangeAndCheck(
+                "D4", // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
-    public void testUpdateCellWhenDifferentCellRangeBottomLeft() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
-
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell),
-                SpreadsheetSelection.parseCellRange("A5")
-                        .setDefaultAnchor(),
-                SpreadsheetSelection.parseCellRange("A3:C5")
-                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_LEFT)
+    public void testUpdateCellWhenCellRangeTopLeft3() {
+        this.updateCellRangeAndCheck(
+                "E5", // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "B2:E5",
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
-    public void testUpdateCellWhenDifferentCellRangeBottomRight() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
-
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell),
-                SpreadsheetSelection.parseCellRange("E5")
-                        .setDefaultAnchor(),
-                SpreadsheetSelection.parseCellRange("C3:E5")
-                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+    public void testUpdateCellWhenCellRangeTopLeft4() {
+        this.updateCellRangeAndCheck(
+                "E5", // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                "B2:E5",
+                SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
+
+    // cell-range TOP_RIGHT.............................................................................................
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopRight() {
+        this.updateCellRangeAndCheck(
+                "B4", // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                SpreadsheetViewportAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopRight2() {
+        this.updateCellRangeAndCheck(
+                "B4", // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                SpreadsheetViewportAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopRight3() {
+        this.updateCellRangeAndCheck(
+                "A5", // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "A2:D5",
+                SpreadsheetViewportAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopRight4() {
+        this.updateCellRangeAndCheck(
+                "A5", // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                "A2:D5",
+                SpreadsheetViewportAnchor.TOP_RIGHT
+        );
+    }
+
+    // cell-range BOTTOM_LEFT...........................................................................................
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeft() {
+        this.updateCellRangeAndCheck(
+                "D2", // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeft2() {
+        this.updateCellRangeAndCheck(
+                "D2", // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeft3() {
+        this.updateCellRangeAndCheck(
+                "E1", // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "B1:E4",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeft4() {
+        this.updateCellRangeAndCheck(
+                "E1", // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                "B1:E4",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    // cell-range BOTTOM_RIGHT..........................................................................................
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRight() {
+        this.updateCellRangeAndCheck(
+                "B2", // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRight2() {
+        this.updateCellRangeAndCheck(
+                "B2", // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRight3() {
+        this.updateCellRangeAndCheck(
+                "A1", // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "A1:D4",
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRight4() {
+        this.updateCellRangeAndCheck(
+                "A1", // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                "A1:D4",
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRight5() {
+        this.updateCellRangeAndCheck(
+                "A1", // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                "A1:D4",
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRight6() {
+        this.updateCellRangeAndCheck(
+                "A1", // cell
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
+                "A1:D4",
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    private void updateCellRangeAndCheck(final String cell,
+                                         final SpreadsheetViewportAnchor initialAnchor,
+                                         final SpreadsheetViewportAnchor expectedAnchor) {
+        this.updateCellRangeAndCheck(
+                cell,
+                initialAnchor,
+                "B2:D4", // expected cell-range
+                expectedAnchor
+        );
+    }
+
+    private void updateCellRangeAndCheck(final String cell,
+                                         final SpreadsheetViewportAnchor initialAnchor,
+                                         final String expectedCellRange,
+                                         final SpreadsheetViewportAnchor expectedAnchor) {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(cell),
+                SpreadsheetSelection.parseCellRange("B2:D4")
+                        .setAnchor(initialAnchor),
+                SpreadsheetSelection.parseCellRange(expectedCellRange)
+                        .setAnchor(expectedAnchor)
+        );
+    }
+
+    // column...........................................................................................................
 
     @Test
     public void testUpdateCellWhenColumn() {
@@ -195,6 +351,12 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
                         .viewport(),
                 viewportRectangle(cell)
                         .viewport()
+        );
+    }
+
+    private SpreadsheetViewportNavigationSelectionExtendCell createSpreadsheetViewportNavigation(final String selection) {
+        return this.createSpreadsheetViewportNavigation(
+                SpreadsheetSelection.parseCell(selection)
         );
     }
 
