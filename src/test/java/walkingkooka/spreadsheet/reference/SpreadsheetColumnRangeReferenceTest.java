@@ -585,6 +585,86 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
+    // setFarthestColumn................................................................................................
+
+    @Test
+    public void testSetFarthestColumnWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection().setFarthestColumn(null)
+        );
+    }
+
+    @Test
+    public void testSetFarthestColumnUnitSame() {
+        this.setFarthestColumnAndCheck(
+                "B",
+                "B",
+                SpreadsheetSelection.parseColumnRange("B")
+                        .setDefaultAnchor()
+        );
+    }
+
+    @Test
+    public void testSetFarthestColumnLeft() {
+        this.setFarthestColumnAndCheck(
+                "C:D",
+                "C",
+                SpreadsheetSelection.parseColumnRange("C:D")
+                        .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+        );
+    }
+
+    @Test
+    public void testSetFarthestColumnLeft2() {
+        this.setFarthestColumnAndCheck(
+                "C:D",
+                "B",
+                SpreadsheetSelection.parseColumnRange("B:D")
+                        .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+        );
+    }
+
+    @Test
+    public void testSetFarthestColumnRight() {
+        this.setFarthestColumnAndCheck(
+                "C:D",
+                "D",
+                SpreadsheetSelection.parseColumnRange("C:D")
+                        .setAnchor(SpreadsheetViewportAnchor.LEFT)
+        );
+    }
+
+    @Test
+    public void testSetFarthestColumnRight2() {
+        this.setFarthestColumnAndCheck(
+                "C:D",
+                "E",
+                SpreadsheetSelection.parseColumnRange("C:E")
+                        .setAnchor(SpreadsheetViewportAnchor.LEFT)
+        );
+    }
+
+    private void setFarthestColumnAndCheck(final String range,
+                                           final String column,
+                                           final AnchoredSpreadsheetSelection anchoredSpreadsheetSelection) {
+        this.setFarthestColumnAndCheck(
+                this.parseString(range),
+                SpreadsheetSelection.parseColumn(column),
+                anchoredSpreadsheetSelection
+        );
+    }
+
+    private void setFarthestColumnAndCheck(final SpreadsheetColumnRangeReference range,
+                                           final SpreadsheetColumnReference column,
+                                           final AnchoredSpreadsheetSelection anchoredSpreadsheetSelection) {
+        this.checkEquals(
+                anchoredSpreadsheetSelection,
+                range.setFarthestColumn(column),
+                () -> range + " setFarthestColumn " + column
+        );
+    }
+
     // frozenColumnsCheck...............................................................................................
 
     @Test
