@@ -18,6 +18,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.collect.Range;
+
 import java.util.Optional;
 
 /**
@@ -71,5 +73,28 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
     @Override
     final String textPrefix() {
         return EXTEND_SPACE;
+    }
+
+    static <TT extends SpreadsheetColumnOrRowReference> int diff(final TT a,
+                                                                 final TT b) {
+        return Math.abs(a.value - b.value);
+    }
+
+    static <TT extends SpreadsheetColumnOrRowReference & Comparable<TT>> Range<TT> range(final TT left,
+                                                                                         final TT right) {
+        return Range.greaterThanEquals(left)
+                .and(
+                        Range.lessThanEquals(right)
+                );
+    }
+
+    static SpreadsheetColumnRangeReference columnRange(final SpreadsheetColumnReference left,
+                                                       final SpreadsheetColumnReference right) {
+        return SpreadsheetSelection.columnRange(
+                range(
+                        left,
+                        right
+                )
+        );
     }
 }
