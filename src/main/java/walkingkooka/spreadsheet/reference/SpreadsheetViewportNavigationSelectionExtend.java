@@ -131,17 +131,65 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
         return anchored;
     }
 
+    static AnchoredSpreadsheetSelection rowToAnchored(final SpreadsheetSelection selection,
+                                                      final SpreadsheetViewportAnchor anchor,
+                                                      final SpreadsheetRowReference newRow) {
+        final AnchoredSpreadsheetSelection anchored;
+
+        if (selection.isRowReference() || selection.isRowRangeReference()) {
+            if (selection.count() == 1) {
+                final SpreadsheetRowReference row = selection.toRow();
+                final int compare = newRow.compareTo(row);
+                if (0 == compare) {
+                    anchored = selection.setAnchor(anchor);
+                } else {
+                    if (compare < 0) {
+                        anchored = rowRange(
+                                newRow,
+                                row
+                        ).setAnchor(SpreadsheetViewportAnchor.BOTTOM);
+                    } else {
+                        anchored = rowRange(
+                                row,
+                                newRow
+                        ).setAnchor(SpreadsheetViewportAnchor.TOP);
+                    }
+                }
+            } else {
+                final SpreadsheetRowRangeReference range = selection.toRowRange();
+
+                final SpreadsheetRowReference top = range.begin();
+                final SpreadsheetRowReference bottom = range.end();
+
+                final SpreadsheetRowReference newTop = newRow.min(top);
+                final SpreadsheetRowReference newBottom = newRow.max(bottom);
+
+                SpreadsheetViewportAnchor newAnchor;
+
+                // try to compute the anchor for the furthest row
+                if (diff(newRow, top) <= diff(newRow, bottom)) {
+                    newAnchor = SpreadsheetViewportAnchor.BOTTOM;
+                } else {
+                    newAnchor = SpreadsheetViewportAnchor.TOP;
+                }
+
+                anchored = range.setRange(
+                        range(
+                                newTop,
+                                newBottom
+                        )
+                ).setAnchor(newAnchor);
+            }
+        } else {
+            // previous selection was not a row/row-range
+            anchored = newRow.setDefaultAnchor();
+        }
+        return anchored;
+    }
+
     static <TT extends SpreadsheetColumnOrRowReference> int diff(final TT a,
                                                                  final TT b) {
         return Math.abs(a.value - b.value);
-    }
-
-    static <TT extends SpreadsheetColumnOrRowReference & Comparable<TT>> Range<TT> range(final TT left,
-                                                                                         final TT right) {
-        return Range.greaterThanEquals(left)
-                .and(
-                        Range.lessThanEquals(right)
-                );
     }
 
     private static SpreadsheetColumnRangeReference columnRange(final SpreadsheetColumnReference left,
@@ -154,13 +202,21 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
         );
     }
 
-    static SpreadsheetRowRangeReference rowRange(final SpreadsheetRowReference left,
-                                                 final SpreadsheetRowReference right) {
+    private static SpreadsheetRowRangeReference rowRange(final SpreadsheetRowReference left,
+                                                         final SpreadsheetRowReference right) {
         return SpreadsheetSelection.rowRange(
                 range(
                         left,
                         right
                 )
         );
+    }
+
+    private static <TT extends SpreadsheetColumnOrRowReference & Comparable<TT>> Range<TT> range(final TT left,
+                                                                                                 final TT right) {
+        return Range.greaterThanEquals(left)
+                .and(
+                        Range.lessThanEquals(right)
+                );
     }
 }

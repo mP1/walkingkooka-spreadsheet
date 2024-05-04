@@ -41,60 +41,13 @@ final class SpreadsheetViewportNavigationSelectionExtendRow extends SpreadsheetV
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        final AnchoredSpreadsheetSelection anchored;
-
-        final SpreadsheetRowReference newRow = this.selection;
-
-        if (selection.isRowReference() || selection.isRowRangeReference()) {
-            if (selection.count() == 1) {
-                final SpreadsheetRowReference row = selection.toRow();
-                final int compare = newRow.compareTo(row);
-                if (0 == compare) {
-                    anchored = selection.setAnchor(anchor);
-                } else {
-                    if (compare < 0) {
-                        anchored = rowRange(
-                                newRow,
-                                row
-                        ).setAnchor(SpreadsheetViewportAnchor.BOTTOM);
-                    } else {
-                        anchored = rowRange(
-                                row,
-                                newRow
-                        ).setAnchor(SpreadsheetViewportAnchor.TOP);
-                    }
-                }
-            } else {
-                final SpreadsheetRowRangeReference range = selection.toRowRange();
-
-                final SpreadsheetRowReference top = range.begin();
-                final SpreadsheetRowReference bottom = range.end();
-
-                final SpreadsheetRowReference newTop = newRow.min(top);
-                final SpreadsheetRowReference newBottom = newRow.max(bottom);
-
-                SpreadsheetViewportAnchor newAnchor;
-
-                // try to compute the anchor for the furthest row
-                if (diff(newRow, top) <= diff(newRow, bottom)) {
-                    newAnchor = SpreadsheetViewportAnchor.BOTTOM;
-                } else {
-                    newAnchor = SpreadsheetViewportAnchor.TOP;
-                }
-
-                anchored = range.setRange(
-                        range(
-                                newTop,
-                                newBottom
-                        )
-                ).setAnchor(newAnchor);
-            }
-        } else {
-            // previous selection was not a row/row-range
-            anchored = newRow.setDefaultAnchor();
-        }
-
-        return Optional.ofNullable(anchored);
+        return Optional.of(
+                rowToAnchored(
+                        selection,
+                        anchor,
+                        this.selection
+                )
+        );
     }
 
     @Override
