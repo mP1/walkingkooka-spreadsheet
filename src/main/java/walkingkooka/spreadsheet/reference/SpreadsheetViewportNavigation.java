@@ -61,24 +61,24 @@ import java.util.function.Supplier;
 public abstract class SpreadsheetViewportNavigation implements HasText {
 
     /**
-     * {@see SpreadsheetViewportNavigationSelectionCell}
+     * {@see SpreadsheetViewportNavigationSelectionSelectCell}
      */
     public static SpreadsheetViewportNavigation cell(final SpreadsheetCellReference selection) {
-        return SpreadsheetViewportNavigationSelectionCell.with(selection);
+        return SpreadsheetViewportNavigationSelectionSelectCell.with(selection);
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationSelectionColumn}
+     * {@see SpreadsheetViewportNavigationSelectionSelectColumn}
      */
     public static SpreadsheetViewportNavigation column(final SpreadsheetColumnReference selection) {
-        return SpreadsheetViewportNavigationSelectionColumn.with(selection);
+        return SpreadsheetViewportNavigationSelectionSelectColumn.with(selection);
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationSelectionRow}
+     * {@see SpreadsheetViewportNavigationSelectionSelectRow}
      */
     public static SpreadsheetViewportNavigation row(final SpreadsheetRowReference row) {
-        return SpreadsheetViewportNavigationSelectionRow.with(row);
+        return SpreadsheetViewportNavigationSelectionSelectRow.with(row);
     }
     
     /**
