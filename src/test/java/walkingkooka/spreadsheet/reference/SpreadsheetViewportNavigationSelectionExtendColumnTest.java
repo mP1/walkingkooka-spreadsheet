@@ -69,79 +69,215 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
     }
 
     @Test
-    public void testUpdateColumnPreviousDifferentColumnLeft() {
-        this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(SpreadsheetSelection.parseColumn("C")),
-                Optional.of(
-                        SpreadsheetSelection.parseColumn("B")
-                                .setDefaultAnchor()
-                ),
-                Optional.of(
-                        SpreadsheetSelection.parseColumnRange("B:C")
-                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
-                )
-        );
-    }
-
-    @Test
-    public void testUpdateColumnPreviousDifferentColumnRight() {
-        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("C");
+    public void testUpdateColumnPreviousColumnBefore() {
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("D");
 
         this.updateAndCheck(
                 this.createSpreadsheetViewportNavigation(column),
                 Optional.of(
-                        SpreadsheetSelection.parseColumn("D")
+                        SpreadsheetSelection.parseColumn("C")
                                 .setDefaultAnchor()
                 ),
                 Optional.of(
                         SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateColumnPreviousColumnAfter() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(SpreadsheetSelection.parseColumn("B")),
+                Optional.of(
+                        SpreadsheetSelection.parseColumn("C")
+                                .setDefaultAnchor()
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("B:C")
                                 .setAnchor(SpreadsheetViewportAnchor.RIGHT)
                 )
         );
     }
 
     @Test
-    public void testUpdateColumnPreviousColumnRangeLeft() {
+    public void testUpdateColumnPreviousColumnRangeLeftBefore() {
         this.updateAndCheck(
                 this.createSpreadsheetViewportNavigation(
-                        SpreadsheetSelection.parseColumn("C")
+                        SpreadsheetSelection.parseColumn("E")
                 ),
                 Optional.of(
-                        SpreadsheetSelection.parseColumnRange("B")
+                        SpreadsheetSelection.parseColumnRange("C")
                                 .setAnchor(SpreadsheetViewportAnchor.LEFT)
                 ),
                 Optional.of(
-                        SpreadsheetSelection.parseColumnRange("B:C")
+                        SpreadsheetSelection.parseColumnRange("C:E")
                                 .setAnchor(SpreadsheetViewportAnchor.LEFT)
                 )
         );
     }
 
     @Test
-    public void testUpdateColumnPreviousColumnRangeLeft2() {
+    public void testUpdateColumnPreviousColumnRangeLeftBefore2() {
         this.updateAndCheck(
                 this.createSpreadsheetViewportNavigation(
-                        SpreadsheetSelection.parseColumn("C")
+                        SpreadsheetSelection.parseColumn("D")
                 ),
                 Optional.of(
-                        SpreadsheetSelection.parseColumnRange("B:C")
+                        SpreadsheetSelection.parseColumnRange("C:D")
                                 .setAnchor(SpreadsheetViewportAnchor.LEFT)
                 ),
                 Optional.of(
-                        SpreadsheetSelection.parseColumnRange("B:C")
+                        SpreadsheetSelection.parseColumnRange("C:D")
                                 .setAnchor(SpreadsheetViewportAnchor.LEFT)
                 )
         );
     }
 
     @Test
-    public void testUpdateColumnPreviousColumnRangeRight() {
+    public void testUpdateColumnPreviousColumnRangeLeftBefore3() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(
+                        SpreadsheetSelection.parseColumn("E")
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:E")
+                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateColumnPreviousColumnRangeRightBefore() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(
+                        SpreadsheetSelection.parseColumn("E")
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:E")
+                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateColumnPreviousColumnRangeRightBefore2() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(
+                        SpreadsheetSelection.parseColumn("D")
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateColumnPreviousColumnRangeRightBefore3() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(
+                        SpreadsheetSelection.parseColumn("E")
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:E")
+                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateColumnPreviousColumnRangeLeftAfter() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(
+                        SpreadsheetSelection.parseColumn("B")
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C")
+                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("B:C")
+                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateColumnPreviousColumnRangeLeftAfter2() {
         this.updateAndCheck(
                 this.createSpreadsheetViewportNavigation(
                         SpreadsheetSelection.parseColumn("C")
                 ),
                 Optional.of(
-                        SpreadsheetSelection.parseColumnRange("D")
+                        SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateColumnPreviousColumnRangeLeftAfter3() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(
+                        SpreadsheetSelection.parseColumn("B")
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("B:D")
+                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateColumnPreviousColumnRangeRightAfter() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(
+                        SpreadsheetSelection.parseColumn("B")
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("B:D")
+                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateColumnPreviousColumnRangeRightAfter2() {
+        this.updateAndCheck(
+                this.createSpreadsheetViewportNavigation(
+                        SpreadsheetSelection.parseColumn("C")
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:D")
                                 .setAnchor(SpreadsheetViewportAnchor.RIGHT)
                 ),
                 Optional.of(
@@ -152,17 +288,17 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
     }
 
     @Test
-    public void testUpdateColumnPreviousColumnRangeRight2() {
+    public void testUpdateColumnPreviousColumnRangeRightAfter3() {
         this.updateAndCheck(
                 this.createSpreadsheetViewportNavigation(
-                        SpreadsheetSelection.parseColumn("C")
-                ),
-                Optional.of(
-                        SpreadsheetSelection.parseColumnRange("A:D")
-                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                        SpreadsheetSelection.parseColumn("B")
                 ),
                 Optional.of(
                         SpreadsheetSelection.parseColumnRange("C:D")
+                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                ),
+                Optional.of(
+                        SpreadsheetSelection.parseColumnRange("B:D")
                                 .setAnchor(SpreadsheetViewportAnchor.RIGHT)
                 )
         );
