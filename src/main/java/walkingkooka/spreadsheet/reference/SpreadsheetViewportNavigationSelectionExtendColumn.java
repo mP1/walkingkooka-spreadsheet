@@ -41,7 +41,7 @@ final class SpreadsheetViewportNavigationSelectionExtendColumn extends Spreadshe
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return Optional.ofNullable(
+        return Optional.of(
                 columnToAnchored(
                         selection,
                         anchor,
