@@ -615,6 +615,24 @@ public final class SpreadsheetViewportNavigationTest implements ParseStringTesti
         );
     }
 
+    @Test
+    public void testCompactUpRowSelectCellDownRowExtendCell() {
+        final SpreadsheetViewportNavigation cell = SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1);
+        final SpreadsheetViewportNavigation extendCell = SpreadsheetViewportNavigation.extendCell(SpreadsheetSelection.parseCell("B2"));
+
+        this.compactAndCheck(
+                Lists.of(
+                        SpreadsheetViewportNavigation.upRow(),
+                        cell,
+                        SpreadsheetViewportNavigation.downRow(),
+                        extendCell
+                ),
+                cell,
+                SpreadsheetViewportNavigation.downRow(),
+                extendCell
+        );
+    }
+
     private void compactAndCheck(final SpreadsheetViewportNavigation... expected) {
         this.compactAndCheck(
                 Lists.of(expected),
