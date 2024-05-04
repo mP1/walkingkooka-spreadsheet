@@ -85,36 +85,6 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
                 );
     }
 
-    // setFarthestColumn................................................................................................
-
-    /**
-     * Creates a {@link AnchoredSpreadsheetSelection} using the {@link SpreadsheetColumnReference} as the farthest corner.
-     * The {@link SpreadsheetViewportAnchor} will be computed so the other or original column is the anchor.
-     */
-    AnchoredSpreadsheetSelection setFarthestColumn(final SpreadsheetColumnReference column) {
-        checkColumnReference(column);
-
-        final AnchoredSpreadsheetSelection anchored;
-
-        final SpreadsheetColumnReference columnBegin = this.begin();
-        final SpreadsheetColumnReference columnEnd = this.end();
-        final int value = column.value;
-
-        if (Math.abs(columnBegin.value - value) > Math.abs(columnEnd.value - value)) {
-            anchored = this.setRange(
-                    Range.greaterThanEquals(columnBegin)
-                            .and(Range.lessThanEquals(column))
-            ).setAnchor(SpreadsheetViewportAnchor.LEFT);
-        } else {
-            anchored = this.setRange(
-                    Range.greaterThanEquals(column)
-                            .and(Range.lessThanEquals(columnEnd))
-            ).setAnchor(SpreadsheetViewportAnchor.RIGHT);
-        }
-
-        return anchored;
-    }
-
     // add..............................................................................................................
 
     @Override
