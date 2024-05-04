@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.collect.Range;
-
 import java.util.Optional;
 
 /**
@@ -48,8 +46,24 @@ final class SpreadsheetViewportNavigationSelectionExtendColumn extends Spreadshe
         final SpreadsheetColumnReference newColumn = this.selection;
 
         if (selection.isColumnReference() || selection.isColumnRangeReference()) {
-            if (newColumn.equalsIgnoreReferenceKind(selection.toColumn()) && selection.count() == 1) {
-                anchored = selection.setAnchor(anchor);
+            if (selection.count() == 1) {
+                final SpreadsheetColumnReference column = selection.toColumn();
+                final int compare = newColumn.compareTo(column);
+                if (0 == compare) {
+                    anchored = selection.setAnchor(anchor);
+                } else {
+                    if (compare < 0) {
+                        anchored = columnRange(
+                                newColumn,
+                                column
+                        ).setAnchor(SpreadsheetViewportAnchor.RIGHT);
+                    } else {
+                        anchored = columnRange(
+                                column,
+                                newColumn
+                        ).setAnchor(SpreadsheetViewportAnchor.LEFT);
+                    }
+                }
             } else {
                 final SpreadsheetColumnRangeReference range = selection.toColumnRange();
 
@@ -62,17 +76,17 @@ final class SpreadsheetViewportNavigationSelectionExtendColumn extends Spreadshe
                 SpreadsheetViewportAnchor newAnchor;
 
                 // try to compute the anchor for the furthest column
-                if (newColumn.compareTo(left) <= 0) {
+                if (diff(newColumn, left) <= diff(newColumn, right)) {
                     newAnchor = SpreadsheetViewportAnchor.RIGHT;
                 } else {
                     newAnchor = SpreadsheetViewportAnchor.LEFT;
                 }
 
                 anchored = range.setRange(
-                        Range.greaterThanEquals(newLeft)
-                                .and(
-                                        Range.lessThanEquals(newRight)
-                                )
+                        range(
+                                newLeft,
+                                newRight
+                        )
                 ).setAnchor(newAnchor);
             }
         } else {
