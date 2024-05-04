@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetViewportNavigationSelectionTestCase<T extends SpreadsheetViewportNavigationSelection<S>, S extends SpreadsheetSelection>
@@ -34,6 +36,17 @@ public abstract class SpreadsheetViewportNavigationSelectionTestCase<T extends S
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetViewportNavigation(null)
+        );
+    }
+
+    final void updateAndCheck(final SpreadsheetViewportNavigation navigation,
+                              final Optional<AnchoredSpreadsheetSelection> expected) {
+        this.updateAndCheck(
+                navigation,
+                HOME_VIEWPORT_RECTANGLE.viewport()
+                        .setAnchoredSelection(Optional.empty()),
+                HOME_VIEWPORT_RECTANGLE.viewport()
+                        .setAnchoredSelection(expected)
         );
     }
 

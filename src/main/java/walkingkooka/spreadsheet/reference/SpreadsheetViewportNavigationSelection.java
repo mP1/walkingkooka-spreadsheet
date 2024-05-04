@@ -33,16 +33,6 @@ abstract class SpreadsheetViewportNavigationSelection<T extends SpreadsheetSelec
         this.selection = selection;
     }
 
-    @Override
-    final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
-                                      final SpreadsheetViewportNavigationContext context) {
-        return this.updateViewport(
-                this.selection.setDefaultAnchor(),
-                viewport,
-                context
-        );
-    }
-
     /**
      * The selected {@link SpreadsheetSelection}.
      */
@@ -50,8 +40,13 @@ abstract class SpreadsheetViewportNavigationSelection<T extends SpreadsheetSelec
 
     @Override
     public final String text() {
-        return "select " + this.selection.textLabel().toLowerCase() + " " + this.selection;
+        return this.textPrefix() + this.selection.textLabel().toLowerCase() + " " + this.selection;
     }
+
+    abstract String textPrefix();
+
+    final String SELECT_SPACE = "select ";
+    final String EXTEND_SPACE = "extend ";
 
     /**
      * Select navigations have no opposite.

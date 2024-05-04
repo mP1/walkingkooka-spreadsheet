@@ -68,10 +68,24 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
+     * {@see SpreadsheetViewportNavigationSelectionExtendCell}
+     */
+    public static SpreadsheetViewportNavigation extendCell(final SpreadsheetCellReference selection) {
+        return SpreadsheetViewportNavigationSelectionExtendCell.with(selection);
+    }
+
+    /**
      * {@see SpreadsheetViewportNavigationSelectionSelectColumn}
      */
     public static SpreadsheetViewportNavigation column(final SpreadsheetColumnReference selection) {
         return SpreadsheetViewportNavigationSelectionSelectColumn.with(selection);
+    }
+
+    /**
+     * {@see SpreadsheetViewportNavigationSelectionExtendColumn}
+     */
+    public static SpreadsheetViewportNavigation extendColumn(final SpreadsheetColumnReference selection) {
+        return SpreadsheetViewportNavigationSelectionExtendColumn.with(selection);
     }
 
     /**
@@ -80,7 +94,14 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     public static SpreadsheetViewportNavigation row(final SpreadsheetRowReference row) {
         return SpreadsheetViewportNavigationSelectionSelectRow.with(row);
     }
-    
+
+    /**
+     * {@see SpreadsheetViewportNavigationSelectionExtendRow}
+     */
+    public static SpreadsheetViewportNavigation extendRow(final SpreadsheetRowReference row) {
+        return SpreadsheetViewportNavigationSelectionExtendRow.with(row);
+    }
+
     /**
      * {@see SpreadsheetViewportNavigationExtendDownPixel}
      */
@@ -394,7 +415,21 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                                         ice
                                                 );
                                             } else {
-                                                throw ice.get();
+                                                if (isMatch(EXTEND, cursor)) {
+                                                    navigation = parseCellColumnOrRow(
+                                                            cursor,
+                                                            SpreadsheetViewportNavigation::extendCell,
+                                                            SpreadsheetViewportNavigation::extendColumn,
+                                                            SpreadsheetViewportNavigation::extendRow,
+                                                            ice
+                                                    );
+                                                } else {
+                                                    throw new InvalidCharacterException(
+                                                            text,
+                                                            cursor.lineInfo()
+                                                                    .textOffset()
+                                                    );
+                                                }
                                             }
                                         }
                                     }
@@ -503,9 +538,18 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     // select row B
     private final static Parser<ParserContext> SELECT = stringParser("select");
 
+    // extend cell A1
+    // extend column A
+    // extend row B
+    private final static Parser<ParserContext> EXTEND = stringParser("extend");
+
+
     // select cell A1
     // select column AB
     // select row 23
+    // extend cell A1
+    // extend column A
+    // extend row B
     private static SpreadsheetViewportNavigation parseCellColumnOrRow(final TextCursor cursor,
                                                                       final Function<SpreadsheetCellReference, SpreadsheetViewportNavigation> cell,
                                                                       final Function<SpreadsheetColumnReference, SpreadsheetViewportNavigation> column,

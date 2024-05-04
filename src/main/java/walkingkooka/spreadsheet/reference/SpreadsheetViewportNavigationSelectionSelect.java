@@ -29,6 +29,16 @@ abstract class SpreadsheetViewportNavigationSelectionSelect<T extends Spreadshee
     }
 
     @Override
+    final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
+                                      final SpreadsheetViewportNavigationContext context) {
+        return this.updateViewport(
+                this.selection.setDefaultAnchor(),
+                viewport,
+                context
+        );
+    }
+
+    @Override
     final Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                                  final SpreadsheetViewportAnchor anchor,
                                                                  final SpreadsheetViewportNavigationContext context) {
@@ -43,5 +53,10 @@ abstract class SpreadsheetViewportNavigationSelectionSelect<T extends Spreadshee
         return Optional.of(
                 this.selection.toCell()
         );
+    }
+
+    @Override
+    final String textPrefix() {
+        return EXTEND_SPACE;
     }
 }
