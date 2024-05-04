@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.NeverError;
 import walkingkooka.collect.Range;
 
 import java.util.Optional;
@@ -54,38 +53,27 @@ final class SpreadsheetViewportNavigationSelectionExtendRow extends SpreadsheetV
             } else {
                 final SpreadsheetRowRangeReference range = selection.toRowRange();
 
-                SpreadsheetViewportAnchor newAnchor = anchor;
-                if (SpreadsheetViewportAnchor.NONE == newAnchor) {
-                    newAnchor =
-                            selection.toRow()
-                                    .compareTo(newRow) <= 0 ?
-                                    SpreadsheetViewportAnchor.TOP :
-                                    SpreadsheetViewportAnchor.BOTTOM;
+                final SpreadsheetRowReference top = range.begin();
+                final SpreadsheetRowReference bottom = range.end();
+
+                final SpreadsheetRowReference newTop = newRow.min(top);
+                final SpreadsheetRowReference newBottom = newRow.max(bottom);
+
+                SpreadsheetViewportAnchor newAnchor;
+
+                // try to compute the anchor for the furthest row
+                if (newRow.compareTo(top) <= 0) {
+                    newAnchor = SpreadsheetViewportAnchor.BOTTOM;
+                } else {
+                    newAnchor = SpreadsheetViewportAnchor.TOP;
                 }
 
-                switch (newAnchor) {
-                    case TOP:
-                        anchored = range.setRange(
-                                Range.greaterThanEquals(range.begin())
-                                        .and(
-                                                Range.lessThanEquals(newRow)
-                                        )
-                        ).setAnchor(SpreadsheetViewportAnchor.TOP);
-                        break;
-                    case BOTTOM:
-                        anchored = range.setRange(
-                                Range.greaterThanEquals(newRow)
-                                        .and(
-                                                Range.lessThanEquals(range.end())
-                                        )
-                        ).setAnchor(SpreadsheetViewportAnchor.BOTTOM);
-                        break;
-                    default:
-                        anchored = NeverError.unhandledEnum(
-                                anchor,
-                                SpreadsheetViewportAnchor.NONE, SpreadsheetViewportAnchor.TOP, SpreadsheetViewportAnchor.BOTTOM
-                        );
-                }
+                anchored = range.setRange(
+                        Range.greaterThanEquals(newTop)
+                                .and(
+                                        Range.lessThanEquals(newBottom)
+                                )
+                ).setAnchor(newAnchor);
             }
         } else {
             // previous selection was not a row/row-range
