@@ -299,7 +299,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      * Any navigations before a previous should be ignored as the selection replaces them.
      */
     final boolean isClearPrevious() {
-        return this instanceof SpreadsheetViewportNavigationSelection;
+        return this instanceof SpreadsheetViewportNavigationSelectionSelect;
     }
 
     abstract boolean isOpposite(final SpreadsheetViewportNavigation other);
