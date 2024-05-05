@@ -46,8 +46,7 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
                 selection.isCellRangeReference() ?
                 this.updateCellOrCellRange(
                         selection,
-                        anchor,
-                        context
+                        anchor
                 ) :
                 Optional.of(
                         this.selection.setDefaultAnchor()
@@ -55,8 +54,7 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
     }
 
     private Optional<AnchoredSpreadsheetSelection> updateCellOrCellRange(final SpreadsheetSelection selection,
-                                                                         final SpreadsheetViewportAnchor anchor,
-                                                                         final SpreadsheetViewportNavigationContext context) {
+                                                                         final SpreadsheetViewportAnchor anchor) {
         final SpreadsheetCellReference newCell = this.selection;
 
         final SpreadsheetViewportAnchor columnAnchor;
