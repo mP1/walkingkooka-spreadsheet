@@ -170,7 +170,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         );
     }
 
-    // row-range > 1....................................................................................................
+    // row-range > 1.................................................................................................
 
     @Test
     public void testUpdateRowPreviousRowRangeTopBefore() {
@@ -211,7 +211,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "5",
                 "3:4",
                 SpreadsheetViewportAnchor.BOTTOM,
-                "3:5",
+                "4:5",
                 SpreadsheetViewportAnchor.TOP
         );
     }
@@ -222,8 +222,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "4",
                 "3:4",
                 SpreadsheetViewportAnchor.BOTTOM,
-                "3:4",
-                SpreadsheetViewportAnchor.TOP
+                SpreadsheetSelection.parseRow("4")
+                        .setDefaultAnchor()
         );
     }
 
@@ -233,7 +233,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "5",
                 "3:4",
                 SpreadsheetViewportAnchor.BOTTOM,
-                "3:5",
+                "4:5",
                 SpreadsheetViewportAnchor.TOP
         );
     }
@@ -244,8 +244,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "3",
                 "3:4",
                 SpreadsheetViewportAnchor.TOP,
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM
+                SpreadsheetSelection.parseRow("3")
+                        .setDefaultAnchor()
         );
     }
 
@@ -277,8 +277,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "4",
                 "3:4",
                 SpreadsheetViewportAnchor.BOTTOM,
-                "3:4",
-                SpreadsheetViewportAnchor.TOP
+                SpreadsheetSelection.parseRow("4")
+                        .setDefaultAnchor()
         );
     }
 
@@ -288,8 +288,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "4",
                 "3:5",
                 SpreadsheetViewportAnchor.TOP,
-                "3:5",
-                SpreadsheetViewportAnchor.BOTTOM
+                "3:4",
+                SpreadsheetViewportAnchor.TOP
         );
     }
 
@@ -299,7 +299,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "4",
                 "3:5",
                 SpreadsheetViewportAnchor.BOTTOM,
-                "3:5",
+                "4:5",
                 SpreadsheetViewportAnchor.BOTTOM
         );
     }
@@ -310,7 +310,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "5",
                 "3:6",
                 SpreadsheetViewportAnchor.TOP,
-                "3:6",
+                "3:5",
                 SpreadsheetViewportAnchor.TOP
         );
     }
@@ -321,8 +321,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "5",
                 "3:6",
                 SpreadsheetViewportAnchor.BOTTOM,
-                "3:6",
-                SpreadsheetViewportAnchor.TOP
+                "5:6",
+                SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
@@ -343,8 +343,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "3",
                 "3:4",
                 SpreadsheetViewportAnchor.TOP,
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM
+                SpreadsheetSelection.parseRow("3")
+                        .setDefaultAnchor()
         );
     }
 
@@ -354,7 +354,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                 "2",
                 "3:4",
                 SpreadsheetViewportAnchor.TOP,
-                "2:4",
+                "2:3",
                 SpreadsheetViewportAnchor.BOTTOM
         );
     }
@@ -397,6 +397,19 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                                         final SpreadsheetViewportAnchor rowRangeAnchor,
                                         final String expectedRowRange,
                                         final SpreadsheetViewportAnchor expectedAnchor) {
+        this.updateRowRangeAndCheck(
+                row,
+                rowRange,
+                rowRangeAnchor,
+                SpreadsheetSelection.parseRowRange(expectedRowRange)
+                        .setAnchor(expectedAnchor)
+        );
+    }
+
+    private void updateRowRangeAndCheck(final String row,
+                                        final String rowRange,
+                                        final SpreadsheetViewportAnchor rowRangeAnchor,
+                                        final AnchoredSpreadsheetSelection expected) {
         this.updateAndCheck(
                 this.createSpreadsheetViewportNavigation(
                         SpreadsheetSelection.parseRow(row)
@@ -405,10 +418,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                         SpreadsheetSelection.parseRowRange(rowRange)
                                 .setAnchor(rowRangeAnchor)
                 ),
-                Optional.of(
-                        SpreadsheetSelection.parseRowRange(expectedRowRange)
-                                .setAnchor(expectedAnchor)
-                )
+                Optional.of(expected)
         );
     }
 

@@ -18,7 +18,9 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.NeverError;
 import walkingkooka.collect.Range;
+import walkingkooka.compare.Comparators;
 
 import java.util.Optional;
 
@@ -100,28 +102,34 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
             }
         } else {
             final SpreadsheetColumnRangeReference range = selection.toColumnRange();
+            final SpreadsheetColumnReference other = anchor.column(range);
 
-            final SpreadsheetColumnReference left = range.begin();
-            final SpreadsheetColumnReference right = range.end();
-
-            final SpreadsheetColumnReference newLeft = newColumn.min(left);
-            final SpreadsheetColumnReference newRight = newColumn.max(right);
-
-            SpreadsheetViewportAnchor newAnchor;
-
-            // try to compute the anchor for the furthest column
-            if (diff(newColumn, left) <= diff(newColumn, right)) {
-                newAnchor = SpreadsheetViewportAnchor.RIGHT;
-            } else {
-                newAnchor = SpreadsheetViewportAnchor.LEFT;
+            final int leftCompare = Comparators.normalize(newColumn.compareTo(other));
+            switch (leftCompare) {
+                case -1:
+                    anchored = columnRange(
+                            newColumn,
+                            other
+                    ).setAnchor(SpreadsheetViewportAnchor.RIGHT);
+                    break;
+                case 0:
+                    anchored = newColumn.setDefaultAnchor();
+                    break;
+                case +1:
+                    anchored = columnRange(
+                            other,
+                            newColumn
+                    ).setAnchor(SpreadsheetViewportAnchor.LEFT);
+                    break;
+                default:
+                    anchored = null;
+                    NeverError.unhandledCase(
+                            leftCompare,
+                            -1,
+                            0,
+                            +1
+                    );
             }
-
-            anchored = range.setRange(
-                    range(
-                            newLeft,
-                            newRight
-                    )
-            ).setAnchor(newAnchor);
         }
         return anchored;
     }
@@ -151,30 +159,35 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
             }
         } else {
             final SpreadsheetRowRangeReference range = selection.toRowRange();
+            final SpreadsheetRowReference other = anchor.row(range);
 
-            final SpreadsheetRowReference top = range.begin();
-            final SpreadsheetRowReference bottom = range.end();
-
-            final SpreadsheetRowReference newTop = newRow.min(top);
-            final SpreadsheetRowReference newBottom = newRow.max(bottom);
-
-            SpreadsheetViewportAnchor newAnchor;
-
-            // try to compute the anchor for the furthest row
-            if (diff(newRow, top) <= diff(newRow, bottom)) {
-                newAnchor = SpreadsheetViewportAnchor.BOTTOM;
-            } else {
-                newAnchor = SpreadsheetViewportAnchor.TOP;
+            final int topCompare = Comparators.normalize(newRow.compareTo(other));
+            switch (topCompare) {
+                case -1:
+                    anchored = rowRange(
+                            newRow,
+                            other
+                    ).setAnchor(SpreadsheetViewportAnchor.BOTTOM);
+                    break;
+                case 0:
+                    anchored = newRow.setDefaultAnchor();
+                    break;
+                case +1:
+                    anchored = rowRange(
+                            other,
+                            newRow
+                    ).setAnchor(SpreadsheetViewportAnchor.TOP);
+                    break;
+                default:
+                    anchored = null;
+                    NeverError.unhandledCase(
+                            topCompare,
+                            -1,
+                            0,
+                            +1
+                    );
             }
-
-            anchored = range.setRange(
-                    range(
-                            newTop,
-                            newBottom
-                    )
-            ).setAnchor(newAnchor);
         }
-
         return anchored;
     }
 

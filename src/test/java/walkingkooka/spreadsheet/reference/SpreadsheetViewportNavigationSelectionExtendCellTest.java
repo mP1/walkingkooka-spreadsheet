@@ -50,6 +50,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
         );
     }
 
+    // different cell...................................................................................................
+
     @Test
     public void testUpdateCellWhenCellTopLeft() {
         this.updateCellAndCheck(
@@ -111,30 +113,51 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
         );
     }
 
+    private final static String OUTSIDE_TOP_LEFT = "A1";
+
+    private final static String OUTSIDE_TOP_RIGHT = "E1";
+
+    private final static String OUTSIDE_BOTTOM_RIGHT = "E5";
+
+    private final static String OUTSIDE_BOTTOM_LEFT = "A5";
+
+
+    private final static String INSIDE_TOP_LEFT = "B2";
+
+    private final static String INSIDE_TOP_RIGHT = "D2";
+
+    private final static String INSIDE_BOTTOM_RIGHT = "D4";
+
+    private final static String INSIDE_BOTTOM_LEFT = "B4";
+
+    private final static String CENTER = "C3";
+
     // cell-range TOP_LEFT..............................................................................................
 
     @Test
-    public void testUpdateCellWhenCellRangeTopLeft() {
+    public void testUpdateCellWhenCellRangeTopLeftTopLeftOutside() {
         this.updateCellRangeAndCheck(
-                "D4", // cell
+                OUTSIDE_TOP_LEFT, // cell
                 SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
-                SpreadsheetViewportAnchor.TOP_LEFT
+                "A1:B2",
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
     @Test
-    public void testUpdateCellWhenCellRangeTopLeft2() {
+    public void testUpdateCellWhenCellRangeTopLeftTopRightOutside() {
         this.updateCellRangeAndCheck(
-                "D4", // cell
-                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
-                SpreadsheetViewportAnchor.TOP_LEFT
+                OUTSIDE_TOP_RIGHT, // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "B1:E2",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
     @Test
-    public void testUpdateCellWhenCellRangeTopLeft3() {
+    public void testUpdateCellWhenCellRangeTopLeftBottomRightOutside() {
         this.updateCellRangeAndCheck(
-                "E5", // cell
+                OUTSIDE_BOTTOM_RIGHT, // cell
                 SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
                 "B2:E5",
                 SpreadsheetViewportAnchor.TOP_LEFT
@@ -142,11 +165,61 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
     }
 
     @Test
-    public void testUpdateCellWhenCellRangeTopLeft4() {
+    public void testUpdateCellWhenCellRangeTopLeftBottomLeftOutside() {
         this.updateCellRangeAndCheck(
-                "E5", // cell
-                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
-                "B2:E5",
+                OUTSIDE_BOTTOM_LEFT, // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "A2:B5",
+                SpreadsheetViewportAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopLeftTopLeftInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_TOP_LEFT, // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                SpreadsheetSelection.parseCell(INSIDE_TOP_LEFT)
+                        .setDefaultAnchor()
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopLeftTopRightInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_TOP_RIGHT, // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "B2:D2",
+                SpreadsheetViewportAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopLeftBottomRightInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_BOTTOM_RIGHT, // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "B2:D4",
+                SpreadsheetViewportAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopLeftBottomLeftInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_BOTTOM_LEFT, // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "B2:B4",
+                SpreadsheetViewportAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopLeftCenter() {
+        this.updateCellRangeAndCheck(
+                CENTER, // cell
+                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                "B2:C3",
                 SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
@@ -154,164 +227,301 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
     // cell-range TOP_RIGHT.............................................................................................
 
     @Test
-    public void testUpdateCellWhenCellRangeTopRight() {
+    public void testUpdateCellWhenCellRangeTopRightTopLeftOutside() {
         this.updateCellRangeAndCheck(
-                "B4", // cell
-                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
-                SpreadsheetViewportAnchor.TOP_RIGHT
-        );
-    }
-
-    @Test
-    public void testUpdateCellWhenCellRangeTopRight2() {
-        this.updateCellRangeAndCheck(
-                "B4", // cell
+                OUTSIDE_TOP_LEFT, // cell
                 SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
-                SpreadsheetViewportAnchor.TOP_RIGHT
+                "A1:D2",
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
     @Test
-    public void testUpdateCellWhenCellRangeTopRight3() {
+    public void testUpdateCellWhenCellRangeTopRightTopRightOutside() {
         this.updateCellRangeAndCheck(
-                "A5", // cell
-                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
+                OUTSIDE_TOP_RIGHT, // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                "D1:E2",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopRightBottomRightOutside() {
+        this.updateCellRangeAndCheck(
+                OUTSIDE_BOTTOM_RIGHT, // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                "D2:E5",
+                SpreadsheetViewportAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopRightBottomLeftOutside() {
+        this.updateCellRangeAndCheck(
+                OUTSIDE_BOTTOM_LEFT, // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
                 "A2:D5",
                 SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
     @Test
-    public void testUpdateCellWhenCellRangeTopRight4() {
+    public void testUpdateCellWhenCellRangeTopRightTopLeftInside() {
         this.updateCellRangeAndCheck(
-                "A5", // cell
+                INSIDE_TOP_LEFT, // cell
                 SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
-                "A2:D5",
+                SpreadsheetSelection.parseCellRange("B2:D2")
+                        .setAnchor(SpreadsheetViewportAnchor.TOP_RIGHT)
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopRightTopRightInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_TOP_RIGHT, // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                SpreadsheetSelection.parseCell(INSIDE_TOP_RIGHT)
+                        .setDefaultAnchor()
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopRightBottomRightInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_BOTTOM_RIGHT, // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                "D2:D4",
+                SpreadsheetViewportAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeTopRightBottomLeftInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_BOTTOM_LEFT, // cell
+                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
+                "B2:D4",
                 SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
-    // cell-range BOTTOM_LEFT...........................................................................................
-
     @Test
-    public void testUpdateCellWhenCellRangeBottomLeft() {
+    public void testUpdateCellWhenCellRangeTopRightCenter() {
         this.updateCellRangeAndCheck(
-                "D2", // cell
-                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
-        );
-    }
-
-    @Test
-    public void testUpdateCellWhenCellRangeBottomLeft2() {
-        this.updateCellRangeAndCheck(
-                "D2", // cell
+                CENTER, // cell
                 SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
-        );
-    }
-
-    @Test
-    public void testUpdateCellWhenCellRangeBottomLeft3() {
-        this.updateCellRangeAndCheck(
-                "E1", // cell
-                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
-                "B1:E4",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
-        );
-    }
-
-    @Test
-    public void testUpdateCellWhenCellRangeBottomLeft4() {
-        this.updateCellRangeAndCheck(
-                "E1", // cell
-                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
-                "B1:E4",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
+                "C2:D3",
+                SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
     // cell-range BOTTOM_RIGHT..........................................................................................
 
     @Test
-    public void testUpdateCellWhenCellRangeBottomRight() {
+    public void testUpdateCellWhenCellRangeBottomRightTopLeftOutside() {
         this.updateCellRangeAndCheck(
-                "B2", // cell
-                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
-        );
-    }
-
-    @Test
-    public void testUpdateCellWhenCellRangeBottomRight2() {
-        this.updateCellRangeAndCheck(
-                "B2", // cell
-                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
-        );
-    }
-
-    @Test
-    public void testUpdateCellWhenCellRangeBottomRight3() {
-        this.updateCellRangeAndCheck(
-                "A1", // cell
-                SpreadsheetViewportAnchor.TOP_LEFT, // initial anchor
-                "A1:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
-        );
-    }
-
-    @Test
-    public void testUpdateCellWhenCellRangeBottomRight4() {
-        this.updateCellRangeAndCheck(
-                "A1", // cell
-                SpreadsheetViewportAnchor.TOP_RIGHT, // initial anchor
-                "A1:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
-        );
-    }
-
-    @Test
-    public void testUpdateCellWhenCellRangeBottomRight5() {
-        this.updateCellRangeAndCheck(
-                "A1", // cell
-                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
-                "A1:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
-        );
-    }
-
-    @Test
-    public void testUpdateCellWhenCellRangeBottomRight6() {
-        this.updateCellRangeAndCheck(
-                "A1", // cell
+                OUTSIDE_TOP_LEFT, // cell
                 SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
                 "A1:D4",
                 SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
-    private void updateCellRangeAndCheck(final String cell,
-                                         final SpreadsheetViewportAnchor initialAnchor,
-                                         final SpreadsheetViewportAnchor expectedAnchor) {
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRightTopRightOutside() {
         this.updateCellRangeAndCheck(
-                cell,
-                initialAnchor,
-                "B2:D4", // expected cell-range
-                expectedAnchor
+                OUTSIDE_TOP_RIGHT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
+                "D1:E4",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRightBottomRightOutside() {
+        this.updateCellRangeAndCheck(
+                OUTSIDE_BOTTOM_RIGHT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
+                "D4:E5",
+                SpreadsheetViewportAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRightBottomLeftOutside() {
+        this.updateCellRangeAndCheck(
+                OUTSIDE_BOTTOM_LEFT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
+                "A4:D5",
+                SpreadsheetViewportAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRightTopLeftInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_TOP_LEFT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
+                SpreadsheetSelection.parseCellRange("B2:D4")
+                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRightTopRightInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_TOP_RIGHT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
+                "D2:D4",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRightBottomRightInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_BOTTOM_RIGHT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
+                SpreadsheetSelection.parseCell(INSIDE_BOTTOM_RIGHT)
+                        .setDefaultAnchor()
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRightBottomLeftInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_BOTTOM_LEFT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
+                "B4:D4",
+                SpreadsheetViewportAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomRightCenter() {
+        this.updateCellRangeAndCheck(
+                CENTER, // cell
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT, // initial anchor
+                "C3:D4",
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    // cell-range BOTTOM_LEFT..........................................................................................
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeftTopLeftOutside() {
+        this.updateCellRangeAndCheck(
+                OUTSIDE_TOP_LEFT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                "A1:B4",
+                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeftTopRightOutside() {
+        this.updateCellRangeAndCheck(
+                OUTSIDE_TOP_RIGHT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                "B1:E4",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeftBottomRightOutside() {
+        this.updateCellRangeAndCheck(
+                OUTSIDE_BOTTOM_RIGHT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                "B4:E5",
+                SpreadsheetViewportAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeftBottomLeftOutside() {
+        this.updateCellRangeAndCheck(
+                OUTSIDE_BOTTOM_LEFT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                "A4:B5",
+                SpreadsheetViewportAnchor.TOP_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeftTopLeftInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_TOP_LEFT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                "B2:B4",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeftTopRightInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_TOP_RIGHT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                "B2:D4",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeftBottomRightInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_BOTTOM_RIGHT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                "B4:D4",
+                SpreadsheetViewportAnchor.TOP_LEFT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeftBottomLeftInside() {
+        this.updateCellRangeAndCheck(
+                INSIDE_BOTTOM_LEFT, // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                SpreadsheetSelection.parseCell(INSIDE_BOTTOM_LEFT)
+                        .setDefaultAnchor()
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenCellRangeBottomLeftCenter() {
+        this.updateCellRangeAndCheck(
+                CENTER, // cell
+                SpreadsheetViewportAnchor.BOTTOM_LEFT, // initial anchor
+                "B3:C4",
+                SpreadsheetViewportAnchor.BOTTOM_LEFT
+        );
+    }
+
+    // updateCellRange helpers..........................................................................................
 
     private void updateCellRangeAndCheck(final String cell,
                                          final SpreadsheetViewportAnchor initialAnchor,
                                          final String expectedCellRange,
                                          final SpreadsheetViewportAnchor expectedAnchor) {
+        this.updateCellRangeAndCheck(
+                cell,
+                initialAnchor,
+                SpreadsheetSelection.parseCellRange(expectedCellRange)
+                        .setAnchor(expectedAnchor)
+        );
+    }
+
+    private void updateCellRangeAndCheck(final String cell,
+                                         final SpreadsheetViewportAnchor initialAnchor,
+                                         final AnchoredSpreadsheetSelection expected) {
         this.updateAndCheck(
                 this.createSpreadsheetViewportNavigation(cell),
                 SpreadsheetSelection.parseCellRange("B2:D4")
                         .setAnchor(initialAnchor),
-                SpreadsheetSelection.parseCellRange(expectedCellRange)
-                        .setAnchor(expectedAnchor)
+                expected
         );
     }
 
