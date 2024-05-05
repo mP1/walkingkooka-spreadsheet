@@ -41,12 +41,16 @@ final class SpreadsheetViewportNavigationSelectionExtendColumn extends Spreadshe
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
+        final SpreadsheetColumnReference newColumn = this.selection;
+
         return Optional.of(
-                columnToAnchored(
-                        selection,
-                        anchor,
-                        this.selection
-                )
+                selection.isColumnReference() || selection.isColumnRangeReference() ?
+                        columnToAnchored(
+                                selection,
+                                anchor,
+                                newColumn
+                        ) :
+                        newColumn.setDefaultAnchor()
         );
     }
 
