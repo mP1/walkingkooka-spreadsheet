@@ -443,8 +443,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
                                                  final String range) {
         this.checkEquals(
                 SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseColumnRange(column).setRowRangeReference(SpreadsheetSelection.parseRowRange(row)),
-                () -> column + " setRowRangeReference " + row
+                SpreadsheetSelection.parseColumnRange(column).setRowRange(SpreadsheetSelection.parseRowRange(row)),
+                () -> column + " setRowRange " + row
         );
     }
 

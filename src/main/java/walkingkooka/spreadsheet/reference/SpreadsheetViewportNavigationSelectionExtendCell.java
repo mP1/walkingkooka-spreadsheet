@@ -183,7 +183,7 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
             }
 
             newAnchored = newSelectionColumn.toColumnRange()
-                    .setRowRangeReference(
+                    .setRowRange(
                             newSelectionRow.toRowRange()
                     ).setAnchor(newAnchor);
         }
