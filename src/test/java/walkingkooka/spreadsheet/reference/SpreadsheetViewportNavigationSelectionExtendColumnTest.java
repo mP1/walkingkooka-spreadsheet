@@ -194,7 +194,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "E",
                 "C:D",
                 SpreadsheetViewportAnchor.RIGHT,
-                "C:E",
+                "D:E",
                 SpreadsheetViewportAnchor.LEFT
         );
     }
@@ -205,8 +205,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "D",
                 "C:D",
                 SpreadsheetViewportAnchor.RIGHT,
-                "C:D",
-                SpreadsheetViewportAnchor.LEFT
+                SpreadsheetSelection.parseColumn("D")
+                        .setDefaultAnchor()
         );
     }
 
@@ -216,7 +216,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "E",
                 "C:D",
                 SpreadsheetViewportAnchor.RIGHT,
-                "C:E",
+                "D:E",
                 SpreadsheetViewportAnchor.LEFT
         );
     }
@@ -227,8 +227,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "C",
                 "C:D",
                 SpreadsheetViewportAnchor.LEFT,
-                "C:D",
-                SpreadsheetViewportAnchor.RIGHT
+                SpreadsheetSelection.parseColumn("C")
+                        .setDefaultAnchor()
         );
     }
 
@@ -260,8 +260,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "D",
                 "C:D",
                 SpreadsheetViewportAnchor.RIGHT,
-                "C:D",
-                SpreadsheetViewportAnchor.LEFT
+                SpreadsheetSelection.parseColumn("D")
+                        .setDefaultAnchor()
         );
     }
 
@@ -271,8 +271,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "D",
                 "C:E",
                 SpreadsheetViewportAnchor.LEFT,
-                "C:E",
-                SpreadsheetViewportAnchor.RIGHT
+                "C:D",
+                SpreadsheetViewportAnchor.LEFT
         );
     }
 
@@ -282,7 +282,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "D",
                 "C:E",
                 SpreadsheetViewportAnchor.RIGHT,
-                "C:E",
+                "D:E",
                 SpreadsheetViewportAnchor.RIGHT
         );
     }
@@ -293,7 +293,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "E",
                 "C:F",
                 SpreadsheetViewportAnchor.LEFT,
-                "C:F",
+                "C:E",
                 SpreadsheetViewportAnchor.LEFT
         );
     }
@@ -304,8 +304,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "E",
                 "C:F",
                 SpreadsheetViewportAnchor.RIGHT,
-                "C:F",
-                SpreadsheetViewportAnchor.LEFT
+                "E:F",
+                SpreadsheetViewportAnchor.RIGHT
         );
     }
 
@@ -326,8 +326,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "C",
                 "C:D",
                 SpreadsheetViewportAnchor.LEFT,
-                "C:D",
-                SpreadsheetViewportAnchor.RIGHT
+                SpreadsheetSelection.parseColumn("C")
+                        .setDefaultAnchor()
         );
     }
 
@@ -337,7 +337,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                 "B",
                 "C:D",
                 SpreadsheetViewportAnchor.LEFT,
-                "B:D",
+                "B:C",
                 SpreadsheetViewportAnchor.RIGHT
         );
     }
@@ -380,6 +380,19 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                                            final SpreadsheetViewportAnchor columnRangeAnchor,
                                            final String expectedColumnRange,
                                            final SpreadsheetViewportAnchor expectedAnchor) {
+        this.updateColumnRangeAndCheck(
+                column,
+                columnRange,
+                columnRangeAnchor,
+                SpreadsheetSelection.parseColumnRange(expectedColumnRange)
+                        .setAnchor(expectedAnchor)
+        );
+    }
+
+    private void updateColumnRangeAndCheck(final String column,
+                                           final String columnRange,
+                                           final SpreadsheetViewportAnchor columnRangeAnchor,
+                                           final AnchoredSpreadsheetSelection expected) {
         this.updateAndCheck(
                 this.createSpreadsheetViewportNavigation(
                         SpreadsheetSelection.parseColumn(column)
@@ -388,10 +401,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
                         SpreadsheetSelection.parseColumnRange(columnRange)
                                 .setAnchor(columnRangeAnchor)
                 ),
-                Optional.of(
-                        SpreadsheetSelection.parseColumnRange(expectedColumnRange)
-                                .setAnchor(expectedAnchor)
-                )
+                Optional.of(expected)
         );
     }
 
