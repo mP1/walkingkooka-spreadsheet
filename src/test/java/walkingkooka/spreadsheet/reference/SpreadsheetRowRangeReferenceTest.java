@@ -416,35 +416,54 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
         );
     }
 
-    // setColumnRangeReference............................................................................................
+    // setColumnRange...................................................................................................
 
     @Test
-    public void testSetColumnRangeReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSelection().setColumnRangeReference(null));
+    public void testSetColumnRangeNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSelection()
+                        .setColumnRange(null)
+        );
     }
 
     @Test
-    public void testSetColumnRangeReference() {
-        this.setColumnRangeReferenceAndCheck("2:4", "B:D", "B2:D4");
+    public void testSetColumnRange() {
+        this.setColumnRangeAndCheck(
+                "2:4",
+                "B:D",
+                "B2:D4"
+        );
     }
 
     @Test
-    public void testSetColumnRangeReference2() {
-        this.setColumnRangeReferenceAndCheck("2", "B", "B2");
+    public void testSetColumnRange2() {
+        this.setColumnRangeAndCheck(
+                "2",
+                "B",
+                "B2"
+        );
     }
 
     @Test
-    public void testSetColumnRangeReference3() {
-        this.setColumnRangeReferenceAndCheck("2", "B:D", "B2:D2");
+    public void testSetColumnRange3() {
+        this.setColumnRangeAndCheck(
+                "2",
+                "B:D",
+                "B2:D2"
+        );
     }
 
-    private void setColumnRangeReferenceAndCheck(final String row,
-                                                 final String column,
-                                                 final String range) {
+    private void setColumnRangeAndCheck(final String row,
+                                        final String column,
+                                        final String expected) {
         this.checkEquals(
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseColumnRange(column).setRowRange(SpreadsheetSelection.parseRowRange(row)),
-                () -> column + " setRowRange " + row
+                SpreadsheetSelection.parseCellRange(expected),
+                SpreadsheetSelection.parseColumnRange(column)
+                        .setRowRange(
+                                SpreadsheetSelection.parseRowRange(row)
+                        ),
+                () -> column + " setColumnRange " + row
         );
     }
 

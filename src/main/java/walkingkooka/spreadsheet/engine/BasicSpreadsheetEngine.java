@@ -1478,7 +1478,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // fcr FR FR FR
             // fc  n  n  n
             // fc  n  n  n
-            final SpreadsheetCellRangeReference frozenRowsCells = frozenRows.setColumnRangeReference(nonFrozenColumns);
+            final SpreadsheetCellRangeReference frozenRowsCells = frozenRows.setColumnRange(nonFrozenColumns);
 
             window.add(frozenRowsCells);
 
