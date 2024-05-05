@@ -1455,7 +1455,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         SpreadsheetCellRangeReference nonFrozenCells = null;
         if (null != nonFrozenColumns && null != nonFrozenRows) {
-            nonFrozenCells = nonFrozenColumns.setRowRangeReference(nonFrozenRows);
+            nonFrozenCells = nonFrozenColumns.setRowRange(nonFrozenRows);
         }
 
         // compute other ranges parse frozenColumns/frozenRows .........................................................
@@ -1466,7 +1466,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // FCR fr fr fr
             // fc  n  n  n
             // fc  n  n  n
-            final SpreadsheetCellRangeReference frozenColumnsRowsCells = frozenColumns.setRowRangeReference(frozenRows);
+            final SpreadsheetCellRangeReference frozenColumnsRowsCells = frozenColumns.setRowRange(frozenRows);
 
             window.add(frozenColumnsRowsCells);
 
@@ -1490,7 +1490,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // fcr fr fr fr
             // FC  n  n  n
             // FC  n  n  n
-            final SpreadsheetCellRangeReference frozenColumnCells = frozenColumns.setRowRangeReference(nonFrozenRows);
+            final SpreadsheetCellRangeReference frozenColumnCells = frozenColumns.setRowRange(nonFrozenRows);
             window.add(frozenColumnCells);
 
             skipPan = skipPan ||

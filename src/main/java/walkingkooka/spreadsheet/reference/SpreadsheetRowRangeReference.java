@@ -65,7 +65,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
     public SpreadsheetCellRangeReference setColumnRangeReference(final SpreadsheetColumnRangeReference columnRangeReference) {
         checkColumnRangeReference(columnRangeReference);
 
-        return columnRangeReference.setRowRangeReference(this);
+        return columnRangeReference.setRowRange(this);
     }
 
     public SpreadsheetRowRangeReference setRange(final Range<SpreadsheetRowReference> range) {

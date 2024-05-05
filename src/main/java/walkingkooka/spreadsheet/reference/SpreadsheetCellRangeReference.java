@@ -62,7 +62,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
      * A {@link SpreadsheetColumnRangeReference} that includes all cells.
      */
     public static final SpreadsheetCellRangeReference ALL = SpreadsheetColumnRangeReference.ALL
-            .setRowRangeReference(SpreadsheetRowRangeReference.ALL);
+            .setRowRange(SpreadsheetRowRangeReference.ALL);
 
     /**
      * Computes the range of the given cells.

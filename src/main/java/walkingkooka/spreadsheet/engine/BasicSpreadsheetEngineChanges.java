@@ -449,7 +449,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         return null != left ?
                 Optional.of(
                         left.columnRange(right)
-                                .setRowRangeReference(
+                                .setRowRange(
                                         top.rowRange(bottom)
                                 )
                 ) :

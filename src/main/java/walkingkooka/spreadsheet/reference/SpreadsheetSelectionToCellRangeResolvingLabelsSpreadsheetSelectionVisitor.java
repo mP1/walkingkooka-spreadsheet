@@ -62,7 +62,7 @@ final class SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVi
 
     @Override
     protected void visit(final SpreadsheetColumnRangeReference columns) {
-        this.cellRange = columns.setRowRangeReference(SpreadsheetSelection.ALL_ROWS);
+        this.cellRange = columns.setRowRange(SpreadsheetSelection.ALL_ROWS);
     }
 
     @Override
