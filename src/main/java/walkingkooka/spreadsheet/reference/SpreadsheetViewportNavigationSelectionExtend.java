@@ -131,54 +131,50 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
                                                       final SpreadsheetRowReference newRow) {
         final AnchoredSpreadsheetSelection anchored;
 
-        if (selection.isRowReference() || selection.isRowRangeReference()) {
-            if (selection.count() == 1) {
-                final SpreadsheetRowReference row = selection.toRow();
-                final int compare = newRow.compareTo(row);
-                if (0 == compare) {
-                    anchored = selection.setAnchor(anchor);
-                } else {
-                    if (compare < 0) {
-                        anchored = rowRange(
-                                newRow,
-                                row
-                        ).setAnchor(SpreadsheetViewportAnchor.BOTTOM);
-                    } else {
-                        anchored = rowRange(
-                                row,
-                                newRow
-                        ).setAnchor(SpreadsheetViewportAnchor.TOP);
-                    }
-                }
+        if (selection.count() == 1) {
+            final SpreadsheetRowReference row = selection.toRow();
+            final int compare = newRow.compareTo(row);
+            if (0 == compare) {
+                anchored = selection.setAnchor(anchor);
             } else {
-                final SpreadsheetRowRangeReference range = selection.toRowRange();
-
-                final SpreadsheetRowReference top = range.begin();
-                final SpreadsheetRowReference bottom = range.end();
-
-                final SpreadsheetRowReference newTop = newRow.min(top);
-                final SpreadsheetRowReference newBottom = newRow.max(bottom);
-
-                SpreadsheetViewportAnchor newAnchor;
-
-                // try to compute the anchor for the furthest row
-                if (diff(newRow, top) <= diff(newRow, bottom)) {
-                    newAnchor = SpreadsheetViewportAnchor.BOTTOM;
+                if (compare < 0) {
+                    anchored = rowRange(
+                            newRow,
+                            row
+                    ).setAnchor(SpreadsheetViewportAnchor.BOTTOM);
                 } else {
-                    newAnchor = SpreadsheetViewportAnchor.TOP;
+                    anchored = rowRange(
+                            row,
+                            newRow
+                    ).setAnchor(SpreadsheetViewportAnchor.TOP);
                 }
-
-                anchored = range.setRange(
-                        range(
-                                newTop,
-                                newBottom
-                        )
-                ).setAnchor(newAnchor);
             }
         } else {
-            // previous selection was not a row/row-range
-            anchored = newRow.setDefaultAnchor();
+            final SpreadsheetRowRangeReference range = selection.toRowRange();
+
+            final SpreadsheetRowReference top = range.begin();
+            final SpreadsheetRowReference bottom = range.end();
+
+            final SpreadsheetRowReference newTop = newRow.min(top);
+            final SpreadsheetRowReference newBottom = newRow.max(bottom);
+
+            SpreadsheetViewportAnchor newAnchor;
+
+            // try to compute the anchor for the furthest row
+            if (diff(newRow, top) <= diff(newRow, bottom)) {
+                newAnchor = SpreadsheetViewportAnchor.BOTTOM;
+            } else {
+                newAnchor = SpreadsheetViewportAnchor.TOP;
+            }
+
+            anchored = range.setRange(
+                    range(
+                            newTop,
+                            newBottom
+                    )
+            ).setAnchor(newAnchor);
         }
+
         return anchored;
     }
 
