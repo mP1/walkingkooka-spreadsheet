@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.NeverError;
-import walkingkooka.collect.Range;
 
 import java.util.Optional;
 
@@ -43,109 +42,153 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        final AnchoredSpreadsheetSelection anchored;
-
-        final SpreadsheetCellReference newCell = this.selection;
-
-        if (selection.isCellReference() || selection.isCellRangeReference()) {
-            if (newCell.equalsIgnoreReferenceKind(selection) && selection.count() == 1) {
-                anchored = selection.setAnchor(anchor);
-            } else {
-                final SpreadsheetCellRangeReference range = selection.toCellRange();
-
-                final SpreadsheetCellReference topLeft = range.begin();
-                final SpreadsheetCellReference bottomRight = range.end();
-
-                SpreadsheetColumnReference left = topLeft.column();
-                SpreadsheetRowReference top = topLeft.row();
-                SpreadsheetColumnReference right = bottomRight.column();
-                SpreadsheetRowReference bottom = bottomRight.row();
-
-                final SpreadsheetColumnReference column = newCell.column();
-                final SpreadsheetRowReference row = newCell.row();
-
-                final SpreadsheetColumnReference c;
-                final SpreadsheetRowReference r;
-
-                switch (anchor) {
-                    case NONE:
-                    case TOP_LEFT:
-                        c = left;
-                        r = top;
-                        break;
-                    case TOP_RIGHT:
-                        c = right;
-                        r = top;
-                        break;
-                    case BOTTOM_LEFT:
-                        c = left;
-                        r = bottom;
-                        break;
-                    case BOTTOM_RIGHT:
-                        c = right;
-                        r = bottom;
-                        break;
-                    default:
-                        c = null;
-                        r = null;
-                        NeverError.unhandledEnum(
-                                anchor,
-                                SpreadsheetViewportAnchor.NONE,
-                                SpreadsheetViewportAnchor.TOP_LEFT,
-                                SpreadsheetViewportAnchor.TOP_RIGHT,
-                                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                                SpreadsheetViewportAnchor.BOTTOM_RIGHT
-                        );
-                }
-
-                left = c.min(column);
-                right = c.max(column);
-                top = r.min(row);
-                bottom = r.max(row);
-
-                final SpreadsheetViewportAnchor newAnchor;
-
-                if (left.equalsIgnoreReferenceKind(topLeft.column())) {
-                    // TOP_LEFT | BOTTOM_LEFT
-                    if (top.equalsIgnoreReferenceKind(topLeft.row())) {
-                        newAnchor = SpreadsheetViewportAnchor.TOP_LEFT;
-                    } else {
-                        newAnchor = SpreadsheetViewportAnchor.BOTTOM_LEFT;
-                    }
-                } else {
-                    // TOP_RIGHT | BOTTOM_RIGHT
-                    if (top.equalsIgnoreReferenceKind(topLeft.row())) {
-                        newAnchor = SpreadsheetViewportAnchor.TOP_RIGHT;
-                    } else {
-                        newAnchor = SpreadsheetViewportAnchor.BOTTOM_RIGHT;
-                    }
-                }
-
-                anchored = setRange(
-                        range,
-                        left.setRow(top),
-                        right.setRow(bottom),
-                        newAnchor
+        return selection.isCellReference() ||
+                selection.isCellRangeReference() ?
+                this.updateCellOrCellRange(
+                        selection,
+                        anchor,
+                        context
+                ) :
+                Optional.of(
+                        this.selection.setDefaultAnchor()
                 );
-            }
-        } else {
-            // previous selection was not a cell/cell-range
-            anchored = newCell.setDefaultAnchor();
-        }
-
-        return Optional.of(anchored);
     }
 
-    private static AnchoredSpreadsheetSelection setRange(final SpreadsheetCellRangeReference range,
-                                                         final SpreadsheetCellReference topLeft,
-                                                         final SpreadsheetCellReference bottomRight,
-                                                         final SpreadsheetViewportAnchor anchor) {
-        return range.setRange(
-                Range.greaterThanEquals(topLeft)
-                        .and(
-                                Range.lessThanEquals(bottomRight)
-                        )
-        ).setAnchor(anchor);
+    private Optional<AnchoredSpreadsheetSelection> updateCellOrCellRange(final SpreadsheetSelection selection,
+                                                                         final SpreadsheetViewportAnchor anchor,
+                                                                         final SpreadsheetViewportNavigationContext context) {
+        final SpreadsheetCellReference newCell = this.selection;
+
+        final SpreadsheetViewportAnchor columnAnchor;
+        final SpreadsheetViewportAnchor rowAnchor;
+
+        switch (anchor) {
+            case NONE:
+                columnAnchor = SpreadsheetViewportAnchor.NONE;
+                rowAnchor = SpreadsheetViewportAnchor.NONE;
+                break;
+            case TOP_LEFT:
+                columnAnchor = SpreadsheetViewportAnchor.LEFT;
+                rowAnchor = SpreadsheetViewportAnchor.TOP;
+                break;
+            case TOP_RIGHT:
+                columnAnchor = SpreadsheetViewportAnchor.RIGHT;
+                rowAnchor = SpreadsheetViewportAnchor.TOP;
+                break;
+            case BOTTOM_LEFT:
+                columnAnchor = SpreadsheetViewportAnchor.LEFT;
+                rowAnchor = SpreadsheetViewportAnchor.BOTTOM;
+                break;
+            case BOTTOM_RIGHT:
+                columnAnchor = SpreadsheetViewportAnchor.RIGHT;
+                rowAnchor = SpreadsheetViewportAnchor.BOTTOM;
+                break;
+            default:
+                columnAnchor = null;
+                rowAnchor = null;
+                NeverError.unhandledEnum(
+                        anchor,
+                        SpreadsheetViewportAnchor.NONE,
+                        SpreadsheetViewportAnchor.TOP_LEFT,
+                        SpreadsheetViewportAnchor.TOP_RIGHT,
+                        SpreadsheetViewportAnchor.BOTTOM_LEFT,
+                        SpreadsheetViewportAnchor.BOTTOM_RIGHT
+                );
+        }
+
+        final AnchoredSpreadsheetSelection anchoredColumn = columnToAnchored(
+                selection.isCellReference() ?
+                        selection.toColumn() :
+                        selection.isCellRangeReference() ?
+                                selection.toColumnRange() :
+                                selection,
+                columnAnchor,
+                newCell.toColumn()
+        );
+
+        final AnchoredSpreadsheetSelection anchoredRow = rowToAnchored(
+                selection.isCellReference() ?
+                        selection.toRow() :
+                        selection.isCellRangeReference() ?
+                                selection.toRowRange() :
+                                selection,
+                rowAnchor,
+                newCell.toRow()
+        );
+
+        final AnchoredSpreadsheetSelection newAnchored;
+        final SpreadsheetSelection newSelectionColumn = anchoredColumn.selection();
+        final SpreadsheetSelection newSelectionRow = anchoredRow.selection();
+
+        if (newSelectionColumn.count() == 1 && newSelectionRow.count() == 1) {
+            newAnchored = newSelectionColumn.toColumn()
+                    .setRow(
+                            newSelectionRow.toRow()
+                    ).setDefaultAnchor();
+        } else {
+            final SpreadsheetViewportAnchor newAnchor;
+
+            final SpreadsheetViewportAnchor anchoredColumnAnchor = anchoredColumn.anchor();
+            final SpreadsheetViewportAnchor anchoredRowAnchor = anchoredRow.anchor();
+
+            switch (anchoredColumnAnchor) {
+                case NONE:
+                case LEFT:
+                    switch (anchoredRowAnchor) {
+                        case NONE:
+                        case TOP:
+                            newAnchor = SpreadsheetViewportAnchor.TOP_LEFT;
+                            break;
+                        case BOTTOM:
+                            newAnchor = SpreadsheetViewportAnchor.BOTTOM_LEFT;
+                            break;
+                        default:
+                            newAnchor = NeverError.unhandledEnum(
+                                    anchor,
+                                    SpreadsheetViewportAnchor.NONE,
+                                    SpreadsheetViewportAnchor.TOP,
+                                    SpreadsheetViewportAnchor.BOTTOM
+                            );
+                            break;
+                    }
+                    break;
+                case RIGHT:
+                    switch (anchoredRowAnchor) {
+                        case NONE:
+                        case TOP:
+                            newAnchor = SpreadsheetViewportAnchor.TOP_RIGHT;
+                            break;
+                        case BOTTOM:
+                            newAnchor = SpreadsheetViewportAnchor.BOTTOM_RIGHT;
+                            break;
+                        default:
+                            newAnchor = NeverError.unhandledEnum(
+                                    anchor,
+                                    SpreadsheetViewportAnchor.NONE,
+                                    SpreadsheetViewportAnchor.TOP,
+                                    SpreadsheetViewportAnchor.BOTTOM
+                            );
+                            break;
+                    }
+                    ;
+                    break;
+                default:
+                    newAnchor = NeverError.unhandledEnum(
+                            anchor,
+                            SpreadsheetViewportAnchor.NONE,
+                            SpreadsheetViewportAnchor.LEFT,
+                            SpreadsheetViewportAnchor.RIGHT
+                    );
+                    break;
+            }
+
+            newAnchored = newSelectionColumn.toColumnRange()
+                    .setRowRangeReference(
+                            newSelectionRow.toRowRange()
+                    ).setAnchor(newAnchor);
+        }
+
+        return Optional.of(newAnchored);
     }
 
     @Override
