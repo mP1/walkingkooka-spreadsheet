@@ -61,8 +61,11 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     private static final SpreadsheetCellRangeReference CELL_RANGE = SpreadsheetSelection.parseCellRange("B2:C3");
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final SpreadsheetViewportAnchor ANCHOR = SpreadsheetViewportAnchor.TOP_LEFT;
-    private static final List<SpreadsheetViewportNavigation> NAVIGATIONS = Lists.of(
-            SpreadsheetViewportNavigation.leftColumn()
+
+    private static final SpreadsheetViewportNavigationList NAVIGATIONS = SpreadsheetViewportNavigationList.with(
+            Lists.of(
+                    SpreadsheetViewportNavigation.leftColumn()
+            )
     );
 
     @Test
@@ -146,8 +149,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     @Test
     public void testSetNavigationsDifferent() {
         final SpreadsheetViewport viewport = this.createObject();
-        final List<SpreadsheetViewportNavigation> navigations = Lists.of(
-                SpreadsheetViewportNavigation.extendRightColumn()
+        final SpreadsheetViewportNavigationList navigations = SpreadsheetViewportNavigationList.with(
+                Lists.of(
+                        SpreadsheetViewportNavigation.extendRightColumn()
+                )
         );
         this.checkNotEquals(
                 NAVIGATIONS,
@@ -167,41 +172,6 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.checkNavigations(
                 differentViewport,
                 navigations
-        );
-    }
-
-    @Test
-    public void testSetNavigationsDifferentCopied() {
-        final SpreadsheetViewport selection = this.createObject();
-        final List<SpreadsheetViewportNavigation> navigations = Lists.array();
-        navigations.add(
-                SpreadsheetViewportNavigation.extendRightColumn()
-        );
-
-        this.checkNotEquals(
-                NAVIGATIONS,
-                navigations,
-                "different navigations"
-        );
-
-
-        final SpreadsheetViewport differentSelection = selection.setNavigations(navigations);
-        assertNotSame(
-                selection,
-                differentSelection
-        );
-        this.checkAnchoredSelection(
-                differentSelection,
-                selection.anchoredSelection()
-        );
-
-        navigations.clear();
-
-        this.checkNavigations(
-                differentSelection,
-                Lists.of(
-                        SpreadsheetViewportNavigation.extendRightColumn()
-                )
         );
     }
 
@@ -257,8 +227,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 SpreadsheetViewport.with(
                         RECTANGLE,
                         SpreadsheetViewport.NO_ANCHORED_SELECTION,
-                        Lists.of(
-                                SpreadsheetViewportNavigation.rightColumn()
+                        SpreadsheetViewportNavigationList.with(
+                                Lists.of(
+                                        SpreadsheetViewportNavigation.rightColumn()
+                                )
                         )
                 )
         );
@@ -314,9 +286,11 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 SpreadsheetViewport.with(
                         RECTANGLE,
                         SpreadsheetViewport.NO_ANCHORED_SELECTION,
-                        Lists.of(
-                                SpreadsheetViewportNavigation.leftColumn(),
-                                SpreadsheetViewportNavigation.upRow()
+                        SpreadsheetViewportNavigationList.with(
+                                Lists.of(
+                                        SpreadsheetViewportNavigation.leftColumn(),
+                                        SpreadsheetViewportNavigation.upRow()
+                                )
                         )
                 ),
                 "rectangle:" + EOL +
@@ -340,8 +314,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                                                 SpreadsheetViewportAnchor.TOP
                                         )
                         ),
-                        Lists.of(
-                                SpreadsheetViewportNavigation.leftColumn()
+                        SpreadsheetViewportNavigationList.with(
+                                Lists.of(
+                                        SpreadsheetViewportNavigation.leftColumn()
+                                )
                         )
                 ),
                 "rectangle:" + EOL +
