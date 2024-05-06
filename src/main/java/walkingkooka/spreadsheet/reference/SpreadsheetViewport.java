@@ -33,7 +33,6 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -52,7 +51,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     /**
      * No navigations
      */
-    public final static List<SpreadsheetViewportNavigation> NO_NAVIGATION = Lists.empty();
+    public final static SpreadsheetViewportNavigationList NO_NAVIGATION = SpreadsheetViewportNavigationList.with(Lists.empty());
 
     /**
      * Constant useful to separate navigations in a CSV.
@@ -75,7 +74,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     // @VisibleForTesting
     static SpreadsheetViewport with(final SpreadsheetViewportRectangle rectangle,
                                     final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
-                                    final List<SpreadsheetViewportNavigation> navigations) {
+                                    final SpreadsheetViewportNavigationList navigations) {
         return new SpreadsheetViewport(
                 rectangle,
                 anchoredSelection,
@@ -85,7 +84,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     private SpreadsheetViewport(final SpreadsheetViewportRectangle rectangle,
                                 final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
-                                final List<SpreadsheetViewportNavigation> navigations) {
+                                final SpreadsheetViewportNavigationList navigations) {
         super();
         this.rectangle = rectangle;
         this.anchoredSelection = anchoredSelection;
@@ -128,24 +127,23 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     private final Optional<AnchoredSpreadsheetSelection> anchoredSelection;
 
-    public List<SpreadsheetViewportNavigation> navigations() {
+    public SpreadsheetViewportNavigationList navigations() {
         return this.navigations;
     }
 
-    public SpreadsheetViewport setNavigations(final List<SpreadsheetViewportNavigation> navigations) {
+    public SpreadsheetViewport setNavigations(final SpreadsheetViewportNavigationList navigations) {
         Objects.requireNonNull(navigations, "navigations");
 
-        final List<SpreadsheetViewportNavigation> copy = Lists.immutable(navigations);
-        return this.navigations.equals(copy) ?
+        return this.navigations.equals(navigations) ?
                 this :
                 new SpreadsheetViewport(
                         this.rectangle,
                         this.anchoredSelection,
-                        copy
+                        navigations
                 );
     }
 
-    private final List<SpreadsheetViewportNavigation> navigations;
+    private final SpreadsheetViewportNavigationList navigations;
 
     // TreePrintable....................................................................................................
 
@@ -168,7 +166,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                     .printTree(printer);
         }
 
-        final List<SpreadsheetViewportNavigation> navigations = this.navigations();
+        final SpreadsheetViewportNavigationList navigations = this.navigations();
         if (false == navigations.isEmpty()) {
             printer.println("navigations:");
             printer.indent();
@@ -250,7 +248,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                                           final JsonNodeUnmarshallContext context) {
         SpreadsheetViewportRectangle rectangle = null;
         Optional<AnchoredSpreadsheetSelection> anchoredSelection = NO_ANCHORED_SELECTION;
-        List<SpreadsheetViewportNavigation> navigations = NO_NAVIGATION;
+        SpreadsheetViewportNavigationList navigations = NO_NAVIGATION;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -270,8 +268,9 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                     );
                     break;
                 case NAVIGATION_PROPERTY_STRING:
-                    navigations = SpreadsheetViewportNavigationList.parse(
-                            child.stringOrFail()
+                    navigations = context.unmarshall(
+                            child,
+                            SpreadsheetViewportNavigationList.class
                     );
                     break;
                 default:
@@ -305,16 +304,11 @@ public final class SpreadsheetViewport implements HasUrlFragment,
             );
         }
 
-        final List<SpreadsheetViewportNavigation> navigations = this.navigations();
+        final SpreadsheetViewportNavigationList navigations = this.navigations();
         if (false == navigations.isEmpty()) {
             object = object.set(
                     NAVIGATION_PROPERTY,
-                    JsonNode.string(
-                            SEPARATOR.toSeparatedString(
-                                    navigations,
-                                    SpreadsheetViewportNavigation::text
-                            )
-                    )
+                    context.marshall(navigations)
             );
         }
 
