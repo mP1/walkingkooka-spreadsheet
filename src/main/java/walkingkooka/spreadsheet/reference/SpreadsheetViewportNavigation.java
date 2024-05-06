@@ -17,14 +17,11 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.text.HasText;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -294,86 +291,5 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     @Override
     public final String toString() {
         return this.text();
-    }
-
-    /**
-     * Accepts some navigations and removes opposites returning the result.
-     */
-    public static List<SpreadsheetViewportNavigation> compact(final List<SpreadsheetViewportNavigation> navigations) {
-        Objects.requireNonNull(navigations, "navigations");
-
-        final List<SpreadsheetViewportNavigation> copy = Lists.immutable(navigations);
-        final int size = copy.size();
-
-        List<SpreadsheetViewportNavigation> result = null;
-
-        switch (size) {
-            case 0:
-            case 1:
-                result = copy;
-                break;
-            default:
-                final SpreadsheetViewportNavigation[] temp = new SpreadsheetViewportNavigation[size];
-                copy.toArray(temp);
-
-                int compactSize = size;
-
-                for (int i = 0; i < size; i++) {
-                    final SpreadsheetViewportNavigation left = temp[i];
-                    if (null == left) {
-                        continue;
-                    }
-                    if (left.isClearPrevious()) {
-                        Arrays.fill(
-                                temp,
-                                0,
-                                i,
-                                null
-                        );
-                    }
-                }
-
-                for (int i = 0; i < size; i++) {
-                    final SpreadsheetViewportNavigation left = temp[i];
-                    if (null == left) {
-                        continue;
-                    }
-
-                    // try and find an opposite
-                    for (int j = i + 1; j < size; j++) {
-                        if (left.isOpposite(temp[j])) {
-                            temp[i] = null;
-                            temp[j] = null;
-
-                            compactSize = compactSize - 2;
-
-                            // all navigations cancelled themselves out
-                            if (0 == compactSize) {
-                                result = Lists.empty();
-                                i = Integer.MAX_VALUE - 1; // because i++ will increment before i < size test.
-                            }
-                            break;
-                        }
-                    }
-                }
-
-                // fill an array with non-null navigations.
-                if (null == result) {
-                    final List<SpreadsheetViewportNavigation> compact = Lists.array();
-
-                    int i = 0;
-                    for (SpreadsheetViewportNavigation item : temp) {
-                        if (null != item) {
-                            compact.add(item);
-                        }
-                    }
-
-                    result = Lists.immutable(compact);
-                }
-
-                break;
-        }
-
-        return result;
     }
 }

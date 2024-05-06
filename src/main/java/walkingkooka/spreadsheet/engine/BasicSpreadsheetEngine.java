@@ -1828,9 +1828,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                     final SpreadsheetViewportNavigationContext context) {
         Optional<SpreadsheetViewport> result;
 
-        final List<SpreadsheetViewportNavigation> navigations = SpreadsheetViewportNavigation.compact(
-                viewport.navigations()
-        );
+        final List<SpreadsheetViewportNavigation> navigations = viewport.navigations()
+                .compact();
         if (navigations.isEmpty()) {
             result = this.navigateWithoutNavigation(
                     viewport,

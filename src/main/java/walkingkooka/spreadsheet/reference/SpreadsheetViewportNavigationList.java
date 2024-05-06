@@ -51,6 +51,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
 import java.util.AbstractList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -458,6 +459,87 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                 token,
                 CaseSensitivity.SENSITIVE
         );
+    }
+
+    /**
+     * Accepts some navigations and removes opposites returning the result.
+     */
+    public SpreadsheetViewportNavigationList compact() {
+        final int size = this.size();
+
+        SpreadsheetViewportNavigationList result = null;
+
+        switch (size) {
+            case 0:
+            case 1:
+                result = this;
+                break;
+            default:
+                final SpreadsheetViewportNavigation[] temp = new SpreadsheetViewportNavigation[size];
+                this.toArray(temp);
+
+                int compactSize = size;
+
+                for (int i = 0; i < size; i++) {
+                    final SpreadsheetViewportNavigation left = temp[i];
+                    if (null == left) {
+                        continue;
+                    }
+                    if (left.isClearPrevious()) {
+                        Arrays.fill(
+                                temp,
+                                0,
+                                i,
+                                null
+                        );
+                    }
+                }
+
+                for (int i = 0; i < size; i++) {
+                    final SpreadsheetViewportNavigation left = temp[i];
+                    if (null == left) {
+                        continue;
+                    }
+
+                    // try and find an opposite
+                    for (int j = i + 1; j < size; j++) {
+                        if (left.isOpposite(temp[j])) {
+                            temp[i] = null;
+                            temp[j] = null;
+
+                            compactSize = compactSize - 2;
+
+                            // all navigations cancelled themselves out
+                            if (0 == compactSize) {
+                                result = EMPTY;
+                                i = Integer.MAX_VALUE - 1; // because i++ will increment before i < size test.
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // fill an array with non-null navigations.
+                if (null == result) {
+                    final List<SpreadsheetViewportNavigation> compact = Lists.array();
+
+                    int i = 0;
+                    for (SpreadsheetViewportNavigation item : temp) {
+                        if (null != item) {
+                            compact.add(item);
+                        }
+                    }
+
+                    final SpreadsheetViewportNavigation[] array = new SpreadsheetViewportNavigation[compact.size()];
+                    compact.toArray(array);
+
+                    result = new SpreadsheetViewportNavigationList(array);
+                }
+
+                break;
+        }
+
+        return result;
     }
 
     // HasText..........................................................................................................
