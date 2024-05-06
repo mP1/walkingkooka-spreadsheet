@@ -24,6 +24,18 @@ import java.util.Optional;
 
 public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends SpreadsheetViewportNavigationSelectionExtendTestCase<SpreadsheetViewportNavigationSelectionExtendRow, SpreadsheetRowReference> {
 
+    // HasText..........................................................................................................
+
+    @Test
+    public void testHasText() {
+        this.textAndCheck(
+                SpreadsheetViewportNavigationSelectionExtendRow.with(SpreadsheetSelection.parseRow("123")),
+                "extend row 123"
+        );
+    }
+
+    // update............................................................................................................
+
     @Test
     public void testUpdateRowNoPreviousSelection() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("3");

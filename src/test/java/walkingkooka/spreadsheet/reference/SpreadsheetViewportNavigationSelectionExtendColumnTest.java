@@ -25,6 +25,18 @@ import java.util.Optional;
 
 public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extends SpreadsheetViewportNavigationSelectionExtendTestCase<SpreadsheetViewportNavigationSelectionExtendColumn, SpreadsheetColumnReference> {
 
+    // HasText..........................................................................................................
+
+    @Test
+    public void testHasText() {
+        this.textAndCheck(
+                SpreadsheetViewportNavigationSelectionExtendColumn.with(SpreadsheetSelection.parseColumn("ABC")),
+                "extend column ABC"
+        );
+    }
+
+    // update............................................................................................................
+
     @Test
     public void testUpdateColumnNoPreviousSelection() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("C");
