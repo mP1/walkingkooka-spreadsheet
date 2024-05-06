@@ -22,6 +22,18 @@ import org.junit.jupiter.api.Test;
 
 public final class SpreadsheetViewportNavigationSelectionSelectRowTest extends SpreadsheetViewportNavigationSelectionSelectTestCase<SpreadsheetViewportNavigationSelectionSelectRow, SpreadsheetRowReference> {
 
+    // HasText..........................................................................................................
+
+    @Test
+    public void testHasText() {
+        this.textAndCheck(
+                SpreadsheetViewportNavigationSelectionSelectRow.with(SpreadsheetSelection.parseRow("456")),
+                "select row 456"
+        );
+    }
+
+    // update...........................................................................................................
+
     @Test
     public void testUpdateRow() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("3");

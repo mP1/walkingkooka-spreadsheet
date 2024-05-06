@@ -22,6 +22,18 @@ import org.junit.jupiter.api.Test;
 
 public final class SpreadsheetViewportNavigationSelectionSelectColumnTest extends SpreadsheetViewportNavigationSelectionSelectTestCase<SpreadsheetViewportNavigationSelectionSelectColumn, SpreadsheetColumnReference> {
 
+    // HasText..........................................................................................................
+
+    @Test
+    public void testHasText() {
+        this.textAndCheck(
+                SpreadsheetViewportNavigationSelectionSelectColumn.with(SpreadsheetSelection.parseColumn("ABC")),
+                "select column ABC"
+        );
+    }
+
+    // update...........................................................................................................
+
     @Test
     public void testUpdateColumn() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("C");

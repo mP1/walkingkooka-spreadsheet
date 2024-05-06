@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.List;
@@ -36,6 +37,7 @@ import java.util.function.Predicate;
 
 public abstract class SpreadsheetViewportNavigationTestCase2<T extends SpreadsheetViewportNavigation> extends
         SpreadsheetViewportNavigationTestCase<T> implements ParseStringTesting<List<T>>,
+        HasTextTesting,
         TreePrintableTesting {
 
     SpreadsheetViewportNavigationTestCase2() {
