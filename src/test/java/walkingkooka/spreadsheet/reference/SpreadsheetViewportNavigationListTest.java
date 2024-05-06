@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -32,7 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetViewportNavigationListTest implements ImmutableListTesting<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation>,
         ParseStringTesting<SpreadsheetViewportNavigationList>,
         TreePrintableTesting,
-        ClassTesting<SpreadsheetViewportNavigationList> {
+        ClassTesting<SpreadsheetViewportNavigationList>,
+        HasTextTesting {
 
     @Test
     public void testWithNullFails() {
@@ -299,6 +301,18 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Override
     public SpreadsheetViewportNavigationList createList() {
         return SpreadsheetViewportNavigationList.with(Lists.empty());
+    }
+
+    // HasTextTesting...................................................................................................
+
+    @Test
+    public void testHasText() {
+        final String text = "left column,right column,up row,down row";
+
+        this.textAndCheck(
+                SpreadsheetViewportNavigationList.parse(text),
+                text
+        );
     }
 
     // ClassTesting.....................................................................................................

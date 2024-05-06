@@ -32,6 +32,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.LongParserToken;
@@ -56,7 +58,13 @@ import java.util.function.Supplier;
  * An {@link walkingkooka.collect.list.ImmutableList} holding zero or more {@link SpreadsheetViewportNavigation}.
  */
 public final class SpreadsheetViewportNavigationList extends AbstractList<SpreadsheetViewportNavigation>
-        implements ImmutableListDefaults<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation> {
+        implements ImmutableListDefaults<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation>,
+        HasText {
+
+    /**
+     * Constant useful to separate navigations in a CSV.
+     */
+    public final static CharacterConstant SEPARATOR = CharacterConstant.COMMA;
 
     /**
      * Factory that creates a new {@link SpreadsheetViewportNavigationList} after taking a defensive copy.
@@ -224,7 +232,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                 break;
             }
 
-            SEPARATOR.parse(cursor, PARSER_CONTEXT);
+            SEPARATOR_PARSER.parse(cursor, PARSER_CONTEXT);
         }
 
         return with(navigations);
@@ -246,8 +254,8 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
 
     private final static Parser<ParserContext> EXTEND_DOWN = stringParser("extend-down");
 
-    private final static Parser<ParserContext> SEPARATOR = characterParserOrReport(
-            CharPredicates.is(SpreadsheetViewport.SEPARATOR.character())
+    private final static Parser<ParserContext> SEPARATOR_PARSER = characterParserOrReport(
+            CharPredicates.is(SEPARATOR.character())
     );
 
     /**
@@ -435,6 +443,15 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         return Parsers.string(
                 token,
                 CaseSensitivity.SENSITIVE
+        );
+    }
+
+    // HasText..........................................................................................................
+
+    public String text() {
+        return SEPARATOR.toSeparatedString(
+                this,
+                SpreadsheetViewportNavigation::text
         );
     }
 }
