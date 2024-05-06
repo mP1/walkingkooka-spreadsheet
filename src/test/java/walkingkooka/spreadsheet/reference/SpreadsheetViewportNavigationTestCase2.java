@@ -248,7 +248,7 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
     @Override
     public final List<T> parseString(final String string) {
         return Cast.to(
-                SpreadsheetViewportNavigation.parse(string)
+                SpreadsheetViewportNavigationList.parse(string)
         );
     }
 

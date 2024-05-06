@@ -270,7 +270,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                     );
                     break;
                 case NAVIGATION_PROPERTY_STRING:
-                    navigations = SpreadsheetViewportNavigation.parse(
+                    navigations = SpreadsheetViewportNavigationList.parse(
                             child.stringOrFail()
                     );
                     break;
