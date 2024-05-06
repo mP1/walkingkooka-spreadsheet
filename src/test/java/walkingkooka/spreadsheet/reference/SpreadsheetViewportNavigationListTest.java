@@ -32,7 +32,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportNavigationListTest implements ImmutableListTesting<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation>,
         ParseStringTesting<SpreadsheetViewportNavigationList>,
@@ -42,19 +41,12 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
         JsonNodeMarshallingTesting<SpreadsheetViewportNavigationList> {
 
     @Test
-    public void testWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetViewportNavigationList.with(null)
-        );
-    }
+    public void testSetElementsDoesntDoubleWrap() {
+        SpreadsheetViewportNavigationList list = SpreadsheetViewportNavigationList.EMPTY.concat(SpreadsheetViewportNavigation.rightColumn());
 
-    @Test
-    public void testDoesntDoubleWrap() {
-        SpreadsheetViewportNavigationList list = SpreadsheetViewportNavigationList.with(Lists.empty());
         assertSame(
                 list,
-                SpreadsheetViewportNavigationList.with(list)
+                list.setElements(list)
         );
     }
 
@@ -282,7 +274,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
                                      final SpreadsheetViewportNavigation... navigations) {
         this.parseStringAndCheck(
                 text,
-                SpreadsheetViewportNavigationList.with(
+                SpreadsheetViewportNavigationList.EMPTY.setElements(
                         Lists.of(navigations)
                 )
         );
@@ -305,7 +297,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
 
     @Override
     public SpreadsheetViewportNavigationList createList() {
-        return SpreadsheetViewportNavigationList.with(Lists.empty());
+        return SpreadsheetViewportNavigationList.EMPTY;
     }
 
     // HasTextTesting...................................................................................................
@@ -334,10 +326,8 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     public void testUnmarshall() {
         this.unmarshallAndCheck(
                 "\"select cell A1\"",
-                SpreadsheetViewportNavigationList.with(
-                        Lists.of(
-                                SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1)
-                        )
+                SpreadsheetViewportNavigationList.EMPTY.concat(
+                        SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1)
                 )
         );
     }
@@ -347,7 +337,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     public void testUnmarshall2() {
         this.unmarshallAndCheck(
                 "\"extend-left column,extend-right column,extend-up row,extend-down row,select cell A1\"",
-                SpreadsheetViewportNavigationList.with(
+                SpreadsheetViewportNavigationList.EMPTY.setElements(
                         Lists.of(
                                 SpreadsheetViewportNavigation.extendLeftColumn(),
                                 SpreadsheetViewportNavigation.extendRightColumn(),

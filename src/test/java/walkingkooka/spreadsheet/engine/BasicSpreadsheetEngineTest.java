@@ -12108,10 +12108,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 .setDefaultAnchor()
                                 )
                         ).setNavigations(
-                                SpreadsheetViewportNavigationList.with(
-                                        Lists.of(
-                                                SpreadsheetViewportNavigation.rightColumn()
-                                        )
+                                SpreadsheetViewportNavigationList.EMPTY.concat(
+                                        SpreadsheetViewportNavigation.rightColumn()
                                 )
                         ),
                 context,
@@ -12138,11 +12136,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                         .viewport()
                         .setNavigations(
-                                SpreadsheetViewportNavigationList.with(
-                                        Lists.of(
-                                                SpreadsheetViewportNavigation.rightPixel(
-                                                        3 * (int) COLUMN_WIDTH - 1
-                                                )
+                                SpreadsheetViewportNavigationList.EMPTY.concat(
+                                        SpreadsheetViewportNavigation.rightPixel(
+                                                3 * (int) COLUMN_WIDTH - 1
                                         )
                                 )
                         ),
@@ -12172,11 +12168,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .viewport()
                         .setAnchoredSelection(selection)
                         .setNavigations(
-                                SpreadsheetViewportNavigationList.with(
-                                        Lists.of(
-                                                SpreadsheetViewportNavigation.rightPixel(
-                                                        3 * (int) COLUMN_WIDTH - 1
-                                                )
+                                SpreadsheetViewportNavigationList.EMPTY.concat(
+                                        SpreadsheetViewportNavigation.rightPixel(
+                                                3 * (int) COLUMN_WIDTH - 1
                                         )
                                 )
                         ),
@@ -12212,10 +12206,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.navigateAndCheck(
                 engine,
                 viewport.setNavigations(
-                        SpreadsheetViewportNavigationList.with(
-                                Lists.of(
-                                        SpreadsheetViewportNavigation.leftColumn()
-                                )
+                        SpreadsheetViewportNavigationList.EMPTY.concat(
+                                SpreadsheetViewportNavigation.leftColumn()
                         )
                 ),
                 context,
@@ -12244,10 +12236,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         selection.setDefaultAnchor()
                                 )
                         ).setNavigations(
-                                SpreadsheetViewportNavigationList.with(
-                                        Lists.of(
-                                                SpreadsheetViewportNavigation.rightColumn()
-                                        )
+                                SpreadsheetViewportNavigationList.EMPTY.concat(
+                                        SpreadsheetViewportNavigation.rightColumn()
                                 )
                         ),
                 context,
@@ -12284,10 +12274,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         selection.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                                 )
                         ).setNavigations(
-                                SpreadsheetViewportNavigationList.with(
-                                        Lists.of(
-                                                SpreadsheetViewportNavigation.extendRightColumn()
-                                        )
+                                SpreadsheetViewportNavigationList.EMPTY.concat(
+                                        SpreadsheetViewportNavigation.extendRightColumn()
                                 )
                         ),
                 context,
@@ -12334,10 +12322,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 .setDefaultAnchor()
                                 )
                         ).setNavigations(
-                                SpreadsheetViewportNavigationList.with(
-                                        Lists.of(
-                                                SpreadsheetViewportNavigation.leftColumn()
-                                        )
+                                SpreadsheetViewportNavigationList.EMPTY.concat(
+                                        SpreadsheetViewportNavigation.leftColumn()
                                 )
                         ),
                 context,
@@ -12372,10 +12358,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         )
                         .setNavigations(
-                                SpreadsheetViewportNavigationList.with(
-                                        Lists.of(
-                                                SpreadsheetViewportNavigation.rightColumn()
-                                        )
+                                SpreadsheetViewportNavigationList.EMPTY.concat(
+                                        SpreadsheetViewportNavigation.rightColumn()
                                 )
                         ),
                 context,
@@ -12416,10 +12400,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         )
                         .setNavigations(
-                                SpreadsheetViewportNavigationList.with(
-                                        Lists.of(
-                                                SpreadsheetViewportNavigation.downRow()
-                                        )
+                                SpreadsheetViewportNavigationList.EMPTY.concat(
+                                        SpreadsheetViewportNavigation.downRow()
                                 )
                         ),
                 context,

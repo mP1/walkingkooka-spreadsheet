@@ -62,11 +62,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final SpreadsheetViewportAnchor ANCHOR = SpreadsheetViewportAnchor.TOP_LEFT;
 
-    private static final SpreadsheetViewportNavigationList NAVIGATIONS = SpreadsheetViewportNavigationList.with(
-            Lists.of(
+    private static final SpreadsheetViewportNavigationList NAVIGATIONS = SpreadsheetViewportNavigationList.EMPTY
+            .concat(
                     SpreadsheetViewportNavigation.leftColumn()
-            )
-    );
+            );
 
     @Test
     public void testWithNullRectangleFails() {
@@ -149,10 +148,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     @Test
     public void testSetNavigationsDifferent() {
         final SpreadsheetViewport viewport = this.createObject();
-        final SpreadsheetViewportNavigationList navigations = SpreadsheetViewportNavigationList.with(
-                Lists.of(
-                        SpreadsheetViewportNavigation.extendRightColumn()
-                )
+        final SpreadsheetViewportNavigationList navigations = SpreadsheetViewportNavigationList.EMPTY.concat(
+                SpreadsheetViewportNavigation.extendRightColumn()
         );
         this.checkNotEquals(
                 NAVIGATIONS,
@@ -227,10 +224,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 SpreadsheetViewport.with(
                         RECTANGLE,
                         SpreadsheetViewport.NO_ANCHORED_SELECTION,
-                        SpreadsheetViewportNavigationList.with(
-                                Lists.of(
-                                        SpreadsheetViewportNavigation.rightColumn()
-                                )
+                        SpreadsheetViewportNavigationList.EMPTY.concat(
+                                SpreadsheetViewportNavigation.rightColumn()
                         )
                 )
         );
@@ -286,7 +281,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 SpreadsheetViewport.with(
                         RECTANGLE,
                         SpreadsheetViewport.NO_ANCHORED_SELECTION,
-                        SpreadsheetViewportNavigationList.with(
+                        SpreadsheetViewportNavigationList.EMPTY.setElements(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.leftColumn(),
                                         SpreadsheetViewportNavigation.upRow()
@@ -314,7 +309,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                                                 SpreadsheetViewportAnchor.TOP
                                         )
                         ),
-                        SpreadsheetViewportNavigationList.with(
+                        SpreadsheetViewportNavigationList.EMPTY.setElements(
                                 Lists.of(
                                         SpreadsheetViewportNavigation.leftColumn()
                                 )
