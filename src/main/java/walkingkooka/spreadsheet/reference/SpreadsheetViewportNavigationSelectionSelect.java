@@ -57,6 +57,6 @@ abstract class SpreadsheetViewportNavigationSelectionSelect<T extends Spreadshee
 
     @Override
     final String textPrefix() {
-        return EXTEND_SPACE;
+        return SELECT_SPACE;
     }
 }

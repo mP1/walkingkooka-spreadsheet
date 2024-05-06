@@ -21,6 +21,18 @@ import org.junit.jupiter.api.Test;
 
 public final class SpreadsheetViewportNavigationSelectionSelectCellTest extends SpreadsheetViewportNavigationSelectionSelectTestCase<SpreadsheetViewportNavigationSelectionSelectCell, SpreadsheetCellReference> {
 
+    // HasText..........................................................................................................
+
+    @Test
+    public void testHasText() {
+        this.textAndCheck(
+                SpreadsheetViewportNavigationSelectionSelectCell.with(SpreadsheetSelection.parseCell("ABC123")),
+                "select cell ABC123"
+        );
+    }
+
+    // update...........................................................................................................
+
     @Test
     public void testUpdateCell() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
