@@ -24,6 +24,18 @@ import java.util.Optional;
 
 public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends SpreadsheetViewportNavigationSelectionExtendTestCase<SpreadsheetViewportNavigationSelectionExtendCell, SpreadsheetCellReference> {
 
+    // HasText..........................................................................................................
+
+    @Test
+    public void testHasText() {
+        this.textAndCheck(
+                SpreadsheetViewportNavigationSelectionExtendCell.with(SpreadsheetSelection.parseCell("ABC123")),
+                "extend cell ABC123"
+        );
+    }
+
+    // update............................................................................................................
+
     @Test
     public void testUpdateCellNoSelection() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
