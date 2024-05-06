@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
@@ -51,7 +50,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     /**
      * No navigations
      */
-    public final static SpreadsheetViewportNavigationList NO_NAVIGATION = SpreadsheetViewportNavigationList.with(Lists.empty());
+    public final static SpreadsheetViewportNavigationList NO_NAVIGATION = SpreadsheetViewportNavigationList.EMPTY;
 
     /**
      * Constant useful to separate navigations in a CSV.

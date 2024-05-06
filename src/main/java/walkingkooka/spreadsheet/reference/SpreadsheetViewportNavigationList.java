@@ -73,18 +73,28 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     /**
      * Factory that creates a new {@link SpreadsheetViewportNavigationList} after taking a defensive copy.
      */
-    public static SpreadsheetViewportNavigationList with(final List<SpreadsheetViewportNavigation> list) {
-        return list instanceof SpreadsheetViewportNavigationList ?
-                (SpreadsheetViewportNavigationList) list :
-                copy(list);
-    }
+    public static SpreadsheetViewportNavigationList EMPTY = new SpreadsheetViewportNavigationList(
+            new SpreadsheetViewportNavigation[0]
+    );
 
-    static SpreadsheetViewportNavigationList copy(final List<SpreadsheetViewportNavigation> list) {
+    private static SpreadsheetViewportNavigationList with(final List<SpreadsheetViewportNavigation> list) {
         Objects.requireNonNull(list, "list");
 
+        final int size = list.size();
         final SpreadsheetViewportNavigation[] copy = new SpreadsheetViewportNavigation[list.size()];
         list.toArray(copy);
-        return new SpreadsheetViewportNavigationList(copy);
+
+        final SpreadsheetViewportNavigationList result;
+        switch (size) {
+            case 0:
+                result = EMPTY;
+                break;
+            default:
+                result = new SpreadsheetViewportNavigationList(copy);
+                break;
+        }
+
+        return result;
     }
 
     private SpreadsheetViewportNavigationList(final SpreadsheetViewportNavigation[] list) {
