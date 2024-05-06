@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
@@ -26,6 +27,9 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,7 +38,8 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
         ParseStringTesting<SpreadsheetViewportNavigationList>,
         TreePrintableTesting,
         ClassTesting<SpreadsheetViewportNavigationList>,
-        HasTextTesting {
+        HasTextTesting,
+        JsonNodeMarshallingTesting<SpreadsheetViewportNavigationList> {
 
     @Test
     public void testWithNullFails() {
@@ -315,6 +320,61 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
         );
     }
 
+    // Json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+                SpreadsheetViewportNavigationList.parse("select cell A1,select column B,select row 3"),
+                "\"select cell A1,select column B,select row 3\""
+        );
+    }
+
+    @Test
+    public void testUnmarshall() {
+        this.unmarshallAndCheck(
+                "\"select cell A1\"",
+                SpreadsheetViewportNavigationList.with(
+                        Lists.of(
+                                SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1)
+                        )
+                )
+        );
+    }
+
+
+    @Test
+    public void testUnmarshall2() {
+        this.unmarshallAndCheck(
+                "\"extend-left column,extend-right column,extend-up row,extend-down row,select cell A1\"",
+                SpreadsheetViewportNavigationList.with(
+                        Lists.of(
+                                SpreadsheetViewportNavigation.extendLeftColumn(),
+                                SpreadsheetViewportNavigation.extendRightColumn(),
+                                SpreadsheetViewportNavigation.extendUpRow(),
+                                SpreadsheetViewportNavigation.extendDownRow(),
+                                SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1)
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetViewportNavigationList unmarshall(final JsonNode json,
+                                                        final JsonNodeUnmarshallContext context) {
+        return SpreadsheetViewportNavigationList.unmarshall(
+                json,
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetViewportNavigationList createJsonNodeMarshallingValue() {
+        return Cast.to(
+                SpreadsheetViewportNavigationList.parse("extend-left column,extend-right column,extend-up row,extend-down row")
+        );
+    }
+    
     // ClassTesting.....................................................................................................
 
     @Override

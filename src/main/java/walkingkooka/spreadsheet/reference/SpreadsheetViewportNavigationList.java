@@ -44,6 +44,10 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
 import java.util.AbstractList;
@@ -452,6 +456,26 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         return SEPARATOR.toSeparatedString(
                 this,
                 SpreadsheetViewportNavigation::text
+        );
+    }
+
+    // Json.............................................................................................................
+
+    static SpreadsheetViewportNavigationList unmarshall(final JsonNode node,
+                                                        final JsonNodeUnmarshallContext context) {
+        return parse(node.stringOrFail());
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.text());
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetViewportNavigationList.class),
+                SpreadsheetViewportNavigationList::unmarshall,
+                SpreadsheetViewportNavigationList::marshall,
+                SpreadsheetViewportNavigationList.class
         );
     }
 }
