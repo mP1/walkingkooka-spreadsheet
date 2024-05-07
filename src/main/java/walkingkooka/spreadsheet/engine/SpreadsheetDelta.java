@@ -2228,12 +2228,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * <pre>
      * {
-     *   "viewport": {
-     *     "selection": {
-     *        "type": "spreadsheet-column",
-     *        "value: "Z"
-     *     }
-     *   }
      *   "cells": {
      *     "A1": {
      *       "formula": {
@@ -2253,21 +2247,19 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      *   },
      *   "labels": {
      *       "A1": "Label1,Label2"
-     *   }
+     *   },
+     *   "viewport": {
+     *     "selection": {
+     *        "type": "spreadsheet-column",
+     *        "value: "Z"
+     *     }
+     *   },
      *   "window": "A1:E5,F6:Z99"
      * }
      * </pre>
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
-
-        final Optional<SpreadsheetViewport> viewport = this.viewport;
-        if (viewport.isPresent()) {
-            children.add(
-                    context.marshall(viewport.get())
-                            .setName(VIEWPORT_SELECTION_PROPERTY)
-            );
-        }
 
         final Set<SpreadsheetCell> cells = this.cells;
         if (false == cells.isEmpty()) {
@@ -2349,6 +2341,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             children.add(
                     context.marshall(rowCount.getAsInt())
                             .setName(ROW_COUNT_PROPERTY)
+            );
+        }
+
+        final Optional<SpreadsheetViewport> viewport = this.viewport;
+        if (viewport.isPresent()) {
+            children.add(
+                    context.marshall(viewport.get())
+                            .setName(VIEWPORT_SELECTION_PROPERTY)
             );
         }
 
