@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragmentTesting;
@@ -40,6 +41,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
         ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
         HasTextTesting,
         HasUrlFragmentTesting,
+        ImmutableListTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList, SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
         JsonNodeMarshallingTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
         ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList> {
 

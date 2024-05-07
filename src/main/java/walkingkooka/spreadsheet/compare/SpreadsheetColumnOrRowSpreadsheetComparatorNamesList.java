@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
@@ -37,7 +38,8 @@ import java.util.stream.Collectors;
  * column with a range sort.
  */
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparatorNames>
-        implements HasText,
+        implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList, SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
+        HasText,
         HasUrlFragment {
 
     public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList parse(final String text) {
@@ -138,5 +140,15 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     @Override
     public UrlFragment urlFragment() {
         return UrlFragment.with(this.text());
+    }
+
+    // ImmutableListDefaults............................................................................................
+
+    @Override
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList setElements(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names) {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copy = with(names);
+        return this.equals(copy) ?
+                this :
+                copy;
     }
 }
