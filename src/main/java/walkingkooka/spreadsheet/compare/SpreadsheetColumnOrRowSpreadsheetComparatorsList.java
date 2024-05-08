@@ -20,17 +20,20 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
+import walkingkooka.text.HasText;
 
 import java.util.AbstractList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * {@link List} that holds multiple {@link SpreadsheetColumnOrRowSpreadsheetComparators} typically one for each sortable
  * column with a range sort.
  */
 final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparators>
-        implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators> {
+        implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
+        HasText {
 
     static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
         Objects.requireNonNull(columnOrRows, "columnOrRows");
@@ -99,5 +102,14 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
         return this.equals(copy) ?
                 this :
                 copy;
+    }
+
+    // HasText..........................................................................................................
+
+    @Override
+    public String text() {
+        return this.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining("" + SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_SEPARATOR));
     }
 }
