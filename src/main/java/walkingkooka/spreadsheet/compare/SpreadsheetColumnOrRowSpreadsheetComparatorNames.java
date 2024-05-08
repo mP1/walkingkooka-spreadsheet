@@ -428,9 +428,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .value(this.columnOrRow)
-                .separator(String.valueOf(COLUMN_ROW_ASSIGNMENT))
+                .labelSeparator(String.valueOf(COLUMN_ROW_ASSIGNMENT))
                 .valueSeparator(String.valueOf(COMPARATOR_SEPARATOR))
+                .label(this.columnOrRow.text())
                 .value(this.comparatorNameAndDirections)
                 .build();
     }
