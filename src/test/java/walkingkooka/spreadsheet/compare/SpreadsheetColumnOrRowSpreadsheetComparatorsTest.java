@@ -610,6 +610,88 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
         );
     }
 
+    @Test
+    public void testParseToString() {
+        final SpreadsheetColumnOrRowSpreadsheetComparators comparators = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                SpreadsheetSelection.parseRow("123"),
+                Lists.of(
+                        SpreadsheetComparators.dayOfMonth()
+                )
+        );
+        this.parseStringAndCheck(
+                comparators.toString(),
+                comparators
+        );
+    }
+
+    @Test
+    public void testParseToStringReversed() {
+        final SpreadsheetColumnOrRowSpreadsheetComparators comparators = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                SpreadsheetSelection.parseRow("123"),
+                Lists.of(
+                        SpreadsheetComparators.dayOfMonth()
+                                .reversed()
+                )
+        );
+        this.parseStringAndCheck(
+                comparators.toString(),
+                comparators
+        );
+    }
+
+    @Test
+    public void testParseToStringReversed2() {
+        final SpreadsheetColumnOrRowSpreadsheetComparators comparators = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                SpreadsheetSelection.parseRow("456"),
+                Lists.of(
+                        SpreadsheetComparators.dayOfMonth()
+                                .reversed(),
+                        SpreadsheetComparators.monthOfYear()
+                                .reversed()
+                )
+        );
+        this.parseStringAndCheck(
+                comparators.toString(),
+                comparators
+        );
+    }
+
+    @Test
+    public void testParseToString2() {
+        final SpreadsheetColumnOrRowSpreadsheetComparators comparators = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                SpreadsheetSelection.parseColumn("AB"),
+                Lists.of(
+                        SpreadsheetComparators.dayOfMonth(),
+                        SpreadsheetComparators.reverse(
+                                SpreadsheetComparators.monthOfYear()
+                        ),
+                        SpreadsheetComparators.year()
+                )
+        );
+        this.parseStringAndCheck(
+                comparators.toString(),
+                comparators
+        );
+    }
+
+    @Test
+    public void testParseToString3() {
+        final SpreadsheetColumnOrRowSpreadsheetComparators comparators = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                SpreadsheetSelection.parseRow("34"),
+                Lists.of(
+                        SpreadsheetComparators.dayOfMonth(),
+                        SpreadsheetComparators.reverse(
+                                SpreadsheetComparators.monthOfYear()
+                        ),
+                        SpreadsheetComparators.year()
+                )
+        );
+        this.parseStringAndCheck(
+                comparators.toString(),
+                comparators
+        );
+    }
+
     private void parseStringAndCheck(final String text,
                                      final SpreadsheetColumnOrRowSpreadsheetComparators... comparators) {
         this.parseStringAndCheck(
@@ -933,24 +1015,93 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
 
     // Object...........................................................................................................
     @Test
-    public void testToString() {
+    public void testToStringColumn() {
         this.toStringAndCheck(
                 this.createObject(),
-                "B day-of-month"
+                "B=day-of-month"
         );
     }
 
     @Test
-    public void testToStringReversedComparator() {
+    public void testToStringAbsoluteColumn() {
         this.toStringAndCheck(
                 SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                        COLUMN_OR_ROW,
+                        SpreadsheetSelection.parseColumn("$C"),
+                        Lists.of(
+                                SpreadsheetComparators.monthOfYear()
+                        )
+                ),
+                "$C=month-of-year"
+        );
+    }
+
+    @Test
+    public void testToStringRow() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseRow("12"),
+                        Lists.of(
+                                SpreadsheetComparators.monthOfYear()
+                        )
+                ),
+                "12=month-of-year"
+        );
+    }
+
+    @Test
+    public void testToStringAbsoluteRow() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseRow("$34"),
+                        Lists.of(
+                                SpreadsheetComparators.year()
+                        )
+                ),
+                "$34=year"
+        );
+    }
+
+    @Test
+    public void testToStringColumnReversedComparator() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
                                 SpreadsheetComparators.monthOfYear()
                                         .reversed()
                         )
                 ),
-                "B month-of-year DOWN"
+                "A=month-of-year DOWN"
+        );
+    }
+
+    @Test
+    public void testToStringRowReversedComparator() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseRow("1"),
+                        Lists.of(
+                                SpreadsheetComparators.year()
+                                        .reversed()
+                        )
+                ),
+                "1=year DOWN"
+        );
+    }
+
+    @Test
+    public void testToStringSeveralComparators() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseRow("3"),
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth(),
+                                SpreadsheetComparators.monthOfYear(),
+                                SpreadsheetComparators.year()
+                                        .reversed()
+                        )
+                ),
+                "3=day-of-month,month-of-year,year DOWN"
         );
     }
 

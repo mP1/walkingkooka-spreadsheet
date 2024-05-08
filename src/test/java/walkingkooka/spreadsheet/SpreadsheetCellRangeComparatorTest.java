@@ -363,7 +363,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                         ),
                         context
                 ),
-                "B day-of-month " + context
+                "B=day-of-month " + context
         );
     }
 
@@ -379,7 +379,39 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                         ),
                         context
                 ),
-                "B day-of-month DOWN " + context
+                "B=day-of-month DOWN " + context
+        );
+    }
+
+    @Test
+    public void testToStringSeveralComparators() {
+        final SpreadsheetComparatorContext context = SpreadsheetComparatorContexts.fake();
+
+        this.toStringAndCheck(
+                SpreadsheetCellRangeComparator.with(
+                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                                "B=day-of-month,month-of-year,year",
+                                SpreadsheetComparatorProviders.builtIn()
+                        ),
+                        context
+                ),
+                "B=day-of-month,month-of-year,year " + context
+        );
+    }
+
+    @Test
+    public void testToStringSeveralComparatorsSomeDown() {
+        final SpreadsheetComparatorContext context = SpreadsheetComparatorContexts.fake();
+
+        this.toStringAndCheck(
+                SpreadsheetCellRangeComparator.with(
+                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                                "B=day-of-month,month-of-year DOWN,year DOWN",
+                                SpreadsheetComparatorProviders.builtIn()
+                        ),
+                        context
+                ),
+                "B=day-of-month,month-of-year DOWN,year DOWN " + context
         );
     }
 

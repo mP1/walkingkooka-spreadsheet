@@ -41,11 +41,11 @@ import java.util.function.Function;
  */
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
 
-    private final static char COLUMN_ROW_ASSIGNMENT = '=';
+    final static char COLUMN_ROW_ASSIGNMENT = '=';
 
-    private final static char NAME_UP_DOWN_SEPARATOR = ' ';
+    final static char NAME_UP_DOWN_SEPARATOR = ' ';
 
-    private final static char COMPARATOR_SEPARATOR = ',';
+    final static char COMPARATOR_SEPARATOR = ',';
 
     final static char COLUMN_ROW_SEPARATOR = ';';
 
