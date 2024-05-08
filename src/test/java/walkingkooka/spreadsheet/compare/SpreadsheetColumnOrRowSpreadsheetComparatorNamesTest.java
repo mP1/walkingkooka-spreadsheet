@@ -806,11 +806,123 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     // Object...........................................................................................................
+
     @Test
-    public void testToString() {
+    public void testToStringColumn() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("AB"),
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                        )
+                ),
+                "AB=day-of-month"
+        );
+    }
+
+    @Test
+    public void testToStringAbsoluteColumn() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("$AB"),
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                        )
+                ),
+                "$AB=day-of-month"
+        );
+    }
+
+    @Test
+    public void testToStringRow() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseRow("12"),
+                        Lists.of(
+                                SpreadsheetComparators.text()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                        )
+                ),
+                "12=text"
+        );
+    }
+
+    @Test
+    public void testToStringAbsoluteRow() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseRow("$12"),
+                        Lists.of(
+                                SpreadsheetComparators.text()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                        )
+                ),
+                "$12=text"
+        );
+    }
+
+    @Test
+    public void testToStringUp() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("BC"),
+                        Lists.of(
+                                SpreadsheetComparators.time()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                        )
+                ),
+                "BC=time UP"
+        );
+    }
+
+    @Test
+    public void testToStringDown() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("ABC"),
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+                        )
+                ),
+                "ABC=day-of-month DOWN"
+        );
+    }
+
+    @Test
+    public void testToStringDown2() {
         this.toStringAndCheck(
                 this.createObject(),
                 "A=text-123 DOWN"
+        );
+    }
+
+    @Test
+    public void testToStringSeveralComparators() {
+        this.toStringAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("AB"),
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.UP),
+                                SpreadsheetComparators.monthOfYear()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DOWN),
+                                SpreadsheetComparators.year()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                        )
+                ),
+                "AB=day-of-month UP,month-of-year DOWN,year UP"
         );
     }
 
