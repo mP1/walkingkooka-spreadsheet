@@ -25,6 +25,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasText;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -39,7 +40,7 @@ import java.util.function.Function;
 /**
  * A selection of {@link SpreadsheetComparatorName names} for a given {@link SpreadsheetColumnOrRowReference}.
  */
-public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
+public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements HasText {
 
     final static char COLUMN_ROW_ASSIGNMENT = '=';
 
@@ -433,6 +434,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames {
                 .label(this.columnOrRow.text())
                 .value(this.comparatorNameAndDirections)
                 .build();
+    }
+
+    // HasText..........................................................................................................
+
+    @Override
+    public String text() {
+        return this.toString();
     }
 
     // Json.............................................................................................................

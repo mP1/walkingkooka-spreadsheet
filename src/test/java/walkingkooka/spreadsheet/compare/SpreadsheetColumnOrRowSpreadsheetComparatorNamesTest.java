@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -42,6 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implements ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
         ComparatorTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
+        HasTextTesting,
         ToStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
         ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
         JsonNodeMarshallingTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
@@ -990,6 +992,40 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 namesAndDirections,
                 columnOrRowComparators.comparatorNameAndDirections(),
                 "namesAndDirections"
+        );
+    }
+
+    // HasText..........................................................................................................
+
+    @Test
+    public void testTextColumn() {
+        this.parseAndTextCheck("A=text");
+    }
+
+    @Test
+    public void testTextRow() {
+        this.parseAndTextCheck("23=text");
+    }
+
+    @Test
+    public void testTextRowUp() {
+        this.parseAndTextCheck("23=text UP");
+    }
+
+    @Test
+    public void testTextRowDown() {
+        this.parseAndTextCheck("23=text DOWN");
+    }
+
+    @Test
+    public void testTextManyComparators() {
+        this.parseAndTextCheck("BCD=day-month,month-of-year UP,year DOWN");
+    }
+
+    private void parseAndTextCheck(final String text) {
+        this.textAndCheck(
+                this.parseString(text),
+                text
         );
     }
 
