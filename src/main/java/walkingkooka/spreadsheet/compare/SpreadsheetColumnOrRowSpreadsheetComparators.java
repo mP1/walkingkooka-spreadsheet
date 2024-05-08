@@ -192,7 +192,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .value(this.columnOrRow)
+                .labelSeparator(String.valueOf(SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_ASSIGNMENT))
+                .valueSeparator(String.valueOf(SpreadsheetColumnOrRowSpreadsheetComparatorNames.COMPARATOR_SEPARATOR))
+                .label(this.columnOrRow.text())
                 .value(this.comparators)
                 .build();
     }
