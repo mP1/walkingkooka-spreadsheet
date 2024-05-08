@@ -24,11 +24,13 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.HasTextTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implements ImmutableListTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
-        ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList> {
+        ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList>,
+        HasTextTesting {
 
     @Test
     public void testDoesntDoubleWrap() {
@@ -106,6 +108,42 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
                         )
         );
     }
+
+    // HasText..........................................................................................................
+
+    @Test
+    public void testText() {
+        this.parseAndTextAndCheck("A=day-of-month");
+    }
+
+    @Test
+    public void testTextReversed() {
+        this.parseAndTextAndCheck("A=day-of-month DOWN");
+    }
+
+    @Test
+    public void testTextSeveralComparators() {
+        this.parseAndTextAndCheck("A=day-of-month,month-of-year,year");
+    }
+
+    @Test
+    public void testTextSeveralComparatorsDown() {
+        this.parseAndTextAndCheck("A=day-of-month DOWN,month-of-year DOWN,year DOWN");
+    }
+
+    private void parseAndTextAndCheck(final String text) {
+        this.textAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(
+                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                                text,
+                                SpreadsheetComparatorProviders.builtIn()
+                        )
+                ),
+                text
+        );
+    }
+
+    // ImmutableListTesting.............................................................................................
 
     @Override
     public SpreadsheetColumnOrRowSpreadsheetComparatorsList createList() {
