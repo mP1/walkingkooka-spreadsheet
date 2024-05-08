@@ -483,6 +483,21 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     @Test
+    public void testParseListAbsoluteColumnSpreadsheetComparatorNameUp() {
+        this.parseStringListAndCheck(
+                "$A=day-of-month UP",
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("$A"),
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testParseListColumnSpreadsheetComparatorNameDown() {
         this.parseStringListAndCheck(
                 "A=day-of-month DOWN",
@@ -503,6 +518,21 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 "2=day-of-month UP",
                 SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("2"),
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.UP)
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseListAbsoluteRowSpreadsheetComparatorNameUp() {
+        this.parseStringListAndCheck(
+                "$2=day-of-month UP",
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseRow("$2"),
                         Lists.of(
                                 SpreadsheetComparators.dayOfMonth()
                                         .name()
