@@ -27,6 +27,8 @@ import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
@@ -38,6 +40,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implements ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
@@ -112,6 +116,100 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         this.comparatorNameAndDirectionAndCheck(
                 columnOrRowComparators,
                 namesAndDirections
+        );
+    }
+
+    // setColumnOrRow...................................................................................................
+
+    @Test
+    public void testSetColumnOrRowWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject().setColumnOrRow(null)
+        );
+    }
+
+    @Test
+    public void testSetColumnOrRowWithSame() {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames names = this.createObject();
+        assertSame(
+                names,
+                names.setColumnOrRow(names.columnOrRow())
+        );
+    }
+
+    @Test
+    public void testSetColumnOrRowWithDifferentReferenceKind() {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames names = SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text");
+
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("$A");
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames different = names.setColumnOrRow(column);
+
+        assertNotSame(
+                names,
+                different
+        );
+
+        this.columnOrRowAndCheck(
+                different,
+                column
+        );
+
+        this.comparatorNameAndDirectionAndCheck(
+                different,
+                Lists.of(
+                        SpreadsheetComparatorNameAndDirection.parse("text")
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnOrRowWithDifferentColumn() {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames names = SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text");
+
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames different = names.setColumnOrRow(column);
+
+        assertNotSame(
+                names,
+                different
+        );
+
+        this.columnOrRowAndCheck(
+                different,
+                column
+        );
+
+        this.comparatorNameAndDirectionAndCheck(
+                different,
+                Lists.of(
+                        SpreadsheetComparatorNameAndDirection.parse("text")
+                )
+        );
+    }
+
+    @Test
+    public void testSetColumnOrRowWithDifferentRow() {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames names = SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text");
+
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("123");
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames different = names.setColumnOrRow(row);
+
+        assertNotSame(
+                names,
+                different
+        );
+
+        this.columnOrRowAndCheck(
+                different,
+                row
+        );
+
+        this.comparatorNameAndDirectionAndCheck(
+                different,
+                Lists.of(
+                        SpreadsheetComparatorNameAndDirection.parse("text")
+                )
         );
     }
 
