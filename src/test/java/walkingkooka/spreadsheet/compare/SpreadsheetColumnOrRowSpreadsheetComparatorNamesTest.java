@@ -213,6 +213,50 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         );
     }
 
+    // setComparatorNameAndDirections...................................................................................
+
+    @Test
+    public void testSetComparatorNameAndDirectionsWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject().setComparatorNameAndDirections(null)
+        );
+    }
+
+    @Test
+    public void testSetComparatorNameAndDirectionsWithSame() {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames names = this.createObject();
+        assertSame(
+                names,
+                names.setComparatorNameAndDirections(names.comparatorNameAndDirections())
+        );
+    }
+
+    @Test
+    public void testSetComparatorNameAndDirectionsWithDifferent() {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames names = SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text");
+
+        final List<SpreadsheetComparatorNameAndDirection> nameAndDirections = Lists.of(
+                SpreadsheetComparatorNameAndDirection.parse("text-case-insensitive")
+        );
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames different = names.setComparatorNameAndDirections(nameAndDirections);
+
+        assertNotSame(
+                names,
+                different
+        );
+
+        this.columnOrRowAndCheck(
+                different,
+                names.columnOrRow()
+        );
+
+        this.comparatorNameAndDirectionAndCheck(
+                different,
+                nameAndDirections
+        );
+    }
+
     // hashcode/equals..................................................................................................
 
     @Test

@@ -364,17 +364,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
         return new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
                 checkColumnOrRows(columnOrRow),
-                Lists.immutable(
-                        Objects.requireNonNull(comparatorNameAndDirections, "comparatorNameAndDirections")
-                )
+                checkComparatorNameAndDirections(comparatorNameAndDirections)
         );
     }
 
     private SpreadsheetColumnOrRowSpreadsheetComparatorNames(final SpreadsheetColumnOrRowReference columnOrRow,
                                                              final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
-        if (comparatorNameAndDirections.isEmpty()) {
-            throw new IllegalArgumentException("Expected at least 1 comparator got none");
-        }
+
 
         this.columnOrRow = columnOrRow;
         this.comparatorNameAndDirections = comparatorNameAndDirections;
@@ -404,11 +400,37 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
     private final SpreadsheetColumnOrRowReference columnOrRow;
 
+    // comparatorNameAndDirections......................................................................................
+
     public List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections() {
         return this.comparatorNameAndDirections;
     }
 
+    /**
+     * Would be setter that returns a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} with the given {@link SpreadsheetComparatorNameAndDirection} creating a new instance if necessary.
+     */
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNames setComparatorNameAndDirections(final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
+        final List<SpreadsheetComparatorNameAndDirection> copy = checkComparatorNameAndDirections(comparatorNameAndDirections);
+
+        return this.comparatorNameAndDirections.equals(copy) ?
+                this :
+                new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
+                        this.columnOrRow,
+                        copy
+                );
+    }
+
     private final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections;
+
+    private static List<SpreadsheetComparatorNameAndDirection> checkComparatorNameAndDirections(final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
+        List<SpreadsheetComparatorNameAndDirection> copy = Lists.immutable(
+                Objects.requireNonNull(comparatorNameAndDirections, "comparatorNameAndDirections")
+        );
+        if (comparatorNameAndDirections.isEmpty()) {
+            throw new IllegalArgumentException("Expected at least 1 comparator got none");
+        }
+        return copy;
+    }
 
     // SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.............................................................
 
