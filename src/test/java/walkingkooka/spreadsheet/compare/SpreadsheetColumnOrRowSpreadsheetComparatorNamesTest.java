@@ -39,6 +39,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -296,6 +297,110 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 COLUMN_OR_ROW,
                 NAME_AND_DIRECTIONS
+        );
+    }
+
+    // tryParseColumnOrRow..............................................................................................
+
+    @Test
+    public void testTryParseColumnOrRowWithNullTextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseColumnOrRow(null)
+        );
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithEmpty() {
+        this.tryParseColumnOrRowAndCheck("");
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithInvalidColumnOrRow() {
+        this.tryParseColumnOrRowAndCheck("!");
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithInvalidColumnOrRow2() {
+        this.tryParseColumnOrRowAndCheck("A/");
+    }
+
+    private void tryParseColumnOrRowAndCheck(final String text) {
+        this.tryParseColumnOrRowAndCheck(
+                text,
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithOnlyColumn() {
+        this.tryParseColumnOrRowAndCheck(
+                "A",
+                SpreadsheetSelection.parseColumn("A")
+        );
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithOnlyColumn2() {
+        this.tryParseColumnOrRowAndCheck(
+                "$BC",
+                SpreadsheetSelection.parseColumn("$BC")
+        );
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithOnlyRow() {
+        this.tryParseColumnOrRowAndCheck(
+                "1",
+                SpreadsheetSelection.parseRow("1")
+        );
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithOnlyColumnNoComparatorNames() {
+        this.tryParseColumnOrRowAndCheck(
+                "D=",
+                SpreadsheetSelection.parseColumn("D")
+        );
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithComparatorNames() {
+        this.tryParseColumnOrRowAndCheck(
+                "E=text-1",
+                SpreadsheetSelection.parseColumn("E")
+        );
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithComparatorNames2() {
+        this.tryParseColumnOrRowAndCheck(
+                "F=text-1,text-2",
+                SpreadsheetSelection.parseColumn("F")
+        );
+    }
+
+    @Test
+    public void testTryParseColumnOrRowWithComparatorNames3() {
+        this.tryParseColumnOrRowAndCheck(
+                "G=text-1,text-2,!!!",
+                SpreadsheetSelection.parseColumn("G")
+        );
+    }
+
+    private void tryParseColumnOrRowAndCheck(final String text,
+                                             final SpreadsheetColumnOrRowReference expected) {
+        this.tryParseColumnOrRowAndCheck(
+                text,
+                Optional.of(expected)
+        );
+    }
+
+    private void tryParseColumnOrRowAndCheck(final String text,
+                                             final Optional<SpreadsheetColumnOrRowReference> expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseColumnOrRow(text)
         );
     }
 
