@@ -33,6 +33,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -49,6 +50,31 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     final static char COMPARATOR_SEPARATOR = ',';
 
     final static char COLUMN_ROW_SEPARATOR = ';';
+
+    /**
+     * Tries to extract the {@link SpreadsheetColumnOrRowReference} from the text form of a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
+     * Useful when parsing text from a user which may be incomplete or syntactically wrong.
+     */
+    public static Optional<SpreadsheetColumnOrRowReference> tryParseColumnOrRow(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        final int assignment = text.indexOf(COLUMN_ROW_ASSIGNMENT);
+
+        SpreadsheetColumnOrRowReference columnOrRow;
+
+        try {
+            columnOrRow = SpreadsheetSelection.parseColumnOrRow(
+                    -1 != assignment ?
+                            text.substring(0, assignment) :
+                            text
+
+            );
+        } catch (final RuntimeException failed) {
+            columnOrRow = null;
+        }
+
+        return Optional.ofNullable(columnOrRow);
+    }
 
     /**
      * Parses the text into a single {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
