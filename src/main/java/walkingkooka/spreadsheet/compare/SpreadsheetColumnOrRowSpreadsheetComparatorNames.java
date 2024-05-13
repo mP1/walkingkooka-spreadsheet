@@ -43,7 +43,7 @@ import java.util.function.Function;
  */
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements HasText {
 
-    final static char COLUMN_ROW_ASSIGNMENT = '=';
+    final static char COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR = '=';
 
     final static char NAME_UP_DOWN_SEPARATOR = ' ';
 
@@ -58,7 +58,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     public static Optional<SpreadsheetColumnOrRowReference> tryParseColumnOrRow(final String text) {
         Objects.requireNonNull(text, "text");
 
-        final int assignment = text.indexOf(COLUMN_ROW_ASSIGNMENT);
+        final int assignment = text.indexOf(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR);
 
         SpreadsheetColumnOrRowReference columnOrRow;
 
@@ -134,7 +134,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
             switch (mode) {
                 case modeColumnOrRowStart:
-                    if (COLUMN_ROW_ASSIGNMENT == c) {
+                    if (COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR == c) {
                         throw new InvalidCharacterException(
                                 text,
                                 i
@@ -146,7 +146,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     mode = modeColumnOrRow;
                     break;
                 case modeColumnOrRow:
-                    if (COLUMN_ROW_ASSIGNMENT == c) {
+                    if (COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR == c) {
                         // parse column OR row
                         try {
                             columnOrRow = columnOrRowParser.apply(
@@ -495,7 +495,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .labelSeparator(String.valueOf(COLUMN_ROW_ASSIGNMENT))
+                .labelSeparator(String.valueOf(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR))
                 .valueSeparator(String.valueOf(COMPARATOR_NAME_SEPARATOR))
                 .label(this.columnOrRow.text())
                 .value(this.comparatorNameAndDirections)
