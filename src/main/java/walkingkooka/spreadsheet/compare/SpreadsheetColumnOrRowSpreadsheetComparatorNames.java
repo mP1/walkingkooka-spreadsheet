@@ -46,19 +46,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
     final static char COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR = '=';
 
-    final static CharacterConstant COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR = CharacterConstant.with(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR);
+    public final static CharacterConstant COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR = CharacterConstant.with(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR);
 
     final static char COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR = ' ';
 
-    final static CharacterConstant COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR = CharacterConstant.with(COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR);
+    public final static CharacterConstant COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR = CharacterConstant.with(COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR);
 
     final static char COMPARATOR_NAME_SEPARATOR_CHAR = ',';
 
-    final static CharacterConstant COMPARATOR_NAME_SEPARATOR = CharacterConstant.with(',');
+    public final static CharacterConstant COMPARATOR_NAME_SEPARATOR = CharacterConstant.with(',');
 
     final static char COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR = ';';
 
-    final static CharacterConstant COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR = CharacterConstant.with(COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR);
+    public final static CharacterConstant COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR = CharacterConstant.with(COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR);
 
     /**
      * Tries to extract the {@link SpreadsheetColumnOrRowReference} from the text form of a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
