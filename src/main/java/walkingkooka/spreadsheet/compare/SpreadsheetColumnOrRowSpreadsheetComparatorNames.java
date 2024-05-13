@@ -49,7 +49,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
     final static char COMPARATOR_NAME_SEPARATOR = ',';
 
-    final static char COLUMN_ROW_SEPARATOR = ';';
+    final static char COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR = ';';
 
     /**
      * Tries to extract the {@link SpreadsheetColumnOrRowReference} from the text form of a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
@@ -211,7 +211,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             );
                             mode = modeNameStart;
                             break;
-                        case COLUMN_ROW_SEPARATOR:
+                        case COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR:
                             if (false == supportColumnRowSeparator) {
                                 throw new InvalidCharacterException(
                                         text,
@@ -273,7 +273,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             );
                             mode = modeNameStart;
                             break;
-                        case COLUMN_ROW_SEPARATOR:
+                        case COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR:
                             if (false == supportColumnRowSeparator) {
                                 throw new InvalidCharacterException(
                                         text,
