@@ -25,6 +25,7 @@ package walkingkooka.spreadsheet;
 // #NULL
 // #NUM
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
@@ -233,6 +234,14 @@ public enum SpreadsheetErrorKind implements HasText {
                 final ConversionException conversionException = (ConversionException) cause;
                 message = "Cannot convert " + CharSequences.quoteIfChars(conversionException.value()) + " to " + conversionException.type().getSimpleName();
                 value = conversionException.value();
+                break;
+            }
+
+            if (cause instanceof InvalidCharacterException) {
+                kind = ERROR;
+
+                final InvalidCharacterException invalidCharacterException = (InvalidCharacterException) cause;
+                message = invalidCharacterException.getShortMessage();
                 break;
             }
 
