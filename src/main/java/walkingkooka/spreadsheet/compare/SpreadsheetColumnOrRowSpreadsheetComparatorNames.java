@@ -48,9 +48,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
     public final static CharacterConstant COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR = CharacterConstant.with(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR);
 
-    final static char COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR = ' ';
+    final static char COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR = SpreadsheetComparatorNameAndDirection.SEPARATOR_CHAR;
 
-    public final static CharacterConstant COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR = CharacterConstant.with(COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR);
+    public final static CharacterConstant COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR = SpreadsheetComparatorNameAndDirection.SEPARATOR;
 
     final static char COMPARATOR_NAME_SEPARATOR_CHAR = ',';
 
