@@ -64,7 +64,7 @@ public enum SpreadsheetComparatorDirection {
 
         @Override
         String toStringWithEmptyDefault() {
-            return " " + this.name();
+            return SpreadsheetComparatorNameAndDirection.SEPARATOR + this.name();
         }
     },
 
@@ -86,7 +86,7 @@ public enum SpreadsheetComparatorDirection {
 
         @Override
         String toStringWithEmptyDefault() {
-            return " " + this.name();
+            return SpreadsheetComparatorNameAndDirection.SEPARATOR + this.name();
         }
     };
 

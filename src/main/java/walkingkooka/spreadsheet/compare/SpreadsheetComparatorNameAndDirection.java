@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.naming.HasName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -34,13 +35,17 @@ import java.util.Objects;
  */
 public final class SpreadsheetComparatorNameAndDirection implements HasName<SpreadsheetComparatorName> {
 
+    final static char SEPARATOR_CHAR = ' ';
+
+    public final static CharacterConstant SEPARATOR = CharacterConstant.with(SEPARATOR_CHAR);
+
     public static SpreadsheetComparatorNameAndDirection parse(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
         final SpreadsheetComparatorName name;
         final SpreadsheetComparatorDirection direction;
 
-        final int space = text.lastIndexOf(' ');
+        final int space = text.lastIndexOf(SEPARATOR_CHAR);
         if (-1 != space) {
             name = SpreadsheetComparatorName.with(
                     text.substring(0, space)
