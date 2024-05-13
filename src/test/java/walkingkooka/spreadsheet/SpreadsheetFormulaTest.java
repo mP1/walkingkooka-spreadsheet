@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -476,7 +477,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testParseInvalidFormulaExpression() {
+    public void testParseInvalidParsePattern() {
         final String text = "=2A";
 
         this.parseAndCheck(
@@ -486,14 +487,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.EMPTY.setText(text)
                         .setValue(
                                 Optional.of(
-                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'=\' at (1,1) \"=2A\" expected \"#\"")
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'=\' at 0 expected \"#\"")
                                 )
                         )
         );
     }
 
     @Test
-    public void testParseUnparseableFormulaExpression2() {
+    public void testParseInvalidDateParsePattern() {
         this.parseAndCheck(
                 "@",
                 SpreadsheetPattern.parseDateParsePattern("dd/mmm/yyyy")
@@ -501,7 +502,25 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.EMPTY.setText("@")
                         .setValue(
                                 Optional.of(
-                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at (1,1) \"@\" expected \"dd/mmm/yyyy\"")
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 0 expected \"dd/mmm/yyyy\"")
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testParseInvalidExpression() {
+        final String text = "=1@Bad2+3";
+
+        this.parseAndCheck(
+                text,
+                SpreadsheetParsers.valueOrExpression(
+                        SpreadsheetMetadataTesting.METADATA_EN_AU.parser()
+                ),
+                SpreadsheetFormula.EMPTY.setText(text)
+                        .setValue(
+                                Optional.of(
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 2 expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
                                 )
                         )
         );

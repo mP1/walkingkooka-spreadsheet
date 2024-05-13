@@ -287,7 +287,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testLoadCellsWithFormulaWithInvalidValueFails() {
         this.loadCellFails(
                 "1.X",
-                SpreadsheetErrorKind.ERROR.setMessage("Invalid character '1' at (1,1) \"1.X\" expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
+                SpreadsheetErrorKind.ERROR.setMessage("Invalid character '1' at 0 expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
         );
     }
 
@@ -655,7 +655,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b2,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 context,
-                "Invalid character '=' at (1,1) \"=1+2\" expected \"#\""
+                "Invalid character '=' at 0 expected \"#\""
         );
     }
 
