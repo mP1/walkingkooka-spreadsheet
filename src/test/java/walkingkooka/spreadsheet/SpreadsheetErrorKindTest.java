@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -240,6 +241,20 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
                 SpreadsheetErrorKind.VALUE,
                 "Cannot convert \"abc\" to ExpressionNumber",
                 "abc"
+        );
+    }
+
+    @Test
+    public void testTranslateInvalidCharacterException() {
+        final InvalidCharacterException ice = new InvalidCharacterException(
+                "abc123",
+                2
+        );
+
+        this.translateAndCheck(
+                ice,
+                SpreadsheetErrorKind.ERROR,
+                ice.getShortMessage()
         );
     }
 
