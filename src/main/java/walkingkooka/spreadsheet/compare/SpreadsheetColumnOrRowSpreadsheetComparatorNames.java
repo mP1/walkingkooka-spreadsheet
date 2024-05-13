@@ -119,14 +119,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                                  final boolean supportColumnRowSeparator) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
-        final int modeColumnOrRowStart = 0;
-        final int modeColumnOrRow = modeColumnOrRowStart + 1;
+        final int MODE_COLUMN_OR_ROW_START = 0;
+        final int MODE_COLUMN_OR_ROW = MODE_COLUMN_OR_ROW_START + 1;
 
-        final int modeNameStart = modeColumnOrRow + 1;
-        final int modeName = modeNameStart + 1;
+        final int MODE_NAME_START = MODE_COLUMN_OR_ROW + 1;
+        final int MODE_NAME = MODE_NAME_START + 1;
 
-        final int modeUpOrDownStart = modeName + 1;
-        final int modeUpOrDown = modeUpOrDownStart + 1;
+        final int MODE_UP_OR_DOWN_START = MODE_NAME + 1;
+        final int MODE_UP_OR_DOWN = MODE_UP_OR_DOWN_START + 1;
 
         final int length = text.length();
 
@@ -142,7 +142,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
             final char c = text.charAt(i);
 
             switch (mode) {
-                case modeColumnOrRowStart:
+                case MODE_COLUMN_OR_ROW_START:
                     if (COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR.character() == c) {
                         throw new InvalidCharacterException(
                                 text,
@@ -152,9 +152,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     tokenStart = i;
                     columnOrRow = null;
                     comparatorNameAndDirections = null;
-                    mode = modeColumnOrRow;
+                    mode = MODE_COLUMN_OR_ROW;
                     break;
-                case modeColumnOrRow:
+                case MODE_COLUMN_OR_ROW:
                     if (COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR.character() == c) {
                         // parse column OR row
                         try {
@@ -183,11 +183,11 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                         comparatorNameAndDirections = Lists.array();
                         columnOrRowParser = columnOrRow.columnOrRowReferenceKind()
                                 ::parse;
-                        mode = modeNameStart;
+                        mode = MODE_NAME_START;
                         break;
                     }
                     break;
-                case modeNameStart:
+                case MODE_NAME_START:
                     if (false == SpreadsheetComparatorName.PART.test(c)) {
                         throw new InvalidCharacterException(
                                 text,
@@ -196,9 +196,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     }
                     tokenStart = i;
                     comparatorName = null;
-                    mode = modeName;
+                    mode = MODE_NAME;
                     break;
-                case modeName:
+                case MODE_NAME:
                     switch (c) {
                         case COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR:
                             comparatorName = SpreadsheetComparatorName.with(
@@ -207,7 +207,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                                             i
                                     )
                             );
-                            mode = modeUpOrDownStart;
+                            mode = MODE_UP_OR_DOWN_START;
                             break;
                         case COMPARATOR_NAME_SEPARATOR_CHAR:
                             comparatorNameAndDirections.add(
@@ -218,7 +218,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                                             )
                                     ).setDirection(SpreadsheetComparatorDirection.DEFAULT)
                             );
-                            mode = modeNameStart;
+                            mode = MODE_NAME_START;
                             break;
                         case COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR:
                             if (false == supportColumnRowSeparator) {
@@ -243,7 +243,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             );
                             columnOrRow = null;
                             comparatorName = null;
-                            mode = modeColumnOrRowStart;
+                            mode = MODE_COLUMN_OR_ROW_START;
                             break;
                         case '-':
                             // continue parsing name
@@ -259,7 +259,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             break;
                     }
                     break;
-                case modeUpOrDownStart:
+                case MODE_UP_OR_DOWN_START:
                     if (c > 'Z' || false == Character.isLetter(c)) {
                         throw new InvalidCharacterException(
                                 text,
@@ -267,9 +267,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                         );
                     }
                     tokenStart = i;
-                    mode = modeUpOrDown;
+                    mode = MODE_UP_OR_DOWN;
                     break;
-                case modeUpOrDown:
+                case MODE_UP_OR_DOWN:
                     switch (c) {
                         case COMPARATOR_NAME_SEPARATOR_CHAR:
                             comparatorNameAndDirections.add(
@@ -280,7 +280,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                                             comparatorName
                                     )
                             );
-                            mode = modeNameStart;
+                            mode = MODE_NAME_START;
                             break;
                         case COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR:
                             if (false == supportColumnRowSeparator) {
@@ -303,7 +303,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                                             comparatorNameAndDirections
                                     )
                             );
-                            mode = modeColumnOrRowStart;
+                            mode = MODE_COLUMN_OR_ROW_START;
                             break;
                         default:
                             if (false == SpreadsheetComparatorName.INITIAL.test(c)) {
@@ -322,7 +322,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
         }
 
         switch (mode) {
-            case modeName:
+            case MODE_NAME:
                 comparatorNameAndDirections.add(
                         SpreadsheetComparatorName.with(
                                 text.substring(
@@ -338,7 +338,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                         )
                 );
                 break;
-            case modeUpOrDown:
+            case MODE_UP_OR_DOWN:
                 comparatorNameAndDirections.add(
                         upOrDown(
                                 tokenStart,
@@ -354,11 +354,11 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                         )
                 );
                 break;
-            case modeColumnOrRow:
+            case MODE_COLUMN_OR_ROW:
                 throw new IllegalArgumentException("Expected column/row");
-            case modeNameStart:
+            case MODE_NAME_START:
                 throw new IllegalArgumentException("Missing comparator name");
-            case modeUpOrDownStart:
+            case MODE_UP_OR_DOWN_START:
                 throw new IllegalArgumentException("Missing " + SpreadsheetComparatorDirection.UP + "/" + SpreadsheetComparatorDirection.DOWN);
             default:
                 break;
