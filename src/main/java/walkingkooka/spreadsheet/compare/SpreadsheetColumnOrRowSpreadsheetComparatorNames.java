@@ -47,7 +47,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
     final static char NAME_UP_DOWN_SEPARATOR = ' ';
 
-    final static char COMPARATOR_SEPARATOR = ',';
+    final static char COMPARATOR_NAME_SEPARATOR = ',';
 
     final static char COLUMN_ROW_SEPARATOR = ';';
 
@@ -200,7 +200,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             );
                             mode = modeUpOrDownStart;
                             break;
-                        case COMPARATOR_SEPARATOR:
+                        case COMPARATOR_NAME_SEPARATOR:
                             comparatorNameAndDirections.add(
                                     SpreadsheetComparatorName.with(
                                             text.substring(
@@ -262,7 +262,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     break;
                 case modeUpOrDown:
                     switch (c) {
-                        case COMPARATOR_SEPARATOR:
+                        case COMPARATOR_NAME_SEPARATOR:
                             comparatorNameAndDirections.add(
                                     upOrDown(
                                             tokenStart,
@@ -496,7 +496,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     public String toString() {
         return ToStringBuilder.empty()
                 .labelSeparator(String.valueOf(COLUMN_ROW_ASSIGNMENT))
-                .valueSeparator(String.valueOf(COMPARATOR_SEPARATOR))
+                .valueSeparator(String.valueOf(COMPARATOR_NAME_SEPARATOR))
                 .label(this.columnOrRow.text())
                 .value(this.comparatorNameAndDirections)
                 .build();
