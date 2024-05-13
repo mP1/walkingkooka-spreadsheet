@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
@@ -2092,6 +2093,18 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         assertThrows(
                 thrown,
                 () -> parser.apply(text)
+        );
+    }
+
+    @Test
+    public void testParseInvalidCharacterThrowsInvalidCharacterException() {
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetPattern.parseNumberFormatPattern("!Hello")
+        );
+        this.checkEquals(
+                "Invalid character '!' at 0",
+                thrown.getShortMessage()
         );
     }
 

@@ -38,9 +38,7 @@ import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -689,16 +687,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     private static ParserToken parsePatternOrFail(final String text,
                                                   final Parser<SpreadsheetFormatParserContext> parser) {
-        CharSequences.failIfNullOrEmpty(text, "text");
-
-        try {
-            return parser.parse(
-                    TextCursors.charSequence(text),
-                    SpreadsheetFormatParserContexts.basic()
-            ).get();
-        } catch (final ParserException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
-        }
+        return parser.parseText(
+                text,
+                SpreadsheetFormatParserContexts.basic()
+        );
     }
 
     // ctor.............................................................................................................
