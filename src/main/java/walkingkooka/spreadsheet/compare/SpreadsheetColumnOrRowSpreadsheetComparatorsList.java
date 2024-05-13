@@ -110,6 +110,6 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     public String text() {
         return this.stream()
                 .map(Object::toString)
-                .collect(Collectors.joining("" + SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_SEPARATOR));
+                .collect(Collectors.joining("" + SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR));
     }
 }
