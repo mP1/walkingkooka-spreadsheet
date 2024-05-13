@@ -25,6 +25,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -43,13 +44,21 @@ import java.util.function.Function;
  */
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements HasText {
 
-    final static char COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR = '=';
+    final static char COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR = '=';
 
-    final static char COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR = ' ';
+    final static CharacterConstant COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR = CharacterConstant.with(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR);
 
-    final static char COMPARATOR_NAME_SEPARATOR = ',';
+    final static char COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR = ' ';
 
-    final static char COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR = ';';
+    final static CharacterConstant COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR = CharacterConstant.with(COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR);
+
+    final static char COMPARATOR_NAME_SEPARATOR_CHAR = ',';
+
+    final static CharacterConstant COMPARATOR_NAME_SEPARATOR = CharacterConstant.with(',');
+
+    final static char COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR = ';';
+
+    final static CharacterConstant COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR = CharacterConstant.with(COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR);
 
     /**
      * Tries to extract the {@link SpreadsheetColumnOrRowReference} from the text form of a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
@@ -58,7 +67,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     public static Optional<SpreadsheetColumnOrRowReference> tryParseColumnOrRow(final String text) {
         Objects.requireNonNull(text, "text");
 
-        final int assignment = text.indexOf(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR);
+        final int assignment = text.indexOf(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR.character());
 
         SpreadsheetColumnOrRowReference columnOrRow;
 
@@ -134,7 +143,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
             switch (mode) {
                 case modeColumnOrRowStart:
-                    if (COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR == c) {
+                    if (COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR.character() == c) {
                         throw new InvalidCharacterException(
                                 text,
                                 i
@@ -146,7 +155,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     mode = modeColumnOrRow;
                     break;
                 case modeColumnOrRow:
-                    if (COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR == c) {
+                    if (COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR.character() == c) {
                         // parse column OR row
                         try {
                             columnOrRow = columnOrRowParser.apply(
@@ -191,7 +200,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     break;
                 case modeName:
                     switch (c) {
-                        case COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR:
+                        case COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR:
                             comparatorName = SpreadsheetComparatorName.with(
                                     text.substring(
                                             tokenStart,
@@ -200,7 +209,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             );
                             mode = modeUpOrDownStart;
                             break;
-                        case COMPARATOR_NAME_SEPARATOR:
+                        case COMPARATOR_NAME_SEPARATOR_CHAR:
                             comparatorNameAndDirections.add(
                                     SpreadsheetComparatorName.with(
                                             text.substring(
@@ -211,7 +220,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             );
                             mode = modeNameStart;
                             break;
-                        case COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR:
+                        case COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR:
                             if (false == supportColumnRowSeparator) {
                                 throw new InvalidCharacterException(
                                         text,
@@ -262,7 +271,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     break;
                 case modeUpOrDown:
                     switch (c) {
-                        case COMPARATOR_NAME_SEPARATOR:
+                        case COMPARATOR_NAME_SEPARATOR_CHAR:
                             comparatorNameAndDirections.add(
                                     upOrDown(
                                             tokenStart,
@@ -273,7 +282,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             );
                             mode = modeNameStart;
                             break;
-                        case COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR:
+                        case COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR:
                             if (false == supportColumnRowSeparator) {
                                 throw new InvalidCharacterException(
                                         text,
