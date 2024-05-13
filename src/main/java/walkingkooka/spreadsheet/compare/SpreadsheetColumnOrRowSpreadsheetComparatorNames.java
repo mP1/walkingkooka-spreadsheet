@@ -354,8 +354,26 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                         )
                 );
                 break;
+            case MODE_COLUMN_OR_ROW_START:
+                throw new IllegalArgumentException("Missing column/row");
             case MODE_COLUMN_OR_ROW:
-                throw new IllegalArgumentException("Expected column/row");
+                if (length != tokenStart) {
+                    // could be a column/row missing '=' or could be an invalid character within a column/row
+                    try {
+                        columnOrRowParser.apply(
+                                text.substring(
+                                        tokenStart,
+                                        length
+                                )
+                        );
+                    } catch (final InvalidCharacterException invalid) {
+                        throw invalid.setTextAndPosition(
+                                text,
+                                tokenStart + invalid.position()
+                        );
+                    }
+                }
+                throw new IllegalArgumentException("Missing " + CharSequences.quoteIfChars(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR));
             case MODE_NAME_START:
                 throw new IllegalArgumentException("Missing comparator name");
             case MODE_UP_OR_DOWN_START:

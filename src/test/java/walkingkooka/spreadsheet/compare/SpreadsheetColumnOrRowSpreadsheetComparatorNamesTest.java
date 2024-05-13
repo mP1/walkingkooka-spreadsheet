@@ -412,7 +412,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.parseStringFails(
                 text,
-                new IllegalArgumentException("Expected column/row")
+                new InvalidCharacterException(text, 0)
         );
     }
 
@@ -422,7 +422,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.parseStringFails(
                 text,
-                new IllegalArgumentException("Expected column/row")
+                new IllegalArgumentException("Missing '='")
         );
     }
 
