@@ -45,7 +45,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
     final static char COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR = '=';
 
-    final static char NAME_UP_DOWN_SEPARATOR = ' ';
+    final static char COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR = ' ';
 
     final static char COMPARATOR_NAME_SEPARATOR = ',';
 
@@ -191,7 +191,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     break;
                 case modeName:
                     switch (c) {
-                        case NAME_UP_DOWN_SEPARATOR:
+                        case COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR:
                             comparatorName = SpreadsheetComparatorName.with(
                                     text.substring(
                                             tokenStart,
