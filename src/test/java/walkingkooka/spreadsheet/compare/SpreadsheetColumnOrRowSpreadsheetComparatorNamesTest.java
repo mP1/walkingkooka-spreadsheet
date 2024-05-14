@@ -682,6 +682,21 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     @Test
+    public void testParseListRowSpreadsheetComparatorNameSeparator() {
+        this.parseStringListAndCheck(
+                "2=day-of-month;",
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseRow("2"),
+                        Lists.of(
+                                SpreadsheetComparators.dayOfMonth()
+                                        .name()
+                                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testParseListSpreadsheetComparatorNameSpaceFails() {
         this.parseStringListFails(
                 "A=day-of-month ",

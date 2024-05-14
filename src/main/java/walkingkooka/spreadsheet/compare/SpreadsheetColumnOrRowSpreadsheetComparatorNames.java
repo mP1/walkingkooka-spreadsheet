@@ -357,7 +357,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                 );
                 break;
             case MODE_COLUMN_OR_ROW_START:
-                throw new IllegalArgumentException("Missing column/row");
+                break;
             case MODE_COLUMN_OR_ROW:
                 if (length != tokenStart) {
                     // could be a column/row missing '=' or could be an invalid character within a column/row
