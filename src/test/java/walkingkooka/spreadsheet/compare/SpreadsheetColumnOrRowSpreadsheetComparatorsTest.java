@@ -496,10 +496,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
 
         this.parseStringFails(
                 text,
-                new InvalidCharacterException(
-                        text,
-                        text.indexOf('1')
-                )
+                new IllegalArgumentException("Got Row 1 expected Column")
         );
     }
 
@@ -509,10 +506,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
 
         this.parseStringFails(
                 text,
-                new InvalidCharacterException(
-                        text,
-                        text.indexOf('A')
-                )
+                new IllegalArgumentException("Got Column A expected Row")
         );
     }
 

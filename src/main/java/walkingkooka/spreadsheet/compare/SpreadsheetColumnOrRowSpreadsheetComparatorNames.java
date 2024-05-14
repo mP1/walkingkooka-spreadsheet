@@ -37,7 +37,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * A selection of {@link SpreadsheetComparatorName names} for a given {@link SpreadsheetColumnOrRowReference}.
@@ -133,7 +132,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
         final Set<SpreadsheetColumnOrRowReference> duplicates = Sets.sorted();
         int mode = 0;
         int tokenStart = 0;
-        Function<String, SpreadsheetColumnOrRowReference> columnOrRowParser = SpreadsheetSelection::parseColumnOrRow;
         SpreadsheetColumnOrRowReference columnOrRow = null;
         SpreadsheetComparatorName comparatorName = null;
         List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections = null;
@@ -158,7 +156,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     if (COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR.character() == c) {
                         // parse column OR row
                         try {
-                            columnOrRow = columnOrRowParser.apply(
+                            columnOrRow = SpreadsheetSelection.parseColumnOrRow(
                                     text.substring(
                                             tokenStart,
                                             i
@@ -171,6 +169,12 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             );
                         }
 
+                        if (false == duplicates.isEmpty()) {
+                            duplicates.iterator()
+                                    .next()
+                                    .ifDifferentReferenceTypeFail(columnOrRow);
+                        }
+
                         if (false == duplicates.add(columnOrRow)) {
                             throw new IllegalArgumentException(
                                     "Duplicate " +
@@ -181,8 +185,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                         }
 
                         comparatorNameAndDirections = Lists.array();
-                        columnOrRowParser = columnOrRow.columnOrRowReferenceKind()
-                                ::parse;
                         mode = MODE_NAME_START;
                         break;
                     }
@@ -360,7 +362,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                 if (length != tokenStart) {
                     // could be a column/row missing '=' or could be an invalid character within a column/row
                     try {
-                        columnOrRowParser.apply(
+                        SpreadsheetSelection.parseColumnOrRow(
                                 text.substring(
                                         tokenStart,
                                         length
