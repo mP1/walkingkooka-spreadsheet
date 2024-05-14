@@ -297,6 +297,29 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     }
 
     @Test
+    public void testParseColumnsTrailingSeparator() {
+        this.parseStringAndCheck(
+                "A=text;B=text-case-insensitive;",
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseColumn("A"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text")
+                                        )
+                                ),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseColumn("B"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text-case-insensitive")
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testParseRows() {
         this.parseStringAndCheck(
                 "1=text;23=text-case-insensitive",
