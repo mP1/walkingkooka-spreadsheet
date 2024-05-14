@@ -574,6 +574,26 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     @Test
+    public void testParseListColumnMissingEqualsSignFails() {
+        final String text = "C";
+
+        this.parseStringListFails(
+                text,
+                new IllegalArgumentException("Missing '='")
+        );
+    }
+
+    @Test
+    public void testParseListRowMissingEqualsSignFails() {
+        final String text = "12";
+
+        this.parseStringListFails(
+                text,
+                new IllegalArgumentException("Missing '='")
+        );
+    }
+
+    @Test
     public void testParseListMissingInvalidColumnOrRowFails() {
         final String text = "A1=day-of-month";
 
