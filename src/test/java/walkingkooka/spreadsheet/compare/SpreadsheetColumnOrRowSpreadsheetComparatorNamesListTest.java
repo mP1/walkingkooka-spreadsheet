@@ -85,7 +85,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 )
         );
         this.checkEquals(
-                "All sorted columns/rows must be COLUMN but 1 is ROW",
+                "Got Row 12 expected Column",
                 thrown.getMessage(),
                 "message"
         );
@@ -119,7 +119,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 )
         );
         this.checkEquals(
-                "All sorted columns/rows must be ROW but 1 is COLUMN",
+                "Got Column AB expected Row",
                 thrown.getMessage(),
                 "message"
         );

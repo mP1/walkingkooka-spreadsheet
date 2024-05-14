@@ -21,7 +21,6 @@ import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -64,27 +63,15 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
             throw new IllegalArgumentException("Expected several sorted column/rows got 0");
         }
 
-        SpreadsheetColumnOrRowReferenceKind first = null;
-        int i = 0;
+        SpreadsheetColumnOrRowReference first = null;
 
         for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
             final SpreadsheetColumnOrRowReference columnOrRow = columnOrRowComparators.columnOrRow();
             if (null == first) {
-                first = columnOrRow.columnOrRowReferenceKind();
+                first = columnOrRow;
             } else {
-                if (first != columnOrRow.columnOrRowReferenceKind()) {
-                    throw new IllegalArgumentException(
-                            "All sorted columns/rows must be " +
-                                    first +
-                                    " but " +
-                                    i +
-                                    " is " +
-                                    first.flip()
-                    );
-                }
+                first.ifDifferentReferenceTypeFail(columnOrRow);
             }
-
-            i++;
         }
 
         return new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(copy);
