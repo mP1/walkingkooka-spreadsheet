@@ -147,6 +147,22 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
      */
     abstract SpreadsheetColumnOrRowReference replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
 
+    /**
+     * Complains by throwing a {#@link IllegalArgumentException} if the given {@link SpreadsheetColumnOrRowReference} is
+     * a different {@link SpreadsheetColumnOrRowReferenceKind}.
+     * <pre>
+     * AB vs 123
+     * Got row 123 expected column
+     * </pre>
+     */
+    public final void ifDifferentReferenceTypeFail(final SpreadsheetColumnOrRowReference columnOrRow) {
+        Objects.requireNonNull(columnOrRow, "columnOrRow");
+
+        if (false == this.columnOrRowReferenceKind().equals(columnOrRow.columnOrRowReferenceKind())) {
+            throw new IllegalArgumentException("Got " + columnOrRow.textLabel() + " " + columnOrRow + " expected " + this.textLabel());
+        }
+    }
+
     @Override
     final Set<SpreadsheetViewportAnchor> anchors() {
         return ANCHORS;
