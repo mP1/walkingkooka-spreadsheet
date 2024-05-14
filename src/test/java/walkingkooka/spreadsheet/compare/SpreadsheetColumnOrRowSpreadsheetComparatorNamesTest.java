@@ -438,6 +438,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
     @Test
     public void testParseInvalidSeparatorComparatorNameFails() {
+        final String text = "D=!text";
+
+        this.parseStringFails(
+                text,
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf('!')
+                )
+        );
+    }
+
+    @Test
+    public void testParseInvalidSeparatorComparatorNameFails2() {
         final String text = "D=text!";
 
         this.parseStringFails(
