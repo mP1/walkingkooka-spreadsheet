@@ -404,6 +404,103 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         );
     }
 
+    // tryParseSpreadsheetComparatorNameAndDirections...................................................................
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNameAndDirectionsNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseSpreadsheetComparatorNameAndDirections(null)
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithEmpty() {
+        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
+                ""
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithColumnMissingEqualsSign() {
+        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
+                "A"
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithInvalidComparatorName() {
+        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
+                "A=!invalid"
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithInvalidComparatorName2() {
+        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
+                "A=text,!invalid"
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithComparatorName() {
+        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
+                "A=day-of-month",
+                SpreadsheetComparators.dayOfMonth()
+                        .name()
+                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithComparatorNames2() {
+        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
+                "A=day-of-month,month-of-year,year",
+                SpreadsheetComparators.dayOfMonth()
+                        .name()
+                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
+                SpreadsheetComparators.monthOfYear()
+                        .name()
+                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
+                SpreadsheetComparators.year()
+                        .name()
+                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithComparatorNames3() {
+        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
+                "A=day-of-month,month-of-year UP,year DOWN",
+                SpreadsheetComparators.dayOfMonth()
+                        .name()
+                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
+                SpreadsheetComparators.monthOfYear()
+                        .name()
+                        .setDirection(SpreadsheetComparatorDirection.UP),
+                SpreadsheetComparators.year()
+                        .name()
+                        .setDirection(SpreadsheetComparatorDirection.DOWN)
+        );
+    }
+
+    private void tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(final String text,
+                                                                        final SpreadsheetComparatorNameAndDirection... nameAndDirections) {
+        this.tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
+                text,
+                Lists.of(nameAndDirections)
+        );
+    }
+
+    private void tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(final String text,
+                                                                        final List<SpreadsheetComparatorNameAndDirection> nameAndDirections) {
+        this.checkEquals(
+                nameAndDirections,
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseSpreadsheetComparatorNameAndDirections(text),
+                () -> "tryParseSpreadsheetComparatorNameAndDirections " + CharSequences.quoteAndEscape(text)
+        );
+    }
+
     // parse............................................................................................................
 
     @Test
