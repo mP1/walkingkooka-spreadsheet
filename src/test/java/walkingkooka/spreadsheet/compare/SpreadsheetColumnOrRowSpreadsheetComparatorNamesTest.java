@@ -900,10 +900,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.parseStringListFails(
                 text,
-                new InvalidCharacterException(
-                        text,
-                        text.indexOf('1')
-                )
+                new IllegalArgumentException("Got Row 1 expected Column")
         );
     }
 
@@ -913,10 +910,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.parseStringListFails(
                 text,
-                new InvalidCharacterException(
-                        text,
-                        text.indexOf('A')
-                )
+                new IllegalArgumentException("Got Column A expected Row")
         );
     }
 
