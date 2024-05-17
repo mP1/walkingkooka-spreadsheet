@@ -97,6 +97,14 @@ import java.util.function.Supplier;
 
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
+ * <br>
+ * This class represents the global settings for a single spreadsheet, capturing its ID, name, audit details
+ * (creator, last modified by, timestamps), locale, computation settings (precisions, rounding etc),
+ * global formatting patterns, and many other non cell focused values.
+ * <br>
+ * For more information examine the {@link SpreadsheetMetadataPropertyName} properties.
+ * <br>
+ * Cell specific data such as individual format patterns are not stored here but on the {@link walkingkooka.spreadsheet.SpreadsheetCell}.
  */
 public abstract class SpreadsheetMetadata implements CanBeEmpty,
         HasConverter<SpreadsheetConverterContext>,
