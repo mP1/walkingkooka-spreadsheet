@@ -24,7 +24,6 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.util.PropertiesPath;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -38,7 +37,7 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
 
     @Test
     public void testCreateContainsSeparatorFails() {
-        assertThrows(IllegalArgumentException.class, () -> GroupName.with("xyz" + PropertiesPath.SEPARATOR.string()));
+        assertThrows(IllegalArgumentException.class, () -> GroupName.with("xyz."));
     }
 
     @Test
