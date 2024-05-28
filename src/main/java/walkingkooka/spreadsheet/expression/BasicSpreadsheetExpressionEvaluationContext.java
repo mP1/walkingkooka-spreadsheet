@@ -206,8 +206,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
-        return this.functions.function(name);
+    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+        return this.functions.expressionFunction(name);
     }
 
     @Override
@@ -217,7 +217,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public boolean isPure(final FunctionExpressionName name) {
-        return this.function(name).isPure(this);
+        return this.expressionFunction(name)
+                .map(f -> f.isPure(this))
+                .orElse(false);
     }
 
     private final ExpressionFunctionProvider functions;

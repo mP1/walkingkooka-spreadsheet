@@ -3300,16 +3300,24 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
-            public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+            public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
                 switch (name.value()) {
                     case "Error.Type":
-                        return function((p, c) -> "Hello");
+                        return Optional.of(
+                                function((p, c) -> "Hello")
+                        );
                     case "test.toDate":
-                        return function((p, c) -> convertStringParameter(p, LocalDate.class));
+                        return Optional.of(
+                                function((p, c) -> convertStringParameter(p, LocalDate.class))
+                        );
                     case "test.toDateTime":
-                        return function((p, c) -> convertStringParameter(p, LocalDateTime.class));
+                        return Optional.of(
+                                function((p, c) -> convertStringParameter(p, LocalDateTime.class))
+                        );
                     case "test.toTime":
-                        return function((p, c) -> convertStringParameter(p, LocalTime.class));
+                        return Optional.of(
+                                function((p, c) -> convertStringParameter(p, LocalTime.class))
+                        );
                     default:
                         throw new UnknownExpressionFunctionException(name);
                 }

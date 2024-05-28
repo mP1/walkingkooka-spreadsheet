@@ -112,11 +112,6 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Override
-    public void testFunctionUnknownFunctionNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testIsPureNullNameFails() {
         throw new UnsupportedOperationException();
     }
@@ -184,7 +179,10 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     public void testFunctionWithNamedValueFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> this.createContext().function(FunctionExpressionName.with(NAME))
+                () -> this.createContext()
+                        .expressionFunction(
+                                FunctionExpressionName.with(NAME)
+                        )
         );
         this.checkEquals(
                 "Function name Name1234 is a parameter and not an actual function",
