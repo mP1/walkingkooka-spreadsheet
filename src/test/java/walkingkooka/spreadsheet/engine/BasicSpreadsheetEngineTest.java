@@ -13282,7 +13282,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+            public Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name) {
                 return SpreadsheetComparatorProviders.builtIn()
                         .spreadsheetComparator(name);
             }

@@ -454,8 +454,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         n.columnOrRow(),
                         n.comparatorNameAndDirections()
                                 .stream()
-                                .map(nad -> nad.direction().apply(context.spreadsheetComparator(nad.name())))
-                                .collect(Collectors.toList())
+                                .map(
+                                        nad -> nad.direction()
+                                                .apply(
+                                                        context.spreadsheetComparatorOrFail(
+                                                                nad.name()
+                                                        )
+                                                )
+                                ).collect(Collectors.toList())
                 )).collect(Collectors.toList());
         checkContext(context);
 

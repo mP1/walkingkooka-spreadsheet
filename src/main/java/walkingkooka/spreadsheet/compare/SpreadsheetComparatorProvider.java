@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,16 @@ public interface SpreadsheetComparatorProvider {
     /**
      * Resolves the given {@link SpreadsheetComparatorName} to a {@link SpreadsheetComparatorName}.
      */
-    SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name);
+    Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name);
+
+    /**
+     * Helper that invokes {@link #spreadsheetComparator(SpreadsheetComparatorName)} and throws a {@link IllegalArgumentException}
+     * if none was found.
+     */
+    default SpreadsheetComparator<?> spreadsheetComparatorOrFail(final SpreadsheetComparatorName name) {
+        return this.spreadsheetComparator(name)
+                .orElseThrow(() -> new IllegalArgumentException("Unknown comparator " + name));
+    }
 
     /**
      * Returns all available {@link SpreadsheetComparatorInfo}
@@ -47,8 +57,12 @@ public interface SpreadsheetComparatorProvider {
                         n.columnOrRow(),
                         n.comparatorNameAndDirections()
                                 .stream()
-                                .map(nad -> nad.direction().apply(this.spreadsheetComparator(nad.name())))
-                                .collect(Collectors.toList())
+                                .map(
+                                        nad -> nad.direction()
+                                                .apply(
+                                                        this.spreadsheetComparatorOrFail(nad.name())
+                                                )
+                                ).collect(Collectors.toList())
                 )).collect(Collectors.toList());
     }
 }
