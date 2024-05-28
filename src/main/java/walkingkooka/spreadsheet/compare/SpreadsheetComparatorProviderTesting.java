@@ -19,13 +19,33 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.reflect.ClassTesting2;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ClassTesting2<T> {
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
+                                               final SpreadsheetComparatorName name) {
+        this.spreadsheetComparatorAndCheck(
+                provider,
+                name,
+                Optional.empty()
+        );
+    }
+
+    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final SpreadsheetComparatorName name,
                                                final SpreadsheetComparator<?> expected) {
+        this.spreadsheetComparatorAndCheck(
+                provider,
+                name,
+                Optional.of(expected)
+        );
+    }
+
+    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
+                                               final SpreadsheetComparatorName name,
+                                               final Optional<SpreadsheetComparator<?>> expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetComparator(name),

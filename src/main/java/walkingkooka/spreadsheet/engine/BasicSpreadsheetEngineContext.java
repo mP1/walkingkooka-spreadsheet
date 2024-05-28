@@ -153,7 +153,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // spreadsheetComparatorProvider.................................................................................................
 
     @Override
-    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+    public Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name) {
         return this.spreadsheetComparatorProvider.spreadsheetComparator(name);
     }
 
