@@ -1047,111 +1047,119 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return new ExpressionFunctionProvider() {
 
             @Override
-            public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName functionExpressionName) {
+            public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName functionExpressionName) {
                 switch (functionExpressionName.value()) {
                     case "xyz":
-                        return Cast.to(
-                                new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+                        return Optional.of(
+                                Cast.to(
+                                        new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
 
-                                    @Override
-                                    public Object apply(final List<Object> parameters,
-                                                        final SpreadsheetExpressionEvaluationContext context) {
-                                        return parameters.stream()
-                                                .mapToLong(p -> context.convertOrFail(p, Long.class))
-                                                .sum();
-                                    }
+                                            @Override
+                                            public Object apply(final List<Object> parameters,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
+                                                return parameters.stream()
+                                                        .mapToLong(p -> context.convertOrFail(p, Long.class))
+                                                        .sum();
+                                            }
 
-                                    @Override
-                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                        return Lists.of(
-                                                ExpressionFunctionParameterName.with("parameters")
-                                                        .variable(Object.class)
-                                                        .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
-                                        );
-                                    }
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                                return Lists.of(
+                                                        ExpressionFunctionParameterName.with("parameters")
+                                                                .variable(Object.class)
+                                                                .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
+                                                );
+                                            }
 
-                                    @Override
-                                    public String toString() {
-                                        return "xyz";
-                                    }
-                                }
+                                            @Override
+                                            public String toString() {
+                                                return "xyz";
+                                            }
+                                        }
+                                )
                         );
                     case TEST_CONTEXT_LOADCELL:
                         return Cast.to(
-                                new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
-                                    @Override
-                                    public Object apply(final List<Object> parameters,
-                                                        final SpreadsheetExpressionEvaluationContext context) {
-                                        return context.loadCell(
-                                                        (SpreadsheetCellReference) parameters.get(0)
-                                                ).get()
-                                                .formula()
-                                                .value()
-                                                .get();
-                                    }
+                                Optional.of(
+                                        new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+                                            @Override
+                                            public Object apply(final List<Object> parameters,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
+                                                return context.loadCell(
+                                                                (SpreadsheetCellReference) parameters.get(0)
+                                                        ).get()
+                                                        .formula()
+                                                        .value()
+                                                        .get();
+                                            }
 
-                                    @Override
-                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                        return Lists.of(
-                                                ExpressionFunctionParameterName.with("parameters")
-                                                        .variable(Object.class)
-                                                        .setKinds(
-                                                                Sets.of(ExpressionFunctionParameterKind.EVALUATE)
-                                                        )
-                                        );
-                                    }
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                                return Lists.of(
+                                                        ExpressionFunctionParameterName.with("parameters")
+                                                                .variable(Object.class)
+                                                                .setKinds(
+                                                                        Sets.of(ExpressionFunctionParameterKind.EVALUATE)
+                                                                )
+                                                );
+                                            }
 
-                                    @Override
-                                    public String toString() {
-                                        return TEST_CONTEXT_LOADCELL;
-                                    }
-                                }
+                                            @Override
+                                            public String toString() {
+                                                return TEST_CONTEXT_LOADCELL;
+                                            }
+                                        }
+                                )
                         );
                     case TEST_CONTEXT_SERVER_URL:
                         return Cast.to(
-                                new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
-                                    @Override
-                                    public Object apply(final List<Object> parameters,
-                                                        final SpreadsheetExpressionEvaluationContext context) {
-                                        return context.serverUrl();
-                                    }
+                                Optional.of(
+                                        new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+                                            @Override
+                                            public Object apply(final List<Object> parameters,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
+                                                return context.serverUrl();
+                                            }
 
-                                    @Override
-                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                        return Lists.of(
-                                                ExpressionFunctionParameterName.with("parameters")
-                                                        .variable(Object.class)
-                                        );
-                                    }
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                                return Lists.of(
+                                                        ExpressionFunctionParameterName.with("parameters")
+                                                                .variable(Object.class)
+                                                );
+                                            }
 
-                                    @Override
-                                    public String toString() {
-                                        return TEST_CONTEXT_SERVER_URL;
-                                    }
-                                }
+                                            @Override
+                                            public String toString() {
+                                                return TEST_CONTEXT_SERVER_URL;
+                                            }
+                                        }
+                                )
                         );
                     case TEST_CONTEXT_SPREADSHEET_METADATA:
                         return Cast.to(
-                                new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
-                                    @Override
-                                    public Object apply(final List<Object> parameters,
-                                                        final SpreadsheetExpressionEvaluationContext context) {
-                                        return context.spreadsheetMetadata();
-                                    }
+                                Optional.of(
+                                        new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+                                            @Override
+                                            public Object apply(final List<Object> parameters,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
+                                                return context.spreadsheetMetadata();
+                                            }
 
-                                    @Override
-                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                        return Lists.of(
-                                                ExpressionFunctionParameterName.with("parameters")
-                                                        .variable(Object.class)
-                                        );
-                                    }
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                                return Lists.of(
+                                                        ExpressionFunctionParameterName.with("parameters")
+                                                                .variable(Object.class)
+                                                );
+                                            }
 
-                                    @Override
-                                    public String toString() {
-                                        return TEST_CONTEXT_SPREADSHEET_METADATA;
-                                    }
-                                }
+                                            @Override
+                                            public String toString() {
+                                                return TEST_CONTEXT_SPREADSHEET_METADATA;
+                                            }
+                                        }
+                                )
                         );
                     default:
                         throw new UnsupportedOperationException("Unknown function: " + functionExpressionName);

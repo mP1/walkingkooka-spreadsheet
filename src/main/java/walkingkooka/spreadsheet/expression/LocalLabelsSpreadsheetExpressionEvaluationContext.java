@@ -121,10 +121,10 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName functionName) {
+    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName functionName) {
         this.failIfParameterName(functionName);
 
-        return this.context.function(functionName);
+        return this.context.expressionFunction(functionName);
     }
 
     @Override

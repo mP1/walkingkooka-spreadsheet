@@ -31,6 +31,7 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.math.MathContext;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -84,7 +85,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
         return new FakeExpressionEvaluationContext() {
 
             @Override
-            public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+            public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
                 throw new UnknownExpressionFunctionException(name);
             }
 

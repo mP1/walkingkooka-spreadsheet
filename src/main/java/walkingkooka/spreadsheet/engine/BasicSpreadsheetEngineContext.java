@@ -167,8 +167,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // expressionFunctionProvider.................................................................................................
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
-        return this.expressionFunctionProvider.function(name);
+    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+        return this.expressionFunctionProvider.expressionFunction(name);
     }
 
     @Override
@@ -207,8 +207,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public boolean isPure(final FunctionExpressionName function) {
-        return this.expressionFunctionProvider.function(function)
-                .isPure(this);
+        return this.expressionFunctionProvider.expressionFunction(function)
+                .map(f -> f.isPure(this))
+                .orElse(false);
     }
 
     @Override
