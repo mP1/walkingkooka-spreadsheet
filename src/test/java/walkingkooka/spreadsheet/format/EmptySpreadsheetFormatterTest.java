@@ -33,7 +33,7 @@ public final class EmptySpreadsheetFormatterTest extends SpreadsheetFormatterTes
 
     @Test
     public void testFormat() {
-        this.formatFailAndCheck(
+        this.formatAndCheck(
                 "Hello2"
         );
     }

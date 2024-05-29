@@ -38,6 +38,17 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
+                                final SpreadsheetFormatterContext context) {
+        this.formatAndCheck(
+                formatter,
+                value,
+                context,
+                Optional.empty()
+        );
+    }
+
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Object value,
                                 final SpreadsheetFormatterContext context,
                                 final String text) {
         this.formatAndCheck(formatter,
@@ -55,19 +66,6 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
                 value,
                 context,
                 Optional.of(text)
-        );
-    }
-
-    // format fail and check............................................................................................
-
-    default void formatFailAndCheck(final SpreadsheetFormatter formatter,
-                                    final Object value,
-                                    final SpreadsheetFormatterContext context) {
-        this.formatAndCheck(
-                formatter,
-                value,
-                context,
-                Optional.empty()
         );
     }
 

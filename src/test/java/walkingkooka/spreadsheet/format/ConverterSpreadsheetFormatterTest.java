@@ -33,7 +33,7 @@ public final class ConverterSpreadsheetFormatterTest implements SpreadsheetForma
 
     @Test
     public void testInvalid() {
-        this.formatFailAndCheck("fail!");
+        this.formatAndCheck("fail!");
     }
 
     @Override

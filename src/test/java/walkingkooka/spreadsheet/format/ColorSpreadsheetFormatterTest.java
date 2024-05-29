@@ -52,7 +52,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatParser
 
     @Test
     public void testWrappedFormatterFails() {
-        this.formatFailAndCheck(ColorSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()),
+        this.formatAndCheck(ColorSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()),
                 new FakeSpreadsheetFormatter() {
                     @Override
                     public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
