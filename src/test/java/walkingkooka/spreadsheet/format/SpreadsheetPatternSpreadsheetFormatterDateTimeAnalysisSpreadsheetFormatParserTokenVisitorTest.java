@@ -24,8 +24,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
-public final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitorTest extends
-        SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitorTest extends
+        SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testHHMMSS() {
@@ -71,7 +71,7 @@ public final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTo
     private void acceptAndCheck(final String pattern,
                                 final int millisecondDecimals,
                                 final boolean ampm) {
-        final DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor visitor = DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor.with();
+        final SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor.with();
         visitor.accept(SpreadsheetFormatParsers.timeFormat().orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern),
                         SpreadsheetFormatParserContexts.basic())
@@ -87,23 +87,23 @@ public final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTo
 
     @Test
     public void testToString12h() {
-        final DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor visitor = this.createVisitor();
+        final SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor visitor = this.createVisitor();
         visitor.accept(SpreadsheetFormatParserToken.amPm("AMPM", "AMPM"));
         this.toStringAndCheck(visitor, "12h");
     }
 
     @Override
-    public DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override
     public String typeNamePrefix() {
-        return DateTimeSpreadsheetFormatter.class.getSimpleName();
+        return SpreadsheetPatternSpreadsheetFormatterDateTime.class.getSimpleName();
     }
 
     @Override
-    public Class<DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor> type() {
-        return DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor.class;
     }
 }

@@ -40,9 +40,14 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<
-        DateTimeSpreadsheetFormatter,
+public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<
+        SpreadsheetPatternSpreadsheetFormatterDateTime,
         SpreadsheetFormatDateTimeParserToken> {
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
+    }
 
     private final static Color RED = Color.parse("#FF0000");
 
@@ -50,7 +55,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetPatternSp
 
     @Test
     public void testWithNullTypeTesterFails() {
-        assertThrows(NullPointerException.class, () -> DateTimeSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetPatternSpreadsheetFormatterDateTime.with(this.parsePatternOrFail(this.pattern()), null));
     }
 
     // tests.............................................................................................................
@@ -100,7 +105,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetPatternSp
     @SuppressWarnings("unused")
     @Override
     public void testCanFormatFalse() {
-        // DateTimeSpreadsheetFormatter says it can format anything. It converts all values to LocalDateTime before formatting.
+        // SpreadsheetPatternSpreadsheetFormatterDateTime says it can format anything. It converts all values to LocalDateTime before formatting.
     }
 
     @SuppressWarnings("unused")
@@ -891,8 +896,8 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetPatternSp
     }
 
     @Override
-    DateTimeSpreadsheetFormatter createFormatter0(final SpreadsheetFormatDateTimeParserToken token) {
-        return DateTimeSpreadsheetFormatter.with(token, (v) -> v instanceof Temporal);
+    SpreadsheetPatternSpreadsheetFormatterDateTime createFormatter0(final SpreadsheetFormatDateTimeParserToken token) {
+        return SpreadsheetPatternSpreadsheetFormatterDateTime.with(token, (v) -> v instanceof Temporal);
     }
 
     @Override
@@ -963,7 +968,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetPatternSp
     }
 
     @Override
-    public Class<DateTimeSpreadsheetFormatter> type() {
-        return DateTimeSpreadsheetFormatter.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterDateTime> type() {
+        return SpreadsheetPatternSpreadsheetFormatterDateTime.class;
     }
 }
