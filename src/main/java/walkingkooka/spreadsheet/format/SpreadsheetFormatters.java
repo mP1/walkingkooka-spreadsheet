@@ -117,10 +117,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see NumberSpreadsheetFormatter}
+     * {@see SpreadsheetPatternSpreadsheetFormatterNumber}
      */
     public static SpreadsheetFormatter number(final SpreadsheetFormatNumberParserToken token) {
-        return NumberSpreadsheetFormatter.with(token);
+        return SpreadsheetPatternSpreadsheetFormatterNumber.with(token);
     }
 
     /**
