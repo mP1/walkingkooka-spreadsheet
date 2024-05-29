@@ -49,12 +49,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         SpreadsheetFormatNumberParserToken> {
 
     private final static Color RED = Color.parse("#FF0000");
-
-    @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
-    }
-
+    
     @Test
     public void testCanConvertBigDecimalFails() {
         final SpreadsheetPatternSpreadsheetFormatterNumber formatter = SpreadsheetPatternSpreadsheetFormatterNumber.with(

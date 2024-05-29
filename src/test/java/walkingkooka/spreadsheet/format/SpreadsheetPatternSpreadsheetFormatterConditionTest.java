@@ -43,11 +43,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterCondition,
         SpreadsheetFormatConditionParserToken> {
 
-    @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
-    }
-
     private final static String TEXT_PATTERN = "!@@";
 
     @Test

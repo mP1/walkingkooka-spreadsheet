@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -30,7 +31,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends SpreadsheetPatternSpreadsheetFormatter<T>,
         T extends SpreadsheetFormatParserToken>
-        extends SpreadsheetFormatterTestCase<F> {
+        extends SpreadsheetFormatterTestCase<F>
+        implements TypeNameTesting<F> {
 
     SpreadsheetPatternSpreadsheetFormatterTestCase() {
         super();
@@ -76,4 +78,14 @@ public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends S
     abstract Parser<SpreadsheetFormatParserContext> parser();
 
     abstract F createFormatter0(final T token);
+
+    @Override
+    public final String typeNamePrefix() {
+        return SpreadsheetPatternSpreadsheetFormatter.class.getSimpleName();
+    }
+
+    @Override
+    public final String typeNameSuffix() {
+        return "";
+    }
 }
