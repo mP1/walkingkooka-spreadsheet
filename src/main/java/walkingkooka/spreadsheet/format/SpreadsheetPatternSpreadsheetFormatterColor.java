@@ -26,26 +26,26 @@ import java.util.Optional;
 /**
  * Adds a {@link Color} to a value formatted by another {@link SpreadsheetFormatter}.
  */
-final class ColorSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatColorParserToken> {
+final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatColorParserToken> {
 
 
     /**
-     * Creates a {@link ColorSpreadsheetFormatter}
+     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterColor}
      */
-    static ColorSpreadsheetFormatter with(final SpreadsheetFormatColorParserToken token,
-                                          final SpreadsheetFormatter formatter) {
+    static SpreadsheetPatternSpreadsheetFormatterColor with(final SpreadsheetFormatColorParserToken token,
+                                                            final SpreadsheetFormatter formatter) {
         checkParserToken(token);
         checkFormatter(formatter);
 
-        return new ColorSpreadsheetFormatter(token,
-                formatter instanceof ColorSpreadsheetFormatter ?
+        return new SpreadsheetPatternSpreadsheetFormatterColor(token,
+                formatter instanceof SpreadsheetPatternSpreadsheetFormatterColor ?
                         unwrap(Cast.to(formatter)) :
                         formatter);
     }
 
-    private static SpreadsheetFormatter unwrap(final ColorSpreadsheetFormatter formatter) {
+    private static SpreadsheetFormatter unwrap(final SpreadsheetPatternSpreadsheetFormatterColor formatter) {
         final SpreadsheetFormatter wrapped = formatter.formatter;
-        return wrapped instanceof ColorSpreadsheetFormatter ?
+        return wrapped instanceof SpreadsheetPatternSpreadsheetFormatterColor ?
                 unwrap(Cast.to(wrapped)) :
                 wrapped;
     }
@@ -53,11 +53,11 @@ final class ColorSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetForma
     /**
      * Private use factory
      */
-    private ColorSpreadsheetFormatter(final SpreadsheetFormatColorParserToken token,
-                                      final SpreadsheetFormatter formatter) {
+    private SpreadsheetPatternSpreadsheetFormatterColor(final SpreadsheetFormatColorParserToken token,
+                                                        final SpreadsheetFormatter formatter) {
         super(token);
 
-        final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(token);
+        final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(token);
         this.source = visitor.source;
         this.sourceValue = visitor.nameOrNumber;
         this.formatter = formatter;
@@ -91,7 +91,7 @@ final class ColorSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetForma
     /**
      * Either the color index (int) or color name (String)
      */
-    private final ColorSpreadsheetFormatterColorSource source;
+    private final SpreadsheetPatternSpreadsheetFormatterColorColorSource source;
 
     /**
      * Either an int or name.

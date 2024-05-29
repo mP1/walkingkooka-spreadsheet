@@ -32,27 +32,32 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ColorSpreadsheetFormatterTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<ColorSpreadsheetFormatter,
+public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterColor,
         SpreadsheetFormatColorParserToken> {
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
+    }
 
     private final static String TEXT_PATTERN = "@@";
 
     @Test
     public void testWithNullWrappedFormatterFails() {
-        assertThrows(NullPointerException.class, () -> ColorSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail(this.pattern()), null));
     }
 
     @Test
     public void testWithColorSpreadsheetFormatter() {
         final SpreadsheetFormatter text = SpreadsheetFormatters.fake();
-        final ColorSpreadsheetFormatter color = ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 1]"), text);
-        final ColorSpreadsheetFormatter wrapper = ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 2]"), color);
+        final SpreadsheetPatternSpreadsheetFormatterColor color = SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail("[COLOR 1]"), text);
+        final SpreadsheetPatternSpreadsheetFormatterColor wrapper = SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail("[COLOR 2]"), color);
         assertSame(text, wrapper.formatter, "formatter");
     }
 
     @Test
     public void testWrappedFormatterFails() {
-        this.formatAndCheck(ColorSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()),
+        this.formatAndCheck(SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail(this.pattern()),
                 new FakeSpreadsheetFormatter() {
                     @Override
                     public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
@@ -126,8 +131,8 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetPatternSprea
         final Optional<Color> color = Optional.of(Color.BLACK);
 
         this.formatAndCheck(
-                ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 2]"),
-                        ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 1]"),
+                SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail("[COLOR 2]"),
+                        SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail("[COLOR 1]"),
                                 new SpreadsheetFormatter() {
                                     @Override
                                     public boolean canFormat(final Object value,
@@ -189,7 +194,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetPatternSprea
         );
     }
 
-    private void formatAndCheck(final ColorSpreadsheetFormatter formatter,
+    private void formatAndCheck(final SpreadsheetPatternSpreadsheetFormatterColor formatter,
                                 final String value,
                                 final SpreadsheetFormatterContext context,
                                 final SpreadsheetText formattedText) {
@@ -207,8 +212,8 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetPatternSprea
     }
 
     @Override
-    ColorSpreadsheetFormatter createFormatter0(final SpreadsheetFormatColorParserToken token) {
-        return ColorSpreadsheetFormatter.with(
+    SpreadsheetPatternSpreadsheetFormatterColor createFormatter0(final SpreadsheetFormatColorParserToken token) {
+        return SpreadsheetPatternSpreadsheetFormatterColor.with(
                 token,
                 this.textFormatter()
         );
@@ -289,7 +294,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetPatternSprea
     }
 
     @Override
-    public Class<ColorSpreadsheetFormatter> type() {
-        return ColorSpreadsheetFormatter.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterColor> type() {
+        return SpreadsheetPatternSpreadsheetFormatterColor.class;
     }
 }

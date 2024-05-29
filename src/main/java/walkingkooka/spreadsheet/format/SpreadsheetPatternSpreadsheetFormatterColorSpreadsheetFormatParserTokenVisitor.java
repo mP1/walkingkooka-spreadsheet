@@ -26,36 +26,36 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
 /**
  * Finds the color name or color number in the {@link SpreadsheetFormatColorParserToken}.
  */
-final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    static ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor colorNameOrNumberOrFail(final SpreadsheetFormatColorParserToken token) {
-        final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
+    static SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor colorNameOrNumberOrFail(final SpreadsheetFormatColorParserToken token) {
+        final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor();
         token.accept(visitor);
         return visitor;
     }
 
     // @VisibleForTesting.
-    ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatColorNameParserToken token) {
-        this.set(ColorSpreadsheetFormatterColorSource.NAME, token.colorName());
+        this.set(SpreadsheetPatternSpreadsheetFormatterColorColorSource.NAME, token.colorName());
     }
 
     @Override
     protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
-        this.set(ColorSpreadsheetFormatterColorSource.NUMBER, token.value());
+        this.set(SpreadsheetPatternSpreadsheetFormatterColorColorSource.NUMBER, token.value());
     }
 
-    private void set(final ColorSpreadsheetFormatterColorSource source,
+    private void set(final SpreadsheetPatternSpreadsheetFormatterColorColorSource source,
                      final Object nameOrNumber) {
         this.source = source;
         this.nameOrNumber = nameOrNumber;
     }
 
-    ColorSpreadsheetFormatterColorSource source;
+    SpreadsheetPatternSpreadsheetFormatterColorColorSource source;
     Object nameOrNumber;
 
     @Override

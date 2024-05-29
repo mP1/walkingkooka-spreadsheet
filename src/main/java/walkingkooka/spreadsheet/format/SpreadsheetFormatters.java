@@ -50,11 +50,11 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see ColorSpreadsheetFormatter}
+     * {@see SpreadsheetPatternSpreadsheetFormatterColor}
      */
     public static SpreadsheetFormatter color(final SpreadsheetFormatColorParserToken token,
                                              final SpreadsheetFormatter formatter) {
-        return ColorSpreadsheetFormatter.with(token, formatter);
+        return SpreadsheetPatternSpreadsheetFormatterColor.with(token, formatter);
     }
 
     /**
