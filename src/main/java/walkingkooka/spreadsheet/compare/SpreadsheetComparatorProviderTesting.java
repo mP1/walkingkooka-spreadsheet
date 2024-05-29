@@ -19,11 +19,13 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 import java.util.Set;
 
-public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ClassTesting2<T> {
+public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ClassTesting2<T>,
+        TreePrintableTesting {
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final SpreadsheetComparatorName name) {
