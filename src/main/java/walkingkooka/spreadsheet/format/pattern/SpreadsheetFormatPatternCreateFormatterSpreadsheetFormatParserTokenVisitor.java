@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
@@ -127,7 +128,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
 
     @Override
     protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
-        final SpreadsheetFormatter generalFormatter = SpreadsheetFormatters.general();
+        final SpreadsheetPatternSpreadsheetFormatter generalFormatter = SpreadsheetFormatters.general();
 
         final Optional<SpreadsheetFormatColorParserToken> color = SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorGeneralColorSpreadsheetFormatParserTokenVisitor.extractColor(token);
 
