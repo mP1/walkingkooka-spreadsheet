@@ -80,11 +80,11 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see DateTimeSpreadsheetFormatter}
+     * {@see SpreadsheetPatternSpreadsheetFormatterDateTime}
      */
     public static SpreadsheetFormatter dateTime(final SpreadsheetFormatDateTimeParserToken token,
                                                 final Predicate<Object> typeTester) {
-        return DateTimeSpreadsheetFormatter.with(token, typeTester);
+        return SpreadsheetPatternSpreadsheetFormatterDateTime.with(token, typeTester);
     }
 
     /**
