@@ -88,10 +88,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see EmptyTextSpreadsheetFormatter}
+     * {@see EmptySpreadsheetFormatter}
      */
     public static SpreadsheetFormatter emptyText() {
-        return EmptyTextSpreadsheetFormatter.INSTANCE;
+        return EmptySpreadsheetFormatter.INSTANCE;
     }
 
     /**

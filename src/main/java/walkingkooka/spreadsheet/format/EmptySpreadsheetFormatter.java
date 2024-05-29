@@ -20,16 +20,16 @@ package walkingkooka.spreadsheet.format;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that unconditionally always returns {@link SpreadsheetText#EMPTY}.
+ * A {@link SpreadsheetFormatter} that unconditionally always returns {@link Optional#empty()}.
  */
-final class EmptyTextSpreadsheetFormatter extends SpreadsheetFormatter2 {
+final class EmptySpreadsheetFormatter extends SpreadsheetFormatter2 {
 
     /**
      * Singleton
      */
-    final static EmptyTextSpreadsheetFormatter INSTANCE = new EmptyTextSpreadsheetFormatter();
+    final static EmptySpreadsheetFormatter INSTANCE = new EmptySpreadsheetFormatter();
 
-    private EmptyTextSpreadsheetFormatter() {
+    private EmptySpreadsheetFormatter() {
         super();
     }
 
@@ -42,10 +42,8 @@ final class EmptyTextSpreadsheetFormatter extends SpreadsheetFormatter2 {
     @Override
     Optional<SpreadsheetText> format0(final Object value,
                                       final SpreadsheetFormatterContext context) {
-        return RESULT;
+        return Optional.empty();
     }
-
-    private final static Optional<SpreadsheetText> RESULT = Optional.of(SpreadsheetText.EMPTY);
 
     @Override
     public String toString() {
