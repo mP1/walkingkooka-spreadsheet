@@ -19,29 +19,29 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 
-public final class FractionSpreadsheetFormatterZeroTest extends FractionSpreadsheetFormatterTestCase<FractionSpreadsheetFormatterZero> {
+public final class SpreadsheetPatternSpreadsheetFormatterFractionZeroTest extends SpreadsheetPatternSpreadsheetFormatterFractionTestCase<SpreadsheetPatternSpreadsheetFormatterFractionZero> {
 
     @Test
     public void testHashPattern() {
-        checkPattern(FractionSpreadsheetFormatterZero.HASH, "#");
+        checkPattern(SpreadsheetPatternSpreadsheetFormatterFractionZero.HASH, "#");
     }
 
     @Test
     public void testQuestionPattern() {
-        checkPattern(FractionSpreadsheetFormatterZero.QUESTION_MARK, "?");
+        checkPattern(SpreadsheetPatternSpreadsheetFormatterFractionZero.QUESTION_MARK, "?");
     }
 
     @Test
     public void testZeroPattern() {
-        checkPattern(FractionSpreadsheetFormatterZero.ZERO, "0");
+        checkPattern(SpreadsheetPatternSpreadsheetFormatterFractionZero.ZERO, "0");
     }
 
-    private void checkPattern(final FractionSpreadsheetFormatterZero zero, final String pattern) {
+    private void checkPattern(final SpreadsheetPatternSpreadsheetFormatterFractionZero zero, final String pattern) {
         this.checkEquals(pattern, zero.pattern(), zero.toString());
     }
 
     @Override
-    public Class<FractionSpreadsheetFormatterZero> type() {
-        return FractionSpreadsheetFormatterZero.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterFractionZero> type() {
+        return SpreadsheetPatternSpreadsheetFormatterFractionZero.class;
     }
 }

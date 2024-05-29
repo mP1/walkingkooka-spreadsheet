@@ -23,7 +23,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentPercenta
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol.INSTANCE, "%");
+        this.toStringAndCheck(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol.INSTANCE, "%");
     }
 
     @Override

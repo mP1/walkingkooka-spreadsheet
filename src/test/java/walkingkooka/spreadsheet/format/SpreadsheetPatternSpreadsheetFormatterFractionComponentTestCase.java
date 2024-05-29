@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.ToStringTesting;
 
-public abstract class FractionSpreadsheetFormatterDigitsTestCase<D extends FractionSpreadsheetFormatterDigits>
-        extends FractionSpreadsheetFormatterTestCase<D>
-        implements ToStringTesting<D> {
+public abstract class SpreadsheetPatternSpreadsheetFormatterFractionComponentTestCase<C extends SpreadsheetPatternSpreadsheetFormatterFractionComponent>
+        extends SpreadsheetPatternSpreadsheetFormatterFractionTestCase<C>
+        implements ToStringTesting<C> {
 
-    FractionSpreadsheetFormatterDigitsTestCase() {
+    SpreadsheetPatternSpreadsheetFormatterFractionComponentTestCase() {
         super();
     }
 }

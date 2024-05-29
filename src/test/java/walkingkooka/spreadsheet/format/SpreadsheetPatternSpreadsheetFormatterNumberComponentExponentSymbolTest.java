@@ -23,7 +23,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentExponent
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetPatternSpreadsheetFormatterNumberComponentExponentSymbol.INSTANCE, "E");
+        this.toStringAndCheck(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentExponentSymbol.INSTANCE, "E");
     }
 
     @Override

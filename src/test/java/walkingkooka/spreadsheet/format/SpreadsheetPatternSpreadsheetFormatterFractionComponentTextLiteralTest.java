@@ -17,17 +17,18 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import org.junit.jupiter.api.Test;
 
-public abstract class FractionSpreadsheetFormatterTestCase<T> implements ClassTesting2<T> {
+public final class SpreadsheetPatternSpreadsheetFormatterFractionComponentTextLiteralTest extends SpreadsheetPatternSpreadsheetFormatterFractionComponentTestCase<SpreadsheetPatternSpreadsheetFormatterFractionComponentTextLiteral> {
 
-    FractionSpreadsheetFormatterTestCase() {
-        super();
+    @Test
+    public void testToString() {
+        final String text = "abc123";
+        this.toStringAndCheck(SpreadsheetPatternSpreadsheetFormatterFractionComponentTextLiteral.with(text), text);
     }
 
     @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    public Class<SpreadsheetPatternSpreadsheetFormatterFractionComponentTextLiteral> type() {
+        return SpreadsheetPatternSpreadsheetFormatterFractionComponentTextLiteral.class;
     }
 }

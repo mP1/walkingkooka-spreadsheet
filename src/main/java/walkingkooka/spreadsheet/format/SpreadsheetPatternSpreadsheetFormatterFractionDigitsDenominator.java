@@ -22,25 +22,24 @@ import walkingkooka.ToStringBuilder;
 /**
  * Handles formatting of both the numerator.
  */
-final class FractionSpreadsheetFormatterDigitsNumerator extends FractionSpreadsheetFormatterDigits {
+final class SpreadsheetPatternSpreadsheetFormatterFractionDigitsDenominator extends SpreadsheetPatternSpreadsheetFormatterFractionDigits {
 
     /**
-     * {@see FractionSpreadsheetFormatterDigits}
+     * {@see SpreadsheetPatternSpreadsheetFormatterFractionDigits}
      */
-    static FractionSpreadsheetFormatterDigitsNumerator with(final String text) {
-        return new FractionSpreadsheetFormatterDigitsNumerator(text);
+    static SpreadsheetPatternSpreadsheetFormatterFractionDigitsDenominator with(final String text) {
+        return new SpreadsheetPatternSpreadsheetFormatterFractionDigitsDenominator(text);
     }
 
     /**
      * Private to use factory.
      */
-    private FractionSpreadsheetFormatterDigitsNumerator(final String text) {
+    private SpreadsheetPatternSpreadsheetFormatterFractionDigitsDenominator(final String text) {
         super(text);
     }
 
     @Override
-    void sign(final FractionSpreadsheetFormatterContext context) {
-        context.appendMinusSign();
+    void sign(final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
     }
 
     @Override

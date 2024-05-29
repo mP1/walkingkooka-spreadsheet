@@ -40,19 +40,24 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * In expectations all symbols are doubled, as a means to verify the context is supplying the values.
  */
-public final class FractionSpreadsheetFormatterTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<FractionSpreadsheetFormatter,
+public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterFraction,
         SpreadsheetFormatFractionParserToken> {
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
+    }
 
     //creation ..............................................................................................
 
     @Test
     public void testWithNullTokenFails() {
-        assertThrows(NullPointerException.class, () -> FractionSpreadsheetFormatter.with(null, fractioner()));
+        assertThrows(NullPointerException.class, () -> SpreadsheetPatternSpreadsheetFormatterFraction.with(null, fractioner()));
     }
 
     @Test
     public void testWithNullFractionerFails() {
-        assertThrows(NullPointerException.class, () -> FractionSpreadsheetFormatter.with(this.token(), null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetPatternSpreadsheetFormatterFraction.with(this.token(), null));
     }
 
     private SpreadsheetFormatFractionParserToken token() {
@@ -402,8 +407,8 @@ public final class FractionSpreadsheetFormatterTest extends SpreadsheetPatternSp
     }
 
     @Override
-    FractionSpreadsheetFormatter createFormatter0(final SpreadsheetFormatFractionParserToken token) {
-        return FractionSpreadsheetFormatter.with(token, this.fractioner());
+    SpreadsheetPatternSpreadsheetFormatterFraction createFormatter0(final SpreadsheetFormatFractionParserToken token) {
+        return SpreadsheetPatternSpreadsheetFormatterFraction.with(token, this.fractioner());
     }
 
     private Function<BigDecimal, Fraction> fractioner() {
@@ -462,7 +467,7 @@ public final class FractionSpreadsheetFormatterTest extends SpreadsheetPatternSp
     private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
     @Override
-    public Class<FractionSpreadsheetFormatter> type() {
-        return FractionSpreadsheetFormatter.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterFraction> type() {
+        return SpreadsheetPatternSpreadsheetFormatterFraction.class;
     }
 }

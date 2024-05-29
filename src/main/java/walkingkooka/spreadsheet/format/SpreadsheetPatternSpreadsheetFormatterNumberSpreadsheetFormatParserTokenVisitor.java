@@ -87,12 +87,12 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
 
     @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
-        this.add(SpreadsheetPatternSpreadsheetFormatterNumberComponent.currencySymbol());
+        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.currencySymbol());
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
-        this.add(SpreadsheetPatternSpreadsheetFormatterNumberComponent.decimalSeparator());
+        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.decimalSeparator());
         this.digitMode.decimalPoint(this);
     }
 
@@ -113,11 +113,11 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
 
     @Override
     protected void visit(final SpreadsheetFormatEscapeParserToken token) {
-        this.add(SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(token.value().toString()));
+        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(token.value().toString()));
     }
 
     void exponent(final SpreadsheetFormatExponentParserToken token) {
-        this.add(SpreadsheetPatternSpreadsheetFormatterNumberComponent.exponentSymbol());
+        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.exponentSymbol());
         this.digitMode = SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitorDigitMode.EXPONENT;
         this.normalOrScientific = SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific.SCENTIFIC;
     }
@@ -133,7 +133,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
             this.percentage = true;
             this.decimalPlacesShift = this.decimalPlacesShift + 2; // x100
         }
-        this.add(SpreadsheetPatternSpreadsheetFormatterNumberComponent.percentageSymbol());
+        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.percentageSymbol());
     }
 
     /**
@@ -143,18 +143,18 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
 
     @Override
     protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
-        this.add(SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(token.value()));
+        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(token.value()));
     }
 
     @Override
     protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
-        this.add(SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(token.value()));
+        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(token.value()));
     }
 
     @Override
     protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
         this.add(
-                SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(
+                walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(
                         CharSequences.repeating(
                                 ' ',
                                 token.value().length()
@@ -230,7 +230,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
      * Adds another component
      */
     private void addDigit(final SpreadsheetPatternSpreadsheetFormatterNumberZero zero) {
-        this.add(SpreadsheetPatternSpreadsheetFormatterNumberComponent.digit(this.digitMode.digitCounterAndIncrement(this), zero));
+        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.digit(this.digitMode.digitCounterAndIncrement(this), zero));
     }
 
     /**

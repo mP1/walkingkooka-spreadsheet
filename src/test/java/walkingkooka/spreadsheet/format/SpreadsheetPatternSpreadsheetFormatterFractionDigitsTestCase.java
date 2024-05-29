@@ -17,17 +17,13 @@
 
 package walkingkooka.spreadsheet.format;
 
-import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 
-public final class FractionSpreadsheetFormatterDigitsNumeratorTest extends FractionSpreadsheetFormatterDigitsTestCase<FractionSpreadsheetFormatterDigitsNumerator> {
+public abstract class SpreadsheetPatternSpreadsheetFormatterFractionDigitsTestCase<D extends SpreadsheetPatternSpreadsheetFormatterFractionDigits>
+        extends SpreadsheetPatternSpreadsheetFormatterFractionTestCase<D>
+        implements ToStringTesting<D> {
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(FractionSpreadsheetFormatterDigitsNumerator.with("1"), "\"1\"");
-    }
-
-    @Override
-    public Class<FractionSpreadsheetFormatterDigitsNumerator> type() {
-        return FractionSpreadsheetFormatterDigitsNumerator.class;
+    SpreadsheetPatternSpreadsheetFormatterFractionDigitsTestCase() {
+        super();
     }
 }

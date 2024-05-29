@@ -20,21 +20,21 @@ package walkingkooka.spreadsheet.format;
 /**
  * Represents a placeholder for a digit.
  */
-final class FractionSpreadsheetFormatterComponentDigit extends FractionSpreadsheetFormatterComponent {
+final class SpreadsheetPatternSpreadsheetFormatterFractionComponentDigit extends SpreadsheetPatternSpreadsheetFormatterFractionComponent {
 
     /**
-     * Factory that creates a {@link FractionSpreadsheetFormatterComponentDigit}.
+     * Factory that creates a {@link SpreadsheetPatternSpreadsheetFormatterFractionComponentDigit}.
      */
-    static FractionSpreadsheetFormatterComponentDigit with(final int position,
-                                                           final FractionSpreadsheetFormatterZero zero) {
-        return new FractionSpreadsheetFormatterComponentDigit(position, zero);
+    static SpreadsheetPatternSpreadsheetFormatterFractionComponentDigit with(final int position,
+                                                                             final SpreadsheetPatternSpreadsheetFormatterFractionZero zero) {
+        return new SpreadsheetPatternSpreadsheetFormatterFractionComponentDigit(position, zero);
     }
 
     /**
      * Private ctor use factory
      */
-    private FractionSpreadsheetFormatterComponentDigit(final int position,
-                                                       final FractionSpreadsheetFormatterZero zero) {
+    private SpreadsheetPatternSpreadsheetFormatterFractionComponentDigit(final int position,
+                                                                         final SpreadsheetPatternSpreadsheetFormatterFractionZero zero) {
         super();
 
         this.position = position;
@@ -42,13 +42,13 @@ final class FractionSpreadsheetFormatterComponentDigit extends FractionSpreadshe
     }
 
     @Override
-    void append(final FractionSpreadsheetFormatterContext context) {
+    void append(final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
         context.appendDigit(this.position, this.zero);
     }
 
     private final int position;
 
-    private final FractionSpreadsheetFormatterZero zero;
+    private final SpreadsheetPatternSpreadsheetFormatterFractionZero zero;
 
     @Override
     public String toString() {

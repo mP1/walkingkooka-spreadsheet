@@ -20,27 +20,28 @@ package walkingkooka.spreadsheet.format;
 /**
  * Inserts the percentage symbol.
  */
-final class FractionSpreadsheetFormatterComponentPercentageSymbol extends FractionSpreadsheetFormatterComponent {
+final class SpreadsheetPatternSpreadsheetFormatterFractionComponentSlashSymbol extends SpreadsheetPatternSpreadsheetFormatterFractionComponent {
 
     /**
      * Singleton
      */
-    static final FractionSpreadsheetFormatterComponentPercentageSymbol INSTANCE = new FractionSpreadsheetFormatterComponentPercentageSymbol();
+    static final SpreadsheetPatternSpreadsheetFormatterFractionComponentSlashSymbol INSTANCE = new SpreadsheetPatternSpreadsheetFormatterFractionComponentSlashSymbol();
 
     /**
      * Private ctor use singleton
      */
-    private FractionSpreadsheetFormatterComponentPercentageSymbol() {
+    private SpreadsheetPatternSpreadsheetFormatterFractionComponentSlashSymbol() {
         super();
     }
 
     @Override
-    void append(final FractionSpreadsheetFormatterContext context) {
-        context.appendPercentage();
+    void append(final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
+        context.appendSlash();
     }
 
     @Override
     public String toString() {
-        return "%";
+        return "/";
     }
 }
+

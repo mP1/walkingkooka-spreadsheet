@@ -22,29 +22,29 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 
 /**
- * The context that accompanies each {@link FractionSpreadsheetFormatterComponent}.
+ * The context that accompanies each {@link SpreadsheetPatternSpreadsheetFormatterFractionComponent}.
  */
-final class FractionSpreadsheetFormatterContext implements Context {
+final class SpreadsheetPatternSpreadsheetFormatterFractionContext implements Context {
 
     /**
      * Factory that creates a new context.
      */
-    static FractionSpreadsheetFormatterContext with(final FractionSpreadsheetFormatterNegativeSign numeratorSign,
-                                                    final FractionSpreadsheetFormatterDigitsNumerator numerator,
-                                                    final FractionSpreadsheetFormatterDigitsDenominator demonimator,
-                                                    final FractionSpreadsheetFormatter formatter,
-                                                    final SpreadsheetFormatterContext context) {
-        return new FractionSpreadsheetFormatterContext(numeratorSign, numerator, demonimator, formatter, context);
+    static SpreadsheetPatternSpreadsheetFormatterFractionContext with(final SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign numeratorSign,
+                                                                      final SpreadsheetPatternSpreadsheetFormatterFractionDigitsNumerator numerator,
+                                                                      final SpreadsheetPatternSpreadsheetFormatterFractionDigitsDenominator demonimator,
+                                                                      final SpreadsheetPatternSpreadsheetFormatterFraction formatter,
+                                                                      final SpreadsheetFormatterContext context) {
+        return new SpreadsheetPatternSpreadsheetFormatterFractionContext(numeratorSign, numerator, demonimator, formatter, context);
     }
 
     /**
      * Private ctor use factory.
      */
-    private FractionSpreadsheetFormatterContext(final FractionSpreadsheetFormatterNegativeSign numeratorSign,
-                                                final FractionSpreadsheetFormatterDigitsNumerator numerator,
-                                                final FractionSpreadsheetFormatterDigitsDenominator demonimator,
-                                                final FractionSpreadsheetFormatter formatter,
-                                                final SpreadsheetFormatterContext context) {
+    private SpreadsheetPatternSpreadsheetFormatterFractionContext(final SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign numeratorSign,
+                                                                  final SpreadsheetPatternSpreadsheetFormatterFractionDigitsNumerator numerator,
+                                                                  final SpreadsheetPatternSpreadsheetFormatterFractionDigitsDenominator demonimator,
+                                                                  final SpreadsheetPatternSpreadsheetFormatterFraction formatter,
+                                                                  final SpreadsheetFormatterContext context) {
         super();
 
         this.sign = numeratorSign;
@@ -62,7 +62,7 @@ final class FractionSpreadsheetFormatterContext implements Context {
         this.text.append(this.context.currencySymbol());
     }
 
-    void appendDigit(final int symbolDigitPosition, final FractionSpreadsheetFormatterZero zero) {
+    void appendDigit(final int symbolDigitPosition, final SpreadsheetPatternSpreadsheetFormatterFractionZero zero) {
         this.digits.append(symbolDigitPosition, zero, this);
     }
 
@@ -72,14 +72,14 @@ final class FractionSpreadsheetFormatterContext implements Context {
     }
 
     void appendMinusSign() {
-        final FractionSpreadsheetFormatterNegativeSign sign = this.sign;
+        final SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign sign = this.sign;
         if (sign.shouldAppendSymbol()) {
             this.text.append(this.context.negativeSign());
-            this.sign = FractionSpreadsheetFormatterNegativeSign.NOT_REQUIRED;
+            this.sign = SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign.NOT_REQUIRED;
         }
     }
 
-    private FractionSpreadsheetFormatterNegativeSign sign;
+    private SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign sign;
 
     void appendPercentage() {
         this.text.append(this.context.percentageSymbol());
@@ -98,13 +98,13 @@ final class FractionSpreadsheetFormatterContext implements Context {
 
     private final SpreadsheetFormatterContext context;
 
-    FractionSpreadsheetFormatterDigits digits;
+    SpreadsheetPatternSpreadsheetFormatterFractionDigits digits;
     int digitSymbolCount;
 
-    private final FractionSpreadsheetFormatterDigits numerator;
-    private final FractionSpreadsheetFormatterDigits demonimator;
+    private final SpreadsheetPatternSpreadsheetFormatterFractionDigits numerator;
+    private final SpreadsheetPatternSpreadsheetFormatterFractionDigits demonimator;
 
-    private final FractionSpreadsheetFormatter formatter;
+    private final SpreadsheetPatternSpreadsheetFormatterFraction formatter;
 
     /**
      * Getter that returns the formatted text.

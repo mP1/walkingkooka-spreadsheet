@@ -17,10 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class FractionSpreadsheetFormatterContextTest extends FractionSpreadsheetFormatterTestCase<FractionSpreadsheetFormatterContext> {
-
+public final class SpreadsheetPatternSpreadsheetFormatterFractionDigitsTest extends SpreadsheetPatternSpreadsheetFormatterFractionTestCase<SpreadsheetPatternSpreadsheetFormatterFractionDigits> {
     @Override
-    public Class<FractionSpreadsheetFormatterContext> type() {
-        return FractionSpreadsheetFormatterContext.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterFractionDigits> type() {
+        return SpreadsheetPatternSpreadsheetFormatterFractionDigits.class;
     }
 }
