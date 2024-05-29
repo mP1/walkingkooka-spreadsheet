@@ -90,7 +90,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see EmptySpreadsheetFormatter}
      */
-    public static SpreadsheetFormatter emptyText() {
+    public static SpreadsheetFormatter empty() {
         return EmptySpreadsheetFormatter.INSTANCE;
     }
 
