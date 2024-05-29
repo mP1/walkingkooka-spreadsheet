@@ -35,11 +35,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterColor,
         SpreadsheetFormatColorParserToken> {
 
-    @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
-    }
-
     private final static String TEXT_PATTERN = "@@";
 
     @Test

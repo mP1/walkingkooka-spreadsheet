@@ -44,11 +44,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
         SpreadsheetPatternSpreadsheetFormatterDateTime,
         SpreadsheetFormatDateTimeParserToken> {
 
-    @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
-    }
-
     private final static Color RED = Color.parse("#FF0000");
 
     // with.............................................................................................................

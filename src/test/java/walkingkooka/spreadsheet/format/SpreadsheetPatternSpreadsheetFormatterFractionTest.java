@@ -43,11 +43,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterFraction,
         SpreadsheetFormatFractionParserToken> {
 
-    @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
-    }
-
     //creation ..............................................................................................
 
     @Test

@@ -19,8 +19,12 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.TypeNameTesting;
 
-public abstract class SpreadsheetPatternSpreadsheetFormatterFractionTestCase<T> implements ClassTesting2<T> {
+public abstract class SpreadsheetPatternSpreadsheetFormatterFractionTestCase<T> implements ClassTesting2<T>,
+        TypeNameTesting<T> {
+
+    // ClassTesting.....................................................................................................
 
     SpreadsheetPatternSpreadsheetFormatterFractionTestCase() {
         super();
@@ -29,5 +33,17 @@ public abstract class SpreadsheetPatternSpreadsheetFormatterFractionTestCase<T> 
     @Override
     public final JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
+    }
+
+    // TypeNameTesting..................................................................................................
+
+    @Override
+    public String typeNamePrefix() {
+        return SpreadsheetPatternSpreadsheetFormatterFraction.class.getSimpleName();
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return "";
     }
 }
