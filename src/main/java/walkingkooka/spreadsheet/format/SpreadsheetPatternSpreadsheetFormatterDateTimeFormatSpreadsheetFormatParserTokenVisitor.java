@@ -42,7 +42,7 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatParserTokenVisitor} that is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)} to
  * assemble a {@link SpreadsheetFormatter} that handles date times.
  */
-final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
 
     /**
      * Visits all the individual tokens in the given token which was compiled parse the given pattern.

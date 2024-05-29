@@ -17,18 +17,22 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.TypeNameTesting;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
-public final class SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest implements ClassTesting2<SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {
+public abstract class SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
+        implements SpreadsheetFormatParserTokenVisitorTesting<V>,
+        ClassTesting<V>,
+        TypeNameTesting<V> {
 
-    @Override
-    public Class<SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.class;
+    SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase() {
+        super();
     }
 
     @Override
-    public JavaVisibility typeVisibility() {
+    public final JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

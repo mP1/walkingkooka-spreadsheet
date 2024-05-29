@@ -44,7 +44,7 @@ import java.util.List;
  * Most of this is achieved by counting parser tokens for integerDigitSymbolCount, fractionDigitSymbolCount, thousands,
  * and percentage symbols.
  */
-final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
 
     /**
      * Analyzes the given {@link SpreadsheetFormatParserToken}.

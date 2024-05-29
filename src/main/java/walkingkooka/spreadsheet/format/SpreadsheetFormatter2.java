@@ -33,7 +33,7 @@ abstract class SpreadsheetFormatter2 implements SpreadsheetFormatter {
     }
 
     /**
-     * Accepts a value and uses the {@link SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor} to produce the formatted text.
+     * Accepts a value and uses the {@link SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor} to produce the formatted text.
      */
     @Override
     public final Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
