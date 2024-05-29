@@ -26,27 +26,27 @@ import java.util.function.Predicate;
 /**
  * Tries to convert a value to a {@link BigDecimal} and then tests a condition and if it is true, executes the given {@link SpreadsheetFormatter}.
  */
-final class ConditionSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatConditionParserToken> {
+final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatConditionParserToken> {
 
     /**
-     * Creates a {@link ConditionSpreadsheetFormatter}
+     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterCondition}
      */
-    static ConditionSpreadsheetFormatter with(final SpreadsheetFormatConditionParserToken token,
-                                              final SpreadsheetFormatter formatter) {
+    static SpreadsheetPatternSpreadsheetFormatterCondition with(final SpreadsheetFormatConditionParserToken token,
+                                                                final SpreadsheetFormatter formatter) {
         checkParserToken(token);
         checkFormatter(formatter);
 
-        return new ConditionSpreadsheetFormatter(token, formatter);
+        return new SpreadsheetPatternSpreadsheetFormatterCondition(token, formatter);
     }
 
     /**
      * Private use factory
      */
-    private ConditionSpreadsheetFormatter(final SpreadsheetFormatConditionParserToken token,
-                                          final SpreadsheetFormatter formatter) {
+    private SpreadsheetPatternSpreadsheetFormatterCondition(final SpreadsheetFormatConditionParserToken token,
+                                                            final SpreadsheetFormatter formatter) {
         super(token);
 
-        this.predicate = ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.predicateOrFail(token);
+        this.predicate = SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor.predicateOrFail(token);
         this.formatter = formatter;
     }
 

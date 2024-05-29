@@ -35,16 +35,16 @@ import java.util.function.Predicate;
 /**
  * Finds the condition and number parameter in the {@link SpreadsheetFormatConditionParserToken}.
  */
-final class ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     static Predicate<BigDecimal> predicateOrFail(final SpreadsheetFormatConditionParserToken token) {
-        final ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor();
         token.accept(visitor);
         return visitor.relation.predicate(visitor.number);
     }
 
     // @VisibleForTesting.
-    ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 

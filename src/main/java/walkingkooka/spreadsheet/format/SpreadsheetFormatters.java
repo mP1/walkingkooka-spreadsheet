@@ -58,11 +58,11 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@link ConditionSpreadsheetFormatter}
+     * {@link SpreadsheetPatternSpreadsheetFormatterCondition}
      */
     public static SpreadsheetFormatter conditional(final SpreadsheetFormatConditionParserToken token,
                                                    final SpreadsheetFormatter formatter) {
-        return ConditionSpreadsheetFormatter.with(token, formatter);
+        return SpreadsheetPatternSpreadsheetFormatterCondition.with(token, formatter);
     }
 
     /**
