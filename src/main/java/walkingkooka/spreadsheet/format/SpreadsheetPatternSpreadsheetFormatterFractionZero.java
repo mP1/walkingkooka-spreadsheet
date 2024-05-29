@@ -20,14 +20,14 @@ package walkingkooka.spreadsheet.format;
 /**
  * The different types of zero formatting.
  */
-enum FractionSpreadsheetFormatterZero {
+enum SpreadsheetPatternSpreadsheetFormatterFractionZero {
 
     /**
      * format digit=#, leading zeros are omitted
      */
     HASH {
         @Override
-        void append(final int textDigitPosition, final FractionSpreadsheetFormatterContext context) {
+        void append(final int textDigitPosition, final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
             // nop
         }
 
@@ -41,7 +41,7 @@ enum FractionSpreadsheetFormatterZero {
      */
     QUESTION_MARK {
         @Override
-        void append(final int textDigitPosition, final FractionSpreadsheetFormatterContext context) {
+        void append(final int textDigitPosition, final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
             context.appendDigit(' ');
         }
 
@@ -55,7 +55,7 @@ enum FractionSpreadsheetFormatterZero {
      */
     ZERO {
         @Override
-        void append(final int textDigitPosition, final FractionSpreadsheetFormatterContext context) {
+        void append(final int textDigitPosition, final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
             context.appendDigit('0');
         }
 
@@ -65,7 +65,7 @@ enum FractionSpreadsheetFormatterZero {
         }
     };
 
-    abstract void append(final int textDigitPosition, final FractionSpreadsheetFormatterContext context);
+    abstract void append(final int textDigitPosition, final SpreadsheetPatternSpreadsheetFormatterFractionContext context);
 
     /**
      * Returns the pattern representation. This is used in building {@link #toString()} responses.

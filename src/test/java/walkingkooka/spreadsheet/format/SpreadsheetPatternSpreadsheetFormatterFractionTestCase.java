@@ -17,9 +17,17 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class FractionSpreadsheetFormatterNegativeSignTest extends FractionSpreadsheetFormatterTestCase<FractionSpreadsheetFormatterNegativeSign> {
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
+
+public abstract class SpreadsheetPatternSpreadsheetFormatterFractionTestCase<T> implements ClassTesting2<T> {
+
+    SpreadsheetPatternSpreadsheetFormatterFractionTestCase() {
+        super();
+    }
+
     @Override
-    public Class<FractionSpreadsheetFormatterNegativeSign> type() {
-        return FractionSpreadsheetFormatterNegativeSign.class;
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

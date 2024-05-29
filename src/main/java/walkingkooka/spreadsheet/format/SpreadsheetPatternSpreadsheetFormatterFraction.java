@@ -34,30 +34,30 @@ import java.util.function.Function;
  * A {@link SpreadsheetFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link Color} using a pattern
  * parsed into a {@link SpreadsheetFormatFractionParserToken}.
  */
-final class FractionSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatFractionParserToken> {
+final class SpreadsheetPatternSpreadsheetFormatterFraction extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatFractionParserToken> {
 
     /**
-     * Creates a {@link FractionSpreadsheetFormatter} parse a {@link SpreadsheetFormatNumberParserToken}.
+     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterFraction} parse a {@link SpreadsheetFormatNumberParserToken}.
      */
-    static FractionSpreadsheetFormatter with(final SpreadsheetFormatFractionParserToken token,
-                                             final Function<BigDecimal, Fraction> fractioner) {
+    static SpreadsheetPatternSpreadsheetFormatterFraction with(final SpreadsheetFormatFractionParserToken token,
+                                                               final Function<BigDecimal, Fraction> fractioner) {
         checkParserToken(token);
         Objects.requireNonNull(fractioner, "fractioner");
 
-        return new FractionSpreadsheetFormatter(token, fractioner);
+        return new SpreadsheetPatternSpreadsheetFormatterFraction(token, fractioner);
     }
 
     /**
      * Private ctor use static parse.
      */
-    private FractionSpreadsheetFormatter(final SpreadsheetFormatFractionParserToken token,
-                                         final Function<BigDecimal, Fraction> fractioner) {
+    private SpreadsheetPatternSpreadsheetFormatterFraction(final SpreadsheetFormatFractionParserToken token,
+                                                           final Function<BigDecimal, Fraction> fractioner) {
         super(token);
 
         this.fractioner = fractioner;
 
-        final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor =
-                FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.analyze(token);
+        final SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor visitor =
+                SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor.analyze(token);
 
         this.components = visitor.components;
 
@@ -103,9 +103,9 @@ final class FractionSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFo
             denominator = denominator.add(FIVE).divide(BigInteger.TEN);
         }
 
-        return this.format2(FractionSpreadsheetFormatterContext.with(FractionSpreadsheetFormatterNegativeSign.fromSignum(sign),
-                FractionSpreadsheetFormatterDigits.numerator(numerator.toString()),
-                FractionSpreadsheetFormatterDigits.denominator(denominator.toString()),
+        return this.format2(SpreadsheetPatternSpreadsheetFormatterFractionContext.with(SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign.fromSignum(sign),
+                SpreadsheetPatternSpreadsheetFormatterFractionDigits.numerator(numerator.toString()),
+                SpreadsheetPatternSpreadsheetFormatterFractionDigits.denominator(denominator.toString()),
                 this,
                 context));
     }
@@ -132,7 +132,7 @@ final class FractionSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFo
     /**
      * Applies the pattern and value into text.
      */
-    private String format2(final FractionSpreadsheetFormatterContext context) {
+    private String format2(final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
         this.components.forEach(c -> c.append(context));
         return context.formattedText();
     }
@@ -140,7 +140,7 @@ final class FractionSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFo
     /**
      * Components for each symbol in the original pattern.
      */
-    private final List<FractionSpreadsheetFormatterComponent> components;
+    private final List<SpreadsheetPatternSpreadsheetFormatterFractionComponent> components;
 
     final int numeratorDigitSymbolCount;
     final int denominatorDigitSymbolCount;

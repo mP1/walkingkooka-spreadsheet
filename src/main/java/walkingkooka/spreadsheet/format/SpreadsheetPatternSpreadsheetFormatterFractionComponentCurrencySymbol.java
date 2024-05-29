@@ -17,31 +17,31 @@
 
 package walkingkooka.spreadsheet.format;
 
+
 /**
- * Inserts the percentage symbol.
+ * Unconditionally inserts the currency symbol parse the {@link SpreadsheetFormatterContext}.
  */
-final class FractionSpreadsheetFormatterComponentSlashSymbol extends FractionSpreadsheetFormatterComponent {
+final class SpreadsheetPatternSpreadsheetFormatterFractionComponentCurrencySymbol extends SpreadsheetPatternSpreadsheetFormatterFractionComponent {
 
     /**
      * Singleton
      */
-    static final FractionSpreadsheetFormatterComponentSlashSymbol INSTANCE = new FractionSpreadsheetFormatterComponentSlashSymbol();
+    final static SpreadsheetPatternSpreadsheetFormatterFractionComponentCurrencySymbol INSTANCE = new SpreadsheetPatternSpreadsheetFormatterFractionComponentCurrencySymbol();
 
     /**
      * Private ctor use singleton
      */
-    private FractionSpreadsheetFormatterComponentSlashSymbol() {
+    private SpreadsheetPatternSpreadsheetFormatterFractionComponentCurrencySymbol() {
         super();
     }
 
     @Override
-    void append(final FractionSpreadsheetFormatterContext context) {
-        context.appendSlash();
+    void append(final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
+        context.appendCurrencySymbol();
     }
 
     @Override
     public String toString() {
-        return "/";
+        return "$";
     }
 }
-

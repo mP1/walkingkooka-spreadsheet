@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 /**
  * Handles inserting the negative sign when required.
  */
-enum FractionSpreadsheetFormatterNegativeSign {
+enum SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign {
     /**
      * unconditionally adds a minus sign.
      */
@@ -55,7 +55,7 @@ enum FractionSpreadsheetFormatterNegativeSign {
 
     abstract String symbol();
 
-    static FractionSpreadsheetFormatterNegativeSign fromSignum(final int value) {
+    static SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign fromSignum(final int value) {
         return value < 0 ?
                 REQUIRED :
                 NOT_REQUIRED;

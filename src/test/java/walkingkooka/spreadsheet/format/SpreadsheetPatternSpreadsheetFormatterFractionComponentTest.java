@@ -17,17 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
-import org.junit.jupiter.api.Test;
-
-public final class FractionSpreadsheetFormatterComponentSlashSymbolTest extends FractionSpreadsheetFormatterComponentTestCase<FractionSpreadsheetFormatterComponentSlashSymbol> {
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(FractionSpreadsheetFormatterComponentSlashSymbol.INSTANCE, "/");
-    }
-
+public final class SpreadsheetPatternSpreadsheetFormatterFractionComponentTest extends SpreadsheetPatternSpreadsheetFormatterFractionTestCase<SpreadsheetPatternSpreadsheetFormatterFractionComponent> {
     @Override
-    public Class<FractionSpreadsheetFormatterComponentSlashSymbol> type() {
-        return FractionSpreadsheetFormatterComponentSlashSymbol.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterFractionComponent> type() {
+        return SpreadsheetPatternSpreadsheetFormatterFractionComponent.class;
     }
 }

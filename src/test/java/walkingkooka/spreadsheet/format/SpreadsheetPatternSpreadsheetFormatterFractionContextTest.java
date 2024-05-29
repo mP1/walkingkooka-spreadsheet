@@ -17,18 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-import org.junit.jupiter.api.Test;
-
-public final class FractionSpreadsheetFormatterComponentTextLiteralTest extends FractionSpreadsheetFormatterComponentTestCase<FractionSpreadsheetFormatterComponentTextLiteral> {
-
-    @Test
-    public void testToString() {
-        final String text = "abc123";
-        this.toStringAndCheck(FractionSpreadsheetFormatterComponentTextLiteral.with(text), text);
-    }
+public final class SpreadsheetPatternSpreadsheetFormatterFractionContextTest extends SpreadsheetPatternSpreadsheetFormatterFractionTestCase<SpreadsheetPatternSpreadsheetFormatterFractionContext> {
 
     @Override
-    public Class<FractionSpreadsheetFormatterComponentTextLiteral> type() {
-        return FractionSpreadsheetFormatterComponentTextLiteral.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterFractionContext> type() {
+        return SpreadsheetPatternSpreadsheetFormatterFractionContext.class;
     }
 }

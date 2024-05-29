@@ -20,25 +20,25 @@ package walkingkooka.spreadsheet.format;
 /**
  * Appends a text literal into the formatted text.
  */
-final class FractionSpreadsheetFormatterComponentTextLiteral extends FractionSpreadsheetFormatterComponent {
+final class SpreadsheetPatternSpreadsheetFormatterFractionComponentTextLiteral extends SpreadsheetPatternSpreadsheetFormatterFractionComponent {
 
     /**
      * Creates a new text literal.
      */
-    static FractionSpreadsheetFormatterComponentTextLiteral with(final String text) {
-        return new FractionSpreadsheetFormatterComponentTextLiteral(text);
+    static SpreadsheetPatternSpreadsheetFormatterFractionComponentTextLiteral with(final String text) {
+        return new SpreadsheetPatternSpreadsheetFormatterFractionComponentTextLiteral(text);
     }
 
     /**
      * Private ctor use factory
      */
-    private FractionSpreadsheetFormatterComponentTextLiteral(final String text) {
+    private SpreadsheetPatternSpreadsheetFormatterFractionComponentTextLiteral(final String text) {
         super();
         this.text = text;
     }
 
     @Override
-    void append(final FractionSpreadsheetFormatterContext context) {
+    void append(final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
         context.appendText(this.text);
     }
 

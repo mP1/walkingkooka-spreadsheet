@@ -23,7 +23,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentDecimalS
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetPatternSpreadsheetFormatterNumberComponentDecimalSeparator.INSTANCE, ".");
+        this.toStringAndCheck(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentDecimalSeparator.INSTANCE, ".");
     }
 
     @Override

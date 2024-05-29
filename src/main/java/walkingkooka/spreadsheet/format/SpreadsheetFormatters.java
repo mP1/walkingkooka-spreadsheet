@@ -102,11 +102,11 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see FractionSpreadsheetFormatter}
+     * {@see SpreadsheetPatternSpreadsheetFormatterFraction}
      */
     public static SpreadsheetFormatter fraction(final SpreadsheetFormatFractionParserToken token,
                                                 final Function<BigDecimal, Fraction> fractioner) {
-        return FractionSpreadsheetFormatter.with(token, fractioner);
+        return SpreadsheetPatternSpreadsheetFormatterFraction.with(token, fractioner);
     }
 
     /**

@@ -38,13 +38,13 @@ import java.util.List;
  * A {@link SpreadsheetFormatParserTokenVisitor} that assembles a {@link SpreadsheetFormatter}. Much of the work is done
  * by counting the number of pattern tokens for digits and percentage symbols and other components.
  */
-final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
 
     /**
      * Analyzes the given {@link SpreadsheetFormatParserToken}.
      */
-    static FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor analyze(final SpreadsheetFormatParserToken token) {
-        final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
+    static SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor analyze(final SpreadsheetFormatParserToken token) {
+        final SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
         return visitor;
     }
@@ -53,7 +53,7 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
      * Private ctor use static method.
      */
     // @VisibleForTesting
-    FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
@@ -61,33 +61,33 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
-        this.add(FractionSpreadsheetFormatterComponent.currencySymbol());
+        this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.currencySymbol());
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitParserToken token) {
-        this.addDigit(FractionSpreadsheetFormatterZero.HASH);
+        this.addDigit(SpreadsheetPatternSpreadsheetFormatterFractionZero.HASH);
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
-        this.addDigit(FractionSpreadsheetFormatterZero.QUESTION_MARK);
+        this.addDigit(SpreadsheetPatternSpreadsheetFormatterFractionZero.QUESTION_MARK);
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
-        this.addDigit(FractionSpreadsheetFormatterZero.ZERO);
+        this.addDigit(SpreadsheetPatternSpreadsheetFormatterFractionZero.ZERO);
     }
 
     @Override
     protected void visit(final SpreadsheetFormatEscapeParserToken token) {
-        this.add(FractionSpreadsheetFormatterComponent.textLiteral(token.value().toString()));
+        this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.textLiteral(token.value().toString()));
     }
 
     @Override
     protected void visit(final SpreadsheetFormatFractionSymbolParserToken token) {
         this.mode.slash(this);
-        this.add(FractionSpreadsheetFormatterComponent.slashSymbol());
+        this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.slashSymbol());
     }
 
     @Override
@@ -101,7 +101,7 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
             this.percentage = true;
             this.multiplier = this.multiplier.scaleByPowerOfTen(2);// x100
         }
-        this.add(FractionSpreadsheetFormatterComponent.percentageSymbol());
+        this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.percentageSymbol());
     }
 
     /**
@@ -111,12 +111,12 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
-        this.add(FractionSpreadsheetFormatterComponent.textLiteral(token.value()));
+        this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.textLiteral(token.value()));
     }
 
     @Override
     protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
-        this.add(FractionSpreadsheetFormatterComponent.textLiteral(token.value()));
+        this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.textLiteral(token.value()));
     }
 
     // misc ..................................................................................................
@@ -124,7 +124,7 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
     /**
      * Tracks which number of the fraction is being processed.
      */
-    FractionSpreadsheetFormatterMode mode = FractionSpreadsheetFormatterMode.NUMERATOR;
+    SpreadsheetPatternSpreadsheetFormatterFractionMode mode = SpreadsheetPatternSpreadsheetFormatterFractionMode.NUMERATOR;
 
     /**
      * Counts the number of numerator digit symbols.
@@ -145,21 +145,21 @@ final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor exte
     /**
      * Adds another digit component
      */
-    private void addDigit(final FractionSpreadsheetFormatterZero zero) {
-        this.add(FractionSpreadsheetFormatterComponent.digit(this.mode.digitCounterAndIncrement(this), zero));
+    private void addDigit(final SpreadsheetPatternSpreadsheetFormatterFractionZero zero) {
+        this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.digit(this.mode.digitCounterAndIncrement(this), zero));
     }
 
     /**
      * Adds another component
      */
-    private void add(final FractionSpreadsheetFormatterComponent component) {
+    private void add(final SpreadsheetPatternSpreadsheetFormatterFractionComponent component) {
         this.components.add(component);
     }
 
     /**
      * Components represent each of the components of the original pattern.
      */
-    final List<FractionSpreadsheetFormatterComponent> components = Lists.array();
+    final List<SpreadsheetPatternSpreadsheetFormatterFractionComponent> components = Lists.array();
 
     @Override
     public String toString() {

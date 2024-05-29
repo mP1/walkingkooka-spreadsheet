@@ -23,7 +23,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentCurrency
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetPatternSpreadsheetFormatterNumberComponentCurrencySymbol.INSTANCE, "$");
+        this.toStringAndCheck(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentCurrencySymbol.INSTANCE, "$");
     }
 
     @Override
