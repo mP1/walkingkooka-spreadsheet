@@ -26,12 +26,12 @@ import java.util.Objects;
  */
 abstract class SpreadsheetFormatParserTokenSpreadsheetFormatter<T extends SpreadsheetFormatParserToken> extends SpreadsheetFormatter2 {
 
-    static void checkFormatter(SpreadsheetFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+    static SpreadsheetFormatter checkFormatter(final SpreadsheetFormatter formatter) {
+        return Objects.requireNonNull(formatter, "formatter");
     }
 
-    static void checkParserToken(final SpreadsheetFormatParserToken token) {
-        Objects.requireNonNull(token, "token");
+    static SpreadsheetFormatParserToken checkParserToken(final SpreadsheetFormatParserToken token) {
+        return Objects.requireNonNull(token, "token");
     }
 
     /**
