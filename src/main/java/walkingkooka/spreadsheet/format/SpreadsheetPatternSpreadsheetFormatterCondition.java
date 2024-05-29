@@ -26,7 +26,7 @@ import java.util.function.Predicate;
 /**
  * Tries to convert a value to a {@link BigDecimal} and then tests a condition and if it is true, executes the given {@link SpreadsheetFormatter}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatConditionParserToken> {
+final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterCondition}

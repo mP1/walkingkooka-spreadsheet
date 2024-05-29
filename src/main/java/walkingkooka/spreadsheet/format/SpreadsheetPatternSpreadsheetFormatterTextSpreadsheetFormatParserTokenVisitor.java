@@ -21,11 +21,11 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatStarParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextPlaceholderParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
@@ -42,7 +42,7 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
     /**
      * Visits all the individual tokens in the given token which was compiled parse the given pattern.
      */
-    static SpreadsheetText format(final SpreadsheetFormatTextParserToken token,
+    static SpreadsheetText format(final SpreadsheetFormatParserToken token,
                                   final String value,
                                   final SpreadsheetFormatterContext context) {
         final SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor(value, context);

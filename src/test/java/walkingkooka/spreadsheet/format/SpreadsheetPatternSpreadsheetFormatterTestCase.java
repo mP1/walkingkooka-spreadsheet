@@ -29,7 +29,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends SpreadsheetPatternSpreadsheetFormatter<T>,
+public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends SpreadsheetPatternSpreadsheetFormatter,
         T extends SpreadsheetFormatParserToken>
         extends SpreadsheetFormatterTestCase<F>
         implements TypeNameTesting<F> {

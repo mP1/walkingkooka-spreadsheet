@@ -25,7 +25,7 @@ import java.util.Objects;
  * Base class for all {@link SpreadsheetFormatter} implementations that use a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
  * This will become important when there are formatters that originate based on a pattern and others that are custom formatters with their own formatting logic.
  */
-abstract public class SpreadsheetPatternSpreadsheetFormatter<T extends SpreadsheetFormatParserToken> extends SpreadsheetFormatter2 {
+abstract public class SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetFormatter2 {
 
     static SpreadsheetFormatter checkFormatter(final SpreadsheetFormatter formatter) {
         return Objects.requireNonNull(formatter, "formatter");
@@ -38,7 +38,7 @@ abstract public class SpreadsheetPatternSpreadsheetFormatter<T extends Spreadshe
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetPatternSpreadsheetFormatter(final T token) {
+    SpreadsheetPatternSpreadsheetFormatter(final SpreadsheetFormatParserToken token) {
         super();
 
         this.token = token;
@@ -52,7 +52,7 @@ abstract public class SpreadsheetPatternSpreadsheetFormatter<T extends Spreadshe
         return this.token.text() + this.toStringSuffix();
     }
 
-    final T token;
+    final SpreadsheetFormatParserToken token;
 
     abstract String toStringSuffix();
 }
