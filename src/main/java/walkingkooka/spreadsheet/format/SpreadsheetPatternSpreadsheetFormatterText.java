@@ -24,21 +24,21 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetFormatter} that formats a {@link String}.
  */
-final class TextSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatTextParserToken> {
+final class SpreadsheetPatternSpreadsheetFormatterText extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatTextParserToken> {
 
     /**
-     * Creates a {@link TextSpreadsheetFormatter} parse a {@link SpreadsheetFormatTextParserToken}.
+     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterText} parse a {@link SpreadsheetFormatTextParserToken}.
      */
-    static TextSpreadsheetFormatter with(final SpreadsheetFormatTextParserToken token) {
+    static SpreadsheetPatternSpreadsheetFormatterText with(final SpreadsheetFormatTextParserToken token) {
         checkParserToken(token);
 
-        return new TextSpreadsheetFormatter(token);
+        return new SpreadsheetPatternSpreadsheetFormatterText(token);
     }
 
     /**
      * Private ctor use static parse.
      */
-    private TextSpreadsheetFormatter(final SpreadsheetFormatTextParserToken token) {
+    private SpreadsheetPatternSpreadsheetFormatterText(final SpreadsheetFormatTextParserToken token) {
         super(token);
     }
 
@@ -53,7 +53,7 @@ final class TextSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFormat
                                       final SpreadsheetFormatterContext context) {
         return this.canFormat(value, context) ?
                 Optional.of(
-                        TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.format(
+                        SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor.format(
                                 this.token,
                                 context.convertOrFail(value, String.class),
                                 context

@@ -20,29 +20,29 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
-public final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest extends
-        SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitorTest extends
+        SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testToString() {
-        final TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor(null, null);
+        final SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor(null, null);
         visitor.accept(SpreadsheetFormatParserToken.escape('\\', "\\"));
         visitor.accept(SpreadsheetFormatParserToken.quotedText("abc123", "\"abc123\""));
         this.toStringAndCheck(visitor, "\\abc123");
     }
 
     @Override
-    public TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor(null, null);
+    public SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor(null, null);
     }
 
     @Override
     public String typeNamePrefix() {
-        return TextSpreadsheetFormatter.class.getSimpleName();
+        return SpreadsheetPatternSpreadsheetFormatterText.class.getSimpleName();
     }
 
     @Override
-    public Class<TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> type() {
-        return TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor.class;
     }
 }
