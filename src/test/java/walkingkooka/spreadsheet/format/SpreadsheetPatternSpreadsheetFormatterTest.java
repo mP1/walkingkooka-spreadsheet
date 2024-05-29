@@ -29,6 +29,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterTest implements ClassTe
 
     @Override
     public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+        return JavaVisibility.PUBLIC;
     }
 }
