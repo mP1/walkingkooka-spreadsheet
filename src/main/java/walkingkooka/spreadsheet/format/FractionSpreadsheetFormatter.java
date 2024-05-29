@@ -34,7 +34,7 @@ import java.util.function.Function;
  * A {@link SpreadsheetFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link Color} using a pattern
  * parsed into a {@link SpreadsheetFormatFractionParserToken}.
  */
-final class FractionSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreadsheetFormatter<SpreadsheetFormatFractionParserToken> {
+final class FractionSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatFractionParserToken> {
 
     /**
      * Creates a {@link FractionSpreadsheetFormatter} parse a {@link SpreadsheetFormatNumberParserToken}.

@@ -28,7 +28,7 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatter} that handles formatting the all {@link Number} values producing the text equivalent without a {@link Color}.
  * The pattern would have been a {@link String} but the factory accepts it represented as a {@link SpreadsheetFormatNumberParserToken}.
  */
-final class NumberSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreadsheetFormatter<SpreadsheetFormatNumberParserToken> {
+final class NumberSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatNumberParserToken> {
 
     /**
      * Creates a {@link NumberSpreadsheetFormatter} parse a {@link SpreadsheetFormatNumberParserToken}.

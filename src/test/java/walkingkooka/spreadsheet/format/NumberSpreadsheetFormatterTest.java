@@ -45,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * In expectations all symbols are changed parse defaults to characters to verify the context is supplying such symbols.
  */
-public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatParserTokenSpreadsheetFormatterTestCase<NumberSpreadsheetFormatter,
+public final class NumberSpreadsheetFormatterTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<NumberSpreadsheetFormatter,
         SpreadsheetFormatNumberParserToken> {
 
     private final static Color RED = Color.parse("#FF0000");

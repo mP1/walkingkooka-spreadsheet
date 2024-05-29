@@ -21,10 +21,10 @@ import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetFormatParserTokenSpreadsheetFormatterTest implements ClassTesting2<SpreadsheetFormatParserTokenSpreadsheetFormatter<?>> {
+public final class SpreadsheetPatternSpreadsheetFormatterTest implements ClassTesting2<SpreadsheetPatternSpreadsheetFormatter<?>> {
     @Override
-    public Class<SpreadsheetFormatParserTokenSpreadsheetFormatter<?>> type() {
-        return Cast.to(SpreadsheetFormatParserTokenSpreadsheetFormatter.class);
+    public Class<SpreadsheetPatternSpreadsheetFormatter<?>> type() {
+        return Cast.to(SpreadsheetPatternSpreadsheetFormatter.class);
     }
 
     @Override
