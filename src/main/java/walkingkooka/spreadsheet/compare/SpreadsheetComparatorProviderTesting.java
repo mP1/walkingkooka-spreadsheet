@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 
 import java.util.Optional;
@@ -50,6 +51,16 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
                 expected,
                 provider.spreadsheetComparator(name),
                 () -> name.toString()
+        );
+    }
+
+    default void spreadsheetComparatorInfosAndCheck(final SpreadsheetComparatorProvider provider,
+                                                    final SpreadsheetComparatorInfo... expected) {
+        this.spreadsheetComparatorInfosAndCheck(
+                provider,
+                Sets.of(
+                        expected
+                )
         );
     }
 
