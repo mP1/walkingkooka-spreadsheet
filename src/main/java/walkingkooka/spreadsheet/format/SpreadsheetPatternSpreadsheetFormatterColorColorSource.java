@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * Helper that resolves the reference in the original expression into a context supplied {@link Color}
  */
-enum ColorSpreadsheetFormatterColorSource {
+enum SpreadsheetPatternSpreadsheetFormatterColorColorSource {
 
     NAME {
         @Override

@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class ColorSpreadsheetFormatterColorSourceTest implements ClassTesting2<ColorSpreadsheetFormatterColorSource> {
+public final class SpreadsheetPatternSpreadsheetFormatterColorColorSourceTest implements ClassTesting2<SpreadsheetPatternSpreadsheetFormatterColorColorSource> {
 
     @Override
-    public Class<ColorSpreadsheetFormatterColorSource> type() {
-        return ColorSpreadsheetFormatterColorSource.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterColorColorSource> type() {
+        return SpreadsheetPatternSpreadsheetFormatterColorColorSource.class;
     }
 
     @Override

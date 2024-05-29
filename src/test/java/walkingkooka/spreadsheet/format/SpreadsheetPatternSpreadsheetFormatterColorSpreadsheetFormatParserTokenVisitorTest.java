@@ -26,8 +26,8 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
-public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
-        implements ToStringTesting<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor>
+        implements ToStringTesting<SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testColorName() {
@@ -37,7 +37,7 @@ public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorT
                 SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
         );
         colorNameOrNumberOrFailAndCheck(SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens)),
-                ColorSpreadsheetFormatterColorSource.NAME,
+                SpreadsheetPatternSpreadsheetFormatterColorColorSource.NAME,
                 SpreadsheetColorName.with("RED"));
     }
 
@@ -52,14 +52,14 @@ public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorT
         );
 
         colorNameOrNumberOrFailAndCheck(SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens)),
-                ColorSpreadsheetFormatterColorSource.NUMBER,
+                SpreadsheetPatternSpreadsheetFormatterColorColorSource.NUMBER,
                 13);
     }
 
     private void colorNameOrNumberOrFailAndCheck(final SpreadsheetFormatColorParserToken color,
-                                                 final ColorSpreadsheetFormatterColorSource source,
+                                                 final SpreadsheetPatternSpreadsheetFormatterColorColorSource source,
                                                  final Object nameOrNumber) {
-        final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(color);
+        final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(color);
         this.checkEquals(source, visitor.source, "source");
         this.checkEquals(nameOrNumber, visitor.nameOrNumber, "nameOrNumber");
     }
@@ -71,7 +71,7 @@ public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorT
 
     @Test
     public void testToString2() {
-        final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor();
 
         final List<ParserToken> tokens = Lists.of(
                 SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
@@ -86,17 +86,17 @@ public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorT
     }
 
     @Override
-    public ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override
     public String typeNamePrefix() {
-        return ColorSpreadsheetFormatter.class.getSimpleName();
+        return SpreadsheetPatternSpreadsheetFormatterColor.class.getSimpleName();
     }
 
     @Override
-    public Class<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> type() {
-        return ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor.class;
     }
 }
