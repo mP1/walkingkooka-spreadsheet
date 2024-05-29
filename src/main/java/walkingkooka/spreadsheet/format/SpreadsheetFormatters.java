@@ -132,10 +132,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see TextSpreadsheetFormatter}
+     * {@see SpreadsheetPatternSpreadsheetFormatterText}
      */
     public static SpreadsheetFormatter text(final SpreadsheetFormatTextParserToken token) {
-        return TextSpreadsheetFormatter.with(token);
+        return SpreadsheetPatternSpreadsheetFormatterText.with(token);
     }
 
     /**

@@ -37,7 +37,7 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatParserTokenVisitor} is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}
  * to assemble a {@link SpreadsheetFormatter} that handles formatting text, all other tokens are ignored.
  */
-final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
 
     /**
      * Visits all the individual tokens in the given token which was compiled parse the given pattern.
@@ -45,7 +45,7 @@ final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends 
     static SpreadsheetText format(final SpreadsheetFormatTextParserToken token,
                                   final String value,
                                   final SpreadsheetFormatterContext context) {
-        final TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor(value, context);
+        final SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor(value, context);
         visitor.accept(token);
         return SpreadsheetText.with(
                 visitor.text.toString()
@@ -55,7 +55,7 @@ final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends 
     /**
      * Private ctor use static method.
      */
-    TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor(final String value, final SpreadsheetFormatterContext context) {
+    SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor(final String value, final SpreadsheetFormatterContext context) {
         super();
         this.context = context;
         this.value = value;

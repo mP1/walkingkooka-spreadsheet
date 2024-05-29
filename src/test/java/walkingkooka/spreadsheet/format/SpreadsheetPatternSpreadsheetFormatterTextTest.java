@@ -28,12 +28,16 @@ import walkingkooka.text.cursor.parser.SequenceParserToken;
 
 import java.util.Optional;
 
-public final class TextSpreadsheetFormatterTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<TextSpreadsheetFormatter, SpreadsheetFormatTextParserToken> {
+public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterText, SpreadsheetFormatTextParserToken> {
 
     private final static String TEXT = "Abc123";
 
     private final static Color RED = Color.parse("#FF0000");
 
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
+    }
     @Test
     public void testPlaceholder() {
         this.parseFormatAndCheck("@", TEXT, TEXT);
@@ -149,8 +153,8 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetPatternSpread
     }
 
     @Override
-    TextSpreadsheetFormatter createFormatter0(final SpreadsheetFormatTextParserToken token) {
-        return TextSpreadsheetFormatter.with(token);
+    SpreadsheetPatternSpreadsheetFormatterText createFormatter0(final SpreadsheetFormatTextParserToken token) {
+        return SpreadsheetPatternSpreadsheetFormatterText.with(token);
     }
 
     @Override
@@ -214,7 +218,7 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetPatternSpread
     }
 
     @Override
-    public Class<TextSpreadsheetFormatter> type() {
-        return TextSpreadsheetFormatter.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterText> type() {
+        return SpreadsheetPatternSpreadsheetFormatterText.class;
     }
 }
