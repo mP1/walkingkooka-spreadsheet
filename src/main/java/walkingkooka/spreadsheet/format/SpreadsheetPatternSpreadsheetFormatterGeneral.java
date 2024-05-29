@@ -31,18 +31,18 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatter} that converts any given value to a {@link ExpressionNumber} and ten proceeds to format.
  * Note numbers with more than 12 digits are formatted as a scientific number.
  */
-final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Singleton
      */
-    final static GeneralSpreadsheetFormatter INSTANCE = new GeneralSpreadsheetFormatter();
+    final static SpreadsheetPatternSpreadsheetFormatterGeneral INSTANCE = new SpreadsheetPatternSpreadsheetFormatterGeneral();
 
     /**
      * Private ctor use singleton
      */
-    private GeneralSpreadsheetFormatter() {
-        super();
+    private SpreadsheetPatternSpreadsheetFormatterGeneral() {
+        super(null);
     }
 
     @Override
@@ -58,8 +58,8 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
-    public Optional<SpreadsheetText> format(final Object value,
-                                            final SpreadsheetFormatterContext context) {
+    Optional<SpreadsheetText> format0(final Object value,
+                                      final SpreadsheetFormatterContext context) {
         return this.canFormat(
                 value,
                 context
@@ -206,6 +206,8 @@ final class GeneralSpreadsheetFormatter implements SpreadsheetFormatter {
                         text
         );
     }
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {

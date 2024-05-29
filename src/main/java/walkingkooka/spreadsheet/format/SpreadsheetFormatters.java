@@ -110,10 +110,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see GeneralSpreadsheetFormatter}
+     * {@see SpreadsheetPatternSpreadsheetFormatterGeneral}
      */
     public static SpreadsheetFormatter general() {
-        return GeneralSpreadsheetFormatter.INSTANCE;
+        return SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE;
     }
 
     /**

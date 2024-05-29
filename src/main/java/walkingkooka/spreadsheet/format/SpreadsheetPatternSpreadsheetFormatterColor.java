@@ -98,8 +98,10 @@ final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatte
      */
     private final Object sourceValue;
 
+    // Object...........................................................................................................
+
     @Override
-    String toStringSuffix() {
-        return " " + this.formatter;
+    public String toString() {
+        return this.token.text() + " " + this.formatter;
     }
 }

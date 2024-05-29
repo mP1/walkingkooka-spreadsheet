@@ -19,14 +19,19 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Objects;
 
-public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<GeneralSpreadsheetFormatter> {
+public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterGeneral, SpreadsheetFormatGeneralParserToken> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -267,7 +272,7 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                GeneralSpreadsheetFormatter.INSTANCE,
+                SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE,
                 "General"
         );
     }
@@ -275,8 +280,20 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
     // SpreadsheetFormatterTestCase.....................................................................................
 
     @Override
-    public GeneralSpreadsheetFormatter createFormatter() {
-        return GeneralSpreadsheetFormatter.INSTANCE;
+    String pattern() {
+        return "General";
+    }
+
+    @Override
+    Parser<SpreadsheetFormatParserContext> parser() {
+        return SpreadsheetFormatParsers.general();
+    }
+
+    @Override
+    SpreadsheetPatternSpreadsheetFormatterGeneral createFormatter0(final SpreadsheetFormatGeneralParserToken pattern) {
+        Objects.requireNonNull(pattern, "pattern");
+
+        return SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE;
     }
 
     @Override
@@ -373,7 +390,7 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<GeneralSpreadsheetFormatter> type() {
-        return GeneralSpreadsheetFormatter.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterGeneral> type() {
+        return SpreadsheetPatternSpreadsheetFormatterGeneral.class;
     }
 }

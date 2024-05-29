@@ -85,8 +85,10 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime extends SpreadsheetPa
     private final boolean twelveHour;
     private final int millisecondDecimals;
 
+    // Object...........................................................................................................
+
     @Override
-    String toStringSuffix() {
-        return "";
+    public String toString() {
+        return this.token.text();
     }
 }

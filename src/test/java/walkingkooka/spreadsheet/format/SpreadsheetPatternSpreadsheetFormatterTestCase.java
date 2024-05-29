@@ -40,7 +40,10 @@ public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends S
 
     @Test
     public final void testWithNullParserTokenFails() {
-        assertThrows(NullPointerException.class, () -> this.createFormatter0(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createFormatter0(null)
+        );
     }
 
     @Override

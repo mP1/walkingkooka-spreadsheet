@@ -62,8 +62,10 @@ final class SpreadsheetPatternSpreadsheetFormatterText extends SpreadsheetPatter
                 Optional.empty();
     }
 
+    // Object...........................................................................................................
+
     @Override
-    String toStringSuffix() {
-        return "";
+    public String toString() {
+        return this.token.text();
     }
 }
