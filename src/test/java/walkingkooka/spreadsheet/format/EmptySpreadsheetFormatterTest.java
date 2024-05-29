@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 
-public final class EmptyTextSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<EmptyTextSpreadsheetFormatter> {
+public final class EmptySpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<EmptySpreadsheetFormatter> {
 
     @Override
     public void testCanFormatFalse() {
@@ -33,15 +33,14 @@ public final class EmptyTextSpreadsheetFormatterTest extends SpreadsheetFormatte
 
     @Test
     public void testFormat() {
-        this.formatAndCheck(
-                "Hello2",
-                SpreadsheetText.EMPTY
+        this.formatFailAndCheck(
+                "Hello2"
         );
     }
 
     @Override
-    public EmptyTextSpreadsheetFormatter createFormatter() {
-        return EmptyTextSpreadsheetFormatter.INSTANCE;
+    public EmptySpreadsheetFormatter createFormatter() {
+        return EmptySpreadsheetFormatter.INSTANCE;
     }
 
     @Override
@@ -55,7 +54,7 @@ public final class EmptyTextSpreadsheetFormatterTest extends SpreadsheetFormatte
     }
 
     @Override
-    public Class<EmptyTextSpreadsheetFormatter> type() {
-        return EmptyTextSpreadsheetFormatter.class;
+    public Class<EmptySpreadsheetFormatter> type() {
+        return EmptySpreadsheetFormatter.class;
     }
 }
