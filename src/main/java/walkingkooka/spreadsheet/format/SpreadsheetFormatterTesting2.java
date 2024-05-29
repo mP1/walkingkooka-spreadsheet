@@ -222,25 +222,25 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
 
     // format fail and check
 
-    default void formatFailAndCheck(final Object value) {
-        this.formatFailAndCheck(
+    default void formatAndCheck(final Object value) {
+        this.formatAndCheck(
                 value,
                 this.createContext()
         );
     }
 
-    default void formatFailAndCheck(final Object value,
-                                    final SpreadsheetFormatterContext context) {
-        this.formatFailAndCheck(
+    default void formatAndCheck(final Object value,
+                                final SpreadsheetFormatterContext context) {
+        this.formatAndCheck(
                 this.createFormatter(),
                 value,
                 context
         );
     }
 
-    default void formatFailAndCheck(final SpreadsheetFormatter formatter,
-                                    final Object value) {
-        this.formatFailAndCheck(
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Object value) {
+        this.formatAndCheck(
                 formatter,
                 value,
                 this.createContext()

@@ -59,7 +59,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatPa
 
     @Test
     public void testFormattedEQ2() {
-        this.formatFailAndCheck2("[=50]", "99"); // fail
+        this.formatAndCheckNothing("[=50]", "99"); // fail
     }
 
     // GT.....................................................................................
@@ -71,12 +71,12 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatPa
 
     @Test
     public void testFormattedGT2() {
-        this.formatFailAndCheck2("[>9]", "5"); // 5 > 9 fail
+        this.formatAndCheckNothing("[>9]", "5"); // 5 > 9 fail
     }
 
     @Test
     public void testFormattedGT3() {
-        this.formatFailAndCheck2("[>9]", "9"); // 9 > 9 fail
+        this.formatAndCheckNothing("[>9]", "9"); // 9 > 9 fail
     }
 
     // GTE.....................................................................................
@@ -88,7 +88,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatPa
 
     @Test
     public void testFormattedGTE2() {
-        this.formatFailAndCheck2("[>=9]", "5"); // 5 >= 9 fail
+        this.formatAndCheckNothing("[>=9]", "5"); // 5 >= 9 fail
     }
 
     @Test
@@ -100,7 +100,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatPa
 
     @Test
     public void testFormattedLT() {
-        this.formatFailAndCheck2("[<9]", "50"); // 50 < 9 fail
+        this.formatAndCheckNothing("[<9]", "50"); // 50 < 9 fail
     }
 
     @Test
@@ -110,14 +110,14 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatPa
 
     @Test
     public void testFormattedLT3() {
-        this.formatFailAndCheck2("[<9]", "9"); // 9 < 9 fail
+        this.formatAndCheckNothing("[<9]", "9"); // 9 < 9 fail
     }
 
     // LTE.....................................................................................
 
     @Test
     public void testFormattedLTE() {
-        this.formatFailAndCheck2("[<=9]", "50"); // 50 <= 9 fail
+        this.formatAndCheckNothing("[<=9]", "50"); // 50 <= 9 fail
     }
 
     @Test
@@ -139,7 +139,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatPa
 
     @Test
     public void testFormattedNE2() {
-        this.formatFailAndCheck2("[<>50]", "50"); // == fail
+        this.formatAndCheckNothing("[<>50]", "50"); // == fail
     }
 
     // helpers.........................................................................
@@ -148,8 +148,13 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatPa
         this.formatAndCheck(this.createFormatter0(pattern), text, text);
     }
 
-    private void formatFailAndCheck2(final String pattern, final String text) {
-        this.formatFailAndCheck(this.createFormatter0(pattern), text, this.createContext());
+    private void formatAndCheckNothing(final String pattern,
+                                       final String text) {
+        this.formatAndCheck(
+                this.createFormatter0(pattern),
+                text,
+                this.createContext()
+        );
     }
 
     @Test
