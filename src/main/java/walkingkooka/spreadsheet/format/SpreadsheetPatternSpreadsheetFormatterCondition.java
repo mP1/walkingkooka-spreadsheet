@@ -77,8 +77,10 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetP
      */
     final Predicate<BigDecimal> predicate;
 
+    // Object...........................................................................................................
+
     @Override
-    String toStringSuffix() {
-        return " " + this.formatter;
+    public String toString() {
+        return this.token.text() + " " + this.formatter;
     }
 }

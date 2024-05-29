@@ -145,8 +145,10 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction extends SpreadsheetPa
     final int numeratorDigitSymbolCount;
     final int denominatorDigitSymbolCount;
 
+    // Object...........................................................................................................
+
     @Override
-    String toStringSuffix() {
-        return "";
+    public String toString() {
+        return this.token.text();
     }
 }

@@ -145,8 +145,10 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber extends SpreadsheetPatt
      */
     final SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator groupSeparator;
 
+    // Object...........................................................................................................
+
     @Override
-    String toStringSuffix() {
-        return "";
+    public String toString() {
+        return this.token.text();
     }
 }

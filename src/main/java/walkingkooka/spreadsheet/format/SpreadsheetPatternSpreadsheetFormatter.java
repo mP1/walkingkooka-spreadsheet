@@ -44,15 +44,5 @@ abstract public class SpreadsheetPatternSpreadsheetFormatter extends Spreadsheet
         this.token = token;
     }
 
-    /**
-     * Returns the original pattern.
-     */
-    @Override
-    public final String toString() {
-        return this.token.text() + this.toStringSuffix();
-    }
-
     final SpreadsheetFormatParserToken token;
-
-    abstract String toStringSuffix();
 }
