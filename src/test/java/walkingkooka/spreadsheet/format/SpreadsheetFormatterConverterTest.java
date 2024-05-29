@@ -112,7 +112,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
                 .map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(SpreadsheetFormatNumberParserToken.class))
                 .map(SpreadsheetFormatters::number)
-                .orElse(SpreadsheetFormatters.fake());
+                .orElseThrow(() -> new UnsupportedOperationException());
     }
 
     @Override
