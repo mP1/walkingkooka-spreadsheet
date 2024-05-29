@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
-public final class ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
+public final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor>
         implements PredicateTesting,
-        ToStringTesting<ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {
+        ToStringTesting<SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testEquals() {
@@ -100,7 +100,7 @@ public final class ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisi
                 SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]"));
 
         final SpreadsheetFormatConditionParserToken token = factory.apply(tokens, ParserToken.text(tokens));
-        final Predicate<BigDecimal> predicate = ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.predicateOrFail(token);
+        final Predicate<BigDecimal> predicate = SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor.predicateOrFail(token);
 
         this.testTrue(predicate, BigDecimal.valueOf(trueValue));
         this.testTrue(predicate, BigDecimal.valueOf(trueValue2));
@@ -114,7 +114,7 @@ public final class ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisi
 
     @Test
     public void testToString2() {
-        final ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = this.createVisitor();
+        final SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor visitor = this.createVisitor();
 
         final List<ParserToken> tokens = Lists.of(
                 SpreadsheetFormatParserToken.bracketCloseSymbol("[", "["),
@@ -128,17 +128,17 @@ public final class ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisi
     }
 
     @Override
-    public ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override
     public String typeNamePrefix() {
-        return ConditionSpreadsheetFormatter.class.getSimpleName();
+        return SpreadsheetPatternSpreadsheetFormatterCondition.class.getSimpleName();
     }
 
     @Override
-    public Class<ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> type() {
-        return ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor.class;
     }
 }

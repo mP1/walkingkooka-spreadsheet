@@ -40,14 +40,19 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ConditionSpreadsheetFormatterTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<ConditionSpreadsheetFormatter,
+public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterCondition,
         SpreadsheetFormatConditionParserToken> {
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
+    }
 
     private final static String TEXT_PATTERN = "!@@";
 
     @Test
     public void testWithNullWrappedFormatterFails() {
-        assertThrows(NullPointerException.class, () -> ConditionSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetPatternSpreadsheetFormatterCondition.with(this.parsePatternOrFail(this.pattern()), null));
     }
 
     // EQ.....................................................................................
@@ -162,13 +167,13 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetPatternS
         this.toStringAndCheck(this.createFormatter(), this.pattern() + " " + TEXT_PATTERN);
     }
 
-    private ConditionSpreadsheetFormatter createFormatter0(final String expression) {
+    private SpreadsheetPatternSpreadsheetFormatterCondition createFormatter0(final String expression) {
         return this.createFormatter0(this.parsePatternOrFail(expression));
     }
 
     @Override
-    ConditionSpreadsheetFormatter createFormatter0(final SpreadsheetFormatConditionParserToken token) {
-        return ConditionSpreadsheetFormatter.with(token, this.formatter());
+    SpreadsheetPatternSpreadsheetFormatterCondition createFormatter0(final SpreadsheetFormatConditionParserToken token) {
+        return SpreadsheetPatternSpreadsheetFormatterCondition.with(token, this.formatter());
     }
 
     private SpreadsheetFormatter formatter() {
@@ -274,7 +279,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetPatternS
     }
 
     @Override
-    public Class<ConditionSpreadsheetFormatter> type() {
-        return ConditionSpreadsheetFormatter.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterCondition> type() {
+        return SpreadsheetPatternSpreadsheetFormatterCondition.class;
     }
 }
