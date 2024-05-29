@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * Adds a {@link Color} to a value formatted by another {@link SpreadsheetFormatter}.
  */
-final class ColorSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreadsheetFormatter<SpreadsheetFormatColorParserToken> {
+final class ColorSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatColorParserToken> {
 
 
     /**

@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetFormatter} that formats a {@link String}.
  */
-final class TextSpreadsheetFormatter extends SpreadsheetFormatParserTokenSpreadsheetFormatter<SpreadsheetFormatTextParserToken> {
+final class TextSpreadsheetFormatter extends SpreadsheetPatternSpreadsheetFormatter<SpreadsheetFormatTextParserToken> {
 
     /**
      * Creates a {@link TextSpreadsheetFormatter} parse a {@link SpreadsheetFormatTextParserToken}.

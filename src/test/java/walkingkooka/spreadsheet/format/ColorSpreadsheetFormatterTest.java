@@ -32,7 +32,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatParserTokenSpreadsheetFormatterTestCase<ColorSpreadsheetFormatter,
+public final class ColorSpreadsheetFormatterTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<ColorSpreadsheetFormatter,
         SpreadsheetFormatColorParserToken> {
 
     private final static String TEXT_PATTERN = "@@";

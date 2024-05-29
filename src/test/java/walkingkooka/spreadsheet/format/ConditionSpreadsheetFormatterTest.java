@@ -40,7 +40,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatParserTokenSpreadsheetFormatterTestCase<ConditionSpreadsheetFormatter,
+public final class ConditionSpreadsheetFormatterTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<ConditionSpreadsheetFormatter,
         SpreadsheetFormatConditionParserToken> {
 
     private final static String TEXT_PATTERN = "!@@";

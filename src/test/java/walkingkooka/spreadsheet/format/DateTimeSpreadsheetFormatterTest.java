@@ -40,7 +40,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatParserTokenSpreadsheetFormatterTestCase<
+public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<
         DateTimeSpreadsheetFormatter,
         SpreadsheetFormatDateTimeParserToken> {
 
