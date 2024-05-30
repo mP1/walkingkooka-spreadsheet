@@ -102,6 +102,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetPatternSpreadsheetFormatter}
+     */
+    public static SpreadsheetPatternSpreadsheetFormatter fakeSpreadsheetPattern() {
+        return new FakeSpreadsheetPatternSpreadsheetFormatter();
+    }
+
+    /**
      * {@see SpreadsheetPatternSpreadsheetFormatterFraction}
      */
     public static SpreadsheetPatternSpreadsheetFormatter fraction(final SpreadsheetFormatFractionParserToken token,
