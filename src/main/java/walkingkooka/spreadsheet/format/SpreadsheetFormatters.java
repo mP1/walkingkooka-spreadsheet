@@ -131,6 +131,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetPatternSpreadsheetFormatterChain}
+     */
+    public static SpreadsheetPatternSpreadsheetFormatter spreadsheetPatternChain(final List<SpreadsheetPatternSpreadsheetFormatter> formatters) {
+        return SpreadsheetPatternSpreadsheetFormatterChain.with(formatters);
+    }
+
+    /**
      * {@see SpreadsheetPatternKind#formatter{java.util.Locale}
      */
     public static SpreadsheetFormatter spreadsheetPatternKind(final SpreadsheetPatternKind kind,
