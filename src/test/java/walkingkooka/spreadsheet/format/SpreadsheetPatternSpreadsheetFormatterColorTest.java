@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.text.cursor.parser.Parser;
@@ -44,21 +46,39 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
 
     @Test
     public void testWithColorSpreadsheetFormatter() {
-        final SpreadsheetFormatter text = SpreadsheetFormatters.fake();
-        final SpreadsheetPatternSpreadsheetFormatterColor color = SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail("[COLOR 1]"), text);
-        final SpreadsheetPatternSpreadsheetFormatterColor wrapper = SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail("[COLOR 2]"), color);
-        assertSame(text, wrapper.formatter, "formatter");
+        final SpreadsheetPatternSpreadsheetFormatter text = SpreadsheetFormatters.text(
+                SpreadsheetFormatParserToken.text(
+                        Lists.of(
+                                SpreadsheetFormatParserToken.textPlaceholder("@", "@"),
+                                SpreadsheetFormatParserToken.textPlaceholder("@", "@")
+                        ),
+                        "@@"
+                )
+        );
+        final SpreadsheetPatternSpreadsheetFormatterColor color = SpreadsheetPatternSpreadsheetFormatterColor.with(
+                this.parsePatternOrFail("[COLOR 1]"),
+                text
+        );
+        final SpreadsheetPatternSpreadsheetFormatterColor wrapper = SpreadsheetPatternSpreadsheetFormatterColor.with(
+                this.parsePatternOrFail("[COLOR 2]"),
+                color
+        );
+        assertSame(
+                text,
+                wrapper.formatter,
+                "formatter"
+        );
     }
 
     @Test
     public void testWrappedFormatterFails() {
-        this.formatAndCheck(SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail(this.pattern()),
-                new FakeSpreadsheetFormatter() {
-                    @Override
-                    public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
-                        return Optional.empty();
-                    }
-                }),
+        this.formatAndCheck(
+                SpreadsheetPatternSpreadsheetFormatterColor.with(
+                        this.parsePatternOrFail(
+                                this.pattern()
+                        ),
+                        SpreadsheetFormatters.general()
+                ),
                 "Ignored text",
                 this.createContext());
     }
@@ -126,24 +146,36 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         final Optional<Color> color = Optional.of(Color.BLACK);
 
         this.formatAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail("[COLOR 2]"),
-                        SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail("[COLOR 1]"),
-                                new SpreadsheetFormatter() {
-                                    @Override
-                                    public boolean canFormat(final Object value,
-                                                             final SpreadsheetFormatterContext context) {
-                                        return true;
-                                    }
-
-                                    @Override
-                                    public Optional<SpreadsheetText> format(final Object value,
-                                                                            final SpreadsheetFormatterContext context) {
-                                        checkEquals(text, value, "value");
-                                        return Optional.of(
-                                                SpreadsheetText.with(text + text)
-                                        );
-                                    }
-                                })
+                SpreadsheetPatternSpreadsheetFormatterColor.with(
+                        this.parsePatternOrFail("[COLOR 2]"),
+                        SpreadsheetPatternSpreadsheetFormatterColor.with(
+                                this.parsePatternOrFail("[COLOR 1]"),
+//                                new SpreadsheetFormatter() {
+//                                    @Override
+//                                    public boolean canFormat(final Object value,
+//                                                             final SpreadsheetFormatterContext context) {
+//                                        return true;
+//                                    }
+//
+//                                    @Override
+//                                    public Optional<SpreadsheetText> format(final Object value,
+//                                                                            final SpreadsheetFormatterContext context) {
+//                                        checkEquals(text, value, "value");
+//                                        return Optional.of(
+//                                                SpreadsheetText.with(text + text)
+//                                        );
+//                                    }
+//                                }
+                                SpreadsheetFormatters.text(
+                                        SpreadsheetFormatParserToken.text(
+                                                Lists.of(
+                                                        SpreadsheetFormatParserToken.textPlaceholder("@", "@"),
+                                                        SpreadsheetFormatParserToken.textPlaceholder("@", "@")
+                                                ),
+                                                "@@"
+                                        )
+                                )
+                        )
                 ),
                 text,
                 new TestSpreadsheetFormatterContext() {
@@ -214,7 +246,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         );
     }
 
-    private SpreadsheetFormatter textFormatter() {
+    private SpreadsheetPatternSpreadsheetFormatter textFormatter() {
         return SpreadsheetFormatters.text(
                 this.parsePatternOrFail(
                                 SpreadsheetFormatParsers.textFormat(),
