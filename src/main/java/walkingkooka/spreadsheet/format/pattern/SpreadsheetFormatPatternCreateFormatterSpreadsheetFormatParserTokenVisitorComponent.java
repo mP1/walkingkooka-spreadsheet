@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
@@ -42,7 +41,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     void prepare(final int index,
                  final int total,
                  final SpreadsheetFormatPattern formatPattern,
-                 final Consumer<SpreadsheetFormatter> formatters) {
+                 final Consumer<SpreadsheetPatternSpreadsheetFormatter> formatters) {
         SpreadsheetPatternSpreadsheetFormatter formatter = this.formatter;
         if (null == formatter) {
             throw new IllegalArgumentException(

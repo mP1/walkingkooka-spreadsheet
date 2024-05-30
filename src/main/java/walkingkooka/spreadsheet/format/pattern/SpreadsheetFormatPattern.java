@@ -52,7 +52,7 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
      * Factory that lazily creates a {@link SpreadsheetFormatter}
      */
     @Override
-    final SpreadsheetFormatter createFormatter() {
+    final SpreadsheetPatternSpreadsheetFormatter createFormatter() {
         return SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor.createFormatter(
                 this
         );
@@ -65,5 +65,5 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
     abstract void missingCondition(final int index,
                                    final int total,
                                    final SpreadsheetPatternSpreadsheetFormatter formatter,
-                                   final Consumer<SpreadsheetFormatter> formatters);
+                                   final Consumer<SpreadsheetPatternSpreadsheetFormatter> formatters);
 }

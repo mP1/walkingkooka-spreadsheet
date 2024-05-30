@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -760,16 +761,16 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Returns a {@link SpreadsheetFormatter} built parse this pattern.
      */
     @Override
-    public final SpreadsheetFormatter formatter() {
+    public final SpreadsheetPatternSpreadsheetFormatter formatter() {
         if (null == this.formatter) {
             this.formatter = this.createFormatter();
         }
         return this.formatter;
     }
 
-    private SpreadsheetFormatter formatter;
+    private SpreadsheetPatternSpreadsheetFormatter formatter;
 
-    abstract SpreadsheetFormatter createFormatter();
+    abstract SpreadsheetPatternSpreadsheetFormatter createFormatter();
 
     // HasSpreadsheetPatternKind........................................................................................
 

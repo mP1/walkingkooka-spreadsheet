@@ -21,7 +21,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
@@ -49,8 +49,9 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     // HasFormatter.....................................................................................................
 
     @Override
-    final SpreadsheetFormatter createFormatter() {
-        return this.toFormat().formatter();
+    final SpreadsheetPatternSpreadsheetFormatter createFormatter() {
+        return this.toFormat()
+                .formatter();
     }
 
     // HasConverter.....................................................................................................
