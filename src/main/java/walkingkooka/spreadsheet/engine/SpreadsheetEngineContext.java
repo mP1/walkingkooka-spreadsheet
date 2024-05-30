@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -32,6 +31,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -86,8 +86,8 @@ public interface SpreadsheetEngineContext extends Context,
     /**
      * Formats the given value using the provided formatter.
      */
-    Optional<SpreadsheetText> formatValue(final Object value,
-                                          final SpreadsheetFormatter formatter);
+    Optional<TextNode> formatValue(final Object value,
+                                   final SpreadsheetFormatter formatter);
 
     /**
      * Combines formatting of any present value along with possibly applying conditional rules.

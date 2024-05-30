@@ -27,8 +27,7 @@ import java.util.Optional;
 /**
  * Wraps another {@link SpreadsheetPatternSpreadsheetFormatter} and adds a {@link Color} to any formatted result.
  */
-final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetFormatter2
-        implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPatternSpreadsheetFormatter {
 
 
     /**
@@ -74,10 +73,15 @@ final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetForma
     }
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value,
-                                      final SpreadsheetFormatterContext context) {
-        return this.formatter.format(value, context)
-                .map(t -> t.setColor(this.color(context)));
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+                                                           final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
+
+        return this.formatter.formatSpreadsheetText(
+                value,
+                context
+        ).map(t -> t.setColor(this.color(context)));
     }
 
     /**

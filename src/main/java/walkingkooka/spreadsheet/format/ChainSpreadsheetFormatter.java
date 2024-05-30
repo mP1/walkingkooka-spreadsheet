@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
 import java.util.Objects;
@@ -69,8 +70,8 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
-    public Optional<SpreadsheetText> format(final Object value,
-                                            final SpreadsheetFormatterContext context) {
+    public Optional<TextNode> format(final Object value,
+                                     final SpreadsheetFormatterContext context) {
         return this.formatter(value, context)
                 .flatMap(f -> f.format(value, context));
     }

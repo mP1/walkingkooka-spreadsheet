@@ -27,8 +27,7 @@ import java.util.function.Predicate;
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that wraps another {@link SpreadsheetPatternSpreadsheetFormatter} which only formats if the condition is true.
  */
-final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetFormatter2
-        implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterCondition implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterCondition}
@@ -65,11 +64,15 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetF
     }
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+                                                           final SpreadsheetFormatterContext context) {
         return context.convert(value, BigDecimal.class)
                 .mapLeft(this.predicate::test)
                 .orElseLeft(false) ?
-                this.formatter.format(value, context) :
+                this.formatter.formatSpreadsheetText(
+                        value,
+                        context
+                ) :
                 Optional.empty();
     }
 

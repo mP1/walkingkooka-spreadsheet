@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -46,12 +47,14 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
-    public Optional<SpreadsheetText> format(final Object value,
-                                            final SpreadsheetFormatterContext context) {
+    public Optional<TextNode> format(final Object value,
+                                     final SpreadsheetFormatterContext context) {
         final Either<String, String> converted = this.converter.convert(value, String.class, context);
         return converted.isLeft() ?
                 Optional.of(
-                        SpreadsheetText.with(converted.leftValue())
+                        SpreadsheetText.with(
+                                converted.leftValue()
+                        ).toTextNode()
                 ) :
                 Optional.empty();
     }

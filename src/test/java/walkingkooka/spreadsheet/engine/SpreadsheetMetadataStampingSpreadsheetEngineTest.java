@@ -486,11 +486,11 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public Optional<SpreadsheetText> formatValue(final Object value,
+            public Optional<TextNode> formatValue(final Object value,
                                                          final SpreadsheetFormatter formatter) {
                 checkEquals(FORMULA_VALUE, value, "formatValue");
                 return Optional.of(
-                        SpreadsheetText.with(FORMULA_VALUE)
+                        SpreadsheetText.with(FORMULA_VALUE).toTextNode()
                 );
             }
 
@@ -503,7 +503,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                                 formatter.orElse(
                                         SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
                                 )
-                        ).map(SpreadsheetText::toTextNode)
+                        )
                 );
             }
         };

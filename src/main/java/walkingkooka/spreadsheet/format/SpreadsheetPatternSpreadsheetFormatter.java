@@ -17,9 +17,25 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.tree.text.TextNode;
+
+import java.util.Optional;
+
 /**
  * A {@link SpreadsheetFormatter} for a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
  */
 public interface SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetFormatter {
+
+    @Override
+    default Optional<TextNode> format(final Object value,
+                                      final SpreadsheetFormatterContext context) {
+        return this.formatSpreadsheetText(
+                value,
+                context
+        ).map(SpreadsheetText::toTextNode);
+    }
+
+    Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+                                                    final SpreadsheetFormatterContext context);
 }
 

@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.tree.text.TextNode;
+
 import java.util.Objects;
 import java.util.Optional;
 
@@ -36,14 +38,17 @@ abstract class SpreadsheetFormatter2 implements SpreadsheetFormatter {
      * Accepts a value and uses the {@link SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor} to produce the formatted text.
      */
     @Override
-    public final Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
+    public final Optional<TextNode> format(final Object value, final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
-        return this.format0(value, context);
+        return this.format0(
+                value,
+                context
+        );
     }
 
-    abstract Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context);
+    abstract Optional<TextNode> format0(final Object value, final SpreadsheetFormatterContext context);
 
     @Override
     public abstract String toString();

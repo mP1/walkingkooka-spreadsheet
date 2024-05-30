@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.text.TextNode;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -153,7 +154,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     // format.................................................................................................
 
     @Override
-    public Optional<SpreadsheetText> format(final Object value) {
+    public Optional<TextNode> format(final Object value) {
         return this.formatter.format(
                 value,
                 this

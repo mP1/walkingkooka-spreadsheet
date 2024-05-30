@@ -28,8 +28,7 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats value after converting them to a number using the provided number pattern.
  */
-final class SpreadsheetPatternSpreadsheetFormatterNumber extends SpreadsheetFormatter2
-        implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterNumber} parse a {@link SpreadsheetFormatNumberParserToken}.
@@ -75,8 +74,11 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber extends SpreadsheetForm
     }
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value,
-                                      final SpreadsheetFormatterContext context) {
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+                                                           final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
+
         return Optional.of(
                 SpreadsheetText.with(
                         this.format1(

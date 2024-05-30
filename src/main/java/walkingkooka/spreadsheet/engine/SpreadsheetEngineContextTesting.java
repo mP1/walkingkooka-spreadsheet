@@ -34,6 +34,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderTesting;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
@@ -223,7 +224,27 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatValueAndCheck(final Object value,
                                      final SpreadsheetFormatter formatter,
-                                     final Optional<SpreadsheetText> expected) {
+                                     final SpreadsheetText expected) {
+        this.formatValueAndCheck(
+                value,
+                formatter,
+                expected.toTextNode()
+        );
+    }
+
+    default void formatValueAndCheck(final Object value,
+                                     final SpreadsheetFormatter formatter,
+                                     final TextNode expected) {
+        this.formatValueAndCheck(
+                value,
+                formatter,
+                Optional.of(expected)
+        );
+    }
+
+    default void formatValueAndCheck(final Object value,
+                                     final SpreadsheetFormatter formatter,
+                                     final Optional<TextNode> expected) {
         this.formatValueAndCheck(
                 this.createContext(),
                 value,
@@ -235,7 +256,19 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void formatValueAndCheck(final SpreadsheetEngineContext context,
                                      final Object value,
                                      final SpreadsheetFormatter formatter,
-                                     final Optional<SpreadsheetText> expected) {
+                                     final TextNode expected) {
+        this.formatValueAndCheck(
+                context,
+                value,
+                formatter,
+                Optional.of(expected)
+        );
+    }
+
+    default void formatValueAndCheck(final SpreadsheetEngineContext context,
+                                     final Object value,
+                                     final SpreadsheetFormatter formatter,
+                                     final Optional<TextNode> expected) {
         this.checkEquals(
                 expected,
                 context.formatValue(value, formatter),

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
@@ -29,18 +30,18 @@ public final class SpreadsheetFormatterContextTest implements ClassTesting<Sprea
     @Test
     public void testFormatOrEmptyText() {
         final String value = "Abc123";
-        final SpreadsheetText expected = SpreadsheetText.EMPTY.setText(value + value + value)
+        final TextNode expected = SpreadsheetText.EMPTY.setText(value + value + value)
                 .setColor(
                         Optional.of(
                                 Color.parse("#234")
                         )
-                );
+                ).toTextNode();
 
         this.checkEquals(
                 expected,
                 new FakeSpreadsheetFormatterContext() {
                     @Override
-                    public Optional<SpreadsheetText> format(final Object v) {
+                    public Optional<TextNode> format(final Object v) {
                         checkEquals(value, v);
                         return Optional.of(expected);
                     }

@@ -266,15 +266,15 @@ public class TestGwtTest extends GWTTestCase {
                                         )
                                 ).map(
                                         f -> cell.style()
-                                                .replace(f.toTextNode())
+                                                .replace(f)
                                 ).orElse(TextNode.EMPTY_TEXT)
                         )
                 );
             }
 
             @Override
-            public Optional<SpreadsheetText> formatValue(final Object value,
-                                                         final SpreadsheetFormatter formatter) {
+            public Optional<TextNode> formatValue(final Object value,
+                                                  final SpreadsheetFormatter formatter) {
                 checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
 
                 return formatter.format(

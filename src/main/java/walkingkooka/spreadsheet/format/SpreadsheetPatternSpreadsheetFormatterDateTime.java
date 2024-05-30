@@ -28,8 +28,7 @@ import java.util.function.Predicate;
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats any value after converting it to a {@link LocalDateTime}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterDateTime extends SpreadsheetFormatter2
-        implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterDateTime implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterDateTime} parse a {@link SpreadsheetFormatDateTimeParserToken}
@@ -69,9 +68,19 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime extends SpreadsheetFo
     private final Predicate<Object> typeTester;
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+                                                           final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
+
         return Optional.of(
-                this.formatLocalDateTime(context.convertOrFail(value, LocalDateTime.class), context)
+                this.formatLocalDateTime(
+                        context.convertOrFail(
+                                value,
+                                LocalDateTime.class
+                        ),
+                        context
+                )
         );
     }
 

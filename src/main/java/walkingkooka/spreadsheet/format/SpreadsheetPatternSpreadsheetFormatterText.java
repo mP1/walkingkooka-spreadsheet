@@ -25,8 +25,7 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats values after converting them to a {@link String}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterText extends SpreadsheetFormatter2
-        implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterText} parse a {@link SpreadsheetFormatTextParserToken}.
@@ -53,8 +52,11 @@ final class SpreadsheetPatternSpreadsheetFormatterText extends SpreadsheetFormat
     }
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value,
-                                      final SpreadsheetFormatterContext context) {
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+                                                           final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
+        
         return this.canFormat(value, context) ?
                 Optional.of(
                         SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor.format(

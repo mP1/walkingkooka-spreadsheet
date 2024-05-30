@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.tree.text.TextNode;
+
 import java.util.Optional;
 
 /**
@@ -40,8 +42,8 @@ final class EmptySpreadsheetFormatter extends SpreadsheetFormatter2 {
     }
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value,
-                                      final SpreadsheetFormatterContext context) {
+    Optional<TextNode> format0(final Object value,
+                               final SpreadsheetFormatterContext context) {
         return Optional.empty();
     }
 

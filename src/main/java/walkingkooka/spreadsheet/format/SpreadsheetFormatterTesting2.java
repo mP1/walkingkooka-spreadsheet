@@ -22,6 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -159,6 +160,15 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         this.formatAndCheck(
                 this.createFormatter(),
                 value,
+                text.toTextNode()
+        );
+    }
+
+    default void formatAndCheck(final Object value,
+                                final TextNode text) {
+        this.formatAndCheck(
+                this.createFormatter(),
+                value,
                 text
         );
     }
@@ -176,6 +186,16 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetText text) {
+        this.formatAndCheck(
+                formatter,
+                value,
+                text.toTextNode()
+        );
+    }
+
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Object value,
+                                final TextNode text) {
         this.formatAndCheck(
                 formatter,
                 value,

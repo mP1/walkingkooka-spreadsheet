@@ -145,8 +145,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) {
+            public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+                                                                   final SpreadsheetFormatterContext context) {
                 Objects.requireNonNull(value, "value");
                 Objects.requireNonNull(context, "context");
 

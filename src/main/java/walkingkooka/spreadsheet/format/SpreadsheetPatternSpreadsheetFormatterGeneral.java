@@ -31,8 +31,7 @@ import java.util.Optional;
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that converts any given value to a {@link ExpressionNumber} and then proceeds to format.
  * Formatting as a scientific number is controlled by {@link SpreadsheetFormatterContext#generalFormatNumberDigitCount}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetFormatter2
-        implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterGeneral implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Singleton
@@ -59,8 +58,11 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetFor
     }
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value,
-                                      final SpreadsheetFormatterContext context) {
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+                                                           final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
+
         return this.canFormat(
                 value,
                 context
@@ -81,9 +83,9 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetFor
                 context
         ) ?
                 this.scientificFormatter(context)
-                        .format(number, context) :
+                        .formatSpreadsheetText(number, context) :
                 this.nonScientificFormatter(context)
-                        .format(number, context)
+                        .formatSpreadsheetText(number, context)
                         .map(t -> removeTrailingDecimalPlaceIfNecessary(t, context));
     }
 
