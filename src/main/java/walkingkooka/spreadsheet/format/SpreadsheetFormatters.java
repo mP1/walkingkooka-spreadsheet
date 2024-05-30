@@ -53,7 +53,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      * {@see SpreadsheetPatternSpreadsheetFormatterColor}
      */
     public static SpreadsheetPatternSpreadsheetFormatter color(final SpreadsheetFormatColorParserToken token,
-                                                               final SpreadsheetFormatter formatter) {
+                                                               final SpreadsheetPatternSpreadsheetFormatter formatter) {
         return SpreadsheetPatternSpreadsheetFormatterColor.with(token, formatter);
     }
 

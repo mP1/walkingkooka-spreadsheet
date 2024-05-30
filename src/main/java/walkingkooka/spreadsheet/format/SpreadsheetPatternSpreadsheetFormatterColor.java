@@ -33,7 +33,7 @@ final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatte
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterColor}
      */
     static SpreadsheetPatternSpreadsheetFormatterColor with(final SpreadsheetFormatColorParserToken token,
-                                                            final SpreadsheetFormatter formatter) {
+                                                            final SpreadsheetPatternSpreadsheetFormatter formatter) {
         checkParserToken(token);
         checkFormatter(formatter);
 
@@ -43,8 +43,8 @@ final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatte
                         formatter);
     }
 
-    private static SpreadsheetFormatter unwrap(final SpreadsheetPatternSpreadsheetFormatterColor formatter) {
-        final SpreadsheetFormatter wrapped = formatter.formatter;
+    private static SpreadsheetPatternSpreadsheetFormatter unwrap(final SpreadsheetPatternSpreadsheetFormatterColor formatter) {
+        final SpreadsheetPatternSpreadsheetFormatter wrapped = formatter.formatter;
         return wrapped instanceof SpreadsheetPatternSpreadsheetFormatterColor ?
                 unwrap(Cast.to(wrapped)) :
                 wrapped;
@@ -54,7 +54,7 @@ final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatte
      * Private use factory
      */
     private SpreadsheetPatternSpreadsheetFormatterColor(final SpreadsheetFormatColorParserToken token,
-                                                        final SpreadsheetFormatter formatter) {
+                                                        final SpreadsheetPatternSpreadsheetFormatter formatter) {
         super(token);
 
         final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(token);
@@ -79,7 +79,7 @@ final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatte
     /**
      * The {@link SpreadsheetFormatter} that will have its color replaced if it was successful.
      */
-    final SpreadsheetFormatter formatter;
+    final SpreadsheetPatternSpreadsheetFormatter formatter;
 
     /**
      * Fetches the color to be added. While the color reference is static, the actual resolved {@link Color} is not.
