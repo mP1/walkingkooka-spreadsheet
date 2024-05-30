@@ -32,6 +32,16 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  */
 final public class SpreadsheetComponentName implements Name, Comparable<SpreadsheetComponentName> {
 
+    /**
+     * Helper that may be used to verify if the given character at the position is valid.
+     */
+    public static boolean isChar(final int pos,
+                                 final char c) {
+        return (0 == pos ?
+                INITIAL :
+                PART).test(c);
+    }
+
     final static CharPredicate INITIAL = CharPredicates.range('A', 'Z')
             .or(CharPredicates.range('a', 'z'));
 
