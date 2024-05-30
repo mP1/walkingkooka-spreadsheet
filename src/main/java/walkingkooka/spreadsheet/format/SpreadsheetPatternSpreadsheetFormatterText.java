@@ -39,7 +39,9 @@ final class SpreadsheetPatternSpreadsheetFormatterText extends SpreadsheetPatter
      * Private ctor use static parse.
      */
     private SpreadsheetPatternSpreadsheetFormatterText(final SpreadsheetFormatTextParserToken token) {
-        super(token);
+        super();
+
+        this.token = token;
     }
 
     @Override
@@ -68,4 +70,6 @@ final class SpreadsheetPatternSpreadsheetFormatterText extends SpreadsheetPatter
     public String toString() {
         return this.token.text();
     }
+
+    private final SpreadsheetFormatTextParserToken token;
 }

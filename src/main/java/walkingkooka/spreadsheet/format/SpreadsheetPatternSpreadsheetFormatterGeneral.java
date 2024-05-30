@@ -42,7 +42,7 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetPat
      * Private ctor use singleton
      */
     private SpreadsheetPatternSpreadsheetFormatterGeneral() {
-        super(null);
+        super();
     }
 
     @Override

@@ -55,7 +55,9 @@ final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatte
      */
     private SpreadsheetPatternSpreadsheetFormatterColor(final SpreadsheetFormatColorParserToken token,
                                                         final SpreadsheetPatternSpreadsheetFormatter formatter) {
-        super(token);
+        super();
+
+        this.token = token;
 
         final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(token);
         this.source = visitor.source;
@@ -104,4 +106,6 @@ final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatte
     public String toString() {
         return this.token.text() + " " + this.formatter;
     }
+
+    private final SpreadsheetFormatColorParserToken token;
 }

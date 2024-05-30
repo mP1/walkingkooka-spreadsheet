@@ -43,8 +43,9 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber extends SpreadsheetPatt
      * Private ctor use static method.
      */
     private SpreadsheetPatternSpreadsheetFormatterNumber(final SpreadsheetFormatNumberParserToken token) {
-        super(token);
+        super();
 
+        this.token = token;
 
         final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor =
                 SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor.analyze(token);
@@ -151,4 +152,6 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber extends SpreadsheetPatt
     public String toString() {
         return this.token.text();
     }
+
+    private final SpreadsheetFormatNumberParserToken token;
 }

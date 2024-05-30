@@ -52,7 +52,9 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction extends SpreadsheetPa
      */
     private SpreadsheetPatternSpreadsheetFormatterFraction(final SpreadsheetFormatFractionParserToken token,
                                                            final Function<BigDecimal, Fraction> fractioner) {
-        super(token);
+        super();
+
+        this.token = token;
 
         this.fractioner = fractioner;
 
@@ -151,4 +153,6 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction extends SpreadsheetPa
     public String toString() {
         return this.token.text();
     }
+
+    private final SpreadsheetFormatFractionParserToken token;
 }

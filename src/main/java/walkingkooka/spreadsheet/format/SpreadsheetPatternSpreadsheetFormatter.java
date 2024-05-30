@@ -38,11 +38,8 @@ abstract public class SpreadsheetPatternSpreadsheetFormatter extends Spreadsheet
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetPatternSpreadsheetFormatter(final SpreadsheetFormatParserToken token) {
+    SpreadsheetPatternSpreadsheetFormatter() {
         super();
-
-        this.token = token;
     }
-
-    final SpreadsheetFormatParserToken token;
 }
+
