@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -234,9 +235,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testFormat() {
         this.formatAndCheck(
                 BigDecimal.valueOf(12.5),
-                Optional.of(
-                        SpreadsheetText.with("012.500")
-                )
+                SpreadsheetText.with("012.500")
         );
     }
 
@@ -310,13 +309,13 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) {
+            public Optional<TextNode> format(final Object value,
+                                             final SpreadsheetFormatterContext context) {
                 return Optional.of(
                         SpreadsheetText.with(
                                 new DecimalFormat("000.000")
                                         .format(value)
-                        )
+                        ).toTextNode()
                 );
             }
 

@@ -49,7 +49,6 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -13540,8 +13539,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public Optional<SpreadsheetText> formatValue(final Object value,
-                                                         final SpreadsheetFormatter formatter) {
+            public Optional<TextNode> formatValue(final Object value,
+                                                  final SpreadsheetFormatter formatter) {
                 assertFalse(
                         value instanceof Optional,
                         () -> "Value must not be optional" + value
@@ -13568,7 +13567,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                         )
                                                 ).map(
                                                         f -> cell.style()
-                                                                .replace(f.toTextNode())
+                                                                .replace(f)
                                                 )
                                                 .orElse(TextNode.EMPTY_TEXT)
                                 )
@@ -13677,7 +13676,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         if (value.isPresent()) {
-            final SpreadsheetText formattedText = this.metadata()
+            final TextNode formattedText = this.metadata()
                     .formatter()
                     .format(
                             value.get(),
@@ -13688,9 +13687,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             result = result.setFormattedValue(
                     Optional.of(
-                            style.replace(
-                                    formattedText.toTextNode()
-                            ).root()
+                            style.replace(formattedText)
+                                    .root()
                     )
             );
         }

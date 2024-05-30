@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
@@ -65,6 +66,18 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
                 formatter,
                 value,
                 context,
+                Optional.of(text.toTextNode())
+        );
+    }
+
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Object value,
+                                final SpreadsheetFormatterContext context,
+                                final TextNode text) {
+        this.formatAndCheck(
+                formatter,
+                value,
+                context,
                 Optional.of(text)
         );
     }
@@ -72,7 +85,7 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
-                                final Optional<SpreadsheetText> text) {
+                                final Optional<TextNode> text) {
         this.checkEquals(
                 text,
                 formatter.format(value, context),

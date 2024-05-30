@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
@@ -34,17 +35,17 @@ public final class SpreadsheetFormatterTest implements SpreadsheetFormatterTesti
                         text + text + text
                 ).setColor(
                         Optional.of(red)
-                ),
+                ).toTextNode(),
                 new FakeSpreadsheetFormatter() {
                     @Override
-                    public Optional<SpreadsheetText> format(final Object value,
-                                                            final SpreadsheetFormatterContext context) {
+                    public Optional<TextNode> format(final Object value,
+                                                     final SpreadsheetFormatterContext context) {
                         return Optional.of(
                                 SpreadsheetText.EMPTY
                                         .setText(text + text + text)
                                         .setColor(
                                                 Optional.of(red)
-                                        )
+                                        ).toTextNode()
                         );
                     }
                 }.formatOrEmptyText(

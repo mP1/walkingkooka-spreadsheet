@@ -32,8 +32,7 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats any number as a fraction.
  */
-final class SpreadsheetPatternSpreadsheetFormatterFraction extends SpreadsheetFormatter2
-        implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterFraction implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterFraction} parse a {@link SpreadsheetFormatNumberParserToken}.
@@ -74,10 +73,16 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction extends SpreadsheetFo
     }
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
-        return Optional.ofNullable(context.convert(value, BigDecimal.class)
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+                                                           final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
+
+        return Optional.ofNullable(
+                context.convert(value, BigDecimal.class)
                 .mapLeft(v -> SpreadsheetText.with(this.format1(v, context)))
-                .orElseLeft(null));
+                        .orElseLeft(null)
+        );
     }
 
     /**

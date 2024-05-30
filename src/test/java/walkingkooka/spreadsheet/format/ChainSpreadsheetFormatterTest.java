@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -110,12 +111,15 @@ public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTes
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) {
+            public Optional<TextNode> format(final Object value,
+                                             final SpreadsheetFormatterContext context) {
                 Objects.requireNonNull(value, "value");
                 Objects.requireNonNull(context, "context");
 
-                return Optional.of(spreadsheetText(text));
+                return Optional.of(
+                        SpreadsheetText.with(text)
+                                .toTextNode()
+                );
             }
 
             @Override
@@ -123,10 +127,6 @@ public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTes
                 return String.valueOf(value);
             }
         };
-    }
-
-    private static SpreadsheetText spreadsheetText(final String text) {
-        return SpreadsheetText.with(text);
     }
 
     @Override

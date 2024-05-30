@@ -83,7 +83,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
 
         assertThrows(
                 ConversionException.class,
-                () -> this.createFormatter().format0(
+                () -> this.createFormatter()
+                        .formatSpreadsheetText(
                         time,
                         new FakeSpreadsheetFormatterContext() {
                             @Override

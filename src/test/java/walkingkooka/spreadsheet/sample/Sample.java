@@ -33,7 +33,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -261,15 +260,15 @@ public final class Sample {
                                         )
                                 ).map(
                                         f -> cell.style()
-                                                .replace(f.toTextNode())
+                                                .replace(f)
                                 ).orElse(TextNode.EMPTY_TEXT)
                         )
                 );
             }
 
             @Override
-            public Optional<SpreadsheetText> formatValue(final Object value,
-                                                         final SpreadsheetFormatter formatter) {
+            public Optional<TextNode> formatValue(final Object value,
+                                                  final SpreadsheetFormatter formatter) {
                 checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
 
                 return formatter.format(

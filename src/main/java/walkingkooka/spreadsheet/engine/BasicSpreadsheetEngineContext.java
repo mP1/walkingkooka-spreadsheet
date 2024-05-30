@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -265,8 +264,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // formatValue......................................................................................................
 
     @Override
-    public Optional<SpreadsheetText> formatValue(final Object value,
-                                                 final SpreadsheetFormatter formatter) {
+    public Optional<TextNode> formatValue(final Object value,
+                                          final SpreadsheetFormatter formatter) {
         Objects.requireNonNull(formatter, "formatter");
 
         return formatter.format(
@@ -307,7 +306,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                                 )
                                                 .map(
                                                         f -> cell.style()
-                                                                .replace(f.toTextNode())
+                                                                .replace(f)
                                                 )
                                                 .orElse(TextNode.EMPTY_TEXT)
                                 )

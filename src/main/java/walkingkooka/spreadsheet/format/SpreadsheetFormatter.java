@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
@@ -47,19 +48,20 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
                       final SpreadsheetFormatterContext context);
 
     /**
-     * Accepts a value and returns a {@link SpreadsheetText}.
+     * Accepts a value and returns a {@link TextNode} if it could format the value.
      */
-    Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context);
+    Optional<TextNode> format(final Object value,
+                              final SpreadsheetFormatterContext context);
 
     /**
      * Formats the given {@link Object value} or returns {@link SpreadsheetText#EMPTY}.
      */
-    default SpreadsheetText formatOrEmptyText(final Object value,
-                                              final SpreadsheetFormatterContext context) {
+    default TextNode formatOrEmptyText(final Object value,
+                                       final SpreadsheetFormatterContext context) {
         return this.format(
                 value,
                 context
-        ).orElse(SpreadsheetText.EMPTY);
+        ).orElse(TextNode.EMPTY_TEXT);
     }
 
     /**

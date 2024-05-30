@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -132,7 +133,7 @@ public final class ContextFormatTextSpreadsheetFormatterTest extends Spreadsheet
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value) {
+            public Optional<TextNode> format(final Object value) {
                 if (value instanceof String) {
                     return this.formattedText(value.toString());
                 }
@@ -145,9 +146,10 @@ public final class ContextFormatTextSpreadsheetFormatterTest extends Spreadsheet
                 return this.formattedText(value.toString());
             }
 
-            private Optional<SpreadsheetText> formattedText(final String text) {
+            private Optional<TextNode> formattedText(final String text) {
                 return Optional.of(
                         SpreadsheetText.with(text)
+                                .toTextNode()
                 );
             }
         };

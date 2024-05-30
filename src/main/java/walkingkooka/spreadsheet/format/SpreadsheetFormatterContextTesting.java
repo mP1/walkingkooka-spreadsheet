@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.color.Color;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberConverterContextTesting;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
@@ -46,15 +47,33 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
     }
 
     default void formatAndCheck(final Object value,
-                                final Optional<SpreadsheetText> expected) {
-        this.formatAndCheck(this.createContext(),
+                                final SpreadsheetText expected) {
+        this.formatAndCheck(
                 value,
-                expected);
+                expected.toTextNode()
+        );
+    }
+
+    default void formatAndCheck(final Object value,
+                                final TextNode expected) {
+        this.formatAndCheck(
+                value,
+                Optional.of(expected)
+        );
+    }
+
+    default void formatAndCheck(final Object value,
+                                final Optional<TextNode> expected) {
+        this.formatAndCheck(
+                this.createContext(),
+                value,
+                expected
+        );
     }
 
     default void formatAndCheck(final SpreadsheetFormatterContext context,
                                 final Object value,
-                                final Optional<SpreadsheetText> expected) {
+                                final Optional<TextNode> expected) {
         this.checkEquals(expected,
                 context.format(value),
                 () -> context + " " + CharSequences.quoteIfChars(value));
