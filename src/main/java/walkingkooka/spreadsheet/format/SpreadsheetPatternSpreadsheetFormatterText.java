@@ -23,9 +23,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that formats a {@link String}.
+ * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats values after converting them to a {@link String}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterText extends SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterText extends SpreadsheetFormatter2
+        implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterText} parse a {@link SpreadsheetFormatTextParserToken}.

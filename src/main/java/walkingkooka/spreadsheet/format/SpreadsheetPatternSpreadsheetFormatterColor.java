@@ -25,9 +25,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Adds a {@link Color} to a value formatted by another {@link SpreadsheetFormatter}.
+ * Wraps another {@link SpreadsheetPatternSpreadsheetFormatter} and adds a {@link Color} to any formatted result.
  */
-final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetFormatter2
+        implements SpreadsheetPatternSpreadsheetFormatter {
 
 
     /**

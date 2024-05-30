@@ -28,10 +28,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that converts any given value to a {@link ExpressionNumber} and ten proceeds to format.
- * Note numbers with more than 12 digits are formatted as a scientific number.
+ * A {@link SpreadsheetPatternSpreadsheetFormatter} that converts any given value to a {@link ExpressionNumber} and then proceeds to format.
+ * Formatting as a scientific number is controlled by {@link SpreadsheetFormatterContext#generalFormatNumberDigitCount}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetFormatter2
+        implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Singleton

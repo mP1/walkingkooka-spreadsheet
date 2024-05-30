@@ -25,9 +25,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
- * Tries to convert a value to a {@link BigDecimal} and then tests a condition and if it is true, executes the given {@link SpreadsheetFormatter}.
+ * A {@link SpreadsheetPatternSpreadsheetFormatter} that wraps another {@link SpreadsheetPatternSpreadsheetFormatter} which only formats if the condition is true.
  */
-final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetFormatter2
+        implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterCondition}

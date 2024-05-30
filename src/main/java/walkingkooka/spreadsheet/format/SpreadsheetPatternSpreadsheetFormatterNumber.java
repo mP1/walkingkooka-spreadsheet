@@ -26,10 +26,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that handles formatting the all {@link Number} values producing the text equivalent without a {@link Color}.
- * The pattern would have been a {@link String} but the factory accepts it represented as a {@link SpreadsheetFormatNumberParserToken}.
+ * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats value after converting them to a number using the provided number pattern.
  */
-final class SpreadsheetPatternSpreadsheetFormatterNumber extends SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterNumber extends SpreadsheetFormatter2
+        implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterNumber} parse a {@link SpreadsheetFormatNumberParserToken}.

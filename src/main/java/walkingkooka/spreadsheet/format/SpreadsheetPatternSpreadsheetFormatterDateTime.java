@@ -26,9 +26,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
- * A {@link SpreadsheetFormatter} that formats any value after converting it to a {@link LocalDateTime}.
+ * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats any value after converting it to a {@link LocalDateTime}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterDateTime extends SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterDateTime extends SpreadsheetFormatter2
+        implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterDateTime} parse a {@link SpreadsheetFormatDateTimeParserToken}
