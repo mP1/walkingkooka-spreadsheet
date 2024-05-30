@@ -19,8 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
-import walkingkooka.predicate.character.CharPredicate;
-import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetComponentName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -28,54 +27,43 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
- * The {@link Name} of a {@link SpreadsheetComparator}. Note comparator names are case sensitive.
+ * The {@link Name} of a {@link SpreadsheetComparator}. Note comparator names are case-sensitive.
  */
 final public class SpreadsheetComparatorName implements Name, Comparable<SpreadsheetComparatorName> {
 
-    final static CharPredicate INITIAL = CharPredicates.range('A', 'Z')
-            .or(CharPredicates.range('a', 'z'));
-
-    final static CharPredicate PART = INITIAL.or(CharPredicates.range('0', '9'))
-            .or(CharPredicates.is('-'));
+    public static boolean isChar(final int pos,
+                                 final char c) {
+        return SpreadsheetComponentName.isChar(pos, c);
+    }
 
     /**
      * The maximum valid length
      */
-    public final static int MAX_LENGTH = 255;
+    public final static int MAX_LENGTH = SpreadsheetComponentName.MAX_LENGTH;
 
     /**
      * Factory that creates a {@link SpreadsheetComparatorName}
      */
     public static SpreadsheetComparatorName with(final String name) {
-        CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(
-                name,
-                SpreadsheetComparatorName.class.getSimpleName(),
-                INITIAL,
-                PART
+        return new SpreadsheetComparatorName(
+                SpreadsheetComponentName.with(name)
         );
-
-        final int length = name.length();
-        if (length > MAX_LENGTH) {
-            throw new IllegalArgumentException("Name length " + length + " > " + MAX_LENGTH);
-        }
-
-        return new SpreadsheetComparatorName(name);
     }
 
     /**
      * Private constructor
      */
-    private SpreadsheetComparatorName(final String name) {
+    private SpreadsheetComparatorName(final SpreadsheetComponentName name) {
         super();
         this.name = name;
     }
 
     @Override
     public String value() {
-        return this.name;
+        return this.name.value();
     }
 
-    private final String name;
+    private final SpreadsheetComponentName name;
 
     /**
      * Create a {@link SpreadsheetComparatorNameAndDirection} using this name and the given {@link SpreadsheetComparatorDirection direction}
@@ -91,7 +79,7 @@ final public class SpreadsheetComparatorName implements Name, Comparable<Spreads
 
     @Override
     public int hashCode() {
-        return CASE_SENSITIVITY.hash(this.name);
+        return this.name.hashCode();
     }
 
     @Override
@@ -107,18 +95,14 @@ final public class SpreadsheetComparatorName implements Name, Comparable<Spreads
 
     @Override
     public String toString() {
-        return this.name;
+        return this.name.toString();
     }
 
     // Comparable ...................................................................................................
 
     @Override
     public int compareTo(final SpreadsheetComparatorName other) {
-        return CASE_SENSITIVITY.comparator()
-                .compare(
-                        this.name,
-                        other.name
-                );
+        return this.name.compareTo(other.name);
     }
 
     // HasCaseSensitivity................................................................................................
