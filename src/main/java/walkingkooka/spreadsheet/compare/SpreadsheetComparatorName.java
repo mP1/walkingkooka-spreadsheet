@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
 import walkingkooka.spreadsheet.SpreadsheetComponentName;
-import walkingkooka.text.CaseSensitivity;
+import walkingkooka.spreadsheet.SpreadsheetComponentNameLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -29,7 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 /**
  * The {@link Name} of a {@link SpreadsheetComparator}. Note comparator names are case-sensitive.
  */
-final public class SpreadsheetComparatorName implements Name, Comparable<SpreadsheetComparatorName> {
+final public class SpreadsheetComparatorName implements SpreadsheetComponentNameLike<SpreadsheetComparatorName> {
 
     public static boolean isChar(final int pos,
                                  final char c) {
@@ -97,22 +97,6 @@ final public class SpreadsheetComparatorName implements Name, Comparable<Spreads
     public String toString() {
         return this.name.toString();
     }
-
-    // Comparable ...................................................................................................
-
-    @Override
-    public int compareTo(final SpreadsheetComparatorName other) {
-        return this.name.compareTo(other.name);
-    }
-
-    // HasCaseSensitivity................................................................................................
-
-    @Override
-    public CaseSensitivity caseSensitivity() {
-        return CASE_SENSITIVITY;
-    }
-
-    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
 
     // Json.............................................................................................................
 

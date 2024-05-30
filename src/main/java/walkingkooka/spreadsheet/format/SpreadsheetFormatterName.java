@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
 import walkingkooka.spreadsheet.SpreadsheetComponentName;
-import walkingkooka.text.CaseSensitivity;
+import walkingkooka.spreadsheet.SpreadsheetComponentNameLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -29,11 +29,11 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 /**
  * The {@link Name} of a {@link SpreadsheetFormatter}. Note formatter names are case-sensitive.
  */
-final public class SpreadsheetFormatterName implements Name, Comparable<SpreadsheetFormatterName> {
+final public class SpreadsheetFormatterName implements SpreadsheetComponentNameLike<SpreadsheetFormatterName> {
 
     public static boolean isChar(final int pos,
                                  final char c) {
-        return SpreadsheetComponentName.isChar(pos, c);
+        return SpreadsheetComponentNameLike.isChar(pos, c);
     }
 
     /**
@@ -87,22 +87,6 @@ final public class SpreadsheetFormatterName implements Name, Comparable<Spreadsh
     public String toString() {
         return this.name.toString();
     }
-
-    // Comparable ...................................................................................................
-
-    @Override
-    public int compareTo(final SpreadsheetFormatterName other) {
-        return this.name.compareTo(other.name);
-    }
-
-    // HasCaseSensitivity................................................................................................
-
-    @Override
-    public CaseSensitivity caseSensitivity() {
-        return CASE_SENSITIVITY;
-    }
-
-    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
 
     // Json.............................................................................................................
 

@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -30,16 +29,11 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 /**
  * The {@link Name} of a component within spreadsheet. Note comparator names are case-sensitive.
  */
-final public class SpreadsheetComponentName implements Name, Comparable<SpreadsheetComponentName> {
+final public class SpreadsheetComponentName implements SpreadsheetComponentNameLike<SpreadsheetComponentName> {
 
-    /**
-     * Helper that may be used to verify if the given character at the position is valid.
-     */
     public static boolean isChar(final int pos,
                                  final char c) {
-        return (0 == pos ?
-                INITIAL :
-                PART).test(c);
+        return SpreadsheetComponentNameLike.isChar(pos, c);
     }
 
     final static CharPredicate INITIAL = CharPredicates.range('A', 'Z')
@@ -109,26 +103,6 @@ final public class SpreadsheetComponentName implements Name, Comparable<Spreadsh
     public String toString() {
         return this.name;
     }
-
-    // Comparable ...................................................................................................
-
-    @Override
-    public int compareTo(final SpreadsheetComponentName other) {
-        return CASE_SENSITIVITY.comparator()
-                .compare(
-                        this.name,
-                        other.name
-                );
-    }
-
-    // HasCaseSensitivity................................................................................................
-
-    @Override
-    public CaseSensitivity caseSensitivity() {
-        return CASE_SENSITIVITY;
-    }
-
-    public final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
 
     // Json.............................................................................................................
 

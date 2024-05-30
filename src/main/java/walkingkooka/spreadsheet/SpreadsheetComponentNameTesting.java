@@ -18,14 +18,13 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.naming.Name;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
-public interface SpreadsheetComponentNameTesting<N extends Name & Comparable<N>> extends ClassTesting2<N>,
+public interface SpreadsheetComponentNameTesting<N extends SpreadsheetComponentNameLike<N>> extends ClassTesting2<N>,
         NameTesting2<N, N>,
         JsonNodeMarshallingTesting<N> {
 
