@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
@@ -56,7 +55,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
     void missingCondition(final int index,
                           final int total,
                           final SpreadsheetPatternSpreadsheetFormatter formatter,
-                          final Consumer<SpreadsheetFormatter> formatters) {
+                          final Consumer<SpreadsheetPatternSpreadsheetFormatter> formatters) {
         switch (total) {
             case 0:
             case 1:
@@ -91,7 +90,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
     // https://support.microsoft.com/en-us/office/number-format-codes-5026bbd6-04bc-48cd-bf33-80f18b4eae68
     private void missingCondition2(final int index,
                                    final SpreadsheetPatternSpreadsheetFormatter formatter,
-                                   final Consumer<SpreadsheetFormatter> formatters) {
+                                   final Consumer<SpreadsheetPatternSpreadsheetFormatter> formatters) {
         switch (index) {
             case 0:
                 formatters.accept(
@@ -117,7 +116,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
 
     private void missingCondition3(final int index,
                                    final SpreadsheetPatternSpreadsheetFormatter formatter,
-                                   final Consumer<SpreadsheetFormatter> formatters) {
+                                   final Consumer<SpreadsheetPatternSpreadsheetFormatter> formatters) {
         switch (index) {
             case 0:
                 formatters.accept(
@@ -151,7 +150,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
 
     private void missingCondition4(final int index,
                                    final SpreadsheetPatternSpreadsheetFormatter formatter,
-                                   final Consumer<SpreadsheetFormatter> formatters) {
+                                   final Consumer<SpreadsheetPatternSpreadsheetFormatter> formatters) {
         switch (index) {
             case 0:
                 formatters.accept(
@@ -221,7 +220,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
             "<0"
     );
 
-    private final static SpreadsheetFormatter TEXT = SpreadsheetFormatters.text(
+    private final static SpreadsheetPatternSpreadsheetFormatter TEXT = SpreadsheetFormatters.text(
             SpreadsheetFormatParserToken.text(
                     Lists.of(
                             SpreadsheetFormatParserToken.textPlaceholder("@", "@")

@@ -52,7 +52,7 @@ import java.util.Optional;
  */
 final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    static SpreadsheetFormatter createFormatter(final SpreadsheetFormatPattern pattern) {
+    static SpreadsheetPatternSpreadsheetFormatter createFormatter(final SpreadsheetFormatPattern pattern) {
         final ParserToken token = pattern.value;
 
         final SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(
@@ -66,7 +66,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
             throw new IllegalArgumentException("Unable to create formatter parse " + token);
         }
 
-        final List<SpreadsheetFormatter> formatters = Lists.array();
+        final List<SpreadsheetPatternSpreadsheetFormatter> formatters = Lists.array();
         int i = 0;
         for (final SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent component : components) {
             component.prepare(
@@ -78,7 +78,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
             i++;
         }
 
-        return SpreadsheetFormatters.chain(formatters);
+        return SpreadsheetFormatters.spreadsheetPatternChain(formatters);
     }
 
     SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(final ParserToken token) {

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -52,7 +51,7 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
     void missingCondition(final int index,
                           final int total,
                           final SpreadsheetPatternSpreadsheetFormatter formatter,
-                          final Consumer<SpreadsheetFormatter> formatters) {
+                          final Consumer<SpreadsheetPatternSpreadsheetFormatter> formatters) {
         formatters.accept(formatter);
     }
 
