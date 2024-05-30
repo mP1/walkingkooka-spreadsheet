@@ -21,6 +21,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
+import walkingkooka.text.CharSequences;
 
 import java.util.function.Consumer;
 
@@ -44,7 +45,12 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
                  final Consumer<SpreadsheetFormatter> formatters) {
         SpreadsheetPatternSpreadsheetFormatter formatter = this.formatter;
         if (null == formatter) {
-            throw new IllegalArgumentException("Empty formatter within pattern " + formatPattern.value);
+            throw new IllegalArgumentException(
+                    "Missing formatter for pattern " +
+                            CharSequences.quoteAndEscape(
+                                    formatPattern.value.text()
+                            )
+            );
         }
 
         final SpreadsheetFormatConditionParserToken condition = this.condition;
