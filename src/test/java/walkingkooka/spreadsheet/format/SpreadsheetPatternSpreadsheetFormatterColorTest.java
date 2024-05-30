@@ -150,22 +150,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                         this.parsePatternOrFail("[COLOR 2]"),
                         SpreadsheetPatternSpreadsheetFormatterColor.with(
                                 this.parsePatternOrFail("[COLOR 1]"),
-//                                new SpreadsheetFormatter() {
-//                                    @Override
-//                                    public boolean canFormat(final Object value,
-//                                                             final SpreadsheetFormatterContext context) {
-//                                        return true;
-//                                    }
-//
-//                                    @Override
-//                                    public Optional<SpreadsheetText> format(final Object value,
-//                                                                            final SpreadsheetFormatterContext context) {
-//                                        checkEquals(text, value, "value");
-//                                        return Optional.of(
-//                                                SpreadsheetText.with(text + text)
-//                                        );
-//                                    }
-//                                }
                                 SpreadsheetFormatters.text(
                                         SpreadsheetFormatParserToken.text(
                                                 Lists.of(
