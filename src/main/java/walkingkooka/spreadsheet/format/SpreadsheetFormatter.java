@@ -17,12 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -69,14 +67,5 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
      */
     default Converter<SpreadsheetConverterContext> converter() {
         return SpreadsheetFormatterConverter.with(this);
-    }
-
-    /**
-     * Creates a chain of this {@link SpreadsheetFormatter} followed by the given {@link SpreadsheetFormatter} next.
-     */
-    default SpreadsheetFormatter then(final SpreadsheetFormatter next) {
-        Objects.requireNonNull(next, "next");
-
-        return this.equals(next) ? this : ChainSpreadsheetFormatter.with(Lists.of(this, next));
     }
 }

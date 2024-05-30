@@ -74,34 +74,6 @@ public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTes
         this.formatAndCheck(VALUE2, TEXT2);
     }
 
-    // then.............................................................................................................
-
-    @Test
-    public void testNextDuplicate() {
-        final SpreadsheetFormatter formatter1 = this.formatter1();
-        final SpreadsheetFormatter formatter2 = this.formatter2();
-        final SpreadsheetFormatter chain = ChainSpreadsheetFormatter.with(Lists.of(formatter1, formatter2));
-        assertSame(chain, chain.then(formatter1));
-    }
-
-    @Test
-    public void testNextDuplicate2() {
-        final SpreadsheetFormatter formatter1 = this.formatter1();
-        final SpreadsheetFormatter formatter2 = this.formatter2();
-        final SpreadsheetFormatter chain = ChainSpreadsheetFormatter.with(Lists.of(formatter1, formatter2));
-        assertSame(chain, chain.then(formatter2));
-    }
-
-    @Test
-    public void testThen() {
-        final SpreadsheetFormatter formatter1 = this.formatter1();
-        final SpreadsheetFormatter formatter2 = this.formatter2();
-        final SpreadsheetFormatter next = SpreadsheetFormatters.fake();
-
-        final ChainSpreadsheetFormatter chain = Cast.to(ChainSpreadsheetFormatter.with(Lists.of(formatter1, formatter2)).then(next));
-        this.checkEquals(Lists.of(formatter1, formatter2, next), chain.formatters, "formatters");
-    }
-
     // toString.........................................................................................................
 
     @Test

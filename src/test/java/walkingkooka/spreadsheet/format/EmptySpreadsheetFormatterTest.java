@@ -26,11 +26,6 @@ public final class EmptySpreadsheetFormatterTest extends SpreadsheetFormatterTes
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void testThenFormat() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testFormat() {
         this.formatAndCheck(

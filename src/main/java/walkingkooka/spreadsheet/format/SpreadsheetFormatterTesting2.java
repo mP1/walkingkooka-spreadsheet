@@ -29,10 +29,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -103,40 +101,6 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                         .map(v -> v.getClass().getName() + "=" + CharSequences.quoteIfChars(v))
                         .collect(Collectors.toList()),
                 "canFormat return false and format didnt fail");
-    }
-
-    // then..............................................................................................................
-
-    @Test
-    default void testThenNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createFormatter().then(null));
-    }
-
-    @Test
-    default void testThenSelf() {
-        final F formatter = this.createFormatter();
-        assertSame(formatter, formatter.then(formatter));
-    }
-
-    @Test
-    default void testThenFormat() {
-        final String text = this.getClass().getName();
-        final SpreadsheetText spreadsheetText = SpreadsheetText.with(text);
-
-        final SpreadsheetFormatter last = new SpreadsheetFormatter() {
-            @Override
-            public boolean canFormat(final Object value,
-                                     final SpreadsheetFormatterContext context) {
-                return SpreadsheetFormatterTesting2.this == value;
-            }
-
-            @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) {
-                return Optional.of(spreadsheetText);
-            }
-        };
-        this.formatAndCheck(this.createFormatter().then(last), this, text);
     }
 
     // helper...........................................................................................................
