@@ -35,7 +35,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime extends SpreadsheetPa
      */
     static SpreadsheetPatternSpreadsheetFormatterDateTime with(final SpreadsheetFormatDateTimeParserToken token,
                                                                final Predicate<Object> typeTester) {
-        checkParserToken(token);
+        Objects.requireNonNull(token, "token");
         Objects.requireNonNull(typeTester, "typeTester");
 
         return new SpreadsheetPatternSpreadsheetFormatterDateTime(token, typeTester);

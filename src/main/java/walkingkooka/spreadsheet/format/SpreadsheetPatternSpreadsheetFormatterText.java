@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -30,7 +31,7 @@ final class SpreadsheetPatternSpreadsheetFormatterText extends SpreadsheetPatter
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterText} parse a {@link SpreadsheetFormatTextParserToken}.
      */
     static SpreadsheetPatternSpreadsheetFormatterText with(final SpreadsheetFormatTextParserToken token) {
-        checkParserToken(token);
+        Objects.requireNonNull(token, "token");
 
         return new SpreadsheetPatternSpreadsheetFormatterText(token);
     }

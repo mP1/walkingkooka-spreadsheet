@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -34,7 +35,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber extends SpreadsheetPatt
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterNumber} parse a {@link SpreadsheetFormatNumberParserToken}.
      */
     static SpreadsheetPatternSpreadsheetFormatterNumber with(final SpreadsheetFormatNumberParserToken token) {
-        checkParserToken(token);
+        Objects.requireNonNull(token, "token");
 
         return new SpreadsheetPatternSpreadsheetFormatterNumber(token);
     }

@@ -17,23 +17,11 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-
-import java.util.Objects;
-
 /**
  * Base class for all {@link SpreadsheetFormatter} implementations that use a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
  * This will become important when there are formatters that originate based on a pattern and others that are custom formatters with their own formatting logic.
  */
 abstract public class SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetFormatter2 {
-
-    static SpreadsheetPatternSpreadsheetFormatter checkFormatter(final SpreadsheetPatternSpreadsheetFormatter formatter) {
-        return Objects.requireNonNull(formatter, "formatter");
-    }
-
-    static SpreadsheetFormatParserToken checkParserToken(final SpreadsheetFormatParserToken token) {
-        return Objects.requireNonNull(token, "token");
-    }
 
     /**
      * Package private to limit sub classing.

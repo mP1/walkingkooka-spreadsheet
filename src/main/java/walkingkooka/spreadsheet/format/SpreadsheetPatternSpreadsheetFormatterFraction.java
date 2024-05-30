@@ -41,7 +41,7 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction extends SpreadsheetPa
      */
     static SpreadsheetPatternSpreadsheetFormatterFraction with(final SpreadsheetFormatFractionParserToken token,
                                                                final Function<BigDecimal, Fraction> fractioner) {
-        checkParserToken(token);
+        Objects.requireNonNull(token, "token");
         Objects.requireNonNull(fractioner, "fractioner");
 
         return new SpreadsheetPatternSpreadsheetFormatterFraction(token, fractioner);

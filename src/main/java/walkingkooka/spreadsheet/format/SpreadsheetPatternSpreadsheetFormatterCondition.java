@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -33,8 +34,8 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetP
      */
     static SpreadsheetPatternSpreadsheetFormatterCondition with(final SpreadsheetFormatConditionParserToken token,
                                                                 final SpreadsheetPatternSpreadsheetFormatter formatter) {
-        checkParserToken(token);
-        checkFormatter(formatter);
+        Objects.requireNonNull(token, "token");
+        Objects.requireNonNull(formatter, "formatter");
 
         return new SpreadsheetPatternSpreadsheetFormatterCondition(
                 token,
