@@ -148,18 +148,19 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetPat
     /**
      * The number format pattern for large numbers that should be formatted in scientific format.
      */
-    private SpreadsheetFormatter scientificFormatter(final SpreadsheetFormatterContext context) {
+    private SpreadsheetPatternSpreadsheetFormatter scientificFormatter(final SpreadsheetFormatterContext context) {
         final int digitCount = context.generalFormatNumberDigitCount();
 
-        final Map<Integer, SpreadsheetFormatter> map = generalNumberFormatDigitCountToScientificFormatter;
+        final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> map = generalNumberFormatDigitCountToScientificFormatter;
 
-        SpreadsheetFormatter formatter = map.get(digitCount);
+        SpreadsheetPatternSpreadsheetFormatter formatter = map.get(digitCount);
         if (null == formatter) {
-            formatter = SpreadsheetPattern.parseNumberFormatPattern(
+            formatter = (SpreadsheetPatternSpreadsheetFormatter)
+                    SpreadsheetPattern.parseNumberFormatPattern(
                             "0." +
                                     CharSequences.repeating('#', digitCount) +
                                     "E+0"
-            ).formatter();
+                    ).formatter();
             map.put(
                     digitCount,
                     formatter
@@ -169,19 +170,20 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetPat
         return formatter;
     }
 
-    private final Map<Integer, SpreadsheetFormatter> generalNumberFormatDigitCountToScientificFormatter = Maps.concurrent();
+    private final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> generalNumberFormatDigitCountToScientificFormatter = Maps.concurrent();
 
 
-    private SpreadsheetFormatter nonScientificFormatter(final SpreadsheetFormatterContext context) {
+    private SpreadsheetPatternSpreadsheetFormatter nonScientificFormatter(final SpreadsheetFormatterContext context) {
         final int digitCount = context.generalFormatNumberDigitCount();
 
-        final Map<Integer, SpreadsheetFormatter> map = this.generalNumberFormatDigitCountToNonScientificFormatter;
-        SpreadsheetFormatter formatter = map.get(digitCount);
+        final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> map = this.generalNumberFormatDigitCountToNonScientificFormatter;
+        SpreadsheetPatternSpreadsheetFormatter formatter = map.get(digitCount);
         if (null == formatter) {
-            formatter = SpreadsheetPattern.parseNumberFormatPattern(
-                    "0." +
-                            CharSequences.repeating('#', digitCount)
-            ).formatter();
+            formatter = (SpreadsheetPatternSpreadsheetFormatter)
+                    SpreadsheetPattern.parseNumberFormatPattern(
+                            "0." +
+                                    CharSequences.repeating('#', digitCount)
+                    ).formatter();
             map.put(
                     digitCount,
                     formatter
@@ -191,7 +193,7 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral extends SpreadsheetPat
         return formatter;
     }
 
-    private final Map<Integer, SpreadsheetFormatter> generalNumberFormatDigitCountToNonScientificFormatter = Maps.concurrent();
+    private final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> generalNumberFormatDigitCountToNonScientificFormatter = Maps.concurrent();
 
     /**
      * Removes any trailing decimal place, so formatting whole numbers do not have a decimal place.
