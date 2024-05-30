@@ -46,7 +46,8 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime extends SpreadsheetPa
      */
     private SpreadsheetPatternSpreadsheetFormatterDateTime(final SpreadsheetFormatDateTimeParserToken token,
                                                            final Predicate<Object> typeTester) {
-        super(token);
+        super();
+        this.token = token;
         this.typeTester = typeTester;
 
         final SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor analysis = SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor.with();
@@ -91,4 +92,6 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime extends SpreadsheetPa
     public String toString() {
         return this.token.text();
     }
+
+    private final SpreadsheetFormatDateTimeParserToken token;
 }

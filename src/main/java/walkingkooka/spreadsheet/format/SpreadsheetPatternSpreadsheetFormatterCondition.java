@@ -47,8 +47,9 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetP
      */
     private SpreadsheetPatternSpreadsheetFormatterCondition(final SpreadsheetFormatConditionParserToken token,
                                                             final SpreadsheetPatternSpreadsheetFormatter formatter) {
-        super(token);
+        super();
 
+        this.token = token;
         this.predicate = SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor.predicateOrFail(token);
         this.formatter = formatter;
     }
@@ -86,4 +87,6 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetP
     public String toString() {
         return this.token.text() + " " + this.formatter;
     }
+
+    private final SpreadsheetFormatConditionParserToken token;
 }
