@@ -97,7 +97,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see FakeSpreadsheetFormatter}
      */
-    public static <V> SpreadsheetFormatter fake() {
+    public static SpreadsheetFormatter fake() {
         return new FakeSpreadsheetFormatter();
     }
 
