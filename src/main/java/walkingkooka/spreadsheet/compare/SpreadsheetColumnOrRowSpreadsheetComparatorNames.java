@@ -214,7 +214,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     }
                     break;
                 case MODE_NAME_START:
-                    if (false == SpreadsheetComparatorName.PART.test(c)) {
+                    if (false == SpreadsheetComparatorName.isChar(i, c)) {
                         throw new InvalidCharacterException(
                                 text,
                                 i
@@ -276,7 +276,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             break;
                         default:
                             // continue parsing name
-                            if (false == SpreadsheetComparatorName.PART.test(c)) {
+                            if (false == SpreadsheetComparatorName.isChar(i, c)) {
                                 throw new InvalidCharacterException(
                                         text,
                                         i
@@ -332,7 +332,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             mode = MODE_COLUMN_OR_ROW_START;
                             break;
                         default:
-                            if (false == SpreadsheetComparatorName.INITIAL.test(c)) {
+                            if (false == SpreadsheetComparatorName.isChar(i, c)) {
                                 throw new InvalidCharacterException(
                                         text,
                                         i
