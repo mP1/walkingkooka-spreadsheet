@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.color.Color;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
@@ -31,10 +30,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * A {@link SpreadsheetFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link Color} using a pattern
- * parsed into a {@link SpreadsheetFormatFractionParserToken}.
+ * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats any number as a fraction.
  */
-final class SpreadsheetPatternSpreadsheetFormatterFraction extends SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterFraction extends SpreadsheetFormatter2
+        implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterFraction} parse a {@link SpreadsheetFormatNumberParserToken}.

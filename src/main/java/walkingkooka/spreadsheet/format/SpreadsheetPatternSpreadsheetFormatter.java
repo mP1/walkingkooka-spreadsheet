@@ -18,16 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * Base class for all {@link SpreadsheetFormatter} implementations that use a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
- * This will become important when there are formatters that originate based on a pattern and others that are custom formatters with their own formatting logic.
+ * A {@link SpreadsheetFormatter} for a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
  */
-abstract public class SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetFormatter2 {
-
-    /**
-     * Package private to limit sub classing.
-     */
-    SpreadsheetPatternSpreadsheetFormatter() {
-        super();
-    }
+public interface SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetFormatter {
 }
 
