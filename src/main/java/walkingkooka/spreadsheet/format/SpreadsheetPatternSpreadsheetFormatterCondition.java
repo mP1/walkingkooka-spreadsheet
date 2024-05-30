@@ -32,18 +32,21 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetP
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterCondition}
      */
     static SpreadsheetPatternSpreadsheetFormatterCondition with(final SpreadsheetFormatConditionParserToken token,
-                                                                final SpreadsheetFormatter formatter) {
+                                                                final SpreadsheetPatternSpreadsheetFormatter formatter) {
         checkParserToken(token);
         checkFormatter(formatter);
 
-        return new SpreadsheetPatternSpreadsheetFormatterCondition(token, formatter);
+        return new SpreadsheetPatternSpreadsheetFormatterCondition(
+                token,
+                formatter
+        );
     }
 
     /**
      * Private use factory
      */
     private SpreadsheetPatternSpreadsheetFormatterCondition(final SpreadsheetFormatConditionParserToken token,
-                                                            final SpreadsheetFormatter formatter) {
+                                                            final SpreadsheetPatternSpreadsheetFormatter formatter) {
         super(token);
 
         this.predicate = SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor.predicateOrFail(token);
@@ -68,9 +71,9 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition extends SpreadsheetP
     }
 
     /**
-     * The formatter that will be executed if the guard test passes.
+     * The formatter that will be executed if the guard (condition) test passes.
      */
-    private final SpreadsheetFormatter formatter;
+    private final SpreadsheetPatternSpreadsheetFormatter formatter;
 
     /**
      * A guard which only executes the formatter if the condition is true.

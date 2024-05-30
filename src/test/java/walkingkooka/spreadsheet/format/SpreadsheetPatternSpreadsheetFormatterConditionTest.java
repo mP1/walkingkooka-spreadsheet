@@ -19,12 +19,14 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.Parser;
@@ -36,14 +38,13 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterCondition,
         SpreadsheetFormatConditionParserToken> {
 
-    private final static String TEXT_PATTERN = "!@@";
+    private final static String TEXT_PATTERN = "@!condition-true";
 
     @Test
     public void testWithNullWrappedFormatterFails() {
@@ -54,102 +55,152 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
 
     @Test
     public void testFormattedEQ() {
-        this.formatAndCheck2("[=50]", "50"); // pass
+        this.formatConditionTrueAndCheck(
+                "[=50]",
+                "50",
+                "50!condition-true"
+        ); // pass
     }
 
     @Test
     public void testFormattedEQ2() {
-        this.formatAndCheckNothing("[=50]", "99"); // fail
+        this.formatConditionFalseAndCheck(
+                "[=50]",
+                "99"
+        ); // fail
     }
 
     // GT.....................................................................................
 
     @Test
     public void testFormattedGT() {
-        this.formatAndCheck2("[>9]", "50"); // 50 > 9 pass
+        this.formatConditionTrueAndCheck(
+                "[>9]",
+                "50",
+                "50!condition-true"
+        ); // 50 > 9 pass
     }
 
     @Test
     public void testFormattedGT2() {
-        this.formatAndCheckNothing("[>9]", "5"); // 5 > 9 fail
+        this.formatConditionFalseAndCheck(
+                "[>9]",
+                "5"
+        ); // 5 > 9 fail
     }
 
     @Test
     public void testFormattedGT3() {
-        this.formatAndCheckNothing("[>9]", "9"); // 9 > 9 fail
+        this.formatConditionFalseAndCheck(
+                "[>9]",
+                "9"
+        ); // 9 > 9 fail
     }
 
     // GTE.....................................................................................
 
     @Test
     public void testFormattedGTE() {
-        this.formatAndCheck2("[>=9]", "50"); // 50 >= 9 pass
+        this.formatConditionTrueAndCheck(
+                "[>=9]",
+                "50",
+                "50!condition-true"
+        ); // 50 >= 9 pass
     }
 
     @Test
     public void testFormattedGTE2() {
-        this.formatAndCheckNothing("[>=9]", "5"); // 5 >= 9 fail
+        this.formatConditionFalseAndCheck(
+                "[>=9]",
+                "5"
+        ); // 5 >= 9 fail
     }
 
     @Test
     public void testFormattedGTE3() {
-        this.formatAndCheck2("[>=9]", "9"); // 9 >= 9 pass
+        this.formatConditionTrueAndCheck(
+                "[>=9]",
+                "9",
+                "9!condition-true"
+        ); // 9 >= 9 pass
     }
 
     // LT.....................................................................................
 
     @Test
     public void testFormattedLT() {
-        this.formatAndCheckNothing("[<9]", "50"); // 50 < 9 fail
+        this.formatConditionFalseAndCheck(
+                "[<9]",
+                "50"
+        ); // 50 < 9 fail
     }
 
     @Test
     public void testFormattedLT2() {
-        this.formatAndCheck2("[<9]", "5"); // 5 < 9 pass
+        this.formatConditionTrueAndCheck(
+                "[<9]",
+                "5",
+                "5!condition-true"
+        ); // 5 < 9 pass
     }
 
     @Test
     public void testFormattedLT3() {
-        this.formatAndCheckNothing("[<9]", "9"); // 9 < 9 fail
+        this.formatConditionFalseAndCheck(
+                "[<9]",
+                "9"
+        ); // 9 < 9 fail
     }
 
     // LTE.....................................................................................
 
     @Test
     public void testFormattedLTE() {
-        this.formatAndCheckNothing("[<=9]", "50"); // 50 <= 9 fail
+        this.formatConditionFalseAndCheck(
+                "[<=9]",
+                "50"
+        ); // 50 <= 9 fail
     }
 
     @Test
     public void testFormattedLTE2() {
-        this.formatAndCheck2("[<=9]", "5"); // 5 <= 9 pass
+        this.formatConditionTrueAndCheck(
+                "[<=9]",
+                "5",
+                "5!condition-true"
+        ); // 5 <= 9 pass
     }
 
     @Test
     public void testFormattedLTE3() {
-        this.formatAndCheck2("[<=9]", "9"); // 9 <= 9 pass
+        this.formatConditionTrueAndCheck(
+                "[<=9]",
+                "9",
+                "9!condition-true"
+        ); // 9 <= 9 pass
     }
 
     // NE.....................................................................................
 
     @Test
     public void testFormattedNE() {
-        this.formatAndCheck2("[<>50]", "99"); // == pass
+        this.formatConditionTrueAndCheck(
+                "[<>50]",
+                "99",
+                "99!condition-true"
+        ); // == pass
     }
 
     @Test
     public void testFormattedNE2() {
-        this.formatAndCheckNothing("[<>50]", "50"); // == fail
+        this.formatConditionFalseAndCheck(
+                "[<>50]",
+                "50"
+        ); // == fail
     }
 
-    // helpers.........................................................................
-
-    private void formatAndCheck2(final String pattern, final String text) {
-        this.formatAndCheck(this.createFormatter0(pattern), text, text);
-    }
-
-    private void formatAndCheckNothing(final String pattern,
-                                       final String text) {
+    private void formatConditionFalseAndCheck(final String pattern,
+                                              final String text) {
         this.formatAndCheck(
                 this.createFormatter0(pattern),
                 text,
@@ -157,10 +208,27 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         );
     }
 
+    private void formatConditionTrueAndCheck(final String pattern,
+                                             final String text,
+                                             final String expected) {
+        this.formatAndCheck(
+                this.createFormatter0(pattern),
+                text,
+                expected
+        );
+    }
+
+    // toString.........................................................................................................
+
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createFormatter(), this.pattern() + " " + TEXT_PATTERN);
+        this.toStringAndCheck(
+                this.createFormatter(),
+                this.pattern() + " " + TEXT_PATTERN
+        );
     }
+
+    // helpers..........................................................................................................
 
     private SpreadsheetPatternSpreadsheetFormatterCondition createFormatter0(final String expression) {
         return this.createFormatter0(this.parsePatternOrFail(expression));
@@ -168,32 +236,24 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
 
     @Override
     SpreadsheetPatternSpreadsheetFormatterCondition createFormatter0(final SpreadsheetFormatConditionParserToken token) {
-        return SpreadsheetPatternSpreadsheetFormatterCondition.with(token, this.formatter());
-    }
-
-    private SpreadsheetFormatter formatter() {
-        return new SpreadsheetFormatter() {
-
-            @Override
-            public boolean canFormat(final Object value,
-                                     final SpreadsheetFormatterContext context) {
-                return value instanceof String;
-            }
-
-            @Override
-            public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) {
-                return Optional.of(
-                        SpreadsheetText.with(
-                                (String) value)
-                );
-            }
-
-            @Override
-            public String toString() {
-                return TEXT_PATTERN;
-            }
-        };
+        return SpreadsheetPatternSpreadsheetFormatterCondition.with(
+                token,
+                SpreadsheetFormatters.text(
+                        SpreadsheetFormatParserToken.text(
+                                Lists.of(
+                                        SpreadsheetFormatParserToken.textPlaceholder(
+                                                "@",
+                                                "@"
+                                        ),
+                                        SpreadsheetFormatParserToken.textLiteral(
+                                                "!condition-true",
+                                                "!condition-true"
+                                        )
+                                ),
+                                TEXT_PATTERN
+                        )
+                )
+        );
     }
 
     @Override
@@ -214,6 +274,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Override
     public SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type) {
+                return value instanceof String && type == String.class;
+            }
+
             @Override
             public char decimalSeparator() {
                 return '.';
@@ -242,6 +308,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
+                if (value instanceof String && String.class == target) {
+                    return this.successfulConversion(
+                            value,
+                            target
+                    );
+                }
                 if (value instanceof String && BigDecimal.class == target) {
                     return this.successfulConversion(
                             new BigDecimal((String) value),

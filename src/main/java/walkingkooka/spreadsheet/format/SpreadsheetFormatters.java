@@ -61,7 +61,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      * {@link SpreadsheetPatternSpreadsheetFormatterCondition}
      */
     public static SpreadsheetPatternSpreadsheetFormatter conditional(final SpreadsheetFormatConditionParserToken token,
-                                                                     final SpreadsheetFormatter formatter) {
+                                                                     final SpreadsheetPatternSpreadsheetFormatter formatter) {
         return SpreadsheetPatternSpreadsheetFormatterCondition.with(token, formatter);
     }
 

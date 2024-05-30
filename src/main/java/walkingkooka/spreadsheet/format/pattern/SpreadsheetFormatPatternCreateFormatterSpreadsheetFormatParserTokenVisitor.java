@@ -198,7 +198,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         );
     }
 
-    private void saveFormatter(final SpreadsheetFormatter formatter) {
+    private void saveFormatter(final SpreadsheetPatternSpreadsheetFormatter formatter) {
         this.component().formatter = formatter;
     }
 

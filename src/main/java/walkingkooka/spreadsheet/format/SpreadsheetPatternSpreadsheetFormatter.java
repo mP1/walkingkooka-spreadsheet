@@ -27,7 +27,7 @@ import java.util.Objects;
  */
 abstract public class SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetFormatter2 {
 
-    static SpreadsheetFormatter checkFormatter(final SpreadsheetFormatter formatter) {
+    static SpreadsheetPatternSpreadsheetFormatter checkFormatter(final SpreadsheetPatternSpreadsheetFormatter formatter) {
         return Objects.requireNonNull(formatter, "formatter");
     }
 
