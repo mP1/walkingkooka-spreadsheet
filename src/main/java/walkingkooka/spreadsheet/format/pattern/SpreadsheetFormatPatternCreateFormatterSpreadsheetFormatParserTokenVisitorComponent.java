@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 
 import java.util.function.Consumer;
@@ -35,13 +36,13 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
 
     SpreadsheetFormatConditionParserToken condition;
 
-    SpreadsheetFormatter formatter;
+    SpreadsheetPatternSpreadsheetFormatter formatter;
 
     void prepare(final int index,
                  final int total,
                  final SpreadsheetFormatPattern formatPattern,
                  final Consumer<SpreadsheetFormatter> formatters) {
-        SpreadsheetFormatter formatter = this.formatter;
+        SpreadsheetPatternSpreadsheetFormatter formatter = this.formatter;
         if (null == formatter) {
             throw new IllegalArgumentException("Empty formatter within pattern " + formatPattern.value);
         }

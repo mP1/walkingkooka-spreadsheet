@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.function.Consumer;
@@ -63,6 +64,6 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
      */
     abstract void missingCondition(final int index,
                                    final int total,
-                                   final SpreadsheetFormatter formatter,
+                                   final SpreadsheetPatternSpreadsheetFormatter formatter,
                                    final Consumer<SpreadsheetFormatter> formatters);
 }
