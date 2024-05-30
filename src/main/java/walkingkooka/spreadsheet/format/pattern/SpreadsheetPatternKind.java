@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -172,10 +173,10 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     /**
      * Returns a {@link SpreadsheetFormatter} that uses the default pattern for the given {@link Locale}.
      */
-    public SpreadsheetFormatter formatter(final Locale locale) {
+    public SpreadsheetPatternSpreadsheetFormatter formatter(final Locale locale) {
         Objects.requireNonNull(locale, "locale");
 
-        final SpreadsheetFormatter formatter;
+        final SpreadsheetPatternSpreadsheetFormatter formatter;
 
         switch (this) {
             case DATE_FORMAT_PATTERN:
