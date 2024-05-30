@@ -23,8 +23,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * A {@link SpreadsheetFormatter} that forms a chain trying one or many {@link SpreadsheetFormatter formatters}.
@@ -81,21 +79,6 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
         return this.formatters.stream()
                 .filter(f -> f.canFormat(value, context))
                 .findFirst();
-    }
-
-    @Override
-    public SpreadsheetFormatter then(final SpreadsheetFormatter next) {
-        Objects.requireNonNull(next);
-        return this.equals(next) || this.formatters.contains(next) ?
-                this :
-                this.append(next);
-    }
-
-    /**
-     * Unconditionally creates a new {@link ChainSpreadsheetFormatter}
-     */
-    private ChainSpreadsheetFormatter append(final SpreadsheetFormatter next) {
-        return new ChainSpreadsheetFormatter(Stream.concat(this.formatters.stream(), Stream.of(next)).collect(Collectors.toList()));
     }
 
     final List<SpreadsheetFormatter> formatters;
