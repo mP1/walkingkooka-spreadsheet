@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -34,8 +35,8 @@ final class SpreadsheetPatternSpreadsheetFormatterColor extends SpreadsheetPatte
      */
     static SpreadsheetPatternSpreadsheetFormatterColor with(final SpreadsheetFormatColorParserToken token,
                                                             final SpreadsheetPatternSpreadsheetFormatter formatter) {
-        checkParserToken(token);
-        checkFormatter(formatter);
+        Objects.requireNonNull(token, "token");
+        Objects.requireNonNull(formatter, "formatter");
 
         return new SpreadsheetPatternSpreadsheetFormatterColor(token,
                 formatter instanceof SpreadsheetPatternSpreadsheetFormatterColor ?
