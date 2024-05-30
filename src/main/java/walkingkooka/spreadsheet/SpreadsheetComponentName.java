@@ -128,7 +128,7 @@ final public class SpreadsheetComponentName implements Name, Comparable<Spreadsh
         return CASE_SENSITIVITY;
     }
 
-    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+    public final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
 
     // Json.............................................................................................................
 
