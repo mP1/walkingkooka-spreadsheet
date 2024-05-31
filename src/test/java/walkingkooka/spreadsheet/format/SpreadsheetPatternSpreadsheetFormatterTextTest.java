@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -28,7 +29,8 @@ import walkingkooka.text.cursor.parser.SequenceParserToken;
 
 import java.util.Optional;
 
-public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterText, SpreadsheetFormatTextParserToken> {
+public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterText, SpreadsheetFormatTextParserToken>
+        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterText> {
 
     private final static String TEXT = "Abc123";
 
@@ -220,5 +222,20 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     @Override
     public Class<SpreadsheetPatternSpreadsheetFormatterText> type() {
         return SpreadsheetPatternSpreadsheetFormatterText.class;
+    }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentToken() {
+        this.checkNotEquals(
+                this.createFormatter("@"),
+                this.createFormatter("@@")
+        );
+    }
+
+    @Override
+    public SpreadsheetPatternSpreadsheetFormatterText createObject() {
+        return this.createFormatter();
     }
 }

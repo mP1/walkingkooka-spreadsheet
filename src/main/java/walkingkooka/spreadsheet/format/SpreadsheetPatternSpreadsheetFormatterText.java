@@ -71,6 +71,21 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
     // Object...........................................................................................................
 
     @Override
+    public int hashCode() {
+        return this.token.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetPatternSpreadsheetFormatterText && this.equals0((SpreadsheetPatternSpreadsheetFormatterText) other);
+    }
+
+    private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterText other) {
+        return this.token.equals(other.token);
+    }
+
+    @Override
     public String toString() {
         return this.token.text();
     }
