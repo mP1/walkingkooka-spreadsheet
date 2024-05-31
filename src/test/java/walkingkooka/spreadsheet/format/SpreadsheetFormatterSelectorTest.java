@@ -19,15 +19,18 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.test.ParseStringTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<SpreadsheetFormatterSelector>,
         HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSelector>,
-        ToStringTesting<SpreadsheetFormatterSelector> {
+        ToStringTesting<SpreadsheetFormatterSelector>,
+        ParseStringTesting<SpreadsheetFormatterSelector> {
 
     private final static SpreadsheetFormatterName NAME = SpreadsheetFormatterName.with("text-format");
 
@@ -64,6 +67,69 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
 
         this.checkEquals(NAME, selector.name(), "name");
         this.checkEquals(TEXT, selector.text(), "text");
+    }
+
+    // parse............................................................................................................
+
+    @Test
+    public void testParseInvalidSpreadsheetFormatterNameFails() {
+        this.parseStringFails(
+                "A!34",
+                new InvalidCharacterException("A!34", 1)
+        );
+    }
+
+    @Test
+    public void testParseSpreadsheetFormatterName() {
+        final String text = "text-format";
+        this.parseStringAndCheck(
+                text,
+                SpreadsheetFormatterSelector.with(
+                        SpreadsheetFormatterName.with(text),
+                        ""
+                )
+        );
+    }
+
+    @Test
+    public void testParseSpreadsheetFormatterNameSpace() {
+        final String text = "text-format";
+        this.parseStringAndCheck(
+                text + " ",
+                SpreadsheetFormatterSelector.with(
+                        SpreadsheetFormatterName.with(text),
+                        ""
+                )
+        );
+    }
+
+    @Test
+    public void testParseSpreadsheetFormatterNameSpacePatternText() {
+        final String name = "text-format";
+        final String patternText = "@@";
+
+        this.parseStringAndCheck(
+                name + " " + patternText,
+                SpreadsheetFormatterSelector.with(
+                        SpreadsheetFormatterName.with(name),
+                        patternText
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterSelector parseString(final String text) {
+        return SpreadsheetFormatterSelector.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
+        return type;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
     }
 
     // equals...........................................................................................................
