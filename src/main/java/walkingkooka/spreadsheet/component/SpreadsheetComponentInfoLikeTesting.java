@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.HasAbsoluteUrlTesting;
 import walkingkooka.net.Url;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
@@ -35,7 +36,8 @@ public interface SpreadsheetComponentInfoLikeTesting<I extends SpreadsheetCompon
         HashCodeEqualsDefinedTesting2<I>,
         HateosResourceTesting<I, N>,
         JsonNodeMarshallingTesting<I>,
-        ComparableTesting2<I> {
+        ComparableTesting2<I>,
+        HasAbsoluteUrlTesting<I> {
 
     // factory..........................................................................................................
 

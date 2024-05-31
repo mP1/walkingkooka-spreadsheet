@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.component;
 
 import walkingkooka.naming.HasName;
+import walkingkooka.net.HasAbsoluteUrl;
 import walkingkooka.net.http.server.hateos.HateosResource;
 
 import java.util.Optional;
@@ -27,6 +28,7 @@ import java.util.Optional;
  */
 public interface SpreadsheetComponentInfoLike<I extends SpreadsheetComponentInfoLike<I, N>, N extends SpreadsheetComponentNameLike<N>> extends
         HasName<N>,
+        HasAbsoluteUrl,
         Comparable<I>,
         HateosResource<N> {
 
