@@ -17,101 +17,35 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
-import walkingkooka.net.http.server.hateos.HateosResourceTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetComponentInfoLikeTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Optional;
+public final class SpreadsheetComparatorInfoTest implements SpreadsheetComponentInfoLikeTesting<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+    // ClassTesting.....................................................................................................
 
-public final class SpreadsheetComparatorInfoTest implements ClassTesting2<SpreadsheetComparatorInfo>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetComparatorInfo>,
-        HateosResourceTesting<SpreadsheetComparatorInfo, SpreadsheetComparatorName>,
-        JsonNodeMarshallingTesting<SpreadsheetComparatorInfo>,
-        ComparableTesting2<SpreadsheetComparatorInfo> {
-
-    private final static AbsoluteUrl URL = Url.parseAbsolute("http://example.com");
-
-    private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("comparator-123");
-
-    @Test
-    public void testWithNullUrlFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorInfo.with(
-                        null,
-                        NAME
-                )
-        );
+    @Override
+    public Class<SpreadsheetComparatorInfo> type() {
+        return SpreadsheetComparatorInfo.class;
     }
 
-    @Test
-    public void testWithNullNameFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorInfo.with(
-                        URL,
-                        null
-                )
-        );
-    }
+    // SpreadsheetComponentInfoLikeTesting..............................................................................
 
-    // equals...........................................................................................................
-
-    @Test
-    public void testEqualsDifferentUrl() {
-        this.checkNotEquals(
-                SpreadsheetComparatorInfo.with(
-                        Url.parseAbsolute("http://example.com/different"),
-                        NAME
-                )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentName() {
-        this.checkNotEquals(
-                SpreadsheetComparatorInfo.with(
-                        URL,
-                        SpreadsheetComparatorName.with("different-123")
-                )
-        );
+    @Override
+    public SpreadsheetComparatorName createName(final String value) {
+        return SpreadsheetComparatorName.with(value);
     }
 
     @Override
-    public SpreadsheetComparatorInfo createObject() {
+    public SpreadsheetComparatorInfo createSpreadsheetComponentInfo(final AbsoluteUrl url,
+                                                                    final SpreadsheetComparatorName name) {
         return SpreadsheetComparatorInfo.with(
-                URL,
-                NAME
+                url,
+                name
         );
     }
-
-    // Comparable.......................................................................................................
-
-    @Test
-    public void testCompareLess() {
-        this.compareToAndCheckLess(
-                SpreadsheetComparatorInfo.with(
-                        URL,
-                        SpreadsheetComparatorName.with("xyz-456")
-                )
-        );
-    }
-
-    @Override
-    public SpreadsheetComparatorInfo createComparable() {
-        return this.createObject();
-    }
-
 
     // json.............................................................................................................
 
@@ -121,47 +55,6 @@ public final class SpreadsheetComparatorInfoTest implements ClassTesting2<Spread
         return SpreadsheetComparatorInfo.unmarshall(
                 json,
                 context
-        );
-    }
-
-    @Override
-    public SpreadsheetComparatorInfo createJsonNodeMarshallingValue() {
-        return this.createObject();
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetComparatorInfo> type() {
-        return SpreadsheetComparatorInfo.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    // HateosResource...................................................................................................
-
-    @Test
-    public void testHateosId() {
-        this.hateosLinkIdAndCheck(
-                NAME.value()
-        );
-    }
-
-    @Test
-    public void testId() {
-        this.idAndCheck(
-                Optional.of(NAME)
-        );
-    }
-
-    @Override
-    public SpreadsheetComparatorInfo createHateosResource() {
-        return SpreadsheetComparatorInfo.with(
-                URL,
-                NAME
         );
     }
 }
