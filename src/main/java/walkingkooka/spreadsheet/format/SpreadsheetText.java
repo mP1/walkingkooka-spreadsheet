@@ -38,7 +38,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Holds the {@link Color} and text that results parse formatting a value.
+ * Holds the formatted text which may include a color following the formatting of a value.
  */
 public final class SpreadsheetText implements HasText,
         HasTextNode,
