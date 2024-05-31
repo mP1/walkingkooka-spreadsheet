@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.ConverterContexts;
@@ -43,8 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<
         SpreadsheetPatternSpreadsheetFormatterDateTime,
-        SpreadsheetFormatDateTimeParserToken>
-        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterDateTime> {
+        SpreadsheetFormatDateTimeParserToken> {
 
     private final static Color RED = Color.parse("#FF0000");
 
@@ -996,10 +994,5 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                         LocalDateTime.class
                 )
         );
-    }
-
-    @Override
-    public SpreadsheetPatternSpreadsheetFormatterDateTime createObject() {
-        return this.createFormatter();
     }
 }

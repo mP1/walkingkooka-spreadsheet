@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -33,8 +32,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterChain, SpreadsheetFormatParserToken>
-        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterChain> {
+public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterChain, SpreadsheetFormatParserToken> {
 
     private final static Integer VALUE1 = 11;
     private final static Double VALUE2 = 222.5;
@@ -203,10 +201,5 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
                         )
                 )
         );
-    }
-
-    @Override
-    public SpreadsheetPatternSpreadsheetFormatterChain createObject() {
-        return this.createFormatter();
     }
 }
