@@ -30,10 +30,10 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.math.BigDecimal;
+import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Collection of static factory methods for numerous {@link SpreadsheetFormatter}.
@@ -83,8 +83,11 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      * {@see SpreadsheetPatternSpreadsheetFormatterDateTime}
      */
     public static SpreadsheetPatternSpreadsheetFormatter dateTime(final SpreadsheetFormatDateTimeParserToken token,
-                                                                  final Predicate<Object> typeTester) {
-        return SpreadsheetPatternSpreadsheetFormatterDateTime.with(token, typeTester);
+                                                                  final Class<? extends Temporal> valueType) {
+        return SpreadsheetPatternSpreadsheetFormatterDateTime.with(
+                token,
+                valueType
+        );
     }
 
     /**

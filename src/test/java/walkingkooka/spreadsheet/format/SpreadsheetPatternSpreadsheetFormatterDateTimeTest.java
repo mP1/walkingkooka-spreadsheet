@@ -893,7 +893,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
 
     @Override
     SpreadsheetPatternSpreadsheetFormatterDateTime createFormatter0(final SpreadsheetFormatDateTimeParserToken token) {
-        return SpreadsheetPatternSpreadsheetFormatterDateTime.with(token, (v) -> v instanceof Temporal);
+        return SpreadsheetPatternSpreadsheetFormatterDateTime.with(
+                token,
+                LocalDateTime.class
+        );
     }
 
     @Override

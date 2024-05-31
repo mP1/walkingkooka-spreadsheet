@@ -94,7 +94,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
                                 token.value(),
                                 token.text()
                         ),
-                        (v) -> v instanceof LocalDate
+                        LocalDate.class
                 )
         );
     }
@@ -104,7 +104,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         this.saveFormatter(
                 SpreadsheetFormatters.dateTime(
                         token,
-                        (v) -> v instanceof LocalDateTime
+                        LocalDateTime.class
                 )
         );
     }
@@ -193,7 +193,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
                                 token.value(),
                                 token.text()
                         ),
-                        (v) -> v instanceof LocalTime
+                        LocalTime.class
                 )
         );
     }

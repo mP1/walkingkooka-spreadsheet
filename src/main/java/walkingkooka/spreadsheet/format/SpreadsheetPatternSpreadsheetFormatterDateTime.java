@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats any value after converting it to a {@link LocalDateTime}.
@@ -34,21 +33,21 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterDateTime} parse a {@link SpreadsheetFormatDateTimeParserToken}
      */
     static SpreadsheetPatternSpreadsheetFormatterDateTime with(final SpreadsheetFormatDateTimeParserToken token,
-                                                               final Predicate<Object> typeTester) {
+                                                               final Class<? extends Temporal> valueType) {
         Objects.requireNonNull(token, "token");
-        Objects.requireNonNull(typeTester, "typeTester");
+        Objects.requireNonNull(valueType, "valueType");
 
-        return new SpreadsheetPatternSpreadsheetFormatterDateTime(token, typeTester);
+        return new SpreadsheetPatternSpreadsheetFormatterDateTime(token, valueType);
     }
 
     /**
      * Private ctor use static parse.
      */
     private SpreadsheetPatternSpreadsheetFormatterDateTime(final SpreadsheetFormatDateTimeParserToken token,
-                                                           final Predicate<Object> typeTester) {
+                                                           final Class<? extends Temporal> valueType) {
         super();
         this.token = token;
-        this.typeTester = typeTester;
+        this.valueType = valueType;
 
         final SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor analysis = SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor.with();
         analysis.accept(token);
@@ -59,13 +58,18 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
     @Override
     public boolean canFormat(final Object value,
                              final SpreadsheetFormatterContext context) {
-        return this.typeTester.test(value) && context.canConvertOrFail(value, LocalDateTime.class);
+        return null != value &&
+                this.valueType.equals(value.getClass()) &&
+                context.canConvertOrFail(
+                        value,
+                        LocalDateTime.class
+                );
     }
 
     /**
      * Used to filter allowing different formatters for different {@link Temporal} types.
      */
-    private final Predicate<Object> typeTester;
+    private final Class<? extends Temporal> valueType;
 
     @Override
     public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
