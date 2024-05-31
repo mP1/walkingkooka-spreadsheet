@@ -152,6 +152,22 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     // Object...........................................................................................................
 
     @Override
+    public int hashCode() {
+        return this.token.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetPatternSpreadsheetFormatterNumber && this.equals0((SpreadsheetPatternSpreadsheetFormatterNumber) other);
+    }
+
+    // all other fields are derived from examining the token, so no need to include them in hashCode/equals
+    private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterNumber other) {
+        return this.token.equals(other.token);
+    }
+
+    @Override
     public String toString() {
         return this.token.text();
     }
