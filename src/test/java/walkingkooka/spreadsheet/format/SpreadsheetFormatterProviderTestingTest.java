@@ -40,7 +40,6 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
     @Test
     public void testSpreadsheetFormatterAndCheck() {
         this.spreadsheetFormatterAndCheck(
-                new TestSpreadsheetFormatterProvider(),
                 SELECTOR,
                 FORMATTER
         );

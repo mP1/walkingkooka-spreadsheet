@@ -40,11 +40,26 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
     T createSpreadsheetFormatterProvider();
 
+    default void spreadsheetFormatterAndCheck(final String selector) {
+        this.spreadsheetFormatterAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                SpreadsheetFormatterSelector.parse(selector)
+        );
+    }
+
     default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
                                               final String selector) {
         this.spreadsheetFormatterAndCheck(
                 provider,
                 SpreadsheetFormatterSelector.parse(selector)
+        );
+    }
+
+    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterSelector selector) {
+        this.spreadsheetFormatterAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                selector,
+                Optional.empty()
         );
     }
 
@@ -54,6 +69,15 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                 provider,
                 selector,
                 Optional.empty()
+        );
+    }
+
+    default void spreadsheetFormatterAndCheck(final String selector,
+                                              final SpreadsheetFormatter expected) {
+        this.spreadsheetFormatterAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                SpreadsheetFormatterSelector.parse(selector),
+                expected
         );
     }
 
@@ -67,6 +91,15 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         );
     }
 
+    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterSelector selector,
+                                              final SpreadsheetFormatter expected) {
+        this.spreadsheetFormatterAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                selector,
+                Optional.of(expected)
+        );
+    }
+
     default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
                                               final SpreadsheetFormatterSelector selector,
                                               final SpreadsheetFormatter expected) {
@@ -74,6 +107,15 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                 provider,
                 selector,
                 Optional.of(expected)
+        );
+    }
+
+    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterSelector selector,
+                                              final Optional<SpreadsheetFormatter> expected) {
+        this.spreadsheetFormatterAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                selector,
+                expected
         );
     }
 
@@ -87,6 +129,15 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         );
     }
 
+    default void spreadsheetFormatterInfosAndCheck(final SpreadsheetFormatterInfo... expected) {
+        this.spreadsheetFormatterInfosAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                Sets.of(
+                        expected
+                )
+        );
+    }
+
     default void spreadsheetFormatterInfosAndCheck(final SpreadsheetFormatterProvider provider,
                                                    final SpreadsheetFormatterInfo... expected) {
         this.spreadsheetFormatterInfosAndCheck(
@@ -94,6 +145,13 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                 Sets.of(
                         expected
                 )
+        );
+    }
+
+    default void spreadsheetFormatterInfosAndCheck(final Set<SpreadsheetFormatterInfo> expected) {
+        this.spreadsheetFormatterInfosAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                expected
         );
     }
 
