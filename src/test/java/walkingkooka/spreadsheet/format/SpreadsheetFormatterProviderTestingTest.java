@@ -56,7 +56,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
     class TestSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
         @Override
         public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
-            checkEquals("text-format", selector.name());
+            checkEquals("text-format", selector.name().value());
             return Optional.of(FORMATTER);
         }
 
