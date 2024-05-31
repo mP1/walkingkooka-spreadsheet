@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
@@ -26,6 +27,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 
@@ -35,7 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterColor,
-        SpreadsheetFormatColorParserToken> {
+        SpreadsheetFormatColorParserToken>
+        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterColor> {
 
     private final static String TEXT_PATTERN = "@@";
 
@@ -307,5 +310,47 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     @Override
     public Class<SpreadsheetPatternSpreadsheetFormatterColor> type() {
         return SpreadsheetPatternSpreadsheetFormatterColor.class;
+    }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentColor() {
+        final SpreadsheetPatternSpreadsheetFormatter formatter = SpreadsheetPattern.parseTextFormatPattern("@")
+                .formatter();
+
+        this.checkNotEquals(
+                SpreadsheetPatternSpreadsheetFormatterColor.with(
+                        this.parsePatternOrFail("[RED]"),
+                        formatter
+                ),
+                SpreadsheetPatternSpreadsheetFormatterColor.with(
+                        this.parsePatternOrFail("[COLOR01]"),
+                        formatter
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentFormatter() {
+        final SpreadsheetFormatColorParserToken token = this.parsePatternOrFail("[RED]");
+
+        this.checkNotEquals(
+                SpreadsheetPatternSpreadsheetFormatterColor.with(
+                        token,
+                        SpreadsheetPattern.parseTextFormatPattern("@")
+                                .formatter()
+                ),
+                SpreadsheetPatternSpreadsheetFormatterColor.with(
+                        token,
+                        SpreadsheetPattern.parseTextFormatPattern("@@@")
+                                .formatter()
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetPatternSpreadsheetFormatterColor createObject() {
+        return this.createFormatter();
     }
 }
