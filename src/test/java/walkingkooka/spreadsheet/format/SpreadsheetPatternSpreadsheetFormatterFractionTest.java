@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.Fraction;
@@ -41,13 +42,20 @@ import static org.junit.jupiter.api.Assertions.fail;
  * In expectations all symbols are doubled, as a means to verify the context is supplying the values.
  */
 public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterFraction,
-        SpreadsheetFormatFractionParserToken> {
+        SpreadsheetFormatFractionParserToken>
+        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterFraction> {
 
     //creation ..............................................................................................
 
     @Test
     public void testWithNullTokenFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPatternSpreadsheetFormatterFraction.with(null, fractioner()));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPatternSpreadsheetFormatterFraction.with(
+                        null,
+                        FRACTIONER
+                )
+        );
     }
 
     @Test
@@ -403,14 +411,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
 
     @Override
     SpreadsheetPatternSpreadsheetFormatterFraction createFormatter0(final SpreadsheetFormatFractionParserToken token) {
-        return SpreadsheetPatternSpreadsheetFormatterFraction.with(token, this.fractioner());
+        return SpreadsheetPatternSpreadsheetFormatterFraction.with(
+                token,
+                FRACTIONER
+        );
     }
 
-    private Function<BigDecimal, Fraction> fractioner() {
-        return this::makeIntoFraction;
-    }
+    private final static Function<BigDecimal, Fraction> FRACTIONER = SpreadsheetPatternSpreadsheetFormatterFractionTest::makeIntoFraction;
 
-    private Fraction makeIntoFraction(final BigDecimal value) {
+    private static Fraction makeIntoFraction(final BigDecimal value) {
         if (value.signum() == 0) {
             return Fraction.with(BigInteger.ZERO, BigInteger.ONE);
         }
@@ -464,5 +473,30 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Override
     public Class<SpreadsheetPatternSpreadsheetFormatterFraction> type() {
         return SpreadsheetPatternSpreadsheetFormatterFraction.class;
+    }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentToken() {
+        this.checkNotEquals(
+                this.createFormatter("#/#"),
+                this.createFormatter("##/##")
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentFractionerFunction() {
+        final SpreadsheetFormatFractionParserToken token = this.token();
+
+        this.checkNotEquals(
+                SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null),
+                SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null)
+        );
+    }
+
+    @Override
+    public SpreadsheetPatternSpreadsheetFormatterFraction createObject() {
+        return this.createFormatter();
     }
 }
