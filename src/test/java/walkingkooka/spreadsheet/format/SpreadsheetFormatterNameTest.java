@@ -17,11 +17,69 @@
 
 package walkingkooka.spreadsheet.format;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.reflect.ConstantsTesting;
 import walkingkooka.spreadsheet.component.SpreadsheetComponentNameTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-final public class SpreadsheetFormatterNameTest implements SpreadsheetComponentNameTesting<SpreadsheetFormatterName> {
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
+
+final public class SpreadsheetFormatterNameTest implements SpreadsheetComponentNameTesting<SpreadsheetFormatterName>,
+        ConstantsTesting<SpreadsheetFormatterName> {
+
+    // constants........................................................................................................
+
+    @Test
+    public void testWithDateFormat() {
+        this.verifyConstant("date-format");
+    }
+
+    @Test
+    public void testWithDateTimeFormat() {
+        this.verifyConstant("date-time-format");
+    }
+
+    @Test
+    public void testWithNumberFormat() {
+        this.verifyConstant("number-format");
+    }
+
+    @Test
+    public void testWithTextFormat() {
+        this.verifyConstant("text-format");
+    }
+
+    @Test
+    public void testWithTimeFormat() {
+        this.verifyConstant("time-format");
+    }
+
+    private void verifyConstant(final String text) {
+        assertSame(
+                SpreadsheetFormatterName.with(text),
+                SpreadsheetFormatterName.with(text)
+        );
+
+        final SpreadsheetFormatterName instance = SpreadsheetFormatterName.with(text);
+        assertSame(
+                instance,
+                this.unmarshall(
+                        this.marshallContext()
+                                .marshall(instance)
+                )
+        );
+    }
+
+    @Override
+    public Set<SpreadsheetFormatterName> intentionalDuplicateConstants() {
+        return Sets.empty();
+    }
+
+    // name.............................................................................................................
 
     @Override
     public SpreadsheetFormatterName createName(final String name) {

@@ -26,6 +26,8 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Objects;
+
 /**
  * The {@link Name} of a {@link SpreadsheetFormatter}. Note formatter names are case-sensitive.
  */
@@ -41,21 +43,80 @@ final public class SpreadsheetFormatterName implements SpreadsheetComponentNameL
      */
     public final static int MAX_LENGTH = SpreadsheetComponentName.MAX_LENGTH;
 
+    // SpreadsheetFormatterName instances...............................................................................
+
+    private final static String DATE_FORMAT_STRING = "date-format";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName DATE_FORMAT = new SpreadsheetFormatterName(DATE_FORMAT_STRING);
+
+    private final static String DATE_TIME_FORMAT_STRING = "date-time-format";
+
+    /**
+     * The name of the date-time {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName DATE_TIME_FORMAT = new SpreadsheetFormatterName(DATE_TIME_FORMAT_STRING);
+
+    private final static String NUMBER_FORMAT_STRING = "number-format";
+
+    /**
+     * The name of the number {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName NUMBER_FORMAT = new SpreadsheetFormatterName(NUMBER_FORMAT_STRING);
+    private final static String TEXT_FORMAT_STRING = "text-format";
+
+    /**
+     * The name of the text {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName TEXT_FORMAT = new SpreadsheetFormatterName(TEXT_FORMAT_STRING);
+
+    private final static String TIME_FORMAT_STRING = "time-format";
+
+    /**
+     * The name of the time {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName TIME_FORMAT = new SpreadsheetFormatterName(TIME_FORMAT_STRING);
+
     /**
      * Factory that creates a {@link SpreadsheetFormatterName}
      */
     public static SpreadsheetFormatterName with(final String name) {
-        return new SpreadsheetFormatterName(
-                SpreadsheetComponentName.with(name)
-        );
+        Objects.requireNonNull(name, "name");
+
+        final SpreadsheetFormatterName spreadsheetFormatterName;
+
+        switch (name) {
+            case DATE_FORMAT_STRING:
+                spreadsheetFormatterName = DATE_FORMAT;
+                break;
+            case DATE_TIME_FORMAT_STRING:
+                spreadsheetFormatterName = DATE_TIME_FORMAT;
+                break;
+            case NUMBER_FORMAT_STRING:
+                spreadsheetFormatterName = NUMBER_FORMAT;
+                break;
+            case TEXT_FORMAT_STRING:
+                spreadsheetFormatterName = TEXT_FORMAT;
+                break;
+            case TIME_FORMAT_STRING:
+                spreadsheetFormatterName = TIME_FORMAT;
+                break;
+            default:
+                spreadsheetFormatterName = new SpreadsheetFormatterName(name);
+                break;
+        }
+
+        return spreadsheetFormatterName;
     }
 
     /**
      * Private constructor
      */
-    private SpreadsheetFormatterName(final SpreadsheetComponentName name) {
+    private SpreadsheetFormatterName(final String name) {
         super();
-        this.name = name;
+        this.name = SpreadsheetComponentName.with(name);
     }
 
     @Override
