@@ -27,6 +27,32 @@ import java.util.Objects;
  */
 public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFormatterName> {
 
+    /**
+     * Parses the given text into a {@link SpreadsheetFormatterSelector}.
+     */
+    public static SpreadsheetFormatterSelector parse(final String text) {
+        CharSequences.failIfNullOrEmpty(text, "text");
+
+        final String textAfter;
+        final String nameText;
+        final int space = text.indexOf(' ');
+        if (-1 == space) {
+            nameText = text;
+            textAfter = "";
+        } else {
+            nameText = text.substring(0, space);
+            textAfter = text.substring(space + 1);
+        }
+
+        return new SpreadsheetFormatterSelector(
+                SpreadsheetFormatterName.with(nameText),
+                textAfter
+        );
+    }
+
+    /**
+     * Factory that creates a new {@link SpreadsheetFormatterSelector}.
+     */
     public static SpreadsheetFormatterSelector with(final SpreadsheetFormatterName name,
                                                     final String text) {
         return new SpreadsheetFormatterSelector(
