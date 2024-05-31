@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.component;
 
 import walkingkooka.naming.Name;
 import walkingkooka.text.CaseSensitivity;

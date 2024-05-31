@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.SpreadsheetComponentInfoLikeTesting;
+import walkingkooka.spreadsheet.component.SpreadsheetComponentInfoLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
