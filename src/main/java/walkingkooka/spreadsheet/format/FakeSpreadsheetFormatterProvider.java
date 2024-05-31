@@ -17,22 +17,17 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import java.util.Optional;
+import java.util.Set;
 
-public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
-
-    /**
-     * {@see FakeSpreadsheetFormatterProvider}
-     */
-    public static SpreadsheetFormatterProvider fake() {
-        return new FakeSpreadsheetFormatterProvider();
+public class FakeSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
+    @Override
+    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+        throw new UnsupportedOperationException();
     }
 
-
-    /**
-     * Stop creation
-     */
-    private SpreadsheetFormatterProviders() {
+    @Override
+    public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
         throw new UnsupportedOperationException();
     }
 }
