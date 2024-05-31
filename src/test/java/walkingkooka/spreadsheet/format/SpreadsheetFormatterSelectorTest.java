@@ -24,13 +24,17 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<SpreadsheetFormatterSelector>,
         HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSelector>,
         ToStringTesting<SpreadsheetFormatterSelector>,
-        ParseStringTesting<SpreadsheetFormatterSelector> {
+        ParseStringTesting<SpreadsheetFormatterSelector>,
+        JsonNodeMarshallingTesting<SpreadsheetFormatterSelector> {
 
     private final static SpreadsheetFormatterName NAME = SpreadsheetFormatterName.with("text-format");
 
@@ -185,5 +189,37 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // Json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+                this.createJsonNodeMarshallingValue(),
+                "\"text-format @@\""
+        );
+    }
+
+    @Test
+    public void testUnmarshall() {
+        this.unmarshallAndCheck(
+                "\"text-format @@\"",
+                this.createJsonNodeMarshallingValue()
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterSelector unmarshall(final JsonNode json,
+                                                   final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatterSelector.unmarshall(
+                json,
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterSelector createJsonNodeMarshallingValue() {
+        return this.createObject();
     }
 }
