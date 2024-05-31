@@ -66,6 +66,7 @@ import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.Temporal;
 import java.util.Locale;
 import java.util.function.Function;
 
@@ -1260,12 +1261,15 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetFormatter dateTimeFormatter(final String pattern,
-                                                   final Class<?> type) {
+                                                   final Class<? extends Temporal> type) {
         return formatter(
                 pattern,
                 SpreadsheetFormatParsers.dateTimeFormat(),
                 SpreadsheetFormatDateTimeParserToken.class,
-                (t) -> SpreadsheetFormatters.dateTime(t, type::isInstance)
+                (t) -> SpreadsheetFormatters.dateTime(
+                        t,
+                        type
+                )
         );
     }
 
