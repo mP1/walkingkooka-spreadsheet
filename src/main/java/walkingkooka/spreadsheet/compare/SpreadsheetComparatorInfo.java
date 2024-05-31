@@ -48,6 +48,7 @@ public final class SpreadsheetComparatorInfo implements SpreadsheetComponentInfo
         this.name = name;
     }
 
+    @Override
     public AbsoluteUrl url() {
         return this.url;
     }
