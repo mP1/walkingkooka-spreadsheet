@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -53,9 +54,16 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         );
     }
 
+    @Override
+    public TestSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
+        return new TestSpreadsheetFormatterProvider();
+    }
+
     class TestSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
         @Override
         public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+            Objects.requireNonNull(selector, "selector");
+
             checkEquals("text-format", selector.name().value());
             return Optional.of(FORMATTER);
         }
