@@ -19,6 +19,10 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.naming.HasName;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 
@@ -113,5 +117,35 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
         return text.isEmpty() ?
                 name :
                 name + " " + CharSequences.quoteAndEscape(text);
+    }
+
+    // JsonNodeContext..................................................................................................
+
+    /**
+     * Factory that creates a {@link SpreadsheetFormatterSelector} from a {@link JsonNode}.
+     */
+    static SpreadsheetFormatterSelector unmarshall(final JsonNode node,
+                                                   final JsonNodeUnmarshallContext context) {
+        return parse(node.stringOrFail());
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        final String name = this.name.toString();
+        final String text = this.text;
+
+        return JsonNode.string(
+                text.isEmpty() ?
+                        name :
+                        name + " " + text
+        );
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetFormatterSelector.class),
+                SpreadsheetFormatterSelector::unmarshall,
+                SpreadsheetFormatterSelector::marshall,
+                SpreadsheetFormatterSelector.class
+        );
     }
 }
