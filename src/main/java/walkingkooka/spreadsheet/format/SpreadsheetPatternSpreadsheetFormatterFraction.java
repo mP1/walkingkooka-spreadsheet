@@ -154,6 +154,22 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
     // Object...........................................................................................................
 
     @Override
+    public int hashCode() {
+        return this.token.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetPatternSpreadsheetFormatterFraction && this.equals0((SpreadsheetPatternSpreadsheetFormatterFraction) other);
+    }
+
+    private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterFraction other) {
+        return this.token.equals(other.token) &&
+                this.fractioner.equals(other.fractioner);
+    }
+
+    @Override
     public String toString() {
         return this.token.text();
     }
