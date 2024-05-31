@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -28,6 +29,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContexts;
@@ -42,7 +44,8 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterCondition,
-        SpreadsheetFormatConditionParserToken> {
+        SpreadsheetFormatConditionParserToken>
+        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterCondition> {
 
     private final static String TEXT_PATTERN = "@!condition-true";
 
@@ -348,5 +351,47 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Override
     public Class<SpreadsheetPatternSpreadsheetFormatterCondition> type() {
         return SpreadsheetPatternSpreadsheetFormatterCondition.class;
+    }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentToken() {
+        final SpreadsheetPatternSpreadsheetFormatter formatter = SpreadsheetPattern.parseTextFormatPattern("@")
+                .formatter();
+
+        this.checkNotEquals(
+                SpreadsheetPatternSpreadsheetFormatterCondition.with(
+                        this.parsePatternOrFail("[<0]"),
+                        formatter
+                ),
+                SpreadsheetPatternSpreadsheetFormatterCondition.with(
+                        this.parsePatternOrFail("[>0]"),
+                        formatter
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentFormatter() {
+        final SpreadsheetFormatConditionParserToken token = this.parsePatternOrFail("[=0]");
+
+        this.checkNotEquals(
+                SpreadsheetPatternSpreadsheetFormatterCondition.with(
+                        token,
+                        SpreadsheetPattern.parseTextFormatPattern("@")
+                                .formatter()
+                ),
+                SpreadsheetPatternSpreadsheetFormatterCondition.with(
+                        token,
+                        SpreadsheetPattern.parseTextFormatPattern("@@@")
+                                .formatter()
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetPatternSpreadsheetFormatterCondition createObject() {
+        return this.createFormatter();
     }
 }

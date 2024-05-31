@@ -89,6 +89,22 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
     // Object...........................................................................................................
 
     @Override
+    public int hashCode() {
+        return this.token.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetPatternSpreadsheetFormatterCondition && this.equals0((SpreadsheetPatternSpreadsheetFormatterCondition) other);
+    }
+
+    private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterCondition other) {
+        return this.token.equals(other.token) &&
+                this.formatter.equals(other.formatter);
+    }
+
+    @Override
     public String toString() {
         return this.token.text() + " " + this.formatter;
     }
