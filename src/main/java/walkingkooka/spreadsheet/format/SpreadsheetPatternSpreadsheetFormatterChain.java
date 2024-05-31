@@ -92,6 +92,21 @@ final class SpreadsheetPatternSpreadsheetFormatterChain implements SpreadsheetPa
     // Object...........................................................................................................
 
     @Override
+    public int hashCode() {
+        return this.formatters.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetPatternSpreadsheetFormatterChain && this.equals0((SpreadsheetPatternSpreadsheetFormatterChain) other);
+    }
+
+    private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterChain other) {
+        return this.formatters.equals(other.formatters);
+    }
+
+    @Override
     public String toString() {
         return SpreadsheetPattern.SEPARATOR.toSeparatedString(
                 this.formatters,
