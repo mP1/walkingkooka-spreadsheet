@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.naming.Name;
 import walkingkooka.spreadsheet.component.SpreadsheetComponentName;
 import walkingkooka.spreadsheet.component.SpreadsheetComponentNameLike;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -50,34 +51,49 @@ final public class SpreadsheetFormatterName implements SpreadsheetComponentNameL
     /**
      * The name of the date {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName DATE_FORMAT = new SpreadsheetFormatterName(DATE_FORMAT_STRING);
+    public final static SpreadsheetFormatterName DATE_FORMAT = new SpreadsheetFormatterName(
+            DATE_FORMAT_STRING,
+            SpreadsheetPatternKind.DATE_FORMAT_PATTERN
+    );
 
     private final static String DATE_TIME_FORMAT_STRING = "date-time-format";
 
     /**
      * The name of the date-time {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName DATE_TIME_FORMAT = new SpreadsheetFormatterName(DATE_TIME_FORMAT_STRING);
+    public final static SpreadsheetFormatterName DATE_TIME_FORMAT = new SpreadsheetFormatterName(
+            DATE_TIME_FORMAT_STRING,
+            SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
+    );
 
     private final static String NUMBER_FORMAT_STRING = "number-format";
 
     /**
      * The name of the number {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName NUMBER_FORMAT = new SpreadsheetFormatterName(NUMBER_FORMAT_STRING);
+    public final static SpreadsheetFormatterName NUMBER_FORMAT = new SpreadsheetFormatterName(
+            NUMBER_FORMAT_STRING,
+            SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
+    );
     private final static String TEXT_FORMAT_STRING = "text-format";
 
     /**
      * The name of the text {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName TEXT_FORMAT = new SpreadsheetFormatterName(TEXT_FORMAT_STRING);
+    public final static SpreadsheetFormatterName TEXT_FORMAT = new SpreadsheetFormatterName(
+            TEXT_FORMAT_STRING,
+            SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+    );
 
     private final static String TIME_FORMAT_STRING = "time-format";
 
     /**
      * The name of the time {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName TIME_FORMAT = new SpreadsheetFormatterName(TIME_FORMAT_STRING);
+    public final static SpreadsheetFormatterName TIME_FORMAT = new SpreadsheetFormatterName(
+            TIME_FORMAT_STRING,
+            SpreadsheetPatternKind.TIME_FORMAT_PATTERN
+    );
 
     /**
      * Factory that creates a {@link SpreadsheetFormatterName}
@@ -104,7 +120,10 @@ final public class SpreadsheetFormatterName implements SpreadsheetComponentNameL
                 spreadsheetFormatterName = TIME_FORMAT;
                 break;
             default:
-                spreadsheetFormatterName = new SpreadsheetFormatterName(name);
+                spreadsheetFormatterName = new SpreadsheetFormatterName(
+                        name,
+                        null // other SpreadsheetFormatterNames dont have a SpreadsheetPatternKind
+                );
                 break;
         }
 
@@ -114,9 +133,11 @@ final public class SpreadsheetFormatterName implements SpreadsheetComponentNameL
     /**
      * Private constructor
      */
-    private SpreadsheetFormatterName(final String name) {
+    private SpreadsheetFormatterName(final String name,
+                                     final SpreadsheetPatternKind patternKind) {
         super();
         this.name = SpreadsheetComponentName.with(name);
+        this.patternKind = patternKind;
     }
 
     @Override
@@ -125,6 +146,10 @@ final public class SpreadsheetFormatterName implements SpreadsheetComponentNameL
     }
 
     private final SpreadsheetComponentName name;
+
+
+    // used by SpreadsheetFormatterSelector.formatter
+    final SpreadsheetPatternKind patternKind;
 
     // Object...........................................................................................................
 

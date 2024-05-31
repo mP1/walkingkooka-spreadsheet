@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.naming.HasName;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -25,6 +26,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Contains the {@link SpreadsheetFormatterName} and some text which may contain the pattern text for {@link SpreadsheetPatternSpreadsheetFormatter}.
@@ -87,6 +89,24 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
     }
 
     private final String text;
+
+    /**
+     * Factory which parses the text as a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
+     */
+    Optional<SpreadsheetFormatter> formatter() {
+        if (null == this.formatter) {
+            final SpreadsheetPatternKind patternKind = this.name.patternKind;
+            this.formatter = Optional.ofNullable(
+                    null == patternKind ?
+                            null :
+                            patternKind.parse(this.text).formatter()
+            );
+        }
+
+        return this.formatter;
+    }
+
+    Optional<SpreadsheetFormatter> formatter;
 
     // Object...........................................................................................................
 
