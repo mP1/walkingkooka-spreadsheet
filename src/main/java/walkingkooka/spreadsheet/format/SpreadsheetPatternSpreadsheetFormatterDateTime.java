@@ -103,6 +103,25 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
     // Object...........................................................................................................
 
     @Override
+    public int hashCode() {
+        return Objects.hash(
+                this.valueType,
+                this.token
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetPatternSpreadsheetFormatterDateTime && this.equals0((SpreadsheetPatternSpreadsheetFormatterDateTime) other);
+    }
+
+    private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterDateTime other) {
+        return this.valueType == other.valueType &&
+                this.token.equals(other.token);
+    }
+
+    @Override
     public String toString() {
         return this.token.text();
     }
