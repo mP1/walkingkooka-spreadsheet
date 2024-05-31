@@ -19,10 +19,12 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Objects;
@@ -31,7 +33,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterChain, SpreadsheetFormatParserToken> {
+public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterChain, SpreadsheetFormatParserToken>
+        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterChain> {
 
     private final static Integer VALUE1 = 11;
     private final static Double VALUE2 = 222.5;
@@ -118,23 +121,19 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
         return Cast.to(
                 SpreadsheetPatternSpreadsheetFormatterChain.with(
                         Lists.of(
-                                this.formatter1(),
-                                this.formatter2()
+                                FORMATTER1,
+                                FORMATTER2
                         )
                 )
         );
     }
 
-    private SpreadsheetPatternSpreadsheetFormatter formatter1() {
-        return this.formatter(VALUE1, TEXT1);
-    }
+    private SpreadsheetPatternSpreadsheetFormatter FORMATTER1 = formatter(VALUE1, TEXT1);
 
-    private SpreadsheetPatternSpreadsheetFormatter formatter2() {
-        return this.formatter(VALUE2, TEXT2);
-    }
+    private SpreadsheetPatternSpreadsheetFormatter FORMATTER2 = formatter(VALUE2, TEXT2);
 
-    private SpreadsheetPatternSpreadsheetFormatter formatter(final Object value,
-                                                             final String text) {
+    private static SpreadsheetPatternSpreadsheetFormatter formatter(final Object value,
+                                                                    final String text) {
         return new FakeSpreadsheetPatternSpreadsheetFormatter() {
             @Override
             public boolean canFormat(final Object v,
@@ -182,5 +181,32 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
     @Override
     public void testTypeNaming() {
         throw new UnsupportedOperationException();
+    }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentFormatters() {
+        this.checkNotEquals(
+                SpreadsheetPatternSpreadsheetFormatterChain.with(
+                        Lists.of(
+                                SpreadsheetPattern.parseTextFormatPattern("@")
+                                        .formatter(),
+                                SpreadsheetPattern.parseTextFormatPattern("@@")
+                                        .formatter()
+                        )
+                ),
+                SpreadsheetPatternSpreadsheetFormatterChain.with(
+                        Lists.of(
+                                SpreadsheetPattern.parseTextFormatPattern("@@@")
+                                        .formatter()
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetPatternSpreadsheetFormatterChain createObject() {
+        return this.createFormatter();
     }
 }
