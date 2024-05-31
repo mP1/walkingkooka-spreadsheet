@@ -37,7 +37,7 @@ public interface SpreadsheetComponentInfoLike<I extends SpreadsheetComponentInfo
         return this.name().compareTo(other.name());
     }
 
-    // HateoResource....................................................................................................
+    // HateosResource...................................................................................................
 
     @Override
     default String hateosLinkId() {
