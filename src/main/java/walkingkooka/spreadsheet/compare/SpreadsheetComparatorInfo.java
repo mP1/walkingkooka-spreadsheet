@@ -21,9 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.component.SpreadsheetComponentInfoLike;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
@@ -93,52 +91,14 @@ public final class SpreadsheetComparatorInfo implements SpreadsheetComponentInfo
 
     // Json.............................................................................................................
 
-    private final static String URL_PROPERTY_STRING = "url";
-
-    private final static String NAME_PROPERTY_STRING = "name";
-
-    // @VisibleForTesting
-    final static JsonPropertyName URL_PROPERTY = JsonPropertyName.with(URL_PROPERTY_STRING);
-
-    final static JsonPropertyName NAME_PROPERTY = JsonPropertyName.with(NAME_PROPERTY_STRING);
-
     static SpreadsheetComparatorInfo unmarshall(final JsonNode node,
                                                 final JsonNodeUnmarshallContext context) {
-        AbsoluteUrl url = null;
-        SpreadsheetComparatorName spreadsheetComparatorName = null;
-
-        for (final JsonNode child : node.objectOrFail().children()) {
-            final JsonPropertyName name = child.name();
-
-            switch (name.value()) {
-                case URL_PROPERTY_STRING:
-                    url = context.unmarshall(
-                            child,
-                            AbsoluteUrl.class
-                    );
-                    break;
-                case NAME_PROPERTY_STRING:
-                    spreadsheetComparatorName = context.unmarshall(
-                            child,
-                            SpreadsheetComparatorName.class
-                    );
-                    break;
-                default:
-                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
-                    break;
-            }
-        }
-
-        return with(
-                url,
-                spreadsheetComparatorName
+        return SpreadsheetComponentInfoLike.unmarshall(
+                node,
+                context,
+                SpreadsheetComparatorName.class,
+                SpreadsheetComparatorInfo::with
         );
-    }
-
-    private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.object()
-                .set(URL_PROPERTY, context.marshall(this.url))
-                .set(NAME_PROPERTY, context.marshall(this.name));
     }
 
     static {
