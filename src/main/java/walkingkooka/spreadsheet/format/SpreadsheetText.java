@@ -23,6 +23,8 @@ import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.text.HasText;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -42,6 +44,7 @@ import java.util.Optional;
  */
 public final class SpreadsheetText implements HasText,
         HasTextNode,
+        TreePrintable,
         UsesToStringBuilder {
 
     /**
@@ -220,5 +223,30 @@ public final class SpreadsheetText implements HasText,
                 SpreadsheetText::marshall,
                 SpreadsheetText.class
         );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        final String text = this.text();
+        if (false == text.isEmpty()) {
+            final Color color = this.color().orElse(null);
+            if (null != color) {
+                printer.indent();
+                printer.println(color.toString());
+            }
+            printer.indent();
+            {
+                printer.println(text);
+            }
+            printer.outdent();
+
+            if (null != color) {
+                printer.outdent();
+            }
+        }
     }
 }
