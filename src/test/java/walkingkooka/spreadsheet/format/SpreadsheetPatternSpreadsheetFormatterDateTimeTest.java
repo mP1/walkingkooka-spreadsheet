@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.ConverterContexts;
@@ -42,7 +43,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<
         SpreadsheetPatternSpreadsheetFormatterDateTime,
-        SpreadsheetFormatDateTimeParserToken> {
+        SpreadsheetFormatDateTimeParserToken>
+        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterDateTime> {
 
     private final static Color RED = Color.parse("#FF0000");
 
@@ -969,5 +971,35 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     @Override
     public Class<SpreadsheetPatternSpreadsheetFormatterDateTime> type() {
         return SpreadsheetPatternSpreadsheetFormatterDateTime.class;
+    }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentPattern() {
+        this.checkNotEquals(
+                this.createFormatter("dd/mm/yyyy")
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentValueType() {
+        final SpreadsheetFormatDateTimeParserToken token = this.parsePatternOrFail("dd/mm/yyyy");
+
+        this.checkNotEquals(
+                SpreadsheetPatternSpreadsheetFormatterDateTime.with(
+                        token,
+                        LocalDate.class
+                ),
+                SpreadsheetPatternSpreadsheetFormatterDateTime.with(
+                        token,
+                        LocalDateTime.class
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetPatternSpreadsheetFormatterDateTime createObject() {
+        return this.createFormatter();
     }
 }
