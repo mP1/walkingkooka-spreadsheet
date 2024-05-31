@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.SpreadsheetComponentInfoLike;
+import walkingkooka.spreadsheet.component.SpreadsheetComponentInfoLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;

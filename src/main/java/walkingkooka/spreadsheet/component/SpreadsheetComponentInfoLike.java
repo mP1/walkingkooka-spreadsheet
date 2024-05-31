@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.component;
 
 import walkingkooka.naming.HasName;
 import walkingkooka.net.http.server.hateos.HateosResource;

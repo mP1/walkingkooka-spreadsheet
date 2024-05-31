@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.SpreadsheetComponentNameTesting;
+import walkingkooka.spreadsheet.component.SpreadsheetComponentNameTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 

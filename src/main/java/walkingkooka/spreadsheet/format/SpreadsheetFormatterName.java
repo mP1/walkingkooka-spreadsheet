@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
-import walkingkooka.spreadsheet.SpreadsheetComponentName;
-import walkingkooka.spreadsheet.SpreadsheetComponentNameLike;
+import walkingkooka.spreadsheet.component.SpreadsheetComponentName;
+import walkingkooka.spreadsheet.component.SpreadsheetComponentNameLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
