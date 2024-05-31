@@ -28,6 +28,12 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
         return new FakeSpreadsheetFormatterProvider();
     }
 
+    /**
+     * {@see SpreadsheetFormatPatternSpreadsheetFormatterProvider}
+     */
+    public static SpreadsheetFormatterProvider spreadsheetFormatPattern() {
+        return SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE;
+    }
 
     /**
      * Stop creation
