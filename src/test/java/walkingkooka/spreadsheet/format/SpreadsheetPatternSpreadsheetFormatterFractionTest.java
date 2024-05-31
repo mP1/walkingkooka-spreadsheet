@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.Fraction;
@@ -42,8 +41,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * In expectations all symbols are doubled, as a means to verify the context is supplying the values.
  */
 public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterFraction,
-        SpreadsheetFormatFractionParserToken>
-        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterFraction> {
+        SpreadsheetFormatFractionParserToken> {
 
     //creation ..............................................................................................
 
@@ -493,10 +491,5 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
                 SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null),
                 SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null)
         );
-    }
-
-    @Override
-    public SpreadsheetPatternSpreadsheetFormatterFraction createObject() {
-        return this.createFormatter();
     }
 }

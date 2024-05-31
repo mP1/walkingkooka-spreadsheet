@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConversionException;
@@ -47,8 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * In expectations all symbols are changed parse defaults to characters to verify the context is supplying such symbols.
  */
 public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterNumber,
-        SpreadsheetFormatNumberParserToken>
-        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterNumber> {
+        SpreadsheetFormatNumberParserToken> {
 
     private final static Color RED = Color.parse("#FF0000");
     
@@ -2543,10 +2541,5 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
                 this.createFormatter("$0.00"),
                 this.createFormatter("#.##")
         );
-    }
-
-    @Override
-    public SpreadsheetPatternSpreadsheetFormatterNumber createObject() {
-        return this.createFormatter();
     }
 }

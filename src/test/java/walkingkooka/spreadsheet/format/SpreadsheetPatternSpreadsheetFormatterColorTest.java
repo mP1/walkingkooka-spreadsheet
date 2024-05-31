@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
@@ -37,8 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterColor,
-        SpreadsheetFormatColorParserToken>
-        implements HashCodeEqualsDefinedTesting2<SpreadsheetPatternSpreadsheetFormatterColor> {
+        SpreadsheetFormatColorParserToken> {
 
     private final static String TEXT_PATTERN = "@@";
 
@@ -347,10 +345,5 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                                 .formatter()
                 )
         );
-    }
-
-    @Override
-    public SpreadsheetPatternSpreadsheetFormatterColor createObject() {
-        return this.createFormatter();
     }
 }

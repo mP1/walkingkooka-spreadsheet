@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
@@ -32,7 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends SpreadsheetPatternSpreadsheetFormatter,
         T extends SpreadsheetFormatParserToken>
         extends SpreadsheetFormatterTestCase<F>
-        implements TypeNameTesting<F> {
+        implements HashCodeEqualsDefinedTesting2<F>,
+        TypeNameTesting<F> {
 
     SpreadsheetPatternSpreadsheetFormatterTestCase() {
         super();
@@ -90,5 +92,12 @@ public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends S
     @Override
     public final String typeNameSuffix() {
         return "";
+    }
+
+    // equals...........................................................................................................
+
+    @Override
+    public final F createObject() {
+        return this.createFormatter();
     }
 }
