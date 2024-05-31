@@ -109,6 +109,22 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     // Object...........................................................................................................
 
     @Override
+    public int hashCode() {
+        return this.token.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetPatternSpreadsheetFormatterColor && this.equals0((SpreadsheetPatternSpreadsheetFormatterColor) other);
+    }
+
+    private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterColor other) {
+        return this.sourceValue.equals(other.sourceValue) &&
+                this.formatter.equals(other.formatter);
+    }
+
+    @Override
     public String toString() {
         return this.token.text() + " " + this.formatter;
     }
