@@ -25,6 +25,7 @@ import walkingkooka.color.Color;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -42,7 +43,8 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         HashCodeEqualsDefinedTesting2<SpreadsheetText>,
         HasTextNodeTesting,
         JsonNodeMarshallingTesting<SpreadsheetText>,
-        ToStringTesting<SpreadsheetText> {
+        ToStringTesting<SpreadsheetText>,
+        TreePrintableTesting {
 
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
     private final static String TEXT = "1/1/2000";
@@ -267,5 +269,34 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Override
     public SpreadsheetText createJsonNodeMarshallingValue() {
         return this.createObject();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintEmptyText() {
+        this.treePrintAndCheck(
+                SpreadsheetText.EMPTY,
+                "SpreadsheetText\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintText() {
+        this.treePrintAndCheck(
+                SpreadsheetText.with("hello123"),
+                "SpreadsheetText\n" +
+                        "  hello123\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintColorAndText() {
+        this.treePrintAndCheck(
+                SpreadsheetText.with("hello123").setColor(Optional.of(Color.fromRgb(12345678))),
+                "SpreadsheetText\n" +
+                        "  #bc614e\n" +
+                        "    hello123\n"
+        );
     }
 }
