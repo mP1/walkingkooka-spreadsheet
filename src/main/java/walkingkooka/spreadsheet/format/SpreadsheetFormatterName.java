@@ -151,6 +151,13 @@ final public class SpreadsheetFormatterName implements SpreadsheetComponentNameL
     // used by SpreadsheetFormatterSelector.formatter
     final SpreadsheetPatternKind patternKind;
 
+    /**
+     * Returns true if the name is actually a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern}
+     */
+    public boolean isSpreadsheetFormatPattern() {
+        return null != this.patternKind;
+    }
+
     // Object...........................................................................................................
 
     @Override
