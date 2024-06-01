@@ -35,6 +35,12 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
 
     /**
      * Parses the given text into a {@link SpreadsheetFormatterSelector}.
+     * <br>
+     * Note the format is formatter-name SPACE optional-text, for {@link SpreadsheetPatternSpreadsheetFormatter} the text will hold the raw pattern, without
+     * any need for encoding of any kind.
+     * <pre>
+     * text-format @
+     * </pre>
      */
     public static SpreadsheetFormatterSelector parse(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
