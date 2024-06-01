@@ -79,6 +79,65 @@ final public class SpreadsheetFormatterNameTest implements SpreadsheetComponentN
         return Sets.empty();
     }
 
+    // isSpreadsheetFormatPattern.......................................................................................
+
+    @Test
+    public void testIsSpreadsheetFormatPatternWithNonSpreadsheetFormatPatternName() {
+        this.isSpreadsheetFormatPatternAndCheck(
+                "abc-123",
+                false
+        );
+    }
+
+    @Test
+    public void testIsSpreadsheetFormatPatternWithDateFormat() {
+        this.isSpreadsheetFormatPatternAndCheck(
+                "date-format",
+                true
+        );
+    }
+
+    @Test
+    public void testIsSpreadsheetFormatPatternWithDateTimeFormat() {
+        this.isSpreadsheetFormatPatternAndCheck(
+                "date-time-format",
+                true
+        );
+    }
+
+    @Test
+    public void testIsSpreadsheetFormatPatternWithNumberFormat() {
+        this.isSpreadsheetFormatPatternAndCheck(
+                "number-format",
+                true
+        );
+    }
+
+    @Test
+    public void testIsSpreadsheetFormatPatternWithDateTextFormat() {
+        this.isSpreadsheetFormatPatternAndCheck(
+                "text-format",
+                true
+        );
+    }
+
+    @Test
+    public void testIsSpreadsheetFormatPatternWithTimeFormat() {
+        this.isSpreadsheetFormatPatternAndCheck(
+                "time-format",
+                true
+        );
+    }
+
+    private void isSpreadsheetFormatPatternAndCheck(final String name,
+                                                    final boolean expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetFormatterName.with(name)
+                        .isSpreadsheetFormatPattern()
+        );
+    }
+
     // name.............................................................................................................
 
     @Override
