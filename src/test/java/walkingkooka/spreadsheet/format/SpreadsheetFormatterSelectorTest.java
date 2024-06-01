@@ -23,10 +23,15 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -134,6 +139,48 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
+    }
+
+    // spreadsheetFormatPattern.........................................................................................
+
+    @Test
+    public void testSpreadsheetFormatPatternWithDateFormat() {
+        this.spreadsheetFormatPatternAndCheck(
+                "date-format dd/mm/yyyy",
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatPatternWithDateFormatWithoutPattern() {
+        this.spreadsheetFormatPatternAndCheck(
+                "date-format"
+        );
+    }
+
+    private void spreadsheetFormatPatternAndCheck(final String text) {
+        this.spreadsheetFormatPatternAndCheck(
+                text,
+                Optional.empty()
+        );
+    }
+
+    private void spreadsheetFormatPatternAndCheck(final String text,
+                                                  final SpreadsheetFormatPattern expected) {
+        this.spreadsheetFormatPatternAndCheck(
+                text,
+                Optional.of(expected)
+        );
+    }
+
+    private void spreadsheetFormatPatternAndCheck(final String text,
+                                                  final Optional<SpreadsheetFormatPattern> expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetFormatterSelector.parse(text)
+                        .spreadsheetFormatPattern(),
+                () -> "spreadsheetFormatPattern " + CharSequences.quote(text)
+        );
     }
 
     // equals...........................................................................................................

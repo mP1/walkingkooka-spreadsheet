@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.naming.HasName;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -97,22 +98,31 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
     private final String text;
 
     /**
-     * Factory which parses the text as a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
+     * Returns a {@link SpreadsheetFormatPattern} if this selector is for a {@link SpreadsheetPatternSpreadsheetFormatter},
+     * providing the text is not empty and a valid pattern.
      */
-    Optional<SpreadsheetFormatter> formatter() {
-        if (null == this.formatter) {
+    public Optional<SpreadsheetFormatPattern> spreadsheetFormatPattern() {
+        if (null == this.spreadsheetFormatPattern) {
             final SpreadsheetPatternKind patternKind = this.name.patternKind;
-            this.formatter = Optional.ofNullable(
-                    null == patternKind ?
-                            null :
-                            patternKind.parse(this.text).formatter()
-            );
+
+            SpreadsheetFormatPattern formatPattern;
+
+            try {
+                formatPattern = null == patternKind ?
+                        null :
+                        patternKind.parse(this.text).toFormat();
+            } catch (final RuntimeException fail) {
+                formatPattern = null;
+            }
+
+
+            this.spreadsheetFormatPattern = Optional.ofNullable(formatPattern);
         }
 
-        return this.formatter;
+        return this.spreadsheetFormatPattern;
     }
 
-    Optional<SpreadsheetFormatter> formatter;
+    private Optional<SpreadsheetFormatPattern> spreadsheetFormatPattern;
 
     // Object...........................................................................................................
 

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -39,7 +40,8 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     @Override
     public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
-        return selector.formatter();
+        return selector.spreadsheetFormatPattern()
+                .map(SpreadsheetPattern::formatter);
     }
 
     @Override
