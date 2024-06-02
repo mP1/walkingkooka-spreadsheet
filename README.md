@@ -97,4 +97,37 @@ A wide variety of items are stored for each spreadsheet including but not limite
 
 ## Internal components
 
+There are many internal components that contribute to the core functionality of a spreadsheet. Eventually each of
+these will be a plugin where users can contribute an alternative or supplementary choice.
+
+### [SpreadsheetComparators](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java)
+
+All sorting is performed by using a selected `SpreadsheetComparator`, which is identical to a `java.util.Comparator`
+but also includes a `type` property of `java.lang.Class`. The `type` property is used to convert each value prior to the
+actual comparison.
+
+This supports advanced features such as sorting a range of cells with
+
+- Date
+- DateTime
+- Day of Month
+- Day of Week
+- Hour of AMPM
+- Hour of Day
+- Month of Year
+- Nano of Second
+- Number
+- Second of Minute
+- Text
+- Text case-insensitive
+- Time
+- Year
+
+It is thus possible to sort a column(s) in the following possible ways
+
+- `day-of-month` then `month-of-year` then `year`
+- `seconds-of-minute` then `minute-of-day` then `hour-of-day`
+
+When sorting a cell-range/column/rows it is possible to sort each column/row with different `SpreadsheetComparator(s)`.
+
 TODO
