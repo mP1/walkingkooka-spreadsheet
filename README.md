@@ -130,9 +130,10 @@ It is thus possible to sort a column(s) in the following possible ways
 
 When sorting a cell-range/column/rows it is possible to sort each column/row with different `SpreadsheetComparator(s)`.
 
-- [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/15) Additional `SpreadsheetComparator(s)` may be
-  provided via a
+- Additional `SpreadsheetComparator(s)` may be provided via a
   custom [SpreadsheetComparatorProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorProvider.java)
+  *DONE*
+- Uploaded plugins [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/15)
 
 ### [ExpressionFunction](https://github.com/mP1/walkingkooka-tree/blob/master/src/main/java/walkingkooka/tree/expression/function/ExpressionFunction.java)
 
