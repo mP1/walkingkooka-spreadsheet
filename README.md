@@ -40,9 +40,9 @@ A wide variety of items are stored for each spreadsheet including but not limite
   - [locale](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameLocale.java)
   - It is possible to replace the initial `Locale` symbols used when formatting numbers and dates.
     - Date
-      - [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/4129) User provided names for the days of the week
-      - [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/4130) User provided names for the months of the
-        year
+      - User provided names for the days of the week [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/4129)
+      - User provided names for the months of the
+        year [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/4130)
     - Numbers
       - [Currency symbol](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameCurrencySymbol.java)
       - [Decimal separator](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameDecimalSeparator.java)
@@ -74,7 +74,7 @@ A wide variety of items are stored for each spreadsheet including but not limite
   - [Text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern.java)
   - [Time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.java)
   - [Custom formatters](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatter.java)
-    - TODO Adding support for authoring (and uploading) or selecting from the store custom formatters.
+    - Adding support for authoring (and uploading) or selecting from the store custom formatters *SEE BELOW*
   - [General digit count](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount.java)
     Controls the number of digits that can appear when the `General` format pattern is selected.
 - Parsing
@@ -83,7 +83,7 @@ A wide variety of items are stored for each spreadsheet including but not limite
     - [DateTime](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern.java)
     - [Number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern.java)
     - [Time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePattern.java)
-    - TODO Adding support for authoring (and uploading) or selecting from the store custom formatters.
+    - Adding support for authoring (and uploading) or selecting from the store custom parsers.
 - Viewport
   These properties control the spreadsheet grid view.
   - [Frozen columns](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameFrozenColumns.java)
