@@ -130,6 +130,10 @@ It is thus possible to sort a column(s) in the following possible ways
 
 When sorting a cell-range/column/rows it is possible to sort each column/row with different `SpreadsheetComparator(s)`.
 
+- [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/15) Additional `SpreadsheetComparator(s)` may be
+  provided via a
+  custom [SpreadsheetComparatorProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorProvider.java)
+
 ### [SpreadsheetFormatter](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatter.java)
 
 A `SpreadsheetFormatter` is used to format the cell value into text that is displayed within the grid of cells.
