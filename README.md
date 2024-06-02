@@ -134,6 +134,16 @@ When sorting a cell-range/column/rows it is possible to sort each column/row wit
   provided via a
   custom [SpreadsheetComparatorProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorProvider.java)
 
+### [ExpressionFunction](https://github.com/mP1/walkingkooka-tree/blob/master/src/main/java/walkingkooka/tree/expression/function/ExpressionFunction.java)
+
+Functions within a formula expressions are defined by individual `ExpressionFunction`.
+
+Currently there are about 100+ functions available and these are
+listed [HERE](https://github.com/mP1/walkingkooka-spreadsheet-server-expression-function).
+
+- *DONE* Additional `ExpressionFunction(s)` may be provided via a
+  custom [ExpressionFunctionProvider](https://github.com/mP1/walkingkooka-tree-expression-function-provider/blob/master/src/main/java/walkingkooka/tree/expression/function/provider/ExpressionFunctionProvider.java)
+
 ### [SpreadsheetFormatter](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatter.java)
 
 A `SpreadsheetFormatter` is used to format the cell value into text that is displayed within the grid of cells.
