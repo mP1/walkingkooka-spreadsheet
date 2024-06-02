@@ -27,7 +27,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
- * The {@link Name} of a component within spreadsheet. Note comparator names are case-sensitive.
+ * The {@link Name} of a component within a spreadsheet. Note component names are case-sensitive.
  */
 final public class SpreadsheetComponentName implements SpreadsheetComponentNameLike<SpreadsheetComponentName> {
 
