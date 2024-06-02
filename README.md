@@ -130,4 +130,28 @@ It is thus possible to sort a column(s) in the following possible ways
 
 When sorting a cell-range/column/rows it is possible to sort each column/row with different `SpreadsheetComparator(s)`.
 
+### [SpreadsheetFormatter](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatter.java)
+
+A `SpreadsheetFormatter` is used to format the cell value into text that is displayed within the grid of cells.
+
+There are several built-in SpreadsheetFormatter(s) one for each Spreadsheet type, each supporting the standard patterns
+to allow
+user customisation of that value type along with a single color.
+
+- [date](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
+  dd/mm/yyyy
+- [date-time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
+  dd/mm/yyyy hh:mm:ss
+- [General](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterGeneral.java)
+  General
+- [number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterNumber.java) $#.###
+- [text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterText.java) @
+- [time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
+  hh:mm:ss
+
+- [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/14) Additional `SpreadsheetFormatter(s)` may be
+  provided via a
+  custom [SpreadsheetFormatterProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatterProvider.java)
+  it is possible to provided
+
 TODO
