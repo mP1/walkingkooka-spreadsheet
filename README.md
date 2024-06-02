@@ -157,4 +157,7 @@ user customisation of that value type along with a single color.
   provided via a
   custom [SpreadsheetFormatterProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatterProvider.java)
 
-TODO
+### Other internal components
+
+*TODO* Mention here
+*TODO* Dynamic plugin support
