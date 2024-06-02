@@ -142,8 +142,10 @@ Functions within a formula expressions are defined by individual `ExpressionFunc
 Currently there are about 100+ functions available and these are
 listed [HERE](https://github.com/mP1/walkingkooka-spreadsheet-server-expression-function).
 
-- *DONE* Additional `ExpressionFunction(s)` may be provided via a
+- Additional `ExpressionFunction(s)` may be provided via a
   custom [ExpressionFunctionProvider](https://github.com/mP1/walkingkooka-tree-expression-function-provider/blob/master/src/main/java/walkingkooka/tree/expression/function/provider/ExpressionFunctionProvider.java)
+  *DONE*
+- Uploaded plugins [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/16)
 
 ### [SpreadsheetFormatter](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatter.java)
 
