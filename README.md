@@ -152,6 +152,5 @@ user customisation of that value type along with a single color.
 - [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/14) Additional `SpreadsheetFormatter(s)` may be
   provided via a
   custom [SpreadsheetFormatterProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatterProvider.java)
-  it is possible to provided
 
 TODO
