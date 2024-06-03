@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
+import java.util.Set;
+
 public final class SpreadsheetComparatorProviders implements PublicStaticHelper {
 
     /**
@@ -26,6 +28,13 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
      */
     public static SpreadsheetComparatorProvider builtIn() {
         return BuiltInSpreadsheetComparatorProvider.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetComparatorProviderCollection}
+     */
+    public static SpreadsheetComparatorProvider collection(final Set<SpreadsheetComparatorProvider> providers) {
+        return SpreadsheetComparatorProviderCollection.with(providers);
     }
 
     /**
