@@ -19,7 +19,16 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
+import java.util.Set;
+
 public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
+
+    /**
+     * {@see SpreadsheetFormatterProviderCollection}
+     */
+    public static SpreadsheetFormatterProvider collection(final Set<SpreadsheetFormatterProvider> providers) {
+        return SpreadsheetFormatterProviderCollection.with(providers);
+    }
 
     /**
      * {@see FakeSpreadsheetFormatterProvider}
