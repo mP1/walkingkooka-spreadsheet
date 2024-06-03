@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.component.SpreadsheetComponentInfoLikeTesting;
+import walkingkooka.plugin.PluginInfoLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetComparatorInfoTest implements SpreadsheetComponentInfoLikeTesting<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
+public final class SpreadsheetComparatorInfoTest implements PluginInfoLikeTesting<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
     // ClassTesting.....................................................................................................
 
@@ -31,7 +31,7 @@ public final class SpreadsheetComparatorInfoTest implements SpreadsheetComponent
         return SpreadsheetComparatorInfo.class;
     }
 
-    // SpreadsheetComponentInfoLikeTesting..............................................................................
+    // PluginInfoLikeTesting..............................................................................
 
     @Override
     public SpreadsheetComparatorName createName(final String value) {

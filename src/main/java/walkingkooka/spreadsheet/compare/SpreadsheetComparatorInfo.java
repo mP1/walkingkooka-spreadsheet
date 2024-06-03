@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.component.SpreadsheetComponentInfoLike;
+import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -30,7 +30,7 @@ import java.util.Objects;
  * Provides a few bits of info describing a {@link SpreadsheetComparator}. The {@link AbsoluteUrl} must be a unique identifier,
  * with the {@link SpreadsheetComparatorName} being a shorter human friendly reference.
  */
-public final class SpreadsheetComparatorInfo implements SpreadsheetComponentInfoLike<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
+public final class SpreadsheetComparatorInfo implements PluginInfoLike<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
     public static SpreadsheetComparatorInfo with(final AbsoluteUrl url,
                                                  final SpreadsheetComparatorName name) {
@@ -93,7 +93,7 @@ public final class SpreadsheetComparatorInfo implements SpreadsheetComponentInfo
 
     static SpreadsheetComparatorInfo unmarshall(final JsonNode node,
                                                 final JsonNodeUnmarshallContext context) {
-        return SpreadsheetComponentInfoLike.unmarshall(
+        return PluginInfoLike.unmarshall(
                 node,
                 context,
                 SpreadsheetComparatorName.class,

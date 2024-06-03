@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
-import walkingkooka.spreadsheet.component.SpreadsheetComponentName;
-import walkingkooka.spreadsheet.component.SpreadsheetComponentNameLike;
+import walkingkooka.plugin.PluginName;
+import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -29,31 +29,31 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 /**
  * The {@link Name} of a {@link SpreadsheetComparator}. Note comparator names are case-sensitive.
  */
-final public class SpreadsheetComparatorName implements SpreadsheetComponentNameLike<SpreadsheetComparatorName> {
+final public class SpreadsheetComparatorName implements PluginNameLike<SpreadsheetComparatorName> {
 
     public static boolean isChar(final int pos,
                                  final char c) {
-        return SpreadsheetComponentName.isChar(pos, c);
+        return PluginName.isChar(pos, c);
     }
 
     /**
      * The maximum valid length
      */
-    public final static int MAX_LENGTH = SpreadsheetComponentName.MAX_LENGTH;
+    public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
     /**
      * Factory that creates a {@link SpreadsheetComparatorName}
      */
     public static SpreadsheetComparatorName with(final String name) {
         return new SpreadsheetComparatorName(
-                SpreadsheetComponentName.with(name)
+                PluginName.with(name)
         );
     }
 
     /**
      * Private constructor
      */
-    private SpreadsheetComparatorName(final SpreadsheetComponentName name) {
+    private SpreadsheetComparatorName(final PluginName name) {
         super();
         this.name = name;
     }
@@ -63,7 +63,7 @@ final public class SpreadsheetComparatorName implements SpreadsheetComponentName
         return this.name.value();
     }
 
-    private final SpreadsheetComponentName name;
+    private final PluginName name;
 
     /**
      * Create a {@link SpreadsheetComparatorNameAndDirection} using this name and the given {@link SpreadsheetComparatorDirection direction}

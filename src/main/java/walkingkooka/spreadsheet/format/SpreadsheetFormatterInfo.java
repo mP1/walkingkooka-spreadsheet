@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.component.SpreadsheetComponentInfoLike;
+import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -30,7 +30,7 @@ import java.util.Objects;
  * Provides a few bits of info describing a {@link SpreadsheetFormatter}. The {@link AbsoluteUrl} must be a unique identifier,
  * with the {@link SpreadsheetFormatterName} being a shorter human friendly reference.
  */
-public final class SpreadsheetFormatterInfo implements SpreadsheetComponentInfoLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
+public final class SpreadsheetFormatterInfo implements PluginInfoLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
 
     public static SpreadsheetFormatterInfo with(final AbsoluteUrl url,
                                                 final SpreadsheetFormatterName name) {
@@ -95,7 +95,7 @@ public final class SpreadsheetFormatterInfo implements SpreadsheetComponentInfoL
 
     static SpreadsheetFormatterInfo unmarshall(final JsonNode node,
                                                final JsonNodeUnmarshallContext context) {
-        return SpreadsheetComponentInfoLike.unmarshall(
+        return PluginInfoLike.unmarshall(
                 node,
                 context,
                 SpreadsheetFormatterName.class,

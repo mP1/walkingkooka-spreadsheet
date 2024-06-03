@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.spreadsheet.component.SpreadsheetComponentNameTesting;
+import walkingkooka.plugin.PluginNameTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-final public class SpreadsheetComparatorNameTest implements SpreadsheetComponentNameTesting<SpreadsheetComparatorName> {
+final public class SpreadsheetComparatorNameTest implements PluginNameTesting<SpreadsheetComparatorName> {
 
     @Override
     public SpreadsheetComparatorName createName(final String name) {

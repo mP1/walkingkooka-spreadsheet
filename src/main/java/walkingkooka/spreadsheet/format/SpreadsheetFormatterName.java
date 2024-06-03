@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
-import walkingkooka.spreadsheet.component.SpreadsheetComponentName;
-import walkingkooka.spreadsheet.component.SpreadsheetComponentNameLike;
+import walkingkooka.plugin.PluginName;
+import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -32,17 +32,17 @@ import java.util.Objects;
 /**
  * The {@link Name} of a {@link SpreadsheetFormatter}. Note formatter names are case-sensitive.
  */
-final public class SpreadsheetFormatterName implements SpreadsheetComponentNameLike<SpreadsheetFormatterName> {
+final public class SpreadsheetFormatterName implements PluginNameLike<SpreadsheetFormatterName> {
 
     public static boolean isChar(final int pos,
                                  final char c) {
-        return SpreadsheetComponentNameLike.isChar(pos, c);
+        return PluginNameLike.isChar(pos, c);
     }
 
     /**
      * The maximum valid length
      */
-    public final static int MAX_LENGTH = SpreadsheetComponentName.MAX_LENGTH;
+    public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
     // SpreadsheetFormatterName instances...............................................................................
 
@@ -136,7 +136,7 @@ final public class SpreadsheetFormatterName implements SpreadsheetComponentNameL
     private SpreadsheetFormatterName(final String name,
                                      final SpreadsheetPatternKind patternKind) {
         super();
-        this.name = SpreadsheetComponentName.with(name);
+        this.name = PluginName.with(name);
         this.patternKind = patternKind;
     }
 
@@ -145,7 +145,7 @@ final public class SpreadsheetFormatterName implements SpreadsheetComponentNameL
         return this.name.value();
     }
 
-    private final SpreadsheetComponentName name;
+    private final PluginName name;
 
 
     // used by SpreadsheetFormatterSelector.formatter

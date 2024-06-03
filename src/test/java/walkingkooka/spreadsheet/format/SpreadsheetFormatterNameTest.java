@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.PluginNameTesting;
 import walkingkooka.reflect.ConstantsTesting;
-import walkingkooka.spreadsheet.component.SpreadsheetComponentNameTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -28,7 +28,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-final public class SpreadsheetFormatterNameTest implements SpreadsheetComponentNameTesting<SpreadsheetFormatterName>,
+final public class SpreadsheetFormatterNameTest implements PluginNameTesting<SpreadsheetFormatterName>,
         ConstantsTesting<SpreadsheetFormatterName> {
 
     // constants........................................................................................................
