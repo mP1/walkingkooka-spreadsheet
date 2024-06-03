@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -37,6 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<SpreadsheetFormatterSelector>,
         HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSelector>,
+        HasTextTesting,
         ToStringTesting<SpreadsheetFormatterSelector>,
         ParseStringTesting<SpreadsheetFormatterSelector>,
         JsonNodeMarshallingTesting<SpreadsheetFormatterSelector> {
@@ -75,7 +77,10 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
         );
 
         this.checkEquals(NAME, selector.name(), "name");
-        this.checkEquals(TEXT, selector.text(), "text");
+        this.textAndCheck(
+                selector,
+                TEXT
+        );
     }
 
     // parse............................................................................................................

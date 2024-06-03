@@ -21,6 +21,7 @@ import walkingkooka.naming.HasName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasText;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -32,7 +33,8 @@ import java.util.Optional;
 /**
  * Contains the {@link SpreadsheetFormatterName} and some text which may contain the pattern text for {@link SpreadsheetPatternSpreadsheetFormatter}.
  */
-public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFormatterName> {
+public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFormatterName>,
+        HasText {
 
     /**
      * Parses the given text into a {@link SpreadsheetFormatterSelector}.
@@ -91,6 +93,7 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
      * If the {@link SpreadsheetFormatterName} identifies a {@link SpreadsheetPatternSpreadsheetFormatter}, this will
      * hold the pattern text itself.
      */
+    @Override
     public String text() {
         return this.text;
     }
