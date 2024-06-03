@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.component.SpreadsheetComponentInfoLikeTesting;
+import walkingkooka.plugin.PluginInfoLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetFormatterInfoTest implements SpreadsheetComponentInfoLikeTesting<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
+public final class SpreadsheetFormatterInfoTest implements PluginInfoLikeTesting<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
 
     // ClassTesting.....................................................................................................
 
@@ -31,7 +31,7 @@ public final class SpreadsheetFormatterInfoTest implements SpreadsheetComponentI
         return SpreadsheetFormatterInfo.class;
     }
 
-    // SpreadsheetComponentInfoLikeTesting..............................................................................
+    // PluginInfoLikeTesting..............................................................................
 
     @Override
     public SpreadsheetFormatterName createName(final String value) {
