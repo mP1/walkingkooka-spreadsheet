@@ -55,6 +55,17 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
     }
 
     @Override
+    public SpreadsheetComparatorProviderCollection createSpreadsheetComparatorProvider() {
+        return SpreadsheetComparatorProviderCollection.with(
+                Sets.of(
+                        SpreadsheetComparatorProviders.builtIn()
+                )
+        );
+    }
+
+    // ClassTesting.....................................................................................................
+
+    @Override
     public Class<SpreadsheetComparatorProviderCollection> type() {
         return SpreadsheetComparatorProviderCollection.class;
     }
