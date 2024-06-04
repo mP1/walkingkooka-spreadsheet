@@ -51,8 +51,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataPropertyName<?>>
-        implements NameTesting<SpreadsheetMetadataPropertyName<?>, SpreadsheetMetadataPropertyName<?>>,
-        HasSpreadsheetPatternKindTesting {
+        implements NameTesting<SpreadsheetMetadataPropertyName<?>, SpreadsheetMetadataPropertyName<?>> {
 
     @Test
     public void testUnknownConstantFails() {
@@ -595,69 +594,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 action,
                 name.spreadsheetCellStoreAction(),
                 () -> name + " spreadsheetCellStoreAction"
-        );
-    }
-
-    // isPattern........................................................................................................
-
-    @Test
-    public void testIsPattern() {
-        this.checkEquals(
-                Sets.of(
-                        SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
-                        SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN,
-                        SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
-                        SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN,
-                        SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN,
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
-                        SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
-                        SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN,
-                        SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN
-                ),
-                SpreadsheetMetadataPropertyName.CONSTANTS.values()
-                        .stream()
-                        .filter(SpreadsheetMetadataPropertyName::isPattern)
-                        .collect(Collectors.toSet())
-        );
-    }
-
-    // HasSpreadsheetPatternKind........................................................................................
-
-    @Test
-    public void testHasSpreadsheetPatternKindSpreadsheetId() {
-        this.hasSpreadsheetPatternKindAndCheck(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID
-        );
-    }
-
-    @Test
-    public void testHasSpreadsheetPatternKindColor1() {
-        this.hasSpreadsheetPatternKindAndCheck(
-                SpreadsheetMetadataPropertyName.numberedColor(1)
-        );
-    }
-
-    @Test
-    public void testHasSpreadsheetPatternKindDateFormatPattern() {
-        this.hasSpreadsheetPatternKindAndCheck(
-                SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
-                SpreadsheetPatternKind.DATE_FORMAT_PATTERN
-        );
-    }
-
-    @Test
-    public void testHasSpreadsheetPatternKindDateTimeFormatPattern() {
-        this.hasSpreadsheetPatternKindAndCheck(
-                SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
-                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
-        );
-    }
-
-    @Test
-    public void testHasSpreadsheetPatternKindTextFormatPattern() {
-        this.hasSpreadsheetPatternKindAndCheck(
-                SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
-                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
         );
     }
 
