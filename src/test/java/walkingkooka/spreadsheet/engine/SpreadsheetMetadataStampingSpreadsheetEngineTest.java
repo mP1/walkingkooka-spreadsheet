@@ -501,7 +501,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                         this.formatValue(
                                 cell.formula().value().get(),
                                 formatter.orElse(
-                                        SpreadsheetPattern.DEFAULT_TEXT_FORMATTER.formatter()
+                                        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
                                 )
                         )
                 );

@@ -757,7 +757,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     cell.setFormula(
                             SpreadsheetFormula.EMPTY.setText("=1")
                     ).setFormatPattern(
-                            Optional.of(SpreadsheetPattern.DEFAULT_TEXT_FORMATTER)
+                            Optional.of(SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN)
                     )
             );
             patchedCells.add(
