@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
@@ -98,6 +100,51 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
                 .parse(TextCursors.charSequence("hhmm"), SpreadsheetFormatParserContexts.basic())
                 .get();
     }
+
+    // spreadsheetFormatterSelector.....................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWhenDate() {
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
+                SpreadsheetFormatterName.DATE_FORMAT + " dd/mm/yyyy"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWhenDateTime() {
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm"),
+                SpreadsheetFormatterName.DATE_TIME_FORMAT + " dd/mm/yyyy hh:mm"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWhenText() {
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("@@"),
+                SpreadsheetFormatterName.TEXT_FORMAT + " @@"
+        );
+    }
+
+    private void spreadsheetFormatterSelectorAndCheck(final SpreadsheetFormatPattern pattern,
+                                                      final String expected) {
+        this.spreadsheetFormatterSelectorAndCheck(
+                pattern,
+                SpreadsheetFormatterSelector.parse(expected)
+        );
+    }
+
+    private void spreadsheetFormatterSelectorAndCheck(final SpreadsheetFormatPattern pattern,
+                                                      final SpreadsheetFormatterSelector expected) {
+        this.checkEquals(
+                expected,
+                pattern.spreadsheetFormatterSelector(),
+                pattern::toString
+        );
+    }
+
+    // ClassTesting.....................................................................................................
 
     @Override
     public Class<SpreadsheetFormatPattern> type() {
