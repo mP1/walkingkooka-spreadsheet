@@ -549,7 +549,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.cellStoreSaveAndLoadCellAndCheck(
                 "=1+2",
                 number(1 + 2),
-                SpreadsheetCell.NO_FORMATTER,
+                SpreadsheetCell.NO_FORMAT,
                 "3 " + FORMATTED_PATTERN_SUFFIX
         );
     }
