@@ -32,6 +32,9 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfo;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -69,6 +72,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      */
     static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
                                               final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+                                              final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                               final ExpressionFunctionProvider expressionFunctionProvider,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
@@ -77,6 +81,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider");
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(fractioner, "fractioner");
@@ -87,6 +92,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return new BasicSpreadsheetEngineContext(
                 metadata,
                 spreadsheetComparatorProvider,
+                spreadsheetFormatterProvider,
                 expressionFunctionProvider,
                 engine,
                 fractioner,
@@ -101,6 +107,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      */
     private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
                                           final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                           final ExpressionFunctionProvider expressionFunctionProvider,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
@@ -120,6 +127,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 engine,
                 this
         );
+
+        this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
 
         this.fractioner = fractioner;
 
@@ -279,6 +288,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     }
 
     // FORMAT .........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+        return this.spreadsheetFormatterProvider.spreadsheetFormatter(selector);
+    }
+
+    @Override
+    public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
+        return this.spreadsheetFormatterProvider.spreadsheetFormatterInfos();
+    }
+
+    private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
 
     /**
      * If a value is present use the {@link SpreadsheetFormatter} and apply the styling.
