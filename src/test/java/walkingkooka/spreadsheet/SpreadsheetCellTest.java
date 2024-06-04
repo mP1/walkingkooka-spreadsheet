@@ -1076,7 +1076,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                                 JsonNode.nullNode()
                         ),
                 cell.setFormatPattern(
-                        SpreadsheetCell.NO_FORMAT
+                        SpreadsheetCell.NO_FORMAT_PATTERN
                 )
         );
     }
@@ -1242,7 +1242,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
 
     @Test
     public void testFormatPatternPatchEmpty() {
-        final Optional<SpreadsheetFormatPattern> formatPattern = SpreadsheetCell.NO_FORMAT;
+        final Optional<SpreadsheetFormatPattern> formatPattern = SpreadsheetCell.NO_FORMAT_PATTERN;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .setFormatPattern(formatPattern);
 
@@ -1946,7 +1946,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     private void checkNoFormatPattern(final SpreadsheetCell cell) {
         this.checkFormatPattern(
                 cell,
-                SpreadsheetCell.NO_FORMAT
+                SpreadsheetCell.NO_FORMAT_PATTERN
         );
     }
 

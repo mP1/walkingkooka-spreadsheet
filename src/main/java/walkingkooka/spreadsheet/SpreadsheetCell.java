@@ -63,7 +63,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     /**
      * Holds an absent {@link SpreadsheetFormatPattern}.
      */
-    public final static Optional<SpreadsheetFormatPattern> NO_FORMAT = Optional.empty();
+    public final static Optional<SpreadsheetFormatPattern> NO_FORMAT_PATTERN = Optional.empty();
 
     /**
      * Holds an absent {@link TextNode}.
@@ -92,7 +92,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 checkFormula(formula),
                 NO_STYLE,
                 NO_PARSE_PATTERN,
-                NO_FORMAT,
+                NO_FORMAT_PATTERN,
                 NO_FORMATTED_VALUE_CELL
         );
     }
