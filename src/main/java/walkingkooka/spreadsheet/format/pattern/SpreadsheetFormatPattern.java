@@ -18,7 +18,11 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
+import walkingkooka.text.CaseKind;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.function.Consumer;
@@ -35,6 +39,29 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
      */
     SpreadsheetFormatPattern(final ParserToken token) {
         super(token);
+    }
+
+    // spreadsheetFormatterSelector.....................................................................................
+
+    /**
+     * Returns the {@link SpreadsheetFormatterSelector} equivalent to this pattern.
+     */
+    public final SpreadsheetFormatterSelector spreadsheetFormatterSelector() {
+        // date-format
+        // date-time-format
+        final String formatterName = CaseKind.CAMEL.change(
+                CharSequences.subSequence(
+                        this.getClass().getSimpleName(),
+                        "Spreadsheet".length(),
+                        -"Pattern".length()
+                ).toString(),
+                CaseKind.KEBAB
+        );
+
+        return SpreadsheetFormatterSelector.with(
+                SpreadsheetFormatterName.with(formatterName),
+                this.text()
+        );
     }
 
     // toFormat.........................................................................................................
