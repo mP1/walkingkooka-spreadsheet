@@ -18,11 +18,12 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern, SpreadsheetTextFormatPattern> {
+public final class SpreadsheetMetadataPropertyNameFormatterTextTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterText> {
 
     @Test
     public void testExtractLocaleValue() {
@@ -31,28 +32,27 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPatternTe
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern.instance(), "text-format-pattern");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameFormatterText.instance(),
+                "text-formatter"
+        );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern.instance();
+    SpreadsheetMetadataPropertyNameFormatterText createName() {
+        return SpreadsheetMetadataPropertyNameFormatterText.instance();
     }
 
     @Override
-    SpreadsheetTextFormatPattern propertyValue() {
-        return SpreadsheetTextFormatPattern.parseTextFormatPattern("@ \"text-literal 123\"");
-    }
-
-    @Override
-    String propertyValueType() {
-        return "Text format pattern";
+    SpreadsheetFormatterSelector propertyValue() {
+        return SpreadsheetTextFormatPattern.parseTextFormatPattern("@ \"text-literal 123\"")
+                .spreadsheetFormatterSelector();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern.class;
+    public Class<SpreadsheetMetadataPropertyNameFormatterText> type() {
+        return SpreadsheetMetadataPropertyNameFormatterText.class;
     }
 }

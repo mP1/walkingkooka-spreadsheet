@@ -43,32 +43,32 @@ public interface SpreadsheetMetadataTesting extends Testing {
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
      */
     SpreadsheetMetadata METADATA_EN_AU = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-                .loadFromLocale()
-                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
-                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 2000)
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("user@example.com"))
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now())
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
-                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
-                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 50)
-                .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetParsePattern.parseDateFormatPattern("yyyy/mm/dd"))
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetParsePattern.parseDateParsePattern("yyyy/mm/dd"))
-                .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetParsePattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm"))
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetParsePattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm"))
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetParsePattern.parseNumberFormatPattern("0.#"))
-                .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetParsePattern.parseNumberParsePattern(").#"))
-                .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetParsePattern.parseTextFormatPattern("@"))
-                .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetParsePattern.parseTimeFormatPattern("hh:mm:ss"))
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetParsePattern.parseTimeParsePattern("hh:mm:ss"))
-                .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
-                        .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
-                        .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
-                ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 1);
+            .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
+            .loadFromLocale()
+            .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
+            .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
+            .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 2000)
+            .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
+            .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("user@example.com"))
+            .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now())
+            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
+            .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
+            .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 50)
+            .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetParsePattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetParsePattern.parseDateParsePattern("yyyy/mm/dd"))
+            .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetParsePattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetParsePattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm"))
+            .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetParsePattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
+            .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetParsePattern.parseNumberParsePattern(").#"))
+            .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetParsePattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetParsePattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetParsePattern.parseTimeParsePattern("hh:mm:ss"))
+            .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
+                    .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
+                    .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
+            ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 1);
 
     static SpreadsheetFormula parseFormula(final String text) {
         return SpreadsheetFormula.parse(

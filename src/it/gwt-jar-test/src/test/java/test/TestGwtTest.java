@@ -6,7 +6,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
-import walkingkooka.j2cl.locale.LocaleAware;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
@@ -19,7 +18,8 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -63,7 +63,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-@LocaleAware
+@walkingkooka.j2cl.locale.LocaleAware
 public class TestGwtTest extends GWTTestCase {
 
     @Override
@@ -83,6 +83,8 @@ public class TestGwtTest extends GWTTestCase {
     private static final Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
     public void testWithCellReference() {
         final SpreadsheetEngine engine = engine();
@@ -137,10 +139,10 @@ public class TestGwtTest extends GWTTestCase {
                     .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD")
-                    .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY"))
+                    .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY"))
                     .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                    .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm"))
+                    .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM"))
                     .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
                     .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1900)
@@ -153,7 +155,7 @@ public class TestGwtTest extends GWTTestCase {
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
-                    .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"))
+                    .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
                     .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#"))
                     .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
@@ -161,12 +163,12 @@ public class TestGwtTest extends GWTTestCase {
                     .set(SpreadsheetMetadataPropertyName.PRECISION, 123)
                     .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR)
                     .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123))
-                    .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@@"))
                     .set(
                             SpreadsheetMetadataPropertyName.STYLE,
                             TextStyle.EMPTY.set(TextStylePropertyName.WIDTH, Length.pixel(50.0))
                                     .set(TextStylePropertyName.HEIGHT, Length.pixel(50.0)))
-                    .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("hh:mm"))
+                    .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@@").spreadsheetFormatterSelector())
+                    .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mmhh:mm:ss.000"))
                     .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31)
                     .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
@@ -223,6 +225,7 @@ public class TestGwtTest extends GWTTestCase {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
+                                        SPREADSHEET_FORMATTER_PROVIDER,
                                         NOW,
                                         LABEL_NAME_RESOLVER
                                 )
@@ -262,7 +265,7 @@ public class TestGwtTest extends GWTTestCase {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter()
+                                                        .formatter(SPREADSHEET_FORMATTER_PROVIDER)
                                         )
                                 ).map(
                                         f -> cell.style()
@@ -280,6 +283,7 @@ public class TestGwtTest extends GWTTestCase {
                 return formatter.format(
                         value,
                         metadata.formatterContext(
+                                SPREADSHEET_FORMATTER_PROVIDER,
                                 NOW,
                                 LABEL_NAME_RESOLVER
                         )

@@ -27,7 +27,6 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.convert.HasConverter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.HasLocale;
@@ -40,20 +39,16 @@ import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
-import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -107,13 +102,11 @@ import java.util.function.Supplier;
  * Cell specific data such as individual format patterns are not stored here but on the {@link walkingkooka.spreadsheet.SpreadsheetCell}.
  */
 public abstract class SpreadsheetMetadata implements CanBeEmpty,
-        HasConverter<SpreadsheetConverterContext>,
         HasDecimalNumberContext,
         HasExpressionNumberKind,
         HasLocale,
         HasMathContext,
         HasParser<SpreadsheetParserContext>,
-        HasSpreadsheetFormatter,
         HateosResource<SpreadsheetId>,
         Patchable<SpreadsheetMetadata>,
         TreePrintable,
@@ -466,41 +459,37 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // Converter.......................................................................................................
 
     /**
-     * Returns a {@link DecimalNumberContext} if the required properties are present.
+     * Returns a {@link Converter} using the required properties.
      * <ul>
      * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMAT_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSE_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_FORMAT_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_PARSE_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMAT_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMATTER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSE_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMAT_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMAT_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMATTER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSE_PATTERN}</li>
      * </ul>
      */
-    @Override
-    public abstract Converter<SpreadsheetConverterContext> converter();
+    public final Converter<SpreadsheetConverterContext> converter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
 
-    /**
-     * Lazy factory that creates a {@link Converter} using current properties.
-     */
-    public final Converter<SpreadsheetConverterContext> converter0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetDateFormatPattern dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN);
+        final SpreadsheetFormatterSelector dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
         final SpreadsheetDateParsePattern dateParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN);
 
-        final SpreadsheetDateTimeFormatPattern dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN);
+        final SpreadsheetFormatterSelector dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
         final SpreadsheetDateTimeParsePattern dateTimeParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN);
 
-        final SpreadsheetNumberFormatPattern numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN);
+        final SpreadsheetFormatterSelector numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
         final SpreadsheetNumberParsePattern numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN);
 
-        final SpreadsheetTextFormatPattern textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN);
+        final SpreadsheetFormatterSelector textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
 
-        final SpreadsheetTimeFormatPattern timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN);
+        final SpreadsheetFormatterSelector timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
         final SpreadsheetTimeParsePattern timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN);
 
         final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_OFFSET);
@@ -508,14 +497,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         components.reportIfMissing();
 
         return SpreadsheetConverters.general(
-                dateFormat.formatter(),
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateFormat),
                 dateParser,
-                dateTimeFormat.formatter(),
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateTimeFormat),
                 dateTimeParser,
-                numberFormat.formatter(),
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(numberFormat),
                 numberParser,
-                textFormat.formatter(),
-                timeFormat.formatter(),
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(textFormat),
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(timeFormat),
                 timeParser,
                 dateOffset
         );
@@ -524,11 +513,16 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link ExpressionNumberConverterContext}
      */
-    public final SpreadsheetConverterContext converterContext(final Supplier<LocalDateTime> now,
-                                                              final SpreadsheetLabelNameResolver resolver) {
+    public final SpreadsheetConverterContext converterContext(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                              final Supplier<LocalDateTime> now,
+                                                              final SpreadsheetLabelNameResolver labelNameResolver) {
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(now, "now");
+        Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+
         return SpreadsheetConverterContexts.basic(
-                this.converter(),
-                resolver,
+                this.converter(spreadsheetFormatterProvider),
+                labelNameResolver,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
@@ -683,28 +677,30 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // HasSpreadsheetFormatter..........................................................................................
 
     /**
-     * Creates a {@link SpreadsheetFormatter} that combines the formatting of all patterns.
+     * Creates a {@link SpreadsheetFormatter} that creates a single formatter from all formatters.
      */
-    @Override
-    public abstract SpreadsheetFormatter formatter();
+    public final SpreadsheetFormatter formatter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
 
-    final SpreadsheetFormatter formatter0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetDateFormatPattern dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN);
-        final SpreadsheetDateTimeFormatPattern dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN);
-        final SpreadsheetNumberFormatPattern numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN);
-        final SpreadsheetTextFormatPattern textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN);
-        final SpreadsheetTimeFormatPattern timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN);
+        final SpreadsheetFormatterSelector date = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
+        final SpreadsheetFormatterSelector dateTime = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
+        final SpreadsheetFormatterSelector number = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
+        final SpreadsheetFormatterSelector text = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
+        final SpreadsheetFormatterSelector time = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
 
         components.reportIfMissing();
 
-        return SpreadsheetFormatters.chain(Lists.of(
-                dateTimeFormat.formatter(),
-                dateFormat.formatter(),
-                timeFormat.formatter(),
-                numberFormat.formatter(),
-                textFormat.formatter()));
+        return SpreadsheetFormatters.chain(
+                Lists.of(
+                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(date),
+                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateTime),
+                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(number),
+                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(text),
+                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(time)
+                )
+        );
     }
 
     // HasSpreadsheetFormatterContext...................................................................................
@@ -712,8 +708,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public final SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now,
+    public final SpreadsheetFormatterContext formatterContext(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                              final Supplier<LocalDateTime> now,
                                                               final SpreadsheetLabelNameResolver labelNameResolver) {
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(now, "now");
+        Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final Integer characterWidth = components.getOrNull(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH);
@@ -726,8 +727,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 this.nameToColor(),
                 characterWidth,
                 generalNumberFormatDigitCount,
-                this.formatter(),
+                this.formatter(spreadsheetFormatterProvider),
                 this.converterContext(
+                        spreadsheetFormatterProvider,
                         now,
                         labelNameResolver
                 )

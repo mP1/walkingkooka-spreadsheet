@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterTesting2;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -186,21 +187,24 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     @Override
     public SpreadsheetConverterContext createContext() {
         final SpreadsheetMetadata metadata = METADATA_EN_AU.set(
-                SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
-                SpreadsheetPattern.parseDateFormatPattern("\"date:\" dd/mm/yyyy")
+                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+                SpreadsheetPattern.parseDateFormatPattern("\"date:\" dd/mm/yyyy").spreadsheetFormatterSelector()
         ).set(
-                SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
-                SpreadsheetPattern.parseDateTimeFormatPattern("\"datetime:\" dd/mm/yyyy hh:mm:ss")
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                SpreadsheetPattern.parseDateTimeFormatPattern("\"datetime:\" dd/mm/yyyy hh:mm:ss").spreadsheetFormatterSelector()
         ).set(
-                SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN,
-                SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss")
+                SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+                SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss").spreadsheetFormatterSelector()
         );
-        final Converter<SpreadsheetConverterContext> converter = metadata.converter();
+        final Converter<SpreadsheetConverterContext> converter = metadata.converter(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        );
 
         return SpreadsheetConverterContexts.basic(
                 converter,
                 LABEL_NAME_RESOLVER,
                 metadata.converterContext(
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
                         LocalDateTime::now,
                         LABEL_NAME_RESOLVER
                 )

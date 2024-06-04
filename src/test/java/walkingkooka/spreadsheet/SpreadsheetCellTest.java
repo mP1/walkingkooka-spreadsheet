@@ -672,7 +672,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
                                 .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                                .set(SpreadsheetCell.FORMAT_PATTERN_PROPERTY, context.marshallWithType(formatPattern().get()))
+                                .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshallWithType(formatPattern().get()))
                         ),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
@@ -738,7 +738,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.unmarshallAndCheck(JsonNode.object()
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                                .set(SpreadsheetCell.FORMAT_PATTERN_PROPERTY, context.marshallWithType(formatPattern().get()))
+                                .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshallWithType(formatPattern().get()))
                                 .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 SpreadsheetCell.with(reference(), formula())
@@ -757,7 +757,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
                                 .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                                .set(SpreadsheetCell.FORMAT_PATTERN_PROPERTY, context.marshallWithType(formatPattern().get()))
+                                .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshallWithType(formatPattern().get()))
                                 .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 SpreadsheetCell.with(reference(), formula())
@@ -1046,7 +1046,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 cell,
                 JsonNode.object()
                         .set(
-                                SpreadsheetCell.FORMAT_PATTERN_PROPERTY,
+                                SpreadsheetCell.FORMATTER_PROPERTY,
                                 JsonNodeMarshallContexts.basic().marshallWithType(formatPattern)
                         ),
                 cell.setFormatPattern(
@@ -1072,11 +1072,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 cell,
                 JsonNode.object()
                         .set(
-                                SpreadsheetCell.FORMAT_PATTERN_PROPERTY,
+                                SpreadsheetCell.FORMATTER_PROPERTY,
                                 JsonNode.nullNode()
                         ),
                 cell.setFormatPattern(
-                        SpreadsheetCell.NO_FORMAT_PATTERN
+                        SpreadsheetCell.NO_FORMATTER
                 )
         );
     }
@@ -1242,7 +1242,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
 
     @Test
     public void testFormatPatternPatchEmpty() {
-        final Optional<SpreadsheetFormatPattern> formatPattern = SpreadsheetCell.NO_FORMAT_PATTERN;
+        final Optional<SpreadsheetFormatPattern> formatPattern = SpreadsheetCell.NO_FORMATTER;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .setFormatPattern(formatPattern);
 
@@ -1946,7 +1946,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     private void checkNoFormatPattern(final SpreadsheetCell cell) {
         this.checkFormatPattern(
                 cell,
-                SpreadsheetCell.NO_FORMAT_PATTERN
+                SpreadsheetCell.NO_FORMATTER
         );
     }
 

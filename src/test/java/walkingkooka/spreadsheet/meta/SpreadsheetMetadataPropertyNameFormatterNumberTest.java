@@ -28,41 +28,56 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern, SpreadsheetTimeFormatPattern> {
+public final class SpreadsheetMetadataPropertyNameFormatterNumberTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterNumber> {
+
+    private final static ExpressionNumberKind KIND = ExpressionNumberKind.DOUBLE;
 
     @Test
     public void testExtractLocaleValue() {
         this.extractLocaleValueAndCheck(
-                Locale.ENGLISH,
-                SpreadsheetTimeParsePattern.parseTimeFormatPattern("h:mm:ss AM/PM")
+                KIND.create(1.25),
+                "1.25"
         );
     }
 
     @Test
-    public void testExtractLocaleValueAndFormat() {
+    public void testExtractLocaleValueInteger() {
+        this.extractLocaleValueAndCheck(
+                KIND.create(789),
+                "789."
+        );
+    }
+
+    private void extractLocaleValueAndCheck(final ExpressionNumber number,
+                                            final String expected) {
         final Locale locale = Locale.ENGLISH;
-        final SpreadsheetTimeFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.instance()
+        final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameFormatterNumber.instance()
                 .extractLocaleValue(locale)
+                .get()
+                .spreadsheetFormatPattern()
                 .get();
 
-        final LocalTime time = LocalTime.of(12, 58, 59);
         final String formatted = pattern.formatter()
-                .format(time, spreadsheetFormatterContext()).get().text();
+                .format(
+                        number,
+                        spreadsheetFormatterContext()
+                ).get()
+                .text();
 
         this.checkEquals(
-                "12:58:59 PM",
+                expected,
                 formatted,
                 pattern::toString
         );
@@ -86,19 +101,15 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
                             public boolean canConvert(final Object value,
                                                       final Class<?> type,
                                                       final SpreadsheetConverterContext context) {
-                                return value instanceof LocalTime &&
-                                        LocalDateTime.class == type;
+                                return type.isInstance(value);
                             }
 
                             @Override
                             public <T> Either<T, String> convert(final Object value,
                                                                  final Class<T> type,
                                                                  final SpreadsheetConverterContext context) {
-                                final LocalTime time = (LocalTime) value;
                                 return this.successfulConversion(
-                                        type.cast(
-                                                LocalDateTime.of(LocalDate.EPOCH, time)
-                                        ),
+                                        type.cast(value),
                                         type
                                 );
                             }
@@ -106,14 +117,16 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
                         LABEL_NAME_RESOLVER,
                         ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
-                                ConverterContexts.basic(Converters.fake(),
+                                ConverterContexts.basic(
+                                        Converters.fake(),
                                         DateTimeContexts.locale(
                                                 Locale.ENGLISH,
                                                 1900,
                                                 20,
                                                 LocalDateTime::now
                                         ),
-                                        DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                                ),
                                 ExpressionNumberKind.DEFAULT
                         )
                 )
@@ -122,28 +135,27 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.instance(), "time-format-pattern");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameFormatterNumber.instance(),
+                "number-formatter"
+        );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.instance();
+    SpreadsheetMetadataPropertyNameFormatterNumber createName() {
+        return SpreadsheetMetadataPropertyNameFormatterNumber.instance();
     }
 
     @Override
-    SpreadsheetTimeFormatPattern propertyValue() {
-        return SpreadsheetTimeFormatPattern.parseTimeFormatPattern("hh mm ss\"custom\"");
-    }
-
-    @Override
-    String propertyValueType() {
-        return "Time format pattern";
+    SpreadsheetFormatterSelector propertyValue() {
+        return SpreadsheetNumberFormatPattern.parseNumberFormatPattern("#.## \"custom\"")
+                .spreadsheetFormatterSelector();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.class;
+    public Class<SpreadsheetMetadataPropertyNameFormatterNumber> type() {
+        return SpreadsheetMetadataPropertyNameFormatterNumber.class;
     }
 }

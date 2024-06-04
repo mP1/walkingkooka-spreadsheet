@@ -19,11 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -117,11 +114,6 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     }
 
     @Override
-    public Converter<SpreadsheetConverterContext> converter() {
-        return this.converter0();
-    }
-
-    @Override
     public DecimalNumberContext decimalNumberContext() {
         return this.decimalNumberContext0();
     }
@@ -139,11 +131,6 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     public MathContext mathContext() {
         return this.mathContext0();
-    }
-
-    @Override
-    public SpreadsheetFormatter formatter() {
-        return this.formatter0();
     }
 
     @Override

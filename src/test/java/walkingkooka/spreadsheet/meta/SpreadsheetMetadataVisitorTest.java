@@ -24,15 +24,11 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
@@ -155,13 +151,17 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDateFormatPattern() {
+    public void testVisitDateFormatter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDateFormatPattern(final SpreadsheetDateFormatPattern p) {
-                this.visited = p;
+            protected void visitDateFormatter(final SpreadsheetFormatterSelector s) {
+                this.visited = s;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY"));
+        }.accept(
+                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+                SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY")
+                        .spreadsheetFormatterSelector()
+        );
     }
 
     @Test
@@ -175,13 +175,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDateTimeFormatPattern() {
+    public void testVisitDateTimeFormatter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDateTimeFormatPattern(final SpreadsheetDateTimeFormatPattern p) {
-                this.visited = p;
+            protected void visitDateTimeFormatter(final SpreadsheetFormatterSelector s) {
+                this.visited = s;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm"));
+        }.accept(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector()
+        );
     }
 
     @Test
@@ -352,13 +355,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitNumberFormatPattern() {
+    public void testVisitNumberFormatter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitNumberFormatPattern(final SpreadsheetNumberFormatPattern p) {
-                this.visited = p;
+            protected void visitNumberFormatter(final SpreadsheetFormatterSelector s) {
+                this.visited = s;
             }
-        }.accept(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"));
+        }.accept(
+                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+                SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector()
+        );
     }
 
     @Test
@@ -432,23 +438,29 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitTextFormatPattern() {
+    public void testVisitTextFormatter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitTextFormatPattern(final SpreadsheetTextFormatPattern p) {
-                this.visited = p;
+            protected void visitTextFormatter(final SpreadsheetFormatterSelector s) {
+                this.visited = s;
             }
-        }.accept(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@"));
+        }.accept(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector()
+        );
     }
 
     @Test
-    public void testVisitTimeFormatPattern() {
+    public void testVisitTimeFormatter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitTimeFormatPattern(final SpreadsheetTimeFormatPattern p) {
-                this.visited = p;
+            protected void visitTimeFormatter(final SpreadsheetFormatterSelector s) {
+                this.visited = s;
             }
-        }.accept(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("hh:mm"));
+        }.accept(
+                SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+                SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector()
+        );
     }
 
     @Test

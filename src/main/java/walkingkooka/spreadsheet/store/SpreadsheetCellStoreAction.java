@@ -41,7 +41,7 @@ public enum SpreadsheetCellStoreAction {
     PARSE_FORMULA(1),
 
     /**
-     * Updating the global {@link SpreadsheetMetadataPropertyName#NUMBER_FORMAT_PATTERN} will require all cell expressions to be re-evaluated and formatted again,
+     * Updating the global {@link SpreadsheetMetadataPropertyName#NUMBER_FORMATTER} will require all cell expressions to be re-evaluated and formatted again,
      * because formatting numeric values with the new pattern will have different text results.
      */
     EVALUATE_AND_FORMAT(2);
