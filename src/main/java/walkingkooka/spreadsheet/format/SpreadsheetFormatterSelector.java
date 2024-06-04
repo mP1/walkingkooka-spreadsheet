@@ -158,7 +158,7 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
 
         return text.isEmpty() ?
                 name :
-                name + " " + CharSequences.quoteAndEscape(text);
+                name + " " + text;
     }
 
     // JsonNodeContext..................................................................................................
@@ -172,13 +172,8 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        final String name = this.name.toString();
-        final String text = this.text;
-
         return JsonNode.string(
-                text.isEmpty() ?
-                        name :
-                        name + " " + text
+                this.toString()
         );
     }
 

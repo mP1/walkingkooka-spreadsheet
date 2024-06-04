@@ -229,7 +229,18 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
                         NAME,
                         TEXT
                 ),
-                "text-format \"@@\""
+                "text-format @@"
+        );
+    }
+
+    @Test
+    public void testToStringWithQuotes() {
+        this.toStringAndCheck(
+                SpreadsheetFormatterSelector.with(
+                        NAME,
+                        "\"Hello\""
+                ),
+                "text-format \"Hello\""
         );
     }
 
