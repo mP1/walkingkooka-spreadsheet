@@ -13331,7 +13331,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetCellStores.fake(),
                                 SERVER_URL,
                                 this.spreadsheetMetadata(),
-                                this.functions(),
+                                this.expressionFunctionProvider(),
                                 (r) -> {
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
@@ -13350,7 +13350,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 storeRepository.cells(),
                                 Url.parseAbsolute("http://server123"), // serverUrl
                                 this.spreadsheetMetadata(), // metadata
-                                this.functions(), // functions
+                                this.expressionFunctionProvider(),
                                 this.references(), // references
                                 (s) -> {
                                     throw new UnsupportedOperationException(s.toString()); // resolveLabel
@@ -13364,13 +13364,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public boolean isPure(final FunctionExpressionName function) {
-                return this.functions()
+                return this.expressionFunctionProvider()
                         .expressionFunction(function)
                         .map(f -> f.isPure(this))
                         .orElse(false);
             }
 
-            private ExpressionFunctionProvider functions() {
+            private ExpressionFunctionProvider expressionFunctionProvider() {
                 return new FakeExpressionFunctionProvider() {
                     @Override
                     public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
