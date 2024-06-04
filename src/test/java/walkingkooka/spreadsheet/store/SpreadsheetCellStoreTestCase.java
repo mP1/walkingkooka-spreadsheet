@@ -427,7 +427,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @SuppressWarnings("SameReturnValue")
     private Optional<SpreadsheetFormatPattern> formatPattern() {
-        return SpreadsheetCell.NO_FORMAT;
+        return SpreadsheetCell.NO_FORMAT_PATTERN;
     }
 
     @SuppressWarnings("SameReturnValue")
