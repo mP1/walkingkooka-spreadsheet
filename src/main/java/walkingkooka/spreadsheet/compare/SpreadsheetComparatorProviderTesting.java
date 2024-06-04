@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -24,8 +25,19 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ClassTesting2<T>,
         TreePrintableTesting {
+
+    @Test
+    default void testSpreadsheetComparatorWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetComparatorProvider()
+                        .spreadsheetComparator(null)
+        );
+    }
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final SpreadsheetComparatorName name) {
@@ -74,4 +86,6 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
                 () -> provider.toString()
         );
     }
+
+    T createSpreadsheetComparatorProvider();
 }

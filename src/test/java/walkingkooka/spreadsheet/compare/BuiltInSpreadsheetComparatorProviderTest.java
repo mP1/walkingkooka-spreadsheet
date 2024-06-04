@@ -67,6 +67,13 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
     }
 
     @Override
+    public BuiltInSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
+        return BuiltInSpreadsheetComparatorProvider.INSTANCE;
+    }
+
+    // ClassTesting.....................................................................................................
+
+    @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
     }

@@ -338,6 +338,13 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         return SpreadsheetEngineContext.class.getSimpleName();
     }
 
+    // SpreadsheetComparatorProvider....................................................................................
+
+    @Override
+    default C createSpreadsheetComparatorProvider() {
+        return this.createContext();
+    }
+
     // ExpressionFunctionProvider.......................................................................................
 
     @Override
