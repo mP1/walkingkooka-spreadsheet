@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
@@ -51,7 +50,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataPropertyName<?>>
-        implements NameTesting<SpreadsheetMetadataPropertyName<?>, SpreadsheetMetadataPropertyName<?>> {
+        implements NameTesting<SpreadsheetMetadataPropertyName<?>, SpreadsheetMetadataPropertyName<?>>,
+        HasSpreadsheetPatternKindTesting {
 
     @Test
     public void testUnknownConstantFails() {
@@ -628,6 +628,46 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Override
     public String nameTextLess() {
         return SpreadsheetMetadataPropertyName.CREATE_DATE_TIME.name;
+    }
+
+    // HasSpreadsheetPatternKind........................................................................................
+
+    @Test
+    public void testHasSpreadsheetPatternKindSpreadsheetId() {
+        this.hasSpreadsheetPatternKindAndCheck(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+        );
+    }
+
+    @Test
+    public void testHasSpreadsheetPatternKindColor1() {
+        this.hasSpreadsheetPatternKindAndCheck(
+                SpreadsheetMetadataPropertyName.numberedColor(1)
+        );
+    }
+
+    @Test
+    public void testHasSpreadsheetPatternKindDateFormatPattern() {
+        this.hasSpreadsheetPatternKindAndCheck(
+                SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testHasSpreadsheetPatternKindDateTimeFormatPattern() {
+        this.hasSpreadsheetPatternKindAndCheck(
+                SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
+        );
+    }
+
+    @Test
+    public void testHasSpreadsheetPatternKindTextFormatPattern() {
+        this.hasSpreadsheetPatternKindAndCheck(
+                SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+        );
     }
 
     // ClassTesting.....................................................................................................
