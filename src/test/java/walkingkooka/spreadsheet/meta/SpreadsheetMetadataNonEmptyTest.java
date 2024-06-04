@@ -42,6 +42,8 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -100,11 +102,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         DateTimeContextTesting,
         DecimalNumberContextTesting,
         SpreadsheetFormatterTesting {
-
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static int DEFAULT_YEAR = 1900;
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
+
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
     @Test
     public void testId() {
@@ -1298,7 +1301,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number7), color7)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"));
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         for (int i = SpreadsheetColors.MIN; i < 10; i++) {
             this.numberToColorAndCheck(metadata,
@@ -1381,7 +1384,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number7), color7)
                 .set(SpreadsheetMetadataPropertyName.namedColor(colorName7), number7)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"));
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.numberToColorNameAndCheck(
                 metadata,
@@ -1683,12 +1686,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private void convertAndCheck2(final Object value,
                                   final Object expected) {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
-        final Converter<SpreadsheetConverterContext> converter = metadata.converter();
+
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final Converter<SpreadsheetConverterContext> converter = metadata.converter(spreadsheetFormatterProvider);
 
         this.convertAndCheck3(
                 value,
                 expected,
-                metadata.converter(),
+                metadata.converter(spreadsheetFormatterProvider),
                 SpreadsheetConverterContexts.basic(
                         converter,
                         LABEL_NAME_RESOLVER,
@@ -1710,26 +1715,20 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
-    @Test
-    public void testConverterCached() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
-        assertSame(metadata.converter(), metadata.converter());
-    }
-
     private SpreadsheetMetadata createSpreadsheetMetadataWithConverter() {
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("\"Date\" yyyy mm dd"))
+                .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("\"Date\" yyyy mm dd").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("\"Date\" yyyy mm dd"))
-                .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh"))
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("\"DateTime\" yyyy hh"))
                 .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000"))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("\"Number\" 00.000"))
-                .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @"))
-                .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" ss hh"))
+                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" ss hh").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("\"Time\" ss hh"))
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20);
     }
@@ -1753,8 +1752,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.convertAndCheck3(
                 LocalTime.of(12, 58, 59),
                 "Time 59 12",
-                metadata.converter(),
+                metadata.converter(SPREADSHEET_FORMATTER_PROVIDER),
                 metadata.converterContext(
+                        SPREADSHEET_FORMATTER_PROVIDER,
                         NOW,
                         LABEL_NAME_RESOLVER
                 )
@@ -1990,8 +1990,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private void formatAndCheck2(final Object value,
                                  final String text) {
-        this.formatAndCheck(this.createSpreadsheetMetadataWithFormatter()
-                        .formatter(),
+        this.formatAndCheck(
+                this.createSpreadsheetMetadataWithFormatter()
+                        .formatter(SPREADSHEET_FORMATTER_PROVIDER),
                 value,
                 new FakeSpreadsheetFormatterContext() {
                     @Override
@@ -2054,19 +2055,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetText.with(text));
     }
 
-    @Test
-    public void testFormatterCached() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithFormatter();
-        assertSame(metadata.formatter(), metadata.formatter());
-    }
-
     private SpreadsheetMetadata createSpreadsheetMetadataWithFormatter() {
         return SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("\"Date\" ddmmyyyy"))
-                .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" ddmmyyyy hhmmss"))
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" #.000"))
-                .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @"))
-                .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" hhmmss"));
+                .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("\"Date\" ddmmyyyy").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" ddmmyyyy hhmmss").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" #.000").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" hhmmss").spreadsheetFormatterSelector());
     }
 
     // formatterContext.................................................................................................
@@ -2090,6 +2085,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
                 null,
                 metadata.formatterContext(
+                        SPREADSHEET_FORMATTER_PROVIDER,
                         NOW,
                         LABEL_NAME_RESOLVER
                 )
@@ -2528,9 +2524,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"create-date-time\": \"2000-12-31T12:58:59\",\n" +
                 "  \"creator\": \"creator@example.com\",\n" +
                 "  \"currency-symbol\": \"$AUD\",\n" +
-                "  \"date-format-pattern\": \"DD/MM/YYYY\",\n" +
+                "  \"date-formatter\": \"date-format DD/MM/YYYY\",\n" +
                 "  \"date-parse-pattern\": \"DD/MM/YYYY;DDMMYYYY\",\n" +
-                "  \"date-time-format-pattern\": \"DD/MM/YYYY hh:mm\",\n" +
+                "  \"date-time-formatter\": \"date-time-format DD/MM/YYYY hh:mm\",\n" +
                 "  \"date-time-offset\": \"0\",\n" +
                 "  \"date-time-parse-pattern\": \"DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
                 "  \"decimal-separator\": \".\",\n" +
@@ -2542,15 +2538,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"modified-by\": \"modified@example.com\",\n" +
                 "  \"modified-date-time\": \"1999-12-31T12:58:59\",\n" +
                 "  \"negative-sign\": \"-\",\n" +
-                "  \"number-format-pattern\": \"#0.0\",\n" +
+                "  \"number-formatter\": \"number-format #0.0\",\n" +
                 "  \"number-parse-pattern\": \"#0.0;$#0.00\",\n" +
                 "  \"percentage-symbol\": \"%\",\n" +
                 "  \"positive-sign\": \"+\",\n" +
                 "  \"precision\": 123,\n" +
                 "  \"rounding-mode\": \"FLOOR\",\n" +
                 "  \"spreadsheet-id\": \"7b\",\n" +
-                "  \"text-format-pattern\": \"@@\",\n" +
-                "  \"time-format-pattern\": \"hh:mm\",\n" +
+                "  \"text-formatter\": \"text-format @@\",\n" +
+                "  \"time-formatter\": \"time-format hh:mm\",\n" +
                 "  \"time-parse-pattern\": \"hh:mm;hh:mm:ss.000\",\n" +
                 "  \"two-digit-year\": 31\n" +
                 "}");
@@ -2566,10 +2562,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
-        properties.put(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY"));
+        properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY"));
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
-        properties.put(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm"));
+        properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM"));
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
@@ -2590,7 +2586,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN);
-        properties.put(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"));
+        properties.put(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8);
         properties.put(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#0.0;$#0.00"));
         properties.put(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT);
@@ -2603,8 +2599,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));
-        properties.put(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@@"));
-        properties.put(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("hh:mm"));
+        properties.put(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@@").spreadsheetFormatterSelector());
+        properties.put(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mm;hh:mm:ss.000"));
         properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31);
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);

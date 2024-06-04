@@ -33,7 +33,7 @@ import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetMetadataStore} that watches each save {@link SpreadsheetMetadata} and determines if the cells
- * belonging to the matching spreadsheet need to be cleared in some way. For example if the {@link SpreadsheetMetadataPropertyName#NUMBER_FORMAT_PATTERN}
+ * belonging to the matching spreadsheet need to be cleared in some way. For example if the {@link SpreadsheetMetadataPropertyName#NUMBER_FORMATTER}
  * changes, then all cells need to be reformatted.
  */
 final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements SpreadsheetMetadataStore {

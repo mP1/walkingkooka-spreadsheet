@@ -318,8 +318,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
+                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                         SpreadsheetPattern.parseTextFormatPattern("@@")
+                                .spreadsheetFormatterSelector()
                 )
         );
 
@@ -384,8 +385,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
+                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                         SpreadsheetPattern.parseTextFormatPattern("@@")
+                                .spreadsheetFormatterSelector()
                 )
         );
 
@@ -400,8 +402,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
+                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                         SpreadsheetPattern.parseTextFormatPattern("@@@")
+                                .spreadsheetFormatterSelector()
                 )
         );
 
@@ -466,8 +469,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
+                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                         SpreadsheetPattern.parseTextFormatPattern("@@")
+                                .spreadsheetFormatterSelector()
                 )
         );
 
@@ -482,7 +486,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.remove(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN
+                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER
                 )
         );
 

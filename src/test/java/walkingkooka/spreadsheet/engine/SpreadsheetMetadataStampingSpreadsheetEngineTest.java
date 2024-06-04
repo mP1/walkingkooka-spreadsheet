@@ -77,7 +77,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 0))
             .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
             .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 0))
-            .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetParsePattern.parseTextFormatPattern("@"));
+            .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetParsePattern.parseTextFormatPattern("@").spreadsheetFormatterSelector());
 
     private final static LocalDateTime TIMESTAMP = LocalDateTime.now();
 
@@ -501,7 +501,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                         this.formatValue(
                                 cell.formula().value().get(),
                                 formatter.orElse(
-                                        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
+                                        SpreadsheetPattern.DEFAULT_TEXT_FORMATTER.formatter()
                                 )
                         )
                 );

@@ -20,11 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -206,21 +203,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      */
     private Function<Integer, Optional<SpreadsheetColorName>> numberToColorName;
 
-    // Converter........................................................................................................
-
-    @Override
-    public Converter<SpreadsheetConverterContext> converter() {
-        if (null == this.converter) {
-            this.converter = this.converter0();
-        }
-        return this.converter;
-    }
-
-    /**
-     * Cached {@link Converter}.
-     */
-    private Converter<SpreadsheetConverterContext> converter;
-
     @Override
     public DecimalNumberContext decimalNumberContext() {
         if (null == this.decimalNumberContext) {
@@ -272,19 +254,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      * Cached {@link MathContext}.
      */
     private MathContext mathContext;
-
-    @Override
-    public SpreadsheetFormatter formatter() {
-        if (null == this.formatter) {
-            this.formatter = this.formatter0();
-        }
-        return this.formatter;
-    }
-
-    /**
-     * Cached {@link SpreadsheetFormatter}.
-     */
-    private SpreadsheetFormatter formatter;
 
     // ParserContext....................................................................................................
 

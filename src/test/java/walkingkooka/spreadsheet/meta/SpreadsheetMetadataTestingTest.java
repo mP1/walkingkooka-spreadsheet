@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -29,14 +31,17 @@ import java.util.Optional;
 public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadataTesting,
         TreePrintableTesting {
 
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
     @Test
     public void testConverter() {
-        METADATA_EN_AU.converter();
+        METADATA_EN_AU.converter(SPREADSHEET_FORMATTER_PROVIDER);
     }
 
     @Test
     public void testConverterContext() {
         METADATA_EN_AU.converterContext(
+                SPREADSHEET_FORMATTER_PROVIDER,
                         LocalDateTime::now,
                         (label) -> {
                             throw new UnsupportedOperationException();
@@ -51,12 +56,13 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testFormatter() {
-        METADATA_EN_AU.formatter();
+        METADATA_EN_AU.formatter(SPREADSHEET_FORMATTER_PROVIDER);
     }
 
     @Test
     public void testFormatterContext() {
         METADATA_EN_AU.formatterContext(
+                SPREADSHEET_FORMATTER_PROVIDER,
                 LocalDateTime::now,
                 (label) -> {
                     throw new UnsupportedOperationException();

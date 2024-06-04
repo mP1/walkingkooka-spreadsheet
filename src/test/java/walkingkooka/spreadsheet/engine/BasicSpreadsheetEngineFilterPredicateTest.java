@@ -22,6 +22,9 @@ import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -137,6 +140,12 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                             default:
                                 throw new IllegalArgumentException("Unexpected cell " + cell);
                         }
+                    }
+
+                    @Override
+                    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+                        return SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                                .spreadsheetFormatter(selector);
                     }
 
                     @Override

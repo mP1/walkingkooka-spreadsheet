@@ -25,6 +25,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -63,6 +64,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetCellStore cellStore,
                                                             final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
+                                                            final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                             final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
@@ -71,6 +73,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(references, "references");
         Objects.requireNonNull(SpreadsheetLabelNameResolver, "SpreadsheetLabelNameResolver");
@@ -81,6 +84,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 cellStore,
                 serverUrl,
                 spreadsheetMetadata,
+                spreadsheetFormatterProvider,
                 expressionFunctionProvider,
                 references,
                 SpreadsheetLabelNameResolver,
@@ -92,6 +96,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetCellStore cellStore,
                                                         final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
+                                                        final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                         final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
@@ -101,6 +106,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.cellStore = cellStore;
         this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
+        this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.references = references;
         this.SpreadsheetLabelNameResolver = SpreadsheetLabelNameResolver;
@@ -180,7 +186,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Converter<SpreadsheetConverterContext> converter() {
-        return this.spreadsheetMetadata.converter();
+        return this.spreadsheetMetadata.converter(
+                this.spreadsheetFormatterProvider
+        );
     }
 
     // ExpressionEvaluationContext........................................................................................
@@ -389,10 +397,13 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private ConverterContext converterContext() {
         return this.spreadsheetMetadata()
                 .converterContext(
+                        this.spreadsheetFormatterProvider,
                         this.now,
                         this.SpreadsheetLabelNameResolver
                 );
     }
+
+    private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
 
     private final Supplier<LocalDateTime> now;
 

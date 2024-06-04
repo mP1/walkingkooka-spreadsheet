@@ -32,6 +32,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.CharSequences;
@@ -408,13 +409,29 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
-    // HasConverter.....................................................................................................
+    // converter........................................................................................................
+
+    @Test
+    public final void testConverterWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .converter(null)
+        );
+    }
+
 
     @Test
     public final void testConverterRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().converter());
-        checkMessage(thrown,
-                "Required properties \"date-format-pattern\", \"date-parse-pattern\", \"date-time-format-pattern\", \"date-time-offset\", \"date-time-parse-pattern\", \"number-format-pattern\", \"number-parse-pattern\", \"text-format-pattern\", \"time-format-pattern\", \"time-parse-pattern\" missing.");
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> this.createObject()
+                        .converter(SpreadsheetFormatterProviders.fake())
+        );
+        checkMessage(
+                thrown,
+                "Required properties \"date-formatter\", \"date-parse-pattern\", \"date-time-formatter\", \"date-time-offset\", \"date-time-parse-pattern\", \"number-formatter\", \"number-parse-pattern\", \"text-formatter\", \"time-formatter\", \"time-parse-pattern\" missing."
+        );
     }
 
     // HasDateTimeContext...............................................................................................
@@ -442,9 +459,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testHasFormatterRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().formatter());
-        checkMessage(thrown,
-                "Required properties \"date-format-pattern\", \"date-time-format-pattern\", \"number-format-pattern\", \"text-format-pattern\", \"time-format-pattern\" missing.");
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> this.createObject()
+                        .formatter(SpreadsheetFormatterProviders.fake())
+        );
+        checkMessage(
+                thrown,
+                "Required properties \"date-formatter\", \"date-time-formatter\", \"number-formatter\", \"text-formatter\", \"time-formatter\" missing."
+        );
     }
 
     // HasMathContext...................................................................................................

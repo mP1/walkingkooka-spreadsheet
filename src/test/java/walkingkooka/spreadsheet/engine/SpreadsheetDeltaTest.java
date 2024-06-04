@@ -757,7 +757,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     cell.setFormula(
                             SpreadsheetFormula.EMPTY.setText("=1")
                     ).setFormatPattern(
-                            Optional.of(SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN)
+                            Optional.of(SpreadsheetPattern.DEFAULT_TEXT_FORMATTER)
                     )
             );
             patchedCells.add(
@@ -1205,7 +1205,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.checkEquals(
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                                SpreadsheetDelta.FORMATTER_PROPERTY,
                                 marshallWithType(pattern)
                         )
                 ,
@@ -1221,7 +1221,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.checkEquals(
                 JsonNode.object()
                         .set(
-                                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                                SpreadsheetDelta.FORMATTER_PROPERTY,
                                 JsonNode.nullNode()
                         )
                 ,
@@ -3025,7 +3025,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsFormatPatternFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                SpreadsheetDelta.FORMATTER_PROPERTY,
                 JsonNode.nullNode()
 
         );
@@ -3351,7 +3351,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsFormatPatternFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.FORMAT_PATTERN_PROPERTY,
+                SpreadsheetDelta.FORMATTER_PROPERTY,
                 JsonNode.nullNode()
 
         );

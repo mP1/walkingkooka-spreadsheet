@@ -23,14 +23,10 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
@@ -114,15 +110,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateFormatPattern(final SpreadsheetDateFormatPattern pattern) {
-        // nop
-    }
-
     protected void visitDateParsePattern(final SpreadsheetDateParsePattern patterns) {
-        // nop
-    }
-
-    protected void visitDateTimeFormatPattern(final SpreadsheetDateTimeFormatPattern pattern) {
         // nop
     }
 
@@ -147,6 +135,14 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitExpressionNumberKind(final ExpressionNumberKind expressionNumberKind) {
+        // nop
+    }
+
+    protected void visitDateFormatter(final SpreadsheetFormatterSelector selector) {
+        // nop
+    }
+
+    protected void visitDateTimeFormatter(final SpreadsheetFormatterSelector selector) {
         // nop
     }
 
@@ -195,7 +191,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitNumberFormatPattern(final SpreadsheetNumberFormatPattern pattern) {
+    protected void visitNumberFormatter(final SpreadsheetFormatterSelector selector) {
         // nop
     }
 
@@ -231,11 +227,11 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTextFormatPattern(final SpreadsheetTextFormatPattern pattern) {
+    protected void visitTextFormatter(final SpreadsheetFormatterSelector selector) {
         // nop
     }
 
-    protected void visitTimeFormatPattern(final SpreadsheetTimeFormatPattern pattern) {
+    protected void visitTimeFormatter(final SpreadsheetFormatterSelector selector) {
         // nop
     }
 

@@ -33,6 +33,8 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -86,6 +88,8 @@ public final class Sample {
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
     public static void main(final String[] args) {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext(engine);
@@ -131,10 +135,10 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD")
-                    .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY"))
+                    .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY"))
                     .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                    .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm"))
+                    .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM"))
                     .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
                     .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1900)
@@ -147,7 +151,7 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
-                    .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"))
+                    .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
                     .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#"))
                     .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
@@ -155,12 +159,12 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.PRECISION, 123)
                     .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR)
                     .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123))
-                    .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@@"))
                     .set(
                             SpreadsheetMetadataPropertyName.STYLE,
                             TextStyle.EMPTY.set(TextStylePropertyName.WIDTH, Length.pixel(50.0))
                                     .set(TextStylePropertyName.HEIGHT, Length.pixel(50.0)))
-                    .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("hh:mm"))
+                    .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@@").spreadsheetFormatterSelector())
+                    .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mmhh:mm:ss.000"))
                     .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31)
                     .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
@@ -217,6 +221,7 @@ public final class Sample {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
+                                        SPREADSHEET_FORMATTER_PROVIDER,
                                         NOW,
                                         LABEL_NAME_RESOLVER
                                 )
@@ -256,7 +261,7 @@ public final class Sample {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter()
+                                                        .formatter(SPREADSHEET_FORMATTER_PROVIDER)
                                         )
                                 ).map(
                                         f -> cell.style()
@@ -274,6 +279,7 @@ public final class Sample {
                 return formatter.format(
                         value,
                         metadata.formatterContext(
+                                SPREADSHEET_FORMATTER_PROVIDER,
                                 NOW,
                                 LABEL_NAME_RESOLVER
                         )

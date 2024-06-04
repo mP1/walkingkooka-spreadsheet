@@ -26,6 +26,8 @@ import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -65,6 +67,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY;
 
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
     private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.fake();
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
@@ -84,6 +88,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
+                SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
@@ -98,6 +103,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 SERVER_URL,
                 METADATA,
+                SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
@@ -112,6 +118,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 null,
                 METADATA,
+                SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
@@ -125,6 +132,22 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 SERVER_URL,
+                null,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                EXPRESSION_FUNCTION_PROVIDER,
+                REFERENCES,
+                LABEL_NAME_RESOLVER,
+                NOW
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetFormatterProviderFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                METADATA,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
@@ -140,6 +163,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
+                SPREADSHEET_FORMATTER_PROVIDER,
                 null,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
@@ -154,6 +178,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
+                SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 null,
                 LABEL_NAME_RESOLVER,
@@ -168,6 +193,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
+                SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 null,
@@ -182,6 +208,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
+                SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
@@ -193,6 +220,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final SpreadsheetCellStore cellStore,
                            final AbsoluteUrl serverUrl,
                            final SpreadsheetMetadata spreadsheetMetadata,
+                           final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                            final ExpressionFunctionProvider expressionFunctionProvider,
                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
                            final SpreadsheetLabelNameResolver labelNameResolver,
@@ -204,6 +232,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         cellStore,
                         serverUrl,
                         spreadsheetMetadata,
+                        spreadsheetFormatterProvider,
                         expressionFunctionProvider,
                         references,
                         labelNameResolver,
@@ -437,8 +466,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, 0L)
                         .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
                         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
-                        .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@"))
+                        .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
                         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20),
+                SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,

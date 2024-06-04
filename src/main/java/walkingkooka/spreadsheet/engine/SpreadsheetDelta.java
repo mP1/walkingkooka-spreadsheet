@@ -980,7 +980,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToFormatPatterns,
-                FORMAT_PATTERN_PROPERTY,
+                FORMATTER_PROPERTY,
                 (pattern) -> context.marshallWithType(pattern.orElse(null))
         );
     }
@@ -1075,7 +1075,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                               final JsonNodeMarshallContext context) {
         return patternPatch(
                 pattern,
-                FORMAT_PATTERN_PROPERTY,
+                FORMATTER_PROPERTY,
                 context
         );
     }
@@ -1219,7 +1219,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             Sets.of(
                     SpreadsheetDelta.CELLS_PROPERTY_STRING,
                     SpreadsheetDelta.FORMULA_PROPERTY_STRING,
-                    SpreadsheetDelta.FORMAT_PATTERN_PROPERTY_STRING,
+                    SpreadsheetDelta.FORMATTER_PROPERTY_STRING,
                     SpreadsheetDelta.PARSE_PATTERN_PROPERTY_STRING,
                     SpreadsheetDelta.STYLE_PROPERTY_STRING
             )
@@ -1323,7 +1323,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case COLUMNS_PROPERTY_STRING:
                     break;
-                case FORMAT_PATTERN_PROPERTY_STRING:
+                case FORMATTER_PROPERTY_STRING:
                     formatPatternPatched = true;
                     break;
                 case FORMATTED_VALUE_PROPERTY_STRING:
@@ -1361,7 +1361,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (cellsPatched && formatPatternPatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, FORMAT_PATTERN_PROPERTY_STRING);
+            patchInvalidFail(CELLS_PROPERTY_STRING, FORMATTER_PROPERTY_STRING);
         }
 
         if (cellsPatched && parsePatternPatched) {
@@ -1381,11 +1381,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (formatPatternPatched && parsePatternPatched) {
-            patchInvalidFail(FORMAT_PATTERN_PROPERTY_STRING, PARSE_PATTERN_PROPERTY_STRING);
+            patchInvalidFail(FORMATTER_PROPERTY_STRING, PARSE_PATTERN_PROPERTY_STRING);
         }
 
         if (formatPatternPatched && stylePatched) {
-            patchInvalidFail(FORMAT_PATTERN_PROPERTY_STRING, STYLE_PROPERTY_STRING);
+            patchInvalidFail(FORMATTER_PROPERTY_STRING, STYLE_PROPERTY_STRING);
         }
 
         if (parsePatternPatched && stylePatched) {
@@ -1429,12 +1429,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             context
                     );
                     break;
-                case FORMAT_PATTERN_PROPERTY_STRING:
+                case FORMATTER_PROPERTY_STRING:
                     cells = patchFormatPattern(
                             selection.toCellRange(),
                             cells,
                             JsonNode.object()
-                                    .set(FORMAT_PATTERN_PROPERTY, propertyAndValue),
+                                    .set(FORMATTER_PROPERTY, propertyAndValue),
                             context
                     );
                     break;
@@ -1605,7 +1605,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final Optional<SpreadsheetFormatPattern> formatPattern = Optional.ofNullable(
                 context.unmarshallWithType(
                         patch.objectOrFail()
-                                .getOrFail(FORMAT_PATTERN_PROPERTY)
+                                .getOrFail(FORMATTER_PROPERTY)
                 )
         );
 
@@ -2407,7 +2407,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String COLUMNS_PROPERTY_STRING = "columns";
     private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
     private final static String FORMULA_PROPERTY_STRING = "formula";
-    private final static String FORMAT_PATTERN_PROPERTY_STRING = "format-pattern";
+    private final static String FORMATTER_PROPERTY_STRING = "format-pattern";
     private final static String LABELS_PROPERTY_STRING = "labels";
     private final static String PARSE_PATTERN_PROPERTY_STRING = "parse-pattern";
     private final static String ROWS_PROPERTY_STRING = "rows";
@@ -2439,7 +2439,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
 
     // @VisibleForTesting
-    final static JsonPropertyName FORMAT_PATTERN_PROPERTY = JsonPropertyName.with(FORMAT_PATTERN_PROPERTY_STRING);
+    final static JsonPropertyName FORMATTER_PROPERTY = JsonPropertyName.with(FORMATTER_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName LABELS_PROPERTY = JsonPropertyName.with(LABELS_PROPERTY_STRING);
     // @VisibleForTesting

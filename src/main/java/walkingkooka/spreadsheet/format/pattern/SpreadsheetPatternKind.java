@@ -237,13 +237,44 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     /**
      * Returns the {@link SpreadsheetMetadataPropertyName} for this {@link SpreadsheetPatternKind}.
      */
-    public SpreadsheetMetadataPropertyName<SpreadsheetPattern> spreadsheetMetadataPropertyName() {
-        return Cast.to(
-                SpreadsheetMetadataPropertyName.with(
-                        this.typeName()
-                                .substring("spreadsheet-".length())
-                )
-        );
+    public SpreadsheetMetadataPropertyName<?> spreadsheetMetadataPropertyName() {
+        SpreadsheetMetadataPropertyName name;
+
+        // must be a switch and not a field to avoid weird cycles between SpreadsheetMetadataPropertyName and this enum.
+        switch (this) {
+            case DATE_FORMAT_PATTERN:
+                name = SpreadsheetMetadataPropertyName.DATE_FORMATTER;
+                break;
+            case DATE_PARSE_PATTERN:
+                name = SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN;
+                break;
+            case DATE_TIME_FORMAT_PATTERN:
+                name = SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER;
+                break;
+            case DATE_TIME_PARSE_PATTERN:
+                name = SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN;
+                break;
+            case NUMBER_FORMAT_PATTERN:
+                name = SpreadsheetMetadataPropertyName.NUMBER_FORMATTER;
+                break;
+            case NUMBER_PARSE_PATTERN:
+                name = SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN;
+                break;
+            case TEXT_FORMAT_PATTERN:
+                name = SpreadsheetMetadataPropertyName.TEXT_FORMATTER;
+                break;
+            case TIME_FORMAT_PATTERN:
+                name = SpreadsheetMetadataPropertyName.TIME_FORMATTER;
+                break;
+            case TIME_PARSE_PATTERN:
+                name = SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN;
+                break;
+            default:
+                NeverError.unhandledCase(this, values());
+                name = null;
+        }
+
+        return Cast.to(name);
     }
 
     /**

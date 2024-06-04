@@ -30,6 +30,7 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
@@ -1180,23 +1181,23 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
     // spreadsheetMetadataPropertyName..................................................................................
 
     @Test
-    public void testSpreadsheetMetadataPropertyNameDateFormat() {
+    public void testSpreadsheetMetadataPropertyNameDateFormatter() {
         this.spreadsheetMetadataPropertyNameAndCheck(
                 SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
-                SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN
+                SpreadsheetMetadataPropertyName.DATE_FORMATTER
         );
     }
 
     @Test
-    public void testSpreadsheetMetadataPropertyNameDateTimeFormat() {
+    public void testSpreadsheetMetadataPropertyNameDateTimeFormatter() {
         this.spreadsheetMetadataPropertyNameAndCheck(
                 SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
-                SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER
         );
     }
 
     private void spreadsheetMetadataPropertyNameAndCheck(final SpreadsheetPatternKind kind,
-                                                         final SpreadsheetMetadataPropertyName<? extends SpreadsheetPattern> expected) {
+                                                         final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> expected) {
         this.checkEquals(
                 expected,
                 kind.spreadsheetMetadataPropertyName()

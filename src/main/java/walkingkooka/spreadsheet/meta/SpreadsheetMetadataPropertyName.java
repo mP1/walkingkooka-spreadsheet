@@ -27,18 +27,14 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
@@ -47,6 +43,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -57,6 +54,7 @@ import walkingkooka.tree.text.TextStyle;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -109,9 +107,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameCurrencySymbol.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-format-pattern {@link String}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the default {@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector} for {@link java.time.LocalDate} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetDateFormatPattern> DATE_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterDate.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parse-pattern {@link String}</code>
@@ -124,9 +122,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Long> DATETIME_OFFSET = registerConstant(SpreadsheetMetadataPropertyNameDateTimeOffset.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-format-pattern {@link String}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the default {@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector} for {@link LocalDateTime} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetDateTimeFormatPattern> DATETIME_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPattern.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterDateTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parse-pattern</code>
@@ -199,9 +197,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Character> NEGATIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNameNegativeSign.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-format-pattern</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link ExpressionNumber} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetNumberFormatPattern> NUMBER_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> NUMBER_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterNumber.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parse-pattern</code>
@@ -244,14 +242,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<TextStyle> STYLE = registerConstant(SpreadsheetMetadataPropertyNameStyle.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>text-format-pattern {@link SpreadsheetFormatPattern}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link String} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetTextFormatPattern> TEXT_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TEXT_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterText.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-format-pattern {@link SpreadsheetFormatPattern}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link LocalTime} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetTimeFormatPattern> TIME_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parse-pattern</code>
@@ -335,7 +333,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                         this.getClass()
                                 .getSimpleName()
                                 .substring(SpreadsheetMetadataPropertyName.class.getSimpleName().length())
-                                .replace("Spreadsheet", ""), // handles sub-classes like SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern
+                                .replace("Spreadsheet", ""), // handles sub-classes like SpreadsheetMetadataPropertyNameFormatterText
                         CaseKind.KEBAB
                 ) :
                 name;
@@ -535,25 +533,32 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     // HasSpreadsheetPatternKind........................................................................................
 
     /**
-     * The coresponding {@link SpreadsheetPatternKind} for this property.
+     * The corresponding {@link SpreadsheetPatternKind} for this property.
      */
-    // text-format-pattern -> TEXT_FORMAT_PATTERN
-    // time-format-pattern -> TIME_FORMAT_PATTERN
     // time-parse-pattern -> TIME_PARSE_PATTERN
     @Override
     public final Optional<SpreadsheetPatternKind> patternKind() {
         final String name = this.value();
 
-        return name.endsWith("format-pattern") || name.endsWith("parse-pattern") ?
-                Optional.of(
-                        SpreadsheetPatternKind.valueOf(
-                                CaseKind.KEBAB.change(
-                                        name,
-                                        CaseKind.SNAKE
-                                )
+        SpreadsheetPatternKind kind;
+        if (this instanceof SpreadsheetMetadataPropertyNameFormatter) {
+            final SpreadsheetMetadataPropertyNameFormatter formatter = (SpreadsheetMetadataPropertyNameFormatter) this;
+            kind = formatter.spreadsheetPatternKind;
+
+        } else {
+            if (name.endsWith("parse-pattern")) {
+                kind = SpreadsheetPatternKind.valueOf(
+                        CaseKind.KEBAB.change(
+                                name,
+                                CaseKind.SNAKE
                         )
-                ) :
-                Optional.empty();
+                );
+            } else {
+                kind = null;
+            }
+        }
+
+        return Optional.ofNullable(kind);
     }
 
     // Object...........................................................................................................

@@ -31,6 +31,7 @@ import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -92,10 +93,10 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, 0L)
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
-            .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@"))
+            .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-            .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("$#.##"));
+            .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("$#.##").spreadsheetFormatterSelector());
 
     /**
      * Concats all the given parameters.
@@ -486,6 +487,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         CELL_STORE,
                         SERVER_URL,
                         METADATA,
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
                         EXPRESSION_FUNCTION_PROVIDER,
                         REFERENCES,
                         LABEL_NAME_RESOLVER,

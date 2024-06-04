@@ -245,6 +245,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 this.storeRepository.cells(),
                 this.serverUrl,
                 this.spreadsheetMetadata(),
+                this.spreadsheetFormatterProvider,
                 this.expressionFunctionProvider,
                 this.referenceFunction,
                 this::resolveIfLabel,
@@ -281,6 +282,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 value,
                 this.spreadsheetMetadata()
                         .formatterContext(
+                                this.spreadsheetFormatterProvider,
                                 this::now,
                                 this::resolveIfLabel
                         )
@@ -322,7 +324,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                                         value.get(),
                                                         formatter.orElse(
                                                                 this.spreadsheetMetadata()
-                                                                        .formatter()
+                                                                        .formatter(this.spreadsheetFormatterProvider)
                                                         )
                                                 )
                                                 .map(

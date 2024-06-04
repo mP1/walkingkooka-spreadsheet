@@ -581,9 +581,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionTextFormatPattern() {
+    public void testSpreadsheetCellStoreActionTextFormatter() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                 SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
         );
     }
@@ -647,25 +647,25 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testHasSpreadsheetPatternKindDateFormatPattern() {
+    public void testHasSpreadsheetPatternKindDateFormatter() {
         this.hasSpreadsheetPatternKindAndCheck(
-                SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN,
+                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
                 SpreadsheetPatternKind.DATE_FORMAT_PATTERN
         );
     }
 
     @Test
-    public void testHasSpreadsheetPatternKindDateTimeFormatPattern() {
+    public void testHasSpreadsheetPatternKindDateTimeFormatter() {
         this.hasSpreadsheetPatternKindAndCheck(
-                SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN,
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
                 SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
         );
     }
 
     @Test
-    public void testHasSpreadsheetPatternKindTextFormatPattern() {
+    public void testHasSpreadsheetPatternKindTextFormatter() {
         this.hasSpreadsheetPatternKindAndCheck(
-                SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN,
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                 SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
         );
     }
