@@ -47,17 +47,6 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         SpreadsheetComparatorProviderTesting<C>,
         SpreadsheetLabelNameResolverTesting {
 
-    // spreadsheetComparator............................................................................................
-
-    @Test
-    default void testSpreadsheetomparatorNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .spreadsheetComparator(null)
-        );
-    }
-
     // SpreadsheetLabelNameResolverTesting..............................................................................
 
     @Override
