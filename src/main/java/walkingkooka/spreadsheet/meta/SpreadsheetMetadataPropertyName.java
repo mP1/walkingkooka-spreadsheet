@@ -68,7 +68,6 @@ import java.util.function.Predicate;
  */
 public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         Comparable<SpreadsheetMetadataPropertyName<?>>,
-        HasSpreadsheetPatternKind,
         HasUrlFragment {
 
     // constants
@@ -530,34 +529,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         }
 
         return action;
-    }
-
-    /**
-     * Tests if this {@link SpreadsheetMetadataPropertyName} is for any format or parse pattern, that is the property
-     * value will be a sub-class of {@link SpreadsheetPattern}.
-     */
-    public final boolean isPattern() {
-        final String name = this.value();
-        return name.endsWith("format-pattern") || name.endsWith("parse-pattern");
-    }
-
-    // HasSpreadsheetPatternKind........................................................................................
-
-    // text-format-pattern -> TEXT_FORMAT_PATTERN
-    // time-format-pattern -> TIME_FORMAT_PATTERN
-    // time-parse-pattern -> TIME_PARSE_PATTERN
-    @Override
-    public final Optional<SpreadsheetPatternKind> patternKind() {
-        return this.isPattern() ?
-                Optional.of(
-                        SpreadsheetPatternKind.valueOf(
-                                CaseKind.KEBAB.change(
-                                        this.value(),
-                                        CaseKind.SNAKE
-                                )
-                        )
-                ) :
-                Optional.empty();
     }
 
     // Object...........................................................................................................
