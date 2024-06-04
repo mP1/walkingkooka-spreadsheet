@@ -63,7 +63,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     /**
      * Holds an absent {@link SpreadsheetFormatPattern}.
      */
-    public final static Optional<SpreadsheetFormatPattern> NO_FORMATTER = Optional.empty();
+    public final static Optional<SpreadsheetFormatPattern> NO_FORMAT = Optional.empty();
 
     /**
      * Holds an absent {@link TextNode}.
@@ -92,7 +92,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 checkFormula(formula),
                 NO_STYLE,
                 NO_PARSE_PATTERN,
-                NO_FORMATTER,
+                NO_FORMAT,
                 NO_FORMATTED_VALUE_CELL
         );
     }
@@ -372,7 +372,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                     )
                     );
                     break;
-                case FORMATTER_PROPERTY_STRING:
+                case FORMAT_PROPERTY_STRING:
                     patched = patched.setFormatPattern(
                             Optional.ofNullable(
                                     context.unmarshallWithType(propertyAndValue)
@@ -428,7 +428,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         checkContext(context);
 
         return this.makePatch(
-                FORMATTER_PROPERTY,
+                FORMAT_PROPERTY,
                 context.marshallWithType(
                         this.formatPattern.orElse(null)
                 )
@@ -583,7 +583,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 case PARSE_PATTERN_PROPERTY_STRING:
                     parsePattern = context.unmarshallWithType(child);
                     break;
-                case FORMATTER_PROPERTY_STRING:
+                case FORMAT_PROPERTY_STRING:
                     formatPattern = context.unmarshallWithType(child);
                     break;
                 case FORMATTED_VALUE_PROPERTY_STRING:
@@ -660,7 +660,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         if (this.formatPattern.isPresent()) {
             object = object.set(
-                    FORMATTER_PROPERTY,
+                    FORMAT_PROPERTY,
                     context.marshallWithType(
                             this.formatPattern.get()
                     )
@@ -677,14 +677,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String STYLE_PROPERTY_STRING = "style";
     private final static String PARSE_PATTERN_PROPERTY_STRING = "parse-pattern";
-    private final static String FORMATTER_PROPERTY_STRING = "format-pattern";
+    private final static String FORMAT_PROPERTY_STRING = "format-pattern";
     private final static String FORMATTED_VALUE_PROPERTY_STRING = "formatted-value";
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
     final static JsonPropertyName PARSE_PATTERN_PROPERTY = JsonPropertyName.with(PARSE_PATTERN_PROPERTY_STRING);
-    final static JsonPropertyName FORMATTER_PROPERTY = JsonPropertyName.with(FORMATTER_PROPERTY_STRING);
+    final static JsonPropertyName FORMAT_PROPERTY = JsonPropertyName.with(FORMAT_PROPERTY_STRING);
     final static JsonPropertyName FORMATTED_VALUE_PROPERTY = JsonPropertyName.with(FORMATTED_VALUE_PROPERTY_STRING);
 
     static {
