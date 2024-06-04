@@ -63,7 +63,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetCellStore cellStore,
                                                             final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
-                                                            final ExpressionFunctionProvider functions,
+                                                            final ExpressionFunctionProvider expressionFunctionProvider,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                             final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
                                                             final Supplier<LocalDateTime> now) {
@@ -71,7 +71,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
-        Objects.requireNonNull(functions, "functions");
+        Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(references, "references");
         Objects.requireNonNull(SpreadsheetLabelNameResolver, "SpreadsheetLabelNameResolver");
         Objects.requireNonNull(now, "now");
@@ -81,7 +81,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 cellStore,
                 serverUrl,
                 spreadsheetMetadata,
-                functions,
+                expressionFunctionProvider,
                 references,
                 SpreadsheetLabelNameResolver,
                 now
@@ -92,7 +92,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetCellStore cellStore,
                                                         final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
-                                                        final ExpressionFunctionProvider functions,
+                                                        final ExpressionFunctionProvider expressionFunctionProvider,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                         final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
                                                         final Supplier<LocalDateTime> now) {
@@ -101,7 +101,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.cellStore = cellStore;
         this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
-        this.functions = functions;
+        this.expressionFunctionProvider = expressionFunctionProvider;
         this.references = references;
         this.SpreadsheetLabelNameResolver = SpreadsheetLabelNameResolver;
         this.now = now;
@@ -207,12 +207,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
-        return this.functions.expressionFunction(name);
+        return this.expressionFunctionProvider.expressionFunction(name);
     }
 
     @Override
     public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
-        return this.functions.expressionFunctionInfos();
+        return this.expressionFunctionProvider.expressionFunctionInfos();
     }
 
     @Override
@@ -222,7 +222,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .orElse(false);
     }
 
-    private final ExpressionFunctionProvider functions;
+    private final ExpressionFunctionProvider expressionFunctionProvider;
 
     @Override
     public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
