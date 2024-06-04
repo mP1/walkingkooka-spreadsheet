@@ -46,7 +46,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetCellStore cellStore,
                                                                final AbsoluteUrl serverUrl,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
-                                                               final ExpressionFunctionProvider functions,
+                                                               final ExpressionFunctionProvider expressionFunctionProvider,
                                                                final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                                final SpreadsheetLabelNameResolver labelNameResolver,
                                                                final Supplier<LocalDateTime> now) {
@@ -55,7 +55,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 cellStore,
                 serverUrl,
                 spreadsheetMetadata,
-                functions,
+                expressionFunctionProvider,
                 references,
                 labelNameResolver,
                 now
