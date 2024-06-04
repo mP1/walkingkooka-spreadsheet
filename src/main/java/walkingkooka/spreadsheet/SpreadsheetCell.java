@@ -691,7 +691,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         SpreadsheetCell.NO_FORMATTED_VALUE_CELL.hashCode();
         SpreadsheetFormula.EMPTY.hashCode();
         TextNode.NO_ATTRIBUTES.isEmpty();
-        SpreadsheetPattern.DEFAULT_TEXT_FORMATTER.toString();
+        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.toString();
 
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetCell.class),
