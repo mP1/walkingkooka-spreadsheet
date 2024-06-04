@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -45,6 +46,7 @@ public interface SpreadsheetEngineContext extends Context,
         HasSpreadsheetMetadata,
         HasNow,
         SpreadsheetComparatorProvider,
+        SpreadsheetFormatterProvider,
         SpreadsheetLabelNameResolver {
 
     /**
@@ -82,6 +84,8 @@ public interface SpreadsheetEngineContext extends Context,
                         Boolean.class
                 );
     }
+
+    // Formatting & SpreadsheetFormatterProvider........................................................................
 
     /**
      * Formats the given value using the provided formatter.

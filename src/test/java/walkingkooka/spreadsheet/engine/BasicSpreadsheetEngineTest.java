@@ -49,6 +49,8 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -13286,6 +13288,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .spreadsheetComparator(name);
             }
 
+            @Override
+            public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+                return SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        .spreadsheetFormatter(selector);
+            }
+            
             public SpreadsheetMetadata spreadsheetMetadata() {
                 return metadata.set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, defaultYear);
             }

@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfo;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -98,6 +100,18 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
                            final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(node, "node");
         Objects.requireNonNull(cell, "cell");
+        throw new UnsupportedOperationException();
+    }
+
+    // formatting.......................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
         throw new UnsupportedOperationException();
     }
 

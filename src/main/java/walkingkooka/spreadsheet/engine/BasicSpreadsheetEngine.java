@@ -1214,7 +1214,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             result = context.formatValueAndStyle(
                     result,
                     cell.formatPattern()
-                            .map(SpreadsheetFormatPattern::formatter)
+                            .map(SpreadsheetFormatPattern::spreadsheetFormatterSelector)
+                            .flatMap(context::spreadsheetFormatter)
             );
         } catch (final Exception cause) {
             result = context.formatThrowableAndStyle(
