@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -41,7 +42,8 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
         HasTextTesting,
         ToStringTesting<SpreadsheetFormatterSelector>,
         ParseStringTesting<SpreadsheetFormatterSelector>,
-        JsonNodeMarshallingTesting<SpreadsheetFormatterSelector> {
+        JsonNodeMarshallingTesting<SpreadsheetFormatterSelector>,
+        TreePrintableTesting {
 
     private final static SpreadsheetFormatterName NAME = SpreadsheetFormatterName.with("text-format");
 
@@ -273,5 +275,24 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
     @Override
     public SpreadsheetFormatterSelector createJsonNodeMarshallingValue() {
         return this.createObject();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintWithoutText() {
+        this.treePrintAndCheck(
+                SpreadsheetFormatterSelector.parse("abc123"),
+                "abc123\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintWithText() {
+        this.treePrintAndCheck(
+                SpreadsheetFormatterSelector.parse("text-format @@"),
+                "text-format\n" +
+                        "  @@\n"
+        );
     }
 }
