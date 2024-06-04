@@ -1131,8 +1131,8 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
 
         this.checkEquals(
-                SpreadsheetDelta.formatPatternPatch(
-                        pattern,
+                SpreadsheetDelta.formatterPatch(
+                        pattern.map(SpreadsheetFormatPattern::spreadsheetFormatterSelector),
                         context
                 ),
                 SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
@@ -1143,13 +1143,15 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
     }
 
     @Test
-    public void testPatternPatchWithSpreadsheetFormatPattern() {
+    public void testPatternPatchWithSpreadsheetFormatter() {
         final SpreadsheetFormatPattern pattern = SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy");
         final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
 
         this.checkEquals(
-                SpreadsheetDelta.formatPatternPatch(
-                        Optional.of(pattern),
+                SpreadsheetDelta.formatterPatch(
+                        Optional.of(
+                                pattern.spreadsheetFormatterSelector()
+                        ),
                         context
                 ),
                 pattern.kind()

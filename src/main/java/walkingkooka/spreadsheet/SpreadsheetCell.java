@@ -22,7 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.CanReplaceReferences;
@@ -61,9 +61,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
         UsesToStringBuilder {
 
     /**
-     * Holds an absent {@link SpreadsheetFormatPattern}.
+     * Holds an absent {@link SpreadsheetFormatterSelector}.
      */
-    public final static Optional<SpreadsheetFormatPattern> NO_FORMAT_PATTERN = Optional.empty();
+    public final static Optional<SpreadsheetFormatterSelector> NO_FORMATTER = Optional.empty();
 
     /**
      * Holds an absent {@link TextNode}.
@@ -92,7 +92,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 checkFormula(formula),
                 NO_STYLE,
                 NO_PARSE_PATTERN,
-                NO_FORMAT_PATTERN,
+                NO_FORMATTER,
                 NO_FORMATTED_VALUE_CELL
         );
     }
@@ -127,7 +127,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                             final SpreadsheetFormula formula,
                             final TextStyle style,
                             final Optional<SpreadsheetParsePattern> parsePattern,
-                            final Optional<SpreadsheetFormatPattern> formatPattern,
+                            final Optional<SpreadsheetFormatterSelector> formatter,
                             final Optional<TextNode> formattedValue) {
         super();
 
@@ -135,7 +135,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         this.formula = formula;
         this.style = style;
         this.parsePattern = parsePattern;
-        this.formatPattern = formatPattern;
+        this.formatter = formatter;
         this.formattedValue = formattedValue;
     }
 
@@ -162,7 +162,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         return this.reference.equals(reference) ?
                 this :
-                this.replace(reference, this.formula, this.style, this.parsePattern, this.formatPattern, NO_FORMATTED_VALUE_CELL);
+                this.replace(reference, this.formula, this.style, this.parsePattern, this.formatter, NO_FORMATTED_VALUE_CELL);
     }
 
     /**
@@ -185,7 +185,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private SpreadsheetCell setFormula0(final SpreadsheetFormula formula) {
         return this.formula.equals(formula) ?
                 this :
-                this.replace(this.reference, formula, this.style, this.parsePattern, this.formatPattern, NO_FORMATTED_VALUE_CELL);
+                this.replace(this.reference, formula, this.style, this.parsePattern, this.formatter, NO_FORMATTED_VALUE_CELL);
     }
 
     /**
@@ -204,7 +204,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         return this.style.equals(style) ?
                 this :
-                this.replace(this.reference, this.formula, style, this.parsePattern, this.formatPattern, NO_FORMATTED_VALUE_CELL);
+                this.replace(this.reference, this.formula, style, this.parsePattern, this.formatter, NO_FORMATTED_VALUE_CELL);
     }
 
     /**
@@ -239,7 +239,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         .setText(formula.text()),
                 this.style,
                 parsePattern,
-                this.formatPattern,
+                this.formatter,
                 NO_FORMATTED_VALUE_CELL
         );
     }
@@ -249,24 +249,24 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private final Optional<SpreadsheetParsePattern> parsePattern;
 
-    // formatPattern..... .............................................................................................
+    // formatter..... .............................................................................................
 
-    public Optional<SpreadsheetFormatPattern> formatPattern() {
-        return this.formatPattern;
+    public Optional<SpreadsheetFormatterSelector> formatter() {
+        return this.formatter;
     }
 
-    public SpreadsheetCell setFormatPattern(final Optional<SpreadsheetFormatPattern> formatPattern) {
-        Objects.requireNonNull(formatPattern, "formatPattern");
+    public SpreadsheetCell setFormatter(final Optional<SpreadsheetFormatterSelector> formatter) {
+        Objects.requireNonNull(formatter, "formatter");
 
-        return this.formatPattern.equals(formatPattern) ?
+        return this.formatter.equals(formatter) ?
                 this :
-                this.replace(this.reference, this.formula, this.style, this.parsePattern, formatPattern, NO_FORMATTED_VALUE_CELL);
+                this.replace(this.reference, this.formula, this.style, this.parsePattern, formatter, NO_FORMATTED_VALUE_CELL);
     }
 
     /**
      * Used to format the output of the cell's formula.
      */
-    private final Optional<SpreadsheetFormatPattern> formatPattern;
+    private final Optional<SpreadsheetFormatterSelector> formatter;
 
     // formatted .............................................................................................
 
@@ -280,7 +280,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         final Optional<TextNode> formatted2 = formattedValue.map(TextNode::root);
         return this.formattedValue.equals(formatted2) ?
                 this :
-                this.replace(this.reference, this.formula, this.style, this.parsePattern, this.formatPattern, formatted2);
+                this.replace(this.reference, this.formula, this.style, this.parsePattern, this.formatter, formatted2);
     }
 
     /**
@@ -297,14 +297,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                     final SpreadsheetFormula formula,
                                     final TextStyle style,
                                     final Optional<SpreadsheetParsePattern> parsePattern,
-                                    final Optional<SpreadsheetFormatPattern> formatPattern,
+                                    final Optional<SpreadsheetFormatterSelector> formatter,
                                     final Optional<TextNode> formatted) {
         return new SpreadsheetCell(
                 reference,
                 formula,
                 style,
                 parsePattern,
-                formatPattern,
+                formatter,
                 formatted
         );
     }
@@ -317,7 +317,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     @Override
     public boolean isEmpty() {
         return this.formula.isEmpty() &&
-                false == this.formatPattern.isPresent() &&
+                false == this.formatter.isPresent() &&
                 false == this.parsePattern.isPresent() &&
                 this.style.isEmpty();
     }
@@ -372,10 +372,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                     )
                     );
                     break;
-                case FORMAT_PROPERTY_STRING:
-                    patched = patched.setFormatPattern(
+                case FORMATTER_PROPERTY_STRING:
+                    patched = patched.setFormatter(
                             Optional.ofNullable(
-                                    context.unmarshallWithType(propertyAndValue)
+                                    context.unmarshall(
+                                            propertyAndValue,
+                                            SpreadsheetFormatterSelector.class
+                                    )
                             )
                     );
                     break;
@@ -422,15 +425,15 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     /**
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
-     * a format-pattern.
+     * a formatter.
      */
-    public JsonNode formatPatternPatch(final JsonNodeMarshallContext context) {
+    public JsonNode formatterPatch(final JsonNodeMarshallContext context) {
         checkContext(context);
 
         return this.makePatch(
-                FORMAT_PROPERTY,
-                context.marshallWithType(
-                        this.formatPattern.orElse(null)
+                FORMATTER_PROPERTY,
+                context.marshall(
+                        this.formatter.orElse(null)
                 )
         );
     }
@@ -491,12 +494,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.formula.printTree(printer);
 
             {
-                final Optional<SpreadsheetFormatPattern> formatPattern = this.formatPattern();
-                if (formatPattern.isPresent()) {
-                    printer.println("formatPattern:");
+                final Optional<SpreadsheetFormatterSelector> formatter = this.formatter();
+                if (formatter.isPresent()) {
+                    printer.println("formatter:");
                     printer.indent();
                     {
-                        formatPattern.get().printTree(printer);
+                        formatter.get()
+                                .printTree(printer);
                     }
                     printer.outdent();
                 }
@@ -568,7 +572,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
         TextStyle style = TextStyle.EMPTY;
         SpreadsheetParsePattern parsePattern = null;
-        SpreadsheetFormatPattern formatPattern = null;
+        SpreadsheetFormatterSelector formatter = null;
         TextNode formatted = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
@@ -583,8 +587,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 case PARSE_PATTERN_PROPERTY_STRING:
                     parsePattern = context.unmarshallWithType(child);
                     break;
-                case FORMAT_PROPERTY_STRING:
-                    formatPattern = context.unmarshallWithType(child);
+                case FORMATTER_PROPERTY_STRING:
+                    formatter = context.unmarshall(
+                            child,
+                            SpreadsheetFormatterSelector.class
+                    );
                     break;
                 case FORMATTED_VALUE_PROPERTY_STRING:
                     formatted = context.unmarshallWithType(child);
@@ -600,7 +607,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 formula,
                 style,
                 Optional.ofNullable(parsePattern),
-                Optional.ofNullable(formatPattern),
+                Optional.ofNullable(formatter),
                 Optional.ofNullable(formatted)
         );
     }
@@ -612,10 +619,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      *     "formula": {
      *       "text": "=1+2"
      *     },
-     *     "format-pattern": {
-     *       "type": "spreadsheet-number-formatter",
-     *       "value": "$0.00"
-     *     }
+     *     "formatter": "text-format @",
      *     "parse-pattern": {
      *       "type": "spreadsheet-number-parse-pattern",
      *       "value": "$0.00"
@@ -658,11 +662,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
         }
 
-        if (this.formatPattern.isPresent()) {
+        if (this.formatter.isPresent()) {
             object = object.set(
-                    FORMAT_PROPERTY,
-                    context.marshallWithType(
-                            this.formatPattern.get()
+                    FORMATTER_PROPERTY,
+                    context.marshall(
+                            this.formatter.get()
                     )
             );
         }
@@ -677,14 +681,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String STYLE_PROPERTY_STRING = "style";
     private final static String PARSE_PATTERN_PROPERTY_STRING = "parse-pattern";
-    private final static String FORMAT_PROPERTY_STRING = "format-pattern";
+    private final static String FORMATTER_PROPERTY_STRING = "formatter";
     private final static String FORMATTED_VALUE_PROPERTY_STRING = "formatted-value";
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
     final static JsonPropertyName PARSE_PATTERN_PROPERTY = JsonPropertyName.with(PARSE_PATTERN_PROPERTY_STRING);
-    final static JsonPropertyName FORMAT_PROPERTY = JsonPropertyName.with(FORMAT_PROPERTY_STRING);
+    final static JsonPropertyName FORMATTER_PROPERTY = JsonPropertyName.with(FORMATTER_PROPERTY_STRING);
     final static JsonPropertyName FORMATTED_VALUE_PROPERTY = JsonPropertyName.with(FORMATTED_VALUE_PROPERTY_STRING);
 
     static {
@@ -710,7 +714,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.formula,
                 this.style,
                 this.parsePattern,
-                this.formatPattern,
+                this.formatter,
                 this.formattedValue
         );
     }
@@ -727,7 +731,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.formula.equals(other.formula()) &&
                 this.style.equals(other.style) &&
                 this.parsePattern.equals(other.parsePattern) &&
-                this.formatPattern.equals(other.formatPattern) &&
+                this.formatter.equals(other.formatter) &&
                 this.formattedValue.equals(other.formattedValue);
     }
 
@@ -742,7 +746,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 .value(this.formula)
                 .value(this.style)
                 .value(this.parsePattern)
-                .value(this.formatPattern)
+                .value(this.formatter)
                 .value(this.formattedValue);
     }
 }

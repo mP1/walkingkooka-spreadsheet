@@ -29,7 +29,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -105,7 +105,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkParsePattern(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
-        this.checkFormatPattern(cell);
+        this.checkFormatter(cell);
         this.checkFormattedValue(cell);
     }
 
@@ -119,7 +119,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkNoParsePattern(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
-        this.checkNoFormatPattern(cell);
+        this.checkNoFormatter(cell);
         this.checkFormattedValue(cell, SpreadsheetCell.NO_FORMATTED_VALUE_CELL);
     }
 
@@ -131,7 +131,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkNoParsePattern(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
-        this.checkNoFormatPattern(cell);
+        this.checkNoFormatter(cell);
         this.checkNoFormattedValue(cell);
     }
 
@@ -156,7 +156,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         )
         );
         this.checkTextStyle(cell);
-        this.checkNoFormatPattern(cell);
+        this.checkNoFormatter(cell);
         this.checkNoFormattedValue(cell);
     }
 
@@ -191,9 +191,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         );
         this.checkFormula(cell);
         this.checkEquals(
-                cell.formatPattern(),
-                different.formatPattern(),
-                "formatPattern"
+                cell.formatter(),
+                different.formatter(),
+                "formatter"
         );
     }
 
@@ -248,7 +248,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkParsePattern(different, differentParsePattern);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
-        this.checkFormatPattern(different);
+        this.checkFormatter(different);
         this.checkNoFormattedValue(different); // clear formattedValue because of format change
     }
 
@@ -280,7 +280,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkParsePattern(different, differentParsePattern);
         this.checkFormula(different, formula);
         this.checkTextStyle(different);
-        this.checkFormatPattern(different);
+        this.checkFormatter(different);
         this.checkNoFormattedValue(different); // clear formattedValue because of format change
     }
 
@@ -294,7 +294,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkParsePattern(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
-        this.checkNoFormatPattern(different);
+        this.checkNoFormatter(different);
         this.checkNoFormattedValue(different);
     }
 
@@ -322,7 +322,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkParsePattern(different);
         this.checkFormula(different, differentFormula);
         this.checkTextStyle(different);
-        this.checkFormatPattern(different);
+        this.checkFormatter(different);
         this.checkNoFormattedValue(different); // clear formattedValue because of formula / value change.
     }
 
@@ -344,7 +344,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         .setValue(Optional.of(SpreadsheetErrorKind.VALUE))
         );
         this.checkTextStyle(different);
-        this.checkFormatPattern(different);
+        this.checkFormatter(different);
         this.checkNoFormattedValue(different); // clear formattedValue because of formula / value change.
     }
 
@@ -372,52 +372,53 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkParsePattern(different);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different, differentTextStyle);
-        this.checkFormatPattern(different);
+        this.checkFormatter(different);
         this.checkNoFormattedValue(different); // clear formattedValue because of text properties change
     }
 
-    // SetFormatPattern.....................................................................................................
+    // SetFormatter.....................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
-    public void testSetFormatPatternNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCell().setFormatPattern(null));
+    public void testSetFormatterNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createCell().setFormatter(null));
     }
 
     @Test
-    public void testSetFormatPatternSame() {
+    public void testSetFormatterSame() {
         final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setFormatPattern(cell.formatPattern()));
+        assertSame(cell, cell.setFormatter(cell.formatter()));
     }
 
     @Test
-    public void testSetFormatPatternDifferent() {
+    public void testSetFormatterDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetFormatPattern> differentFormatPattern = Optional.of(
+        final Optional<SpreadsheetFormatterSelector> differentFormatter = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
+                        .spreadsheetFormatterSelector()
         );
-        final SpreadsheetCell different = cell.setFormatPattern(differentFormatPattern);
+        final SpreadsheetCell different = cell.setFormatter(differentFormatter);
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
         this.checkParsePattern(different);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
-        this.checkFormatPattern(different, differentFormatPattern);
+        this.checkFormatter(different, differentFormatter);
         this.checkNoFormattedValue(different); // clear formattedValue because of format change
     }
 
     @Test
-    public void testSetFormatPatternWhenWithout() {
+    public void testSetFormatterWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
-        final SpreadsheetCell different = cell.setFormatPattern(this.formatPattern());
+        final SpreadsheetCell different = cell.setFormatter(this.formatter());
         assertNotSame(cell, different);
 
         this.checkReference(different);
         this.checkNoParsePattern(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
-        this.checkFormatPattern(different);
+        this.checkFormatter(different);
         this.checkNoFormattedValue(different);
     }
 
@@ -451,7 +452,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
-        this.checkFormatPattern(different, this.formatPattern());
+        this.checkFormatter(different, this.formatter());
         this.checkFormattedValue(different, differentFormatted);
     }
 
@@ -464,7 +465,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkReference(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
-        this.checkNoFormatPattern(different);
+        this.checkNoFormatter(different);
         this.checkFormattedValue(different);
     }
 
@@ -591,11 +592,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testCompareDifferentFormatPattern() {
+    public void testCompareDifferentFormatter() {
         this.compareToAndCheckEquals(this.createComparable()
-                .setFormatPattern(
+                .setFormatter(
                         Optional.of(
-                                SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\""))));
+                                SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
+                                        .spreadsheetFormatterSelector()
+                        )
+                )
+        );
     }
 
     @Test
@@ -663,7 +668,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatPattern() {
+    public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatter() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         final JsonNodeMarshallContext context = this.marshallContext();
@@ -672,11 +677,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
                                 .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                                .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshallWithType(formatPattern().get()))
+                                .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
                         ),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
-                        .setFormatPattern(formatPattern()));
+                        .setFormatter(formatter()));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -732,23 +737,23 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testUnmarshallObjectReferenceAndFormulaAndFormatPatternAndFormattedCell() {
+    public void testUnmarshallObjectReferenceAndFormulaAndFormatterAndFormattedCell() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(JsonNode.object()
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                                .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshallWithType(formatPattern().get()))
+                                .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
                                 .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 SpreadsheetCell.with(reference(), formula())
-                        .setFormatPattern(formatPattern())
+                        .setFormatter(formatter())
                         .setFormattedValue(formattedValue()));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatPatternAndFormattedCell() {
+    public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatterAndFormattedCell() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
         final JsonNodeMarshallContext context = this.marshallContext();
@@ -757,12 +762,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
                                 .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                                .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshallWithType(formatPattern().get()))
+                                .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
                                 .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
-                        .setFormatPattern(formatPattern())
+                        .setFormatter(formatter())
                         .setFormattedValue(formattedValue()));
     }
 
@@ -817,10 +822,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "      \"type\": \"spreadsheet-date-time-parse-pattern\",\n" +
                         "      \"value\": \"dd/mm/yyyy\"\n" +
                         "    },\n" +
-                        "    \"format-pattern\": {\n" +
-                        "      \"type\": \"spreadsheet-text-format-pattern\",\n" +
-                        "      \"value\": \"@@\"\n" +
-                        "    },\n" +
+                        "    \"formatter\": \"text-format @@\",\n" +
                         "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
@@ -851,10 +853,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "      \"type\": \"spreadsheet-date-time-parse-pattern\",\n" +
                         "      \"value\": \"dd/mm/yyyy\"\n" +
                         "    },\n" +
-                        "    \"format-pattern\": {\n" +
-                        "      \"type\": \"spreadsheet-text-format-pattern\",\n" +
-                        "      \"value\": \"@@\"\n" +
-                        "    },\n" +
+                        "    \"formatter\": \"text-format @@\",\n" +
                         "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
@@ -879,14 +878,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testMarshallFormulaStyleFormatPatternAndFormattedRoundtripTwice() {
+    public void testMarshallFormulaStyleFormatterAndFormattedRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetSelection.parseCell("A99")
                         .setFormula(SpreadsheetFormula.EMPTY.setText("=123.5"))
                         .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
-                        .setFormatPattern(
+                        .setFormatter(
                                 Optional.of(
                                         SpreadsheetPattern.parseNumberFormatPattern("##")
+                                                .spreadsheetFormatterSelector()
                                 )).setFormattedValue(
                                 Optional.of(
                                         TextNode.text("abc123")
@@ -1030,41 +1030,45 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testPatchSetFormatPattern() {
+    public void testPatchSetFormatter() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
                 formula("=1")
-        ).setFormatPattern(
+        ).setFormatter(
                 Optional.of(
                         SpreadsheetPattern.parseTextFormatPattern("@")
+                                .spreadsheetFormatterSelector()
                 )
         );
 
-        final SpreadsheetFormatPattern formatPattern = SpreadsheetPattern.parseTextFormatPattern("@@@");
+        final SpreadsheetFormatterSelector formatter = SpreadsheetPattern.parseTextFormatPattern("@@@")
+                .spreadsheetFormatterSelector();
 
         this.patchAndCheck(
                 cell,
                 JsonNode.object()
                         .set(
-                                SpreadsheetCell.FORMAT_PROPERTY,
-                                JsonNodeMarshallContexts.basic().marshallWithType(formatPattern)
+                                SpreadsheetCell.FORMATTER_PROPERTY,
+                                JsonNodeMarshallContexts.basic()
+                                        .marshall(formatter)
                         ),
-                cell.setFormatPattern(
+                cell.setFormatter(
                         Optional.of(
-                                formatPattern
+                                formatter
                         )
                 )
         );
     }
 
     @Test
-    public void testPatchRemoveFormatPattern() {
+    public void testPatchRemoveFormatter() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
                 formula("=1")
-        ).setFormatPattern(
+        ).setFormatter(
                 Optional.of(
                         SpreadsheetPattern.parseTextFormatPattern("@")
+                                .spreadsheetFormatterSelector()
                 )
         );
 
@@ -1072,11 +1076,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 cell,
                 JsonNode.object()
                         .set(
-                                SpreadsheetCell.FORMAT_PROPERTY,
+                                SpreadsheetCell.FORMATTER_PROPERTY,
                                 JsonNode.nullNode()
                         ),
-                cell.setFormatPattern(
-                        SpreadsheetCell.NO_FORMAT_PATTERN
+                cell.setFormatter(
+                        SpreadsheetCell.NO_FORMATTER
                 )
         );
     }
@@ -1171,11 +1175,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     @Test
     public void testFormulaPatch() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
-        final Optional<SpreadsheetFormatPattern> formatPattern = Optional.of(
+        final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+                        .spreadsheetFormatterSelector()
         );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(formula)
-                .setFormatPattern(formatPattern);
+                .setFormatter(formatter);
 
         final JsonNode patch = cell.formulaPatch(
                 this.jsonNodeMarshallContext()
@@ -1194,73 +1199,71 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
 
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setFormatPattern(formatPattern),
+                        .setFormatter(formatter),
                 patch,
                 cell
         );
     }
 
     @Test
-    public void testFormatPatternPatchNullContextFails() {
+    public void testFormatterPatchNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .formatPatternPatch(null)
+                        .formatterPatch(null)
         );
     }
 
     @Test
-    public void testFormatPatternPatchNotEmpty() {
-        final Optional<SpreadsheetFormatPattern> formatPattern = Optional.of(
+    public void testFormatterPatchNotEmpty() {
+        final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+                        .spreadsheetFormatterSelector()
         );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatPattern(formatPattern);
+                .setFormatter(formatter);
 
-        final JsonNode patch = cell.formatPatternPatch(
+        final JsonNode patch = cell.formatterPatch(
                 this.jsonNodeMarshallContext()
         );
         this.checkEquals(
                 patch,
                 "{\n" +
                         "  \"A1\": {\n" +
-                        "    \"format-pattern\": {\n" +
-                        "      \"type\": \"spreadsheet-date-format-pattern\",\n" +
-                        "      \"value\": \"dd/mm/yyyy\"\n" +
-                        "    }\n" +
+                        "    \"formatter\": \"date-format dd/mm/yyyy\"\n" +
                         "  }\n" +
                         "}"
         );
 
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setFormatPattern(formatPattern),
+                        .setFormatter(formatter),
                 patch,
                 cell
         );
     }
 
     @Test
-    public void testFormatPatternPatchEmpty() {
-        final Optional<SpreadsheetFormatPattern> formatPattern = SpreadsheetCell.NO_FORMAT_PATTERN;
+    public void testFormatterPatchEmpty() {
+        final Optional<SpreadsheetFormatterSelector> formatter = SpreadsheetCell.NO_FORMATTER;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatPattern(formatPattern);
+                .setFormatter(formatter);
 
-        final JsonNode patch = cell.formatPatternPatch(
+        final JsonNode patch = cell.formatterPatch(
                 this.jsonNodeMarshallContext()
         );
         this.checkEquals(
                 patch,
                 "{\n" +
                         "  \"A1\": {\n" +
-                        "    \"format-pattern\": null\n" +
+                        "    \"formatter\": null\n" +
                         "  }\n" +
                         "}"
         );
 
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setFormatPattern(formatPattern),
+                        .setFormatter(formatter),
                 patch,
                 cell
         );
@@ -1591,13 +1594,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleParsePatternFormatPattern() {
+    public void testTreePrintableFormulaTokenExpressionValueStyleParsePatternFormatter() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("$A$1")
                         .setFormula(SpreadsheetFormula.EMPTY)
                         .setStyle(this.boldAndItalics())
                         .setParsePattern(this.parsePattern())
-                        .setFormatPattern(this.formatPattern())
+                        .setFormatter(this.formatter())
                         .setFormula(
                                 this.formula(FORMULA_TEXT)
                                         .setToken(this.token())
@@ -1619,9 +1622,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
-                        "  formatPattern:\n" +
-                        "    text-format-pattern\n" +
-                        "      \"@@\"\n" +
+                        "  formatter:\n" +
+                        "    text-format\n" +
+                        "      @@\n" +
                         "  parsePattern:\n" +
                         "    date-time-parse-pattern\n" +
                         "      \"dd/mm/yyyy\"\n" +
@@ -1632,7 +1635,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleFormatPattern() {
+    public void testTreePrintableFormulaTokenExpressionValueStyleFormatter() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                                 SpreadsheetSelection.parseCell("$A$1"),
@@ -1641,7 +1644,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                                         .setExpression(expression())
                                         .setValue(Optional.of(3))
                         ).setStyle(this.boldAndItalics())
-                        .setFormatPattern(formatPattern()),
+                        .setFormatter(formatter()),
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
@@ -1657,9 +1660,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
-                        "  formatPattern:\n" +
-                        "    text-format-pattern\n" +
-                        "      \"@@\"\n" +
+                        "  formatter:\n" +
+                        "    text-format\n" +
+                        "      @@\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
                         "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
@@ -1667,7 +1670,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleFormatPatternFormatted() {
+    public void testTreePrintableFormulaTokenExpressionValueStyleFormatterFormatted() {
         this.treePrintAndCheck(
                 SpreadsheetCell.with(
                                 SpreadsheetSelection.parseCell("$A$1"),
@@ -1676,7 +1679,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                                         .setExpression(expression())
                                         .setValue(Optional.of(3))
                         ).setStyle(this.boldAndItalics())
-                        .setFormatPattern(formatPattern())
+                        .setFormatter(formatter())
                         .setFormattedValue(formattedValue()),
                 "Cell A1\n" +
                         "  Formula\n" +
@@ -1693,9 +1696,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
-                        "  formatPattern:\n" +
-                        "    text-format-pattern\n" +
-                        "      \"@@\"\n" +
+                        "  formatter:\n" +
+                        "    text-format\n" +
+                        "      @@\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
                         "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
@@ -1768,7 +1771,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testToStringWithoutErrorWithoutFormatPatternWithoutFormatted() {
+    public void testToStringWithoutErrorWithoutFormatterWithoutFormatted() {
         this.toStringAndCheck(
                 SpreadsheetCell.with(
                         REFERENCE,
@@ -1779,14 +1782,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testToStringWithoutErrorWithFormatPatternWithoutFormatted() {
+    public void testToStringWithoutErrorWithFormatterWithoutFormatted() {
         this.toStringAndCheck(
                 SpreadsheetCell.with(
                                 REFERENCE,
                                 this.formula()
                         )
-                        .setFormatPattern(this.formatPattern()),
-                REFERENCE + " " + this.formula() + " \"@@\""
+                        .setFormatter(this.formatter()),
+                REFERENCE + " " + this.formula() + " text-format @@"
         );
     }
 
@@ -1794,7 +1797,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" \"@@\" \"formattedValue-text\""
+                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" text-format @@ \"formattedValue-text\""
         );
     }
 
@@ -1847,7 +1850,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         formula(formula)
                 )
                 .setParsePattern(this.parsePattern())
-                .setFormatPattern(this.formatPattern())
+                .setFormatter(this.formatter())
                 .setFormattedValue(this.formattedValue());
     }
 
@@ -1937,29 +1940,30 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkEquals(style, cell.style(), "style");
     }
 
-    private Optional<SpreadsheetFormatPattern> formatPattern() {
+    private Optional<SpreadsheetFormatterSelector> formatter() {
         return Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("@@")
+                        .spreadsheetFormatterSelector()
         );
     }
 
-    private void checkNoFormatPattern(final SpreadsheetCell cell) {
-        this.checkFormatPattern(
+    private void checkNoFormatter(final SpreadsheetCell cell) {
+        this.checkFormatter(
                 cell,
-                SpreadsheetCell.NO_FORMAT_PATTERN
+                SpreadsheetCell.NO_FORMATTER
         );
     }
 
-    private void checkFormatPattern(final SpreadsheetCell cell) {
-        this.checkFormatPattern(cell, this.formatPattern());
+    private void checkFormatter(final SpreadsheetCell cell) {
+        this.checkFormatter(cell, this.formatter());
     }
 
-    private void checkFormatPattern(final SpreadsheetCell cell,
-                                    final Optional<SpreadsheetFormatPattern> formatPattern) {
+    private void checkFormatter(final SpreadsheetCell cell,
+                                final Optional<SpreadsheetFormatterSelector> formatter) {
         this.checkEquals(
-                formatPattern,
-                cell.formatPattern(),
-                "formatPattern"
+                formatter,
+                cell.formatter(),
+                "formatter"
         );
     }
 
