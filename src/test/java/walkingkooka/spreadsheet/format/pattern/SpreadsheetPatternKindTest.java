@@ -697,7 +697,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
     public void testUrlFragmentDateFormatPattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
-                "/format-pattern/date"
+                "/formatter/date"
         );
     }
 
@@ -705,7 +705,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
     public void testUrlFragmentDateTimeFormatPattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
-                "/format-pattern/date-time"
+                "/formatter/date-time"
         );
     }
 

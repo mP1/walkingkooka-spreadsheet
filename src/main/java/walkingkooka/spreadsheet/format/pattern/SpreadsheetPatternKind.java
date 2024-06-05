@@ -137,7 +137,7 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
         this.urlFragment =
                 (
                         this.isFormatPattern() ?
-                                SpreadsheetUrlFragments.FORMAT_PATTERN :
+                                SpreadsheetUrlFragments.FORMATTER :
                                 SpreadsheetUrlFragments.PARSE_PATTERN
                 )
                         .append(UrlFragment.SLASH)
