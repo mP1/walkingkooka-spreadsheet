@@ -983,7 +983,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     static {
         SpreadsheetMetadataPropertyName.CREATOR.value();
-        SpreadsheetMetadataPropertyName.VIEWPORT.value();
 
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetMetadata.class),
