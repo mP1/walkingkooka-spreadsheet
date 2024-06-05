@@ -52,7 +52,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -545,34 +544,36 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithoutFormatPattern() {
+    public void testLoadCellsWithoutFormatter() {
         this.cellStoreSaveAndLoadCellAndCheck(
                 "=1+2",
                 number(1 + 2),
-                SpreadsheetCell.NO_FORMAT_PATTERN,
+                SpreadsheetCell.NO_FORMATTER,
                 "3 " + FORMATTED_PATTERN_SUFFIX
         );
     }
 
     @Test
-    public void testLoadCellsWithFormatPattern() {
+    public void testLoadCellsWithFormatter() {
         this.cellStoreSaveAndLoadCellAndCheck(
                 "=1+2",
                 number(1 + 2),
                 Optional.of(
                         SpreadsheetPattern.parseNumberFormatPattern("# \"" + FORMATTED_PATTERN_SUFFIX + "\"")
+                                .spreadsheetFormatterSelector()
                 ),
                 "3 " + FORMATTED_PATTERN_SUFFIX
         );
     }
 
     @Test
-    public void testLoadCellsWithErrorAndFormatPattern() {
+    public void testLoadCellsWithErrorAndFormatter() {
         this.cellStoreSaveAndLoadCellAndCheck(
                 "=1/0",
                 SpreadsheetErrorKind.DIV0.setMessage("Division by zero"),
                 Optional.of(
                         SpreadsheetPattern.parseNumberFormatPattern("# \"" + FORMATTED_PATTERN_SUFFIX + "\"")
+                                .spreadsheetFormatterSelector()
                 ),
                 "#DIV/0! " + FORMATTED_PATTERN_SUFFIX
         );
@@ -580,7 +581,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private void cellStoreSaveAndLoadCellAndCheck(final String formulaText,
                                                   final Object value,
-                                                  final Optional<SpreadsheetFormatPattern> formatPattern,
+                                                  final Optional<SpreadsheetFormatterSelector> formatter,
                                                   final String formattedText) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -593,7 +594,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         b2,
                                         formulaText
                                 )
-                                .setFormatPattern(formatPattern)
+                                .setFormatter(formatter)
                 );
         final SpreadsheetCell cell = this.loadCellAndCheckValue(
                 engine,

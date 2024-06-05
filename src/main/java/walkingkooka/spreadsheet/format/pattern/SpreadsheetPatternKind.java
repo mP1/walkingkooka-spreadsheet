@@ -395,8 +395,11 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
 
         this.checkSameOrFail(pattern.orElse(null));
         return this.isFormatPattern() ?
-                SpreadsheetDelta.formatPatternPatch(
-                        Cast.to(pattern),
+                SpreadsheetDelta.formatterPatch(
+                        pattern.map(p -> {
+                            final SpreadsheetFormatPattern formatPattern = (SpreadsheetFormatPattern) p;
+                            return formatPattern.spreadsheetFormatterSelector();
+                        }),
                         context
                 ) :
                 SpreadsheetDelta.parsePatternPatch(

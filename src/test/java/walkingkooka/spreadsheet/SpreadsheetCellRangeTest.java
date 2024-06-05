@@ -66,9 +66,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     private final static SpreadsheetCellReference B2 = SpreadsheetSelection.parseCell("B2");
 
     private final static SpreadsheetCell B2_CELL = B2.setFormula(SpreadsheetFormula.EMPTY.setText("=22"))
-            .setFormatPattern(
+            .setFormatter(
                     Optional.of(
-                            SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN
+                            SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
                     )
             ).setParsePattern(
                     Optional.of(
@@ -1190,9 +1190,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         "  Cell B2\n" +
                         "    Formula\n" +
                         "      text: \"=22\"\n" +
-                        "    formatPattern:\n" +
-                        "      text-format-pattern\n" +
-                        "        \"@\"\n" +
+                        "    formatter:\n" +
+                        "      text-format\n" +
+                        "        @\n" +
                         "    parsePattern:\n" +
                         "      number-parse-pattern\n" +
                         "        \"#.##\"\n" +

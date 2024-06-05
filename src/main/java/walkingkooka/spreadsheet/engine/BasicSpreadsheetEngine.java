@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -1214,8 +1213,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             result = context.formatValueAndStyle(
                     result,
-                    cell.formatPattern()
-                            .map(SpreadsheetFormatPattern::spreadsheetFormatterSelector)
+                    cell.formatter()
                             .flatMap(context::spreadsheetFormatter)
             );
         } catch (final Exception cause) {
