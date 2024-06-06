@@ -1388,26 +1388,23 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Produces a fragment that is composed of the selection type a slash and the string form of a selection.
      * <pre>
-     * /cell/A1
-     * /cell/Label123
-     * /column/A1
-     * /column/B2:C3
+     * cell/A1
+     * cell/Label123
+     * column/A1
+     * column/B2:C3
      * </pre>
      */
     @Override
     public final UrlFragment urlFragment() {
-        return UrlFragment.SLASH.append(
-                        UrlFragment.with(
-                                this.selectionTypeName()
-                                        .replace("label", "cell")
-                                        .replace("-range", "")
-                        )
-                ).append(UrlFragment.SLASH)
-                .append(
-                        UrlFragment.with(
-                                this.toStringMaybeStar()
-                        )
-                );
+        return UrlFragment.with(
+                this.selectionTypeName()
+                        .replace("label", "cell")
+                        .replace("-range", "")
+        ).appendSlashThen(
+                UrlFragment.with(
+                        this.toStringMaybeStar()
+                )
+        );
     }
 
     // UsesToStringBuilder..............................................................................................

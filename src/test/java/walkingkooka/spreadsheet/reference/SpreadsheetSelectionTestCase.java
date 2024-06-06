@@ -1885,9 +1885,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.urlFragmentAndCheck(
                 selection,
                 UrlFragment.with(
-                        "/" +
-                                (selection.isLabelName() ? "cell" : selection.selectionTypeName())
-                                        .replace("-range", "") +
+                        (selection.isLabelName() ? "cell" : selection.selectionTypeName())
+                                .replace("-range", "") +
                                 "/" +
                                 toString
                 )

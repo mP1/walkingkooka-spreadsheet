@@ -1661,7 +1661,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testHasUrlFragmentCell() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.A1,
-                "/cell/A1"
+                "cell/A1"
         );
     }
 
@@ -1669,7 +1669,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testHasUrlFragmentCellRange() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseCellOrCellRange("B2:C3"),
-                "/cell/B2:C3"
+                "cell/B2:C3"
         );
     }
 
@@ -1677,7 +1677,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testHasUrlFragmentColumn() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseColumn("D"),
-                "/column/D"
+                "column/D"
         );
     }
 
@@ -1685,7 +1685,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testHasUrlFragmentColumnRange() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseColumnRange("E:F"),
-                "/column/E:F"
+                "column/E:F"
         );
     }
 
@@ -1693,7 +1693,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testHasUrlFragmentLabel() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.labelName("Label456"),
-                "/cell/Label456"
+                "cell/Label456"
         );
     }
 
