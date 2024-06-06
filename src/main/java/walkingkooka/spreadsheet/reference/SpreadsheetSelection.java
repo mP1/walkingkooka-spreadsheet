@@ -30,6 +30,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
@@ -1396,11 +1397,23 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     @Override
     public final UrlFragment urlFragment() {
-        return UrlFragment.with(
-                this.selectionTypeName()
-                        .replace("label", "cell")
-                        .replace("-range", "")
-        ).appendSlashThen(
+        UrlFragment urlFragment;
+
+        if (this.isCellReference() || this.isCellRangeReference() || this.isLabelName()) {
+            urlFragment = SpreadsheetUrlFragments.CELL;
+        } else {
+            if (this.isColumnReference() || this.isColumnRangeReference()) {
+                urlFragment = SpreadsheetUrlFragments.COLUMN;
+            } else {
+                if (this.isRowReference() || this.isRowRangeReference()) {
+                    urlFragment = SpreadsheetUrlFragments.ROW;
+                } else {
+                    throw new IllegalStateException("Unknown selection " + this);
+                }
+            }
+        }
+
+        return urlFragment.appendSlashThen(
                 UrlFragment.with(
                         this.toStringMaybeStar()
                 )
