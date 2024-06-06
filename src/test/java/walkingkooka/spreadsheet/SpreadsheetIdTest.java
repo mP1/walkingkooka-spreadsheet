@@ -48,7 +48,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testUrlFragment() {
         this.checkEquals(
-                UrlFragment.with("/123456"),
+                UrlFragment.with("123456"),
                 SpreadsheetId.with(0x123456).urlFragment()
         );
     }

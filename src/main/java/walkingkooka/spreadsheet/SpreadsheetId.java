@@ -87,9 +87,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
 
     @Override
     public UrlFragment urlFragment() {
-        return UrlFragment.SLASH.append(
-                UrlFragment.with(this.toString())
-        );
+        return UrlFragment.with(this.toString());
     }
 
     // JsonNodeContext..................................................................................................
