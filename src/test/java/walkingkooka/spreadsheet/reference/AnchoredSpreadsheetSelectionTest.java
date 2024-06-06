@@ -123,7 +123,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     @Test
     public void testHasUrlFragmentCell() {
         this.checkEquals(
-                UrlFragment.parse("/cell/A1"),
+                UrlFragment.parse("cell/A1"),
                 SpreadsheetSelection.A1
                         .urlFragment()
         );
@@ -132,7 +132,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     @Test
     public void testHasUrlFragmentCellRange() {
         this.checkEquals(
-                UrlFragment.parse("/cell/A1:B2/bottom-right"),
+                UrlFragment.parse("cell/A1:B2/bottom-right"),
                 this.createObject()
                         .urlFragment()
         );

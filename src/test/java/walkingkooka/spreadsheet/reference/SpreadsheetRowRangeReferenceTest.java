@@ -1451,7 +1451,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     public void testUrlFragment2() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseRowRange("1:2"),
-                UrlFragment.parse("/row/1:2")
+                UrlFragment.parse("row/1:2")
         );
     }
 
@@ -1459,7 +1459,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     public void testUrlFragmentAllRows() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.ALL_ROWS,
-                UrlFragment.parse("/row/*")
+                UrlFragment.parse("row/*")
         );
     }
 
