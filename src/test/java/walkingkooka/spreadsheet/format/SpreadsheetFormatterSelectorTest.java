@@ -133,6 +133,30 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
         );
     }
 
+    // SpreadsheetFormatterSelector.parse must be able to parse all SpreadsheetFormatterSelector.toString.
+
+    @Test
+    public void testParseToString() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+                .spreadsheetFormatterSelector();
+
+        this.parseStringAndCheck(
+                selector.toString(),
+                selector
+        );
+    }
+
+    @Test
+    public void testParseToStringWithQuotes() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetPattern.parseTextFormatPattern("\"Hello\" @")
+                .spreadsheetFormatterSelector();
+
+        this.parseStringAndCheck(
+                selector.toString(),
+                selector
+        );
+    }
+
     @Override
     public SpreadsheetFormatterSelector parseString(final String text) {
         return SpreadsheetFormatterSelector.parse(text);
