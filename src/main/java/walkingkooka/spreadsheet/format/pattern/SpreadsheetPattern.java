@@ -67,7 +67,6 @@ import java.util.function.Predicate;
  */
 abstract public class SpreadsheetPattern implements Value<ParserToken>,
         HasSpreadsheetFormatter,
-        HasSpreadsheetPatternKind,
         HasText,
         TreePrintable,
         HasUrlFragment {
@@ -713,17 +712,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     final ParserToken value;
 
-    // kind.............................................................................................................
-
-    /**
-     * Returns the {@link SpreadsheetPatternKind} for this pattern.
-     */
-    public final SpreadsheetPatternKind kind() {
-        return SpreadsheetPatternKind.fromTypeName(
-                "spreadsheet-" + this.printTreeTypeName()
-        );
-    }
-
     // toFormat.........................................................................................................
 
     /**
@@ -772,12 +760,14 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     abstract SpreadsheetPatternSpreadsheetFormatter createFormatter();
 
-    // HasSpreadsheetPatternKind........................................................................................
+    // patternKind......................................................................................................
 
-    @Override
-    public Optional<SpreadsheetPatternKind> patternKind() {
-        return Optional.of(
-                this.kind()
+    /**
+     * Returns the matching {@link SpreadsheetPatternKind}
+     */
+    public final SpreadsheetPatternKind patternKind() {
+        return SpreadsheetPatternKind.fromTypeName(
+                "spreadsheet-" + this.printTreeTypeName()
         );
     }
 

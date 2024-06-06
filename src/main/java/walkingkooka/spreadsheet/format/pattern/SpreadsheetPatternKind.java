@@ -374,12 +374,12 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     }
 
     /**
-     * Checks and throws a {@link IllegalArgumentException} if the {@link SpreadsheetPattern#kind()} is different to this.
+     * Checks and throws a {@link IllegalArgumentException} if the {@link SpreadsheetPattern#patternKind()} is different to this.
      * A null {@link SpreadsheetPattern} parameter will never fail.
      */
     public void checkSameOrFail(final SpreadsheetPattern pattern) {
         if (null != pattern) {
-            final SpreadsheetPatternKind kind = pattern.kind();
+            final SpreadsheetPatternKind kind = pattern.patternKind();
             if (this != kind) {
                 throw new IllegalArgumentException("Pattern " + pattern + " is not a " + kind + ".");
             }
