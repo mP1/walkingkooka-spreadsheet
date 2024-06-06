@@ -822,7 +822,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "      \"type\": \"spreadsheet-date-time-parse-pattern\",\n" +
                         "      \"value\": \"dd/mm/yyyy\"\n" +
                         "    },\n" +
-                        "    \"formatter\": \"text-format @@\",\n" +
+                        "    \"formatter\": \"text-format-pattern @@\",\n" +
                         "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
@@ -853,7 +853,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "      \"type\": \"spreadsheet-date-time-parse-pattern\",\n" +
                         "      \"value\": \"dd/mm/yyyy\"\n" +
                         "    },\n" +
-                        "    \"formatter\": \"text-format @@\",\n" +
+                        "    \"formatter\": \"text-format-pattern @@\",\n" +
                         "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
@@ -1230,7 +1230,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 patch,
                 "{\n" +
                         "  \"A1\": {\n" +
-                        "    \"formatter\": \"date-format dd/mm/yyyy\"\n" +
+                        "    \"formatter\": \"date-format-pattern dd/mm/yyyy\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -1623,7 +1623,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
                         "  formatter:\n" +
-                        "    text-format\n" +
+                        "    text-format-pattern\n" +
                         "      @@\n" +
                         "  parsePattern:\n" +
                         "    date-time-parse-pattern\n" +
@@ -1661,7 +1661,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
                         "  formatter:\n" +
-                        "    text-format\n" +
+                        "    text-format-pattern\n" +
                         "      @@\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
@@ -1697,7 +1697,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
                         "  formatter:\n" +
-                        "    text-format\n" +
+                        "    text-format-pattern\n" +
                         "      @@\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
@@ -1789,7 +1789,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                                 this.formula()
                         )
                         .setFormatter(this.formatter()),
-                REFERENCE + " " + this.formula() + " \"text-format @@\""
+                REFERENCE + " " + this.formula() + " \"text-format-pattern @@\""
         );
     }
 
@@ -1797,7 +1797,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" \"text-format @@\" \"formattedValue-text\""
+                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" \"text-format-pattern @@\" \"formattedValue-text\""
         );
     }
 

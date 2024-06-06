@@ -45,7 +45,7 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
         JsonNodeMarshallingTesting<SpreadsheetFormatterSelector>,
         TreePrintableTesting {
 
-    private final static SpreadsheetFormatterName NAME = SpreadsheetFormatterName.with("text-format");
+    private final static SpreadsheetFormatterName NAME = SpreadsheetFormatterName.with("text-format-pattern");
 
     private final static String TEXT = "@@";
 
@@ -175,9 +175,9 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
     // spreadsheetFormatPattern.........................................................................................
 
     @Test
-    public void testSpreadsheetFormatPatternWithDateFormat() {
+    public void testSpreadsheetFormatPatternWithDateFormatPattern() {
         this.spreadsheetFormatPatternAndCheck(
-                "date-format dd/mm/yyyy",
+                "date-format-pattern dd/mm/yyyy",
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
         );
     }
@@ -253,7 +253,7 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
                         NAME,
                         TEXT
                 ),
-                "text-format @@"
+                "text-format-pattern @@"
         );
     }
 
@@ -264,7 +264,7 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
                         NAME,
                         "\"Hello\""
                 ),
-                "text-format \"Hello\""
+                "text-format-pattern \"Hello\""
         );
     }
 
@@ -286,14 +286,14 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
     public void testMarshall() {
         this.marshallAndCheck(
                 this.createJsonNodeMarshallingValue(),
-                "\"text-format @@\""
+                "\"text-format-pattern @@\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "\"text-format @@\"",
+                "\"text-format-pattern @@\"",
                 this.createJsonNodeMarshallingValue()
         );
     }
@@ -325,8 +325,8 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
     @Test
     public void testTreePrintWithText() {
         this.treePrintAndCheck(
-                SpreadsheetFormatterSelector.parse("text-format @@"),
-                "text-format\n" +
+                SpreadsheetFormatterSelector.parse("text-format-pattern @@"),
+                "text-format-pattern\n" +
                         "  @@\n"
         );
     }

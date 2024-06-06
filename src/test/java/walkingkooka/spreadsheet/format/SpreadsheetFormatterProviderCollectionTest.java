@@ -42,7 +42,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
                 SpreadsheetFormatterProviderCollection.with(
                         Sets.of(provider)
                 ),
-                SpreadsheetFormatterSelector.parse("text-format @@"),
+                SpreadsheetFormatterSelector.parse("text-format-pattern @@"),
                 SpreadsheetPattern.parseTextFormatPattern("@@")
                         .formatter()
         );

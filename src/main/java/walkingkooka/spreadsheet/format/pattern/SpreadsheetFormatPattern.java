@@ -22,7 +22,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.text.CaseKind;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.function.Consumer;
@@ -45,16 +44,16 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
 
     /**
      * Returns the {@link SpreadsheetFormatterSelector} equivalent to this pattern.
+     * <pre>
+     * date-format-pattern
+     * date-time-format-pattern
+     * </pre>
      */
     public final SpreadsheetFormatterSelector spreadsheetFormatterSelector() {
-        // date-format
-        // date-time-format
+
         final String formatterName = CaseKind.CAMEL.change(
-                CharSequences.subSequence(
-                        this.getClass().getSimpleName(),
-                        "Spreadsheet".length(),
-                        -"Pattern".length()
-                ).toString(),
+                this.getClass().getSimpleName()
+                        .substring("Spreadsheet".length()),
                 CaseKind.KEBAB
         );
 

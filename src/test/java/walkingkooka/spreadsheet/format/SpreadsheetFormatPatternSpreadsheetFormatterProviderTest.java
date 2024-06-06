@@ -26,41 +26,41 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
         ToStringTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider> {
 
     @Test
-    public void testDateFormat() {
+    public void testDateFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-                "date-format dd/mm/yy",
+                "date-format-pattern dd/mm/yy",
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter()
         );
     }
 
     @Test
-    public void testDateTimeFormat() {
+    public void testDateTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-                "date-time-format dd/mm/yyyy hh:mm:ss",
+                "date-time-format-pattern dd/mm/yyyy hh:mm:ss",
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm:ss").formatter()
         );
     }
 
     @Test
-    public void testNumberFormat() {
+    public void testNumberFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-                "number-format $0.00",
+                "number-format-pattern $0.00",
                 SpreadsheetPattern.parseNumberFormatPattern("$0.00").formatter()
         );
     }
 
     @Test
-    public void testTextFormat() {
+    public void testTextFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-                "text-format @@\"Hello\"",
+                "text-format-pattern @@\"Hello\"",
                 SpreadsheetPattern.parseTextFormatPattern("@@\"Hello\"").formatter()
         );
     }
 
     @Test
-    public void testTimeFormat() {
+    public void testTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-                "time-format hh:mm:ss",
+                "time-format-pattern hh:mm:ss",
                 SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").formatter()
         );
     }

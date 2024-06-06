@@ -34,28 +34,28 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     // constants........................................................................................................
 
     @Test
-    public void testWithDateFormat() {
-        this.verifyConstant("date-format");
+    public void testWithDateFormatPattern() {
+        this.verifyConstant("date-format-pattern");
     }
 
     @Test
-    public void testWithDateTimeFormat() {
-        this.verifyConstant("date-time-format");
+    public void testWithDateTimeFormatPattern() {
+        this.verifyConstant("date-time-format-pattern");
     }
 
     @Test
-    public void testWithNumberFormat() {
-        this.verifyConstant("number-format");
+    public void testWithNumberFormatPattern() {
+        this.verifyConstant("number-format-pattern");
     }
 
     @Test
-    public void testWithTextFormat() {
-        this.verifyConstant("text-format");
+    public void testWithTextFormatPattern() {
+        this.verifyConstant("text-format-pattern");
     }
 
     @Test
-    public void testWithTimeFormat() {
-        this.verifyConstant("time-format");
+    public void testWithTimeFormatPattern() {
+        this.verifyConstant("time-format-pattern");
     }
 
     private void verifyConstant(final String text) {
@@ -90,41 +90,41 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithDateFormat() {
+    public void testIsSpreadsheetFormatPatternWithDateFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "date-format",
+                "date-format-pattern",
                 true
         );
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithDateTimeFormat() {
+    public void testIsSpreadsheetFormatPatternWithDateTimeFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "date-time-format",
+                "date-time-format-pattern",
                 true
         );
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithNumberFormat() {
+    public void testIsSpreadsheetFormatPatternWithNumberFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "number-format",
+                "number-format-pattern",
                 true
         );
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithDateTextFormat() {
+    public void testIsSpreadsheetFormatPatternWithDateTextFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "text-format",
+                "text-format-pattern",
                 true
         );
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithTimeFormat() {
+    public void testIsSpreadsheetFormatPatternWithTimeFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "time-format",
+                "time-format-pattern",
                 true
         );
     }

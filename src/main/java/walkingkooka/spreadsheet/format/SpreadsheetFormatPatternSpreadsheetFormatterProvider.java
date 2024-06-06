@@ -50,11 +50,11 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     }
 
     private final static Set<SpreadsheetFormatterInfo> INFOS = Sets.of(
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER_FORMAT),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT_FORMAT),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME_FORMAT)
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME_FORMAT_PATTERN)
     );
 
 

@@ -28,13 +28,13 @@ import java.util.Set;
 
 public final class SpreadsheetFormatterProviderTestingTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatterProviderTestingTest.TestSpreadsheetFormatterProvider> {
 
-    private final static String SELECTOR = "text-format @@";
+    private final static String SELECTOR = "text-format-pattern @@";
 
     private final static SpreadsheetFormatter FORMATTER = SpreadsheetFormatters.fake();
 
     private final static SpreadsheetFormatterInfo INFO = SpreadsheetFormatterInfo.with(
             Url.parseAbsolute("https://example.com/123"),
-            SpreadsheetFormatterName.TEXT_FORMAT
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
     );
 
     @Test
@@ -63,7 +63,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
             Objects.requireNonNull(selector, "selector");
 
-            checkEquals("text-format", selector.name().value());
+            checkEquals("text-format-pattern", selector.name().value());
             return Optional.of(FORMATTER);
         }
 

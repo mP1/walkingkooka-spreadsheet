@@ -46,52 +46,52 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
 
     // SpreadsheetFormatterName instances...............................................................................
 
-    private final static String DATE_FORMAT_STRING = "date-format";
+    private final static String DATE_FORMAT_PATTERN_STRING = "date-format-pattern";
 
     /**
      * The name of the date {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName DATE_FORMAT = new SpreadsheetFormatterName(
-            DATE_FORMAT_STRING,
+    public final static SpreadsheetFormatterName DATE_FORMAT_PATTERN = new SpreadsheetFormatterName(
+            DATE_FORMAT_PATTERN_STRING,
             SpreadsheetPatternKind.DATE_FORMAT_PATTERN
     );
 
-    private final static String DATE_TIME_FORMAT_STRING = "date-time-format";
+    private final static String DATE_TIME_FORMAT_PATTERN_STRING = "date-time-format-pattern";
 
     /**
      * The name of the date-time {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName DATE_TIME_FORMAT = new SpreadsheetFormatterName(
-            DATE_TIME_FORMAT_STRING,
+    public final static SpreadsheetFormatterName DATE_TIME_FORMAT_PATTERN = new SpreadsheetFormatterName(
+            DATE_TIME_FORMAT_PATTERN_STRING,
             SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
     );
 
-    private final static String NUMBER_FORMAT_STRING = "number-format";
+    private final static String NUMBER_FORMAT_PATTERN_STRING = "number-format-pattern";
 
     /**
      * The name of the number {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName NUMBER_FORMAT = new SpreadsheetFormatterName(
-            NUMBER_FORMAT_STRING,
+    public final static SpreadsheetFormatterName NUMBER_FORMAT_PATTERN = new SpreadsheetFormatterName(
+            NUMBER_FORMAT_PATTERN_STRING,
             SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
     );
-    private final static String TEXT_FORMAT_STRING = "text-format";
+    private final static String TEXT_FORMAT_PATTERN_STRING = "text-format-pattern";
 
     /**
      * The name of the text {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName TEXT_FORMAT = new SpreadsheetFormatterName(
-            TEXT_FORMAT_STRING,
+    public final static SpreadsheetFormatterName TEXT_FORMAT_PATTERN = new SpreadsheetFormatterName(
+            TEXT_FORMAT_PATTERN_STRING,
             SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
     );
 
-    private final static String TIME_FORMAT_STRING = "time-format";
+    private final static String TIME_FORMAT_PATTERN_STRING = "time-format-pattern";
 
     /**
      * The name of the time {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName TIME_FORMAT = new SpreadsheetFormatterName(
-            TIME_FORMAT_STRING,
+    public final static SpreadsheetFormatterName TIME_FORMAT_PATTERN = new SpreadsheetFormatterName(
+            TIME_FORMAT_PATTERN_STRING,
             SpreadsheetPatternKind.TIME_FORMAT_PATTERN
     );
 
@@ -104,20 +104,20 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         final SpreadsheetFormatterName spreadsheetFormatterName;
 
         switch (name) {
-            case DATE_FORMAT_STRING:
-                spreadsheetFormatterName = DATE_FORMAT;
+            case DATE_FORMAT_PATTERN_STRING:
+                spreadsheetFormatterName = DATE_FORMAT_PATTERN;
                 break;
-            case DATE_TIME_FORMAT_STRING:
-                spreadsheetFormatterName = DATE_TIME_FORMAT;
+            case DATE_TIME_FORMAT_PATTERN_STRING:
+                spreadsheetFormatterName = DATE_TIME_FORMAT_PATTERN;
                 break;
-            case NUMBER_FORMAT_STRING:
-                spreadsheetFormatterName = NUMBER_FORMAT;
+            case NUMBER_FORMAT_PATTERN_STRING:
+                spreadsheetFormatterName = NUMBER_FORMAT_PATTERN;
                 break;
-            case TEXT_FORMAT_STRING:
-                spreadsheetFormatterName = TEXT_FORMAT;
+            case TEXT_FORMAT_PATTERN_STRING:
+                spreadsheetFormatterName = TEXT_FORMAT_PATTERN;
                 break;
-            case TIME_FORMAT_STRING:
-                spreadsheetFormatterName = TIME_FORMAT;
+            case TIME_FORMAT_PATTERN_STRING:
+                spreadsheetFormatterName = TIME_FORMAT_PATTERN;
                 break;
             default:
                 spreadsheetFormatterName = new SpreadsheetFormatterName(

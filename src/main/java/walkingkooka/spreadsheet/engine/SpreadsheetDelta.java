@@ -1169,7 +1169,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Format pattern patch
      * <pre>
      * {
-     *   "formatter": "text-format @\"patched\""
+     *   "formatter": "text-format-pattern @\"patched\""
      *   }
      * }
      * </pre>

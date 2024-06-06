@@ -641,7 +641,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
         SpreadsheetFormatterSelector.with(
-                SpreadsheetFormatterName.DATE_FORMAT,
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
                 "dd/mm/yyyy"
         );
         SpreadsheetPattern.parseNumberFormatPattern(" ");
