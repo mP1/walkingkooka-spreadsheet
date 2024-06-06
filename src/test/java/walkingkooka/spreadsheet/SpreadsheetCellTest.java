@@ -1789,7 +1789,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                                 this.formula()
                         )
                         .setFormatter(this.formatter()),
-                REFERENCE + " " + this.formula() + " text-format @@"
+                REFERENCE + " " + this.formula() + " \"text-format @@\""
         );
     }
 
@@ -1797,7 +1797,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" text-format @@ \"formattedValue-text\""
+                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" \"text-format @@\" \"formattedValue-text\""
         );
     }
 

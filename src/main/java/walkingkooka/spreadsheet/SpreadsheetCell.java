@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
+import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -746,7 +747,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 .value(this.formula)
                 .value(this.style)
                 .value(this.parsePattern)
-                .value(this.formatter)
+                .enable(ToStringBuilderOption.QUOTE)
+                .value(this.formatter.map(Object::toString).orElse(""))
+                .disable(ToStringBuilderOption.QUOTE)
                 .value(this.formattedValue);
     }
 }
