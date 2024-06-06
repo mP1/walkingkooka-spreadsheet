@@ -107,7 +107,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     public void testSpreadsheetFormatterSelectorWhenDate() {
         this.spreadsheetFormatterSelectorAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
-                SpreadsheetFormatterName.DATE_FORMAT + " dd/mm/yyyy"
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN + " dd/mm/yyyy"
         );
     }
 
@@ -115,7 +115,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     public void testSpreadsheetFormatterSelectorWhenDateTime() {
         this.spreadsheetFormatterSelectorAndCheck(
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm"),
-                SpreadsheetFormatterName.DATE_TIME_FORMAT + " dd/mm/yyyy hh:mm"
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN + " dd/mm/yyyy hh:mm"
         );
     }
 
@@ -123,7 +123,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     public void testSpreadsheetFormatterSelectorWhenText() {
         this.spreadsheetFormatterSelectorAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("@@"),
-                SpreadsheetFormatterName.TEXT_FORMAT + " @@"
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN + " @@"
         );
     }
 

@@ -620,7 +620,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      *     "formula": {
      *       "text": "=1+2"
      *     },
-     *     "formatter": "text-format @",
+     *     "formatter": "text-format-pattern @",
      *     "parse-pattern": {
      *       "type": "spreadsheet-number-parse-pattern",
      *       "value": "$0.00"

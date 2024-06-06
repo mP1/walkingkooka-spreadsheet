@@ -2545,7 +2545,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"precision\": 123,\n" +
                 "  \"rounding-mode\": \"FLOOR\",\n" +
                 "  \"spreadsheet-id\": \"7b\",\n" +
-                "  \"text-formatter\": \"text-format @@\",\n" +
+                "  \"text-formatter\": \"text-format-pattern @@\",\n" +
                 "  \"time-formatter\": \"time-format hh:mm\",\n" +
                 "  \"time-parse-pattern\": \"hh:mm;hh:mm:ss.000\",\n" +
                 "  \"two-digit-year\": 31\n" +

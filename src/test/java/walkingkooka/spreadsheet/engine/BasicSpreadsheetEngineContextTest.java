@@ -755,9 +755,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-White\": 2,\n" +
                         "  \"color-Yellow\": 6,\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
-                        "  \"date-formatter\": \"date-format dddd, d mmmm yyyy\",\n" +
+                        "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"date-parse-pattern\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
-                        "  \"date-time-formatter\": \"date-time-format dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                        "  \"date-time-formatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                         "  \"date-time-offset\": \"-25569\",\n" +
                         "  \"date-time-parse-pattern\": \"dd/mm/yyyy hh:mm\",\n" +
                         "  \"decimal-separator\": \".\",\n" +
@@ -769,7 +769,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"hide-zero-values\": false,\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
-                        "  \"number-formatter\": \"number-format #,##0.###\",\n" +
+                        "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +
                         "  \"number-parse-pattern\": \"#,##0.###;#,##0\",\n" +
                         "  \"percentage-symbol\": \"%\",\n" +
                         "  \"positive-sign\": \"@\",\n" +
@@ -811,8 +811,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"word-break\": \"NORMAL\",\n" +
                         "    \"word-wrap\": \"NORMAL\"\n" +
                         "  },\n" +
-                        "  \"text-formatter\": \"text-format @\",\n" +
-                        "  \"time-formatter\": \"time-format h:mm:ss AM/PM\",\n" +
+                        "  \"text-formatter\": \"text-format-pattern @\",\n" +
+                        "  \"time-formatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"time-parse-pattern\": \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"two-digit-year\": 20,\n" +
                         "  \"value-separator\": \",\",\n" +
@@ -821,7 +821,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  }\n" +
                         "}\n" +
                         "fractioner=Fractioner123\n" +
-                        "serverUrl=" + SERVER_URL
+                        "serverUrl=https://example.com/path123"
         );
     }
 
@@ -905,9 +905,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-White\": 2,\n" +
                         "  \"color-Yellow\": 6,\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
-                        "  \"date-formatter\": \"date-format dddd, d mmmm yyyy\",\n" +
+                        "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"date-parse-pattern\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
-                        "  \"date-time-formatter\": \"date-time-format dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                        "  \"date-time-formatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                         "  \"date-time-offset\": \"-25569\",\n" +
                         "  \"date-time-parse-pattern\": \"dd/mm/yyyy hh:mm\",\n" +
                         "  \"decimal-separator\": \".\",\n" +
@@ -919,7 +919,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"hide-zero-values\": false,\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
-                        "  \"number-formatter\": \"number-format #,##0.###\",\n" +
+                        "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +
                         "  \"number-parse-pattern\": \"#,##0.###;#,##0\",\n" +
                         "  \"percentage-symbol\": \"%\",\n" +
                         "  \"positive-sign\": \"@\",\n" +
@@ -961,8 +961,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"word-break\": \"NORMAL\",\n" +
                         "    \"word-wrap\": \"NORMAL\"\n" +
                         "  },\n" +
-                        "  \"text-formatter\": \"text-format @\",\n" +
-                        "  \"time-formatter\": \"time-format h:mm:ss AM/PM\",\n" +
+                        "  \"text-formatter\": \"text-format-pattern @\",\n" +
+                        "  \"time-formatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"time-parse-pattern\": \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"two-digit-year\": 20,\n" +
                         "  \"value-separator\": \",\",\n" +
@@ -971,7 +971,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  }\n" +
                         "}\n" +
                         "fractioner=Fractioner123\n" +
-                        "serverUrl=" + SERVER_URL
+                        "serverUrl=https://example.com/path123"
         );
     }
 
