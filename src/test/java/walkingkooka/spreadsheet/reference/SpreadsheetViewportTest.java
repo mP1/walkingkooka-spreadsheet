@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.net.UrlFragment;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
@@ -38,6 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetViewport>,
+        HasUrlFragmentTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetViewport>,
         JsonNodeMarshallingTesting<SpreadsheetViewport>,
         ToStringTesting<SpreadsheetViewport>,
@@ -409,15 +410,6 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                                 )
                         ),
                 expected
-        );
-    }
-
-    private void urlFragmentAndCheck(final SpreadsheetViewport selection,
-                                     final String expected) {
-        this.checkEquals(
-                UrlFragment.with(expected),
-                selection.urlFragment(),
-                selection + " urlfragment"
         );
     }
 
