@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.net.UrlFragment;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
@@ -30,6 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         ComparableTesting2<SpreadsheetId>,
+        HasUrlFragmentTesting,
         JsonNodeMarshallingTesting<SpreadsheetId>,
         ParseStringTesting<SpreadsheetId>,
         ToStringTesting<SpreadsheetId> {
@@ -47,9 +48,9 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
 
     @Test
     public void testUrlFragment() {
-        this.checkEquals(
-                UrlFragment.with("123456"),
-                SpreadsheetId.with(0x123456).urlFragment()
+        this.urlFragmentAndCheck(
+                SpreadsheetId.with(0x123456),
+                "123456"
         );
     }
 
