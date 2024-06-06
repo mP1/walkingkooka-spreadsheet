@@ -25,15 +25,15 @@ import walkingkooka.reflect.PublicStaticHelper;
  */
 public final class SpreadsheetUrlFragments implements PublicStaticHelper {
 
-    public static final UrlFragment CELL = UrlFragment.with("/cell");
+    public static final UrlFragment CELL = UrlFragment.with("cell");
 
-    public static final UrlFragment COLUMN = UrlFragment.with("/column");
+    public static final UrlFragment COLUMN = UrlFragment.with("column");
 
-    public static final UrlFragment ROW = UrlFragment.with("/row");
+    public static final UrlFragment ROW = UrlFragment.with("row");
 
-    public static final UrlFragment FORMATTER = UrlFragment.with("/formatter");
+    public static final UrlFragment FORMATTER = UrlFragment.with("formatter");
 
-    public static final UrlFragment PARSE_PATTERN = UrlFragment.with("/parse-pattern");
+    public static final UrlFragment PARSE_PATTERN = UrlFragment.with("parse-pattern");
 
     /**
      * Stop creation
