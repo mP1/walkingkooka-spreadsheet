@@ -1154,7 +1154,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                         ),
                         context
                 ),
-                pattern.kind()
+                pattern.patternKind()
                         .patternPatch(
                                 Optional.of(pattern),
                                 context
@@ -1172,7 +1172,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                         Optional.of(pattern),
                         context
                 ),
-                pattern.kind()
+                pattern.patternKind()
                         .patternPatch(
                                 Optional.of(pattern),
                                 context

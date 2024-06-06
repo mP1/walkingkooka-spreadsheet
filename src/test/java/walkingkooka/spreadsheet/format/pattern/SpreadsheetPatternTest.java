@@ -2722,47 +2722,43 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // kind & HasSpreadsheetPatterKind..................................................................................
 
     @Test
-    public void testKindDateParsePattern() {
-        this.kindAndCheck(
+    public void testPatternKindDateParsePattern() {
+        this.patternKindAndCheck(
                 SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy"),
                 SpreadsheetPatternKind.DATE_PARSE_PATTERN
         );
     }
 
     @Test
-    public void testKindDateTimeParsePattern() {
-        this.kindAndCheck(
+    public void testPatternKindDateTimeParsePattern() {
+        this.patternKindAndCheck(
                 SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss"),
                 SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
         );
     }
 
     @Test
-    public void testKindNumberFormatPattern() {
-        this.kindAndCheck(
+    public void testPatternKindNumberFormatPattern() {
+        this.patternKindAndCheck(
                 SpreadsheetPattern.parseNumberFormatPattern("#.###"),
                 SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
         );
     }
 
     @Test
-    public void testKindTextFormatPattern() {
-        this.kindAndCheck(
+    public void testPatternKindTextFormatPattern() {
+        this.patternKindAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("@"),
                 SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
         );
     }
 
-    private void kindAndCheck(final SpreadsheetPattern pattern,
-                              final SpreadsheetPatternKind expected) {
+    private void patternKindAndCheck(final SpreadsheetPattern pattern,
+                                     final SpreadsheetPatternKind expected) {
         this.checkEquals(
                 expected,
-                pattern.kind(),
+                pattern.patternKind(),
                 () -> pattern + " kind"
-        );
-        this.hasSpreadsheetPatternKindAndCheck(
-                pattern,
-                expected
         );
     }
 
