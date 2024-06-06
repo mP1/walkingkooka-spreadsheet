@@ -151,6 +151,10 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
                 this.text.equals(other.text);
     }
 
+    /**
+     * Note it is intentional that the {@link #text()} is not quoted, to ensure {@link #parse(String)} and {@link #toString()}
+     * are roundtrippable.
+     */
     @Override
     public String toString() {
         final String name = this.name.toString();
