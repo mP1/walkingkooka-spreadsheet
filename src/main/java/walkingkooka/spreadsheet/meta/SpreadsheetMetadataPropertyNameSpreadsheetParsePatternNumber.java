@@ -24,19 +24,22 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Optional;
 
-final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern extends SpreadsheetMetadataPropertyName<SpreadsheetNumberParsePattern> {
+/**
+ * A property that holds the default {@link SpreadsheetNumberParsePattern}.
+ */
+final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber extends SpreadsheetMetadataPropertyNameSpreadsheetParsePattern<SpreadsheetNumberParsePattern> {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern instance() {
-        return new SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern();
+    static SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern() {
+    private SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber() {
         super();
     }
 
@@ -80,18 +83,6 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern extends
     @Override
     Class<SpreadsheetNumberParsePattern> type() {
         return SpreadsheetNumberParsePattern.class;
-    }
-
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
-    // parseValue.......................................................................................................
-
-    @Override
-    public boolean isParseValueSupported() {
-        return true;
     }
 
     @Override

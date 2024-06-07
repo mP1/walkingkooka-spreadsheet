@@ -23,19 +23,22 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import java.util.Locale;
 import java.util.Optional;
 
-final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern extends SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePattern> {
+/**
+ * A property that holds the default {@link SpreadsheetDateTimeParsePattern}.
+ */
+final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime extends SpreadsheetMetadataPropertyNameSpreadsheetParsePattern<SpreadsheetDateTimeParsePattern> {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern instance() {
-        return new SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern();
+    static SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern() {
+    private SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime() {
         super();
     }
 
@@ -66,18 +69,6 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern exten
     @Override
     Class<SpreadsheetDateTimeParsePattern> type() {
         return SpreadsheetDateTimeParsePattern.class;
-    }
-
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
-    // parseValue.......................................................................................................
-
-    @Override
-    public boolean isParseValueSupported() {
-        return true;
     }
 
     @Override

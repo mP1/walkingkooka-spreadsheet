@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePattern, SpreadsheetTimeParsePattern> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTimeTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime, SpreadsheetTimeParsePattern> {
 
     @Test
     public void testExtractLocaleValue() {
@@ -34,12 +34,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternTes
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePattern.instance(), "time-parse-pattern");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime.instance(), "time-parse-pattern");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePattern createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePattern.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime.instance();
     }
 
     @Override
@@ -55,7 +55,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternTes
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePattern> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePattern.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime.class;
     }
 }

@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetDateParsePattern, SpreadsheetDateParsePattern> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate, SpreadsheetDateParsePattern> {
 
     @Test
     public void testExtractLocaleValueUS() {
@@ -42,12 +42,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternTes
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetDateParsePattern.instance(), "date-parse-pattern");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate.instance(), "date-parse-pattern");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetDateParsePattern createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetDateParsePattern.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate.instance();
     }
 
     @Override
@@ -63,7 +63,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternTes
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetDateParsePattern> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetDateParsePattern.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate.class;
     }
 }
