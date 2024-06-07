@@ -39,8 +39,8 @@ public final class SpreadsheetComparatorInfoTest implements PluginInfoLikeTestin
     }
 
     @Override
-    public SpreadsheetComparatorInfo createSpreadsheetComponentInfo(final AbsoluteUrl url,
-                                                                    final SpreadsheetComparatorName name) {
+    public SpreadsheetComparatorInfo createPluginInfoLike(final AbsoluteUrl url,
+                                                          final SpreadsheetComparatorName name) {
         return SpreadsheetComparatorInfo.with(
                 url,
                 name
@@ -56,5 +56,12 @@ public final class SpreadsheetComparatorInfoTest implements PluginInfoLikeTestin
                 json,
                 context
         );
+    }
+
+    // parse.............................................................................................................
+
+    @Override
+    public SpreadsheetComparatorInfo parseString(final String text) {
+        return SpreadsheetComparatorInfo.parse(text);
     }
 }

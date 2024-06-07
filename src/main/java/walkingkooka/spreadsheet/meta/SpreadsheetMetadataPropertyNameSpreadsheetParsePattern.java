@@ -24,8 +24,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
  */
 abstract class SpreadsheetMetadataPropertyNameSpreadsheetParsePattern<P extends SpreadsheetParsePattern> extends SpreadsheetMetadataPropertyName<P> {
 
-    SpreadsheetMetadataPropertyNameSpreadsheetParsePattern() {
-        super();
+    SpreadsheetMetadataPropertyNameSpreadsheetParsePattern(final String name) {
+        super(name);
     }
 
     @Override

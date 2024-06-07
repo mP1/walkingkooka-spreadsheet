@@ -32,6 +32,14 @@ import java.util.Objects;
  */
 public final class SpreadsheetComparatorInfo implements PluginInfoLike<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
+    public static SpreadsheetComparatorInfo parse(final String text) {
+        return PluginInfoLike.parsePluginInfoLike(
+                text,
+                SpreadsheetComparatorName::with,
+                SpreadsheetComparatorInfo::with
+        );
+    }
+
     public static SpreadsheetComparatorInfo with(final AbsoluteUrl url,
                                                  final SpreadsheetComparatorName name) {
         return new SpreadsheetComparatorInfo(
