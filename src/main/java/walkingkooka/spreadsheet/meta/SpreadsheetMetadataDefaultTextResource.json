@@ -71,6 +71,68 @@
   "hide-zero-values": false,
   "precision": 10,
   "rounding-mode": "HALF_UP",
+  "spreadsheet-comparators": [
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date",
+      "name": "date"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time",
+      "name": "date-time"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month",
+      "name": "day-of-month"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-week",
+      "name": "day-of-week"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-am-pm",
+      "name": "hour-of-am-pm"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-day",
+      "name": "hour-of-day"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/minute-of-hour",
+      "name": "minute-of-hour"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/month-of-year",
+      "name": "month-of-year"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/nano-of-second",
+      "name": "nano-of-second"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/number",
+      "name": "number"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute",
+      "name": "seconds-of-minute"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text",
+      "name": "text"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive",
+      "name": "text-case-insensitive"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time",
+      "name": "time"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year",
+      "name": "year"
+    }
+  ],
   "style": {
     "background-color": "#ffffff",
     "border-left-color": "#000000",

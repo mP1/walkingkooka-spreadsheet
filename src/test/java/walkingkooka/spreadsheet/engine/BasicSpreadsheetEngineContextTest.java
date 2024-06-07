@@ -775,6 +775,68 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
+                        "  \"spreadsheet-comparators\": [\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date\",\n" +
+                        "      \"name\": \"date\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time\",\n" +
+                        "      \"name\": \"date-time\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month\",\n" +
+                        "      \"name\": \"day-of-month\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-week\",\n" +
+                        "      \"name\": \"day-of-week\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-am-pm\",\n" +
+                        "      \"name\": \"hour-of-am-pm\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-day\",\n" +
+                        "      \"name\": \"hour-of-day\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/minute-of-hour\",\n" +
+                        "      \"name\": \"minute-of-hour\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/month-of-year\",\n" +
+                        "      \"name\": \"month-of-year\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/nano-of-second\",\n" +
+                        "      \"name\": \"nano-of-second\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/number\",\n" +
+                        "      \"name\": \"number\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute\",\n" +
+                        "      \"name\": \"seconds-of-minute\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text\",\n" +
+                        "      \"name\": \"text\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive\",\n" +
+                        "      \"name\": \"text-case-insensitive\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time\",\n" +
+                        "      \"name\": \"time\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year\",\n" +
+                        "      \"name\": \"year\"\n" +
+                        "    }\n" +
+                        "  ],\n" +
                         "  \"style\": {\n" +
                         "    \"background-color\": \"#ffffff\",\n" +
                         "    \"border-bottom-color\": \"#000000\",\n" +
@@ -925,6 +987,68 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
+                        "  \"spreadsheet-comparators\": [\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date\",\n" +
+                        "      \"name\": \"date\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time\",\n" +
+                        "      \"name\": \"date-time\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month\",\n" +
+                        "      \"name\": \"day-of-month\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-week\",\n" +
+                        "      \"name\": \"day-of-week\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-am-pm\",\n" +
+                        "      \"name\": \"hour-of-am-pm\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-day\",\n" +
+                        "      \"name\": \"hour-of-day\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/minute-of-hour\",\n" +
+                        "      \"name\": \"minute-of-hour\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/month-of-year\",\n" +
+                        "      \"name\": \"month-of-year\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/nano-of-second\",\n" +
+                        "      \"name\": \"nano-of-second\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/number\",\n" +
+                        "      \"name\": \"number\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute\",\n" +
+                        "      \"name\": \"seconds-of-minute\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text\",\n" +
+                        "      \"name\": \"text\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive\",\n" +
+                        "      \"name\": \"text-case-insensitive\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time\",\n" +
+                        "      \"name\": \"time\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year\",\n" +
+                        "      \"name\": \"year\"\n" +
+                        "    }\n" +
+                        "  ],\n" +
                         "  \"style\": {\n" +
                         "    \"background-color\": \"#ffffff\",\n" +
                         "    \"border-bottom-color\": \"#000000\",\n" +

@@ -21,6 +21,7 @@ import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
@@ -213,6 +214,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     @Override
     protected void visitRoundingMode(final RoundingMode roundingMode) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitSpreadsheetComparators(final SpreadsheetComparatorInfoSet value) {
+        // nop
     }
 
     @Override
