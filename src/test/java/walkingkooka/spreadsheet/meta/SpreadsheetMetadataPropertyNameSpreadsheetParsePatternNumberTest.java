@@ -33,7 +33,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern, SpreadsheetNumberParsePattern> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumberTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber, SpreadsheetNumberParsePattern> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
@@ -61,7 +61,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternT
     private void extractLocaleValueAndCheck2(final String text,
                                              final ExpressionNumberKind kind) throws ParseException {
         final Locale locale = Locale.ENGLISH;
-        final SpreadsheetNumberParsePattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern.instance()
+        final SpreadsheetNumberParsePattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber.instance()
                 .extractLocaleValue(locale)
                 .get();
 
@@ -91,12 +91,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternT
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern.instance(), "number-parse-pattern");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber.instance(), "number-parse-pattern");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber.instance();
     }
 
     @Override
@@ -112,7 +112,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternT
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePattern.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber.class;
     }
 }

@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern, SpreadsheetDateTimeParsePattern> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTimeTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime, SpreadsheetDateTimeParsePattern> {
 
     @Test
     public void testExtractLocaleValue() {
@@ -35,12 +35,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatter
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern.instance(), "date-time-parse-pattern");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime.instance(), "date-time-parse-pattern");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime.instance();
     }
 
     @Override
@@ -56,7 +56,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatter
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime.class;
     }
 }
