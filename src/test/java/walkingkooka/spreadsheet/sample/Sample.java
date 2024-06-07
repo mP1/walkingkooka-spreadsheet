@@ -88,8 +88,6 @@ public final class Sample {
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
-
     public static void main(final String[] args) {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext(engine);
@@ -186,6 +184,7 @@ public final class Sample {
 
     private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine) {
         final SpreadsheetMetadata metadata = metadata();
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
         return new FakeSpreadsheetEngineContext() {
 
@@ -221,7 +220,7 @@ public final class Sample {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
-                                        SPREADSHEET_FORMATTER_PROVIDER,
+                                        spreadsheetFormatterProvider,
                                         NOW,
                                         LABEL_NAME_RESOLVER
                                 )
@@ -261,7 +260,7 @@ public final class Sample {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter(SPREADSHEET_FORMATTER_PROVIDER)
+                                                        .formatter(spreadsheetFormatterProvider)
                                         )
                                 ).map(
                                         f -> cell.style()
@@ -279,7 +278,7 @@ public final class Sample {
                 return formatter.format(
                         value,
                         metadata.formatterContext(
-                                SPREADSHEET_FORMATTER_PROVIDER,
+                                spreadsheetFormatterProvider,
                                 NOW,
                                 LABEL_NAME_RESOLVER
                         )

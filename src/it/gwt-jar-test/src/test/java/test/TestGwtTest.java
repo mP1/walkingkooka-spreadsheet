@@ -84,8 +84,6 @@ public class TestGwtTest extends GWTTestCase {
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
-
     public void testWithCellReference() {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext(engine);
@@ -190,6 +188,7 @@ public class TestGwtTest extends GWTTestCase {
 
     private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine) {
         final SpreadsheetMetadata metadata = metadata();
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
         return new FakeSpreadsheetEngineContext() {
 
@@ -225,7 +224,7 @@ public class TestGwtTest extends GWTTestCase {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
-                                        SPREADSHEET_FORMATTER_PROVIDER,
+                                        spreadsheetFormatterProvider,
                                         NOW,
                                         LABEL_NAME_RESOLVER
                                 )
@@ -265,7 +264,7 @@ public class TestGwtTest extends GWTTestCase {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter(SPREADSHEET_FORMATTER_PROVIDER)
+                                                        .formatter(spreadsheetFormatterProvider)
                                         )
                                 ).map(
                                         f -> cell.style()
@@ -283,7 +282,7 @@ public class TestGwtTest extends GWTTestCase {
                 return formatter.format(
                         value,
                         metadata.formatterContext(
-                                SPREADSHEET_FORMATTER_PROVIDER,
+                                spreadsheetFormatterProvider,
                                 NOW,
                                 LABEL_NAME_RESOLVER
                         )

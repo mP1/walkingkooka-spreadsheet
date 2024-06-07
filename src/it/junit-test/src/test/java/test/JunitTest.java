@@ -91,8 +91,6 @@ public class JunitTest {
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
-
     @Test
     public void testMetadataNonLocaleDefaults() {
         Assert.assertNotEquals(null, SpreadsheetMetadata.NON_LOCALE_DEFAULTS);
@@ -195,6 +193,7 @@ public class JunitTest {
 
     private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine) {
         final SpreadsheetMetadata metadata = metadata();
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
         return new FakeSpreadsheetEngineContext() {
 
@@ -230,7 +229,7 @@ public class JunitTest {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
-                                        SPREADSHEET_FORMATTER_PROVIDER,
+                                        spreadsheetFormatterProvider,
                                         NOW,
                                         LABEL_NAME_RESOLVER
                                 )
@@ -270,7 +269,7 @@ public class JunitTest {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter(SPREADSHEET_FORMATTER_PROVIDER)
+                                                        .formatter(spreadsheetFormatterProvider)
                                         )
                                 ).map(
                                         f -> cell.style()
@@ -288,7 +287,7 @@ public class JunitTest {
                 return formatter.format(
                         value,
                         metadata.formatterContext(
-                                SPREADSHEET_FORMATTER_PROVIDER,
+                                spreadsheetFormatterProvider,
                                 NOW,
                                 LABEL_NAME_RESOLVER
                         )
