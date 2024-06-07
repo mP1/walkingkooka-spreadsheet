@@ -86,7 +86,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber extends
     }
 
     @Override
-    public SpreadsheetNumberParsePattern parseValue0(final String value) {
+    public SpreadsheetNumberParsePattern parseUrlFragmentSaveValue0(final String value) {
         return SpreadsheetPattern.parseNumberParsePattern(value);
     }
 }

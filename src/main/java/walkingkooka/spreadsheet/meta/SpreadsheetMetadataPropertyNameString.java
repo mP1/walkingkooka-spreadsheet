@@ -62,15 +62,15 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
         return this.value();
     }
 
-    // parseValue.......................................................................................................
+    // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final boolean isParseValueSupported() {
+    public final boolean isParseUrlFragmentSaveValueSupported() {
         return true;
     }
 
     @Override
-    public final String parseValue0(final String value) {
+    public final String parseUrlFragmentSaveValue0(final String value) {
         return value;
     }
 }

@@ -144,10 +144,10 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                 propertyName + " extractLocaleValue " + locale);
     }
 
-    // parseValue.......................................................................................................
+    // parseUrlFragmentSaveValue........................................................................................
 
     @Test
-    public final void testParseValue() {
+    public final void testParseUrlFragmentSaveValue() {
         final SpreadsheetMetadataPropertyName<V> propertyName = this.createName();
 
         final String text;
@@ -160,16 +160,16 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
             text = String.valueOf(value);
         }
 
-        if (propertyName.isParseValueSupported()) {
+        if (propertyName.isParseUrlFragmentSaveValueSupported()) {
             this.checkEquals(
                     value,
-                    propertyName.parseValue(text),
-                    () -> "parseValue " + CharSequences.quoteAndEscape(text)
+                    propertyName.parseUrlFragmentSaveValue(text),
+                    () -> "parseUrlFragmentSaveValue " + CharSequences.quoteAndEscape(text)
             );
         } else {
             assertThrows(
                     UnsupportedOperationException.class,
-                    () -> propertyName.parseValue("")
+                    () -> propertyName.parseUrlFragmentSaveValue("")
             );
         }
     }

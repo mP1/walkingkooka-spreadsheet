@@ -71,15 +71,15 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
         return ""; // ensure id always appears first.
     }
 
-    // parseValue.......................................................................................................
+    // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public boolean isParseValueSupported() {
+    public boolean isParseUrlFragmentSaveValueSupported() {
         return false;
     }
 
     @Override
-    public SpreadsheetId parseValue0(final String value) {
-        return this.failParseValueUnsupported();
+    public SpreadsheetId parseUrlFragmentSaveValue0(final String value) {
+        return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

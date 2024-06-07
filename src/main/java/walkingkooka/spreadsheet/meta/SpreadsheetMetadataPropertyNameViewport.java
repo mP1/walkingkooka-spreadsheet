@@ -78,15 +78,15 @@ final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataP
         visitor.visitViewport(value);
     }
 
-    // parseValue.......................................................................................................
+    // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public boolean isParseValueSupported() {
+    public boolean isParseUrlFragmentSaveValueSupported() {
         return false;
     }
 
     @Override
-    public SpreadsheetViewport parseValue0(final String value) {
-        return this.failParseValueUnsupported();
+    public SpreadsheetViewport parseUrlFragmentSaveValue0(final String value) {
+        return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

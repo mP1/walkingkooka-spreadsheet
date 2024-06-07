@@ -99,15 +99,15 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
         return Color.class;
     }
 
-    // parseValue.......................................................................................................
+    // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public boolean isParseValueSupported() {
+    public boolean isParseUrlFragmentSaveValueSupported() {
         return true;
     }
 
     @Override
-    public Color parseValue0(final String value) {
+    public Color parseUrlFragmentSaveValue0(final String value) {
         return Color.parse(value);
     }
 

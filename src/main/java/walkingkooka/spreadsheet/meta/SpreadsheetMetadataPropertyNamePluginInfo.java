@@ -38,7 +38,7 @@ abstract class SpreadsheetMetadataPropertyNamePluginInfo<I extends PluginInfoLik
      * The parse value is the PLUGIN-NAME SPACE ABSOLUTE_URL.
      */
     @Override
-    public final boolean isParseValueSupported() {
+    public final boolean isParseUrlFragmentSaveValueSupported() {
         return true;
     }
 }
