@@ -72,7 +72,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate extends S
     }
 
     @Override
-    public SpreadsheetDateParsePattern parseValue0(final String value) {
+    public SpreadsheetDateParsePattern parseUrlFragmentSaveValue0(final String value) {
         return SpreadsheetPattern.parseDateParsePattern(value);
     }
 }

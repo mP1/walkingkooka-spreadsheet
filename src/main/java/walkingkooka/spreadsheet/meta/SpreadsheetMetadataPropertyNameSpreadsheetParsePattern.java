@@ -33,10 +33,10 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetParsePattern<P extends 
         return this.value();
     }
 
-    // parseValue.......................................................................................................
+    // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final boolean isParseValueSupported() {
+    public final boolean isParseUrlFragmentSaveValueSupported() {
         return true;
     }
 }

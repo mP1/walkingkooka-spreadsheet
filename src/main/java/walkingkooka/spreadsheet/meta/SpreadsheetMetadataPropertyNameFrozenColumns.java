@@ -80,15 +80,15 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
         return this.value();
     }
 
-    // parseValue.......................................................................................................
+    // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public boolean isParseValueSupported() {
+    public boolean isParseUrlFragmentSaveValueSupported() {
         return false;
     }
 
     @Override
-    public SpreadsheetColumnRangeReference parseValue0(final String value) {
-        return this.failParseValueUnsupported();
+    public SpreadsheetColumnRangeReference parseUrlFragmentSaveValue0(final String value) {
+        return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

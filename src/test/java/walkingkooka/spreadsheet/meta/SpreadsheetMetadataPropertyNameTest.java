@@ -307,21 +307,21 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         );
     }
 
-    // parseValue.......................................................................................................
+    // parseUrlFragmentSaveValue.......................................................................................................
 
     @Test
-    public void testParseValueColor() {
+    public void testParseUrlFragmentSaveValueColor() {
         final Color color = Color.parse("#123456");
 
         this.checkEquals(
                 color,
                 SpreadsheetMetadataPropertyName.numberedColor(1)
-                        .parseValue(color.toString())
+                        .parseUrlFragmentSaveValue(color.toString())
         );
     }
 
     @Test
-    public void testParseValueCreatorFails() {
+    public void testParseUrlFragmentSaveValueCreatorFails() {
         this.parseValueFails(
                 SpreadsheetMetadataPropertyName.CREATOR,
                 EmailAddress.parse("creator@example.com")
@@ -329,7 +329,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseValueFrozenColumnFails() {
+    public void testParseUrlFragmentSaveValueFrozenColumnFails() {
         this.parseValueFails(
                 SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
                 "A:B"
@@ -337,7 +337,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseValueModifiedByFails() {
+    public void testParseUrlFragmentSaveValueModifiedByFails() {
         this.parseValueFails(
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 EmailAddress.parse("modified-by@example.com")
@@ -345,7 +345,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseValueFrozenRowFails() {
+    public void testParseUrlFragmentSaveValueFrozenRowFails() {
         this.parseValueFails(
                 SpreadsheetMetadataPropertyName.FROZEN_ROWS,
                 "1:2"
@@ -353,7 +353,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseValueSpreadsheetIdFails() {
+    public void testParseUrlFragmentSaveValueSpreadsheetIdFails() {
         this.parseValueFails(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 SpreadsheetId.parse("123abc")
@@ -361,7 +361,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseValueStyleFails() {
+    public void testParseUrlFragmentSaveValueStyleFails() {
         this.parseValueFails(
                 SpreadsheetMetadataPropertyName.STYLE,
                 "style"
@@ -380,17 +380,17 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                                  final String propertyValue) {
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> propertyName.parseValue(propertyValue)
+                () -> propertyName.parseUrlFragmentSaveValue(propertyValue)
         );
     }
 
     @Test
-    public void testParseValueSpreadsheetName() {
+    public void testParseUrlFragmentSaveValueSpreadsheetName() {
         final String value = "SpreadsheetName123";
 
         this.checkEquals(
                 SpreadsheetName.with(value),
-                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.parseValue(value)
+                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.parseUrlFragmentSaveValue(value)
         );
     }
 
