@@ -39,7 +39,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate extends S
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate() {
-        super();
+        super("date-parse-pattern");
     }
 
     @Override

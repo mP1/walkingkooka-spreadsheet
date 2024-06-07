@@ -39,8 +39,8 @@ public final class SpreadsheetFormatterInfoTest implements PluginInfoLikeTesting
     }
 
     @Override
-    public SpreadsheetFormatterInfo createSpreadsheetComponentInfo(final AbsoluteUrl url,
-                                                                   final SpreadsheetFormatterName name) {
+    public SpreadsheetFormatterInfo createPluginInfoLike(final AbsoluteUrl url,
+                                                         final SpreadsheetFormatterName name) {
         return SpreadsheetFormatterInfo.with(
                 url,
                 name
@@ -56,5 +56,12 @@ public final class SpreadsheetFormatterInfoTest implements PluginInfoLikeTesting
                 json,
                 context
         );
+    }
+
+    // parse............................................................................................................
+
+    @Override
+    public SpreadsheetFormatterInfo parseString(final String text) {
+        return SpreadsheetFormatterInfo.parse(text);
     }
 }

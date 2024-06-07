@@ -39,7 +39,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime extends S
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime() {
-        super();
+        super("time-parse-pattern");
     }
 
     @Override
