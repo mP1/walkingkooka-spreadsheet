@@ -84,13 +84,11 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     // @VisibleForTesting
     static SpreadsheetComparatorInfoSet unmarshall(final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
-        final Set<SpreadsheetComparatorInfo> copy = Sets.sorted(HateosResource.comparator());
-        copy.addAll(
+        return with(
                 context.unmarshallSet(
                         node,
                         SpreadsheetComparatorInfo.class
                 )
         );
-        return new SpreadsheetComparatorInfoSet(copy);
     }
 }
