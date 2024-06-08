@@ -94,7 +94,7 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
 
     @Override
     public String toString() {
-        return this.url + " " + this.name;
+        return PluginInfoLike.toString(this);
     }
 
     // Json.............................................................................................................
