@@ -33,7 +33,7 @@ import java.util.Objects;
 public final class SpreadsheetFormatterInfo implements PluginInfoLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
 
     public static SpreadsheetFormatterInfo parse(final String text) {
-        return PluginInfoLike.parsePluginInfoLike(
+        return PluginInfoLike.parse(
                 text,
                 SpreadsheetFormatterName::with,
                 SpreadsheetFormatterInfo::with
