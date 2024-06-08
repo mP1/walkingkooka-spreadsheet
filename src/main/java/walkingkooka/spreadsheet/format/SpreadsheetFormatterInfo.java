@@ -96,7 +96,7 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
 
     @Override
     public String toString() {
-        return this.url + " " + this.name;
+        return PluginInfoLike.toString(this);
     }
 
     // Json.............................................................................................................
