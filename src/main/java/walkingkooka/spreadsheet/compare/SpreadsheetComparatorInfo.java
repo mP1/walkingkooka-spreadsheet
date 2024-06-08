@@ -33,7 +33,7 @@ import java.util.Objects;
 public final class SpreadsheetComparatorInfo implements PluginInfoLike<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
     public static SpreadsheetComparatorInfo parse(final String text) {
-        return PluginInfoLike.parsePluginInfoLike(
+        return PluginInfoLike.parse(
                 text,
                 SpreadsheetComparatorName::with,
                 SpreadsheetComparatorInfo::with
