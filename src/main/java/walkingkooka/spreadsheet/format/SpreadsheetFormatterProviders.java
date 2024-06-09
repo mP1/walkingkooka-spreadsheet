@@ -21,6 +21,9 @@ import walkingkooka.reflect.PublicStaticHelper;
 
 import java.util.Set;
 
+/**
+ * A collection of constants and factory methods for {@link SpreadsheetFormatterProvider}.
+ */
 public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
 
     /**
