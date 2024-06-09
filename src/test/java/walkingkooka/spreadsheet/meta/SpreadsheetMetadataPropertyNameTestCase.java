@@ -134,14 +134,16 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         this.checkEquals(value, thrown.value(), "value");
     }
 
-    // extractLocaleValue...............................................................................................
+    // extractLocaleAwareValue...............................................................................................
 
-    final void extractLocaleValueAndCheck(final Locale locale,
-                                          final V value) {
+    final void extractLocaleValueAwareAndCheck(final Locale locale,
+                                               final V value) {
         final N propertyName = this.createName();
-        this.checkEquals(Optional.ofNullable(value),
-                propertyName.extractLocaleValue(locale),
-                propertyName + " extractLocaleValue " + locale);
+        this.checkEquals(
+                Optional.ofNullable(value),
+                propertyName.extractLocaleAwareValue(locale),
+                propertyName + " extractLocaleAwareValue for locale " + locale
+        );
     }
 
     // parseUrlFragmentSaveValue........................................................................................

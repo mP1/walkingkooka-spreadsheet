@@ -35,7 +35,7 @@ abstract class SpreadsheetMetadataPropertyNameDouble extends SpreadsheetMetadata
     }
 
     @Override
-    final Optional<Double> extractLocaleValue(final Locale locale) {
+    final Optional<Double> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 

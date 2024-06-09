@@ -24,8 +24,8 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameDecimalSeparatorTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameDecimalSeparator> {
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, '.');
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, '.');
     }
 
     @Test

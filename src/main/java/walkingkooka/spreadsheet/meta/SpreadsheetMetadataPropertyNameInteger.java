@@ -46,7 +46,7 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
     }
 
     @Override
-    final Optional<Integer> extractLocaleValue(final Locale locale) {
+    final Optional<Integer> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty(); // Dont think width/precison/twoYearDigit are locale aware.
     }
 

@@ -42,7 +42,7 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     }
 
     @Override
-    final Optional<LocalDateTime> extractLocaleValue(final Locale locale) {
+    final Optional<LocalDateTime> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty(); // TODO dateTimes are not locale aware.
     }
 

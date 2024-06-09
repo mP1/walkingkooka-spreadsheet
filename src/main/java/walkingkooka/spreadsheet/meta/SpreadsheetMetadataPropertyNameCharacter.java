@@ -50,7 +50,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     }
 
     @Override
-    final Optional<Character> extractLocaleValue(final Locale locale) {
+    final Optional<Character> extractLocaleAwareValue(final Locale locale) {
         return Optional.of(this.extractLocaleValueCharacter(DecimalFormatSymbols.getInstance(locale)));
     }
 

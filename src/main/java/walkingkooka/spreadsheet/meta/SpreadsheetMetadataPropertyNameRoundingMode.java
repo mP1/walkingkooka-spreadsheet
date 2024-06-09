@@ -55,7 +55,7 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
     }
 
     @Override
-    Optional<RoundingMode> extractLocaleValue(final Locale locale) {
+    Optional<RoundingMode> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty(); // RoundingMode have nothing todo with Locales
     }
 

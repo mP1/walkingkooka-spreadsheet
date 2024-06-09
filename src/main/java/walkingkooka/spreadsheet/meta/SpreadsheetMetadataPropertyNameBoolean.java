@@ -43,7 +43,7 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
     }
 
     @Override
-    final Optional<Boolean> extractLocaleValue(final Locale locale) {
+    final Optional<Boolean> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty(); // always empty
     }
 

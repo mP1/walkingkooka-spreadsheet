@@ -48,10 +48,10 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameFormatterDateTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterDate> {
 
     @Test
-    public void testExtractLocaleValue() {
+    public void testExtractLocaleAwareValue() {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameFormatterDate.instance()
-                .extractLocaleValue(locale)
+                .extractLocaleAwareValue(locale)
                 .get()
                 .spreadsheetFormatPattern()
                 .get();

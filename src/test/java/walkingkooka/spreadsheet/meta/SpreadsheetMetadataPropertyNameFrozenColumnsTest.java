@@ -35,8 +35,8 @@ public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends Spre
     }
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, null);
     }
 
     @Test

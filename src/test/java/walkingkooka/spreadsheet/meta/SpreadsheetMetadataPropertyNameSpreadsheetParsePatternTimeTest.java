@@ -25,8 +25,8 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTimeTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime, SpreadsheetTimeParsePattern> {
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(
                 Locale.ENGLISH,
                 SpreadsheetTimeParsePattern.parseTimeParsePattern("h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm")
         );

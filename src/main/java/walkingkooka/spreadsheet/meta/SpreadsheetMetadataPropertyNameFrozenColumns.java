@@ -60,7 +60,7 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     }
 
     @Override
-    Optional<SpreadsheetColumnRangeReference> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetColumnRangeReference> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 

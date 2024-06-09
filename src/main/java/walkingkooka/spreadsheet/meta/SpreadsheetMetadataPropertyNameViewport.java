@@ -58,7 +58,7 @@ final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataP
     }
 
     @Override
-    Optional<SpreadsheetViewport> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetViewport> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 
