@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -99,6 +100,10 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
 
     // Json.............................................................................................................
 
+    static void register() {
+
+    }
+
     static SpreadsheetComparatorInfo unmarshall(final JsonNode node,
                                                 final JsonNodeUnmarshallContext context) {
         return PluginInfoLike.unmarshall(
@@ -110,6 +115,9 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
     }
 
     static {
+        Url.HOST_PORT_SEPARATOR.character();
+        SpreadsheetComparatorName.CASE_SENSITIVITY.comparator(); // force json registry
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetComparatorInfo.class),
                 SpreadsheetComparatorInfo::unmarshall,
