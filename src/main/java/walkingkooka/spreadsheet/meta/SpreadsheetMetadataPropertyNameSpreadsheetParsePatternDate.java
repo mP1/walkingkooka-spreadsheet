@@ -60,7 +60,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate extends S
     }
 
     @Override
-    Optional<SpreadsheetDateParsePattern> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetDateParsePattern> extractLocaleAwareValue(final Locale locale) {
         return Optional.of(
                 SpreadsheetPattern.dateParsePatternLocale(locale)
         );

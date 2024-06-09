@@ -54,7 +54,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     }
 
     @Override
-    Optional<Long> extractLocaleValue(final Locale locale) {
+    Optional<Long> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty(); // Unrelated to Locales
     }
 

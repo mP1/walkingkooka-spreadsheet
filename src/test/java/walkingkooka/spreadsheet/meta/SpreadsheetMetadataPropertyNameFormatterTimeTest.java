@@ -45,8 +45,8 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameFormatterTimeTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterTime> {
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(
                 Locale.ENGLISH,
                 SpreadsheetTimeParsePattern.parseTimeFormatPattern("h:mm:ss AM/PM")
                         .spreadsheetFormatterSelector()
@@ -54,10 +54,10 @@ public final class SpreadsheetMetadataPropertyNameFormatterTimeTest extends Spre
     }
 
     @Test
-    public void testExtractLocaleValueAndFormat() {
+    public void testExtractLocaleAwareValueAndFormat() {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameFormatterTime.instance()
-                .extractLocaleValue(locale)
+                .extractLocaleAwareValue(locale)
                 .get()
                 .spreadsheetFormatPattern()
                 .get();

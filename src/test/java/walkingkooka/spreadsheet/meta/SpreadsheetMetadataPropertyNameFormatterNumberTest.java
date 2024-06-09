@@ -45,7 +45,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterNumberTest extends Sp
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DOUBLE;
 
     @Test
-    public void testExtractLocaleValue() {
+    public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAndCheck(
                 KIND.create(1.25),
                 "1.25"
@@ -53,7 +53,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterNumberTest extends Sp
     }
 
     @Test
-    public void testExtractLocaleValueInteger() {
+    public void testExtractLocaleAwareValueInteger() {
         this.extractLocaleValueAndCheck(
                 KIND.create(789),
                 "789."
@@ -64,7 +64,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterNumberTest extends Sp
                                             final String expected) {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameFormatterNumber.instance()
-                .extractLocaleValue(locale)
+                .extractLocaleAwareValue(locale)
                 .get()
                 .spreadsheetFormatPattern()
                 .get();

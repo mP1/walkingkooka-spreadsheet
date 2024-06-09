@@ -61,7 +61,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     }
 
     @Override
-    Optional<SpreadsheetRowRangeReference> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetRowRangeReference> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 

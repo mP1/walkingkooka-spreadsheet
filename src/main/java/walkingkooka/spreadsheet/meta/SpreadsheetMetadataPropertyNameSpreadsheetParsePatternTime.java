@@ -59,7 +59,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime extends S
         visitor.visitTimeParsePattern(value);
     }
 
-    Optional<SpreadsheetTimeParsePattern> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetTimeParsePattern> extractLocaleAwareValue(final Locale locale) {
         return Optional.of(
                 SpreadsheetPattern.timeParsePatternLocale(locale)
         );

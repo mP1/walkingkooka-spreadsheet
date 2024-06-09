@@ -26,8 +26,8 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameFormatterTextTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterText> {
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, null);
     }
 
     @Test

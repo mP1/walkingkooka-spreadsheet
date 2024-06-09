@@ -56,7 +56,7 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
     }
 
     @Override
-    Optional<ExpressionNumberKind> extractLocaleValue(final Locale locale) {
+    Optional<ExpressionNumberKind> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty(); // ExpressionNumberKind have nothing todo with Locales
     }
 

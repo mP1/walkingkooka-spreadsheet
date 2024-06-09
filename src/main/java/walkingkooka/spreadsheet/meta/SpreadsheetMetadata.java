@@ -811,9 +811,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetMetadata updated = this;
 
         for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
-            final Optional<?> localeValue = propertyName.extractLocaleValue(locale);
-            if (localeValue.isPresent()) {
-                updated = updated.set(propertyName, Cast.to(localeValue.get()));
+            final Optional<?> localeAwareValue = propertyName.extractLocaleAwareValue(locale);
+            if (localeAwareValue.isPresent()) {
+                updated = updated.set(
+                        propertyName,
+                        Cast.to(localeAwareValue.get())
+                );
             }
         }
 

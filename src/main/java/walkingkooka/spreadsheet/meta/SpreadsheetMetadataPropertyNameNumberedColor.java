@@ -90,7 +90,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     }
 
     @Override
-    Optional<Color> extractLocaleValue(final Locale locale) {
+    Optional<Color> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty(); // colours are not Locale aware
     }
 

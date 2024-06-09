@@ -34,8 +34,8 @@ public abstract class SpreadsheetMetadataPropertyNameEmailAddressTestCase<N exte
     }
 
     @Test
-    public final void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+    public final void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, null);
     }
 
     @Override

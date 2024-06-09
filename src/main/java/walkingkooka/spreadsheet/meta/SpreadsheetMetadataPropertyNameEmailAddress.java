@@ -43,7 +43,7 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     }
 
     @Override
-    final Optional<EmailAddress> extractLocaleValue(final Locale locale) {
+    final Optional<EmailAddress> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty(); // emails have nothing todo with Locales
     }
 

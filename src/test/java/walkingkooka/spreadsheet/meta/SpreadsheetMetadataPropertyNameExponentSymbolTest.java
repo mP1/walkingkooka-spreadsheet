@@ -24,8 +24,8 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameExponentSymbolTest extends SpreadsheetMetadataPropertyNameStringTestCase<SpreadsheetMetadataPropertyNameExponentSymbol> {
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, "E");
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, "E");
     }
 
     @Test

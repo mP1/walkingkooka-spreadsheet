@@ -24,8 +24,8 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameValueSeparatorTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameValueSeparator> {
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.forLanguageTag("EN-AU"), ',');
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(Locale.forLanguageTag("EN-AU"), ',');
     }
 
     @Test

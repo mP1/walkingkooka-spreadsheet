@@ -36,8 +36,8 @@ public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends Spreads
     }
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, null);
     }
 
     @Test

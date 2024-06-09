@@ -54,7 +54,7 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     }
 
     @Override
-    Optional<Locale> extractLocaleValue(final Locale locale) {
+    Optional<Locale> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 

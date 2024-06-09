@@ -28,8 +28,8 @@ public abstract class SpreadsheetMetadataPropertyNameIntegerTestCase<N extends S
     }
 
     @Test
-    public final void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+    public final void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, null);
     }
 
     @Override

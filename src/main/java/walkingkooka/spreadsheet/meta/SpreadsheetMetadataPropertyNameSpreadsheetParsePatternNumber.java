@@ -61,7 +61,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber extends
     }
 
     @Override
-    Optional<SpreadsheetNumberParsePattern> extractLocaleValue(final Locale locale) {
+    Optional<SpreadsheetNumberParsePattern> extractLocaleAwareValue(final Locale locale) {
         final SpreadsheetNumberParsePattern number = SpreadsheetPattern.decimalFormat(
                 (DecimalFormat) DecimalFormat.getInstance(locale)
         );
