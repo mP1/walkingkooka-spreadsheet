@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.net.Url;
+import walkingkooka.net.UrlPath;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.text.CaseKind;
@@ -59,10 +59,37 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
                                 ).toString()
                         ).filter(n -> false == "fake".equals(n))
                         .map(n -> SpreadsheetComparatorInfo.with(
-                                        Url.parseAbsolute("https://github.com/mP1/walkingkooka-spreadsheet/" + n),
+                                SpreadsheetComparatorProviders.BASE_URL.appendPath(
+                                        UrlPath.parse(n)
+                                ),
                                         SpreadsheetComparatorName.with(n)
                                 )
                         ).collect(Collectors.toSet())
+        );
+    }
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                SpreadsheetComparatorInfoSet.with(
+                        BuiltInSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos()
+                ),
+                "SpreadsheetComparatorInfoSet\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-week day-of-week\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-am-pm hour-of-am-pm\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-day hour-of-day\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/minute-of-hour minute-of-hour\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/month-of-year month-of-year\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/nano-of-second nano-of-second\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/number number\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute seconds-of-minute\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text text\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\n"
         );
     }
 
