@@ -53,7 +53,7 @@ final class SpreadsheetMetadataPropertyNameFormatterText extends SpreadsheetMeta
     }
 
     @Override
-    Optional<SpreadsheetFormatPattern> extractLocaleValueSpreadsheetFormatPattern(final Locale locale) {
+    Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale) {
         return Optional.empty();
     }
 }
