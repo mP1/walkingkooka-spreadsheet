@@ -20,14 +20,21 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
-import walkingkooka.net.http.server.hateos.HateosResourceSetTesting;
+import walkingkooka.plugin.PluginInfoSetLikeTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetFormatterInfoSetTest implements HateosResourceSetTesting<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName>,
+public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName>,
         ClassTesting<SpreadsheetFormatterInfoSet> {
+
+    // parse............................................................................................................
+
+    @Override
+    public SpreadsheetFormatterInfoSet parseString(final String text) {
+        return SpreadsheetFormatterInfoSet.parse(text);
+    }
 
     // Set..............................................................................................................
 

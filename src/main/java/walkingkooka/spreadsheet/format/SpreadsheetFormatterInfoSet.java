@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -33,8 +34,20 @@ import java.util.Set;
 /**
  * A read only {@link Set} of {@link SpreadsheetFormatterInfo} sorted by {@link SpreadsheetFormatterName}.
  */
-public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFormatterInfo> {
+public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFormatterInfo>
+        implements PluginInfoSetLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
 
+    /**
+     * Parses the CSV text into a {@link SpreadsheetFormatterInfoSet}.
+     */
+    public static SpreadsheetFormatterInfoSet parse(final String text) {
+        return PluginInfoSetLike.parse(
+                text,
+                SpreadsheetFormatterInfo::parse,
+                SpreadsheetFormatterInfoSet::with
+        );
+    }
+    
     /**
      * Factory that creates a {@link SpreadsheetFormatterInfoSet} with the provided {@link SpreadsheetFormatterInfo}.
      */
