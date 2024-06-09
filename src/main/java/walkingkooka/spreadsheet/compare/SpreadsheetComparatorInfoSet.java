@@ -81,6 +81,8 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     // json.............................................................................................................
 
     static {
+        SpreadsheetComparatorInfo.register(); // for registry of json marshaller
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetComparatorInfoSet.class),
                 SpreadsheetComparatorInfoSet::unmarshall,
