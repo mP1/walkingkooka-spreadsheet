@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.net.Url;
+import walkingkooka.net.UrlPath;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import java.util.Objects;
@@ -60,7 +60,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
 
     private static SpreadsheetFormatterInfo spreadsheetFormatterInfo(final SpreadsheetFormatterName name) {
         return SpreadsheetFormatterInfo.with(
-                Url.parseAbsolute("https://github.com/mP1/walkingkooka-spreadsheet/" + name),
+                SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse(name.value())),
                 name
         );
     }
