@@ -22,6 +22,8 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.text.CaseKind;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -90,6 +92,81 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\n"
+        );
+    }
+
+    @Test
+    public void testMarshall() {
+        this.checkEquals(
+                JsonNode.parse(
+                        "[\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/date\",\n" +
+                                "    \"name\": \"date\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/date-time\",\n" +
+                                "    \"name\": \"date-time\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/day-of-month\",\n" +
+                                "    \"name\": \"day-of-month\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/day-of-week\",\n" +
+                                "    \"name\": \"day-of-week\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/hour-of-am-pm\",\n" +
+                                "    \"name\": \"hour-of-am-pm\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/hour-of-day\",\n" +
+                                "    \"name\": \"hour-of-day\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/minute-of-hour\",\n" +
+                                "    \"name\": \"minute-of-hour\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/month-of-year\",\n" +
+                                "    \"name\": \"month-of-year\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/nano-of-second\",\n" +
+                                "    \"name\": \"nano-of-second\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/number\",\n" +
+                                "    \"name\": \"number\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/seconds-of-minute\",\n" +
+                                "    \"name\": \"seconds-of-minute\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/text\",\n" +
+                                "    \"name\": \"text\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/text-case-insensitive\",\n" +
+                                "    \"name\": \"text-case-insensitive\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/time\",\n" +
+                                "    \"name\": \"time\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/year\",\n" +
+                                "    \"name\": \"year\"\n" +
+                                "  }\n" +
+                                "]"),
+                JsonNodeMarshallContexts.basic()
+                        .marshall(
+                                SpreadsheetComparatorInfoSet.with(
+                                        BuiltInSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos()
+                                )
+                        )
         );
     }
 
