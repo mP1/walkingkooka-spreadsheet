@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.net.Url;
+import walkingkooka.net.UrlPath;
 
 import java.util.Map;
 import java.util.Objects;
@@ -56,7 +56,11 @@ final class BuiltInSpreadsheetComparatorProvider implements SpreadsheetComparato
         return NAME_TO_COMPARATOR.keySet()
                 .stream()
                 .map(n -> SpreadsheetComparatorInfo.with(
-                                Url.parseAbsolute("https://github.com/mP1/walkingkooka-spreadsheet/" + n.toString()),
+                        SpreadsheetComparatorProviders.BASE_URL.appendPath(
+                                UrlPath.parse(
+                                        n.value()
+                                )
+                        ),
                                 n
                         )
                 ).collect(Collectors.toCollection(Sets::sorted));
