@@ -89,4 +89,21 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                 "SpreadsheetFormatPattern.spreadsheetFormatter"
         );
     }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+                SpreadsheetFormatterInfoSet.with(
+                        SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE.spreadsheetFormatterInfos()
+                ),
+                "SpreadsheetFormatterInfoSet\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern date-format-pattern\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern date-time-format-pattern\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern number-format-pattern\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\n"
+        );
+    }
 }

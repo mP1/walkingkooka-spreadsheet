@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.reflect.PublicStaticHelper;
 
 import java.util.Set;
@@ -25,6 +27,14 @@ import java.util.Set;
  * A collection of constants and factory methods for {@link SpreadsheetFormatterProvider}.
  */
 public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
+
+    /**
+     * This is the base {@link AbsoluteUrl} for all {@link SpreadsheetFormatter} in this package. The name of each
+     * formatter will be appended to this base.
+     */
+    public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
+            "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetFormatter.class.getSimpleName()
+    );
 
     /**
      * {@see SpreadsheetFormatterProviderCollection}
