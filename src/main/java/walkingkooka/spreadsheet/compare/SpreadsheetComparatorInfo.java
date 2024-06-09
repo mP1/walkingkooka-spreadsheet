@@ -115,8 +115,8 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
     }
 
     static {
-        Url.HOST_PORT_SEPARATOR.character();
-        SpreadsheetComparatorName.CASE_SENSITIVITY.comparator(); // force json registry
+        Url.parseAbsoluteOrRelative("/");
+        SpreadsheetComparatorName.with("Hello"); // force json registry
 
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetComparatorInfo.class),
