@@ -20,14 +20,26 @@ package walkingkooka.spreadsheet.compare;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
-import walkingkooka.net.http.server.hateos.HateosResourceSetTesting;
+import walkingkooka.plugin.PluginInfoSetLikeTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetComparatorInfoSetTest implements HateosResourceSetTesting<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo, SpreadsheetComparatorName>,
+public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo, SpreadsheetComparatorName>,
         ClassTesting<SpreadsheetComparatorInfoSet> {
+
+    // parse............................................................................................................
+
+    @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetComparatorInfoSet parseString(final String text) {
+        return SpreadsheetComparatorInfoSet.parse(text);
+    }
 
     // Set..............................................................................................................
 
