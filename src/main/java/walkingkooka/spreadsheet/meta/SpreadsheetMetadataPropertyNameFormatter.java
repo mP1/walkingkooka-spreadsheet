@@ -56,7 +56,7 @@ abstract class SpreadsheetMetadataPropertyNameFormatter extends SpreadsheetMetad
 
     @Override
     final Optional<SpreadsheetFormatterSelector> extractLocaleAwareValue(final Locale locale) {
-        return this.extractLocaleValueSpreadsheetFormatPattern(locale)
+        return this.extractLocaleAwareValueSpreadsheetFormatPattern(locale)
                 .map(SpreadsheetFormatPattern::spreadsheetFormatterSelector);
     }
 
@@ -64,7 +64,7 @@ abstract class SpreadsheetMetadataPropertyNameFormatter extends SpreadsheetMetad
      * For the given {@link Locale} return the default {@link SpreadsheetFormatPattern}, this will then be
      * converted into its {@link SpreadsheetFormatterSelector} equivalent.
      */
-    abstract Optional<SpreadsheetFormatPattern> extractLocaleValueSpreadsheetFormatPattern(final Locale locale);
+    abstract Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale);
 
     @Override
     final Class<SpreadsheetFormatterSelector> type() {

@@ -55,7 +55,7 @@ final class SpreadsheetMetadataPropertyNameFormatterNumber extends SpreadsheetMe
     }
 
     @Override
-    Optional<SpreadsheetFormatPattern> extractLocaleValueSpreadsheetFormatPattern(final Locale locale) {
+    Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale) {
         return Optional.of(
                 SpreadsheetPattern.decimalFormat(
                         (DecimalFormat) DecimalFormat.getInstance(locale)

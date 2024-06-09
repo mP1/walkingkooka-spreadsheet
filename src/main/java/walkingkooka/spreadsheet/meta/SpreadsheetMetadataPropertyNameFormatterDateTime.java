@@ -54,7 +54,7 @@ final class SpreadsheetMetadataPropertyNameFormatterDateTime extends Spreadsheet
     }
 
     @Override
-    Optional<SpreadsheetFormatPattern> extractLocaleValueSpreadsheetFormatPattern(final Locale locale) {
+    Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale) {
         return Optional.of(
                 SpreadsheetPattern.dateTimeFormatPatternLocale(locale)
         );
