@@ -21,6 +21,9 @@ import walkingkooka.reflect.PublicStaticHelper;
 
 import java.util.Set;
 
+/**
+ * A collection of helpers and implementations of {@link SpreadsheetComparatorProvider}.
+ */
 public final class SpreadsheetComparatorProviders implements PublicStaticHelper {
 
     /**
