@@ -133,6 +133,28 @@
       "name": "year"
     }
   ],
+  "spreadsheet-formatters": [
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern",
+      "name": "date-format-pattern"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern",
+      "name": "date-time-format-pattern"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern",
+      "name": "number-format-pattern"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern",
+      "name": "text-format-pattern"
+    },
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern",
+      "name": "time-format-pattern"
+    }
+  ],
   "style": {
     "background-color": "#ffffff",
     "border-left-color": "#000000",

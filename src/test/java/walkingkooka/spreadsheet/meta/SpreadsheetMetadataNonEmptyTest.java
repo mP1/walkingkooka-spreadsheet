@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
@@ -2592,6 +2593,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR,
                 SpreadsheetComparatorInfoSet.with(
                         SpreadsheetComparatorProviders.builtIn().spreadsheetComparatorInfos()
+                )
+        );
+        properties.put(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTER,
+                SpreadsheetFormatterInfoSet.with(
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                                .spreadsheetFormatterInfos()
                 )
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
