@@ -38,6 +38,8 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -2596,6 +2598,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
                 SpreadsheetMetadataPropertyName.VIEWPORT,
                 SpreadsheetSelection.A1.setDefaultAnchor()
+        );
+        properties.put(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR,
+                SpreadsheetComparatorInfoSet.with(
+                        SpreadsheetComparatorProviders.builtIn().spreadsheetComparatorInfos()
+                )
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));

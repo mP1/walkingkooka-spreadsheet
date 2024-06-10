@@ -19,26 +19,12 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.naming.Name;
 import walkingkooka.plugin.PluginInfoLike;
+import walkingkooka.plugin.PluginInfoSetLike;
 
-/**
- * Base class for a few {@link SpreadsheetMetadataPropertyName} that have a {@link PluginInfoLike} as the value.
- */
-abstract class SpreadsheetMetadataPropertyNamePluginInfo<I extends PluginInfoLike<I, N>, N extends Name & Comparable<N>> extends SpreadsheetMetadataPropertyName<I> {
+public abstract class SpreadsheetMetadataPropertyNamePluginTestCase<P extends SpreadsheetMetadataPropertyNamePlugin<S, I, N>, S extends PluginInfoSetLike<I, N>, I extends PluginInfoLike<I, N>, N extends Name & Comparable<N>>
+        extends SpreadsheetMetadataPropertyNameTestCase<P, S> {
 
-    SpreadsheetMetadataPropertyNamePluginInfo() {
+    SpreadsheetMetadataPropertyNamePluginTestCase() {
         super();
-    }
-
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
-    /**
-     * The parse value is the PLUGIN-NAME SPACE ABSOLUTE_URL.
-     */
-    @Override
-    public final boolean isParseUrlFragmentSaveValueSupported() {
-        return true;
     }
 }
