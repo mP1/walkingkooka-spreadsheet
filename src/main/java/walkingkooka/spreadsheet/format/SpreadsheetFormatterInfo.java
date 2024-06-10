@@ -101,6 +101,10 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
 
     // Json.............................................................................................................
 
+    static void register() {
+        // required to FORCE json register
+    }
+
     static SpreadsheetFormatterInfo unmarshall(final JsonNode node,
                                                final JsonNodeUnmarshallContext context) {
         return PluginInfoLike.unmarshall(
