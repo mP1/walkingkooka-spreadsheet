@@ -32,6 +32,11 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
     // parse............................................................................................................
 
     @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetFormatterInfoSet parseString(final String text) {
         return SpreadsheetFormatterInfoSet.parse(text);
     }
