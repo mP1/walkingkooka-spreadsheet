@@ -104,4 +104,11 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
                         SpreadsheetFormatterInfo.class
                 ));
     }
+
+    // toString.........................................................................................................
+
+    @Override
+    public String toString() {
+        return PluginInfoSetLike.toString(this);
+    }
 }
