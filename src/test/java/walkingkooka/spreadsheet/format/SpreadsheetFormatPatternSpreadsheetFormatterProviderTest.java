@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
 public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider>,
         ToStringTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider> {
@@ -104,6 +106,45 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern number-format-pattern\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\n"
+        );
+    }
+
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.checkEquals(
+                JsonNode.parse(
+                        "walkingkooka.tree.json.JsonArray\n" +
+                                "  [\n" +
+                                "    {\n" +
+                                "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern\",\n" +
+                                "      \"name\": \"date-format-pattern\"\n" +
+                                "    },\n" +
+                                "    {\n" +
+                                "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern\",\n" +
+                                "      \"name\": \"date-time-format-pattern\"\n" +
+                                "    },\n" +
+                                "    {\n" +
+                                "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern\",\n" +
+                                "      \"name\": \"number-format-pattern\"\n" +
+                                "    },\n" +
+                                "    {\n" +
+                                "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern\",\n" +
+                                "      \"name\": \"text-format-pattern\"\n" +
+                                "    },\n" +
+                                "    {\n" +
+                                "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern\",\n" +
+                                "      \"name\": \"time-format-pattern\"\n" +
+                                "    }\n" +
+                                "  ]"
+                ),
+                JsonNodeMarshallContexts.basic()
+                        .marshall(
+                                SpreadsheetFormatterInfoSet.with(
+                                        SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE.spreadsheetFormatterInfos()
+                                )
+                        )
         );
     }
 }
