@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
@@ -133,6 +134,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitExponentSymbol(final String exponentSymbol) {
+        // nop
+    }
+
+    protected void visitExpressionFunctions(final ExpressionFunctionInfoSet set) {
         // nop
     }
 
