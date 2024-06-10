@@ -21,7 +21,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link SpreadsheetComparatorInfoSet}.
