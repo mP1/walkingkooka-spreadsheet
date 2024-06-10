@@ -2571,13 +2571,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM"));
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
-        properties.put(SpreadsheetMetadataPropertyName.STYLE,
-                TextStyle.EMPTY
-                        .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))
-                        .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
-                        .set(TextStylePropertyName.HEIGHT, Length.pixel(60.0))
-                        .set(TextStylePropertyName.WIDTH, Length.pixel(15.0))
-        );
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL);
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));
@@ -2596,10 +2589,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(
-                SpreadsheetMetadataPropertyName.VIEWPORT,
-                SpreadsheetSelection.A1.setDefaultAnchor()
-        );
-        properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR,
                 SpreadsheetComparatorInfoSet.with(
                         SpreadsheetComparatorProviders.builtIn().spreadsheetComparatorInfos()
@@ -2607,6 +2596,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));
+        properties.put(SpreadsheetMetadataPropertyName.STYLE,
+                TextStyle.EMPTY
+                        .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))
+                        .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
+                        .set(TextStylePropertyName.HEIGHT, Length.pixel(60.0))
+                        .set(TextStylePropertyName.WIDTH, Length.pixel(15.0))
+        );
         properties.put(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@@").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mm;hh:mm:ss.000"));
