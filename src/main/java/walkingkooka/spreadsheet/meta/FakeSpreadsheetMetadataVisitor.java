@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 
@@ -123,6 +124,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitExponentSymbol(final String exponentSymbol) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitExpressionFunctions(final ExpressionFunctionInfoSet set) {
         throw new UnsupportedOperationException();
     }
 
