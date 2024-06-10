@@ -22,6 +22,9 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
+/**
+ * A collection of helpers for getting {@link ExpressionFunction}.
+ */
 public final class SpreadsheetExpressionFunctions implements PublicStaticHelper {
 
     /**
