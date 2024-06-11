@@ -66,6 +66,7 @@
   "color-Cyan": 8,
   "date-time-offset": -25569,
   "default-year": 1900,
+  "expression-functions": [],
   "expression-number-kind": "BIG_DECIMAL",
   "general-number-format-digit-count": 9,
   "hide-zero-values": false,
