@@ -39,12 +39,29 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
         );
     }
 
+    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorName name) {
+        this.spreadsheetComparatorAndCheck(
+                this.createSpreadsheetComparatorProvider(),
+                name,
+                Optional.empty()
+        );
+    }
+
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final SpreadsheetComparatorName name) {
         this.spreadsheetComparatorAndCheck(
                 provider,
                 name,
                 Optional.empty()
+        );
+    }
+
+    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorName name,
+                                               final SpreadsheetComparator<?> expected) {
+        this.spreadsheetComparatorAndCheck(
+                this.createSpreadsheetComparatorProvider(),
+                name,
+                Optional.of(expected)
         );
     }
 
@@ -58,6 +75,15 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
         );
     }
 
+    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorName name,
+                                               final Optional<SpreadsheetComparator<?>> expected) {
+        this.spreadsheetComparatorAndCheck(
+                this.createSpreadsheetComparatorProvider(),
+                name,
+                expected
+        );
+    }
+
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final SpreadsheetComparatorName name,
                                                final Optional<SpreadsheetComparator<?>> expected) {
@@ -68,6 +94,13 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
         );
     }
 
+    default void spreadsheetComparatorInfosAndCheck(final SpreadsheetComparatorInfo... expected) {
+        this.spreadsheetComparatorInfosAndCheck(
+                this.createSpreadsheetComparatorProvider(),
+                expected
+        );
+    }
+
     default void spreadsheetComparatorInfosAndCheck(final SpreadsheetComparatorProvider provider,
                                                     final SpreadsheetComparatorInfo... expected) {
         this.spreadsheetComparatorInfosAndCheck(
@@ -75,6 +108,13 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
                 Sets.of(
                         expected
                 )
+        );
+    }
+
+    default void spreadsheetComparatorInfosAndCheck(final Set<SpreadsheetComparatorInfo> expected) {
+        this.spreadsheetComparatorInfosAndCheck(
+                this.createSpreadsheetComparatorProvider(),
+                expected
         );
     }
 
