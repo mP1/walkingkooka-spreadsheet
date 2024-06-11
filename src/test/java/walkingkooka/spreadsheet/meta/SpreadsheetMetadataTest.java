@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.net.Url;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
@@ -35,7 +36,16 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -63,6 +73,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -498,6 +509,59 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 expected,
                 metadata.shouldViewRefresh(previous),
                 () -> metadata + " shouldViewsRefresh " + previous
+        );
+    }
+
+    // ExpressionFunctions..............................................................................................
+
+    @Test
+    public void testExpressionFunctions() {
+        final ExpressionFunction<?, ExpressionEvaluationContext> function1 = new FakeExpressionFunction<>() {
+            @Override
+            public Optional<FunctionExpressionName> name() {
+                return Optional.of(
+                        FunctionExpressionName.with("test-function-111")
+                );
+            }
+
+            @Override
+            public Object apply(final List<Object> parameters,
+                                final ExpressionEvaluationContext context) {
+                return "Hello";
+            }
+        };
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS,
+                ExpressionFunctionInfoSet.parse("https://example/ExpressionFunctions/test-function-111 sin,https://example/ExpressionFunctions/test-function-22 sum")
+        );
+
+        final ExpressionFunctionProvider provider = metadata.expressionFunctionProvider(
+                ExpressionFunctionProviders.basic(
+                        Url.parseAbsolute("https://example/ExpressionFunctions"),
+                        CaseSensitivity.INSENSITIVE,
+                        Sets.of(
+                                function1,
+                                new FakeExpressionFunction<>() {
+                                    @Override
+                                    public Optional<FunctionExpressionName> name() {
+                                        return Optional.of(
+                                                FunctionExpressionName.with("test-function-222")
+                                        );
+                                    }
+                                }
+                        )
+                )
+        );
+
+        this.checkEquals(
+                "Hello",
+                provider.expressionFunctionOrFail(
+                        FunctionExpressionName.with("sin")
+                ).apply(
+                        ExpressionFunction.NO_PARAMETER_VALUES,
+                        ExpressionEvaluationContexts.fake()
+                )
         );
     }
 
