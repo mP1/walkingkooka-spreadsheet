@@ -26,8 +26,22 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName>,
         ClassTesting<SpreadsheetFormatterInfoSet> {
+
+    // immuatable set...................................................................................................
+
+    @Test
+    public void testImmutableSet() {
+        final SpreadsheetFormatterInfoSet set = this.createSet();
+
+        assertSame(
+                set,
+                Sets.immutable(set)
+        );
+    }
 
     // parse............................................................................................................
 
