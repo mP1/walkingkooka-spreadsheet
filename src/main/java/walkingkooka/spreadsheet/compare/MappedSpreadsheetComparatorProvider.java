@@ -48,7 +48,7 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
                 provider.spreadsheetComparatorInfos()
         );
         this.provider = provider;
-        this.infos = PluginInfoSetLike.viewFilter(
+        this.infos = PluginInfoSetLike.merge(
                 infos,
                 provider.spreadsheetComparatorInfos()
         );
