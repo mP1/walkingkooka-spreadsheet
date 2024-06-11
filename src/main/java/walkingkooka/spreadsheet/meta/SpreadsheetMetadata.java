@@ -67,6 +67,8 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -590,6 +592,27 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     final DecimalNumberContext decimalNumberContext0() {
         return SpreadsheetMetadataDecimalNumberContextComponents.with(this).decimalNumberContext();
+    }
+
+    // ExpressionNumberProvider.........................................................................................
+
+    /**
+     * Returns a {@link ExpressionFunctionProvider} that only contains the selected {@link walkingkooka.tree.expression.function.ExpressionFunction}
+     * in {@link SpreadsheetMetadataPropertyName#EXPRESSION_FUNCTIONS}
+     */
+    public final ExpressionFunctionProvider expressionFunctionProvider(final ExpressionFunctionProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS);
+
+        components.reportIfMissing();
+
+        return ExpressionFunctionProviders.mapped(
+                this.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS),
+                provider
+        );
     }
 
     // HasExpressionNumberContext.......................................................................................
