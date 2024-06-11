@@ -90,6 +90,18 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
         return this.name;
     }
 
+    /**
+     * Would be setter that returns a {@link SpreadsheetFormatterSelector} with the given {@link SpreadsheetFormatterName},
+     * creating a new instance if necessary.
+     */
+    public SpreadsheetFormatterSelector setName(final SpreadsheetFormatterName name) {
+        Objects.requireNonNull(name, "name");
+
+        return this.name.equals(name) ?
+                this :
+                new SpreadsheetFormatterSelector(name, this.text);
+    }
+
     private final SpreadsheetFormatterName name;
 
     /**

@@ -35,6 +35,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<SpreadsheetFormatterSelector>,
@@ -79,6 +81,55 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
         );
 
         this.checkEquals(NAME, selector.name(), "name");
+        this.textAndCheck(
+                selector,
+                TEXT
+        );
+    }
+
+    // setName..........................................................................................................
+
+    @Test
+    public void testSetNameWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormatterSelector.with(
+                        NAME,
+                        TEXT
+                ).setName(null)
+        );
+    }
+
+    @Test
+    public void testSetNameWithSame() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterSelector.with(
+                NAME,
+                TEXT
+        );
+        assertSame(
+                selector,
+                selector.setName(NAME)
+        );
+    }
+
+    @Test
+    public void testSetNameWithDifferent() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterSelector.with(
+                NAME,
+                TEXT
+        );
+        final SpreadsheetFormatterName differentName = SpreadsheetFormatterName.with("different");
+        final SpreadsheetFormatterSelector different = selector.setName(differentName);
+
+        assertNotSame(
+                different,
+                selector
+        );
+        this.checkEquals(
+                differentName,
+                different.name(),
+                "name"
+        );
         this.textAndCheck(
                 selector,
                 TEXT
