@@ -36,6 +36,10 @@ import java.util.Set;
  */
 public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
+    static {
+        Sets.registerImmutableType(SpreadsheetComparatorInfoSet.class);
+    }
+
     /**
      * Parses the CSV text into a {@link SpreadsheetComparatorInfoSet}.
      */
