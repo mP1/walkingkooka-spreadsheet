@@ -623,19 +623,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     /**
      * Returns a {@link SpreadsheetComparatorProvider} that only contains the selected {@link SpreadsheetComparator}
-     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_COMPARATOR}
+     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_COMPARATORS}
      */
     public final SpreadsheetComparatorProvider spreadsheetComparatorProvider(final SpreadsheetComparatorProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS);
 
         components.reportIfMissing();
 
         return SpreadsheetComparatorProviders.mapped(
-                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR),
+                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS),
                 provider
         );
     }

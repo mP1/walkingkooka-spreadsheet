@@ -238,7 +238,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetComparatorInfoSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorInfoSet> SPREADSHEET_COMPARATOR = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorInfoSet> SPREADSHEET_COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>

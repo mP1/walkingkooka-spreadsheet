@@ -600,7 +600,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetComparator<?> comparator1 = SpreadsheetComparators.dayOfMonth();
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR,
+                SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
                 SpreadsheetComparatorInfoSet.parse(SpreadsheetComparatorProviders.BASE_URL + "/day-of-month xyz,https://example/SpreadsheetComparators/test-comparator-22 zzz")
         );
 
