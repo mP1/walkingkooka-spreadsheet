@@ -36,6 +36,9 @@ import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -611,6 +614,27 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return ExpressionFunctionProviders.mapped(
                 this.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS),
+                provider
+        );
+    }
+
+    // SpreadsheetComparatorProvider.........................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetComparatorProvider} that only contains the selected {@link SpreadsheetComparator}
+     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_COMPARATOR}
+     */
+    public final SpreadsheetComparatorProvider spreadsheetComparatorProvider(final SpreadsheetComparatorProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR);
+
+        components.reportIfMissing();
+
+        return SpreadsheetComparatorProviders.mapped(
+                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR),
                 provider
         );
     }
