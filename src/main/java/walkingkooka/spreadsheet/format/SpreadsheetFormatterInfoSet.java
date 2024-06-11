@@ -37,6 +37,10 @@ import java.util.Set;
 public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFormatterInfo>
         implements PluginInfoSetLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
 
+    static {
+        Sets.registerImmutableType(SpreadsheetFormatterInfoSet.class);
+    }
+
     /**
      * Parses the CSV text into a {@link SpreadsheetFormatterInfoSet}.
      */
