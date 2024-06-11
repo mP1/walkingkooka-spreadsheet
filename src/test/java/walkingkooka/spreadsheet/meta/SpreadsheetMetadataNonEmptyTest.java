@@ -2601,7 +2601,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 )
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTER,
+                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
                 SpreadsheetFormatterInfoSet.with(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                                 .spreadsheetFormatterInfos()

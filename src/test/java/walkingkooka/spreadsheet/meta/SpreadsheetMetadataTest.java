@@ -642,7 +642,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .formatter();
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTER,
+                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
                 SpreadsheetFormatterInfoSet.parse(SpreadsheetFormatterProviders.BASE_URL + "/text-format-pattern xyz,https://example/SpreadsheetFormatters/test-formatter-22 zzz")
         );
 

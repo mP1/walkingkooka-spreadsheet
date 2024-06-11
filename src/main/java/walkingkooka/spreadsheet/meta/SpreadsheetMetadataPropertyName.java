@@ -243,7 +243,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterInfoSet> SPREADSHEET_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterInfoSet> SPREADSHEET_FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>

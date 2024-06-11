@@ -644,19 +644,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     /**
      * Returns a {@link SpreadsheetFormatterProvider} that only contains the selected {@link SpreadsheetFormatter}
-     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_FORMATTER}
+     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_FORMATTERS}
      */
     public final SpreadsheetFormatterProvider spreadsheetFormatterProvider(final SpreadsheetFormatterProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTER);
+        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS);
 
         components.reportIfMissing();
 
         return SpreadsheetFormatterProviders.mapped(
-                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTER),
+                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS),
                 provider
         );
     }
