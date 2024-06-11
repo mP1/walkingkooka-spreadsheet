@@ -48,7 +48,7 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
                 provider.spreadsheetFormatterInfos()
         );
         this.provider = provider;
-        this.infos = PluginInfoSetLike.viewFilter(
+        this.infos = PluginInfoSetLike.merge(
                 infos,
                 provider.spreadsheetFormatterInfos()
         );
