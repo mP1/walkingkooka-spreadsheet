@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
@@ -635,6 +636,27 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return SpreadsheetComparatorProviders.mapped(
                 this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR),
+                provider
+        );
+    }
+
+    // SpreadsheetFormatterProvider.........................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetFormatterProvider} that only contains the selected {@link SpreadsheetFormatter}
+     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_FORMATTER}
+     */
+    public final SpreadsheetFormatterProvider spreadsheetFormatterProvider(final SpreadsheetFormatterProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTER);
+
+        components.reportIfMissing();
+
+        return SpreadsheetFormatterProviders.mapped(
+                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTER),
                 provider
         );
     }

@@ -38,8 +38,12 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
@@ -608,6 +612,48 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 comparator1,
                 provider.spreadsheetComparatorOrFail(
                         SpreadsheetComparatorName.with("xyz")
+                )
+        );
+    }
+
+    // SpreadsheetFormatters............................................................................................
+
+    @Test
+    public void testSpreadsheetFormattersWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetFormatterProvider(null)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormattersWithMissingPropertyFails() {
+        assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetFormatterProvider(
+                        SpreadsheetFormatterProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatters() {
+        final SpreadsheetFormatter formatter = SpreadsheetPattern.parseTextFormatPattern("@@")
+                .formatter();
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTER,
+                SpreadsheetFormatterInfoSet.parse(SpreadsheetFormatterProviders.BASE_URL + "/text-format-pattern xyz,https://example/SpreadsheetFormatters/test-formatter-22 zzz")
+        );
+
+        final SpreadsheetFormatterProvider provider = metadata.spreadsheetFormatterProvider(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        );
+
+        this.checkEquals(
+                formatter,
+                provider.spreadsheetFormatterOrFail(
+                        SpreadsheetFormatterSelector.parse("xyz @@")
                 )
         );
     }
