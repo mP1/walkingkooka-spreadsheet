@@ -31,6 +31,12 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
@@ -565,6 +571,47 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
+    // SpreadsheetComparators...........................................................................................
+
+    @Test
+    public void testSpreadsheetComparatorsWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetComparatorProvider(null)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorsWithMissingPropertyFails() {
+        assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetComparatorProvider(
+                        SpreadsheetComparatorProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparators() {
+        final SpreadsheetComparator<?> comparator1 = SpreadsheetComparators.dayOfMonth();
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATOR,
+                SpreadsheetComparatorInfoSet.parse(SpreadsheetComparatorProviders.BASE_URL + "/day-of-month xyz,https://example/SpreadsheetComparators/test-comparator-22 zzz")
+        );
+
+        final SpreadsheetComparatorProvider provider = metadata.spreadsheetComparatorProvider(
+                SpreadsheetComparatorProviders.builtIn()
+        );
+
+        this.checkEquals(
+                comparator1,
+                provider.spreadsheetComparatorOrFail(
+                        SpreadsheetComparatorName.with("xyz")
+                )
+        );
+    }
+    
     // HasJsonNodeMarshallContext.......................................................................................
 
     @Test
