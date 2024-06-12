@@ -410,13 +410,6 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         return LocalLabelsSpreadsheetExpressionEvaluationContext.class;
     }
 
-    // ExpressionFunctionProviderTesting................................................................................
-
-    @Override
-    public void testExpressionFunctionInfosNotEmpty() {
-        throw new UnsupportedOperationException();
-    }
-
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
