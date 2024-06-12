@@ -44,6 +44,13 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see EmptySpreadsheetFormatterProvider}
+     */
+    public static SpreadsheetFormatterProvider empty() {
+        return EmptySpreadsheetFormatterProvider.INSTANCE;
+    }
+
+    /**
      * {@see FakeSpreadsheetFormatterProvider}
      */
     public static SpreadsheetFormatterProvider fake() {
