@@ -51,6 +51,13 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     }
 
     /**
+     * {@see EmptySpreadsheetComparatorProvider}
+     */
+    public static SpreadsheetComparatorProvider empty() {
+        return EmptySpreadsheetComparatorProvider.INSTANCE;
+    }
+
+    /**
      * {@see FakeSpreadsheetComparatorProvider}
      */
     public static SpreadsheetComparatorProvider fake() {
