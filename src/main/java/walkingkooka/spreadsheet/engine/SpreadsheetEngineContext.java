@@ -38,7 +38,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
+ * A context that holds individual values tailored for an individual spreadsheet or user such as their locale,
+ * formatting characters such as the selected decimal point and other similar data. The {@link SpreadsheetEngine} itself
+ * will refer to this context for these values when it performs its spreadsheet operations such as evaluating a cell,
+ * formatting etc. This supports the idea of using a single {@link SpreadsheetEngine} that is shared amongst users and
+ * spreadsheets and only the {@link SpreadsheetEngineContext} is different, for circumstances such as those previously
+ * mentioned.
  */
 public interface SpreadsheetEngineContext extends Context,
         ExpressionFunctionProvider,
