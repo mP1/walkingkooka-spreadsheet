@@ -109,11 +109,4 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
                 )
         );
     }
-
-    // toString.........................................................................................................
-
-    @Override
-    public String toString() {
-        return PluginInfoSetLike.toString(this);
-    }
 }
