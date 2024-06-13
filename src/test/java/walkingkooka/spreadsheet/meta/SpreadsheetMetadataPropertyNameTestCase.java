@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -159,7 +160,12 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
             final HasUrlFragment has = (HasUrlFragment) value;
             text = has.urlFragment().value();
         } else {
-            text = String.valueOf(value);
+            if (value instanceof PluginInfoSetLike) {
+                final PluginInfoSetLike<?, ?> set = (PluginInfoSetLike<?, ?>) value;
+                text = set.text();
+            } else {
+                text = String.valueOf(value);
+            }
         }
 
         if (propertyName.isParseUrlFragmentSaveValueSupported()) {
