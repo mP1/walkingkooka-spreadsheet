@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserTok
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
@@ -88,6 +89,14 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
                 token,
                 valueType
         );
+    }
+
+    /**
+     * A {@link SpreadsheetPatternSpreadsheetFormatter} that prints the text with no colour.
+     * This is equivalent to the pattern <pre>@</pre>
+     */
+    public static SpreadsheetPatternSpreadsheetFormatter defaultText() {
+        return SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter();
     }
 
     /**
