@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.text.CharSequences;
+
 /**
  * Base class for {@link IllegalColumnArgumentException} and {@link IllegalRowArgumentException}
  */
@@ -25,6 +27,22 @@ public abstract class IllegalColumnOrRowArgumentException extends IllegalArgumen
     private static final long serialVersionUID = 0L;
 
     IllegalColumnOrRowArgumentException(final String message) {
-        super(message);
+        super(
+                checkMessage(message)
+        );
     }
+
+    static String checkMessage(final String message) {
+        return CharSequences.failIfNullOrEmpty(message, "message");
+    }
+
+    IllegalColumnOrRowArgumentException(final String message,
+                                        final IllegalColumnOrRowArgumentException cause) {
+        super(message, cause);
+    }
+
+    /**
+     * Would be setter that returns an exception of the same type with the new message.
+     */
+    public abstract IllegalColumnOrRowArgumentException setMessage(final String message);
 }
