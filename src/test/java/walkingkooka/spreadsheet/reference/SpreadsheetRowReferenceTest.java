@@ -1432,6 +1432,11 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         return SpreadsheetRowReference.class;
     }
 
+    @Override
+    Class<? extends IllegalArgumentException> invalidValueExceptionType() {
+        return IllegalRowArgumentException.class;
+    }
+
     // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
