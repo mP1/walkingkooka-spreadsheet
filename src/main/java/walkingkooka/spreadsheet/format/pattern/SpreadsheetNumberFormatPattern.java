@@ -220,14 +220,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
             "<0"
     );
 
-    private final static SpreadsheetPatternSpreadsheetFormatter TEXT = SpreadsheetFormatters.text(
-            SpreadsheetFormatParserToken.text(
-                    Lists.of(
-                            SpreadsheetFormatParserToken.textPlaceholder("@", "@")
-                    ),
-                    "@"
-            )
-    );
+    private final static SpreadsheetPatternSpreadsheetFormatter TEXT = SpreadsheetFormatters.defaultText();
 
     // patterns.........................................................................................................
 

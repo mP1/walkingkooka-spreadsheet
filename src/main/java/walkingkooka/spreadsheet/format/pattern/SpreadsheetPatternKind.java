@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Cast;
 import walkingkooka.NeverError;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -28,7 +27,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CaseKind;
@@ -199,17 +197,7 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                         .formatter();
                 break;
             case TEXT_FORMAT_PATTERN:
-                formatter = SpreadsheetFormatters.text(
-                        SpreadsheetFormatParserToken.text(
-                                Lists.of(
-                                        SpreadsheetFormatParserToken.textPlaceholder(
-                                                "@",
-                                                "@"
-                                        )
-                                ),
-                                "@"
-                        )
-                );
+                formatter = SpreadsheetFormatters.defaultText();
                 break;
             case TIME_FORMAT_PATTERN:
             case TIME_PARSE_PATTERN:
