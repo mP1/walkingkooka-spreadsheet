@@ -454,6 +454,14 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
+    public void testParseColumnMoreThanMaxFails() {
+        this.parseStringFails(
+                "ABCDEFGHIJKL",
+                new IllegalColumnArgumentException("Invalid column value 2030465881 expected between 0 and 16384 in \"ABCDEFGHIJKL\"")
+        );
+    }
+
+    @Test
     public void testParseColumnUpperCased() {
         this.parseStringAndCheck("A", SpreadsheetColumnReference.with(0, SpreadsheetReferenceKind.RELATIVE));
     }
