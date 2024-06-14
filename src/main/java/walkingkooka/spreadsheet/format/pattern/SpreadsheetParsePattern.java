@@ -21,8 +21,11 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetParserName;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -46,6 +49,29 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
         super(token);
     }
 
+    // spreadsheetParserSelector.....................................................................................
+
+    /**
+     * Returns the {@link SpreadsheetParserSelector} equivalent to this pattern.
+     * <pre>
+     * date-parse-pattern
+     * date-time-parse-pattern
+     * </pre>
+     */
+    public final SpreadsheetParserSelector spreadsheetParserSelector() {
+
+        final String parserName = CaseKind.CAMEL.change(
+                this.getClass().getSimpleName()
+                        .substring("Spreadsheet".length()),
+                CaseKind.KEBAB
+        );
+
+        return SpreadsheetParserSelector.with(
+                SpreadsheetParserName.with(parserName),
+                this.text()
+        );
+    }
+    
     // HasFormatter.....................................................................................................
 
     @Override
