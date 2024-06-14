@@ -21,7 +21,7 @@ package walkingkooka.spreadsheet.reference;
 /**
  * This exception is thrown to denote an invalid column value, eg negative or greater than {@link SpreadsheetRowReference#MAX_VALUE}.
  */
-public abstract class IllegalRowArgumentException extends IllegalArgumentException {
+public final class IllegalRowArgumentException extends IllegalArgumentException {
 
     private static final long serialVersionUID = 0L;
 
