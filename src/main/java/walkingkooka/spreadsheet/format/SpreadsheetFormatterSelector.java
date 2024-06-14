@@ -85,6 +85,8 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
         this.text = text;
     }
 
+    // HasName..........................................................................................................
+
     @Override
     public SpreadsheetFormatterName name() {
         return this.name;
@@ -104,6 +106,8 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
 
     private final SpreadsheetFormatterName name;
 
+    // HasText..........................................................................................................
+
     /**
      * If the {@link SpreadsheetFormatterName} identifies a {@link SpreadsheetPatternSpreadsheetFormatter}, this will
      * hold the pattern text itself.
@@ -114,6 +118,8 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
     }
 
     private final String text;
+
+    // spreadsheetFormatPattern.........................................................................................
 
     /**
      * Returns a {@link SpreadsheetFormatPattern} if this selector is for a {@link SpreadsheetPatternSpreadsheetFormatter},
