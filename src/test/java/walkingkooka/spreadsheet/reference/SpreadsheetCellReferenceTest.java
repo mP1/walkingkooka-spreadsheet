@@ -1325,15 +1325,35 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testParseInvalidCellReferenceLastColumnPlus1Fails() {
-        this.parseStringFails("XFE2",
-                IllegalArgumentException.class);
+    public void testParseInvalidColumnFails() {
+        this.parseStringFails(
+                "XFE2",
+                new IllegalColumnArgumentException("Invalid column value 16384 expected between 0 and 16384 in \"XFE2\"")
+        );
     }
 
     @Test
-    public void testParseInvalidCellReferenceLastRowPlus1Fails() {
-        this.parseStringFails("B1048577",
-                IllegalArgumentException.class);
+    public void testParseInvalidColumnFails2() {
+        this.parseStringFails(
+                "ABCDEF1",
+                new IllegalColumnArgumentException("Invalid column value 12850895 expected between 0 and 16384 in \"ABCDEF1\"")
+        );
+    }
+
+    @Test
+    public void testParseInvalidRowFails() {
+        this.parseStringFails(
+                "B1048577",
+                new IllegalRowArgumentException("Invalid row value 1048576 expected between 0 and 1048576 in \"B1048577\"")
+        );
+    }
+
+    @Test
+    public void testParseInvalidRowFails2() {
+        this.parseStringFails(
+                "B12345678",
+                new IllegalRowArgumentException("Invalid row value 12345677 expected between 0 and 1048576 in \"B12345678\"")
+        );
     }
 
     @Test

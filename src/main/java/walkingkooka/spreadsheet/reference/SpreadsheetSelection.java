@@ -328,8 +328,16 @@ public abstract class SpreadsheetSelection implements HasText,
      * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
      */
     public static SpreadsheetCellReference parseCell(final String text) {
-        return SpreadsheetCellReference.parseCell0(text);
+        return parseTextOrFail(
+                text,
+                CELL_PARSER
+        ).cast(SpreadsheetCellReferenceParserToken.class)
+                .cell();
     }
+
+    static final Parser<SpreadsheetParserContext> CELL_PARSER = SpreadsheetParsers.cell()
+            .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
+            .orReport(ParserReporters.invalidCharacterException());
 
     /**
      * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
@@ -474,17 +482,39 @@ public abstract class SpreadsheetSelection implements HasText,
 
     /**
      * Parsers the text into a {@link ParserToken} or fails.
+     * Note the caught {@link ParserException#getCause()} has some special handling with the
+     * original {@link String text} parameter appended when possible.
+     * <pre>
+     * Invalid row value 1048576 expected between 0 and 1048576
+     * becomes
+     * Invalid row value 1048576 expected between 0 and 1048576 got "B1048577"
+     * </pre>
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     static ParserToken parseTextOrFail(final String text,
                                        final Parser<SpreadsheetParserContext> parser) {
         try {
             return parser.parse(
-                            TextCursors.charSequence(text),
+                            TextCursors.maxPosition(
+                                    TextCursors.charSequence(text)
+                            ),
                             SpreadsheetParserContexts.fake()
                     )
                     .get();
         } catch (final ParserException cause) {
+            final Throwable wrapped = cause.getCause();
+
+            if (wrapped instanceof NullPointerException) {
+                throw (NullPointerException) wrapped;
+            }
+            if (wrapped instanceof IllegalColumnOrRowArgumentException) {
+                final IllegalColumnOrRowArgumentException columnOrRow = (IllegalColumnOrRowArgumentException) wrapped;
+                throw columnOrRow.setMessage(columnOrRow.getMessage() + " in " + CharSequences.quoteAndEscape(text));
+            }
+            if (wrapped instanceof IllegalArgumentException) {
+                throw (IllegalArgumentException) wrapped;
+            }
+
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
     }

@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
@@ -25,14 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.text.cursor.MaxPositionTextCursor;
-import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Comparator;
@@ -60,35 +52,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     public static Comparator<SpreadsheetCell> cellComparator(final Comparator<SpreadsheetCellReference> comparator) {
         return SpreadsheetCellReferenceComparator.with(comparator);
     }
-
-    /**
-     * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
-     */
-    static SpreadsheetCellReference parseCell0(final String text) {
-        try {
-            final MaxPositionTextCursor textCursor = TextCursors.maxPosition(
-                    TextCursors.charSequence(text)
-            );
-            final Optional<ParserToken> token = PARSER.parse(
-                    textCursor,
-                    SpreadsheetParserContexts.fake()
-            );
-            if (false == token.isPresent() || false == textCursor.isEmpty()) {
-                throw new InvalidCharacterException(
-                        text,
-                        textCursor.max()
-                );
-            }
-            return token.get()
-                    .cast(SpreadsheetCellReferenceParserToken.class)
-                    .cell();
-        } catch (final ParserException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
-        }
-    }
-
-    // Used by SpreadsheetSelection
-    static final Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.cell();
 
     /**
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.
