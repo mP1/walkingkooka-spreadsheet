@@ -28,4 +28,18 @@ public final class IllegalRowArgumentException extends IllegalColumnOrRowArgumen
     public IllegalRowArgumentException(final String message) {
         super(message);
     }
+
+    private IllegalRowArgumentException(final String message,
+                                        final IllegalRowArgumentException cause) {
+        super(message, cause);
+    }
+
+    @Override
+    public IllegalRowArgumentException setMessage(final String message) {
+        checkMessage(message);
+
+        return message.equals(this.getMessage()) ?
+                this :
+                new IllegalRowArgumentException(message, this);
+    }
 }

@@ -17,18 +17,15 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+public final class IllegalColumnArgumentExceptionTest extends IllegalColumnOrRowArgumentExceptionTestCase<IllegalColumnArgumentException> {
 
-public final class IllegalColumnArgumentExceptionTest implements ClassTesting<IllegalColumnArgumentException> {
+    @Override
+    IllegalColumnArgumentException createThrowable(final String message) {
+        return new IllegalColumnArgumentException(message);
+    }
 
     @Override
     public Class<IllegalColumnArgumentException> type() {
         return IllegalColumnArgumentException.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

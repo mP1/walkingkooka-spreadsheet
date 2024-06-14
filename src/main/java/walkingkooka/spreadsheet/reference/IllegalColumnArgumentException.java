@@ -27,4 +27,18 @@ public final class IllegalColumnArgumentException extends IllegalColumnOrRowArgu
     public IllegalColumnArgumentException(final String message) {
         super(message);
     }
+
+    private IllegalColumnArgumentException(final String message,
+                                           final IllegalColumnArgumentException cause) {
+        super(message, cause);
+    }
+
+    @Override
+    public IllegalColumnArgumentException setMessage(final String message) {
+        checkMessage(message);
+
+        return message.equals(this.getMessage()) ?
+                this :
+                new IllegalColumnArgumentException(message, this);
+    }
 }
