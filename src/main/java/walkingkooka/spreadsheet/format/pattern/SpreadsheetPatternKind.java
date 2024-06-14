@@ -49,7 +49,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * The different types of {@link SpreadsheetPattern}.
+ * The different types of {@link SpreadsheetPattern}. While this kind is named after a {@link SpreadsheetPattern} it is also used to
+ * identify {@link SpreadsheetFormatter} or {@link walkingkooka.text.cursor.parser.Parser} for each of the spreadsheet value types.
  */
 public enum SpreadsheetPatternKind implements HasUrlFragment {
     DATE_FORMAT_PATTERN(
