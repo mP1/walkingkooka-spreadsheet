@@ -514,6 +514,46 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     @Test
+    public void testParseInvalidColumnFails() {
+        final String text = "A@ text";
+
+        this.parseStringFails(
+                text,
+                new InvalidCharacterException(text, 1)
+        );
+    }
+
+    @Test
+    public void testParseInvalidColumnFails2() {
+        final String text = "ABCDEFGHIJKLM text";
+
+        this.parseStringFails(
+                text,
+                new IllegalArgumentException("Invalid column value 1252505392 expected between 0 and 16384")
+        );
+    }
+
+    @Test
+    public void testParseInvalidRowFails() {
+        final String text = "1@ text";
+
+        this.parseStringFails(
+                text,
+                new InvalidCharacterException(text, 1)
+        );
+    }
+
+    @Test
+    public void testParseInvalidRowFails2() {
+        final String text = "1234567890123 text";
+
+        this.parseStringFails(
+                text,
+                new IllegalArgumentException("Invalid row value 1912276170 expected between 0 and 1048576")
+        );
+    }
+
+    @Test
     public void testParseMissingColumnOrRowSeparatorFails() {
         final String text = "C";
 
