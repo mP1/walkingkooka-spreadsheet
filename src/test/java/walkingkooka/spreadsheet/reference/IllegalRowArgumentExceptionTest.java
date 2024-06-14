@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.ThrowableTesting2;
 
-public final class IllegalRowArgumentExceptionTest implements ThrowableTesting2<IllegalRowArgumentException> {
+public final class IllegalRowArgumentExceptionTest implements ClassTesting<IllegalRowArgumentException> {
 
     @Override
     public Class<IllegalRowArgumentException> type() {
