@@ -110,7 +110,10 @@ abstract class SpreadsheetColumnOrRowReferenceParser implements Parser<Spreadshe
         try {
             return Optional.of(this.token1(absoluteOrRelative, value, save.textBetween().toString()));
         } catch (final RuntimeException cause) {
-            throw new SpreadsheetParserException(cause.getMessage());
+            throw new SpreadsheetParserException(
+                    cause.getMessage(),
+                    cause
+            );
         }
     }
 
