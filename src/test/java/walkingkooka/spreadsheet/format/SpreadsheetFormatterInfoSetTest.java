@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName>,
         ClassTesting<SpreadsheetFormatterInfoSet> {
 
-    // immuatable set...................................................................................................
+    // immutable set....................................................................................................
 
     @Test
     public void testImmutableSet() {
