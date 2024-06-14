@@ -38,12 +38,18 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testWithNegativeValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createReference(-1, SpreadsheetReferenceKind.RELATIVE));
+        assertThrows(
+                this.invalidValueExceptionType(),
+                () -> this.createReference(-1, SpreadsheetReferenceKind.RELATIVE)
+        );
     }
 
     @Test
     public final void testWithInvalidValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createReference(this.maxValue() + 1, SpreadsheetReferenceKind.RELATIVE));
+        assertThrows(
+                this.invalidValueExceptionType(),
+                () -> this.createReference(this.maxValue() + 1, SpreadsheetReferenceKind.RELATIVE)
+        );
     }
 
     @Test
@@ -273,7 +279,10 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testSetValueInvalidFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createSelection().setValue(-1));
+        assertThrows(
+                this.invalidValueExceptionType(),
+                () -> this.createSelection().setValue(-1)
+        );
     }
 
     @Test
@@ -308,12 +317,20 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testAddUnderflowFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createReference(0).add(-1));
+        assertThrows(
+                this.invalidValueExceptionType(),
+                () -> this.createReference(0)
+                        .add(-1)
+        );
     }
 
     @Test
     public final void testAddOverflowFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createReference(this.maxValue()).add(1));
+        assertThrows(
+                this.invalidValueExceptionType(),
+                () -> this.createReference(this.maxValue())
+                        .add(1)
+        );
     }
 
     @Test
@@ -400,6 +417,8 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     final R createReference(final int value) {
         return this.createReference(value, REFERENCE_KIND);
     }
+
+    abstract Class<? extends IllegalArgumentException> invalidValueExceptionType();
 
     abstract R createReference(final int value, final SpreadsheetReferenceKind kind);
 

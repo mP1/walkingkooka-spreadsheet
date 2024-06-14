@@ -1515,6 +1515,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         return SpreadsheetColumnReference.class;
     }
 
+    @Override
+    Class<? extends IllegalArgumentException> invalidValueExceptionType() {
+        return IllegalColumnArgumentException.class;
+    }
+
     // ParseStringTesting............................................................................................
 
     @Override
