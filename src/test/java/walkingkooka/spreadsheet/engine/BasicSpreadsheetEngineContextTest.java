@@ -860,6 +860,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "      \"name\": \"time-format-pattern\"\n" +
                         "    }\n" +
                         "  ],\n" +
+                        "  \"spreadsheet-parsers\": [\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern\",\n" +
+                        "      \"name\": \"date-parse-pattern\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern\",\n" +
+                        "      \"name\": \"date-time-parse-pattern\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/number-parse-pattern\",\n" +
+                        "      \"name\": \"number-parse-pattern\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/time-parse-pattern\",\n" +
+                        "      \"name\": \"time-parse-pattern\"\n" +
+                        "    }\n" +
+                        "  ],\n" +
                         "  \"style\": {\n" +
                         "    \"background-color\": \"#ffffff\",\n" +
                         "    \"border-bottom-color\": \"#000000\",\n" +
@@ -1093,6 +1111,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern\",\n" +
                         "      \"name\": \"time-format-pattern\"\n" +
+                        "    }\n" +
+                        "  ],\n" +
+                        "  \"spreadsheet-parsers\": [\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern\",\n" +
+                        "      \"name\": \"date-parse-pattern\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern\",\n" +
+                        "      \"name\": \"date-time-parse-pattern\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/number-parse-pattern\",\n" +
+                        "      \"name\": \"number-parse-pattern\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/time-parse-pattern\",\n" +
+                        "      \"name\": \"time-parse-pattern\"\n" +
                         "    }\n" +
                         "  ],\n" +
                         "  \"style\": {\n" +
