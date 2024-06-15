@@ -44,9 +44,15 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -654,6 +660,48 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 formatter,
                 provider.spreadsheetFormatterOrFail(
                         SpreadsheetFormatterSelector.parse("xyz @@")
+                )
+        );
+    }
+
+    // SpreadsheetParsers............................................................................................
+
+    @Test
+    public void testSpreadsheetParsersWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetParserProvider(null)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParsersWithMissingPropertyFails() {
+        assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetParserProvider(
+                        SpreadsheetParserProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParsers() {
+        final Parser<SpreadsheetParserContext> parser = SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                .parser();
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
+                SpreadsheetParserInfoSet.parse(SpreadsheetParserProviders.BASE_URL + "/date-parse-pattern xyz,https://example/SpreadsheetParsers/test-parser-22 zzz")
+        );
+
+        final SpreadsheetParserProvider provider = metadata.spreadsheetParserProvider(
+                SpreadsheetParserProviders.spreadsheetParsePattern()
+        );
+
+        this.checkEquals(
+                parser,
+                provider.spreadsheetParserOrFail(
+                        SpreadsheetParserSelector.parse("xyz yyyy/mm/dd")
                 )
         );
     }
