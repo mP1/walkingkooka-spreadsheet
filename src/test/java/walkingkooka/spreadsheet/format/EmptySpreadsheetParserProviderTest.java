@@ -17,32 +17,22 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.reflect.JavaVisibility;
 
-/**
- * A collection of constants and factory methods for {@link Parser}.
- */
-public final class SpreadsheetParserProviders implements PublicStaticHelper {
+public final class EmptySpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<EmptySpreadsheetParserProvider> {
 
-    /**
-     * {@see EmptySpreadsheetParserProvider}
-     */
-    public static SpreadsheetParserProvider empty() {
+    @Override
+    public EmptySpreadsheetParserProvider createSpreadsheetParserProvider() {
         return EmptySpreadsheetParserProvider.INSTANCE;
     }
 
-    /**
-     * {@link FakeSpreadsheetParserProvider}
-     */
-    public static SpreadsheetParserProvider fake() {
-        return new FakeSpreadsheetParserProvider();
+    @Override
+    public Class<EmptySpreadsheetParserProvider> type() {
+        return EmptySpreadsheetParserProvider.class;
     }
 
-    /**
-     * Stop creation
-     */
-    private SpreadsheetParserProviders() {
-        throw new UnsupportedOperationException();
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
