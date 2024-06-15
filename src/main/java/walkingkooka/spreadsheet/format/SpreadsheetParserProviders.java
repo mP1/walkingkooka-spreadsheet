@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.cursor.parser.Parser;
 
@@ -24,6 +26,14 @@ import walkingkooka.text.cursor.parser.Parser;
  * A collection of constants and factory methods for {@link Parser}.
  */
 public final class SpreadsheetParserProviders implements PublicStaticHelper {
+
+    /**
+     * This is the base {@link AbsoluteUrl} for all {@link SpreadsheetFormatter} in this package. The name of each
+     * formatter will be appended to this base.
+     */
+    public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
+            "https://github.com/mP1/walkingkooka-spreadsheet/" + Parser.class.getSimpleName()
+    );
 
     /**
      * {@see EmptySpreadsheetParserProvider}
