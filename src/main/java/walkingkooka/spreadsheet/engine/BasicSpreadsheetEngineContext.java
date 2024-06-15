@@ -35,6 +35,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfo;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.SpreadsheetParserInfo;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -44,6 +47,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -74,6 +78,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                               final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                               final ExpressionFunctionProvider expressionFunctionProvider,
+                                              final SpreadsheetParserProvider spreadsheetParserProvider,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetStoreRepository storeRepository,
@@ -83,6 +88,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider");
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
+        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(storeRepository, "storeRepository");
@@ -94,6 +100,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 spreadsheetComparatorProvider,
                 spreadsheetFormatterProvider,
                 expressionFunctionProvider,
+                spreadsheetParserProvider,
                 engine,
                 fractioner,
                 storeRepository,
@@ -109,6 +116,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                           final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                           final ExpressionFunctionProvider expressionFunctionProvider,
+                                          final SpreadsheetParserProvider spreadsheetParserProvider,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetStoreRepository storeRepository,
@@ -129,6 +137,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         );
 
         this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
+        this.spreadsheetParserProvider = spreadsheetParserProvider;
 
         this.fractioner = fractioner;
 
@@ -377,6 +386,20 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         }
         return formatted;
     }
+
+    // SpreadsheetParserProvider........................................................................................
+
+    @Override
+    public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+        return this.spreadsheetParserProvider.spreadsheetParser(selector);
+    }
+
+    @Override
+    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
+        return this.spreadsheetParserProvider.spreadsheetParserInfos();
+    }
+
+    private final SpreadsheetParserProvider spreadsheetParserProvider;
 
     // Store............................................................................................................
 
