@@ -27,7 +27,7 @@ import java.util.Set;
 /**
  * A {@link SpreadsheetFormatterProvider} that is always empty and never returns any {@link SpreadsheetFormatter} or {@link SpreadsheetFormatterInfo}.
  */
-public class EmptySpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
+final class EmptySpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
 
     /**
      * Singleton.
