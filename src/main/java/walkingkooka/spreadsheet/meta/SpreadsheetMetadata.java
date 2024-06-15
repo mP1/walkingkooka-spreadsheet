@@ -50,6 +50,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
@@ -657,6 +659,27 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return SpreadsheetFormatterProviders.mapped(
                 this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS),
+                provider
+        );
+    }
+
+    // SpreadsheetParserProvider.........................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetParserProvider} that only contains the selected {@link Parser}
+     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_PARSERS}
+     */
+    public final SpreadsheetParserProvider spreadsheetParserProvider(final SpreadsheetParserProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS);
+
+        components.reportIfMissing();
+
+        return SpreadsheetParserProviders.mapped(
+                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS),
                 provider
         );
     }
