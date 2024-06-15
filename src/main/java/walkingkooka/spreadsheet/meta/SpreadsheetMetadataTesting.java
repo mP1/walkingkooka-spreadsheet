@@ -25,6 +25,8 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.test.Testing;
 import walkingkooka.text.cursor.TextCursors;
@@ -70,6 +72,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
             .set(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS, SpreadsheetComparatorInfoSet.with(SpreadsheetComparatorProviders.builtIn().spreadsheetComparatorInfos()))
             .set(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS, SpreadsheetFormatterInfoSet.with(SpreadsheetFormatterProviders.spreadsheetFormatPattern().spreadsheetFormatterInfos()))
+            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS, SpreadsheetParserInfoSet.with(SpreadsheetParserProviders.spreadsheetParsePattern().spreadsheetParserInfos()))
             .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
                     .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
                     .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))

@@ -31,12 +31,14 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
+import walkingkooka.spreadsheet.format.SpreadsheetParserName;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -255,6 +257,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetName> SPREADSHEET_NAME = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetName.instance());
 
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetParserInfoSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserInfoSet> SPREADSHEET_PARSERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers.instance());
+    
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>style {@link walkingkooka.tree.text.TextStyle}</code>
      */
@@ -670,7 +677,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
                 "dd/mm/yyyy"
         );
-        SpreadsheetPattern.parseNumberFormatPattern(" ");
+        SpreadsheetParserSelector.with(
+                SpreadsheetParserName.DATE_PARSE_PATTERN,
+                "dd/mm/yyyy"
+        );
         //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);
         SpreadsheetName.with("Untitled");

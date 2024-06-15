@@ -48,6 +48,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -2609,6 +2611,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));
+        properties.put(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
+                SpreadsheetParserInfoSet.with(
+                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                                .spreadsheetParserInfos()
+                )
+        );
         properties.put(SpreadsheetMetadataPropertyName.STYLE,
                 TextStyle.EMPTY
                         .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))
