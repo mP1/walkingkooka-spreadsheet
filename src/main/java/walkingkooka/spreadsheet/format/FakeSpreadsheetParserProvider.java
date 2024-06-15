@@ -17,25 +17,25 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 
-/**
- * A collection of constants and factory methods for {@link Parser}.
- */
-public final class SpreadsheetParserProviders implements PublicStaticHelper {
+import java.util.Optional;
+import java.util.Set;
 
-    /**
-     * {@link FakeSpreadsheetParserProvider}
-     */
-    public static SpreadsheetParserProvider fake() {
-        return new FakeSpreadsheetParserProvider();
+public class FakeSpreadsheetParserProvider implements SpreadsheetParserProvider {
+
+    public FakeSpreadsheetParserProvider() {
+        super();
     }
 
-    /**
-     * Stop creation
-     */
-    private SpreadsheetParserProviders() {
+    @Override
+    public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
         throw new UnsupportedOperationException();
     }
 }
