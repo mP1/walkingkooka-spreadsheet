@@ -50,6 +50,13 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetParsePatternSpreadsheetParserProvider}
+     */
+    public static SpreadsheetParserProvider spreadsheetParsePattern() {
+        return SpreadsheetParsePatternSpreadsheetParserProvider.INSTANCE;
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetParserProviders() {
