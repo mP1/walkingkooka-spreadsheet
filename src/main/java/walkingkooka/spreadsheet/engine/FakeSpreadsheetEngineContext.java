@@ -25,13 +25,17 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfo;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.SpreadsheetParserInfo;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -126,6 +130,20 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
                                                final Optional<SpreadsheetFormatter> formatter) {
         throw new UnsupportedOperationException();
     }
+
+    // SpreadsheetParserProvider........................................................................................
+
+    @Override
+    public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
+        throw new UnsupportedOperationException();
+    }
+
+    // storerespository.................................................................................................
 
     @Override
     public SpreadsheetStoreRepository storeRepository() {

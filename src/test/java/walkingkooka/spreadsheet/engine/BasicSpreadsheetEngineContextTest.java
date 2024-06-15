@@ -43,6 +43,8 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -98,6 +100,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
+    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
+
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
     private final static char VALUE_SEPARATOR = ',';
@@ -115,6 +119,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
+                        SPREADSHEET_PARSER_PROVIDER,
                         this.engine(),
                         FRACTIONER,
                         this.storeRepository(),
@@ -133,6 +138,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         null,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
+                        SPREADSHEET_PARSER_PROVIDER,
                         this.engine(),
                         FRACTIONER,
                         this.storeRepository(),
@@ -151,6 +157,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         null,
                         this.functionProvider(),
+                        SPREADSHEET_PARSER_PROVIDER,
                         this.engine(),
                         FRACTIONER,
                         this.storeRepository(),
@@ -168,6 +175,26 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         this.metadata(),
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        null,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        this.engine(),
+                        FRACTIONER,
+                        this.storeRepository(),
+                        SERVER_URL,
+                        NOW
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetParserProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        this.metadata(),
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        this.functionProvider(),
                         null,
                         this.engine(),
                         FRACTIONER,
@@ -187,6 +214,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
+                        SPREADSHEET_PARSER_PROVIDER,
                         null,
                         FRACTIONER,
                         this.storeRepository(),
@@ -205,6 +233,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
+                        SPREADSHEET_PARSER_PROVIDER,
                         this.engine(),
                         null,
                         this.storeRepository(),
@@ -223,6 +252,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
+                        SPREADSHEET_PARSER_PROVIDER,
                         this.engine(),
                         FRACTIONER,
                         null,
@@ -241,6 +271,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
+                        SPREADSHEET_PARSER_PROVIDER,
                         this.engine(),
                         FRACTIONER,
                         this.storeRepository(),
@@ -259,6 +290,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
+                        SPREADSHEET_PARSER_PROVIDER,
                         this.engine(),
                         FRACTIONER,
                         this.storeRepository(),
@@ -1221,6 +1253,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 this.functionProvider(),
+                SPREADSHEET_PARSER_PROVIDER,
                 this.engine(),
                 FRACTIONER,
                 new FakeSpreadsheetStoreRepository() {
