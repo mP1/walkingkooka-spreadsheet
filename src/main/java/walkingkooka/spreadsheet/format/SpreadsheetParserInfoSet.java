@@ -86,7 +86,7 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     // json.............................................................................................................
 
     static {
-        SpreadsheetParserInfo.register(); // for registry of json marshaller
+        SpreadsheetParserInfo.register(); // force registry of json marshaller
 
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetParserInfoSet.class),
