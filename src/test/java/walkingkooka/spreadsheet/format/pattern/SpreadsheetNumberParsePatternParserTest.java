@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
@@ -42,7 +43,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNumberParsePatternTestCase2<SpreadsheetNumberParsePatternParser>
-        implements ParserTesting2<SpreadsheetNumberParsePatternParser, SpreadsheetParserContext> {
+        implements ParserTesting2<SpreadsheetNumberParsePatternParser, SpreadsheetParserContext>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetNumberParsePatternParser> {
 
     private final static char VALUE_SEPARATOR = ';';
 
@@ -624,6 +626,23 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     private SpreadsheetWhitespaceParserToken whitespace() {
         return SpreadsheetParserToken.whitespace(" ", " ");
     }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testDifferentPattern() {
+        this.checkNotEquals(
+                this.createParser("0.00"),
+                this.createParser("$0.00")
+        );
+    }
+
+    @Override
+    public SpreadsheetNumberParsePatternParser createObject() {
+        return this.createParser();
+    }
+
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetNumberParsePatternParser> type() {

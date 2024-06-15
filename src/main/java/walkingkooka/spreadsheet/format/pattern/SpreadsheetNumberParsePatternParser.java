@@ -80,6 +80,23 @@ final class SpreadsheetNumberParsePatternParser implements Parser<SpreadsheetPar
 
     private final SpreadsheetNumberParsePatternMode mode;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.pattern.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetNumberParsePatternParser && this.equals0((SpreadsheetNumberParsePatternParser) other);
+    }
+
+    private boolean equals0(final SpreadsheetNumberParsePatternParser other) {
+        return this.pattern.equals(other.pattern);
+    }
+
     @Override
     public String toString() {
         return this.pattern.toString();
