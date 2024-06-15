@@ -22,6 +22,8 @@ import walkingkooka.net.Url;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.cursor.parser.Parser;
 
+import java.util.Set;
+
 /**
  * A collection of constants and factory methods for {@link Parser}.
  */
@@ -34,6 +36,13 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
             "https://github.com/mP1/walkingkooka-spreadsheet/" + Parser.class.getSimpleName()
     );
+
+    /**
+     * {@see SpreadsheetParserProviderCollection}
+     */
+    public static SpreadsheetParserProvider collection(final Set<SpreadsheetParserProvider> providers) {
+        return SpreadsheetParserProviderCollection.with(providers);
+    }
 
     /**
      * {@see EmptySpreadsheetParserProvider}
