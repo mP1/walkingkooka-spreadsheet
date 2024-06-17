@@ -91,7 +91,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetParsePatternSpreadsheetParserProvider.INSTANCE,
-                "SpreadsheetParsePattern.parser"
+                "SpreadsheetPattern.parser"
         );
     }
 

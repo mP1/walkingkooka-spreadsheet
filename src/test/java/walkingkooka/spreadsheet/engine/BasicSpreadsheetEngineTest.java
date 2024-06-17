@@ -55,7 +55,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -13840,15 +13839,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetParsePattern.parseDateFormatPattern(DATE_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetParsePattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm"))
-                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetParsePattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetParsePattern.parseDateTimeParsePattern(DATETIME_PATTERN))
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetParsePattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetParsePattern.parseNumberParsePattern(NUMBER_PATTERN))
-                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetParsePattern.parseTextFormatPattern(TEXT_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetParsePattern.parseTimeFormatPattern(TIME_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetParsePattern.parseTimeParsePattern(TIME_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern(DATE_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm"))
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern(DATETIME_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern(NUMBER_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern(TEXT_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern(TIME_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern(TIME_PATTERN))
                 .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
                         .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
                         .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))

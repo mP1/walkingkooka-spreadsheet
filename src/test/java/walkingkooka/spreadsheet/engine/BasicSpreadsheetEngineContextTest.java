@@ -46,7 +46,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -1282,8 +1281,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .loadFromLocale()
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetFormatPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm"))
-                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetFormatPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm"))
+                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT)

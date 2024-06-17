@@ -36,7 +36,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
         final ParserToken token = this.dmyy();
         this.checkEquals(
                 token,
-                SpreadsheetFormatPattern.dateFormatPattern(token)
+                SpreadsheetPattern.dateFormatPattern(token)
                         .value()
         );
     }
@@ -46,7 +46,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
         final ParserToken token = this.hhmmyyyy();
         this.checkEquals(
                 token,
-                SpreadsheetFormatPattern.dateTimeFormatPattern(token)
+                SpreadsheetPattern.dateTimeFormatPattern(token)
                         .value()
         );
     }
@@ -57,7 +57,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
 
         this.checkEquals(
                 token,
-                SpreadsheetFormatPattern.numberFormatPattern(token)
+                SpreadsheetPattern.numberFormatPattern(token)
                         .value()
         );
     }
@@ -68,7 +68,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
 
         this.checkEquals(
                 token,
-                SpreadsheetFormatPattern.timeFormatPattern(token)
+                SpreadsheetPattern.timeFormatPattern(token)
                         .value()
         );
     }

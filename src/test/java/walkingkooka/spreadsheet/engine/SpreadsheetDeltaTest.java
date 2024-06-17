@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -1209,7 +1208,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testFormatterPatch() {
-        final SpreadsheetFormatterSelector formatter = SpreadsheetFormatPattern.parseTextFormatPattern("@@")
+        final SpreadsheetFormatterSelector formatter = SpreadsheetPattern.parseTextFormatPattern("@@")
                 .spreadsheetFormatterSelector();
 
         this.checkEquals(
@@ -1270,7 +1269,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testParsePatternPatch() {
-        final SpreadsheetParsePattern pattern = SpreadsheetParsePattern.parseNumberParsePattern("0.00");
+        final SpreadsheetParsePattern pattern = SpreadsheetPattern.parseNumberParsePattern("0.00");
 
         this.checkEquals(
                 JsonNode.object()

@@ -50,7 +50,7 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenV
     }
 
     private SpreadsheetFormatParserToken parserToken(final String pattern) {
-        final SpreadsheetParsePattern date = SpreadsheetParsePattern.parseDateParsePattern(pattern);
+        final SpreadsheetParsePattern date = SpreadsheetPattern.parseDateParsePattern(pattern);
         final SequenceParserToken sequenceParserToken = (SequenceParserToken) date.value();
         return sequenceParserToken.value()
                 .get(0)
