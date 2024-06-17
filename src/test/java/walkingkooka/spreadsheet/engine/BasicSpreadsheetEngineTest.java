@@ -52,12 +52,16 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -99,6 +103,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -163,6 +168,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://server.example.com");
 
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
+    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
 
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
         @Override
@@ -13296,7 +13303,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
                 return SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatter(selector);
             }
-            
+
+            @Override
+            public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(SpreadsheetParserSelector selector) {
+                return SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(selector);
+            }
+
             public SpreadsheetMetadata spreadsheetMetadata() {
                 return metadata.set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, defaultYear);
             }
