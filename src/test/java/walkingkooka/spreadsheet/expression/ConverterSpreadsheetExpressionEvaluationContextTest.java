@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -64,7 +65,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -105,9 +105,10 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         @Override
         public String apply(final List<Object> objects,
                             final SpreadsheetExpressionEvaluationContext context) {
-            return objects.stream()
-                    .map(Object::toString)
-                    .collect(Collectors.joining(","));
+            return CharacterConstant.COMMA.toSeparatedString(
+                    objects,
+                    Object::toString
+            );
         }
 
         @Override

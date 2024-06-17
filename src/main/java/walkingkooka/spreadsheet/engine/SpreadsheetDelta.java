@@ -2177,7 +2177,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                                   final Function<String, S> parser) {
         return Arrays.stream(
                         csv.stringOrFail()
-                                .split(CSV_COMMA)
+                                .split(CSV_COMMA.string())
                 ).map(parser)
                 .collect(Collectors.toCollection(Sets::ordered));
     }
@@ -2211,9 +2211,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     static <S extends SpreadsheetSelection> String csv(final Collection<S> selections) {
-        return selections.stream()
-                .map(SpreadsheetSelection::toString)
-                .collect(Collectors.joining(CSV_COMMA));
+        return CSV_COMMA.toSeparatedString(
+                selections,
+                SpreadsheetSelection::toString
+        );
     }
 
     /**
@@ -2354,7 +2355,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return JsonNode.object().setChildren(children);
     }
 
-    private final static String CSV_COMMA = ",";
+    private final static CharacterConstant CSV_COMMA = CharacterConstant.COMMA;
 
     /**
      * Accepts a {@link Collection} of any {@link SpreadsheetSelection} and returns a {@link JsonString} with the selections
