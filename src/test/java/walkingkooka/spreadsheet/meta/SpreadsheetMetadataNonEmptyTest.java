@@ -51,7 +51,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
@@ -2201,7 +2200,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testParserMissingProperties() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetParsePattern.parseDateParsePattern("yyyy/mm/dd"));
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd"));
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 metadata::parser
@@ -2257,10 +2256,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private SpreadsheetMetadata metadataWithParser() {
         return SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetParsePattern.parseDateParsePattern("yyyy/mm/dd"))
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetParsePattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm"))
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetParsePattern.parseNumberParsePattern("#.#"))
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetParsePattern.parseTimeParsePattern("hh:mm"));
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd"))
+                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm"))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#.#"))
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mm"));
     }
 
     private <T> void metadataParserParseAndCheck(final String text,

@@ -24,7 +24,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursor;
@@ -510,7 +510,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         predefined.put(
                 NUMBER_IDENTIFIER,
-                SpreadsheetParsePattern.parseNumberParsePattern("#.#E+#;#.#%;#.#;#%;#").expressionParser() //
+                SpreadsheetPattern.parseNumberParsePattern("#.#E+#;#.#%;#.#;#%;#").expressionParser() //
         );
         predefined.put(VALUE_IDENTIFIER, value.setToString(VALUE_IDENTIFIER.toString()));
 

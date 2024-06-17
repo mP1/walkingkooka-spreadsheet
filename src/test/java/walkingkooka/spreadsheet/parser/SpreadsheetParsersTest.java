@@ -34,7 +34,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -202,7 +201,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                    final SpreadsheetParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
-                SpreadsheetParsePattern.parseDateParsePattern(pattern).parser(),
+                SpreadsheetPattern.parseDateParsePattern(pattern).parser(),
                 SpreadsheetParserToken::date,
                 tokens
         );
@@ -246,7 +245,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                        final SpreadsheetParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
-                SpreadsheetParsePattern.parseDateTimeParsePattern(pattern).parser(),
+                SpreadsheetPattern.parseDateTimeParsePattern(pattern).parser(),
                 SpreadsheetParserToken::dateTime,
                 tokens
         );
@@ -306,7 +305,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                    final SpreadsheetParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
-                SpreadsheetParsePattern.parseTimeParsePattern(pattern).parser(),
+                SpreadsheetPattern.parseTimeParsePattern(pattern).parser(),
                 SpreadsheetParserToken::time,
                 tokens
         );
@@ -3202,10 +3201,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParsers.valueOrExpression(
                 Parsers.alternatives(
                         Lists.of(
-                                SpreadsheetParsePattern.parseDateParsePattern("yyyy/mm/dd").parser(),
-                                SpreadsheetParsePattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").parser(),
-                                SpreadsheetParsePattern.parseNumberParsePattern("#;#.#").parser(),
-                                SpreadsheetParsePattern.parseTimeParsePattern("hh:mm").parser()
+                                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser(),
+                                SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").parser(),
+                                SpreadsheetPattern.parseNumberParsePattern("#;#.#").parser(),
+                                SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser()
                         )
                 )
         );

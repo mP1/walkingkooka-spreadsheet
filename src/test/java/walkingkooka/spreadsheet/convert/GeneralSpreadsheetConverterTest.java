@@ -39,7 +39,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -1212,7 +1212,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetDateParsePattern dateParser() {
-        return SpreadsheetParsePattern.parseDateParsePattern("\\D yyyy-mm-dd");
+        return SpreadsheetPattern.parseDateParsePattern("\\D yyyy-mm-dd");
     }
 
     private SpreadsheetFormatter dateTimeFormatter() {
@@ -1223,7 +1223,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetDateTimeParsePattern dateTimeParser() {
-        return SpreadsheetParsePattern.parseDateTimeParsePattern("\"DT\" dd mm yyyy hh mm ss");
+        return SpreadsheetPattern.parseDateTimeParsePattern("\"DT\" dd mm yyyy hh mm ss");
     }
 
     private SpreadsheetFormatter numberFormatter() {
@@ -1235,7 +1235,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetNumberParsePattern numberParser() {
-        return SpreadsheetParsePattern.parseNumberParsePattern("\"N\" #;\"N\" #.#");
+        return SpreadsheetPattern.parseNumberParsePattern("\"N\" #;\"N\" #.#");
     }
 
     private SpreadsheetFormatter textFormatter() {
@@ -1257,7 +1257,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetTimeParsePattern timeParser() {
-        return SpreadsheetParsePattern.parseTimeParsePattern("\\T hh mm ss");
+        return SpreadsheetPattern.parseTimeParsePattern("\\T hh mm ss");
     }
 
     private SpreadsheetFormatter dateTimeFormatter(final String pattern,

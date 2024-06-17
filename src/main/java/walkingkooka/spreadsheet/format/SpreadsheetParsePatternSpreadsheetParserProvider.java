@@ -69,6 +69,6 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
 
     @Override
     public String toString() {
-        return "SpreadsheetParsePattern.parser";
+        return "SpreadsheetPattern.parser";
     }
 }
