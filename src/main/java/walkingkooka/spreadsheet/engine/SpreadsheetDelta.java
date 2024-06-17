@@ -1581,7 +1581,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Traverses the cells, patching each with the provided {@link JsonNode format}.
      * <pre>
      * {
-     *   "format-pattern": "text-format-pattern @\"patched\""
+     *   "formatter": "text-format-pattern @\"patched\""
      * }
      * </pre>
      */
