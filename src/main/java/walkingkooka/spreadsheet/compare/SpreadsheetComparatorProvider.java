@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * A mapper function that can turn a {@link SpreadsheetComparatorName} into a {@link SpreadsheetComparator}.
+ * A provider supports listing available {@link SpreadsheetComparatorInfo} and fetching implementations by {@link SpreadsheetComparatorName}.
  */
 public interface SpreadsheetComparatorProvider {
 
