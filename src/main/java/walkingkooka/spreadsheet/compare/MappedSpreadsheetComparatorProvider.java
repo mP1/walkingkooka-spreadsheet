@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.text.CharacterConstant;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetComparatorProvider} that wraps a view of new {@link SpreadsheetComparatorName} to a wrapped {@link SpreadsheetComparatorProvider}.
@@ -81,8 +81,9 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
 
     @Override
     public String toString() {
-        return this.infos.stream()
-                .map(SpreadsheetComparatorInfo::toString)
-                .collect(Collectors.joining(","));
+        return CharacterConstant.COMMA.toSeparatedString(
+                this.infos,
+                SpreadsheetComparatorInfo::toString
+        );
     }
 }

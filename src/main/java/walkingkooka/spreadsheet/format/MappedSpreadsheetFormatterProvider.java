@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.text.CharacterConstant;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetFormatterProvider} that wraps a view of new {@link SpreadsheetFormatterName} to a wrapped {@link SpreadsheetFormatterProvider}.
@@ -81,8 +81,9 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
 
     @Override
     public String toString() {
-        return this.infos.stream()
-                .map(SpreadsheetFormatterInfo::toString)
-                .collect(Collectors.joining(","));
+        return CharacterConstant.COMMA.toSeparatedString(
+                this.infos,
+                SpreadsheetFormatterInfo::toString
+        );
     }
 }

@@ -32,7 +32,6 @@ import java.util.AbstractList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * {@link List} that holds multiple {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} typically one for each sortable
@@ -109,9 +108,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
 
     @Override
     public String text() {
-        return this.stream()
-                .map(Object::toString)
-                .collect(Collectors.joining("" + SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR));
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.toSeparatedString(
+                this,
+                Object::toString
+        );
     }
 
     // Json.............................................................................................................

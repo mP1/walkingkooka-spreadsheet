@@ -19,13 +19,13 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetParserProvider} that wraps a view of new {@link SpreadsheetParserName} to a wrapped {@link SpreadsheetParserProvider}.
@@ -83,8 +83,9 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
 
     @Override
     public String toString() {
-        return this.infos.stream()
-                .map(SpreadsheetParserInfo::toString)
-                .collect(Collectors.joining(","));
+        return CharacterConstant.COMMA.toSeparatedString(
+                this.infos,
+                SpreadsheetParserInfo::toString
+        );
     }
 }
