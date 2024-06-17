@@ -643,7 +643,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsParsePatternFails() {
+    public void testLoadCellsParserFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -654,9 +654,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.cell(
                                 b2,
                                 "=1+2"
-                        ).setParsePattern(
+                        ).setParser(
                                 Optional.of(
                                         SpreadsheetPattern.parseNumberParsePattern("#")
+                                                .spreadsheetParserSelector()
                                 )
                         )
                 );
@@ -671,7 +672,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsParsePattern() {
+    public void testLoadCellsParser() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -682,9 +683,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         this.cell(
                                 b2,
                                 "123"
-                        ).setParsePattern(
+                        ).setParser(
                                 Optional.of(
                                         SpreadsheetPattern.parseNumberParsePattern("$#;#")
+                                                .spreadsheetParserSelector()
                                 )
                         )
                 );

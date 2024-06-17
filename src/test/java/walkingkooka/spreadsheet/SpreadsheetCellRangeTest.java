@@ -70,9 +70,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                     Optional.of(
                             SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
                     )
-            ).setParsePattern(
+            ).setParser(
                     Optional.of(
                             SpreadsheetPattern.parseNumberParsePattern("#.##")
+                                    .spreadsheetParserSelector()
                     )
             ).setStyle(
                     TextStyle.EMPTY.set(
@@ -1193,7 +1194,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                         "    formatter:\n" +
                         "      text-format-pattern\n" +
                         "        \"@\"\n" +
-                        "    parsePattern:\n" +
+                        "    parser:\n" +
                         "      number-parse-pattern\n" +
                         "        \"#.##\"\n" +
                         "    TextStyle\n" +

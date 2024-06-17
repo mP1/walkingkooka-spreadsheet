@@ -30,7 +30,7 @@ import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -102,7 +102,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         final SpreadsheetCell cell = this.createCell();
 
         this.checkReference(cell);
-        this.checkParsePattern(cell);
+        this.checkParser(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkFormatter(cell);
@@ -116,7 +116,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 formula(FORMULA));
 
         this.checkReference(cell, reference.toRelative());
-        this.checkNoParsePattern(cell);
+        this.checkNoParser(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkNoFormatter(cell);
@@ -128,7 +128,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
 
         this.checkReference(cell);
-        this.checkNoParsePattern(cell);
+        this.checkNoParser(cell);
         this.checkFormula(cell);
         this.checkTextStyle(cell);
         this.checkNoFormatter(cell);
@@ -146,7 +146,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         );
 
         this.checkReference(cell);
-        this.checkNoParsePattern(cell);
+        this.checkNoParser(cell);
         this.checkFormula(
                 cell,
                 SpreadsheetFormula.EMPTY.setText("=1+2")
@@ -185,9 +185,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
 
         this.checkReference(cell);
         this.checkEquals(
-                cell.parsePattern(),
-                different.parsePattern(),
-                "parsePattern"
+                cell.parser(),
+                different.parser(),
+                "parser"
         );
         this.checkFormula(cell);
         this.checkEquals(
@@ -201,18 +201,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
-    public void testSetParsePatternNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCell().setParsePattern(null));
+    public void testSetParserNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createCell().setParser(null));
     }
 
     @Test
-    public void testSetParsePatternSame() {
+    public void testSetParserSame() {
         final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setParsePattern(cell.parsePattern()));
+        assertSame(cell, cell.setParser(cell.parser()));
     }
 
     @Test
-    public void testSetParsePatternSameDoesntClearFormulaToken() {
+    public void testSetParserSameDoesntClearFormulaToken() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText("'A");
 
@@ -231,21 +231,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 );
         assertSame(
                 cell,
-                cell.setParsePattern(cell.parsePattern())
+                cell.setParser(cell.parser())
         );
     }
 
     @Test
-    public void testSetParsePatternDifferent() {
+    public void testSetParserDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetParsePattern> differentParsePattern = Optional.of(
+        final Optional<SpreadsheetParserSelector> differentParser = Optional.of(
                 SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
+                        .spreadsheetParserSelector()
         );
-        final SpreadsheetCell different = cell.setParsePattern(differentParsePattern);
+        final SpreadsheetCell different = cell.setParser(differentParser);
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePattern(different, differentParsePattern);
+        this.checkParser(different, differentParser);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
         this.checkFormatter(different);
@@ -253,7 +254,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testSetParsePatternDifferentClearsFormulaTokenAndExpression() {
+    public void testSetParserDifferentClearsFormulaTokenAndExpression() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText("'A");
 
@@ -270,14 +271,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                                 )
                         )
                 );
-        final Optional<SpreadsheetParsePattern> differentParsePattern = Optional.of(
+        final Optional<SpreadsheetParserSelector> differentParser = Optional.of(
                 SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
+                        .spreadsheetParserSelector()
         );
-        final SpreadsheetCell different = cell.setParsePattern(differentParsePattern);
+        final SpreadsheetCell different = cell.setParser(differentParser);
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePattern(different, differentParsePattern);
+        this.checkParser(different, differentParser);
         this.checkFormula(different, formula);
         this.checkTextStyle(different);
         this.checkFormatter(different);
@@ -285,13 +287,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testSetParsePatternWhenWithout() {
+    public void testSetParserWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
-        final SpreadsheetCell different = cell.setParsePattern(this.parsePattern());
+        final SpreadsheetCell different = cell.setParser(this.parser());
         assertNotSame(cell, different);
 
         this.checkReference(different);
-        this.checkParsePattern(different);
+        this.checkParser(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
         this.checkNoFormatter(different);
@@ -319,7 +321,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePattern(different);
+        this.checkParser(different);
         this.checkFormula(different, differentFormula);
         this.checkTextStyle(different);
         this.checkFormatter(different);
@@ -337,7 +339,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePattern(different);
+        this.checkParser(different);
         this.checkFormula(
                 different,
                 SpreadsheetFormula.EMPTY
@@ -369,7 +371,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePattern(different);
+        this.checkParser(different);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different, differentTextStyle);
         this.checkFormatter(different);
@@ -401,7 +403,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
-        this.checkParsePattern(different);
+        this.checkParser(different);
         this.checkFormula(different, this.formula());
         this.checkTextStyle(different);
         this.checkFormatter(different, differentFormatter);
@@ -415,7 +417,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         assertNotSame(cell, different);
 
         this.checkReference(different);
-        this.checkNoParsePattern(different);
+        this.checkNoParser(different);
         this.checkFormula(different);
         this.checkTextStyle(different);
         this.checkFormatter(different);
@@ -555,12 +557,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     // equals ..........................................................................................................
 
     @Test
-    public void testCompareDifferentParsePattern() {
+    public void testCompareDifferentParser() {
         this.compareToAndCheckEquals(
                 this.createComparable()
-                        .setParsePattern(
+                        .setParser(
                                 Optional.of(
                                         SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
+                                                .spreadsheetParserSelector()
                                 )
                         )
         );
@@ -723,12 +726,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 JsonNode.object()
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula))
-                                .set(SpreadsheetCell.PARSE_PATTERN_PROPERTY, context.marshallWithType(this.parsePattern().get()))
+                                .set(SpreadsheetCell.PARSER_PROPERTY, context.marshall(this.parser().get()))
                                 .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 reference()
                         .setFormula(SpreadsheetFormula.EMPTY)
-                        .setParsePattern(this.parsePattern())
+                        .setParser(this.parser())
                         .setFormula(formula)
                         .setFormattedValue(formattedValue())
                         .setFormattedValue(formattedValue())
@@ -818,10 +821,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
-                        "    \"parse-pattern\": {\n" +
-                        "      \"type\": \"spreadsheet-date-time-parse-pattern\",\n" +
-                        "      \"value\": \"dd/mm/yyyy\"\n" +
-                        "    },\n" +
+                        "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
                         "    \"formatter\": \"text-format-pattern @@\",\n" +
                         "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
@@ -849,10 +849,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "      \"font-style\": \"ITALIC\",\n" +
                         "      \"font-weight\": \"bold\"\n" +
                         "    },\n" +
-                        "    \"parse-pattern\": {\n" +
-                        "      \"type\": \"spreadsheet-date-time-parse-pattern\",\n" +
-                        "      \"value\": \"dd/mm/yyyy\"\n" +
-                        "    },\n" +
+                        "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
                         "    \"formatter\": \"text-format-pattern @@\",\n" +
                         "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
@@ -1270,66 +1267,64 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     }
 
     @Test
-    public void testParsePatternPatchNullContextFails() {
+    public void testParserPatchNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .parsePatternPatch(null)
+                        .parserPatch(null)
         );
     }
 
     @Test
-    public void testParsePatternPatchNotEmpty() {
-        final Optional<SpreadsheetParsePattern> parsePattern = Optional.of(
-                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+    public void testParserPatchNotEmpty() {
+        final Optional<SpreadsheetParserSelector> parser = Optional.of(
+                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                        .spreadsheetParserSelector()
         );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setParsePattern(parsePattern);
+                .setParser(parser);
 
-        final JsonNode patch = cell.parsePatternPatch(
+        final JsonNode patch = cell.parserPatch(
                 this.jsonNodeMarshallContext()
         );
         this.checkEquals(
                 patch,
                 "{\n" +
                         "  \"A1\": {\n" +
-                        "    \"parse-pattern\": {\n" +
-                        "      \"type\": \"spreadsheet-date-parse-pattern\",\n" +
-                        "      \"value\": \"dd/mm/yyyy\"\n" +
-                        "    }\n" +
+                        "    \"parser\": \"date-parse-pattern yyyy/mm/dd\"\n" +
                         "  }\n" +
                         "}"
         );
 
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setParsePattern(parsePattern),
+                        .setParser(parser),
                 patch,
                 cell
         );
     }
 
     @Test
-    public void testParsePatternPatchEmpty() {
-        final Optional<SpreadsheetParsePattern> parsePattern = SpreadsheetCell.NO_PARSE_PATTERN;
+    public void testParserPatchEmpty() {
+        final Optional<SpreadsheetParserSelector> parser = SpreadsheetCell.NO_PARSER;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setParsePattern(parsePattern);
+                .setParser(parser);
 
-        final JsonNode patch = cell.parsePatternPatch(
+        final JsonNode patch = cell.parserPatch(
                 this.jsonNodeMarshallContext()
         );
         this.checkEquals(
                 patch,
                 "{\n" +
                         "  \"A1\": {\n" +
-                        "    \"parse-pattern\": null\n" +
+                        "    \"parser\": null\n" +
                         "  }\n" +
                         "}"
         );
 
         this.patchAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setParsePattern(parsePattern),
+                        .setParser(parser),
                 patch,
                 cell
         );
@@ -1562,7 +1557,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 SpreadsheetSelection.parseCell("$A$1")
                         .setFormula(SpreadsheetFormula.EMPTY)
                         .setStyle(this.boldAndItalics())
-                        .setParsePattern(this.parsePattern())
+                        .setParser(this.parser())
                         .setFormula(
                                 this.formula(FORMULA_TEXT)
                                         .setToken(this.token())
@@ -1584,7 +1579,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    value: 3 (java.lang.Integer)\n" +
-                        "  parsePattern:\n" +
+                        "  parser:\n" +
                         "    date-time-parse-pattern\n" +
                         "      \"dd/mm/yyyy\"\n" +
                         "  TextStyle\n" +
@@ -1599,7 +1594,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 SpreadsheetSelection.parseCell("$A$1")
                         .setFormula(SpreadsheetFormula.EMPTY)
                         .setStyle(this.boldAndItalics())
-                        .setParsePattern(this.parsePattern())
+                        .setParser(this.parser())
                         .setFormatter(this.formatter())
                         .setFormula(
                                 this.formula(FORMULA_TEXT)
@@ -1625,7 +1620,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "  formatter:\n" +
                         "    text-format-pattern\n" +
                         "      \"@@\"\n" +
-                        "  parsePattern:\n" +
+                        "  parser:\n" +
                         "    date-time-parse-pattern\n" +
                         "      \"dd/mm/yyyy\"\n" +
                         "  TextStyle\n" +
@@ -1797,7 +1792,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + " " + this.formula() + " \"dd/mm/yyyy\" \"text-format-pattern @@\" \"formattedValue-text\""
+                REFERENCE + " " + this.formula() + " \"date-time-parse-pattern dd/mm/yyyy\" \"text-format-pattern @@\" \"formattedValue-text\""
         );
     }
 
@@ -1849,7 +1844,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         reference(column, row),
                         formula(formula)
                 )
-                .setParsePattern(this.parsePattern())
+                .setParser(this.parser())
                 .setFormatter(this.formatter())
                 .setFormattedValue(this.formattedValue());
     }
@@ -1877,32 +1872,33 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         this.checkEquals(reference, cell.reference(), "reference");
     }
 
-    private Optional<SpreadsheetParsePattern> parsePattern() {
+    private Optional<SpreadsheetParserSelector> parser() {
         return Optional.of(
                 SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy")
+                        .spreadsheetParserSelector()
         );
     }
 
-    private void checkNoParsePattern(final SpreadsheetCell cell) {
-        this.checkParsePattern(
+    private void checkNoParser(final SpreadsheetCell cell) {
+        this.checkParser(
                 cell,
-                SpreadsheetCell.NO_PARSE_PATTERN
+                SpreadsheetCell.NO_PARSER
         );
     }
 
-    private void checkParsePattern(final SpreadsheetCell cell) {
-        this.checkParsePattern(
+    private void checkParser(final SpreadsheetCell cell) {
+        this.checkParser(
                 cell,
-                this.parsePattern()
+                this.parser()
         );
     }
 
-    private void checkParsePattern(final SpreadsheetCell cell,
-                                   final Optional<SpreadsheetParsePattern> parsePattern) {
+    private void checkParser(final SpreadsheetCell cell,
+                             final Optional<SpreadsheetParserSelector> selector) {
         this.checkEquals(
-                parsePattern,
-                cell.parsePattern(),
-                "parsePattern"
+                selector,
+                cell.parser(),
+                "parser"
         );
     }
 

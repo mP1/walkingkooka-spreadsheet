@@ -31,9 +31,9 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -989,15 +989,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
      */
-    public static JsonNode cellsParsePatternPatch(final Map<SpreadsheetCellReference, Optional<SpreadsheetParsePattern>> cellToParsePatterns,
-                                                  final JsonNodeMarshallContext context) {
-        Objects.requireNonNull(cellToParsePatterns, "cellToParsePatterns");
+    public static JsonNode cellsParserPatch(final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> cellToParser,
+                                            final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToParser, "cellToParser");
         checkContext(context);
 
         return SpreadsheetDelta.cellsPatchFromMap(
-                cellToParsePatterns,
-                PARSE_PATTERN_PROPERTY,
-                (pattern) -> context.marshallWithType(pattern.orElse(null))
+                cellToParser,
+                PARSER_PROPERTY,
+                (pattern) -> context.marshall(pattern.orElse(null))
         );
     }
 
@@ -1086,17 +1086,17 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Creates a {@link SpreadsheetParsePattern} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
+     * Creates a {@link SpreadsheetParserSelector} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
-    public static JsonNode parsePatternPatch(final Optional<SpreadsheetParsePattern> pattern,
-                                             final JsonNodeMarshallContext context) {
-        Objects.requireNonNull((Optional<? extends SpreadsheetPattern>) pattern, "pattern");
+    public static JsonNode parserPatch(final Optional<SpreadsheetParserSelector> parser,
+                                       final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(parser, "parser");
         checkContext(context);
 
         return makePatch(
-                PARSE_PATTERN_PROPERTY,
-                pattern.isPresent() ?
-                        context.marshallWithType(((Optional<? extends SpreadsheetPattern>) pattern).get()) :
+                PARSER_PROPERTY,
+                parser.isPresent() ?
+                        context.marshall(parser.get()) :
                         JsonNode.nullNode()
         );
     }
@@ -1176,8 +1176,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Parse pattern patch
      * <pre>
      * {
-     *   "parse-pattern": {
-     *     "type": "spreadsheet-number-parse-pattern",
+     *   "parser": {
+     *     "type": "spreadsheet-number-parser",
      *     "value": "\"patched\""
      *   }
      * }
@@ -1210,7 +1210,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     SpreadsheetDelta.CELLS_PROPERTY_STRING,
                     SpreadsheetDelta.FORMULA_PROPERTY_STRING,
                     SpreadsheetDelta.FORMATTER_PROPERTY_STRING,
-                    SpreadsheetDelta.PARSE_PATTERN_PROPERTY_STRING,
+                    SpreadsheetDelta.PARSER_PROPERTY_STRING,
                     SpreadsheetDelta.STYLE_PROPERTY_STRING
             )
     );
@@ -1321,7 +1321,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case FORMULA_PROPERTY_STRING:
                     formulaPatched = true;
                     break;
-                case PARSE_PATTERN_PROPERTY_STRING:
+                case PARSER_PROPERTY_STRING:
                     parsePatternPatched = true;
                     break;
                 case ROWS_PROPERTY_STRING:
@@ -1355,7 +1355,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (cellsPatched && parsePatternPatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, PARSE_PATTERN_PROPERTY_STRING);
+            patchInvalidFail(CELLS_PROPERTY_STRING, PARSER_PROPERTY_STRING);
         }
 
         if (cellsPatched && stylePatched) {
@@ -1371,7 +1371,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (formatPatternPatched && parsePatternPatched) {
-            patchInvalidFail(FORMATTER_PROPERTY_STRING, PARSE_PATTERN_PROPERTY_STRING);
+            patchInvalidFail(FORMATTER_PROPERTY_STRING, PARSER_PROPERTY_STRING);
         }
 
         if (formatPatternPatched && stylePatched) {
@@ -1379,7 +1379,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         if (parsePatternPatched && stylePatched) {
-            patchInvalidFail(PARSE_PATTERN_PROPERTY_STRING, STYLE_PROPERTY_STRING);
+            patchInvalidFail(PARSER_PROPERTY_STRING, STYLE_PROPERTY_STRING);
         }
     }
 
@@ -1440,12 +1440,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             context
                     );
                     break;
-                case PARSE_PATTERN_PROPERTY_STRING:
-                    cells = patchParsePattern(
+                case PARSER_PROPERTY_STRING:
+                    cells = patchParser(
                             selection.toCellRange(),
                             cells,
                             JsonNode.object()
-                                    .set(PARSE_PATTERN_PROPERTY, propertyAndValue),
+                                    .set(PARSER_PROPERTY, propertyAndValue),
                             context
                     );
                     break;
@@ -1607,33 +1607,31 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Traverses the cells, patching each with the provided {@link JsonNode parsePattern}.
+     * Traverses the cells, patching each with the provided {@link JsonNode parser}.
      * <pre>
      * {
-     *   "parse-pattern": {
-     *     "type": "spreadsheet-number-parse-pattern",
-     *     "value": "\"patched\""
-     *   }
+     *   "parser": "spreadsheet-number-parser patched"
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchParsePattern(final SpreadsheetCellRangeReference cellRange,
-                                                          final Set<SpreadsheetCell> cells,
-                                                          final JsonNode patch,
-                                                          final JsonNodeUnmarshallContext context) {
-        final Optional<SpreadsheetParsePattern> parsePattern = Optional.ofNullable(
-                context.unmarshallWithType(
+    private static Set<SpreadsheetCell> patchParser(final SpreadsheetCellRangeReference cellRange,
+                                                    final Set<SpreadsheetCell> cells,
+                                                    final JsonNode patch,
+                                                    final JsonNodeUnmarshallContext context) {
+        final Optional<SpreadsheetParserSelector> parserSelector = Optional.ofNullable(
+                context.unmarshall(
                         patch.objectOrFail()
-                                .getOrFail(PARSE_PATTERN_PROPERTY)
+                                .getOrFail(PARSER_PROPERTY),
+                        SpreadsheetParserSelector.class
                 )
         );
 
         return patchAllCells(
                 cellRange,
                 cells,
-                c -> c.setParsePattern(parsePattern),
+                c -> c.setParser(parserSelector),
                 r -> r.setFormula(SpreadsheetFormula.EMPTY)
-                        .setParsePattern(parsePattern)
+                        .setParser(parserSelector)
         );
     }
 
@@ -2398,7 +2396,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
     private final static String LABELS_PROPERTY_STRING = "labels";
-    private final static String PARSE_PATTERN_PROPERTY_STRING = "parse-pattern";
+    private final static String PARSER_PROPERTY_STRING = "parser";
     private final static String ROWS_PROPERTY_STRING = "rows";
     private final static String STYLE_PROPERTY_STRING = "style"; // only used by patchCells
 
@@ -2432,7 +2430,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // @VisibleForTesting
     final static JsonPropertyName LABELS_PROPERTY = JsonPropertyName.with(LABELS_PROPERTY_STRING);
     // @VisibleForTesting
-    final static JsonPropertyName PARSE_PATTERN_PROPERTY = JsonPropertyName.with(PARSE_PATTERN_PROPERTY_STRING);
+    final static JsonPropertyName PARSER_PROPERTY = JsonPropertyName.with(PARSER_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName ROWS_PROPERTY = JsonPropertyName.with(ROWS_PROPERTY_STRING);
     // @VisibleForTesting
