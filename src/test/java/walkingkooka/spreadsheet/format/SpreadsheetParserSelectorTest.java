@@ -378,7 +378,7 @@ public final class SpreadsheetParserSelectorTest implements ClassTesting2<Spread
         this.treePrintAndCheck(
                 SpreadsheetParserSelector.parse("number-parse-pattern $0.00"),
                 "number-parse-pattern\n" +
-                        "  $0.00\n"
+                        "  \"$0.00\"\n"
         );
     }
 }

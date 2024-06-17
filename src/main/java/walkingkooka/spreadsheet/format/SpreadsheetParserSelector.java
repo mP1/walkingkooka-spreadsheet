@@ -218,7 +218,9 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
         if (false == text.isEmpty()) {
             printer.indent();
             {
-                printer.println(text);
+                printer.println(
+                        CharSequences.quoteAndEscape(text)
+                );
             }
             printer.outdent();
         }
