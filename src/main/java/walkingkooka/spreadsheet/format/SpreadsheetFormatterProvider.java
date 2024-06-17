@@ -21,8 +21,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * A provider that supports discovering of a {@link SpreadsheetFormatter} using a {@link SpreadsheetFormatterSelector}, which is a simple
- * combination of a {@link SpreadsheetParserName} and a pattern or string parameter.
+ * A provider supports listing available {@link SpreadsheetFormatterInfo} and fetching implementations using a
+ * {@link SpreadsheetFormatterSelector}, which is a simple combination of a {@link SpreadsheetParserName} and a pattern or string parameter.
  * <pre>
  * dd/mmm/yyyy
  * </pre>.
