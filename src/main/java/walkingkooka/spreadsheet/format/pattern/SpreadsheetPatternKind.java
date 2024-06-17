@@ -391,8 +391,13 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                         }),
                         context
                 ) :
-                SpreadsheetDelta.parsePatternPatch(
-                        Cast.to(pattern),
+                SpreadsheetDelta.parserPatch(
+                        pattern.map(
+                                p -> {
+                                    final SpreadsheetParsePattern parsePattern = (SpreadsheetParsePattern) p;
+                                    return parsePattern.spreadsheetParserSelector();
+                                }
+                        ),
                         context
                 );
     }

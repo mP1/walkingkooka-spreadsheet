@@ -1168,8 +1168,8 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
 
         this.checkEquals(
-                SpreadsheetDelta.parsePatternPatch(
-                        Optional.of(pattern),
+                SpreadsheetDelta.parserPatch(
+                        Optional.of(pattern.spreadsheetParserSelector()),
                         context
                 ),
                 pattern.patternKind()

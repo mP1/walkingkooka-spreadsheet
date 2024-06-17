@@ -1136,8 +1136,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 cell.formula()
                                         .text()
                         ),
-                        cell.parsePattern()
-                                .flatMap(p -> context.spreadsheetParser(p.spreadsheetParserSelector()))
+                        cell.parser()
+                                .flatMap(context::spreadsheetParser)
                                 .orElseGet(
                                         () -> SpreadsheetParsers.valueOrExpression(
                                                 metadata.parser()
