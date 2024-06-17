@@ -1420,7 +1420,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case FORMATTER_PROPERTY_STRING:
-                    cells = patchFormatPattern(
+                    cells = patchFormatter(
                             selection.toCellRange(),
                             cells,
                             JsonNode.object()
@@ -1585,10 +1585,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchFormatPattern(final SpreadsheetCellRangeReference cellRange,
-                                                           final Set<SpreadsheetCell> cells,
-                                                           final JsonNode patch,
-                                                           final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCell> patchFormatter(final SpreadsheetCellRangeReference cellRange,
+                                                       final Set<SpreadsheetCell> cells,
+                                                       final JsonNode patch,
+                                                       final JsonNodeUnmarshallContext context) {
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.ofNullable(
                 context.unmarshall(
                         patch.objectOrFail()
