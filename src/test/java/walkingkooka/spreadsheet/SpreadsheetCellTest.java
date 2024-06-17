@@ -1624,7 +1624,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "    value: 3 (java.lang.Integer)\n" +
                         "  formatter:\n" +
                         "    text-format-pattern\n" +
-                        "      @@\n" +
+                        "      \"@@\"\n" +
                         "  parsePattern:\n" +
                         "    date-time-parse-pattern\n" +
                         "      \"dd/mm/yyyy\"\n" +
@@ -1662,7 +1662,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "    value: 3 (java.lang.Integer)\n" +
                         "  formatter:\n" +
                         "    text-format-pattern\n" +
-                        "      @@\n" +
+                        "      \"@@\"\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
                         "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
@@ -1698,7 +1698,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                         "    value: 3 (java.lang.Integer)\n" +
                         "  formatter:\n" +
                         "    text-format-pattern\n" +
-                        "      @@\n" +
+                        "      \"@@\"\n" +
                         "  TextStyle\n" +
                         "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
                         "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +

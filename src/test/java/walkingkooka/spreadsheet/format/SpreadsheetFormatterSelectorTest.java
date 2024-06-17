@@ -378,7 +378,7 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
         this.treePrintAndCheck(
                 SpreadsheetFormatterSelector.parse("text-format-pattern @@"),
                 "text-format-pattern\n" +
-                        "  @@\n"
+                        "  \"@@\"\n"
         );
     }
 }
