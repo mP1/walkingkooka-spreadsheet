@@ -26,6 +26,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -53,6 +54,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporterException;
@@ -695,12 +697,18 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     abstract Class<V> targetType();
 
     private ExpressionNumberConverterContext converterContext() {
-        return ExpressionNumberConverterContexts.basic(
+        return SpreadsheetConverterContexts.basic(
                 Converters.fake(),
-                ConverterContexts.basic(Converters.fake(),
-                        this.dateTimeContext(),
-                        this.decimalNumberContext()),
-                EXPRESSION_NUMBER_KIND
+                SpreadsheetLabelNameResolvers.fake(),
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(
+                                Converters.fake(),
+                                this.dateTimeContext(),
+                                this.decimalNumberContext()
+                        ),
+                        EXPRESSION_NUMBER_KIND
+                )
         );
     }
 
