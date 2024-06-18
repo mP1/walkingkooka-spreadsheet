@@ -42,10 +42,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * A basic {@link Converter} that supports number -> number, date -> datetime, time -> datetime.
      */
     public static <C extends ExpressionNumberConverterContext> Converter<C> basic() {
-        return Cast.to(CONVERTER);
+        return Cast.to(BASIC_CONVERTER);
     }
 
-    private final static Converter<ExpressionNumberConverterContext> CONVERTER = Converters.collection(
+    private final static Converter<ExpressionNumberConverterContext> BASIC_CONVERTER = Converters.collection(
             Lists.of(
                     Converters.simple(),
                     ExpressionNumber.toConverter(
