@@ -17,21 +17,11 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -47,55 +37,6 @@ abstract class SpreadsheetNonNumberParsePattern<V> extends SpreadsheetParsePatte
      */
     SpreadsheetNonNumberParsePattern(final ParserToken token) {
         super(token);
-    }
-
-    // HasConverter.....................................................................................................
-
-    /**
-     * Creates a {@link Converter} that tries each of the individual patterns, after converting each pattern to a
-     * {@link DateTimeFormatter}.
-     */
-    @Override
-    final Converter<ExpressionNumberConverterContext> createConverter() {
-        return Converters.parser(
-                this.targetType(),
-                this.createParser(),
-                SpreadsheetNonNumberParsePattern::spreadsheetParserContext,
-                this::converterTransformer
-        );
-    }
-
-    private V converterTransformer(final ParserToken token,
-                                   final ExpressionNumberConverterContext context) {
-        return this.converterTransformer0(
-                token,
-                SpreadsheetNonNumberParsePatternExpressionEvaluationContext.with(context)
-        );
-    }
-
-    /**
-     * Transforms the {@link SpreadsheetParserToken} into a {@link LocalDate} etc.
-     */
-    abstract V converterTransformer0(final ParserToken token,
-                                     final ExpressionEvaluationContext context);
-
-    /**
-     * The target {@link Class type} of the {@link Converter}.
-     */
-    abstract Class<V> targetType();
-
-    /**
-     * Creates an adapter that will be used by the parser parse a {@link ConverterContext}.
-     */
-    private static SpreadsheetParserContext spreadsheetParserContext(final ConverterContext context) {
-        return SpreadsheetParserContexts.basic(
-                context,
-                ExpressionNumberContexts.basic(
-                        ExpressionNumberKind.BIG_DECIMAL, // ignored not actually used.
-                        context
-                ),
-                ',' // ignored
-        );
     }
 
     // HasParser........................................................................................................

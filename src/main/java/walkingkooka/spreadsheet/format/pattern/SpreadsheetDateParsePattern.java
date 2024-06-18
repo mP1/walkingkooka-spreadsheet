@@ -17,12 +17,15 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.Cast;
+import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -53,20 +56,16 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParse
         return SpreadsheetPattern.dateFormatPattern(this.value());
     }
 
-    @Override
-    Class<LocalDate> targetType() {
-        return LocalDate.class;
-    }
+    // HasConverter.....................................................................................................
 
     @Override
-    LocalDate converterTransformer0(final ParserToken token,
-                                    final ExpressionEvaluationContext context) {
-        return token.cast(
-                SpreadsheetDateParserToken.class
-        ).toLocalDate(context);
+    Converter<ExpressionNumberConverterContext> createConverter() {
+        return Cast.to(
+                SpreadsheetConverters.date(this.parser())
+        );
     }
 
-    // parse........................................................................................................
+    // parse............................................................................................................
 
     /**
      * Tries to parse the given {@link String text} into a {@link LocalDate} or throw.
