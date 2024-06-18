@@ -713,7 +713,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
     public void testUrlFragmentTimeParsePattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetPatternKind.TIME_PARSE_PATTERN,
-                "parse-pattern/time"
+                "parser/time"
         );
     }
 

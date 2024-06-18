@@ -33,7 +33,7 @@ public final class SpreadsheetUrlFragments implements PublicStaticHelper {
 
     public static final UrlFragment FORMATTER = UrlFragment.with("formatter");
 
-    public static final UrlFragment PARSE_PATTERN = UrlFragment.with("parse-pattern");
+    public static final UrlFragment PARSER = UrlFragment.with("parser");
 
     /**
      * Stop creation
