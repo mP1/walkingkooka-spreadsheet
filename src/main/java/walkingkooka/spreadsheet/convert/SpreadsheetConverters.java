@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -35,6 +36,8 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+
+import java.time.LocalDate;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
@@ -55,6 +58,25 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                     Converters.localTimeLocalDateTime()
             )
     );
+
+    /**
+     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link SpreadsheetDateParserToken} and converting
+     * that into a {@link LocalDate}.
+     */
+    public static Converter<SpreadsheetConverterContext> date(final Parser<SpreadsheetParserContext> parser) {
+        return Converters.parser(
+                LocalDate.class, // parserValueType
+                parser, // parser
+                (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
+                        scc,
+                        scc,
+                        '0' // valueSeparator not required because not parsing multiple values.
+                ),
+                (final ParserToken t,
+                 final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetDateParserToken.class)
+                        .toLocalDate(scc)
+        );
+    }
 
     /**
      * {@see SpreadsheetErrorThrowingConverter}

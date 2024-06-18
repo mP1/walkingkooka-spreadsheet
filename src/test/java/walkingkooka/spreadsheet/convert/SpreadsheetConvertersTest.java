@@ -34,10 +34,64 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
+import java.time.LocalDate;
+import java.util.Locale;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
         PublicStaticHelperTesting<SpreadsheetConverters>,
         ConverterTesting {
+
+    // date.............................................................................................................
+
+    @Test
+    public void testDateConvertFails() {
+        this.convertFails(
+                SpreadsheetConverters.date(
+                        SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                                .parser()
+                ),
+                "1999/12", // missing day
+                LocalDate.class,
+                this.dateSpreadsheetConverterContext()
+        );
+    }
+
+    @Test
+    public void testDateConvert() {
+        this.convertAndCheck(
+                SpreadsheetConverters.date(
+                        SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                                .parser()
+                ),
+                "1999/12/31",
+                LocalDate.class,
+                this.dateSpreadsheetConverterContext(),
+                LocalDate.of(1999, 12, 31)
+        );
+    }
+
+    private SpreadsheetConverterContext dateSpreadsheetConverterContext() {
+        return SpreadsheetConverterContexts.basic(
+                Converters.fake(), // not used
+                SpreadsheetLabelNameResolvers.fake(), // not required
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(), // not used
+                        ConverterContexts.basic(
+                                Converters.fake(),
+                                DateTimeContexts.locale(
+                                        Locale.forLanguageTag("EN-AU"),
+                                        1950,
+                                        50,
+                                        () -> {
+                                            throw new UnsupportedOperationException("now() not supported");
+                                        }
+                                ),
+                                DecimalNumberContexts.fake()
+                        ),
+                        ExpressionNumberKind.BIG_DECIMAL
+                )
+        );
+    }
 
     // expressionNumber.................................................................................................
 
@@ -50,7 +104,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ),
                 "1",
                 ExpressionNumber.class,
-                this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL)
+                this.expressionNumberSpreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL)
         );
     }
 
@@ -76,12 +130,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ),
                 "1.25",
                 ExpressionNumber.class,
-                this.spreadsheetConverterContext(kind),
+                this.expressionNumberSpreadsheetConverterContext(kind),
                 kind.create(1.25)
         );
     }
 
-    private SpreadsheetConverterContext spreadsheetConverterContext(final ExpressionNumberKind kind) {
+    private SpreadsheetConverterContext expressionNumberSpreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
                 Converters.fake(), // not used
                 SpreadsheetLabelNameResolvers.fake(), // not required
