@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -38,6 +39,7 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
@@ -75,6 +77,25 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 (final ParserToken t,
                  final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetDateParserToken.class)
                         .toLocalDate(scc)
+        );
+    }
+
+    /**
+     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link SpreadsheetDateTimeParserToken} and converting
+     * that into a {@link LocalDateTime}.
+     */
+    public static Converter<SpreadsheetConverterContext> dateTime(final Parser<SpreadsheetParserContext> parser) {
+        return Converters.parser(
+                LocalDateTime.class, // parserValueType
+                parser, // parser
+                (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
+                        scc,
+                        scc,
+                        '0' // valueSeparator not required because not parsing multiple values.
+                ),
+                (final ParserToken t,
+                 final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetDateTimeParserToken.class)
+                        .toLocalDateTime(scc)
         );
     }
 
