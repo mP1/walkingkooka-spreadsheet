@@ -35,6 +35,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.lang.reflect.Method;
 import java.math.MathContext;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
@@ -52,7 +53,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ),
                 "1999/12", // missing day
                 LocalDate.class,
-                this.dateSpreadsheetConverterContext()
+                this.dateTimeSpreadsheetConverterContext()
         );
     }
 
@@ -65,12 +66,41 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ),
                 "1999/12/31",
                 LocalDate.class,
-                this.dateSpreadsheetConverterContext(),
+                this.dateTimeSpreadsheetConverterContext(),
                 LocalDate.of(1999, 12, 31)
         );
     }
 
-    private SpreadsheetConverterContext dateSpreadsheetConverterContext() {
+    // dateTime.............................................................................................................
+
+    @Test
+    public void testDateTimeConvertFails() {
+        this.convertFails(
+                SpreadsheetConverters.dateTime(
+                        SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm")
+                                .parser()
+                ),
+                "1999/12", // missing day
+                LocalDateTime.class,
+                this.dateTimeSpreadsheetConverterContext()
+        );
+    }
+
+    @Test
+    public void testDateTimeConvert() {
+        this.convertAndCheck(
+                SpreadsheetConverters.dateTime(
+                        SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm")
+                                .parser()
+                ),
+                "1999/12/31 12:59",
+                LocalDateTime.class,
+                this.dateTimeSpreadsheetConverterContext(),
+                LocalDateTime.of(1999, 12, 31, 12, 59)
+        );
+    }
+
+    private SpreadsheetConverterContext dateTimeSpreadsheetConverterContext() {
         return SpreadsheetConverterContexts.basic(
                 Converters.fake(), // not used
                 SpreadsheetLabelNameResolvers.fake(), // not required
