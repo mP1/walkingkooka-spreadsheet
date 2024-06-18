@@ -28,6 +28,11 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
+import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
@@ -70,6 +75,25 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<ConverterContext> errorToString() {
         return SpreadsheetErrorToStringConverter.INSTANCE;
+    }
+
+    /**
+     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link SpreadsheetNumberParserToken} and converting
+     * that into a {@link ExpressionNumber}.
+     */
+    public static Converter<SpreadsheetConverterContext> expressionNumber(final Parser<SpreadsheetParserContext> parser) {
+        return Converters.parser(
+                ExpressionNumber.class, // parserValueType
+                parser, // parser
+                (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
+                        scc,
+                        scc,
+                        '0' // valueSeparator not required because not parsing multiple values.
+                ),
+                (final ParserToken t,
+                 final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetNumberParserToken.class)
+                        .toNumber(scc)
+        );
     }
 
     /**
