@@ -36,6 +36,7 @@ import java.lang.reflect.Method;
 import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Locale;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
@@ -97,6 +98,35 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 LocalDateTime.class,
                 this.dateTimeSpreadsheetConverterContext(),
                 LocalDateTime.of(1999, 12, 31, 12, 59)
+        );
+    }
+
+    // time.............................................................................................................
+
+    @Test
+    public void testTimeConvertFails() {
+        this.convertFails(
+                SpreadsheetConverters.time(
+                        SpreadsheetPattern.parseTimeParsePattern("hh:mm")
+                                .parser()
+                ),
+                "12:", // missing minutes
+                LocalTime.class,
+                this.dateTimeSpreadsheetConverterContext()
+        );
+    }
+
+    @Test
+    public void testTimeConvert() {
+        this.convertAndCheck(
+                SpreadsheetConverters.time(
+                        SpreadsheetPattern.parseTimeParsePattern("hh:mm")
+                                .parser()
+                ),
+                "12:59",
+                LocalTime.class,
+                this.dateTimeSpreadsheetConverterContext(),
+                LocalTime.of(12, 59)
         );
     }
 

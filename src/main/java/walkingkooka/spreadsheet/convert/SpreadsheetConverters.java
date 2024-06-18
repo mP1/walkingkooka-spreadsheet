@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -40,6 +41,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
@@ -185,6 +187,25 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         return StringToFormatPatternConverter.with(pattern);
     }
 
+    /**
+     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link SpreadsheetTimeParserToken} and converting
+     * that into a {@link LocalTime}.
+     */
+    public static Converter<SpreadsheetConverterContext> time(final Parser<SpreadsheetParserContext> parser) {
+        return Converters.parser(
+                LocalTime.class, // parserValueType
+                parser, // parser
+                (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
+                        scc,
+                        scc,
+                        '0' // valueSeparator not required because not parsing multiple values.
+                ),
+                (final ParserToken t,
+                 final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetTimeParserToken.class)
+                        .toLocalTime()
+        );
+    }
+    
     /**
      * {@see UnformattedNumberSpreadsheetConverter}
      */
