@@ -42,6 +42,8 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
@@ -68,14 +70,9 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * that into a {@link LocalDate}.
      */
     public static Converter<SpreadsheetConverterContext> date(final Parser<SpreadsheetParserContext> parser) {
-        return Converters.parser(
+        return parser(
                 LocalDate.class, // parserValueType
-                parser, // parser
-                (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
-                        scc,
-                        scc,
-                        '0' // valueSeparator not required because not parsing multiple values.
-                ),
+                parser,
                 (final ParserToken t,
                  final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetDateParserToken.class)
                         .toLocalDate(scc)
@@ -87,14 +84,9 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * that into a {@link LocalDateTime}.
      */
     public static Converter<SpreadsheetConverterContext> dateTime(final Parser<SpreadsheetParserContext> parser) {
-        return Converters.parser(
+        return parser(
                 LocalDateTime.class, // parserValueType
-                parser, // parser
-                (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
-                        scc,
-                        scc,
-                        '0' // valueSeparator not required because not parsing multiple values.
-                ),
+                parser,
                 (final ParserToken t,
                  final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetDateTimeParserToken.class)
                         .toLocalDateTime(scc)
@@ -127,14 +119,9 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * that into a {@link ExpressionNumber}.
      */
     public static Converter<SpreadsheetConverterContext> expressionNumber(final Parser<SpreadsheetParserContext> parser) {
-        return Converters.parser(
+        return parser(
                 ExpressionNumber.class, // parserValueType
-                parser, // parser
-                (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
-                        scc,
-                        scc,
-                        '0' // valueSeparator not required because not parsing multiple values.
-                ),
+                parser,
                 (final ParserToken t,
                  final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetNumberParserToken.class)
                         .toNumber(scc)
@@ -167,6 +154,24 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A wrapper around {@link Converters#parser(Class, Parser, Function, BiFunction)} simplifying the abstraction.
+     */
+    public static <V> Converter<SpreadsheetConverterContext> parser(final Class<V> parserValueType,
+                                                                    final Parser<SpreadsheetParserContext> parser,
+                                                                    final BiFunction<ParserToken, SpreadsheetConverterContext, V> parserTokenToValue) {
+        return Converters.parser(
+                parserValueType, // parserValueType
+                parser, // parser
+                (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
+                        scc,
+                        scc,
+                        '0' // valueSeparator not required because not parsing multiple values.
+                ),
+                parserTokenToValue
+        );
+    }
+
+    /**
      * {@see SpreadsheetSelectionToSpreadsheetSelectionConverter}
      */
     public static Converter<SpreadsheetConverterContext> selectionToSelection() {
@@ -192,20 +197,15 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * that into a {@link LocalTime}.
      */
     public static Converter<SpreadsheetConverterContext> time(final Parser<SpreadsheetParserContext> parser) {
-        return Converters.parser(
+        return parser(
                 LocalTime.class, // parserValueType
-                parser, // parser
-                (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
-                        scc,
-                        scc,
-                        '0' // valueSeparator not required because not parsing multiple values.
-                ),
+                parser,
                 (final ParserToken t,
                  final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetTimeParserToken.class)
                         .toLocalTime()
         );
     }
-    
+
     /**
      * {@see UnformattedNumberSpreadsheetConverter}
      */
