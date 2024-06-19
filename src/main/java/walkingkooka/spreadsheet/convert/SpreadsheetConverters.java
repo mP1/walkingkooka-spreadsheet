@@ -119,12 +119,14 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * that into a {@link ExpressionNumber}.
      */
     public static Converter<SpreadsheetConverterContext> expressionNumber(final Parser<SpreadsheetParserContext> parser) {
-        return parser(
-                ExpressionNumber.class, // parserValueType
-                parser,
-                (final ParserToken t,
-                 final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetNumberParserToken.class)
-                        .toNumber(scc)
+        return ExpressionNumber.fromConverter(
+                parser(
+                        ExpressionNumber.class, // parserValueType
+                        parser,
+                        (final ParserToken t,
+                         final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetNumberParserToken.class)
+                                .toNumber(scc)
+                )
         );
     }
 

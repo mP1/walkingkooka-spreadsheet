@@ -195,6 +195,19 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testExpressionNumberConvertIntegerFails() {
+        this.convertFails(
+                SpreadsheetConverters.expressionNumber(
+                        SpreadsheetPattern.parseNumberParsePattern("000")
+                                .parser()
+                ),
+                "123",
+                Integer.class,
+                this.expressionNumberSpreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL)
+        );
+    }
+
     private SpreadsheetConverterContext expressionNumberSpreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
                 Converters.fake(), // not used
