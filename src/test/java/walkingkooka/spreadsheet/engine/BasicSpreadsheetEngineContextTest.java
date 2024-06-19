@@ -580,10 +580,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testFormatValue() {
         this.formatValueAndCheck(
-                BigDecimal.valueOf(-123.45),
+                BigDecimal.valueOf(-125.25),
                 SpreadsheetPattern.parseNumberFormatPattern("#.#\"Abc123\"").formatter(),
                 SpreadsheetText.with(
-                        MINUS + "123" + DECIMAL + "5Abc123"
+                        MINUS + "125" + DECIMAL + "3Abc123"
                 )
         );
     }
