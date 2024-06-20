@@ -116,7 +116,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link SpreadsheetNumberParserToken} and converting
-     * that into a {@link ExpressionNumber}.
+     * that into a {@link ExpressionNumber}. Note the {@link Converter} does not support converting to other {@link Number} types and attempts will fail.
      */
     public static Converter<SpreadsheetConverterContext> expressionNumber(final Parser<SpreadsheetParserContext> parser) {
         return parser(
