@@ -1162,6 +1162,70 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
+    public void testConvertStringToByte() {
+        this.convertAndCheck(
+                "N 123",
+                (byte) 123
+        );
+    }
+
+    @Test
+    public void testConvertStringToShort() {
+        this.convertAndCheck(
+                "N 123",
+                (short) 123
+        );
+    }
+
+    @Test
+    public void testConvertStringToInteger() {
+        this.convertAndCheck(
+                "N 123",
+                123
+        );
+    }
+
+    @Test
+    public void testConvertStringToLong() {
+        this.convertAndCheck(
+                "N 123",
+                123L
+        );
+    }
+
+    @Test
+    public void testConvertStringToFloat() {
+        this.convertAndCheck(
+                "N 123",
+                123f
+        );
+    }
+
+    @Test
+    public void testConvertStringToDouble() {
+        this.convertAndCheck(
+                "N 123",
+                123f
+        );
+    }
+
+    @Test
+    public void testConvertStringToBigInteger() {
+        this.convertAndCheck(
+                "N 123",
+                BigInteger.valueOf(123)
+        );
+    }
+
+    @Test
+    public void testConvertStringToBigDecimal() {
+        this.convertAndCheck(
+                "N 123",
+                BigDecimal.valueOf(123)
+        );
+    }
+
+    @Test
     public void testConvertStringToExpressionNumber() {
         this.convertAndCheck(
                 "N 123",
