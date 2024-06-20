@@ -241,7 +241,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // Object..........................................................................................................
 
     @Test
-    public void testNullObject() {
+    public void testConvertNullToObject() {
         this.convertAndCheck(
                 null,
                 Object.class
@@ -249,7 +249,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testBooleanTrueObject() {
+    public void testConvertBooleanTrueToObject() {
         this.convertAndCheck(
                 true,
                 Object.class
@@ -257,7 +257,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testExpressionNumberObject() {
+    public void testConvertExpressionNumberToObject() {
         this.convertAndCheck(
                 EXPRESSION_NUMBER_KIND.create(123),
                 Object.class
@@ -265,7 +265,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testIntegerObject() {
+    public void testConvertIntegerTOObject() {
         this.convertAndCheck(
                 1,
                 Object.class
@@ -273,7 +273,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringObject() {
+    public void testConvertStringToObject() {
         this.convertAndCheck(
                 "abc123",
                 Object.class
@@ -283,7 +283,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // SpreadsheetCellReference.........................................................................................
 
     @Test
-    public void testSpreadsheetCellReferenceToCellReference() {
+    public void testConvertSpreadsheetCellReferenceToCellReference() {
         this.convertAndCheck(
                 SpreadsheetSelection.A1,
                 SpreadsheetCellReference.class
@@ -291,7 +291,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetCellReferenceToCellReferenceOrRange() {
+    public void testConvertSpreadsheetCellReferenceToCellReferenceOrRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.A1,
                 SpreadsheetCellReferenceOrRange.class
@@ -299,7 +299,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetCellReferenceToExpressionReference() {
+    public void testConvertSpreadsheetCellReferenceToExpressionReference() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
                 SpreadsheetExpressionReference.class
@@ -307,7 +307,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetCellReferenceToRange() {
+    public void testConvertSpreadsheetCellReferenceToRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
                 SpreadsheetCellRangeReference.class,
@@ -316,15 +316,15 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetCellReferenceToSpreadsheetSelection() {
-        this.convertAndCheckSpreadsheetSelection(
+    public void testConvertSpreadsheetCellReferenceToSpreadsheetSelection() {
+        this.convertToSpreadsheetSelectionAndCheck(
                 SpreadsheetSelection.A1
         );
     }
 
     @Test
-    public void testSpreadsheetCellReferenceToString() {
-        this.convertAndCheckString(
+    public void testConvertSpreadsheetCellReferenceToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.A1
         );
     }
@@ -332,7 +332,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // SpreadsheetCellRangeReference.............................................................................................
 
     @Test
-    public void testSpreadsheetCellRangeToCellOrCellRange() {
+    public void testConvertSpreadsheetCellRangeToCellOrCellRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetCellReferenceOrRange.class
@@ -340,7 +340,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetCellRangeToCellRange() {
+    public void testConvertSpreadsheetCellRangeToCellRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetCellRangeReference.class
@@ -348,7 +348,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetCellRangeToCell() {
+    public void testConvertSpreadsheetCellRangeToCell() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("C3:D4"),
                 SpreadsheetCellReference.class,
@@ -357,7 +357,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetCellRangeToExpressionReference() {
+    public void testConvertSpreadsheetCellRangeToExpressionReference() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("C3:D4"),
                 SpreadsheetExpressionReference.class
@@ -365,15 +365,15 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetCellRangeToSpreadsheetSelection() {
-        this.convertAndCheckSpreadsheetSelection(
+    public void testConvertSpreadsheetCellRangeToSpreadsheetSelection() {
+        this.convertToSpreadsheetSelectionAndCheck(
                 SpreadsheetSelection.parseCellRange("C3:D4")
         );
     }
 
     @Test
-    public void testSpreadsheetCellRangeToString() {
-        this.convertAndCheckString(
+    public void testConvertSpreadsheetCellRangeToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseCellRange("A1:B2")
         );
     }
@@ -381,7 +381,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // SpreadsheetColumnReference.......................................................................................
 
     @Test
-    public void testSpreadsheetColumnReference() {
+    public void testConvertSpreadsheetColumnReferenceToSpreadsheetColumnReference() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseColumn("C"),
                 SpreadsheetColumnReference.class
@@ -389,15 +389,15 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetColumnReferenceToSpreadsheetSelection() {
-        this.convertAndCheckSpreadsheetSelection(
+    public void testConvertSpreadsheetColumnReferenceToSpreadsheetSelection() {
+        this.convertToSpreadsheetSelectionAndCheck(
                 SpreadsheetSelection.parseColumn("C")
         );
     }
 
     @Test
-    public void testSpreadsheetColumnReferenceToString() {
-        this.convertAndCheckString(
+    public void testConvertSpreadsheetColumnReferenceToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseColumn("C")
         );
     }
@@ -405,7 +405,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // SpreadsheetColumnRangeReference..................................................................................
 
     @Test
-    public void testSpreadsheetColumnRangeReference() {
+    public void testConvertSpreadsheetColumnRangeReferenceToSpreadsheetColumnRangeReference() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseColumnRange("D:E"),
                 SpreadsheetColumnRangeReference.class
@@ -413,15 +413,15 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetColumnRangeReferenceToSpreadsheetSelection() {
-        this.convertAndCheckSpreadsheetSelection(
+    public void testConvertSpreadsheetColumnRangeReferenceToSpreadsheetSelection() {
+        this.convertToSpreadsheetSelectionAndCheck(
                 SpreadsheetSelection.parseColumnRange("D:E")
         );
     }
 
     @Test
-    public void testSpreadsheetColumnRangeReferenceToString() {
-        this.convertAndCheckString(
+    public void testConvertSpreadsheetColumnRangeReferenceToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseColumnRange("D:E")
         );
     }
@@ -429,7 +429,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // SpreadsheetLabelName............................................................................................
 
     @Test
-    public void testSpreadsheetLabelNameToLabel() {
+    public void testConvertSpreadsheetLabelNameToLabel() {
         this.convertAndCheck(
                 SpreadsheetSelection.labelName("Label123"),
                 SpreadsheetLabelName.class
@@ -437,7 +437,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetLabelNameToCell() {
+    public void testConvertSpreadsheetLabelNameToCell() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123Cell");
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z999");
 
@@ -450,7 +450,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetLabelNameToCellRange() {
+    public void testConvertSpreadsheetLabelNameToCellRange() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123Range");
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("Z9:Z99");
 
@@ -463,7 +463,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetLabelNameToCellOrRangeCell() {
+    public void testConvertSpreadsheetLabelNameToCellOrRangeCell() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123Cell");
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z999");
 
@@ -476,7 +476,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetLabelNameToCellOrRangeCellRange() {
+    public void testConvertSpreadsheetLabelNameToCellOrRangeCellRange() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123CellRange");
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:c3");
 
@@ -491,7 +491,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // SpreadsheetRowReference.......................................................................................
 
     @Test
-    public void testSpreadsheetRowReference() {
+    public void testConvertSpreadsheetRowReferenceToSpreadsheetRowReference() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseRow("5"),
                 SpreadsheetRowReference.class
@@ -499,15 +499,15 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetRowReferenceToSpreadsheetSelection() {
-        this.convertAndCheckSpreadsheetSelection(
+    public void testConvertSpreadsheetRowReferenceToSpreadsheetSelection() {
+        this.convertToSpreadsheetSelectionAndCheck(
                 SpreadsheetSelection.parseRow("5")
         );
     }
 
     @Test
-    public void testSpreadsheetRowReferenceToString() {
-        this.convertAndCheckString(
+    public void testConvertSpreadsheetRowReferenceToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseRow("5")
         );
     }
@@ -515,7 +515,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // SpreadsheetRowRangeReference..................................................................................
 
     @Test
-    public void testSpreadsheetRowRangeReference() {
+    public void testConvertSpreadsheetRowRangeReferenceToSpreadsheetRowRangeReference() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseRowRange("6:7"),
                 SpreadsheetRowRangeReference.class
@@ -523,20 +523,20 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetRowRangeReferenceToSpreadsheetSelection() {
-        this.convertAndCheckSpreadsheetSelection(
+    public void testConvertSpreadsheetRowRangeReferenceToSpreadsheetSelection() {
+        this.convertToSpreadsheetSelectionAndCheck(
                 SpreadsheetSelection.parseRowRange("6:7")
         );
     }
 
     @Test
-    public void testSpreadsheetRowRangeReferenceToString() {
-        this.convertAndCheckString(
+    public void testConvertSpreadsheetRowRangeReferenceToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseRowRange("6:7")
         );
     }
 
-    private void convertAndCheckSpreadsheetSelection(final SpreadsheetSelection selection) {
+    private void convertToSpreadsheetSelectionAndCheck(final SpreadsheetSelection selection) {
         this.convertAndCheck(
                 selection,
                 SpreadsheetSelection.class,
@@ -544,7 +544,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         );
     }
 
-    private void convertAndCheckString(final SpreadsheetSelection selection) {
+    private void convertToStringAndCheck(final SpreadsheetSelection selection) {
         this.convertAndCheck(
                 selection,
                 String.class,
@@ -555,7 +555,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // error ...........................................................................................................
 
     @Test
-    public void testSpreadsheetErrorToNumber() {
+    public void testConvertSpreadsheetErrorToExpressionNumberFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
                 () -> this.createConverter()
@@ -568,7 +568,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testSpreadsheetErrorToString() {
+    public void testConvertSpreadsheetErrorToStringFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
                 () -> this.convert(
@@ -581,113 +581,175 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // boolean..........................................................................................................
 
     @Test
-    public void testBooleanTrueBoolean() {
+    public void testConvertBooleanTrueToBoolean() {
         this.convertAndCheck(true);
     }
 
     @Test
-    public void testBooleanFalseBoolean() {
+    public void testConvertBooleanFalseToBoolean() {
         this.convertAndCheck(false);
     }
 
     @Test
-    public void testBooleanTrueDate() {
-        this.convertAndBackCheck(true, DATE_TRUE);
+    public void testConvertBooleanTrueToDate() {
+        this.convertAndBackCheck(
+                true,
+                DATE_TRUE
+        );
     }
 
     @Test
-    public void testBooleanFalseDate() {
-        this.convertAndBackCheck(false, DATE_FALSE);
+    public void testConvertBooleanFalseToDate() {
+        this.convertAndBackCheck(
+                false,
+                DATE_FALSE
+        );
     }
 
     @Test
-    public void testBooleanTrueDateTime() {
-        this.convertAndBackCheck(true, DATE_TIME_TRUE);
+    public void testConvertBooleanTrueToDateTime() {
+        this.convertAndBackCheck(
+                true,
+                DATE_TIME_TRUE
+        );
     }
 
     @Test
-    public void testBooleanFalseDateTime() {
-        this.convertAndBackCheck(false, DATE_TIME_FALSE);
+    public void testConvertBooleanFalseToDateTime() {
+        this.convertAndBackCheck(
+                false,
+                DATE_TIME_FALSE
+        );
     }
 
     @Test
-    public void testBooleanTrueNumber() {
-        this.convertNumberAndCheck(true, NUMBER_TRUE);
+    public void testConvertBooleanTrueToAllNumberTypes() {
+        this.convertToAllNumberTypesAndCheck(
+                true,
+                NUMBER_TRUE
+        );
     }
 
     @Test
-    public void testBooleanFalseNumber() {
-        this.convertNumberAndCheck(false, NUMBER_FALSE);
+    public void testConvertBooleanFalseToAllNumberTypes() {
+        this.convertToAllNumberTypesAndCheck(
+                false,
+                NUMBER_FALSE
+        );
     }
 
     @Test
-    public void testBooleanTrueString() {
-        this.convertAndCheck(true, STRING_TRUE + TEXT_SUFFIX);
+    public void testConvertBooleanTrueToString() {
+        this.convertAndCheck(
+                true,
+                STRING_TRUE + TEXT_SUFFIX
+        );
     }
 
     @Test
-    public void testBooleanFalseString() {
-        this.convertAndCheck(false, false + TEXT_SUFFIX);
+    public void testConvertBooleanFalseToString() {
+        this.convertAndCheck(
+                false,
+                false + TEXT_SUFFIX
+        );
     }
 
     @Test
-    public void testBooleanTrueTime() {
-        this.convertAndBackCheck(true, TIME_TRUE);
+    public void testConvertBooleanTrueToTime() {
+        this.convertAndBackCheck(
+                true,
+                TIME_TRUE
+        );
     }
 
     @Test
-    public void testBooleanFalseTime() {
-        this.convertAndBackCheck(false, TIME_FALSE);
+    public void testConvertBooleanFalseToTime() {
+        this.convertAndBackCheck(
+                false,
+                TIME_FALSE
+        );
     }
 
     // Character........................................................................................................
 
     @Test
-    public void testCharacterToString() {
-        this.convertAndCheck('A', String.class, "A");
+    public void testConvertCharacterToString() {
+        this.convertAndCheck(
+                'A',
+                String.class,
+                "A"
+        );
     }
 
     // Date.............................................................................................................
 
     @Test
-    public void testNullBoolean() {
-        this.convertAndCheck(null, Boolean.class, null);
+    public void testConvertNullToBoolean() {
+        this.convertAndCheck(
+                null,
+                Boolean.class,
+                null
+        );
     }
 
     @Test
-    public void testNullDate() {
-        this.convertAndCheck(null, LocalDate.class, DATE_FALSE);
+    public void testConvertNullToDate() {
+        this.convertAndCheck(
+                null,
+                LocalDate.class,
+                DATE_FALSE
+        );
     }
 
     @Test
-    public void testNullDateTime() {
-        this.convertAndCheck(null, LocalDateTime.class, LocalDateTime.of(DATE_FALSE, TIME_FALSE));
+    public void testConvertNullToDateTime() {
+        this.convertAndCheck(
+                null,
+                LocalDateTime.class,
+                LocalDateTime.of(DATE_FALSE, TIME_FALSE)
+        );
     }
 
     @Test
-    public void testNullTime() {
-        this.convertAndCheck(null, LocalTime.class, TIME_FALSE);
+    public void testConvertNullToTime() {
+        this.convertAndCheck(
+                null,
+                LocalTime.class,
+                TIME_FALSE
+        );
     }
 
     @Test
-    public void testNullExpressionNumber() {
-        this.convertAndCheck(null, ExpressionNumber.class, null);
+    public void testConvertNullToExpressionNumber() {
+        this.convertAndCheck(
+                null,
+                ExpressionNumber.class,
+                null
+        );
     }
 
     @Test
-    public void testNullNumber() {
-        this.convertAndCheck(null, Number.class, null);
+    public void testConvertNullToNumber() {
+        this.convertAndCheck(
+                null,
+                Number.class,
+                null
+        );
     }
 
     @Test
-    public void testNullString() {
-        this.convertAndCheck(null, String.class, "falsetext-literal-123");
+    public void testConvertNullToString() {
+        this.convertAndCheck(
+                null,
+                String.class,
+                "falsetext-literal-123"
+        );
     }
 
     // character.......................................................................................................
 
     @Test
-    public void testCharacterToSpreadsheetColumnReference() {
+    public void testConvertCharacterToSpreadsheetColumnReference() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("X");
 
         this.convertAndCheck(
@@ -697,7 +759,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testCharacterToSpreadsheetColumnRangeReference() {
+    public void testConvertCharacterToSpreadsheetColumnRangeReference() {
         final SpreadsheetColumnRangeReference range = SpreadsheetSelection.parseColumnRange("X");
 
         this.convertAndCheck(
@@ -707,7 +769,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testCharacterToSpreadsheetRowReference() {
+    public void testConvertCharacterToSpreadsheetRowReference() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("1");
 
         this.convertAndCheck(
@@ -717,7 +779,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testCharacterToSpreadsheetRowRangeReference() {
+    public void testConvertCharacterToSpreadsheetRowRangeReference() {
         final SpreadsheetRowRangeReference range = SpreadsheetSelection.parseRowRange("1");
 
         this.convertAndCheck(
@@ -729,178 +791,252 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // date............................................................................................................
 
     @Test
-    public void testDateTrueBoolean() {
-        this.convertAndCheck(DATE_TRUE, true);
+    public void testConvertDateTrueToBoolean() {
+        this.convertAndCheck(
+                DATE_TRUE,
+                true
+        );
     }
 
     @Test
-    public void testDateFalseBoolean() {
-        this.convertAndCheck(DATE_FALSE, false);
+    public void testConvertDateFalseToBoolean() {
+        this.convertAndCheck(
+                DATE_FALSE,
+                false
+        );
     }
 
     @Test
-    public void testDateDate() {
-        this.convertAndCheck(LocalDate.of(2000, 12, 31));
+    public void testConvertDateToDate() {
+        this.convertAndCheck(
+                LocalDate.of(2000, 12, 31)
+        );
     }
 
     @Test
-    public void testDateTrueDateTime() {
-        this.convertAndBackCheck(DATE_TRUE, LocalDateTime.of(DATE_TRUE, LocalTime.MIDNIGHT));
+    public void testConvertDateTrueToDateTime() {
+        this.convertAndBackCheck(
+                DATE_TRUE,
+                LocalDateTime.of(DATE_TRUE, LocalTime.MIDNIGHT)
+        );
     }
 
     @Test
-    public void testDateFalseDateTime() {
-        this.convertAndBackCheck(DATE_FALSE, LocalDateTime.of(DATE_FALSE, LocalTime.MIDNIGHT));
+    public void testConvertDateFalseToDateTime() {
+        this.convertAndBackCheck(
+                DATE_FALSE,
+                LocalDateTime.of(DATE_FALSE, LocalTime.MIDNIGHT)
+        );
     }
 
     @Test
-    public void testDateTrueNumber() {
-        this.convertNumberAndCheck(DATE_TRUE, NUMBER_TRUE);
+    public void testConvertDateTrueToAllNumberTypes() {
+        this.convertToAllNumberTypesAndCheck(
+                DATE_TRUE,
+                NUMBER_TRUE
+        );
     }
 
     @Test
-    public void testDateFalseNumber() {
-        this.convertNumberAndCheck(DATE_FALSE, NUMBER_FALSE);
+    public void testConvertDateFalseToAllNumberTypes() {
+        this.convertToAllNumberTypesAndCheck(
+                DATE_FALSE,
+                NUMBER_FALSE
+        );
     }
 
     @Test
-    public void testDateNumber() {
+    public void testConvertDateToAllNumberTypes() {
         final int value = 100;
-        this.convertNumberAndCheck(LocalDate.ofEpochDay(value), value);
+        this.convertToAllNumberTypesAndCheck(
+                LocalDate.ofEpochDay(value),
+                value
+        );
     }
 
     @Test
-    public void testDateTrueString() {
-        this.convertAndCheck(DATE, "D 2000-12-31");
+    public void testConvertDateTrueToString() {
+        this.convertAndCheck(
+                DATE,
+                "D 2000-12-31"
+        );
     }
 
     @Test
-    public void testDateTime() {
-        this.convertFails(DATE, LocalTime.class);
+    public void testConvertDateToTimeFails() {
+        this.convertFails(
+                DATE,
+                LocalTime.class
+        );
     }
 
     // DateTime.........................................................................................................
 
     @Test
-    public void testDateTimeTrueBoolean() {
-        this.convertAndCheck(DATE_TIME_TRUE, true);
+    public void testConvertDateTimeTrueToBoolean() {
+        this.convertAndCheck(
+                DATE_TIME_TRUE,
+                true
+        );
     }
 
     @Test
-    public void testDateTimeFalseBoolean() {
-        this.convertAndCheck(DATE_TIME_FALSE, false);
+    public void testConvertDateTimeFalseToBoolean() {
+        this.convertAndCheck(
+                DATE_TIME_FALSE,
+                false
+        );
     }
 
     @Test
-    public void testDateTimeDate() {
-        this.convertAndCheck(DATE_TIME, DATE);
+    public void testConvertDateTimeToDate() {
+        this.convertAndCheck(
+                DATE_TIME,
+                DATE
+        );
     }
 
     @Test
-    public void testDateTimeDateTime() {
+    public void testConvertDateTimeToDateTime() {
         this.convertAndCheck(DATE_TIME);
     }
 
     @Test
-    public void testDateTimeTrueNumber() {
-        this.convertNumberAndCheck(DATE_TIME_TRUE, NUMBER_TRUE);
+    public void testConvertDateTimeTrueToAllNumberTypes() {
+        this.convertToAllNumberTypesAndCheck(
+                DATE_TIME_TRUE,
+                NUMBER_TRUE
+        );
     }
 
     @Test
-    public void testDateTimeFalseNumber() {
-        this.convertNumberAndCheck(DATE_TIME_FALSE, NUMBER_FALSE);
+    public void testConvertDateTimeFalseToAllNumberTypes() {
+        this.convertToAllNumberTypesAndCheck(
+                DATE_TIME_FALSE,
+                NUMBER_FALSE
+        );
     }
 
     @Test
-    public void testDateTimeNumber() {
+    public void testConvertDateTimeToAllNumberTypes() {
         final int value = 100;
-        this.convertNumberAndCheck(LocalDateTime.of(LocalDate.ofEpochDay(value), LocalTime.MIDNIGHT), value);
+        this.convertToAllNumberTypesAndCheck(
+                LocalDateTime.of(
+                        LocalDate.ofEpochDay(value),
+                        LocalTime.MIDNIGHT
+                ),
+                value
+        );
     }
 
     @Test
-    public void testDateTimeTrueString() {
-        this.convertAndCheck(DATE_TIME, "DT 2000-12-31 12-58");
+    public void testConvertDateTimeTrueToString() {
+        this.convertAndCheck(
+                DATE_TIME,
+                "DT 2000-12-31 12-58"
+        );
     }
 
     @Test
-    public void testDateTimeTime() {
-        this.convertAndCheck(DATE_TIME, TIME);
+    public void testConvertDateTimeToTime() {
+        this.convertAndCheck(
+                DATE_TIME,
+                TIME
+        );
     }
 
     // Number...........................................................................................................
 
     @Test
-    public void testNumberTrueBoolean() {
-        this.convertNumberAndCheck(1, true);
+    public void testConvertAllNumberTypesTrueToBoolean() {
+        this.convertAllNumberTypesAndCheck(
+                1,
+                true
+        );
     }
 
     @Test
-    public void testNumberFalseBoolean() {
-        this.convertNumberAndCheck(0, false);
+    public void testConvertAllNumberTypesFalseToBoolean() {
+        this.convertAllNumberTypesAndCheck(
+                0,
+                false
+        );
     }
 
     @Test
-    public void testNumberTrueDate() {
-        this.convertAndBackCheck(1, DATE_TRUE);
+    public void testConvertAllNumberTypesTrueToDate() {
+        this.convertAndBackCheck(
+                1,
+                DATE_TRUE
+        );
     }
 
     @Test
-    public void testNumberFalseDate() {
-        this.convertAndBackCheck(0, DATE_FALSE);
+    public void testConvertAllNumberTypesFalseToDate() {
+        this.convertAndBackCheck(
+                0,
+                DATE_FALSE
+        );
     }
 
     @Test
-    public void testNumberTrueDateTime() {
-        this.convertAndBackCheck(1, DATE_TIME_TRUE);
+    public void testConvertAllNumberTypesTrueToDateTime() {
+        this.convertAndBackCheck(
+                1,
+                DATE_TIME_TRUE
+        );
     }
 
     @Test
-    public void testNumberFalseDateTime() {
-        this.convertAndBackCheck(0, DATE_TIME_FALSE);
+    public void testConvertAllNumberTypesFalseToDateTime() {
+        this.convertAndBackCheck(
+                0,
+                DATE_TIME_FALSE
+        );
     }
 
     @Test
-    public void testNumberByte() {
-        this.convertNumberAndCheck((byte) 123);
+    public void testConvertAllNumberTypesToByte() {
+        this.convertAllNumberTypesAndCheck((byte) 123);
     }
 
     @Test
-    public void testNumberShort() {
-        this.convertNumberAndCheck((short) 123);
+    public void testConvertAllNumberTypesToShort() {
+        this.convertAllNumberTypesAndCheck((short) 123);
     }
 
     @Test
-    public void testNumberInteger() {
-        this.convertNumberAndCheck(123);
+    public void testConvertAllNumberTypesToInteger() {
+        this.convertAllNumberTypesAndCheck(123);
     }
 
     @Test
-    public void testNumberLong() {
-        this.convertNumberAndCheck(123L);
+    public void testConvertAllNumberTypesToLong() {
+        this.convertAllNumberTypesAndCheck(123L);
     }
 
     @Test
-    public void testNumberFloat() {
-        this.convertNumberAndCheck(123f);
+    public void testConvertAllNumberTypesToFloat() {
+        this.convertAllNumberTypesAndCheck(123f);
     }
 
     @Test
-    public void testNumberDouble() {
-        this.convertNumberAndCheck(123.0);
+    public void testConvertAllNumberTypesToDouble() {
+        this.convertAllNumberTypesAndCheck(123.0);
     }
 
     @Test
-    public void testNumberBigDecimal() {
-        this.convertNumberAndCheck(BigDecimal.valueOf(123));
+    public void testConvertAllNumberTypesToBigDecimal() {
+        this.convertAllNumberTypesAndCheck(BigDecimal.valueOf(123));
     }
 
     @Test
-    public void testNumberBigInteger() {
-        this.convertNumberAndCheck(BigInteger.valueOf(123));
+    public void testConvertAllNumberTypesToBigInteger() {
+        this.convertAllNumberTypesAndCheck(BigInteger.valueOf(123));
     }
 
     @Test
-    public void testNumberCharacter() {
+    public void testConvertAllNumberTypesToCharacter() {
         this.convertAndCheck(
                 GeneralSpreadsheetConverter.with(
                         dateFormatter(),
@@ -926,28 +1062,40 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testNumberTrueString() {
-        this.convertAndCheck(12.5, "N 12D5");
+    public void testConvertAllNumberTypesTrueToString() {
+        this.convertAndCheck(
+                12.5,
+                "N 12D5"
+        );
     }
 
     @Test
-    public void testNumberFalseString() {
-        this.convertAndCheck(false, TIME_FALSE);
+    public void testConvertAllNumberTypesFalseTOString() {
+        this.convertAndCheck(
+                false,
+                TIME_FALSE
+        );
     }
 
     @Test
-    public void testNumberTime() {
-        this.convertAndBackCheck(Converters.localTimeNumber()
-                        .convertOrFail(TIME, BigDecimal.class, this.createContext()),
-                TIME);
+    public void testConvertAllNumberTypesToTime() {
+        this.convertAndBackCheck(
+                Converters.localTimeNumber()
+                        .convertOrFail(
+                                TIME,
+                                BigDecimal.class,
+                                this.createContext()
+                        ),
+                TIME
+        );
     }
 
-    private void convertNumberAndCheck(final Number value) {
-        this.convertNumberAndCheck(value, value);
+    private void convertAllNumberTypesAndCheck(final Number value) {
+        this.convertAllNumberTypesAndCheck(value, value);
     }
 
-    private void convertNumberAndCheck(final Number value,
-                                       final Object expected) {
+    private void convertAllNumberTypesAndCheck(final Number value,
+                                               final Object expected) {
         final Converter<ConverterContext> numberNumber = Converters.numberNumber();
         final ConverterContext context = this.createContext();
 
@@ -964,7 +1112,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // String.............................................................................................................
 
     @Test
-    public void testCharacterString() {
+    public void testConvertCharacterToString2() {
         this.convertAndCheck(
                 'A',
                 "A"
@@ -972,7 +1120,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringBooleanFalse() {
+    public void testConvertStringToBooleanFalse() {
         this.convertAndCheck(
                 STRING_FALSE,
                 false
@@ -980,7 +1128,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringBooleanTrue() {
+    public void testConvertStringToBooleanTrue() {
         this.convertAndCheck(
                 STRING_TRUE,
                 true
@@ -988,7 +1136,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringCharacter() {
+    public void testConvertStringToCharacter() {
         this.convertAndCheck(
                 "A",
                 'A'
@@ -996,7 +1144,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringDate() {
+    public void testConvertStringToDate() {
         this.convertAndCheck(
                 "D 2000-12-31",
                 DATE
@@ -1006,7 +1154,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // "\"DT\" dd mm yyyy hh mm ss"
 
     @Test
-    public void testStringDateTime() {
+    public void testConvertStringToDateTime() {
         this.convertAndCheck(
                 "DT 31 12 2000 12 58 59",
                 DATE_TIME
@@ -1014,7 +1162,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringNumber() {
+    public void testConvertStringToExpressionNumber() {
         this.convertAndCheck(
                 "N 123",
                 EXPRESSION_NUMBER_KIND.create(123)
@@ -1022,7 +1170,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringToSpreadsheetCellReference() {
+    public void testConvertStringToSpreadsheetCellReference() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
         this.convertAndCheck(
@@ -1032,7 +1180,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringLabelToSpreadsheetCellReference() {
+    public void testConvertStringLabelToSpreadsheetCellReference() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
@@ -1045,7 +1193,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringToSpreadsheetCellRange() {
+    public void testConvertStringToSpreadsheetCellRange() {
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("Z99:Z100");
 
         this.convertAndCheck(
@@ -1055,7 +1203,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringLabelToSpreadsheetCellRange() {
+    public void testConvertStringLabelToSpreadsheetCellRange() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("Z9:Z99");
 
@@ -1068,7 +1216,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringToSpreadsheetColumnReference() {
+    public void testConvertStringToSpreadsheetColumnReference() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("Z");
 
         this.convertAndCheck(
@@ -1078,7 +1226,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringToSpreadsheetColumnRangeReference() {
+    public void testConvertStringToSpreadsheetColumnRangeReference() {
         final SpreadsheetColumnRangeReference range = SpreadsheetSelection.parseColumnRange("X:Y");
 
         this.convertAndCheck(
@@ -1088,7 +1236,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringToSpreadsheetLabelName() {
+    public void testConvertStringToSpreadsheetLabelName() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         this.convertAndCheck(
@@ -1098,7 +1246,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringToSpreadsheetRowReference() {
+    public void testConvertStringToSpreadsheetRowReference() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("123");
 
         this.convertAndCheck(
@@ -1108,7 +1256,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringToSpreadsheetRowRangeReference() {
+    public void testConvertStringToSpreadsheetRowRangeReference() {
         final SpreadsheetRowRangeReference range = SpreadsheetSelection.parseRowRange("123:456");
 
         this.convertAndCheck(
@@ -1118,13 +1266,13 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
-    public void testStringString() {
+    public void testConvertStringToString() {
         final String text = "abc123";
         this.convertAndCheck(text, text);
     }
 
     @Test
-    public void testStringTime() {
+    public void testConvertStringToTime() {
         this.convertAndCheck(
                 "T 12 58 59",
                 TIME
@@ -1134,48 +1282,72 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     // Time.............................................................................................................
 
     @Test
-    public void testTimeTrueBoolean() {
-        this.convertAndCheck(TIME_TRUE, true);
+    public void testConvertTimeTrueToBoolean() {
+        this.convertAndCheck(
+                TIME_TRUE,
+                true
+        );
     }
 
     @Test
-    public void testTimeFalseBoolean() {
-        this.convertAndCheck(TIME_FALSE, false);
+    public void testConvertTimeFalseToBoolean() {
+        this.convertAndCheck(
+                TIME_FALSE,
+                false
+        );
     }
 
     @Test
-    public void testTimeDate() {
-        this.convertFails(TIME, LocalDate.class);
+    public void testConvertTimeToDate() {
+        this.convertFails(
+                TIME,
+                LocalDate.class
+        );
     }
 
     @Test
-    public void testTimeDateTime() {
-        this.convertAndCheck(TIME, LocalDateTime.of(DATE_FALSE, TIME));
+    public void testConvertTimeToDateTime() {
+        this.convertAndCheck(
+                TIME,
+                LocalDateTime.of(DATE_FALSE, TIME)
+        );
     }
 
     @Test
-    public void testTimeTrueNumber() {
-        this.convertNumberAndCheck(TIME_TRUE, NUMBER_TRUE);
+    public void testConvertTimeTrueToAllNumberTypes() {
+        this.convertToAllNumberTypesAndCheck(
+                TIME_TRUE,
+                NUMBER_TRUE
+        );
     }
 
     @Test
-    public void testTimeFalseNumber() {
-        this.convertNumberAndCheck(TIME_FALSE, NUMBER_FALSE);
+    public void testConvertTimeFalseToAllNumberTypes() {
+        this.convertToAllNumberTypesAndCheck(
+                TIME_FALSE,
+                NUMBER_FALSE
+        );
     }
 
     @Test
-    public void testTimeNumber() {
+    public void testConvertTimeToAllNumberTypes() {
         final int value = 123;
-        this.convertNumberAndCheck(LocalTime.ofSecondOfDay(value), value);
+        this.convertToAllNumberTypesAndCheck(
+                LocalTime.ofSecondOfDay(value),
+                value
+        );
     }
 
     @Test
-    public void testTimeTrueString() {
-        this.convertAndCheck(DATE, "D 2000-12-31");
+    public void testConvertDateTrueToString2() {
+        this.convertAndCheck(
+                DATE,
+                "D 2000-12-31"
+        );
     }
 
     @Test
-    public void testTimeTime() {
+    public void testConvertTimeToTime() {
         this.convertAndCheck(TIME);
     }
 
@@ -1333,8 +1505,8 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         this.convertAndCheck(expected, value);
     }
 
-    private void convertNumberAndCheck(final Object value,
-                                       final double expected) {
+    private void convertToAllNumberTypesAndCheck(final Object value,
+                                                 final double expected) {
         final Converter<SpreadsheetConverterContext> converter = this.createConverter();
         final SpreadsheetConverterContext context = this.createContext();
 
