@@ -18,8 +18,16 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.ConverterTesting;
+import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
@@ -28,20 +36,23 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 
 public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
         SpreadsheetFormatNumberParserToken,
         SpreadsheetNumberParserToken,
-        ExpressionNumber> {
+        ExpressionNumber> implements ConverterTesting {
 
     @Test
     public void testWithAmpmFails() {
@@ -620,7 +631,580 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         };
     }
 
-    // ToString........................................................................................................
+    // converter........................................................................................................
+
+    @Test
+    public void testConvertPatternHashInvalidStringFails() {
+        this.parsePatternAndConvertFails("#", "A");
+    }
+
+    // integer values single digit pattern..............................................................................
+
+    @Test
+    public void testConvertPatternHashBigDecimalZero() {
+        this.parsePatternConvertAndCheck(
+                "#",
+                "0",
+                BigDecimal.valueOf(0)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashBigDecimalPlusInteger() {
+        this.parsePatternConvertAndCheck(
+                "#",
+                PLUS + "1",
+                BigDecimal.ONE
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashBigDecimalPlusInteger2() {
+        this.parsePatternConvertAndCheck(
+                "#",
+                PLUS + "23",
+                BigDecimal.valueOf(23)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashBigDecimalPlusInteger3() {
+        this.parsePatternConvertAndCheck(
+                "#",
+                PLUS + "456",
+                BigDecimal.valueOf(456)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashBigDecimalMinusInteger() {
+        this.parsePatternConvertAndCheck(
+                "#",
+                MINUS + "1",
+                BigDecimal.valueOf(-1)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashBigDecimalMinusInteger2() {
+        this.parsePatternConvertAndCheck(
+                "#",
+                MINUS + "23",
+                BigDecimal.valueOf(-23)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashBigDecimalMinusInteger3() {
+        this.parsePatternConvertAndCheck(
+                "#",
+                MINUS + "456",
+                BigDecimal.valueOf(-456)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashBigDecimalLeadingZeroInteger() {
+        this.parsePatternConvertAndCheck(
+                "#",
+                MINUS + "0789",
+                BigDecimal.valueOf(-789)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashBigDecimalLeadingZeroInteger2() {
+        this.parsePatternConvertAndCheck(
+                "#",
+                MINUS + "00789",
+                BigDecimal.valueOf(-789)
+        );
+    }
+
+    @Test
+    public void testConvertPatternQuestionMarkBigDecimalLeadingZeroInteger2() {
+        this.parsePatternConvertAndCheck(
+                "?",
+                MINUS + "00789",
+                BigDecimal.valueOf(-789)
+        );
+    }
+
+    @Test
+    public void testConvertPatternZeroBigDecimalLeadingZeroInteger2() {
+        this.parsePatternConvertAndCheck(
+                "0",
+                MINUS + "00789",
+                BigDecimal.valueOf(-789)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashHashBigDecimal() {
+        this.parsePatternConvertAndCheck("##",
+                "12",
+                BigDecimal.valueOf(12));
+    }
+
+    @Test
+    public void testConvertPatternQuestionQuestionQuestionBigDecimal() {
+        this.parsePatternConvertAndCheck("???",
+                "123",
+                BigDecimal.valueOf(123));
+    }
+
+    @Test
+    public void testConvertPatternZeroZeroZeroZeroBigDecimal() {
+        this.parsePatternConvertAndCheck("0000",
+                "1234",
+                BigDecimal.valueOf(1234));
+    }
+
+    @Test
+    public void testConvertPatternHashHashBigDecimalExtraPattern() {
+        this.parsePatternConvertAndCheck(
+                "##",
+                "9",
+                BigDecimal.valueOf(9)
+        );
+    }
+
+    @Test
+    public void testConvertPatternQuestionQuestionQuestionBigDecimalExtraPattern() {
+        this.parsePatternConvertAndCheck(
+                "???",
+                "78",
+                BigDecimal.valueOf(78)
+        );
+    }
+
+    @Test
+    public void testConvertPatternZeroZeroZeroZeroBigDecimalExtraPattern() {
+        this.parsePatternConvertAndCheck(
+                "0000",
+                "6",
+                BigDecimal.valueOf(6)
+        );
+    }
+
+    // fraction values .................................................................................................
+
+    @Test
+    public void testConvertPatternHashBigDecimalFractionFails() {
+        this.parsePatternAndConvertFails(
+                "#",
+                "0.5"
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashDecimalHashBigDecimalFraction() {
+        this.parsePatternConvertAndCheck(
+                "#.#",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
+    }
+
+    @Test
+    public void testConvertPatternQuestionDecimalQuestionBigDecimalFraction() {
+        this.parsePatternConvertAndCheck(
+                "?.?",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
+    }
+
+    @Test
+    public void testConvertPatternZeroDecimalZeroBigDecimalFraction() {
+        this.parsePatternConvertAndCheck(
+                "0.0",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
+    }
+
+    @Test
+    public void testConvertPatternZeroDecimalZeroBigDecimalFractionExtraPattern() {
+        this.parsePatternConvertAndCheck(
+                "0.00",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
+    }
+
+    @Test
+    public void testConvertPatternZeroDecimalZeroBigDecimalFractionExtraPattern2() {
+        this.parsePatternConvertAndCheck(
+                "0.000",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
+    }
+
+    @Test
+    public void testConvertPatternZeroDecimalZeroZeroBigDecimalFraction() {
+        this.parsePatternConvertAndCheck(
+                "0.00",
+                "0" + DECIMAL + "56",
+                BigDecimal.valueOf(0.56)
+        );
+    }
+
+    @Test
+    public void testConvertPatternZeroDecimalZeroZeroZeroBigDecimalFraction() {
+        this.parsePatternConvertAndCheck(
+                "0.000",
+                "0" + DECIMAL + "56",
+                BigDecimal.valueOf(0.56)
+        );
+    }
+
+    // mixed patterns...................................................................................................
+
+    @Test
+    public void testConvertPatternHashQuestionZeroBigDecimalDigit() {
+        this.parsePatternConvertAndCheck(
+                "#?0",
+                "1",
+                BigDecimal.ONE
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashQuestionZeroBigDecimalSpaceDigit() {
+        this.parsePatternConvertAndCheck(
+                "#?0",
+                " 1",
+                BigDecimal.ONE
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashQuestionZeroBigDecimalDigitSpaceDigit() {
+        this.parsePatternConvertAndCheck(
+                "#?0",
+                "0 1",
+                BigDecimal.ONE
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashQuestionZeroBigDecimalDigitSpaceDigit2() {
+        this.parsePatternConvertAndCheck(
+                "#?0",
+                "3 4",
+                BigDecimal.valueOf(34)
+        );
+    }
+
+    // exponent.........................................................................................................
+
+    @Test
+    public void testConvertPatternHashExponentPlusHashBigDecimalDigitExponentDigit() {
+        this.parsePatternConvertAndCheck(
+                "#E+#",
+                "2" + EXPONENT + PLUS + "3",
+                BigDecimal.valueOf(2000)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashExponentMinusHashBigDecimalDigitExponentDigit() {
+        this.parsePatternConvertAndCheck(
+                "#E+#",
+                "2" + EXPONENT + PLUS + "3",
+                BigDecimal.valueOf(2000)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashExponentPlusHashBigDecimalDigitExponentDigit2() {
+        this.parsePatternConvertAndCheck(
+                "#E+#",
+                "2" + EXPONENT + PLUS + "3",
+                BigDecimal.valueOf(2000)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashExponentPlusHashBigDecimalDigitExponentPlusDigit() {
+        this.parsePatternConvertAndCheck(
+                "#E+#",
+                "4" + EXPONENT + PLUS + "5",
+                new BigDecimal("4E+5")
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashExponentPlusHashBigDecimalDigitExponentMinusDigit() {
+        this.parsePatternConvertAndCheck(
+                "#E+#",
+                "6" + EXPONENT + MINUS + "7",
+                new BigDecimal("6E-7")
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashExponentPlusHashHashBigDecimalDigitExponentDigit() {
+        this.parsePatternConvertAndCheck(
+                "#E+##",
+                "8" + EXPONENT + PLUS + "90",
+                new BigDecimal("8E+90")
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashExponentPlusQuestionBigDecimalDigitExponentSpaceDigit() {
+        this.parsePatternConvertAndCheck(
+                "#E+?",
+                "1" + EXPONENT + " 2",
+                new BigDecimal("1E+2")
+        );
+    }
+
+    // currency.........................................................................................................
+
+    @Test
+    public void testConvertPatternCurrencyHashBigDecimal() {
+        this.parsePatternConvertAndCheck("$#",
+                CURRENCY + "1",
+                BigDecimal.ONE);
+    }
+
+    @Test
+    public void testConvertPatternHashCurrencyBigDecimal() {
+        this.parsePatternConvertAndCheck(
+                "#$",
+                "1" + CURRENCY,
+                BigDecimal.ONE
+        );
+    }
+
+    // percent..........................................................................................................
+
+    @Test
+    public void testConvertPatternPercentHashBigDecimalPercentDigit() {
+        this.parsePatternConvertAndCheck(
+                "%#",
+                PERCENT + "1",
+                BigDecimal.valueOf(0.01)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashPercentBigDecimalDigitPercent() {
+        this.parsePatternConvertAndCheck(
+                "#%",
+                "12" + PERCENT,
+                BigDecimal.valueOf(0.12)
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashPercentBigDecimalDigitDigitDigitPercent() {
+        this.parsePatternConvertAndCheck("#%",
+                "123" + PERCENT,
+                BigDecimal.valueOf(1.23));
+    }
+
+    @Test
+    public void testConvertPatternHashDecimalPercentBigDecimalDigitDigitDigitPercent() {
+        this.parsePatternConvertAndCheck("#.#%",
+                "45" + DECIMAL + "6" + PERCENT,
+                BigDecimal.valueOf(0.456));
+    }
+
+    // several patterns.................................................................................................
+
+    @Test
+    public void testConvertPatternFirstPatternMatches() {
+        this.parsePatternConvertAndCheck("0;\"text-literal\"",
+                "1",
+                BigDecimal.ONE);
+    }
+
+    @Test
+    public void testConvertPatternLastPatternMatches() {
+        this.parsePatternConvertAndCheck("\"text-literal\";0",
+                "2",
+                BigDecimal.valueOf(2));
+    }
+
+    // other Number types...............................................................................................
+
+    @Test
+    public void testConvertPatternByte() {
+        this.parsePatternConvertAndCheck(Byte.MAX_VALUE);
+    }
+
+    @Test
+    public void testConvertPatternByteRangeFail() {
+        this.parsePatternAndConvertFails("#",
+                String.valueOf(Short.MAX_VALUE),
+                Byte.class);
+    }
+
+    @Test
+    public void testConvertPatternShort() {
+        this.parsePatternConvertAndCheck(Short.MAX_VALUE);
+    }
+
+    @Test
+    public void testConvertPatternShortRangeFail() {
+        this.parsePatternAndConvertFails("#",
+                String.valueOf(Integer.MAX_VALUE),
+                Short.class);
+    }
+
+    @Test
+    public void testConvertPatternInteger() {
+        this.parsePatternConvertAndCheck(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void testConvertPatternIntegerRangeFail() {
+        this.parsePatternAndConvertFails("#",
+                String.valueOf(Long.MAX_VALUE),
+                Integer.class);
+    }
+
+    @Test
+    public void testConvertPatternLong() {
+        this.parsePatternConvertAndCheck(999L);
+    }
+
+    @Test
+    public void testConvertPatternFloat() {
+        this.parsePatternConvertAndCheck(123.5f);
+    }
+
+    @Test
+    public void testConvertPatternDouble() {
+        this.parsePatternConvertAndCheck(67.5);
+    }
+
+    @Test
+    public void testConvertPatternBigDecimal() {
+        this.parsePatternConvertAndCheck(1234567.5);
+    }
+
+    @Test
+    public void testConvertPatternBigInteger() {
+        this.parsePatternConvertAndCheck(1234567890);
+    }
+
+    private void parsePatternConvertAndCheck(final Number number) {
+        this.parsePatternConvertAndCheck(
+                "#.#;#",
+                number.toString().replace('.', DECIMAL).replace('+', PLUS).replace('-', MINUS).replace("E", EXPONENT),
+                number
+        );
+    }
+
+    @Test
+    public void testConvertPatternNumber() {
+        this.convertAndCheck3(
+                "##.##",
+                "1" + DECIMAL + "25",
+                1.25
+        );
+    }
+
+    private void convertAndCheck3(final String pattern,
+                                  final String text,
+                                  final Number number) {
+        this.convertAndCheck4(
+                pattern,
+                text,
+                ExpressionNumberKind.BIG_DECIMAL,
+                number
+        );
+        this.convertAndCheck4(
+                pattern,
+                text,
+                ExpressionNumberKind.DOUBLE,
+                number
+        );
+    }
+
+    private void convertAndCheck4(final String pattern,
+                                  final String text,
+                                  final ExpressionNumberKind kind,
+                                  final Number number) {
+        this.convertAndCheck(
+                SpreadsheetNumberParsePattern.parseNumberParsePattern(pattern).createConverter(),
+                text,
+                ExpressionNumber.class,
+                this.createConverterContext(kind),
+                kind.create(number)
+        );
+    }
+
+    // helpers..........................................................................................................
+
+    private void parsePatternAndConvertFails(final String pattern,
+                                             final String text) {
+        this.parsePatternAndConvertFails(pattern, text, BigDecimal.class);
+    }
+
+    private void parsePatternAndConvertFails(final String pattern,
+                                             final String text,
+                                             final Class<? extends Number> type) {
+        this.convertFails(
+                this.createConverter(pattern),
+                text,
+                type,
+                this.createConverterContext(ExpressionNumberKind.DEFAULT)
+        );
+    }
+
+    private void parsePatternConvertAndCheck(final String pattern,
+                                             final String text,
+                                             final Number expected) {
+        this.parsePatternConvertAndCheck(
+                pattern,
+                text,
+                Cast.to(expected.getClass()),
+                expected
+        );
+    }
+
+    private <N extends Number> void parsePatternConvertAndCheck(final String pattern,
+                                                                final String text,
+                                                                final Class<N> number,
+                                                                final N expected) {
+        this.convertAndCheck(
+                this.createConverter(pattern),
+                text,
+                number,
+                createConverterContext(ExpressionNumberKind.DEFAULT),
+                expected
+        );
+    }
+
+    private Converter<SpreadsheetConverterContext> createConverter(final String pattern) {
+        return Cast.to(
+                this.parseString(pattern)
+                        .createConverter()
+        );
+    }
+
+    private SpreadsheetConverterContext createConverterContext(final ExpressionNumberKind kind) {
+        return SpreadsheetConverterContexts.basic(
+                Converters.fake(),
+                SpreadsheetLabelNameResolvers.fake(),
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(Converters.fake(),
+                                DateTimeContexts.fake(), // DateTimeContext unused
+                                this.decimalNumberContext()),
+                        kind
+                )
+        );
+    }
+
+    // ToString.........................................................................................................
 
     @Test
     public void testToString2() {
