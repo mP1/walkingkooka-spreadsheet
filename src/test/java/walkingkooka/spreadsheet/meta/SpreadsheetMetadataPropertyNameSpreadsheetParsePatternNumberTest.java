@@ -35,8 +35,6 @@ import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumberTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber, SpreadsheetNumberParsePattern> {
 
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-
     @Test
     public void testExtractLocaleAwareValue() throws ParseException {
         this.extractLocaleValueAndCheck("1.25");
