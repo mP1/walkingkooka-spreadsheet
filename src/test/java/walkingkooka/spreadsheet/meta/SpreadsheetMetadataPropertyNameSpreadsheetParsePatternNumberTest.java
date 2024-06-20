@@ -22,7 +22,9 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -64,16 +66,22 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumberT
                 .get();
 
         final ExpressionNumber value = pattern.converter()
-                .convertOrFail(text,
+                .convertOrFail(
+                        text,
                         ExpressionNumber.class,
-                        ExpressionNumberConverterContexts.basic(
+                        SpreadsheetConverterContexts.basic(
                                 Converters.fake(),
-                                ConverterContexts.basic(
+                                SpreadsheetLabelNameResolvers.fake(),
+                                ExpressionNumberConverterContexts.basic(
                                         Converters.fake(),
-                                        DateTimeContexts.locale(locale, 1900, 20, LocalDateTime::now),
-                                        DecimalNumberContexts.american(MathContext.DECIMAL32)
-                                ),
-                                kind)
+                                        ConverterContexts.basic(
+                                                Converters.fake(),
+                                                DateTimeContexts.locale(locale, 1900, 20, LocalDateTime::now),
+                                                DecimalNumberContexts.american(MathContext.DECIMAL32)
+                                        ),
+                                        kind
+                                )
+                        )
                 );
 
         final DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getInstance(locale);

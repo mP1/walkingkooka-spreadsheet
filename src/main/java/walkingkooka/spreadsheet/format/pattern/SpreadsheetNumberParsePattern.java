@@ -17,6 +17,10 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.Cast;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.TextCursors;
@@ -24,6 +28,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.util.List;
 
@@ -84,8 +89,19 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
     // HasConverter.....................................................................................................
 
     @Override
-    SpreadsheetNumberParsePatternConverter createConverter() {
-        return SpreadsheetNumberParsePatternConverter.with(this);
+    Converter<ExpressionNumberConverterContext> createConverter() {
+        // the parser returns an ExpressionNumber
+        // the 2nd converter handles converting tht ExpressionNumber to Number if target is a number
+        return Cast.to(
+                ExpressionNumber.intermediateConverter(
+                        SpreadsheetConverters.expressionNumber(
+                                this.parser()
+                        ),
+                        ExpressionNumber.fromConverter(
+                                Converters.numberNumber()
+                        )
+                )
+        );
     }
 
     // HasParser........................................................................................................
