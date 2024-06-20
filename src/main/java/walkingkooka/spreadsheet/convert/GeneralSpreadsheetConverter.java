@@ -23,10 +23,8 @@ import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
@@ -45,14 +43,14 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
      * Factory that creates a new {@link GeneralSpreadsheetConverter}.
      */
     static GeneralSpreadsheetConverter with(final SpreadsheetFormatter dateFormatter,
-                                            final SpreadsheetDateParsePattern dateParser,
+                                            final Parser<SpreadsheetParserContext> dateParser,
                                             final SpreadsheetFormatter dateTimeFormatter,
-                                            final SpreadsheetDateTimeParsePattern dateTimeParser,
+                                            final Parser<SpreadsheetParserContext> dateTimeParser,
                                             final SpreadsheetFormatter numberFormatter,
-                                            final SpreadsheetNumberParsePattern numberParser,
+                                            final Parser<SpreadsheetParserContext> numberParser,
                                             final SpreadsheetFormatter textFormatter,
                                             final SpreadsheetFormatter timeFormatter,
-                                            final SpreadsheetTimeParsePattern timeParser,
+                                            final Parser<SpreadsheetParserContext> timeParser,
                                             final long dateOffset) {
         Objects.requireNonNull(dateFormatter, "dateFormatter");
         Objects.requireNonNull(dateParser, "dateParser");
@@ -81,14 +79,14 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     }
 
     private GeneralSpreadsheetConverter(final SpreadsheetFormatter dateFormatter,
-                                        final SpreadsheetDateParsePattern dateParser,
+                                        final Parser<SpreadsheetParserContext> dateParser,
                                         final SpreadsheetFormatter dateTimeFormatter,
-                                        final SpreadsheetDateTimeParsePattern dateTimeParser,
+                                        final Parser<SpreadsheetParserContext> dateTimeParser,
                                         final SpreadsheetFormatter numberFormatter,
-                                        final SpreadsheetNumberParsePattern numberParser,
+                                        final Parser<SpreadsheetParserContext> numberParser,
                                         final SpreadsheetFormatter textFormatter,
                                         final SpreadsheetFormatter timeFormatter,
-                                        final SpreadsheetTimeParsePattern timeParser,
+                                        final Parser<SpreadsheetParserContext> timeParser,
                                         final long dateOffset) {
         super();
 
@@ -180,15 +178,19 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                         toBoolean(String.class, stringTrue)
                 ), // string -> boolean
                 fromCharacterOrString(
-                        dateParser.converter().cast(ExpressionNumberConverterContext.class)
+                        SpreadsheetConverters.date(dateParser)
                 ),
                 fromCharacterOrString(
-                        dateTimeParser.converter()
+                        SpreadsheetConverters.dateTime(dateTimeParser)
                 ),
                 fromCharacterOrString(
-                        ExpressionNumber.toConverter(
-                                numberParser.converter()
-                                        .cast(SpreadsheetConverterContext.class)
+                        ExpressionNumber.intermediateConverter(
+                                SpreadsheetConverters.expressionNumber(
+                                        numberParser
+                                ),
+                                ExpressionNumber.fromConverter(
+                                        Converters.numberNumber()
+                                )
                         )
                 ),
                 fromCharacterOrString(
@@ -200,8 +202,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                         )
                 ),
                 fromCharacterOrString(
-                        timeParser.converter()
-                                .cast(SpreadsheetConverterContext.class)
+                        SpreadsheetConverters.time(timeParser)
                 )
         );
 
