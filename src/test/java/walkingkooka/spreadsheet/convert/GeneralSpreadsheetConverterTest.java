@@ -36,11 +36,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -82,7 +79,8 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     @Test
     public void testWithNullDateFormatterFails() {
-        withFails(null,
+        withFails(
+                null,
                 dateParser(),
                 dateTimeFormatter(),
                 dateTimeParser(),
@@ -90,12 +88,14 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser()
+        );
     }
 
     @Test
     public void testWithNullDateParserFails() {
-        withFails(dateFormatter(),
+        withFails(
+                dateFormatter(),
                 null,
                 dateTimeFormatter(),
                 dateTimeParser(),
@@ -103,12 +103,14 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser()
+        );
     }
 
     @Test
     public void testWithNullDateTimeFormatterFails() {
-        withFails(dateFormatter(),
+        withFails(
+                dateFormatter(),
                 dateParser(),
                 null,
                 dateTimeParser(),
@@ -116,12 +118,14 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser()
+        );
     }
 
     @Test
     public void testWithNullDateTimeParserFails() {
-        withFails(dateFormatter(),
+        withFails(
+                dateFormatter(),
                 dateParser(),
                 dateTimeFormatter(),
                 null,
@@ -129,12 +133,14 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser()
+        );
     }
 
     @Test
     public void testWithNullNumberFormatterFails() {
-        withFails(dateFormatter(),
+        withFails(
+                dateFormatter(),
                 dateParser(),
                 dateTimeFormatter(),
                 dateTimeParser(),
@@ -142,12 +148,14 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser()
+        );
     }
 
     @Test
     public void testWithNullNumberParserFails() {
-        withFails(dateFormatter(),
+        withFails(
+                dateFormatter(),
                 dateParser(),
                 dateTimeFormatter(),
                 dateTimeParser(),
@@ -155,12 +163,14 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 null,
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser()
+        );
     }
 
     @Test
     public void testWithNullTextFormatterFails() {
-        withFails(dateFormatter(),
+        withFails(
+                dateFormatter(),
                 dateParser(),
                 dateTimeFormatter(),
                 dateTimeParser(),
@@ -168,12 +178,14 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 numberParser(),
                 null,
                 timeFormatter(),
-                timeParser());
+                timeParser()
+        );
     }
 
     @Test
     public void testWithNullTimeFormatterFails() {
-        withFails(dateFormatter(),
+        withFails(
+                dateFormatter(),
                 dateParser(),
                 dateTimeFormatter(),
                 dateTimeParser(),
@@ -181,12 +193,14 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 numberParser(),
                 textFormatter(),
                 null,
-                timeParser());
+                timeParser()
+        );
     }
 
     @Test
     public void testWithNullTimeParserFails() {
-        withFails(dateFormatter(),
+        withFails(
+                dateFormatter(),
                 dateParser(),
                 dateTimeFormatter(),
                 dateTimeParser(),
@@ -194,28 +208,34 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                null);
+                null
+        );
     }
 
     private void withFails(final SpreadsheetFormatter dateFormatter,
-                           final SpreadsheetDateParsePattern dateParser,
+                           final Parser<SpreadsheetParserContext> dateParser,
                            final SpreadsheetFormatter dateTimeFormatter,
-                           final SpreadsheetDateTimeParsePattern dateTimeParser,
+                           final Parser<SpreadsheetParserContext> dateTimeParser,
                            final SpreadsheetFormatter numberFormatter,
-                           final SpreadsheetNumberParsePattern numberParser,
+                           final Parser<SpreadsheetParserContext> numberParser,
                            final SpreadsheetFormatter textFormatter,
                            final SpreadsheetFormatter timeFormatter,
-                           final SpreadsheetTimeParsePattern timeParser) {
-        assertThrows(NullPointerException.class, () -> GeneralSpreadsheetConverter.with(dateFormatter,
-                dateParser,
-                dateTimeFormatter,
-                dateTimeParser,
-                numberFormatter,
-                numberParser,
-                textFormatter,
-                timeFormatter,
-                timeParser,
-                DATE_OFFSET));
+                           final Parser<SpreadsheetParserContext> timeParser) {
+        assertThrows(
+                NullPointerException.class,
+                () -> GeneralSpreadsheetConverter.with(
+                        dateFormatter,
+                        dateParser,
+                        dateTimeFormatter,
+                        dateTimeParser,
+                        numberFormatter,
+                        numberParser,
+                        textFormatter,
+                        timeFormatter,
+                        timeParser,
+                        DATE_OFFSET
+                )
+        );
     }
 
     // convert..........................................................................................................
@@ -1447,8 +1467,9 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         );
     }
 
-    private SpreadsheetDateParsePattern dateParser() {
-        return SpreadsheetPattern.parseDateParsePattern("\\D yyyy-mm-dd");
+    private Parser<SpreadsheetParserContext> dateParser() {
+        return SpreadsheetPattern.parseDateParsePattern("\\D yyyy-mm-dd")
+                .parser();
     }
 
     private SpreadsheetFormatter dateTimeFormatter() {
@@ -1458,8 +1479,9 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         ); // dateTimeFormatter
     }
 
-    private SpreadsheetDateTimeParsePattern dateTimeParser() {
-        return SpreadsheetPattern.parseDateTimeParsePattern("\"DT\" dd mm yyyy hh mm ss");
+    private Parser<SpreadsheetParserContext> dateTimeParser() {
+        return SpreadsheetPattern.parseDateTimeParsePattern("\"DT\" dd mm yyyy hh mm ss")
+                .parser();
     }
 
     private SpreadsheetFormatter numberFormatter() {
@@ -1470,8 +1492,9 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         );
     }
 
-    private SpreadsheetNumberParsePattern numberParser() {
-        return SpreadsheetPattern.parseNumberParsePattern("\"N\" #;\"N\" #.#");
+    private Parser<SpreadsheetParserContext> numberParser() {
+        return SpreadsheetPattern.parseNumberParsePattern("\"N\" #;\"N\" #.#")
+                .parser();
     }
 
     private SpreadsheetFormatter textFormatter() {
@@ -1492,8 +1515,9 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         );
     }
 
-    private SpreadsheetTimeParsePattern timeParser() {
-        return SpreadsheetPattern.parseTimeParsePattern("\\T hh mm ss");
+    private Parser<SpreadsheetParserContext> timeParser() {
+        return SpreadsheetPattern.parseTimeParsePattern("\\T hh mm ss")
+                .parser();
     }
 
     private SpreadsheetFormatter dateTimeFormatter(final String pattern,

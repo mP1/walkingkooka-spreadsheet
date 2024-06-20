@@ -24,10 +24,6 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
@@ -132,16 +128,17 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * {@see GeneralSpreadsheetConverter}
      */
     public static Converter<SpreadsheetConverterContext> general(final SpreadsheetFormatter dateFormatter,
-                                                                 final SpreadsheetDateParsePattern dateParser,
+                                                                 final Parser<SpreadsheetParserContext> dateParser,
                                                                  final SpreadsheetFormatter dateTimeFormatter,
-                                                                 final SpreadsheetDateTimeParsePattern dateTimeParser,
+                                                                 final Parser<SpreadsheetParserContext> dateTimeParser,
                                                                  final SpreadsheetFormatter numberFormatter,
-                                                                 final SpreadsheetNumberParsePattern numberParser,
+                                                                 final Parser<SpreadsheetParserContext> numberParser,
                                                                  final SpreadsheetFormatter textFormatter,
                                                                  final SpreadsheetFormatter timeFormatter,
-                                                                 final SpreadsheetTimeParsePattern timeParser,
+                                                                 final Parser<SpreadsheetParserContext> timeParser,
                                                                  final long dateOffset) {
-        return GeneralSpreadsheetConverter.with(dateFormatter,
+        return GeneralSpreadsheetConverter.with(
+                dateFormatter,
                 dateParser,
                 dateTimeFormatter,
                 dateTimeParser,
@@ -150,7 +147,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 textFormatter,
                 timeFormatter,
                 timeParser,
-                dateOffset);
+                dateOffset
+        );
     }
 
     /**

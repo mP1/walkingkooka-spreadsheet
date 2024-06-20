@@ -506,14 +506,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return SpreadsheetConverters.general(
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateFormat),
-                dateParser,
+                dateParser.parser(),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateTimeFormat),
-                dateTimeParser,
+                dateTimeParser.parser(),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(numberFormat),
-                numberParser,
+                numberParser.parser(),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(textFormat),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(timeFormat),
-                timeParser,
+                timeParser.parser(),
                 dateOffset
         );
     }
