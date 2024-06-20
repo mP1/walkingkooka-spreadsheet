@@ -105,52 +105,6 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         this.parseStringFails("hh:mm:sss", IllegalArgumentException.class);
     }
 
-    // general........................................................................................................
-
-    @Test
-    public void testConvertFails() {
-        this.convertFails2(
-                "#.00",
-                "abc123"
-        );
-    }
-
-    @Test
-    public void testConvertFails2() {
-        this.convertFails2(
-                "$ #.00",
-                "1" + DECIMAL + "23"
-        );
-    }
-
-    @Test
-    public void testConvertNumber() {
-        this.convertAndCheck3(
-                "#.00",
-                "1" + DECIMAL + "23",
-                1.23
-        );
-    }
-
-    @Test
-    public void testConvertNumberWithCurrency() {
-        this.convertAndCheck3(
-                "$#.00",
-                CURRENCY + "1" + DECIMAL + "23",
-                1.23
-        );
-    }
-
-    private void convertAndCheck3(final String pattern,
-                                  final String text,
-                                  final Number value) {
-        this.convertAndCheck2(
-                pattern,
-                text,
-                EXPRESSION_NUMBER_KIND.create(value)
-        );
-    }
-
     // parser........................................................................................................
 
     @Test
@@ -477,6 +431,53 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                         )
         );
     }
+
+    // general........................................................................................................
+
+    @Test
+    public void testConvertUnparseableStringToExpressionNumberFails() {
+        this.convertFails2(
+                "#.00",
+                "abc123"
+        );
+    }
+
+    @Test
+    public void testConvertUnparseableStringToExpressionNumberFails2() {
+        this.convertFails2(
+                "$ #.00",
+                "1" + DECIMAL + "23"
+        );
+    }
+
+    @Test
+    public void testConvertStringToNumber() {
+        this.convertStringToExpressionNumberAndCheck(
+                "#.00",
+                "1" + DECIMAL + "23",
+                1.23
+        );
+    }
+
+    @Test
+    public void testConvertStringWithCurrencyToNumber() {
+        this.convertStringToExpressionNumberAndCheck(
+                "$#.00",
+                CURRENCY + "1" + DECIMAL + "23",
+                1.23
+        );
+    }
+
+    private void convertStringToExpressionNumberAndCheck(final String pattern,
+                                                         final String text,
+                                                         final Number value) {
+        this.convertAndCheck2(
+                pattern,
+                text,
+                EXPRESSION_NUMBER_KIND.create(value)
+        );
+    }
+
 
     // TreePrintable....................................................................................................
 
