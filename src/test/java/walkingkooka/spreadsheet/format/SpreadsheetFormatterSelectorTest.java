@@ -143,6 +143,7 @@ public final class SpreadsheetFormatterSelectorTest implements ClassTesting2<Spr
         this.parseStringFails(
                 "A!34",
                 new InvalidCharacterException("A!34", 1)
+                        .appendToMessage(" in \"A!34\"")
         );
     }
 

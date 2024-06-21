@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.naming.HasName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
@@ -62,10 +63,14 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
             textAfter = text.substring(space + 1);
         }
 
-        return new SpreadsheetFormatterSelector(
-                SpreadsheetFormatterName.with(nameText),
-                textAfter
-        );
+        try {
+            return new SpreadsheetFormatterSelector(
+                    SpreadsheetFormatterName.with(nameText),
+                    textAfter
+            );
+        } catch (final InvalidCharacterException cause) {
+            throw cause.appendToMessage(" in " + CharSequences.quoteAndEscape(text));
+        }
     }
 
     /**
