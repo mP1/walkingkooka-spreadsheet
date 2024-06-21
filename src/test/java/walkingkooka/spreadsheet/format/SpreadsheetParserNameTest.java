@@ -142,4 +142,17 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
                                             final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserName.unmarshall(from, context);
     }
+
+    // setText..........................................................................................................
+
+    @Test
+    public void testSetText() {
+        final SpreadsheetParserName name = SpreadsheetParserName.TIME_PARSER;
+        final String text = "yyyy/mm/dd";
+
+        this.checkEquals(
+                SpreadsheetParserSelector.with(name, text),
+                name.setText(text)
+        );
+    }
 }
