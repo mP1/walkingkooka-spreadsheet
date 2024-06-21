@@ -17,13 +17,12 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.Cast;
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,10 +56,8 @@ public final class SpreadsheetDateTimeParsePattern extends SpreadsheetNonNumberP
     // HasConverter.....................................................................................................
 
     @Override
-    Converter<ExpressionNumberConverterContext> createConverter() {
-        return Cast.to(
-                SpreadsheetConverters.dateTime(this.parser())
-        );
+    Converter<SpreadsheetConverterContext> createConverter() {
+        return SpreadsheetConverters.dateTime(this.parser());
     }
 
     // parse............................................................................................................

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetParserName;
 import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
@@ -29,7 +30,6 @@ import walkingkooka.text.CaseKind;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.util.Objects;
 
@@ -37,7 +37,7 @@ import java.util.Objects;
  * Holds a {@link ParserToken} typically a date/dateime/time and possibly color or conditions.
  */
 public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
-        implements HasConverter<ExpressionNumberConverterContext>,
+        implements HasConverter<SpreadsheetConverterContext>,
         HasParser<SpreadsheetParserContext> {
 
     // ctor.............................................................................................................
@@ -84,19 +84,19 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     /**
      * Returns a {@link Converter} which will try all the patterns.
      */
-    public final Converter<ExpressionNumberConverterContext> converter() {
+    public final Converter<SpreadsheetConverterContext> converter() {
         if (null == this.converter) {
             this.converter = this.createConverter();
         }
         return this.converter;
     }
 
-    private Converter<ExpressionNumberConverterContext> converter;
+    private Converter<SpreadsheetConverterContext> converter;
 
     /**
      * Factory that lazily creates a {@link Converter}
      */
-    abstract Converter<ExpressionNumberConverterContext> createConverter();
+    abstract Converter<SpreadsheetConverterContext> createConverter();
 
     // HasParser........................................................................................................
 

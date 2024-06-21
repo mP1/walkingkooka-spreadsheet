@@ -26,6 +26,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
@@ -62,7 +63,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -695,18 +695,22 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     abstract Class<V> targetType();
 
-    private ExpressionNumberConverterContext converterContext() {
+    private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
                 Converters.fake(),
                 SpreadsheetLabelNameResolvers.fake(),
-                ExpressionNumberConverterContexts.basic(
+                SpreadsheetConverterContexts.basic(
                         Converters.fake(),
-                        ConverterContexts.basic(
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
-                                this.dateTimeContext(),
-                                this.decimalNumberContext()
-                        ),
-                        EXPRESSION_NUMBER_KIND
+                                ConverterContexts.basic(
+                                        Converters.fake(),
+                                        this.dateTimeContext(),
+                                        this.decimalNumberContext()
+                                ),
+                                EXPRESSION_NUMBER_KIND
+                        )
                 )
         );
     }
