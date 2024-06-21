@@ -57,7 +57,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
@@ -308,7 +307,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     @Test
     public final void testParseInvalidTextFails() {
         assertThrows(
-                ParserReporterException.class,
+                InvalidCharacterException.class,
                 () -> this.createPattern()
                         .parse(
                                 "!invalid",

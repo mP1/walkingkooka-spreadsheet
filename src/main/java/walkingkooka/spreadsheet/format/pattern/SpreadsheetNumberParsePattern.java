@@ -23,9 +23,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -65,10 +63,10 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
     public ExpressionNumber parse(final String text,
                                   final SpreadsheetParserContext context) {
         return this.parser()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), context)
-                .get()
-                .cast(SpreadsheetNumberParserToken.class)
+                .parseText(
+                        text,
+                        context
+                ).cast(SpreadsheetNumberParserToken.class)
                 .toNumber(context);
     }
 
