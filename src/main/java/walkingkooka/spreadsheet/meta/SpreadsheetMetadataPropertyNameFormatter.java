@@ -72,7 +72,7 @@ abstract class SpreadsheetMetadataPropertyNameFormatter extends SpreadsheetMetad
     }
 
     @Override
-    String compareToName() {
+    final String compareToName() {
         return this.value();
     }
 
