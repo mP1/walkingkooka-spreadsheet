@@ -200,4 +200,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 SpreadsheetFormatterName.class
         );
     }
+
+    // SpreadsheetFormatterSelector.....................................................................................
+
+    /**
+     * Factory that creates a {@link SpreadsheetFormatterSelector} with this name and the given text.
+     */
+    public SpreadsheetFormatterSelector setText(final String text) {
+        return SpreadsheetFormatterSelector.with(
+                this,
+                text
+        );
+    }
 }
