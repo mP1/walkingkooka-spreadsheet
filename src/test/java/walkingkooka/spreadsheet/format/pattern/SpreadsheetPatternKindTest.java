@@ -25,7 +25,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.net.UrlFragment;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -61,6 +61,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTesting,
+        HasUrlFragmentTesting,
         ClassTesting<SpreadsheetPatternKind> {
 
     @Test
@@ -714,23 +715,6 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         this.urlFragmentAndCheck(
                 SpreadsheetPatternKind.TIME_PARSE_PATTERN,
                 "parser/time"
-        );
-    }
-
-    private void urlFragmentAndCheck(final SpreadsheetPatternKind kind,
-                                     final String expected) {
-        this.urlFragmentAndCheck(
-                kind,
-                UrlFragment.with(expected)
-        );
-    }
-
-    private void urlFragmentAndCheck(final SpreadsheetPatternKind kind,
-                                     final UrlFragment expected) {
-        this.checkEquals(
-                expected,
-                kind.urlFragment(),
-                () -> kind + " urlFragment()"
         );
     }
 
