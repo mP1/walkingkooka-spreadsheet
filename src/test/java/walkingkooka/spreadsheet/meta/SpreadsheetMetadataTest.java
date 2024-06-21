@@ -23,8 +23,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
-import walkingkooka.net.UrlFragment;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -101,6 +101,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetMetadata>,
         HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
+        HasUrlFragmentTesting,
         JsonNodeMarshallingTesting<SpreadsheetMetadata>,
         PatchableTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
@@ -955,15 +956,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.STYLE,
                 "style"
-        );
-    }
-
-    private void urlFragmentAndCheck(final SpreadsheetMetadataPropertyName<?> propertyName,
-                                     final String urlFragment) {
-        this.checkEquals(
-                UrlFragment.parse(urlFragment),
-                propertyName.urlFragment(),
-                () -> propertyName + " urlFragment"
         );
     }
 
