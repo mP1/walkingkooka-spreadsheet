@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
@@ -56,6 +58,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         }
     };
 
+    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
+
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     @Test
@@ -65,6 +69,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                         null,
                         REPOSITORY,
+                        SPREADSHEET_PARSER_PROVIDER,
                         NOW
                 )
         );
@@ -76,6 +81,20 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 NullPointerException.class,
                 () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                         ID,
+                        null,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        NOW
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetParserProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                        ID,
+                        REPOSITORY,
                         null,
                         NOW
                 )
@@ -89,6 +108,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                         ID,
                         REPOSITORY,
+                        SPREADSHEET_PARSER_PROVIDER,
                         null
                 )
         );
@@ -188,9 +208,10 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                         ID,
                         REPOSITORY,
+                        SPREADSHEET_PARSER_PROVIDER,
                         NOW
                 ),
-                ID + " " + REPOSITORY
+                ID + " " + REPOSITORY + " " + SPREADSHEET_PARSER_PROVIDER
         );
     }
 
@@ -214,6 +235,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         SpreadsheetRowStores.treeMap(),
                         SpreadsheetUserStores.treeMap()
                 ),
+                SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
     }

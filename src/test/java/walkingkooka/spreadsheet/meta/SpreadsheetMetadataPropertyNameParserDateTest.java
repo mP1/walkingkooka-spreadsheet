@@ -18,17 +18,19 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate, SpreadsheetDateParsePattern> {
+public final class SpreadsheetMetadataPropertyNameParserDateTest extends SpreadsheetMetadataPropertyNameParserTestCase<SpreadsheetMetadataPropertyNameParserDate> {
 
     @Test
     public void testExtractLocaleAwareValueUS() {
         this.extractLocaleValueAwareAndCheck(
                 Locale.ENGLISH,
                 SpreadsheetDateParsePattern.parseDateParsePattern("dddd, mmmm d, yyyy;dddd, mmmm d, yy;dddd, mmmm d;mmmm d, yyyy;mmmm d, yy;mmmm d;mmm d, yyyy;mmm d, yy;mmm d;m/d/yy;m/d/yyyy;m/d")
+                        .spreadsheetParserSelector()
         );
     }
 
@@ -37,33 +39,31 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTes
         this.extractLocaleValueAwareAndCheck(
                 Locale.forLanguageTag("EN-AU"),
                 SpreadsheetDateParsePattern.parseDateParsePattern("dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m")
+                        .spreadsheetParserSelector()
         );
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate.instance(), "date-parse-pattern");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameParserDate.instance(),
+                "date-parser"
+        );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate.instance();
+    SpreadsheetMetadataPropertyNameParserDate createName() {
+        return SpreadsheetMetadataPropertyNameParserDate.instance();
     }
 
     @Override
-    SpreadsheetDateParsePattern propertyValue() {
-        return SpreadsheetDateParsePattern.parseDateParsePattern("dd mm yyyy \"custom\"");
+    SpreadsheetParserSelector propertyValue() {
+        return SpreadsheetDateParsePattern.parseDateParsePattern("yyyy/mm/dd")
+                .spreadsheetParserSelector();
     }
 
     @Override
-    String propertyValueType() {
-        return "Date parse pattern";
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate.class;
+    public Class<SpreadsheetMetadataPropertyNameParserDate> type() {
+        return SpreadsheetMetadataPropertyNameParserDate.class;
     }
 }

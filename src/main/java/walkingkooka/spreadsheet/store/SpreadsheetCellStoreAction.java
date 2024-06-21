@@ -35,7 +35,7 @@ public enum SpreadsheetCellStoreAction {
     NONE(0),
 
     /**
-     * Updating the global {@link SpreadsheetMetadataPropertyName#NUMBER_PARSE_PATTERN}, will require all cell formula
+     * Updating the global {@link SpreadsheetMetadataPropertyName#NUMBER_PARSER}, will require all cell formula
      * to be parsed again because different outcomes will be produced for number literals in cells.
      */
     PARSE_FORMULA(1),

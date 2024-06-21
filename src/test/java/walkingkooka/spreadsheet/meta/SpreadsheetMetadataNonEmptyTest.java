@@ -49,19 +49,18 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -113,6 +112,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
+    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
 
     @Test
     public void testId() {
@@ -1692,13 +1693,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                   final Object expected) {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
 
-        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
-        final Converter<SpreadsheetConverterContext> converter = metadata.converter(spreadsheetFormatterProvider);
+        final Converter<SpreadsheetConverterContext> converter = metadata.converter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER
+        );
 
         this.convertAndCheck3(
                 value,
                 expected,
-                metadata.converter(spreadsheetFormatterProvider),
+                converter,
                 SpreadsheetConverterContexts.basic(
                         converter,
                         LABEL_NAME_RESOLVER,
@@ -1724,17 +1727,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("\"Date\" yyyy mm dd").spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("\"Date\" yyyy mm dd"))
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("\"Date\" yyyy mm dd").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh").spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("\"DateTime\" yyyy hh"))
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("\"DateTime\" yyyy hh").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000").spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("\"Number\" 00.000"))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("\"Number\" 00.000").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" ss hh").spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("\"Time\" ss hh"))
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("\"Time\" ss hh").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20);
     }
 
@@ -1757,9 +1760,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.convertAndCheck3(
                 LocalTime.of(12, 58, 59),
                 "Time 59 12",
-                metadata.converter(SPREADSHEET_FORMATTER_PROVIDER),
+                metadata.converter(
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER
+                ),
                 metadata.converterContext(
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
                         NOW,
                         LABEL_NAME_RESOLVER
                 )
@@ -2091,6 +2098,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 null,
                 metadata.formatterContext(
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
                         NOW,
                         LABEL_NAME_RESOLVER
                 )
@@ -2200,19 +2208,19 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testParserMissingProperties() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd"));
+                .set(
+                        SpreadsheetMetadataPropertyName.DATE_PARSER,
+                        SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector()
+                );
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                metadata::parser
+                () -> metadata.parser(SPREADSHEET_PARSER_PROVIDER)
         );
-        this.checkEquals("Required properties \"date-time-parse-pattern\", \"number-parse-pattern\", \"time-parse-pattern\" missing.", thrown.getMessage());
-    }
-
-    @Test
-    public void testParser() {
-        final SpreadsheetMetadata metadata = this.metadataWithParser();
-        final Parser<SpreadsheetParserContext> parser = metadata.parser();
-        assertSame(metadata.parser(), parser, "parser");
+        this.checkEquals(
+                "Required properties \"date-time-parser\", \"number-parser\", \"time-parser\" missing.",
+                thrown.getMessage(),
+                "message"
+        );
     }
 
     @Test
@@ -2256,10 +2264,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private SpreadsheetMetadata metadataWithParser() {
         return SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd"))
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm"))
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#.#"))
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mm"));
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#.#").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm").spreadsheetParserSelector());
     }
 
     private <T> void metadataParserParseAndCheck(final String text,
@@ -2268,7 +2276,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final TextCursor cursor = TextCursors.charSequence(text);
 
         final ParserToken token = this.metadataWithParser()
-                .parser()
+                .parser(SPREADSHEET_PARSER_PROVIDER)
                 .parse(
                         cursor,
                         this.metadataWithParserContext()
@@ -2529,11 +2537,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"create-date-time\": \"2000-12-31T12:58:59\",\n" +
                 "  \"creator\": \"creator@example.com\",\n" +
                 "  \"currency-symbol\": \"$AUD\",\n" +
-                "  \"date-formatter\": \"date-format DD/MM/YYYY\",\n" +
-                "  \"date-parse-pattern\": \"DD/MM/YYYY;DDMMYYYY\",\n" +
-                "  \"date-time-formatter\": \"date-time-format DD/MM/YYYY hh:mm\",\n" +
+                "  \"date-formatter\": \"date-format-pattern DD/MM/YYYY\",\n" +
+                "  \"date-parser\": \"date-parse-pattern DD/MM/YYYY;DDMMYYYY\",\n" +
+                "  \"date-time-formatter\": \"date-time-format-pattern DD/MM/YYYY hh:mm\",\n" +
                 "  \"date-time-offset\": \"0\",\n" +
-                "  \"date-time-parse-pattern\": \"DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
+                "  \"date-time-parser\": \"date-time-pattern DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
                 "  \"decimal-separator\": \".\",\n" +
                 "  \"default-year\": 1901,\n" +
                 "  \"exponent-symbol\": \"E\",\n" +
@@ -2543,16 +2551,16 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"modified-by\": \"modified@example.com\",\n" +
                 "  \"modified-date-time\": \"1999-12-31T12:58:59\",\n" +
                 "  \"negative-sign\": \"-\",\n" +
-                "  \"number-formatter\": \"number-format #0.0\",\n" +
-                "  \"number-parse-pattern\": \"#0.0;$#0.00\",\n" +
+                "  \"number-formatter\": \"number-format-pattern #0.0\",\n" +
+                "  \"number-parser\": \"number-parse-pattern #0.0;$#0.00\",\n" +
                 "  \"percentage-symbol\": \"%\",\n" +
                 "  \"positive-sign\": \"+\",\n" +
                 "  \"precision\": 123,\n" +
                 "  \"rounding-mode\": \"FLOOR\",\n" +
                 "  \"spreadsheet-id\": \"7b\",\n" +
                 "  \"text-formatter\": \"text-format-pattern @@\",\n" +
-                "  \"time-formatter\": \"time-format hh:mm\",\n" +
-                "  \"time-parse-pattern\": \"hh:mm;hh:mm:ss.000\",\n" +
+                "  \"time-formatter\": \"time-format-pattern hh:mm\",\n" +
+                "  \"time-parser\": \"time-parse-pattern hh:mm;hh:mm:ss.000\",\n" +
                 "  \"two-digit-year\": 31\n" +
                 "}");
         final SpreadsheetMetadata metadata = this.unmarshall(json);
@@ -2568,10 +2576,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
         properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
-        properties.put(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY"));
+        properties.put(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector());
-        properties.put(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM"));
+        properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
         properties.put(
@@ -2590,7 +2598,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN);
         properties.put(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8);
-        properties.put(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#0.0;$#0.00"));
+        properties.put(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#0.0;$#0.00").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT);
         properties.put(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN);
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
@@ -2626,7 +2634,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@@").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector());
-        properties.put(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mm;hh:mm:ss.000"));
+        properties.put(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm;hh:mm:ss.000").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31);
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
         properties.put(
@@ -2658,7 +2666,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 missing,
                 () -> "Several properties are missing values in " + properties);
 
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetMetadataNonEmpty.with(properties, SpreadsheetMetadata.EMPTY));
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetMetadataNonEmpty.with(
+                        properties,
+                        SpreadsheetMetadata.EMPTY
+                )
+        );
     }
 
     // TreePrintable....................................................................................................

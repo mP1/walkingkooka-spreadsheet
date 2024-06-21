@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -143,11 +144,13 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testParserAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                SpreadsheetMetadata.EMPTY::parser
+                () -> SpreadsheetMetadata.EMPTY.parser(SpreadsheetParserProviders.fake())
         );
-        this.checkEquals("Required properties \"date-parse-pattern\", \"date-time-parse-pattern\", \"number-parse-pattern\", \"time-parse-pattern\" missing.",
+        this.checkEquals(
+                "Required properties \"date-parser\", \"date-time-parser\", \"number-parser\", \"time-parser\" missing.",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     // HasParserContext.....................................................................................

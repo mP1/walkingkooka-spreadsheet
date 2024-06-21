@@ -20,10 +20,14 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -41,6 +45,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
@@ -138,10 +143,10 @@ public class TestGwtTest extends GWTTestCase {
                     .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD")
                     .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY"))
+                    .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY").spreadsheetParserSelector())
                     .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                     .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM"))
+                    .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM").spreadsheetParserSelector())
                     .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
                     .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1900)
                     .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
@@ -155,7 +160,7 @@ public class TestGwtTest extends GWTTestCase {
                     .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
                     .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
-                    .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern("#"))
+                    .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#").spreadsheetParserSelector())
                     .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
                     .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
                     .set(SpreadsheetMetadataPropertyName.PRECISION, 123)
@@ -167,7 +172,7 @@ public class TestGwtTest extends GWTTestCase {
                                     .set(TextStylePropertyName.HEIGHT, Length.pixel(50.0)))
                     .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@@").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern("hh:mmhh:mm:ss.000"))
+                    .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mmhh:mm:ss.000").spreadsheetParserSelector())
                     .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31)
                     .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
 
@@ -189,6 +194,7 @@ public class TestGwtTest extends GWTTestCase {
     private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine) {
         final SpreadsheetMetadata metadata = metadata();
         final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetParserProvider spreadsheetParserProvider = SpreadsheetParserProviders.spreadsheetParsePattern();
 
         return new FakeSpreadsheetEngineContext() {
 
@@ -211,6 +217,11 @@ public class TestGwtTest extends GWTTestCase {
             }
 
             @Override
+            public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+                return spreadsheetParserProvider.spreadsheetParser(selector);
+            }
+
+            @Override
             public Object evaluate(final Expression node,
                                    final Optional<SpreadsheetCell> cell) {
                 return node.toValue(
@@ -225,6 +236,7 @@ public class TestGwtTest extends GWTTestCase {
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
                                         spreadsheetFormatterProvider,
+                                        spreadsheetParserProvider,
                                         NOW,
                                         LABEL_NAME_RESOLVER
                                 )
@@ -283,6 +295,7 @@ public class TestGwtTest extends GWTTestCase {
                         value,
                         metadata.formatterContext(
                                 spreadsheetFormatterProvider,
+                                spreadsheetParserProvider,
                                 NOW,
                                 LABEL_NAME_RESOLVER
                         )

@@ -52,17 +52,13 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -114,7 +110,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         HasExpressionNumberKind,
         HasLocale,
         HasMathContext,
-        HasParser<SpreadsheetParserContext>,
         HateosResource<SpreadsheetId>,
         Patchable<SpreadsheetMetadata>,
         TreePrintable,
@@ -471,34 +466,36 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * <ul>
      * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSE_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_PARSE_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_PARSER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSE_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMATTER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSE_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSER}</li>
      * </ul>
      */
-    public final Converter<SpreadsheetConverterContext> converter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+    public final Converter<SpreadsheetConverterContext> converter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                                  final SpreadsheetParserProvider spreadsheetParserProvider) {
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final SpreadsheetFormatterSelector dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
-        final SpreadsheetDateParsePattern dateParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN);
+        final SpreadsheetParserSelector dateParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
 
         final SpreadsheetFormatterSelector dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
-        final SpreadsheetDateTimeParsePattern dateTimeParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN);
+        final SpreadsheetParserSelector dateTimeParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
 
         final SpreadsheetFormatterSelector numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
-        final SpreadsheetNumberParsePattern numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN);
+        final SpreadsheetParserSelector numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSER);
 
         final SpreadsheetFormatterSelector textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
 
         final SpreadsheetFormatterSelector timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
-        final SpreadsheetTimeParsePattern timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN);
+        final SpreadsheetParserSelector timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
 
         final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_OFFSET);
 
@@ -506,14 +503,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return SpreadsheetConverters.general(
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateFormat),
-                dateParser.parser(),
+                spreadsheetParserProvider.spreadsheetParserOrFail(dateParser),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateTimeFormat),
-                dateTimeParser.parser(),
+                spreadsheetParserProvider.spreadsheetParserOrFail(dateTimeParser),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(numberFormat),
-                numberParser.parser(),
+                spreadsheetParserProvider.spreadsheetParserOrFail(numberParser),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(textFormat),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(timeFormat),
-                timeParser.parser(),
+                spreadsheetParserProvider.spreadsheetParserOrFail(timeParser),
                 dateOffset
         );
     }
@@ -522,14 +519,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link ExpressionNumberConverterContext}
      */
     public final SpreadsheetConverterContext converterContext(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                              final SpreadsheetParserProvider spreadsheetParserProvider,
                                                               final Supplier<LocalDateTime> now,
                                                               final SpreadsheetLabelNameResolver labelNameResolver) {
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
 
         return SpreadsheetConverterContexts.basic(
-                this.converter(spreadsheetFormatterProvider),
+                this.converter(
+                        spreadsheetFormatterProvider,
+                        spreadsheetParserProvider
+                ),
                 labelNameResolver,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
@@ -801,6 +803,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetFormatterContext}.
      */
     public final SpreadsheetFormatterContext formatterContext(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                              final SpreadsheetParserProvider spreadsheetParserProvider,
                                                               final Supplier<LocalDateTime> now,
                                                               final SpreadsheetLabelNameResolver labelNameResolver) {
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
@@ -822,6 +825,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 this.formatter(spreadsheetFormatterProvider),
                 this.converterContext(
                         spreadsheetFormatterProvider,
+                        spreadsheetParserProvider,
                         now,
                         labelNameResolver
                 )
@@ -833,28 +837,26 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link Parser} that can be used to parse formulas.
      */
-    public abstract Parser<SpreadsheetParserContext> parser();
+    public final Parser<SpreadsheetParserContext> parser(final SpreadsheetParserProvider provider) {
+        Objects.requireNonNull(provider, "provider");
 
-    /**
-     * Creates a {@link Parser} that may be used to parse formulas after verifying required properties.
-     */
-    final Parser<SpreadsheetParserContext> createParser() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetDateParsePattern date = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN);
-        final SpreadsheetDateTimeParsePattern dateTime = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN);
-        final SpreadsheetNumberParsePattern number = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN);
-        final SpreadsheetTimeParsePattern time = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN);
+        final SpreadsheetParserSelector date = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
+        final SpreadsheetParserSelector dateTime = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
+        final SpreadsheetParserSelector number = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSER);
+        final SpreadsheetParserSelector time = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
 
         components.reportIfMissing();
 
         return SpreadsheetParsers.valueOrExpression(
                 Parsers.alternatives(
                         Lists.of(
-                                date.parser(),
-                                dateTime.parser(),
-                                number.parser().andEmptyTextCursor(),
-                                time.parser()
+                                provider.spreadsheetParserOrFail(date),
+                                provider.spreadsheetParserOrFail(dateTime),
+                                provider.spreadsheetParserOrFail(number)
+                                        .andEmptyTextCursor(),
+                                provider.spreadsheetParserOrFail(time)
                         )
                 )
         );

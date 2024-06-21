@@ -502,6 +502,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             context.spreadsheetMetadata()
                                     .converterContext(
                                             context, // SpreadsheetFormatterProvider
+                                            context, // SpreadsheetParserProvider
                                             context::now, // now supplier
                                             context::resolveIfLabel
                                     )
@@ -1140,7 +1141,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 .flatMap(context::spreadsheetParser)
                                 .orElseGet(
                                         () -> SpreadsheetParsers.valueOrExpression(
-                                                metadata.parser()
+                                                metadata.parser(context) // SpreadsheetEngineContext implements SpreadsheetParserProvider
                                         )
                                 ),
                         metadata.parserContext(context::now)

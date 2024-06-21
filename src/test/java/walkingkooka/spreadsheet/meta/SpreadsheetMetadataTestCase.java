@@ -33,6 +33,7 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.CharSequences;
@@ -412,11 +413,26 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     // converter........................................................................................................
 
     @Test
-    public final void testConverterWithNullFails() {
+    public final void testConverterWithNullSpreadsheetFormatterProviderFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createObject()
-                        .converter(null)
+                        .converter(
+                                null,
+                                SpreadsheetParserProviders.fake()
+                        )
+        );
+    }
+
+    @Test
+    public final void testConverterWithNullSpreadsheetParserProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .converter(
+                                SpreadsheetFormatterProviders.fake(),
+                                null
+                        )
         );
     }
 
@@ -426,11 +442,14 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> this.createObject()
-                        .converter(SpreadsheetFormatterProviders.fake())
+                        .converter(
+                                SpreadsheetFormatterProviders.fake(),
+                                SpreadsheetParserProviders.fake()
+                        )
         );
         checkMessage(
                 thrown,
-                "Required properties \"date-formatter\", \"date-parse-pattern\", \"date-time-formatter\", \"date-time-offset\", \"date-time-parse-pattern\", \"number-formatter\", \"number-parse-pattern\", \"text-formatter\", \"time-formatter\", \"time-parse-pattern\" missing."
+                "Required properties \"date-formatter\", \"date-parser\", \"date-time-formatter\", \"date-time-offset\", \"date-time-parser\", \"number-formatter\", \"number-parser\", \"text-formatter\", \"time-formatter\", \"time-parser\" missing."
         );
     }
 

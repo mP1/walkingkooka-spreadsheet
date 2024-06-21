@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 
 import java.time.LocalDateTime;
@@ -40,10 +41,12 @@ public final class SpreadsheetCellStores implements PublicStaticHelper {
      */
     public static SpreadsheetCellStore spreadsheetFormulaSpreadsheetMetadataAware(final SpreadsheetCellStore store,
                                                                                   final SpreadsheetMetadata metadata,
+                                                                                  final SpreadsheetParserProvider spreadsheetParserProvider,
                                                                                   final Supplier<LocalDateTime> now) {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
                 metadata,
+                spreadsheetParserProvider,
                 now
         );
     }

@@ -235,19 +235,19 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                 name = SpreadsheetMetadataPropertyName.DATE_FORMATTER;
                 break;
             case DATE_PARSE_PATTERN:
-                name = SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN;
+                name = SpreadsheetMetadataPropertyName.DATE_PARSER;
                 break;
             case DATE_TIME_FORMAT_PATTERN:
                 name = SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER;
                 break;
             case DATE_TIME_PARSE_PATTERN:
-                name = SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN;
+                name = SpreadsheetMetadataPropertyName.DATE_TIME_PARSER;
                 break;
             case NUMBER_FORMAT_PATTERN:
                 name = SpreadsheetMetadataPropertyName.NUMBER_FORMATTER;
                 break;
             case NUMBER_PARSE_PATTERN:
-                name = SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN;
+                name = SpreadsheetMetadataPropertyName.NUMBER_PARSER;
                 break;
             case TEXT_FORMAT_PATTERN:
                 name = SpreadsheetMetadataPropertyName.TEXT_FORMATTER;
@@ -256,7 +256,7 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                 name = SpreadsheetMetadataPropertyName.TIME_FORMATTER;
                 break;
             case TIME_PARSE_PATTERN:
-                name = SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN;
+                name = SpreadsheetMetadataPropertyName.TIME_PARSER;
                 break;
             default:
                 NeverError.unhandledCase(this, values());

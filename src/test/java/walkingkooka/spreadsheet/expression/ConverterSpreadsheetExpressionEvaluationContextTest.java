@@ -32,6 +32,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -490,6 +491,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         METADATA,
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
                         EXPRESSION_FUNCTION_PROVIDER,
+                        SpreadsheetParserProviders.spreadsheetParsePattern(),
                         REFERENCES,
                         LABEL_NAME_RESOLVER,
                         LocalDateTime::now

@@ -199,7 +199,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public SpreadsheetParserToken parseFormula(final TextCursor formula) {
-        return SpreadsheetParsers.valueOrExpression(this.metadata.parser())
+        return SpreadsheetParsers.valueOrExpression(
+                        this.metadata.parser(this)
+                )
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(formula, this.parserContext)
                 .get()
@@ -256,6 +258,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 this.spreadsheetMetadata(),
                 this.spreadsheetFormatterProvider,
                 this.expressionFunctionProvider,
+                this.spreadsheetParserProvider,
                 this.referenceFunction,
                 this::resolveIfLabel,
                 this.now
@@ -292,6 +295,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 this.spreadsheetMetadata()
                         .formatterContext(
                                 this.spreadsheetFormatterProvider,
+                                this.spreadsheetParserProvider,
                                 this::now,
                                 this::resolveIfLabel
                         )

@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -71,6 +73,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.fake();
 
+    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
+
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
@@ -90,6 +94,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -105,6 +110,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -120,6 +126,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -135,6 +142,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -150,6 +158,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -164,6 +173,23 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_FORMATTER_PROVIDER,
+                null,
+                SPREADSHEET_PARSER_PROVIDER,
+                REFERENCES,
+                LABEL_NAME_RESOLVER,
+                NOW
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetParserProviderFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                METADATA,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                EXPRESSION_FUNCTION_PROVIDER,
                 null,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
@@ -180,6 +206,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 null,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -195,6 +222,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 null,
                 NOW
@@ -210,6 +238,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 null
@@ -222,6 +251,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final SpreadsheetMetadata spreadsheetMetadata,
                            final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                            final ExpressionFunctionProvider expressionFunctionProvider,
+                           final SpreadsheetParserProvider spreadsheetParserProvider,
                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
                            final SpreadsheetLabelNameResolver labelNameResolver,
                            final Supplier<LocalDateTime> now) {
@@ -234,6 +264,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         spreadsheetMetadata,
                         spreadsheetFormatterProvider,
                         expressionFunctionProvider,
+                        spreadsheetParserProvider,
                         references,
                         labelNameResolver,
                         now
@@ -470,6 +501,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20),
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW

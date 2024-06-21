@@ -23,6 +23,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -49,6 +50,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetMetadata spreadsheetMetadata,
                                                                final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                                final ExpressionFunctionProvider expressionFunctionProvider,
+                                                               final SpreadsheetParserProvider spreadsheetParserProvider,
                                                                final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                                final SpreadsheetLabelNameResolver labelNameResolver,
                                                                final Supplier<LocalDateTime> now) {
@@ -59,6 +61,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 spreadsheetMetadata,
                 spreadsheetFormatterProvider,
                 expressionFunctionProvider,
+                spreadsheetParserProvider,
                 references,
                 labelNameResolver,
                 now

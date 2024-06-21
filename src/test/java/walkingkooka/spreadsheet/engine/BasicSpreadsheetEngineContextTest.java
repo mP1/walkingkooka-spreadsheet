@@ -787,10 +787,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-Yellow\": 6,\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
-                        "  \"date-parse-pattern\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                        "  \"date-parser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                         "  \"date-time-formatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                         "  \"date-time-offset\": \"-25569\",\n" +
-                        "  \"date-time-parse-pattern\": \"dd/mm/yyyy hh:mm\",\n" +
+                        "  \"date-time-parser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
                         "  \"decimal-separator\": \".\",\n" +
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
@@ -802,7 +802,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +
-                        "  \"number-parse-pattern\": \"#,##0.###;#,##0\",\n" +
+                        "  \"number-parser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                         "  \"percentage-symbol\": \"%\",\n" +
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
@@ -947,7 +947,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  },\n" +
                         "  \"text-formatter\": \"text-format-pattern @\",\n" +
                         "  \"time-formatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
-                        "  \"time-parse-pattern\": \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
+                        "  \"time-parser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"two-digit-year\": 20,\n" +
                         "  \"value-separator\": \",\",\n" +
                         "  \"viewport\": {\n" +
@@ -1040,10 +1040,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-Yellow\": 6,\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
-                        "  \"date-parse-pattern\": \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                        "  \"date-parser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                         "  \"date-time-formatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                         "  \"date-time-offset\": \"-25569\",\n" +
-                        "  \"date-time-parse-pattern\": \"dd/mm/yyyy hh:mm\",\n" +
+                        "  \"date-time-parser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
                         "  \"decimal-separator\": \".\",\n" +
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
@@ -1055,7 +1055,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +
-                        "  \"number-parse-pattern\": \"#,##0.###;#,##0\",\n" +
+                        "  \"number-parser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                         "  \"percentage-symbol\": \"%\",\n" +
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
@@ -1200,7 +1200,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  },\n" +
                         "  \"text-formatter\": \"text-format-pattern @\",\n" +
                         "  \"time-formatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
-                        "  \"time-parse-pattern\": \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
+                        "  \"time-parser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"two-digit-year\": 20,\n" +
                         "  \"value-separator\": \",\",\n" +
                         "  \"viewport\": {\n" +
@@ -1281,7 +1281,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .loadFromLocale()
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm"))
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)

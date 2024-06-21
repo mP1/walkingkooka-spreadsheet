@@ -18,44 +18,45 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTimeTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime, SpreadsheetTimeParsePattern> {
+public final class SpreadsheetMetadataPropertyNameParserTimeTest extends SpreadsheetMetadataPropertyNameParserTestCase<SpreadsheetMetadataPropertyNameParserTime> {
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
                 Locale.ENGLISH,
                 SpreadsheetTimeParsePattern.parseTimeParsePattern("h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm")
+                        .spreadsheetParserSelector()
         );
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime.instance(), "time-parse-pattern");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameParserTime.instance(),
+                "time-parser"
+        );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime.instance();
+    SpreadsheetMetadataPropertyNameParserTime createName() {
+        return SpreadsheetMetadataPropertyNameParserTime.instance();
     }
 
     @Override
-    SpreadsheetTimeParsePattern propertyValue() {
-        return SpreadsheetTimeParsePattern.parseTimeParsePattern("hhmmss \"pattern-1\";hhmmss \"pattern-2\"");
-    }
-
-    @Override
-    String propertyValueType() {
-        return "Time parse pattern";
+    SpreadsheetParserSelector propertyValue() {
+        return SpreadsheetTimeParsePattern.parseTimeParsePattern("hhmmss \"pattern-1\";hhmmss \"pattern-2\"")
+                .spreadsheetParserSelector();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime.class;
+    public Class<SpreadsheetMetadataPropertyNameParserTime> type() {
+        return SpreadsheetMetadataPropertyNameParserTime.class;
     }
 }

@@ -533,33 +533,33 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionDateParsePattern() {
+    public void testSpreadsheetCellStoreActionDateParser() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN,
+                SpreadsheetMetadataPropertyName.DATE_PARSER,
                 SpreadsheetCellStoreAction.PARSE_FORMULA
         );
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionDateTimeParsePattern() {
+    public void testSpreadsheetCellStoreActionDateTimeParser() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN,
+                SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
                 SpreadsheetCellStoreAction.PARSE_FORMULA
         );
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionNumberParsePattern() {
+    public void testSpreadsheetCellStoreActionNumberParser() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                 SpreadsheetCellStoreAction.PARSE_FORMULA
         );
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionTimeParsePattern() {
+    public void testSpreadsheetCellStoreActionTimeParser() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN,
+                SpreadsheetMetadataPropertyName.TIME_PARSER,
                 SpreadsheetCellStoreAction.PARSE_FORMULA
         );
     }

@@ -23,6 +23,9 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -35,7 +38,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumberTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber, SpreadsheetNumberParsePattern> {
+public final class SpreadsheetMetadataPropertyNameParserNumberTest extends SpreadsheetMetadataPropertyNameParserTestCase<SpreadsheetMetadataPropertyNameParserNumber> {
 
     @Test
     public void testExtractLocaleAwareValue() throws ParseException {
@@ -61,28 +64,30 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumberT
     private void extractLocaleValueAndCheck2(final String text,
                                              final ExpressionNumberKind kind) throws ParseException {
         final Locale locale = Locale.ENGLISH;
-        final SpreadsheetNumberParsePattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber.instance()
+        final SpreadsheetParserSelector parserSelector = SpreadsheetMetadataPropertyNameParserNumber.instance()
                 .extractLocaleAwareValue(locale)
                 .get();
 
-        final ExpressionNumber value = pattern.converter()
-                .convertOrFail(
-                        text,
-                        ExpressionNumber.class,
-                        SpreadsheetConverterContexts.basic(
+        final ExpressionNumber value = SpreadsheetConverters.expressionNumber(
+                SpreadsheetParserProviders.spreadsheetParsePattern()
+                        .spreadsheetParserOrFail(parserSelector)
+        ).convertOrFail(
+                text,
+                ExpressionNumber.class,
+                SpreadsheetConverterContexts.basic(
+                        Converters.fake(),
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
-                                SpreadsheetLabelNameResolvers.fake(),
-                                ExpressionNumberConverterContexts.basic(
+                                ConverterContexts.basic(
                                         Converters.fake(),
-                                        ConverterContexts.basic(
-                                                Converters.fake(),
-                                                DateTimeContexts.locale(locale, 1900, 20, LocalDateTime::now),
-                                                DecimalNumberContexts.american(MathContext.DECIMAL32)
-                                        ),
-                                        kind
-                                )
+                                        DateTimeContexts.locale(locale, 1900, 20, LocalDateTime::now),
+                                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                                ),
+                                kind
                         )
-                );
+                )
+        );
 
         final DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getInstance(locale);
         decimalFormat.setParseBigDecimal(true);
@@ -91,34 +96,33 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumberT
         this.checkEquals(
                 kind.create(expected),
                 value,
-                () -> pattern + "\n" + kind + "\nDecimalFormat: " + decimalFormat.toPattern()
+                () -> parserSelector + "\n" + kind + "\nDecimalFormat: " + decimalFormat.toPattern()
         );
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber.instance(), "number-parse-pattern");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameParserNumber.instance(),
+                "number-parser"
+        );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber.instance();
+    SpreadsheetMetadataPropertyNameParserNumber createName() {
+        return SpreadsheetMetadataPropertyNameParserNumber.instance();
     }
 
     @Override
-    SpreadsheetNumberParsePattern propertyValue() {
-        return SpreadsheetNumberParsePattern.parseNumberParsePattern("#.## \"pattern-1\";#.00 \"pattern-2\"");
-    }
-
-    @Override
-    String propertyValueType() {
-        return "Number parse pattern";
+    SpreadsheetParserSelector propertyValue() {
+        return SpreadsheetNumberParsePattern.parseNumberParsePattern("#.## \"pattern-1\";#.00 \"pattern-2\"")
+                .spreadsheetParserSelector();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber.class;
+    public Class<SpreadsheetMetadataPropertyNameParserNumber> type() {
+        return SpreadsheetMetadataPropertyNameParserNumber.class;
     }
 }
