@@ -24,6 +24,10 @@ import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -43,13 +47,20 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements SpreadsheetCellStoreTesting<S>,
-        TypeNameTesting<S> {
-
-    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DOUBLE;
+        TypeNameTesting<S>,
+        SpreadsheetMetadataTesting {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.RELATIVE
             .column(1)
             .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
+
+    final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("d/m/y").spreadsheetParserSelector())
+            .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("d/m/y h:mm").spreadsheetParserSelector())
+            .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#;#.#").spreadsheetParserSelector())
+            .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm").spreadsheetParserSelector());
+
+    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = METADATA.expressionNumberKind();
+
 
     SpreadsheetCellStoreTestCase() {
         super();

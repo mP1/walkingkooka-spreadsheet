@@ -25,15 +25,12 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
 
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -46,16 +43,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore> {
 
-    private final static String CURRENCY_SYMBOL = "$AUD";
     private final static char DECIMAL_SEPARATOR = ',';
-    private final static int DEFAULT_YEAR = 1800;
-    private final static String EXPONENT_SYMBOL = "e";
-    private final static char GROUP_SEPARATOR = '.';
-    private final static char NEGATIVE_SIGN = '-';
     private final static char PERCENT = '^';
-    private final static char POSITIVE_SIGN = '+';
-    private final static int TWO_DIGIT_YEAR = 25;
-    private final static char VALUE_SEPARATOR = ';';
 
     private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
@@ -68,7 +57,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 NullPointerException.class,
                 () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                         null,
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
                         NOW
                 )
@@ -94,7 +83,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 NullPointerException.class,
                 () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                         this.cellStore(),
-                        this.metadata(),
+                        METADATA,
                         null,
                         NOW
                 )
@@ -107,7 +96,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 NullPointerException.class,
                 () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                         this.cellStore(),
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
                         null
                 )
@@ -117,17 +106,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testWith() {
         final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetMetadata metadata = this.metadata();
 
         this.check(
                 SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                         cellStore,
-                        metadata,
+                        METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
                         NOW
                 ),
                 cellStore,
-                metadata,
+                METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -136,11 +124,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testWithSpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreAndSameMetadata() {
         final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetMetadata metadata = this.metadata();
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore wrapped = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 cellStore,
-                metadata,
+                METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -149,7 +136,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 wrapped,
                 SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                         wrapped,
-                        metadata,
+                        METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
                         NOW
                 ));
@@ -158,16 +145,15 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testWithSpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreDifferentMetadata() {
         final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetMetadata metadata = this.metadata();
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore wrapped = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 cellStore,
-                metadata,
+                METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
 
-        final SpreadsheetMetadata differentMetadata = metadata.set(
+        final SpreadsheetMetadata differentMetadata = METADATA.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(99999L)
         );
 
@@ -340,21 +326,20 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
             }
         };
 
-        final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetCell returned = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                         cellStore,
-                        metadata,
+                        METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
                         NOW
                 )
                 .save(cell);
         this.checkEquals(saved,
                 this.saved,
-                () -> "saved " + cell + " metadata=" + metadata
+                () -> "saved " + cell + " metadata=" + METADATA
         );
         this.checkEquals(loaded,
                 returned,
-                () -> "returned saved " + cell + " metadata=" + metadata
+                () -> "returned saved " + cell + " metadata=" + METADATA
         );
     }
 
@@ -390,8 +375,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
-                this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("ES")),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        Locale.forLanguageTag("ES")
+                ),
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -463,8 +450,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
-                this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("ES")),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        Locale.forLanguageTag("ES")
+                ),
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -529,8 +518,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
-                this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("ES")),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        Locale.forLanguageTag("ES")
+                ),
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -593,8 +584,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
-                this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("ES")),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        Locale.forLanguageTag("ES")
+                ),
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -648,8 +641,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final char decimalSeparator2 = ';';
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
-                this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, decimalSeparator2),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
+                        decimalSeparator2
+                ),
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -691,8 +686,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final char percent2 = ';';
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
-                this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, percent2),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
+                        percent2
+                ),
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -755,8 +752,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final char decimalSeparator2 = ';';
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
-                this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, decimalSeparator2),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
+                        decimalSeparator2
+                ),
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -808,8 +807,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final char decimalSeparator2 = ';';
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
-                this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, decimalSeparator2),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
+                        decimalSeparator2
+                ),
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -884,8 +885,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
-                this.metadata()
-                        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("ES")),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        Locale.forLanguageTag("ES")
+                ),
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -925,17 +928,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testToString() {
         final SpreadsheetCellStore cellStore = SpreadsheetCellStores.fake();
-        final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 cellStore,
-                metadata,
+                METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
 
         this.toStringAndCheck(
                 store,
-                metadata + " " + cellStore + " " + SPREADSHEET_PARSER_PROVIDER
+                METADATA + " " + cellStore + " " + SPREADSHEET_PARSER_PROVIDER
         );
     }
 
@@ -943,7 +945,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore createStore() {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 this.cellStore(),
-                this.metadata(),
+                METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW
         );
@@ -951,28 +953,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
     private SpreadsheetCellStore cellStore() {
         return SpreadsheetCellStores.treeMap();
-    }
-
-    private SpreadsheetMetadata metadata() {
-        return SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY_SYMBOL)
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("d/m/y").spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("d/m/y h:mm").spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
-                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
-                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#;#.#").spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT)
-                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN)
-                .set(SpreadsheetMetadataPropertyName.PRECISION, MathContext.DECIMAL32.getPrecision())
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR)
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm").spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
     }
 
     @Override
