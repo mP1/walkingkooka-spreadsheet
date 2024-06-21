@@ -563,7 +563,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     // HasSpreadsheetPatternKind........................................................................................
 
     /**
-     * The corresponding {@link SpreadsheetPatternKind} for this property.
+     * The corresponding {@link SpreadsheetPatternKind} for this property. Only <code>formatter</code> and
+     * <code>parser</code> properties will return a {@link SpreadsheetPatternKind}.
      */
     // time-parse-pattern -> TIME_PARSER
     @Override
@@ -576,13 +577,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
             kind = formatter.spreadsheetPatternKind;
 
         } else {
-            if (name.endsWith("parse-pattern")) {
-                kind = SpreadsheetPatternKind.valueOf(
-                        CaseKind.KEBAB.change(
-                                name,
-                                CaseKind.SNAKE
-                        )
-                );
+            if (this instanceof SpreadsheetMetadataPropertyNameParser) {
+                final SpreadsheetMetadataPropertyNameParser parser = (SpreadsheetMetadataPropertyNameParser) this;
+                kind = parser.spreadsheetPatternKind;
             } else {
                 kind = null;
             }
