@@ -41,6 +41,9 @@ import java.time.LocalTime;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+/**
+ * A collection of factors for creating {@link Converter} converters.
+ */
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
     /**
