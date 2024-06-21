@@ -54,12 +54,11 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     /**
      * Returns the {@link SpreadsheetParserSelector} equivalent to this pattern.
      * <pre>
-     * date-parse-pattern
-     * date-time-parse-pattern
+     * date-parse-pattern pattern-here
+     * date-time-parse-pattern pattern-here
      * </pre>
      */
     public final SpreadsheetParserSelector spreadsheetParserSelector() {
-
         final String parserName = CaseKind.CAMEL.change(
                 this.getClass().getSimpleName()
                         .substring("Spreadsheet".length()),

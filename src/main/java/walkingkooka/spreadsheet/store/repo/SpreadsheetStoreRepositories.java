@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store.repo;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -81,10 +82,12 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
      */
     public static SpreadsheetStoreRepository spreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetId id,
                                                                                           final SpreadsheetStoreRepository repository,
+                                                                                          final SpreadsheetParserProvider spreadsheetParserProvider,
                                                                                           final Supplier<LocalDateTime> now) {
         return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                 id,
                 repository,
+                spreadsheetParserProvider,
                 now
         );
     }

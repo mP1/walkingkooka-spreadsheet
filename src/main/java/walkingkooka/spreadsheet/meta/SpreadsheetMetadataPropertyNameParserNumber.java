@@ -17,51 +17,46 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
 import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * A property that holds the default {@link SpreadsheetNumberParsePattern}.
+ * This {@link SpreadsheetMetadataPropertyName} holds the default parser for {@link walkingkooka.tree.expression.ExpressionNumber} values.
  */
-final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber extends SpreadsheetMetadataPropertyNameSpreadsheetParsePattern<SpreadsheetNumberParsePattern> {
+final class SpreadsheetMetadataPropertyNameParserNumber extends SpreadsheetMetadataPropertyNameParser {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber instance() {
-        return new SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber();
+    static SpreadsheetMetadataPropertyNameParserNumber instance() {
+        return new SpreadsheetMetadataPropertyNameParserNumber();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber() {
-        super("number-parse-pattern");
+    private SpreadsheetMetadataPropertyNameParserNumber() {
+        super(
+                "number-parser",
+                SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
+        );
     }
 
     @Override
-    SpreadsheetNumberParsePattern checkValue0(final Object value) {
-        return this.checkValueType(value,
-                v -> v instanceof SpreadsheetNumberParsePattern);
-    }
-
-    @Override
-    String expected() {
-        return "Number parse pattern";
-    }
-
-    @Override
-    void accept(final SpreadsheetNumberParsePattern value,
+    void accept(final SpreadsheetParserSelector value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitNumberParsePattern(value);
+        visitor.visitNumberParser(value);
     }
 
     @Override
-    Optional<SpreadsheetNumberParsePattern> extractLocaleAwareValue(final Locale locale) {
+    Optional<SpreadsheetParsePattern> extractLocaleAwareValueSpreadsheetParsePattern(final Locale locale) {
         final SpreadsheetNumberParsePattern number = SpreadsheetPattern.decimalFormat(
                 (DecimalFormat) DecimalFormat.getInstance(locale)
         );
@@ -78,15 +73,5 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber extends
                                         integer.text()
                         )
         );
-    }
-
-    @Override
-    Class<SpreadsheetNumberParsePattern> type() {
-        return SpreadsheetNumberParsePattern.class;
-    }
-
-    @Override
-    public SpreadsheetNumberParsePattern parseUrlFragmentSaveValue0(final String value) {
-        return SpreadsheetPattern.parseNumberParsePattern(value);
     }
 }

@@ -13322,8 +13322,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public SpreadsheetParserToken parseFormula(final TextCursor formula) {
-                return SpreadsheetParsers.valueOrExpression(BasicSpreadsheetEngineTest.this.metadata().parser())
-                        .orFailIfCursorNotEmpty(ParserReporters.basic())
+                return SpreadsheetParsers.valueOrExpression(
+                                BasicSpreadsheetEngineTest.this.metadata()
+                                        .parser(SPREADSHEET_PARSER_PROVIDER)
+                        ).orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(
                                 formula,
                                 SpreadsheetParserContexts.basic(
@@ -13349,6 +13351,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.spreadsheetMetadata(),
                                 SPREADSHEET_FORMATTER_PROVIDER,
                                 this.expressionFunctionProvider(),
+                                SPREADSHEET_PARSER_PROVIDER,
                                 (r) -> {
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
@@ -13369,6 +13372,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.spreadsheetMetadata(), // metadata
                                 SPREADSHEET_FORMATTER_PROVIDER,
                                 this.expressionFunctionProvider(),
+                                SPREADSHEET_PARSER_PROVIDER,
                                 this.references(), // references
                                 (s) -> {
                                     throw new UnsupportedOperationException(s.toString()); // resolveLabel
@@ -13555,6 +13559,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return this.spreadsheetMetadata()
                         .converterContext(
                                 SPREADSHEET_FORMATTER_PROVIDER,
+                                SPREADSHEET_PARSER_PROVIDER,
                                 NOW,
                                 LABEL_NAME_RESOLVER
                         );
@@ -13735,7 +13740,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         null :
                         SpreadsheetParsers.valueOrExpression(
                                 BasicSpreadsheetEngineTest.this.metadata()
-                                        .parser()
+                                        .parser(SPREADSHEET_PARSER_PROVIDER)
                                 ).orFailIfCursorNotEmpty(ParserReporters.basic())
                                 .parse(TextCursors.charSequence(text),
                                         SpreadsheetParserContexts.basic(
@@ -13842,14 +13847,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern(DATE_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERN, SpreadsheetPattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm"))
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERN, SpreadsheetPattern.parseDateTimeParsePattern(DATETIME_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern(DATETIME_PATTERN).spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN, SpreadsheetPattern.parseNumberParsePattern(NUMBER_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern(NUMBER_PATTERN).spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern(TEXT_PATTERN + suffix).spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern(TIME_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERN, SpreadsheetPattern.parseTimeParsePattern(TIME_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern(TIME_PATTERN).spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
                         .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
                         .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))

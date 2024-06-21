@@ -109,8 +109,8 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                        SpreadsheetPattern.parseNumberParsePattern("0.00").spreadsheetParserSelector()
                 )
         );
 
@@ -145,8 +145,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .spreadsheetParserSelector()
                 )
         );
 
@@ -157,8 +158,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .spreadsheetParserSelector()
                 )
         );
 
@@ -193,8 +195,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .spreadsheetParserSelector()
                 ).set(
                         SpreadsheetMetadataPropertyName.CREATOR,
                         EmailAddress.parse("different@example.com")
@@ -208,8 +211,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .spreadsheetParserSelector()
                 )
         );
 
@@ -244,8 +248,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .spreadsheetParserSelector()
                 )
         );
 
@@ -256,8 +261,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                         SpreadsheetPattern.parseNumberParsePattern("0.000")
+                                .spreadsheetParserSelector()
                 )
         );
 
@@ -302,8 +308,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .spreadsheetParserSelector()
                 )
         );
 
@@ -369,8 +376,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .spreadsheetParserSelector()
                 )
         );
 
@@ -453,8 +461,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         metadata = store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERN,
+                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .spreadsheetParserSelector()
                 )
         );
 

@@ -22,6 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -197,7 +198,8 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss").spreadsheetFormatterSelector()
         );
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                SpreadsheetParserProviders.spreadsheetParsePattern()
         );
 
         return SpreadsheetConverterContexts.basic(
@@ -205,6 +207,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 LABEL_NAME_RESOLVER,
                 metadata.converterContext(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                        SpreadsheetParserProviders.spreadsheetParsePattern(),
                         LocalDateTime::now,
                         LABEL_NAME_RESOLVER
                 )

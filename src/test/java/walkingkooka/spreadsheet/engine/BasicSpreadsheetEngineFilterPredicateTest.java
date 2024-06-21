@@ -25,10 +25,14 @@ import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
@@ -146,6 +150,12 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                     public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
                         return SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                                 .spreadsheetFormatter(selector);
+                    }
+
+                    @Override
+                    public Parser<SpreadsheetParserContext> spreadsheetParserOrFail(final SpreadsheetParserSelector selector) {
+                        return SpreadsheetParserProviders.spreadsheetParsePattern()
+                                .spreadsheetParserOrFail(selector);
                     }
 
                     @Override

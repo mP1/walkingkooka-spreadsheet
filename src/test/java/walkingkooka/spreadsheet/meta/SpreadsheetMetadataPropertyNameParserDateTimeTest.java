@@ -18,45 +18,46 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTimeTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime, SpreadsheetDateTimeParsePattern> {
+public final class SpreadsheetMetadataPropertyNameParserDateTimeTest extends SpreadsheetMetadataPropertyNameParserTestCase<SpreadsheetMetadataPropertyNameParserDateTime> {
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
                 Locale.ENGLISH,
                 SpreadsheetDateParsePattern.parseDateTimeParsePattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\a\\t h:mm:ss;dddd, mmmm d, yy \\a\\t h:mm AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss.0;dddd, mmmm d, yyyy \\a\\t h:mm:ss;dddd, mmmm d, yyyy \\a\\t h:mm AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss;dddd, mmmm d, yy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0;dddd, mmmm d, yyyy, h:mm:ss;dddd, mmmm d, yyyy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm;dddd, mmmm d, yy, h:mm;mmmm d, yyyy \\a\\t h:mm:ss AM/PM;mmmm d, yy \\a\\t h:mm:ss AM/PM;mmmm d, yy \\a\\t h:mm:ss;mmmm d, yy \\a\\t h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm:ss.0 AM/PM;mmmm d, yyyy \\a\\t h:mm:ss.0;mmmm d, yyyy \\a\\t h:mm:ss;mmmm d, yyyy \\a\\t h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss;mmmm d, yy, h:mm AM/PM;mmmm d, yyyy, h:mm:ss.0 AM/PM;mmmm d, yyyy, h:mm:ss.0;mmmm d, yyyy, h:mm:ss;mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy, h:mm;mmmm d, yy, h:mm;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss;mmm d, yy, h:mm AM/PM;mmm d, yyyy, h:mm:ss.0 AM/PM;mmm d, yyyy, h:mm:ss.0;mmm d, yyyy, h:mm:ss;mmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm;mmm d, yy, h:mm;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss;m/d/yy, h:mm AM/PM;m/d/yyyy, h:mm:ss AM/PM;m/d/yyyy, h:mm:ss.0 AM/PM;m/d/yyyy, h:mm:ss.0;m/d/yyyy, h:mm:ss;m/d/yyyy, h:mm AM/PM;m/d/yy, h:mm:ss.0;m/d/yy, h:mm;m/d/yyyy, h:mm")
+                        .spreadsheetParserSelector()
         );
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime.instance(), "date-time-parse-pattern");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameParserDateTime.instance(),
+                "date-time-parser"
+        );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime.instance();
+    SpreadsheetMetadataPropertyNameParserDateTime createName() {
+        return SpreadsheetMetadataPropertyNameParserDateTime.instance();
     }
 
     @Override
-    SpreadsheetDateTimeParsePattern propertyValue() {
-        return SpreadsheetDateTimeParsePattern.parseDateTimeParsePattern("ddmmyyyyhhmmss \"pattern-1\";yyyymmddhhmmss \"pattern-2\"");
-    }
-
-    @Override
-    String propertyValueType() {
-        return "DateTime parse pattern";
+    SpreadsheetParserSelector propertyValue() {
+        return SpreadsheetDateTimeParsePattern.parseDateTimeParsePattern("ddmmyyyyhhmmss \"pattern-1\";yyyymmddhhmmss \"pattern-2\"")
+                .spreadsheetParserSelector();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime.class;
+    public Class<SpreadsheetMetadataPropertyNameParserDateTime> type() {
+        return SpreadsheetMetadataPropertyNameParserDateTime.class;
     }
 }

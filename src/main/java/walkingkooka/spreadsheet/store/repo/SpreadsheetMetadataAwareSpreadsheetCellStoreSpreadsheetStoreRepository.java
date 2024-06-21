@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -45,23 +46,28 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
 
     static SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository with(final SpreadsheetId id,
                                                                                        final SpreadsheetStoreRepository repository,
+                                                                                       final SpreadsheetParserProvider spreadsheetParserProvider,
                                                                                        final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(repository, "repository");
+        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
         Objects.requireNonNull(now, "now");
 
         return new SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository(
                 id,
                 repository,
+                spreadsheetParserProvider,
                 now
         );
     }
 
     private SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository(final SpreadsheetId id,
                                                                                    final SpreadsheetStoreRepository repository,
+                                                                                   final SpreadsheetParserProvider spreadsheetParserProvider,
                                                                                    final Supplier<LocalDateTime> now) {
         this.id = id;
         this.repository = repository;
+        this.spreadsheetParserProvider = spreadsheetParserProvider;
         this.now = now;
 
         repository.metadatas().addSaveWatcher(this::onSaveMetadata);
@@ -79,6 +85,7 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
             this.cells = SpreadsheetCellStores.spreadsheetFormulaSpreadsheetMetadataAware(
                     this.repository.cells(),
                     metadata,
+                    this.spreadsheetParserProvider,
                     this.now
             );
         }
@@ -90,11 +97,14 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
             this.cells = SpreadsheetCellStores.spreadsheetFormulaSpreadsheetMetadataAware(
                     this.repository.cells(),
                     this.repository.metadatas().loadOrFail(this.id),
+                    this.spreadsheetParserProvider,
                     this.now
             );
         }
         return cells;
     }
+
+    private final SpreadsheetParserProvider spreadsheetParserProvider;
 
     private final Supplier<LocalDateTime> now;
 
@@ -160,6 +170,6 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
 
     @Override
     public String toString() {
-        return this.id + " " + this.repository;
+        return this.id + " " + this.repository + " " + this.spreadsheetParserProvider;
     }
 }

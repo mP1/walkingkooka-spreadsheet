@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -52,20 +53,24 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore with(final SpreadsheetCellStore store,
                                                                                final SpreadsheetMetadata metadata,
+                                                                               final SpreadsheetParserProvider spreadsheetParserProvider,
                                                                                final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(store, "store");
         Objects.requireNonNull(metadata, "metadata");
+        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
         Objects.requireNonNull(now, "now");
 
         return store instanceof SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore ?
                 setMetadata(
                         (SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore) store,
                         metadata,
+                        spreadsheetParserProvider,
                         now
                 ) :
                 new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(
                         store,
                         metadata,
+                        spreadsheetParserProvider,
                         now
                 );
     }
@@ -77,17 +82,25 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     private static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore setMetadata(
             final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store,
             final SpreadsheetMetadata metadata,
+            final SpreadsheetParserProvider spreadsheetParserProvider,
             final Supplier<LocalDateTime> now) {
         return metadata.equals(store.metadata) ?
                 store :
-                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(store.store, metadata, now);
+                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(
+                        store.store,
+                        metadata,
+                        spreadsheetParserProvider,
+                        now
+                );
     }
 
     private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetCellStore store,
                                                                            final SpreadsheetMetadata metadata,
+                                                                           final SpreadsheetParserProvider spreadsheetParserProvider,
                                                                            final Supplier<LocalDateTime> now) {
         this.store = store;
         this.metadata = metadata;
+        this.spreadsheetParserProvider = spreadsheetParserProvider;
         this.now = now;
     }
 
@@ -153,7 +166,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     private SpreadsheetParserToken parseFormulaTextExpression(final String text) {
         final SpreadsheetMetadata metadata = this.metadata;
 
-        return this.metadata.parser()
+        return this.metadata.parser(this.spreadsheetParserProvider)
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(
                         TextCursors.charSequence(text),
@@ -338,10 +351,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     // @VisibleForTesting
     final SpreadsheetMetadata metadata;
 
+    final SpreadsheetParserProvider spreadsheetParserProvider;
+
     final Supplier<LocalDateTime> now;
 
     @Override
     public String toString() {
-        return this.metadata + " " + this.store;
+        return this.metadata + " " + this.store + " " + this.spreadsheetParserProvider;
     }
 }

@@ -22,6 +22,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -32,16 +34,21 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         TreePrintableTesting {
 
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
 
     @Test
     public void testConverter() {
-        METADATA_EN_AU.converter(SPREADSHEET_FORMATTER_PROVIDER);
+        METADATA_EN_AU.converter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER
+        );
     }
 
     @Test
     public void testConverterContext() {
         METADATA_EN_AU.converterContext(
                 SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                         LocalDateTime::now,
                         (label) -> {
                             throw new UnsupportedOperationException();
@@ -63,6 +70,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testFormatterContext() {
         METADATA_EN_AU.formatterContext(
                 SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 LocalDateTime::now,
                 (label) -> {
                     throw new UnsupportedOperationException();
@@ -82,7 +90,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testParser() {
-        METADATA_EN_AU.parser();
+        METADATA_EN_AU.parser(SPREADSHEET_PARSER_PROVIDER);
     }
 
     @Test

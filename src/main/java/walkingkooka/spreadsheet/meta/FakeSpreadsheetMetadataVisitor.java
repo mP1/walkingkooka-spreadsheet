@@ -26,10 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
+import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
@@ -94,7 +91,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateParsePattern(final SpreadsheetDateParsePattern patterns) {
+    protected void visitDateParser(final SpreadsheetParserSelector selector) {
         throw new UnsupportedOperationException();
     }
 
@@ -109,7 +106,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateTimeParsePattern(final SpreadsheetDateTimeParsePattern pattern) {
+    protected void visitDateTimeParser(final SpreadsheetParserSelector selector) {
         throw new UnsupportedOperationException();
     }
 
@@ -200,7 +197,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitNumberParsePattern(final SpreadsheetNumberParsePattern patterns) {
+    protected void visitNumberParser(final SpreadsheetParserSelector selector) {
         throw new UnsupportedOperationException();
     }
 
@@ -265,7 +262,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitTimeParsePattern(final SpreadsheetTimeParsePattern patterns) {
+    protected void visitTimeParser(final SpreadsheetParserSelector selector) {
         throw new UnsupportedOperationException();
     }
 

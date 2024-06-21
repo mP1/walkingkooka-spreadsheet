@@ -21,8 +21,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -131,11 +129,6 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     public MathContext mathContext() {
         return this.mathContext0();
-    }
-
-    @Override
-    public Parser<SpreadsheetParserContext> parser() {
-        return this.createParser();
     }
 
     // SpreadsheetMetadataVisitor........................................................................................

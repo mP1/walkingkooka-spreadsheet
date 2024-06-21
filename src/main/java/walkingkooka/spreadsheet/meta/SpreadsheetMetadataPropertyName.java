@@ -35,12 +35,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetParserName;
 import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
@@ -118,9 +114,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterDate.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parse-pattern {@link String}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parser {@link String}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetDateParsePattern> DATE_PARSE_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDate.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_PARSER = registerConstant(SpreadsheetMetadataPropertyNameParserDate.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
@@ -133,9 +129,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterDateTime.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parse-pattern</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parser</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePattern> DATETIME_PARSE_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternDateTime.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameParserDateTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-separator {@link Character}</code>
@@ -213,9 +209,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> NUMBER_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterNumber.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parse-pattern</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parser</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetNumberParsePattern> NUMBER_PARSE_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternNumber.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> NUMBER_PARSER = registerConstant(SpreadsheetMetadataPropertyNameParserNumber.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>
@@ -278,9 +274,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterTime.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parse-pattern</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parser</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePattern> TIME_PARSE_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParsePatternTime.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameParserTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year {@link SpreadsheetFormatPattern}</code>
@@ -549,10 +545,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 action = SpreadsheetCellStoreAction.PARSE_FORMULA;
                 break;
             // parse-patterns
-            case "date-parse-pattern":
-            case "date-time-parse-pattern":
-            case "number-parse-pattern":
-            case "time-parse-pattern":
+            case "date-parser":
+            case "date-time-parser":
+            case "number-parser":
+            case "time-parser":
                 action = SpreadsheetCellStoreAction.PARSE_FORMULA;
                 break;
             default:
@@ -569,7 +565,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * The corresponding {@link SpreadsheetPatternKind} for this property.
      */
-    // time-parse-pattern -> TIME_PARSE_PATTERN
+    // time-parse-pattern -> TIME_PARSER
     @Override
     public final Optional<SpreadsheetPatternKind> patternKind() {
         final String name = this.value();
@@ -678,7 +674,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 "dd/mm/yyyy"
         );
         SpreadsheetParserSelector.with(
-                SpreadsheetParserName.DATE_PARSE_PATTERN,
+                SpreadsheetParserName.DATE_PARSER,
                 "dd/mm/yyyy"
         );
         //noinspection ResultOfMethodCallIgnored
