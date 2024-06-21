@@ -155,4 +155,17 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
                                                final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormatterName.unmarshall(from, context);
     }
+
+    // setText..........................................................................................................
+
+    @Test
+    public void testSetText() {
+        final SpreadsheetFormatterName name = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN;
+        final String text = "@@";
+
+        this.checkEquals(
+                SpreadsheetFormatterSelector.with(name, text),
+                name.setText(text)
+        );
+    }
 }
