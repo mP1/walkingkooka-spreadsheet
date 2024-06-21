@@ -17,12 +17,22 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 public abstract class SpreadsheetMetadataPropertyNameFormatterTestCase<N extends SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector>> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetFormatterSelector> {
 
     SpreadsheetMetadataPropertyNameFormatterTestCase() {
         super();
+    }
+
+    @Test
+    public final void testPatternKindNonNull() {
+        this.checkNotEquals(
+                null,
+                this.createName()
+                        .patternKind()
+        );
     }
 
     @Override
