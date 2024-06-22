@@ -38,7 +38,11 @@ public final class ConverterSpreadsheetFormatterTest implements SpreadsheetForma
 
     @Override
     public ConverterSpreadsheetFormatter createFormatter() {
-        return ConverterSpreadsheetFormatter.with(Converters.localDateString(c -> DateTimeFormatter.ISO_DATE));
+        return ConverterSpreadsheetFormatter.with(
+                Converters.localDateToString(
+                        c -> DateTimeFormatter.ISO_DATE
+                )
+        );
     }
 
     @Override
