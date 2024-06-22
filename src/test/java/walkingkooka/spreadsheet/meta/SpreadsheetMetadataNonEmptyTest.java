@@ -2020,7 +2020,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 Lists.of(
                                         Converters.simple(),
                                         ExpressionNumber.toConverter(
-                                                Converters.numberNumber()
+                                                Converters.numberToNumber()
                                         ),
                                         Converters.localDateLocalDateTime(),
                                         Converters.localTimeLocalDateTime()

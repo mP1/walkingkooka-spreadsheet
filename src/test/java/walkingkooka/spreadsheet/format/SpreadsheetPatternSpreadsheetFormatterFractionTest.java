@@ -446,7 +446,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return Converters.numberNumber().convert(value, target, ConverterContexts.fake());
+                return Converters.numberToNumber().convert(value, target, ConverterContexts.fake());
             }
 
             @Override

@@ -3263,7 +3263,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 Lists.of(
                         Converters.object(),
                         Converters.simple(),
-                        ExpressionNumber.toConverter(Converters.numberNumber()),
+                        ExpressionNumber.toConverter(Converters.numberToNumber()),
                         ExpressionNumber.toConverter(Converters.localDateNumber(Converters.JAVA_EPOCH_OFFSET)),
                         ExpressionNumber.toConverter(Converters.localDateTimeNumber(Converters.JAVA_EPOCH_OFFSET)),
                         ExpressionNumber.toConverter(Converters.localTimeNumber()),

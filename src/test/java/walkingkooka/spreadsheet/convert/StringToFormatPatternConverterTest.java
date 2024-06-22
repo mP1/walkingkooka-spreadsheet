@@ -272,7 +272,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
         final Converter<SpreadsheetConverterContext> converter = Converters.collection(
                 Lists.of(
                         ExpressionNumber.toConverter(
-                                Converters.numberNumber()
+                                Converters.numberToNumber()
                         ),
                         Converters.localDateLocalDateTime(),
                         Converters.localTimeLocalDateTime(),

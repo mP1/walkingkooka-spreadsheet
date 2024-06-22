@@ -1826,8 +1826,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return Converters.collection(
                 Lists.of(
                         Converters.simple(),
-                        ExpressionNumber.toConverter(Converters.numberNumber()),
-                        ExpressionNumber.fromConverter(Converters.numberNumber())
+                        ExpressionNumber.toConverter(Converters.numberToNumber()),
+                        ExpressionNumber.fromConverter(Converters.numberToNumber())
                 )
         );
     }

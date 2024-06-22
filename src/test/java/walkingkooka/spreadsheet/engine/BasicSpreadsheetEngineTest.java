@@ -198,7 +198,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 Converters.localDateLocalDateTime(),
                                                 Converters.localTimeLocalDateTime(),
                                                 ExpressionNumber.toConverter(
-                                                        Converters.numberNumber()
+                                                        Converters.numberToNumber()
                                                 ),
                                                 Converters.objectString()
                                         )

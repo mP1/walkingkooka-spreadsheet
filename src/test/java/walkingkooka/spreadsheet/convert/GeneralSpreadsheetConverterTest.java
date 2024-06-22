@@ -1116,7 +1116,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
 
     private void convertAllNumberTypesAndCheck(final Number value,
                                                final Object expected) {
-        final Converter<ConverterContext> numberNumber = Converters.numberNumber();
+        final Converter<ConverterContext> numberNumber = Converters.numberToNumber();
         final ConverterContext context = this.createContext();
 
         this.convertAndBackCheck(numberNumber.convertOrFail(value, BigDecimal.class, context), expected);

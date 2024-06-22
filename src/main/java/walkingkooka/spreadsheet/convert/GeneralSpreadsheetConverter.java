@@ -154,7 +154,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 ExpressionNumber.fromConverter(Converters.truthyNumberBoolean()),
                 ExpressionNumber.fromConverter(Converters.numberLocalDate(dateOffset)),
                 ExpressionNumber.fromConverter(Converters.numberLocalDateTime(dateOffset)),
-                ExpressionNumber.toConverter(ExpressionNumber.fromConverter(Converters.numberNumber())),
+                ExpressionNumber.toConverter(ExpressionNumber.fromConverter(Converters.numberToNumber())),
                 null, // selection
                 ExpressionNumber.fromConverter(numberFormatter.converter()).cast(SpreadsheetConverterContext.class),
                 ExpressionNumber.fromConverter(Converters.numberLocalTime())
@@ -189,7 +189,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                                         numberParser
                                 ),
                                 ExpressionNumber.fromConverter(
-                                        Converters.numberNumber()
+                                        Converters.numberToNumber()
                                 )
                         )
                 ),
