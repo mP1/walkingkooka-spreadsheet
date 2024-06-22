@@ -66,7 +66,7 @@ final class SpreadsheetErrorToNumberConverter extends SpreadsheetErrorConverter<
                 );
     }
 
-    private final static Converter<SpreadsheetConverterContext> NUMBER_TO_NUMBER = Converters.numberNumber();
+    private final static Converter<SpreadsheetConverterContext> NUMBER_TO_NUMBER = Converters.numberToNumber();
 
     @Override
     String toStringType() {

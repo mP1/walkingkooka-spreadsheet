@@ -40,7 +40,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DEFAULT;
 
-    private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.numberNumber();
+    private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.numberToNumber();
 
     private final static SpreadsheetLabelNameResolver LABEL_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 

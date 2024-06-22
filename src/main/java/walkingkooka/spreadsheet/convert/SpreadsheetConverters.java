@@ -57,7 +57,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
             Lists.of(
                     Converters.simple(),
                     ExpressionNumber.toConverter(
-                            Converters.numberNumber()
+                            Converters.numberToNumber()
                     ),
                     Converters.localDateLocalDateTime(),
                     Converters.localTimeLocalDateTime()

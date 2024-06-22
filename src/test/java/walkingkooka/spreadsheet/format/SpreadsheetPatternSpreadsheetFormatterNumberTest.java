@@ -2449,7 +2449,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return ExpressionNumber.toConverter(
-                        Converters.numberNumber()
+                        Converters.numberToNumber()
                 ).convert(
                         value,
                         target,
