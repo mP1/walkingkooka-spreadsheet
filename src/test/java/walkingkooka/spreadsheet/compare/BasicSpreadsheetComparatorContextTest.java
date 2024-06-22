@@ -75,14 +75,14 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     }
 
     private final SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
-            Converters.objectString(),
+            Converters.objectToString(),
             (label) -> {
                 throw new UnsupportedOperationException();
             },
             ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
-                            Converters.objectString(),
+                            Converters.objectToString(),
                             DateTimeContexts.locale(
                                     Locale.forLanguageTag("EN-AU"),
                                     1950, // default year
