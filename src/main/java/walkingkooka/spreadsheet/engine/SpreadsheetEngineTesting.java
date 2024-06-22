@@ -55,9 +55,9 @@ import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
@@ -1826,8 +1826,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return Converters.collection(
                 Lists.of(
                         Converters.simple(),
-                        ExpressionNumber.toConverter(Converters.numberToNumber()),
-                        ExpressionNumber.numberOrExpressionNumberTo(
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.numberToNumber()),
+                        ExpressionNumberConverters.numberOrExpressionNumberTo(
                                 Converters.numberToNumber()
                         )
                 )

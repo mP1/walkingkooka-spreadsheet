@@ -108,6 +108,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -185,7 +186,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         private final Converter<SpreadsheetFormatterContext> converter = Converters.collection(
                 Lists.of(
-                        ExpressionNumber.numberOrExpressionNumberTo(
+                        ExpressionNumberConverters.numberOrExpressionNumberTo(
                                 Converters.collection(
                                         Lists.of(
                                                 Converters.simple(),
@@ -197,7 +198,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                         .cast(SpreadsheetFormatterContext.class),
                                                 Converters.localDateToLocalDateTime(),
                                                 Converters.localTimeToLocalDateTime(),
-                                                ExpressionNumber.toConverter(
+                                                ExpressionNumberConverters.toNumberOrExpressionNumber(
                                                         Converters.numberToNumber()
                                                 ),
                                                 Converters.objectToString()

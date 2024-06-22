@@ -35,6 +35,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
@@ -678,9 +679,12 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
 
     ExpressionEvaluationContext expressionEvaluationContext() {
         final Converter<ExpressionNumberConverterContext> all = Converters.collection(
-                Lists.of(Converters.simple(),
-                        ExpressionNumber.toConverter(Converters.simple()),
-                        ExpressionNumber.numberOrExpressionNumberTo(
+                Lists.of(
+                        Converters.simple(),
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(
+                                Converters.simple()
+                        ),
+                        ExpressionNumberConverters.numberOrExpressionNumberTo(
                                 Converters.numberToBoolean()
                         )
                 )

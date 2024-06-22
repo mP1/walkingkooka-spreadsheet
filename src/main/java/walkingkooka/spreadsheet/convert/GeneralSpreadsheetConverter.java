@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -109,7 +110,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 Converters.simple(), // boolean -> boolean
                 fromBoolean(LocalDate.class, dateTrue, dateFalse),
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
-                ExpressionNumber.toConverter(Converters.booleanToNumber()),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.booleanToNumber()),
                 null, // selection
                 GeneralSpreadsheetConverterBooleanString.with(
                         fromBoolean(
@@ -130,7 +131,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 toBoolean(LocalDate.class, dateTrue),
                 Converters.simple(), // date -> date
                 Converters.localDateToLocalDateTime(),
-                ExpressionNumber.toConverter(Converters.localDateToNumber(dateOffset)),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateToNumber(dateOffset)),
                 null, // selection
                 dateFormatter.converter()
                         .cast(SpreadsheetConverterContext.class),
@@ -142,7 +143,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 toBoolean(LocalDateTime.class, dateTimeTrue),
                 Converters.localDateTimeToLocalDate(),
                 Converters.simple(), // dateTime -> dateTime
-                ExpressionNumber.toConverter(Converters.localDateTimeToNumber(dateOffset)),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateTimeToNumber(dateOffset)),
                 null, // selection
                 dateTimeFormatter.converter()
                         .cast(SpreadsheetConverterContext.class),
@@ -151,13 +152,21 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
 
         // Number ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> number = mapping(
-                ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToBoolean()),
-                ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToLocalDate(dateOffset)),
-                ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToLocalDateTime(dateOffset)),
-                ExpressionNumber.toConverter(ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToNumber())),
+                ExpressionNumberConverters.numberOrExpressionNumberTo(Converters.numberToBoolean()),
+                ExpressionNumberConverters.numberOrExpressionNumberTo(Converters.numberToLocalDate(dateOffset)),
+                ExpressionNumberConverters.numberOrExpressionNumberTo(Converters.numberToLocalDateTime(dateOffset)),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(
+                        ExpressionNumberConverters.numberOrExpressionNumberTo(
+                                Converters.numberToNumber()
+                        )
+                ),
                 null, // selection
-                ExpressionNumber.numberOrExpressionNumberTo(numberFormatter.converter()).cast(SpreadsheetConverterContext.class),
-                ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToLocalTime())
+                ExpressionNumberConverters.numberOrExpressionNumberTo(
+                        numberFormatter.converter()
+                ).cast(SpreadsheetConverterContext.class),
+                ExpressionNumberConverters.numberOrExpressionNumberTo(
+                        Converters.numberToLocalTime()
+                )
         );
 
         // selection
@@ -184,11 +193,11 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                         SpreadsheetConverters.dateTime(dateTimeParser)
                 ),
                 fromCharacterOrString(
-                        ExpressionNumber.intermediateConverter(
+                        ExpressionNumberConverters.toExpressionNumberThen(
                                 SpreadsheetConverters.expressionNumber(
                                         numberParser
                                 ),
-                                ExpressionNumber.numberOrExpressionNumberTo(
+                                ExpressionNumberConverters.numberOrExpressionNumberTo(
                                         Converters.numberToNumber()
                                 )
                         )
@@ -211,7 +220,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 toBoolean(LocalTime.class, timeTrue),
                 null, // time -> date invalid
                 Converters.localTimeToLocalDateTime(),
-                ExpressionNumber.toConverter(Converters.localTimeToNumber()),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localTimeToNumber()),
                 null, // selection
                 timeFormatter.converter().cast(SpreadsheetConverterContext.class),
                 Converters.simple()
