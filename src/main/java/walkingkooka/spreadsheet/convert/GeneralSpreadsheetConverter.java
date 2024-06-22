@@ -187,14 +187,14 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                         toBoolean(String.class, stringTrue)
                 ), // string -> boolean
                 fromCharacterOrString(
-                        SpreadsheetConverters.date(dateParser)
+                        SpreadsheetConverters.stringToDate(dateParser)
                 ),
                 fromCharacterOrString(
-                        SpreadsheetConverters.dateTime(dateTimeParser)
+                        SpreadsheetConverters.stringToDateTime(dateTimeParser)
                 ),
                 fromCharacterOrString(
                         ExpressionNumberConverters.toExpressionNumberThen(
-                                SpreadsheetConverters.expressionNumber(
+                                SpreadsheetConverters.stringToExpressionNumber(
                                         numberParser
                                 ),
                                 ExpressionNumberConverters.numberOrExpressionNumberTo(
@@ -211,7 +211,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                         )
                 ),
                 fromCharacterOrString(
-                        SpreadsheetConverters.time(timeParser)
+                        SpreadsheetConverters.stringToTime(timeParser)
                 )
         );
 

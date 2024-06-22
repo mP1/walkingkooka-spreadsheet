@@ -57,7 +57,7 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetNonNumberParse
 
     @Override
     Converter<SpreadsheetConverterContext> createConverter() {
-        return SpreadsheetConverters.time(this.parser());
+        return SpreadsheetConverters.stringToTime(this.parser());
     }
 
     // parse............................................................................................................
