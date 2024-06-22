@@ -56,7 +56,7 @@ public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralS
     @Override
     public GeneralSpreadsheetConverterBooleanString createConverter() {
         return GeneralSpreadsheetConverterBooleanString.with(
-                Converters.booleanTrueFalse(
+                Converters.toBoolean(
                         Predicates.customToString((v) -> v instanceof Boolean, "isBoolean"),
                         Predicates.is(String.class),
                         Predicates.is(Boolean.TRUE),
