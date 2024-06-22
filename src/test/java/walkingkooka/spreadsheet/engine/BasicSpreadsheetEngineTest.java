@@ -185,7 +185,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         private final Converter<SpreadsheetFormatterContext> converter = Converters.collection(
                 Lists.of(
-                        ExpressionNumber.fromConverter(
+                        ExpressionNumber.numberOrExpressionNumberTo(
                                 Converters.collection(
                                         Lists.of(
                                                 Converters.simple(),

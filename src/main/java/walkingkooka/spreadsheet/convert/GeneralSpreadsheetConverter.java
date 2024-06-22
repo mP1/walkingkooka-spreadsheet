@@ -151,13 +151,13 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
 
         // Number ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> number = mapping(
-                ExpressionNumber.fromConverter(Converters.numberToBoolean()),
-                ExpressionNumber.fromConverter(Converters.numberToLocalDate(dateOffset)),
-                ExpressionNumber.fromConverter(Converters.numberToLocalDateTime(dateOffset)),
-                ExpressionNumber.toConverter(ExpressionNumber.fromConverter(Converters.numberToNumber())),
+                ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToBoolean()),
+                ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToLocalDate(dateOffset)),
+                ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToLocalDateTime(dateOffset)),
+                ExpressionNumber.toConverter(ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToNumber())),
                 null, // selection
-                ExpressionNumber.fromConverter(numberFormatter.converter()).cast(SpreadsheetConverterContext.class),
-                ExpressionNumber.fromConverter(Converters.numberToLocalTime())
+                ExpressionNumber.numberOrExpressionNumberTo(numberFormatter.converter()).cast(SpreadsheetConverterContext.class),
+                ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToLocalTime())
         );
 
         // selection
@@ -188,7 +188,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                                 SpreadsheetConverters.expressionNumber(
                                         numberParser
                                 ),
-                                ExpressionNumber.fromConverter(
+                                ExpressionNumber.numberOrExpressionNumberTo(
                                         Converters.numberToNumber()
                                 )
                         )

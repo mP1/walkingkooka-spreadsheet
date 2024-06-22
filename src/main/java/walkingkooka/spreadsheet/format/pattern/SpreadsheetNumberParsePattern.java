@@ -93,7 +93,7 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
                 SpreadsheetConverters.expressionNumber(
                         this.parser()
                 ),
-                ExpressionNumber.fromConverter(
+                ExpressionNumber.numberOrExpressionNumberTo(
                         Converters.numberToNumber()
                 )
         );
