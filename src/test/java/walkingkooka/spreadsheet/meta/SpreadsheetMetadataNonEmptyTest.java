@@ -2023,7 +2023,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                                 Converters.numberToNumber()
                                         ),
                                         Converters.localDateToLocalDateTime(),
-                                        Converters.localTimeLocalDateTime()
+                                        Converters.localTimeToLocalDateTime()
                                 )
                         ).convert(
                                 value,

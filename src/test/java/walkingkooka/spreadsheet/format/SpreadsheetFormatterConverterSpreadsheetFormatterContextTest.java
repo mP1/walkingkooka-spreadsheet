@@ -78,9 +78,16 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     @Test
     public void testConvertTime() {
         final LocalTime time = LocalTime.of(12, 58, 59);
-        this.convertAndCheck(time,
+        this.convertAndCheck(
+                time,
                 LocalDateTime.class,
-                Converters.localTimeLocalDateTime().convertOrFail(time, LocalDateTime.class, this.converterContext()));
+                Converters.localTimeToLocalDateTime()
+                        .convertOrFail(
+                                time,
+                                LocalDateTime.class,
+                                this.converterContext()
+                        )
+        );
     }
 
     @Test

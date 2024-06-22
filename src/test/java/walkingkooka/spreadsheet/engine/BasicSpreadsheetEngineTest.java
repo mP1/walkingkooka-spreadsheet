@@ -196,7 +196,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetConverters.errorThrowing()
                                                         .cast(SpreadsheetFormatterContext.class),
                                                 Converters.localDateToLocalDateTime(),
-                                                Converters.localTimeLocalDateTime(),
+                                                Converters.localTimeToLocalDateTime(),
                                                 ExpressionNumber.toConverter(
                                                         Converters.numberToNumber()
                                                 ),
