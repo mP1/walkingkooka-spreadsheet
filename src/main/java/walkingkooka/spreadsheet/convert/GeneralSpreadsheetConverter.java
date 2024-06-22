@@ -258,7 +258,8 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                                                                                         final Object falseValueTest,
                                                                                         final T falseValueResult,
                                                                                         final T trueValueResult) {
-        return Converters.booleanTrueFalse(t -> t.getClass() == fromType,
+        return Converters.toBoolean(
+                t -> t.getClass() == fromType,
                 Predicates.is(targetType),
                 Predicates.is(falseValueTest),
                 falseValueResult,
