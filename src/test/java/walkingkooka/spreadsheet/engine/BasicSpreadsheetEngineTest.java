@@ -200,7 +200,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 ExpressionNumber.toConverter(
                                                         Converters.numberToNumber()
                                                 ),
-                                                Converters.objectString()
+                                                Converters.objectToString()
                                         )
                                 )
                         )

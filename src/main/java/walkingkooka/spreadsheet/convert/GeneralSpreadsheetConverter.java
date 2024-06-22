@@ -167,7 +167,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 null, // date-time
                 null, // number
                 SELECTION_TO_SELECTION, // selection
-                Converters.objectString(), // string
+                Converters.objectToString(), // string
                 null // time
         );
 

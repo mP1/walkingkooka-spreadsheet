@@ -3272,7 +3272,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         stringLocalDate,
                         stringLocalDateTime,
                         stringLocalTime,
-                        Converters.objectString()
+                        Converters.objectToString()
                 )
         );
 
