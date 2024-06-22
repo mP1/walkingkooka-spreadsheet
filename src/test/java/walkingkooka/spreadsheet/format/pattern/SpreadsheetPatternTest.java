@@ -210,7 +210,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                                 );
                             }
                             if (value instanceof LocalTime) {
-                                return Converters.localTimeLocalDateTime().convert(value, target, ConverterContexts.fake());
+                                return Converters.localTimeToLocalDateTime()
+                                        .convert(
+                                                value,
+                                                target,
+                                                ConverterContexts.fake()
+                                        );
                             }
                         }
 

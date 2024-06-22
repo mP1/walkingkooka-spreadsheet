@@ -275,7 +275,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
                                 Converters.numberToNumber()
                         ),
                         Converters.localDateToLocalDateTime(),
-                        Converters.localTimeLocalDateTime(),
+                        Converters.localTimeToLocalDateTime(),
                         Converters.simple()
                 )
         );

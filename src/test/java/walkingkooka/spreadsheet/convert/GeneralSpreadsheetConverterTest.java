@@ -1100,7 +1100,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     @Test
     public void testConvertAllNumberTypesToTime() {
         this.convertAndBackCheck(
-                Converters.localTimeNumber()
+                Converters.localTimeToNumber()
                         .convertOrFail(
                                 TIME,
                                 BigDecimal.class,

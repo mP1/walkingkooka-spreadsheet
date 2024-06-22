@@ -60,7 +60,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                             Converters.numberToNumber()
                     ),
                     Converters.localDateToLocalDateTime(),
-                    Converters.localTimeLocalDateTime()
+                    Converters.localTimeToLocalDateTime()
             )
     );
 

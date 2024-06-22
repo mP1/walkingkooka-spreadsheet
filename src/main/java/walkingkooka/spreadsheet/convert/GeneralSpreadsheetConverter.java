@@ -210,8 +210,8 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> time = mapping(
                 toBoolean(LocalTime.class, timeTrue),
                 null, // time -> date invalid
-                Converters.localTimeLocalDateTime(),
-                ExpressionNumber.toConverter(Converters.localTimeNumber()),
+                Converters.localTimeToLocalDateTime(),
+                ExpressionNumber.toConverter(Converters.localTimeToNumber()),
                 null, // selection
                 timeFormatter.converter().cast(SpreadsheetConverterContext.class),
                 Converters.simple()

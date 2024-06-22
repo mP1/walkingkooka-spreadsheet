@@ -671,9 +671,9 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
                             ExpressionNumber.toConverter(
-                                    Converters.localTimeNumber()
+                                    Converters.localTimeToNumber()
                             ),
-                            Converters.localTimeLocalDateTime()
+                            Converters.localTimeToLocalDateTime()
                     )
             );
 
