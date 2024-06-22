@@ -680,7 +680,7 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
         final Converter<ExpressionNumberConverterContext> all = Converters.collection(
                 Lists.of(Converters.simple(),
                         ExpressionNumber.toConverter(Converters.simple()),
-                        ExpressionNumber.fromConverter(Converters.truthyNumberBoolean())));
+                        ExpressionNumber.fromConverter(Converters.numberToBoolean())));
 
         return new FakeExpressionEvaluationContext() {
             @Override

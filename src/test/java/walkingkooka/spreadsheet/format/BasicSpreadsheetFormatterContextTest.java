@@ -330,7 +330,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return SpreadsheetConverterContexts.basic(
                 Converters.collection(
                         Lists.of(
-                                Converters.truthyNumberBoolean(),
+                                Converters.numberToBoolean(),
                                 SpreadsheetConverters.errorToNumber()
                         )
                 ),

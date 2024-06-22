@@ -54,7 +54,7 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
         final Converter<ExpressionNumberConverterContext> all = Converters.collection(
                 Lists.of(Converters.simple(),
                         ExpressionNumber.toConverter(Converters.simple()),
-                        ExpressionNumber.fromConverter(Converters.truthyNumberBoolean())));
+                        ExpressionNumber.fromConverter(Converters.numberToBoolean())));
 
         return new FakeExpressionEvaluationContext() {
             @Override
