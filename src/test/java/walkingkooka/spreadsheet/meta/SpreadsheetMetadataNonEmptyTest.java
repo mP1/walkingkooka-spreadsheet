@@ -2022,7 +2022,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                         ExpressionNumber.toConverter(
                                                 Converters.numberToNumber()
                                         ),
-                                        Converters.localDateLocalDateTime(),
+                                        Converters.localDateToLocalDateTime(),
                                         Converters.localTimeLocalDateTime()
                                 )
                         ).convert(

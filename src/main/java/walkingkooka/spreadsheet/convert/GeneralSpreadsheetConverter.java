@@ -129,8 +129,8 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> date = mapping(
                 toBoolean(LocalDate.class, dateTrue),
                 Converters.simple(), // date -> date
-                Converters.localDateLocalDateTime(),
-                ExpressionNumber.toConverter(Converters.localDateNumber(dateOffset)),
+                Converters.localDateToLocalDateTime(),
+                ExpressionNumber.toConverter(Converters.localDateToNumber(dateOffset)),
                 null, // selection
                 dateFormatter.converter()
                         .cast(SpreadsheetConverterContext.class),
@@ -140,13 +140,13 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         // LocalDateTime ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> dateTime = mapping(
                 toBoolean(LocalDateTime.class, dateTimeTrue),
-                Converters.localDateTimeLocalDate(),
+                Converters.localDateTimeToLocalDate(),
                 Converters.simple(), // dateTime -> dateTime
-                ExpressionNumber.toConverter(Converters.localDateTimeNumber(dateOffset)),
+                ExpressionNumber.toConverter(Converters.localDateTimeToNumber(dateOffset)),
                 null, // selection
                 dateTimeFormatter.converter()
                         .cast(SpreadsheetConverterContext.class),
-                Converters.localDateTimeLocalTime()
+                Converters.localDateTimeToLocalTime()
         );
 
         // Number ->
@@ -280,7 +280,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
      * Adds support for converting to String and then maybe Character.
      */
     private static Converter<SpreadsheetConverterContext> toCharacterOrString(final Converter<? extends ExpressionNumberConverterContext> converter) {
-        return Converters.converterStringCharacter(
+        return Converters.thenStringOrCharacter(
                 converter
         ).cast(SpreadsheetConverterContext.class);
     }

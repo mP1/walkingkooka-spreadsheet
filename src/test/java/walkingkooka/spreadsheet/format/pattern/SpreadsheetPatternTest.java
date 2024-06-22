@@ -196,7 +196,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                                                            final Class<TT> target) {
                         if (target == LocalDateTime.class) {
                             if (value instanceof LocalDate) {
-                                return Converters.localDateLocalDateTime().convert(value, target, ConverterContexts.fake());
+                                return Converters.localDateToLocalDateTime()
+                                        .convert(
+                                                value,
+                                                target,
+                                                ConverterContexts.fake()
+                                        );
                             }
                             if (value instanceof LocalDateTime) {
                                 return this.successfulConversion(

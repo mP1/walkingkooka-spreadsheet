@@ -843,7 +843,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
                             ExpressionNumber.toConverter(
-                                    Converters.localDateTimeNumber(0)
+                                    Converters.localDateTimeToNumber(0)
                             ),
                             Converters.simple()
                     )

@@ -274,7 +274,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
                         ExpressionNumber.toConverter(
                                 Converters.numberToNumber()
                         ),
-                        Converters.localDateLocalDateTime(),
+                        Converters.localDateToLocalDateTime(),
                         Converters.localTimeLocalDateTime(),
                         Converters.simple()
                 )
