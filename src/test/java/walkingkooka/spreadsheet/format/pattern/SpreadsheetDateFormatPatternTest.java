@@ -481,9 +481,9 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
                             ExpressionNumber.toConverter(
-                                    Converters.localDateNumber(0)
+                                    Converters.localDateToNumber(0)
                             ),
-                            Converters.localDateLocalDateTime()
+                            Converters.localDateToLocalDateTime()
                     )
             );
 

@@ -59,7 +59,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                     ExpressionNumber.toConverter(
                             Converters.numberToNumber()
                     ),
-                    Converters.localDateLocalDateTime(),
+                    Converters.localDateToLocalDateTime(),
                     Converters.localTimeLocalDateTime()
             )
     );

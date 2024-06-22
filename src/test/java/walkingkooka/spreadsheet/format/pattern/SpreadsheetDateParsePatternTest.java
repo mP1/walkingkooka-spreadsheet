@@ -492,7 +492,7 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
                 );
             }
 
-            private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.localDateLocalDateTime();
+            private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.localDateToLocalDateTime();
         };
     }
 

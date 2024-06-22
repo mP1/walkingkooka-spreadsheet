@@ -735,7 +735,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                     @Override
                     public boolean canConvert(final Object value,
                                               final Class<?> target) {
-                        return Converters.localDateLocalDateTime().canConvert(value, target, ConverterContexts.fake());
+                        return Converters.localDateToLocalDateTime()
+                                .canConvert(value, target, ConverterContexts.fake());
                     }
 
                     @Override
@@ -746,7 +747,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                                 target,
                                 "target"
                         );
-                        return Converters.localDateLocalDateTime()
+                        return Converters.localDateToLocalDateTime()
                                 .convert(
                                         value,
                                         target,
