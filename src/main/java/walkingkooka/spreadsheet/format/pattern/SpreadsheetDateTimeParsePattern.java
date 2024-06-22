@@ -57,7 +57,7 @@ public final class SpreadsheetDateTimeParsePattern extends SpreadsheetNonNumberP
 
     @Override
     Converter<SpreadsheetConverterContext> createConverter() {
-        return SpreadsheetConverters.dateTime(this.parser());
+        return SpreadsheetConverters.stringToDateTime(this.parser());
     }
 
     // parse............................................................................................................

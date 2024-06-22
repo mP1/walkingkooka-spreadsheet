@@ -68,7 +68,7 @@ public final class SpreadsheetMetadataPropertyNameParserNumberTest extends Sprea
                 .extractLocaleAwareValue(locale)
                 .get();
 
-        final ExpressionNumber value = SpreadsheetConverters.expressionNumber(
+        final ExpressionNumber value = SpreadsheetConverters.stringToExpressionNumber(
                 SpreadsheetParserProviders.spreadsheetParsePattern()
                         .spreadsheetParserOrFail(parserSelector)
         ).convertOrFail(

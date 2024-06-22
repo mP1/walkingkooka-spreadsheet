@@ -46,9 +46,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // date.............................................................................................................
 
     @Test
-    public void testDateConvertFails() {
+    public void testStringToDateConvertFails() {
         this.convertFails(
-                SpreadsheetConverters.date(
+                SpreadsheetConverters.stringToDate(
                         SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                                 .parser()
                 ),
@@ -59,9 +59,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testDateConvert() {
+    public void testStringToDateConvert() {
         this.convertAndCheck(
-                SpreadsheetConverters.date(
+                SpreadsheetConverters.stringToDate(
                         SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                                 .parser()
                 ),
@@ -75,9 +75,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // dateTime.............................................................................................................
 
     @Test
-    public void testDateTimeConvertFails() {
+    public void testStringToDateTimeConvertFails() {
         this.convertFails(
-                SpreadsheetConverters.dateTime(
+                SpreadsheetConverters.stringToDateTime(
                         SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm")
                                 .parser()
                 ),
@@ -88,9 +88,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testDateTimeConvert() {
+    public void testStringToDateTimeConvert() {
         this.convertAndCheck(
-                SpreadsheetConverters.dateTime(
+                SpreadsheetConverters.stringToDateTime(
                         SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm")
                                 .parser()
                 ),
@@ -104,9 +104,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // time.............................................................................................................
 
     @Test
-    public void testTimeConvertFails() {
+    public void testStringToTimeConvertFails() {
         this.convertFails(
-                SpreadsheetConverters.time(
+                SpreadsheetConverters.stringToTime(
                         SpreadsheetPattern.parseTimeParsePattern("hh:mm")
                                 .parser()
                 ),
@@ -117,9 +117,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testTimeConvert() {
+    public void testStringToTimeConvert() {
         this.convertAndCheck(
-                SpreadsheetConverters.time(
+                SpreadsheetConverters.stringToTime(
                         SpreadsheetPattern.parseTimeParsePattern("hh:mm")
                                 .parser()
                 ),
@@ -156,9 +156,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // expressionNumber.................................................................................................
 
     @Test
-    public void testExpressionNumberConvertFails() {
+    public void testStringToExpressionNumberConvertFails() {
         this.convertFails(
-                SpreadsheetConverters.expressionNumber(
+                SpreadsheetConverters.stringToExpressionNumber(
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
                                 .parser()
                 ),
@@ -169,22 +169,22 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testExpressionNumberBigDecimalConvert() {
-        this.convertAndCheck2(
+    public void testStringToExpressionNumberBigDecimalConvert() {
+        this.convertStringToExpressionNumberAndCheck(
                 ExpressionNumberKind.BIG_DECIMAL
         );
     }
 
     @Test
-    public void testExpressionNumberDoubleConvert() {
-        this.convertAndCheck2(
+    public void testStringToExpressionNumberDoubleConvert() {
+        this.convertStringToExpressionNumberAndCheck(
                 ExpressionNumberKind.DOUBLE
         );
     }
 
-    private void convertAndCheck2(final ExpressionNumberKind kind) {
+    private void convertStringToExpressionNumberAndCheck(final ExpressionNumberKind kind) {
         this.convertAndCheck(
-                SpreadsheetConverters.expressionNumber(
+                SpreadsheetConverters.stringToExpressionNumber(
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
                                 .parser()
                 ),
@@ -198,7 +198,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     @Test
     public void testExpressionNumberConvertIntegerFails() {
         this.convertFails(
-                SpreadsheetConverters.expressionNumber(
+                SpreadsheetConverters.stringToExpressionNumber(
                         SpreadsheetPattern.parseNumberParsePattern("000")
                                 .parser()
                 ),
