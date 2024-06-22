@@ -109,7 +109,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 Converters.simple(), // boolean -> boolean
                 fromBoolean(LocalDate.class, dateTrue, dateFalse),
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
-                ExpressionNumber.toConverter(Converters.booleanNumber()),
+                ExpressionNumber.toConverter(Converters.booleanToNumber()),
                 null, // selection
                 GeneralSpreadsheetConverterBooleanString.with(
                         fromBoolean(
