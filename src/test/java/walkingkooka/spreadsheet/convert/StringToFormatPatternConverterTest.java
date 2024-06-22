@@ -28,8 +28,8 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
@@ -271,7 +271,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
     public SpreadsheetConverterContext createContext() {
         final Converter<SpreadsheetConverterContext> converter = Converters.collection(
                 Lists.of(
-                        ExpressionNumber.toConverter(
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(
                                 Converters.numberToNumber()
                         ),
                         Converters.localDateToLocalDateTime(),

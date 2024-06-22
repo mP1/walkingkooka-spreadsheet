@@ -32,7 +32,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -670,7 +670,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
 
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
-                            ExpressionNumber.toConverter(
+                            ExpressionNumberConverters.toNumberOrExpressionNumber(
                                     Converters.localTimeToNumber()
                             ),
                             Converters.localTimeToLocalDateTime()

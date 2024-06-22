@@ -34,6 +34,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,7 +57,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<ExpressionNumberConverterContext> BASIC_CONVERTER = Converters.collection(
             Lists.of(
                     Converters.simple(),
-                    ExpressionNumber.toConverter(
+                    ExpressionNumberConverters.toNumberOrExpressionNumber(
                             Converters.numberToNumber()
                     ),
                     Converters.localDateToLocalDateTime(),

@@ -26,9 +26,9 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
@@ -54,8 +54,10 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
         final Converter<ExpressionNumberConverterContext> all = Converters.collection(
                 Lists.of(
                         Converters.simple(),
-                        ExpressionNumber.toConverter(Converters.simple()),
-                        ExpressionNumber.numberOrExpressionNumberTo(
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(
+                                Converters.simple()
+                        ),
+                        ExpressionNumberConverters.numberOrExpressionNumberTo(
                                 Converters.numberToBoolean()
                         )
                 )

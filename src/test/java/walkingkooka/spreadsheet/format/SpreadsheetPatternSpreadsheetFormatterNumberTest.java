@@ -30,7 +30,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
-import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionNumberConverterContext;
 
@@ -2448,7 +2448,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return ExpressionNumber.toConverter(
+                return ExpressionNumberConverters.toNumberOrExpressionNumber(
                         Converters.numberToNumber()
                 ).convert(
                         value,

@@ -56,9 +56,9 @@ import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -3263,12 +3263,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 Lists.of(
                         Converters.object(),
                         Converters.simple(),
-                        ExpressionNumber.toConverter(Converters.numberToNumber()),
-                        ExpressionNumber.toConverter(Converters.localDateToNumber(Converters.JAVA_EPOCH_OFFSET)),
-                        ExpressionNumber.toConverter(Converters.localDateTimeToNumber(Converters.JAVA_EPOCH_OFFSET)),
-                        ExpressionNumber.toConverter(Converters.localTimeToNumber()),
-                        ExpressionNumber.numberOrExpressionNumberTo(Converters.numberToLocalTime()),
-                        ExpressionNumber.toConverter(stringDouble),
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.numberToNumber()),
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateToNumber(Converters.JAVA_EPOCH_OFFSET)),
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateTimeToNumber(Converters.JAVA_EPOCH_OFFSET)),
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localTimeToNumber()),
+                        ExpressionNumberConverters.numberOrExpressionNumberTo(Converters.numberToLocalTime()),
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(stringDouble),
                         stringLocalDate,
                         stringLocalDateTime,
                         stringLocalTime,

@@ -63,9 +63,9 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FakeExpressionNumberConverterContext;
@@ -2019,7 +2019,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         return Converters.collection(
                                 Lists.of(
                                         Converters.simple(),
-                                        ExpressionNumber.toConverter(
+                                        ExpressionNumberConverters.toNumberOrExpressionNumber(
                                                 Converters.numberToNumber()
                                         ),
                                         Converters.localDateToLocalDateTime(),
