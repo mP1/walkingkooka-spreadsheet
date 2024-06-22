@@ -151,7 +151,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
 
         // Number ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> number = mapping(
-                ExpressionNumber.fromConverter(Converters.truthyNumberBoolean()),
+                ExpressionNumber.fromConverter(Converters.numberToBoolean()),
                 ExpressionNumber.fromConverter(Converters.numberToLocalDate(dateOffset)),
                 ExpressionNumber.fromConverter(Converters.numberToLocalDateTime(dateOffset)),
                 ExpressionNumber.toConverter(ExpressionNumber.fromConverter(Converters.numberToNumber())),
