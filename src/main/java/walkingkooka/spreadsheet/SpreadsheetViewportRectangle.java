@@ -237,7 +237,7 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
 
     @Override
     public int compareTo(final SpreadsheetViewportRectangle other) {
-        throw new UnsupportedOperationException(); // required by HateosHandler
+        throw new UnsupportedOperationException(); // required by HateosResourceHandler
     }
 
     // json.............................................................................................................
