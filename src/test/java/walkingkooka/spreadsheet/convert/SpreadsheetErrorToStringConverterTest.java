@@ -69,7 +69,7 @@ public final class SpreadsheetErrorToStringConverterTest implements ConverterTes
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetErrorToStringConverter.INSTANCE,
-                "SpreadsheetError->String"
+                "SpreadsheetError to String"
         );
     }
 

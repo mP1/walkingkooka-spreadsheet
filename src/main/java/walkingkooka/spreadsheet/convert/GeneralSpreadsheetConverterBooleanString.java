@@ -62,6 +62,6 @@ final class GeneralSpreadsheetConverterBooleanString implements Converter<Spread
 
     @Override
     public String toString() {
-        return this.booleanString + "->" + this.textFormatter;
+        return this.booleanString + " to " + this.textFormatter;
     }
 }

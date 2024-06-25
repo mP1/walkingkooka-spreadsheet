@@ -63,11 +63,4 @@ abstract class SpreadsheetErrorConverter<C extends ConverterContext> implements 
     abstract <T> Either<T, String> convertSpreadsheetError(final SpreadsheetError error,
                                                            final Class<T> type,
                                                            final C context);
-
-    @Override
-    public final String toString() {
-        return SpreadsheetError.class.getSimpleName() + "->" + this.toStringType();
-    }
-
-    abstract String toStringType();
 }

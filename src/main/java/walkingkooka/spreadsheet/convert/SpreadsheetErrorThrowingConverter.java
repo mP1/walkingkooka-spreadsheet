@@ -59,7 +59,7 @@ final class SpreadsheetErrorThrowingConverter extends SpreadsheetErrorConverter<
     }
 
     @Override
-    String toStringType() {
-        return "throws";
+    public String toString() {
+        return "throws SpreadsheetError";
     }
 }

@@ -58,7 +58,7 @@ final class SpreadsheetErrorToStringConverter extends SpreadsheetErrorConverter<
     }
 
     @Override
-    String toStringType() {
-        return "String";
+    public String toString() {
+        return "SpreadsheetError to String";
     }
 }

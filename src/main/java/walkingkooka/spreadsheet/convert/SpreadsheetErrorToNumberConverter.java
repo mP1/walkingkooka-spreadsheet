@@ -69,7 +69,7 @@ final class SpreadsheetErrorToNumberConverter extends SpreadsheetErrorConverter<
     private final static Converter<SpreadsheetConverterContext> NUMBER_TO_NUMBER = Converters.numberToNumber();
 
     @Override
-    String toStringType() {
-        return "Number";
+    public String toString() {
+        return "SpreadsheetError to Number";
     }
 }

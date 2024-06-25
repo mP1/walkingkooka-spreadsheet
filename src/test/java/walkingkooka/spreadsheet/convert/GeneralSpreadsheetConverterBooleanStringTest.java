@@ -50,14 +50,17 @@ public final class GeneralSpreadsheetConverterBooleanStringTest extends GeneralS
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createConverter(), "isBoolean->class java.lang.String->@@");
+        this.toStringAndCheck(
+                this.createConverter(),
+                "Boolean to class java.lang.String to @@"
+        );
     }
 
     @Override
     public GeneralSpreadsheetConverterBooleanString createConverter() {
         return GeneralSpreadsheetConverterBooleanString.with(
                 Converters.toBoolean(
-                        Predicates.customToString((v) -> v instanceof Boolean, "isBoolean"),
+                        Predicates.customToString((v) -> v instanceof Boolean, "Boolean"),
                         Predicates.is(String.class),
                         Predicates.is(Boolean.TRUE),
                         "true",
