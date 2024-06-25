@@ -54,7 +54,7 @@ public final class SpreadsheetErrorThrowingConverterTest implements ConverterTes
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetErrorThrowingConverter.INSTANCE,
-                "SpreadsheetError->throws"
+                "throws SpreadsheetError"
         );
     }
 

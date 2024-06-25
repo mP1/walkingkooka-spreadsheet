@@ -96,7 +96,7 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetErrorToNumberConverter.INSTANCE,
-                "SpreadsheetError->Number"
+                "SpreadsheetError to Number"
         );
     }
 
