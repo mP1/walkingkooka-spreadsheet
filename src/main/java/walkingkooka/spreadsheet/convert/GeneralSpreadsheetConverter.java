@@ -280,7 +280,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
      * Adds support for Character or String to Character or String.
      */
     private static Converter<SpreadsheetConverterContext> fromCharacterOrString(final Converter<? extends ExpressionNumberConverterContext> converter) {
-        return Converters.characterOrStringThen(
+        return Converters.characterOrStringToStringThen(
                 converter
         ).cast(SpreadsheetConverterContext.class);
     }
