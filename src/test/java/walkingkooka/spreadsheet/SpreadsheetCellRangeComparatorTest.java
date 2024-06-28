@@ -79,7 +79,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                 () -> SpreadsheetCellRangeComparator.with(
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "A=text",
-                                SpreadsheetComparatorProviders.builtIn()
+                                SpreadsheetComparatorProviders.spreadsheetComparators()
                         ), // spreadsheetComparators
                         null // context
                 )
@@ -359,7 +359,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                 SpreadsheetCellRangeComparator.with(
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "B=day-of-month",
-                                SpreadsheetComparatorProviders.builtIn()
+                                SpreadsheetComparatorProviders.spreadsheetComparators()
                         ),
                         context
                 ),
@@ -375,7 +375,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                 SpreadsheetCellRangeComparator.with(
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "B=day-of-month DOWN",
-                                SpreadsheetComparatorProviders.builtIn()
+                                SpreadsheetComparatorProviders.spreadsheetComparators()
                         ),
                         context
                 ),
@@ -391,7 +391,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                 SpreadsheetCellRangeComparator.with(
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "B=day-of-month,month-of-year,year",
-                                SpreadsheetComparatorProviders.builtIn()
+                                SpreadsheetComparatorProviders.spreadsheetComparators()
                         ),
                         context
                 ),
@@ -407,7 +407,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                 SpreadsheetCellRangeComparator.with(
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "B=day-of-month,month-of-year DOWN,year DOWN",
-                                SpreadsheetComparatorProviders.builtIn()
+                                SpreadsheetComparatorProviders.spreadsheetComparators()
                         ),
                         context
                 ),
@@ -470,7 +470,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
         return SpreadsheetCellRangeComparator.with(
                 SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         comparators,
-                        SpreadsheetComparatorProviders.builtIn()
+                        SpreadsheetComparatorProviders.spreadsheetComparators()
                 ),
                 SpreadsheetComparatorContexts.basic(
                         SpreadsheetConverterContexts.basic(

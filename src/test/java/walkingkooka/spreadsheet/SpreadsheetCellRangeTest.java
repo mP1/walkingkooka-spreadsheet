@@ -569,7 +569,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.sortFails(
                 SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         "A=text",
-                        SpreadsheetComparatorProviders.builtIn()
+                        SpreadsheetComparatorProviders.spreadsheetComparators()
                 ),
                 null,
                 SpreadsheetComparatorContexts.fake()
@@ -581,7 +581,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         this.sortFails(
                 SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         "A=text",
-                        SpreadsheetComparatorProviders.builtIn()
+                        SpreadsheetComparatorProviders.spreadsheetComparators()
                 ),
                 MOVED_CELLS_BICONSUMER,
                 null
@@ -1154,7 +1154,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 range,
                 SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         comparators,
-                        SpreadsheetComparatorProviders.builtIn()
+                        SpreadsheetComparatorProviders.spreadsheetComparators()
                 ),
                 movedCells,
                 context,

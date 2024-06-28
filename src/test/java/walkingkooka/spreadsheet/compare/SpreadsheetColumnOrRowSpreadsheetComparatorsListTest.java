@@ -97,14 +97,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
                 (SpreadsheetColumnOrRowSpreadsheetComparatorsList)
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "A=day-of-month;B=month-of-year;C=year;D=text",
-                                SpreadsheetComparatorProviders.builtIn()
+                                SpreadsheetComparatorProviders.spreadsheetComparators()
                         ),
                 1,
                 3,
                 (SpreadsheetColumnOrRowSpreadsheetComparatorsList)
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "A=day-of-month;D=text;C=year;B=month-of-year",
-                                SpreadsheetComparatorProviders.builtIn()
+                                SpreadsheetComparatorProviders.spreadsheetComparators()
                         )
         );
     }
@@ -136,7 +136,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
                 SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 text,
-                                SpreadsheetComparatorProviders.builtIn()
+                                SpreadsheetComparatorProviders.spreadsheetComparators()
                         )
                 ),
                 text
@@ -150,7 +150,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
         return Cast.to(
                 SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         "A=text",
-                        SpreadsheetComparatorProviders.builtIn()
+                        SpreadsheetComparatorProviders.spreadsheetComparators()
                 )
         );
     }

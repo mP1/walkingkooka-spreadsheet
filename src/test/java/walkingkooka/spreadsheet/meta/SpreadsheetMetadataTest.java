@@ -615,7 +615,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         final SpreadsheetComparatorProvider provider = metadata.spreadsheetComparatorProvider(
-                SpreadsheetComparatorProviders.builtIn()
+                SpreadsheetComparatorProviders.spreadsheetComparators()
         );
 
         this.checkEquals(

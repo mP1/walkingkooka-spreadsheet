@@ -35,7 +35,7 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
 
     @Test
     public void testGet() {
-        final SpreadsheetComparatorProvider provider = SpreadsheetComparatorProviders.builtIn();
+        final SpreadsheetComparatorProvider provider = SpreadsheetComparatorProviders.spreadsheetComparators();
 
         this.spreadsheetComparatorAndCheck(
                 SpreadsheetComparatorProviderCollection.with(Sets.of(provider)),
@@ -46,7 +46,7 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
 
     @Test
     public void testInfos() {
-        final SpreadsheetComparatorProvider provider = SpreadsheetComparatorProviders.builtIn();
+        final SpreadsheetComparatorProvider provider = SpreadsheetComparatorProviders.spreadsheetComparators();
 
         this.spreadsheetComparatorInfosAndCheck(
                 SpreadsheetComparatorProviderCollection.with(Sets.of(provider)),
@@ -58,7 +58,7 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
     public SpreadsheetComparatorProviderCollection createSpreadsheetComparatorProvider() {
         return SpreadsheetComparatorProviderCollection.with(
                 Sets.of(
-                        SpreadsheetComparatorProviders.builtIn()
+                        SpreadsheetComparatorProviders.spreadsheetComparators()
                 )
         );
     }

@@ -311,7 +311,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 IllegalArgumentException.class,
                 () -> SpreadsheetComparators.parse(
                         "text XYZ",
-                        SpreadsheetComparatorProviders.builtIn()
+                        SpreadsheetComparatorProviders.spreadsheetComparators()
                 )
         );
         this.checkEquals(
@@ -326,7 +326,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 IllegalArgumentException.class,
                 () -> SpreadsheetComparators.parse(
                         "day-of-month,month-of-year XYZ,year",
-                        SpreadsheetComparatorProviders.builtIn()
+                        SpreadsheetComparatorProviders.spreadsheetComparators()
                 )
         );
         this.checkEquals(
@@ -387,7 +387,7 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                                final SpreadsheetComparator<?>... expected) {
         this.parseAndCheck(
                 comparators,
-                SpreadsheetComparatorProviders.builtIn(),
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
                 expected
         );
     }

@@ -58,7 +58,7 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
     @Override
     public SpreadsheetComparatorInfoSet createSet() {
         return SpreadsheetComparatorInfoSet.with(
-                SpreadsheetComparatorProviders.builtIn()
+                SpreadsheetComparatorProviders.spreadsheetComparators()
                         .spreadsheetComparatorInfos()
         );
     }
