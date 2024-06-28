@@ -43,7 +43,7 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
     /**
      * Parses the given text into a {@link SpreadsheetParserSelector}.
      * <br>
-     * Note the format is formatter-name SPACE optional-text, for {@link SpreadsheetParsePattern} the text will hold the raw pattern, without
+     * Note the format is spreadsheet-parser-name SPACE optional-text, for {@link SpreadsheetParsePattern} the text will hold the raw pattern, without
      * any need for encoding of any kind.
      * <pre>
      * number-parse-pattern $0.00
