@@ -291,8 +291,10 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
      * Adds support for converting to String and then maybe Character.
      */
     private static Converter<SpreadsheetConverterContext> toCharacterOrString(final Converter<? extends ExpressionNumberConverterContext> converter) {
-        return Converters.thenStringOrCharacter(
-                converter
+        return Converters.chain(
+                converter,
+                String.class,
+                Converters.stringToCharacterOrString()
         ).cast(SpreadsheetConverterContext.class);
     }
 
