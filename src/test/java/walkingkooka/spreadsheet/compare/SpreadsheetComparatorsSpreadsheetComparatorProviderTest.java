@@ -28,7 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public final class BuiltInSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<BuiltInSpreadsheetComparatorProvider> {
+public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<SpreadsheetComparatorsSpreadsheetComparatorProvider> {
 
     @Test
     public void testSpreadsheetComparator() {
@@ -41,7 +41,7 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
                                 CaseKind.KEBAB
                         ).toString()
                 ).filter(n -> false == "fake".equals(n))
-                .forEach(n -> BuiltInSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparator(
+                .forEach(n -> SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparator(
                                 SpreadsheetComparatorName.with(n)
                         )
                 );
@@ -50,7 +50,7 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
     @Test
     public void testSpreadsheetComparatorInfos() {
         this.spreadsheetComparatorInfosAndCheck(
-                BuiltInSpreadsheetComparatorProvider.INSTANCE,
+                SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE,
                 Arrays.stream(SpreadsheetComparators.class.getMethods())
                         .filter(m -> MethodAttributes.STATIC.is(m))
                         .filter(m -> SpreadsheetComparator.class.equals(m.getReturnType()))
@@ -74,7 +74,7 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
     public void testTreePrint() {
         this.treePrintAndCheck(
                 SpreadsheetComparatorInfoSet.with(
-                        BuiltInSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos()
+                        SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos()
                 ),
                 "SpreadsheetComparatorInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\n" +
@@ -165,15 +165,15 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
                 JsonNodeMarshallContexts.basic()
                         .marshall(
                                 SpreadsheetComparatorInfoSet.with(
-                                        BuiltInSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos()
+                                        SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos()
                                 )
                         )
         );
     }
 
     @Override
-    public BuiltInSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
-        return BuiltInSpreadsheetComparatorProvider.INSTANCE;
+    public SpreadsheetComparatorsSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
+        return SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE;
     }
 
     // ClassTesting.....................................................................................................
@@ -184,7 +184,7 @@ public final class BuiltInSpreadsheetComparatorProviderTest implements Spreadshe
     }
 
     @Override
-    public Class<BuiltInSpreadsheetComparatorProvider> type() {
-        return BuiltInSpreadsheetComparatorProvider.class;
+    public Class<SpreadsheetComparatorsSpreadsheetComparatorProvider> type() {
+        return SpreadsheetComparatorsSpreadsheetComparatorProvider.class;
     }
 }

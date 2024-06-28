@@ -31,14 +31,14 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetComparatorProvider} that uses the {@link SpreadsheetComparatorProvider} defined in {@link SpreadsheetComparators}.
  */
-final class BuiltInSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
+final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
 
     /**
      * Singleton
      */
-    final static BuiltInSpreadsheetComparatorProvider INSTANCE = new BuiltInSpreadsheetComparatorProvider();
+    final static SpreadsheetComparatorsSpreadsheetComparatorProvider INSTANCE = new SpreadsheetComparatorsSpreadsheetComparatorProvider();
 
-    private BuiltInSpreadsheetComparatorProvider() {
+    private SpreadsheetComparatorsSpreadsheetComparatorProvider() {
         super();
     }
 

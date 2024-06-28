@@ -37,13 +37,6 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     );
 
     /**
-     * {@see BuiltInSpreadsheetComparatorProvider}
-     */
-    public static SpreadsheetComparatorProvider builtIn() {
-        return BuiltInSpreadsheetComparatorProvider.INSTANCE;
-    }
-
-    /**
      * {@see SpreadsheetComparatorProviderCollection}
      */
     public static SpreadsheetComparatorProvider collection(final Set<SpreadsheetComparatorProvider> providers) {
@@ -73,6 +66,13 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
                 infos,
                 provider
         );
+    }
+
+    /**
+     * {@see SpreadsheetComparatorsSpreadsheetComparatorProvider}
+     */
+    public static SpreadsheetComparatorProvider spreadsheetComparators() {
+        return SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE;
     }
 
     /**

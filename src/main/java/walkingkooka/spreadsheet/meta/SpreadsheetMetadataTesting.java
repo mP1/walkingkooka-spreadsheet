@@ -70,7 +70,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern(").#").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
-            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS, SpreadsheetComparatorInfoSet.with(SpreadsheetComparatorProviders.builtIn().spreadsheetComparatorInfos()))
+            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS, SpreadsheetComparatorInfoSet.with(SpreadsheetComparatorProviders.spreadsheetComparators().spreadsheetComparatorInfos()))
             .set(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS, SpreadsheetFormatterInfoSet.with(SpreadsheetFormatterProviders.spreadsheetFormatPattern().spreadsheetFormatterInfos()))
             .set(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS, SpreadsheetParserInfoSet.with(SpreadsheetParserProviders.spreadsheetParsePattern().spreadsheetParserInfos()))
             .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY

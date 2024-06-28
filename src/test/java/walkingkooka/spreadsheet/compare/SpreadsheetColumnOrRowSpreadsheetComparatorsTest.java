@@ -700,7 +700,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     public List<SpreadsheetColumnOrRowSpreadsheetComparators> parseString(final String text) {
         return SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                 text,
-                SpreadsheetComparatorProviders.builtIn()
+                SpreadsheetComparatorProviders.spreadsheetComparators()
         );
     }
 
@@ -948,7 +948,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
 
         final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRowSpreadsheetComparators = SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                 comparators,
-                SpreadsheetComparatorProviders.builtIn()
+                SpreadsheetComparatorProviders.spreadsheetComparators()
         );
 
         final SpreadsheetComparatorContext context = new FakeSpreadsheetComparatorContext() {
