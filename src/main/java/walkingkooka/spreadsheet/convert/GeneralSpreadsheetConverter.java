@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverters;
 
 import java.time.LocalDate;
@@ -284,23 +283,23 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     /**
      * Adds support for Character or String to Character or String.
      */
-    private static Converter<SpreadsheetConverterContext> characterOrStringTo(final Converter<? extends ExpressionNumberConverterContext> converter) {
-        return Converters.chain(
-                Converters.characterOrStringToString(),
-                String.class,
-                converter
-        ).cast(SpreadsheetConverterContext.class);
+    private static Converter<SpreadsheetConverterContext> characterOrStringTo(final Converter<SpreadsheetConverterContext> converter) {
+        return Converters.characterOrStringToString()
+                .cast(SpreadsheetConverterContext.class)
+                .to(
+                        String.class,
+                        converter
+                );
     }
 
     /**
      * Adds support for converting to String and then maybe Character.
      */
-    private static Converter<SpreadsheetConverterContext> toCharacterOrString(final Converter<? extends ExpressionNumberConverterContext> converter) {
-        return Converters.chain(
-                converter,
+    private static Converter<SpreadsheetConverterContext> toCharacterOrString(final Converter<SpreadsheetConverterContext> converter) {
+        return converter.to(
                 String.class,
                 Converters.stringToCharacterOrString()
-        ).cast(SpreadsheetConverterContext.class);
+        );
     }
 
     private static LocalDateTime dateTime(final LocalDate date) {
