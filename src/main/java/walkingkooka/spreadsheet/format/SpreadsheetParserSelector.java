@@ -17,11 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.InvalidCharacterException;
 import walkingkooka.naming.HasName;
+import walkingkooka.plugin.PluginSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -50,27 +49,12 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
      * </pre>
      */
     public static SpreadsheetParserSelector parse(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "text");
-
-        final String textAfter;
-        final String nameText;
-        final int space = text.indexOf(' ');
-        if (-1 == space) {
-            nameText = text;
-            textAfter = "";
-        } else {
-            nameText = text.substring(0, space);
-            textAfter = text.substring(space + 1);
-        }
-
-        try {
-            return new SpreadsheetParserSelector(
-                    SpreadsheetParserName.with(nameText),
-                    textAfter
-            );
-        } catch (final InvalidCharacterException cause) {
-            throw cause.appendToMessage(" in " + CharSequences.quoteAndEscape(text));
-        }
+        return new SpreadsheetParserSelector(
+                PluginSelector.parse(
+                        text,
+                        SpreadsheetParserName::with
+                )
+        );
     }
 
     /**
@@ -79,22 +63,22 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
     public static SpreadsheetParserSelector with(final SpreadsheetParserName name,
                                                  final String text) {
         return new SpreadsheetParserSelector(
-                Objects.requireNonNull(name, "name"),
-                Objects.requireNonNull(text, "text")
+                PluginSelector.with(
+                        name,
+                        text
+                )
         );
     }
 
-    private SpreadsheetParserSelector(final SpreadsheetParserName name,
-                                      final String text) {
-        this.name = name;
-        this.text = text;
+    private SpreadsheetParserSelector(final PluginSelector<SpreadsheetParserName> selector) {
+        this.selector = selector;
     }
 
     // HasName..........................................................................................................
 
     @Override
     public SpreadsheetParserName name() {
-        return this.name;
+        return this.selector.name();
     }
 
     /**
@@ -104,12 +88,15 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
     public SpreadsheetParserSelector setName(final SpreadsheetParserName name) {
         Objects.requireNonNull(name, "name");
 
-        return this.name.equals(name) ?
+        return this.name().equals(name) ?
                 this :
-                new SpreadsheetParserSelector(name, this.text);
+                new SpreadsheetParserSelector(
+                        PluginSelector.with(
+                                name,
+                                this.text()
+                        )
+                );
     }
-
-    private final SpreadsheetParserName name;
 
     // HasText..........................................................................................................
 
@@ -119,10 +106,10 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
      */
     @Override
     public String text() {
-        return this.text;
+        return this.selector.text();
     }
 
-    private final String text;
+    private final PluginSelector<SpreadsheetParserName> selector;
 
     // spreadsheetParsePattern.........................................................................................
 
@@ -131,7 +118,7 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
      */
     public Optional<SpreadsheetParsePattern> spreadsheetParsePattern() {
         if (null == this.spreadsheetParserPattern) {
-            final SpreadsheetPatternKind patternKind = this.name.patternKind;
+            final SpreadsheetPatternKind patternKind = this.name().patternKind;
 
             SpreadsheetParsePattern parsePattern;
 
@@ -139,7 +126,7 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
                 parsePattern = null == patternKind ?
                         null :
                         (SpreadsheetParsePattern)
-                                patternKind.parse(this.text);
+                                patternKind.parse(this.text());
             } catch (final RuntimeException fail) {
                 parsePattern = null;
             }
@@ -157,10 +144,7 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.name,
-                this.text
-        );
+        return this.selector.hashCode();
     }
 
     @Override
@@ -170,8 +154,7 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
     }
 
     private boolean equals0(final SpreadsheetParserSelector other) {
-        return this.name.equals(other.name) &&
-                this.text.equals(other.text);
+        return this.selector.equals(other.selector);
     }
 
     /**
@@ -180,12 +163,7 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
      */
     @Override
     public String toString() {
-        final String name = this.name.toString();
-        final String text = this.text;
-
-        return text.isEmpty() ?
-                name :
-                name + " " + text;
+        return this.selector.toString();
     }
 
     // JsonNodeContext..................................................................................................
@@ -217,17 +195,6 @@ public final class SpreadsheetParserSelector implements HasName<SpreadsheetParse
 
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.println(this.name.toString());
-
-        final String text = this.text;
-        if (false == text.isEmpty()) {
-            printer.indent();
-            {
-                printer.println(
-                        CharSequences.quoteAndEscape(text)
-                );
-            }
-            printer.outdent();
-        }
+        this.selector.printTree(printer);
     }
 }
