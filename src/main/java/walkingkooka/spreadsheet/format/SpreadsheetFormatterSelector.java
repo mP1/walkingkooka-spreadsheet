@@ -17,11 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.InvalidCharacterException;
 import walkingkooka.naming.HasName;
+import walkingkooka.plugin.PluginSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -50,27 +49,12 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
      * </pre>
      */
     public static SpreadsheetFormatterSelector parse(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "text");
-
-        final String textAfter;
-        final String nameText;
-        final int space = text.indexOf(' ');
-        if (-1 == space) {
-            nameText = text;
-            textAfter = "";
-        } else {
-            nameText = text.substring(0, space);
-            textAfter = text.substring(space + 1);
-        }
-
-        try {
-            return new SpreadsheetFormatterSelector(
-                    SpreadsheetFormatterName.with(nameText),
-                    textAfter
-            );
-        } catch (final InvalidCharacterException cause) {
-            throw cause.appendToMessage(" in " + CharSequences.quoteAndEscape(text));
-        }
+        return new SpreadsheetFormatterSelector(
+                PluginSelector.parse(
+                        text,
+                        SpreadsheetFormatterName::with
+                )
+        );
     }
 
     /**
@@ -79,22 +63,22 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
     public static SpreadsheetFormatterSelector with(final SpreadsheetFormatterName name,
                                                     final String text) {
         return new SpreadsheetFormatterSelector(
-                Objects.requireNonNull(name, "name"),
-                Objects.requireNonNull(text, "text")
+                PluginSelector.with(
+                        name,
+                        text
+                )
         );
     }
 
-    private SpreadsheetFormatterSelector(final SpreadsheetFormatterName name,
-                                         final String text) {
-        this.name = name;
-        this.text = text;
+    private SpreadsheetFormatterSelector(final PluginSelector<SpreadsheetFormatterName> selector) {
+        this.selector = selector;
     }
 
     // HasName..........................................................................................................
 
     @Override
     public SpreadsheetFormatterName name() {
-        return this.name;
+        return this.selector.name();
     }
 
     /**
@@ -104,12 +88,15 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
     public SpreadsheetFormatterSelector setName(final SpreadsheetFormatterName name) {
         Objects.requireNonNull(name, "name");
 
-        return this.name.equals(name) ?
+        return this.name().equals(name) ?
                 this :
-                new SpreadsheetFormatterSelector(name, this.text);
+                new SpreadsheetFormatterSelector(
+                        PluginSelector.with(
+                                name,
+                                this.text()
+                        )
+                );
     }
-
-    private final SpreadsheetFormatterName name;
 
     // HasText..........................................................................................................
 
@@ -119,10 +106,10 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
      */
     @Override
     public String text() {
-        return this.text;
+        return this.selector.text();
     }
 
-    private final String text;
+    private final PluginSelector<SpreadsheetFormatterName> selector;
 
     // spreadsheetFormatPattern.........................................................................................
 
@@ -132,14 +119,16 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
      */
     public Optional<SpreadsheetFormatPattern> spreadsheetFormatPattern() {
         if (null == this.spreadsheetFormatPattern) {
-            final SpreadsheetPatternKind patternKind = this.name.patternKind;
+            final SpreadsheetPatternKind patternKind = this.name().patternKind;
 
             SpreadsheetFormatPattern formatPattern;
 
             try {
                 formatPattern = null == patternKind ?
                         null :
-                        patternKind.parse(this.text).toFormat();
+                        patternKind.parse(
+                                this.text()
+                        ).toFormat();
             } catch (final RuntimeException fail) {
                 formatPattern = null;
             }
@@ -157,10 +146,7 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.name,
-                this.text
-        );
+        return this.selector.hashCode();
     }
 
     @Override
@@ -170,8 +156,7 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
     }
 
     private boolean equals0(final SpreadsheetFormatterSelector other) {
-        return this.name.equals(other.name) &&
-                this.text.equals(other.text);
+        return this.selector.equals(other.selector);
     }
 
     /**
@@ -180,12 +165,7 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
      */
     @Override
     public String toString() {
-        final String name = this.name.toString();
-        final String text = this.text;
-
-        return text.isEmpty() ?
-                name :
-                name + " " + text;
+        return this.selector.toString();
     }
 
     // JsonNodeContext..................................................................................................
@@ -217,17 +197,6 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
 
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.println(this.name.toString());
-
-        final String text = this.text;
-        if (false == text.isEmpty()) {
-            printer.indent();
-            {
-                printer.println(
-                        CharSequences.quoteAndEscape(text)
-                );
-            }
-            printer.outdent();
-        }
+        this.selector.printTree(printer);
     }
 }
