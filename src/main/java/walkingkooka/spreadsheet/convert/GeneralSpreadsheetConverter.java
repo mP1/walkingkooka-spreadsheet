@@ -152,21 +152,39 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
 
         // Number ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> numberTo = mapping(
-                ExpressionNumberConverters.numberOrExpressionNumberTo(Converters.numberToBoolean()),
-                ExpressionNumberConverters.numberOrExpressionNumberTo(Converters.numberToLocalDate(dateOffset)),
-                ExpressionNumberConverters.numberOrExpressionNumberTo(Converters.numberToLocalDateTime(dateOffset)),
-                ExpressionNumberConverters.toNumberOrExpressionNumber(
-                        ExpressionNumberConverters.numberOrExpressionNumberTo(
-                                Converters.numberToNumber()
-                        )
-                ),
-                null, // selection
-                ExpressionNumberConverters.numberOrExpressionNumberTo(
-                        numberFormatter.converter()
+                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                        .to(
+                                Number.class,
+                                Converters.numberToBoolean()
+                        ).cast(SpreadsheetConverterContext.class),
+                ExpressionNumberConverters.numberOrExpressionNumberToNumber().to(
+                        Number.class,
+                        Converters.numberToLocalDate(dateOffset)
                 ).cast(SpreadsheetConverterContext.class),
-                ExpressionNumberConverters.numberOrExpressionNumberTo(
-                        Converters.numberToLocalTime()
-                )
+                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                        .to(
+                                Number.class,
+                                Converters.numberToLocalDateTime(dateOffset)
+                        ).cast(SpreadsheetConverterContext.class),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(
+                        ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                                .to(
+                                        Number.class,
+                                        Converters.numberToNumber()
+                                )
+                ).cast(SpreadsheetConverterContext.class),
+                null, // selection
+                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                        .cast(SpreadsheetConverterContext.class)
+                        .to(
+                                Number.class,
+                                numberFormatter.converter()
+                        ),
+                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                        .to(
+                                Number.class,
+                                Converters.numberToLocalTime()
+                        ).cast(SpreadsheetConverterContext.class)
         );
 
         // selection
@@ -197,9 +215,11 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                                 SpreadsheetConverters.stringToExpressionNumber(
                                         numberParser
                                 ),
-                                ExpressionNumberConverters.numberOrExpressionNumberTo(
-                                        Converters.numberToNumber()
-                                )
+                                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                                        .to(
+                                                Number.class,
+                                                Converters.numberToNumber()
+                                        ).cast(SpreadsheetConverterContext.class)
                         )
                 ),
                 characterOrStringTo(

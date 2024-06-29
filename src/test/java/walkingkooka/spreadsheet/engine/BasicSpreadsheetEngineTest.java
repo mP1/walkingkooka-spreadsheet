@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -184,29 +185,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             return this.converter.convert(value, target, this);
         }
 
-        private final Converter<SpreadsheetFormatterContext> converter = Converters.collection(
-                Lists.of(
-                        ExpressionNumberConverters.numberOrExpressionNumberTo(
-                                Converters.collection(
-                                        Lists.of(
-                                                Converters.simple(),
-                                                SpreadsheetConverters.errorToString()
-                                                        .cast(SpreadsheetFormatterContext.class),
-                                                SpreadsheetConverters.errorToNumber()
-                                                        .cast(SpreadsheetFormatterContext.class),
-                                                SpreadsheetConverters.errorThrowing()
-                                                        .cast(SpreadsheetFormatterContext.class),
-                                                Converters.localDateToLocalDateTime(),
-                                                Converters.localTimeToLocalDateTime(),
-                                                ExpressionNumberConverters.toNumberOrExpressionNumber(
-                                                        Converters.numberToNumber()
-                                                ),
-                                                Converters.objectToString()
-                                        )
+        private final Converter<SpreadsheetConverterContext> converter = ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                .cast(SpreadsheetConverterContext.class)
+                .to(
+                        Number.class,
+                        Converters.collection(
+                                Lists.of(
+                                        Converters.simple()
+                                                .cast(SpreadsheetConverterContext.class),
+                                        SpreadsheetConverters.errorToString()
+                                                .cast(SpreadsheetConverterContext.class),
+                                        SpreadsheetConverters.errorToNumber()
+                                                .cast(SpreadsheetConverterContext.class),
+                                        SpreadsheetConverters.errorThrowing()
+                                                .cast(SpreadsheetConverterContext.class),
+                                        Converters.localDateToLocalDateTime()
+                                                .cast(SpreadsheetConverterContext.class),
+                                        Converters.localTimeToLocalDateTime()
+                                                .cast(SpreadsheetConverterContext.class),
+                                        ExpressionNumberConverters.toNumberOrExpressionNumber(
+                                                Converters.numberToNumber()
+                                        ).cast(SpreadsheetConverterContext.class),
+                                        Converters.objectToString()
+                                                .cast(SpreadsheetConverterContext.class)
                                 )
                         )
-                )
-        );
+                );
 
         @Override
         public char decimalSeparator() {

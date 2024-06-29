@@ -57,9 +57,11 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
                         ExpressionNumberConverters.toNumberOrExpressionNumber(
                                 Converters.simple()
                         ),
-                        ExpressionNumberConverters.numberOrExpressionNumberTo(
-                                Converters.numberToBoolean()
-                        )
+                        ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                                .to(
+                                        Number.class,
+                                        Converters.numberToBoolean()
+                                )
                 )
         );
 

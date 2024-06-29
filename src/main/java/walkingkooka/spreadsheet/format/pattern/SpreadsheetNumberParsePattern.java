@@ -94,9 +94,11 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
                 SpreadsheetConverters.stringToExpressionNumber(
                         this.parser()
                 ),
-                ExpressionNumberConverters.numberOrExpressionNumberTo(
-                        Converters.numberToNumber()
-                )
+                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                        .to(
+                                Number.class,
+                                Converters.numberToNumber()
+                        ).cast(SpreadsheetConverterContext.class)
         );
     }
 
