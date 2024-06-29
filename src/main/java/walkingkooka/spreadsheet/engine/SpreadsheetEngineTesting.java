@@ -1827,9 +1827,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 Lists.of(
                         Converters.simple(),
                         ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.numberToNumber()),
-                        ExpressionNumberConverters.numberOrExpressionNumberTo(
-                                Converters.numberToNumber()
-                        )
+                        ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                                .to(
+                                        Number.class,
+                                        Converters.numberToNumber()
+                                )
                 )
         );
     }

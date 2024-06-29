@@ -684,9 +684,11 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
                         ExpressionNumberConverters.toNumberOrExpressionNumber(
                                 Converters.simple()
                         ),
-                        ExpressionNumberConverters.numberOrExpressionNumberTo(
-                                Converters.numberToBoolean()
-                        )
+                        ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                                .to(
+                                        Number.class,
+                                        Converters.numberToBoolean()
+                                )
                 )
         );
 
