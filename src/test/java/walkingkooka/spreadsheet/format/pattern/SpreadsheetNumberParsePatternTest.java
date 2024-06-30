@@ -1196,7 +1196,9 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                 SpreadsheetLabelNameResolvers.fake(),
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
-                        ConverterContexts.basic(Converters.fake(),
+                        ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                Converters.fake(),
                                 DateTimeContexts.fake(), // DateTimeContext unused
                                 this.decimalNumberContext()),
                         kind

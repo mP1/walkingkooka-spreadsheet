@@ -337,7 +337,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 LABEL_NAME_RESOLVER,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
-                        ConverterContexts.basic(Converters.fake(),
+                        ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                Converters.fake(),
                                 this.dateTimeContext(),
                                 this.decimalNumberContext()),
                         EXPRESSION_NUMBER_KIND

@@ -328,6 +328,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                         ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
                                 ConverterContexts.basic(
+                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                         Converters.fake(),
                                         DateTimeContexts.fake(),
                                         this

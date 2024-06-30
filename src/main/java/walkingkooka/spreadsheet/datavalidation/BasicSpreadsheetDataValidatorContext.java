@@ -234,6 +234,11 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
         return this.context.convert(value, type);
     }
 
+    @Override
+    public long dateOffset() {
+        return this.context.dateOffset();
+    }
+
     private final ExpressionEvaluationContext context;
 
     @Override

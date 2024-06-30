@@ -151,6 +151,11 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     private final Converter<SpreadsheetConverterContext> converter;
 
+    @Override
+    public long dateOffset() {
+        return this.context.dateOffset();
+    }
+
     // format.................................................................................................
 
     @Override

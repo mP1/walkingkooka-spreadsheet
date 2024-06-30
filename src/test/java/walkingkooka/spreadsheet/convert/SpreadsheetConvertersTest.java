@@ -137,6 +137,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(), // not used
                         ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 Converters.fake(),
                                 DateTimeContexts.locale(
                                         Locale.forLanguageTag("EN-AU"),
@@ -215,6 +216,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(), // not used
                         ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 Converters.fake(),
                                 DateTimeContexts.fake(), // unused only doing numbers
                                 DecimalNumberContexts.american(MathContext.DECIMAL32)

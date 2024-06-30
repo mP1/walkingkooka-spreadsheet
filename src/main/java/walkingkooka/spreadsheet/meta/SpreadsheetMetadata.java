@@ -527,6 +527,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
 
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_OFFSET);
+        final ExpressionNumberKind expressionNumberKind = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+
+        components.reportIfMissing();
+
         return SpreadsheetConverterContexts.basic(
                 this.converter(
                         spreadsheetFormatterProvider,
@@ -536,11 +543,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
+                                dateOffset,
                                 Converters.fake(),
                                 this.dateTimeContext(now),
                                 this.decimalNumberContext()
                         ),
-                        this.expressionNumberKind()
+                        expressionNumberKind
                 )
         );
     }

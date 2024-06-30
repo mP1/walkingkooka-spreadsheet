@@ -286,6 +286,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 converter.cast(ConverterContext.class),
                                 DateTimeContexts.locale(
                                         Locale.FRANCE,

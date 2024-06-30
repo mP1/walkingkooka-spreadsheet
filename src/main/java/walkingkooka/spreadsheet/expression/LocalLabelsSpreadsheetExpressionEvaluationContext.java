@@ -241,6 +241,11 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         return this.context.converter();
     }
 
+    @Override
+    public long dateOffset() {
+        return this.context.dateOffset();
+    }
+
     // DateTimeContext.................................................................................................
 
     @Override

@@ -80,6 +80,7 @@ public final class SpreadsheetMetadataPropertyNameParserNumberTest extends Sprea
                         ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
                                 ConverterContexts.basic(
+                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                         Converters.fake(),
                                         DateTimeContexts.locale(locale, 1900, 20, LocalDateTime::now),
                                         DecimalNumberContexts.american(MathContext.DECIMAL32)

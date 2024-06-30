@@ -283,6 +283,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .convert(value, type);
     }
 
+    @Override
+    public long dateOffset() {
+        return this.converterContext()
+                .dateOffset();
+    }
+
     // DateTimeContext.................................................................................................
 
     @Override

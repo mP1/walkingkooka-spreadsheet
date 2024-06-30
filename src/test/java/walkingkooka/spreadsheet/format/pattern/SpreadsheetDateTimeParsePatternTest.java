@@ -580,7 +580,7 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
                             ExpressionNumberConverters.toNumberOrExpressionNumber(
-                                    Converters.localDateTimeToNumber(0)
+                                    Converters.localDateTimeToNumber()
                             ),
                             Converters.simple()
                     )

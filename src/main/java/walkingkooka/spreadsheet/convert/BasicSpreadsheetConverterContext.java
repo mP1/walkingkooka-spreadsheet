@@ -95,6 +95,11 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     // ExpressionNumberConverterContext.................................................................................
 
     @Override
+    public long dateOffset() {
+        return this.context.dateOffset();
+    }
+
+    @Override
     public Locale locale() {
         return this.context.locale();
     }

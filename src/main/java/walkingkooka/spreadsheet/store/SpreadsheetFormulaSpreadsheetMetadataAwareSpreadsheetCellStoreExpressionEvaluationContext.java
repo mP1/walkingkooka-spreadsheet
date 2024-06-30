@@ -124,6 +124,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public long dateOffset() {
+        throw new UnsupportedOperationException();
+    }
+
     // DateTimeContext..................................................................................................
 
     @Override
