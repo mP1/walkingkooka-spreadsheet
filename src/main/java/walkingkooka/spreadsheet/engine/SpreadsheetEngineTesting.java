@@ -1837,11 +1837,16 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default ExpressionNumberConverterContext converterContext() {
-        return ExpressionNumberConverterContexts.basic(this.converter(),
-                ConverterContexts.basic(Converters.fake(),
+        return ExpressionNumberConverterContexts.basic(
+                this.converter(),
+                ConverterContexts.basic(
+                        Converters.JAVA_EPOCH_OFFSET,
+                        Converters.fake(),
                         this.dateTimeContext(),
-                        this.decimalNumberContext()),
-                this.expressionNumberKind());
+                        this.decimalNumberContext()
+                ),
+                this.expressionNumberKind()
+        );
     }
 
     default ExpressionNumberKind expressionNumberKind() {

@@ -114,6 +114,11 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
         return this.context.convert(value, target);
     }
 
+    @Override
+    public long dateOffset() {
+        return this.context.dateOffset();
+    }
+
     // DateTimeContext..................................................................................................
 
     @Override

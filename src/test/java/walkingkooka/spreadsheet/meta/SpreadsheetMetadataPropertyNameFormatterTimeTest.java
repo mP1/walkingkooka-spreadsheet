@@ -111,14 +111,17 @@ public final class SpreadsheetMetadataPropertyNameFormatterTimeTest extends Spre
                         LABEL_NAME_RESOLVER,
                         ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
-                                ConverterContexts.basic(Converters.fake(),
+                                ConverterContexts.basic(
+                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                        Converters.fake(),
                                         DateTimeContexts.locale(
                                                 Locale.ENGLISH,
                                                 1900,
                                                 20,
                                                 LocalDateTime::now
                                         ),
-                                        DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                                ),
                                 ExpressionNumberKind.DEFAULT
                         )
                 )

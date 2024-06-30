@@ -153,6 +153,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 Converters.fake(),
                                 dateTimeContext(),
                                 decimalNumberContext()

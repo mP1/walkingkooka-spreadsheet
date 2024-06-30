@@ -1566,6 +1566,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 Converters.fake(),
                                 DateTimeContexts.locale(
                                         Locale.ENGLISH,
@@ -1581,7 +1582,8 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                                         'P',
                                         'L',
                                         Locale.ENGLISH,
-                                        MathContext.DECIMAL32)),
+                                        MathContext.DECIMAL32)
+                        ),
                         EXPRESSION_NUMBER_KIND
                 )
         );

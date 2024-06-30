@@ -93,6 +93,11 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
+    public long dateOffset() {
+        return this.context.dateOffset();
+    }
+
+    @Override
     public Optional<TextNode> format(final Object value) {
         throw new UnsupportedOperationException();
     }

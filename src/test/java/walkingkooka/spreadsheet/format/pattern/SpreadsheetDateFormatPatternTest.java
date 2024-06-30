@@ -481,11 +481,16 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
                             ExpressionNumberConverters.toNumberOrExpressionNumber(
-                                    Converters.localDateToNumber(0)
+                                    Converters.localDateToNumber()
                             ),
                             Converters.localDateToLocalDateTime()
                     )
             );
+
+            @Override
+            public long dateOffset() {
+                return Converters.JAVA_EPOCH_OFFSET;
+            }
 
             @Override
             public char decimalSeparator() {

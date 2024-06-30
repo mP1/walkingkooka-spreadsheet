@@ -843,11 +843,16 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                     Lists.of(
                             ExpressionNumberConverters.toNumberOrExpressionNumber(
-                                    Converters.localDateTimeToNumber(0)
+                                    Converters.localDateTimeToNumber()
                             ),
                             Converters.simple()
                     )
             );
+
+            @Override
+            public long dateOffset() {
+                return Converters.JAVA_EPOCH_OFFSET;
+            }
 
             @Override
             public ExpressionNumberKind expressionNumberKind() {

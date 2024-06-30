@@ -3264,8 +3264,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         Converters.object(),
                         Converters.simple(),
                         ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.numberToNumber()),
-                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateToNumber(Converters.JAVA_EPOCH_OFFSET)),
-                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateTimeToNumber(Converters.JAVA_EPOCH_OFFSET)),
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateToNumber()),
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateTimeToNumber()),
                         ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localTimeToNumber()),
                         ExpressionNumberConverters.numberOrExpressionNumberToNumber()
                                 .to(
@@ -3363,11 +3363,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 return converter.convert(
                         value,
                         target,
-                        ExpressionNumberConverterContexts.basic(Converters.fake(),
-                                ConverterContexts.basic(Converters.fake(),
+                        ExpressionNumberConverterContexts.basic(
+                                Converters.fake(),
+                                ConverterContexts.basic(
+                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                        Converters.fake(),
                                         dateTimeContext(),
-                                        decimalNumberContext()),
-                                this.expressionNumberKind())
+                                        decimalNumberContext()
+                                ),
+                                this.expressionNumberKind()
+                        )
                 );
             }
 

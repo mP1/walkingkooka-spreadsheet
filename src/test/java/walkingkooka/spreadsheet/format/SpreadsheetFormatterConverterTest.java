@@ -125,6 +125,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 Converters.fake(),
                                 DateTimeContexts.fake(),
                                 DecimalNumberContexts.american(MathContext.UNLIMITED)

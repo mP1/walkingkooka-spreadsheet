@@ -698,11 +698,16 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
                                                  final Class<T> target) {
                 return all.convert(value,
                         target,
-                        ExpressionNumberConverterContexts.basic(Converters.fake(),
-                                ConverterContexts.basic(Converters.fake(),
+                        ExpressionNumberConverterContexts.basic(
+                                Converters.fake(),
+                                ConverterContexts.basic(
+                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                        Converters.fake(),
                                         DateTimeContexts.fake(),
-                                        DecimalNumberContexts.fake()),
-                                EXPRESSION_NUMBER_KIND));
+                                        DecimalNumberContexts.fake()
+                                ),
+                                EXPRESSION_NUMBER_KIND)
+                );
             }
         };
     }

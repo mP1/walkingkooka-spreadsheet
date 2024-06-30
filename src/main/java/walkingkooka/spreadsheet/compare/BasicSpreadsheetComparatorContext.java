@@ -61,6 +61,11 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
     }
 
     @Override
+    public long dateOffset() {
+        return this.converterContext.dateOffset();
+    }
+
+    @Override
     public List<String> ampms() {
         return this.converterContext.ampms();
     }

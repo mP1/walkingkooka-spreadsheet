@@ -82,6 +82,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
             ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Converters.objectToString(),
                             DateTimeContexts.locale(
                                     Locale.forLanguageTag("EN-AU"),

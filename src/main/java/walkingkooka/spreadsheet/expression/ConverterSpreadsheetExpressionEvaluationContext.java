@@ -151,6 +151,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     // @VisibleForTesting
     final Converter<SpreadsheetExpressionEvaluationContext> converter;
 
+    @Override
+    public long dateOffset() {
+        return this.context.dateOffset();
+    }
+
     // SpreadsheetExpressionEvaluationContext delegate..................................................................
 
     @Override

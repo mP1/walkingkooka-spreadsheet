@@ -131,7 +131,9 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 toBoolean(LocalDate.class, dateTrue),
                 Converters.simple(), // date -> date
                 Converters.localDateToLocalDateTime(),
-                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateToNumber(dateOffset)),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(
+                        Converters.localDateToNumber()
+                ),
                 null, // selection
                 dateFormatter.converter()
                         .cast(SpreadsheetConverterContext.class),
@@ -143,7 +145,9 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 toBoolean(LocalDateTime.class, dateTimeTrue),
                 Converters.localDateTimeToLocalDate(),
                 Converters.simple(), // dateTime -> dateTime
-                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateTimeToNumber(dateOffset)),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(
+                        Converters.localDateTimeToNumber()
+                ),
                 null, // selection
                 dateTimeFormatter.converter()
                         .cast(SpreadsheetConverterContext.class),
@@ -159,12 +163,12 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                         ).cast(SpreadsheetConverterContext.class),
                 ExpressionNumberConverters.numberOrExpressionNumberToNumber().to(
                         Number.class,
-                        Converters.numberToLocalDate(dateOffset)
+                        Converters.numberToLocalDate()
                 ).cast(SpreadsheetConverterContext.class),
                 ExpressionNumberConverters.numberOrExpressionNumberToNumber()
                         .to(
                                 Number.class,
-                                Converters.numberToLocalDateTime(dateOffset)
+                                Converters.numberToLocalDateTime()
                         ).cast(SpreadsheetConverterContext.class),
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
                         ExpressionNumberConverters.numberOrExpressionNumberToNumber()
