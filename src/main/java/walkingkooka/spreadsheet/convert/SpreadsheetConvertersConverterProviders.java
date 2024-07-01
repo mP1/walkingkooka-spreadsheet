@@ -26,6 +26,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetConvertersConverterProviders implements PublicStaticHelper {
 
     /**
+     * {@see SpreadsheetConvertersConverterProvider}
+     */
+    public static ConverterProvider spreadsheetConverters() {
+        return SpreadsheetConvertersConverterProvider.INSTANCE;
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetConvertersConverterProviders() {
