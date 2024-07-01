@@ -497,8 +497,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetFormatterSelector timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
         final SpreadsheetParserSelector timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
 
-        final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_OFFSET);
-
         components.reportIfMissing();
 
         return SpreadsheetConverters.general(
@@ -510,8 +508,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 spreadsheetParserProvider.spreadsheetParserOrFail(numberParser),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(textFormat),
                 spreadsheetFormatterProvider.spreadsheetFormatterOrFail(timeFormat),
-                spreadsheetParserProvider.spreadsheetParserOrFail(timeParser),
-                dateOffset
+                spreadsheetParserProvider.spreadsheetParserOrFail(timeParser)
         );
     }
 
