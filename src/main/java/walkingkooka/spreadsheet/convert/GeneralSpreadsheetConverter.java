@@ -97,12 +97,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         final LocalDateTime dateTimeTrue = dateTime(dateTrue);
         final LocalDateTime dateTimeFalse = dateTime(dateFalse);
 
-        final String stringTrue = Boolean.TRUE.toString();
-        final String stringFalse = Boolean.FALSE.toString();
-
-        final LocalTime timeTrue = LocalTime.ofSecondOfDay(1);
-        final LocalTime timeFalse = LocalTime.MIDNIGHT;
-
         // wrap all number parse/to converters to also handle ExpressionNumber
 
         // boolean ->
@@ -115,13 +109,13 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 GeneralSpreadsheetConverterBooleanString.with(
                         booleanTo(
                                 String.class,
-                                stringTrue,
-                                stringFalse
+                                TRUE_TO_STRING,
+                                FALSE_TO_STRING
                         ),
                         textFormatter.converter()
                                 .cast(SpreadsheetConverterContext.class)
                 ), // boolean -> String
-                booleanTo(LocalTime.class, timeTrue, timeFalse)
+                booleanTo(LocalTime.class, TRUE_TO_TIME, FALSE_TO_TIME)
         ); // Time
 
         this.booleanConverter = booleanTo;
@@ -206,7 +200,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         // String|Character ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> stringTo = GeneralSpreadsheetConverterMapping.with(
                 characterOrStringTo(
-                        toBoolean(String.class, stringTrue)
+                        toBoolean(String.class, TRUE_TO_STRING)
                 ), // string -> boolean
                 characterOrStringTo(
                         SpreadsheetConverters.stringToDate(dateParser)
@@ -241,7 +235,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
 
         // LocalTime ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> timeTo = mapping(
-                toBoolean(LocalTime.class, timeTrue),
+                toBoolean(LocalTime.class, TRUE_TO_TIME),
                 null, // time -> date invalid
                 Converters.localTimeToLocalDateTime(),
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
@@ -263,6 +257,14 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 timeTo
         );
     }
+
+    private final static LocalTime TRUE_TO_TIME = LocalTime.ofSecondOfDay(1);
+
+    private final static LocalTime FALSE_TO_TIME = LocalTime.MIDNIGHT;
+
+    private final static String TRUE_TO_STRING = Boolean.TRUE.toString();
+
+    private final static String FALSE_TO_STRING = Boolean.FALSE.toString();
 
     /**
      * Creates a {@link Converter} that converts {@link Boolean} values to the given type.
