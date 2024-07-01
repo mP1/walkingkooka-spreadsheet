@@ -49,8 +49,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                                             final Parser<SpreadsheetParserContext> numberParser,
                                             final SpreadsheetFormatter textFormatter,
                                             final SpreadsheetFormatter timeFormatter,
-                                            final Parser<SpreadsheetParserContext> timeParser,
-                                            final long dateOffset) {
+                                            final Parser<SpreadsheetParserContext> timeParser) {
         Objects.requireNonNull(dateFormatter, "dateFormatter");
         Objects.requireNonNull(dateParser, "dateParser");
 
@@ -74,8 +73,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 numberParser,
                 textFormatter,
                 timeFormatter,
-                timeParser,
-                dateOffset
+                timeParser
         );
     }
 
@@ -87,23 +85,20 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                                         final Parser<SpreadsheetParserContext> numberParser,
                                         final SpreadsheetFormatter textFormatter,
                                         final SpreadsheetFormatter timeFormatter,
-                                        final Parser<SpreadsheetParserContext> timeParser,
-                                        final long dateOffset) {
+                                        final Parser<SpreadsheetParserContext> timeParser) {
         super();
-
-        final LocalDate dateTrue = LocalDate.ofEpochDay(dateOffset + 1);
-        final LocalDate dateFalse = LocalDate.ofEpochDay(dateOffset);
-
-        final LocalDateTime dateTimeTrue = dateTime(dateTrue);
-        final LocalDateTime dateTimeFalse = dateTime(dateFalse);
 
         // wrap all number parse/to converters to also handle ExpressionNumber
 
         // boolean ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> booleanTo = mapping(
                 Converters.simple(), // boolean -> boolean
-                booleanTo(LocalDate.class, dateTrue, dateFalse),
-                booleanTo(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
+                Converters.booleanToNumber()
+                        .to(Integer.class, Converters.numberToLocalDate())
+                        .cast(SpreadsheetConverterContext.class),
+                Converters.booleanToNumber()
+                        .to(Integer.class, Converters.numberToLocalDateTime())
+                        .cast(SpreadsheetConverterContext.class),
                 ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.booleanToNumber()),
                 null, // selection
                 GeneralSpreadsheetConverterBooleanString.with(
@@ -122,7 +117,9 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
 
         // LocalDate ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> dateTo = mapping(
-                toBoolean(LocalDate.class, dateTrue),
+                Converters.localDateToNumber()
+                        .to(Integer.class, Converters.numberToBoolean())
+                        .cast(SpreadsheetConverterContext.class),
                 Converters.simple(), // date -> date
                 Converters.localDateToLocalDateTime(),
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
@@ -136,7 +133,9 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
 
         // LocalDateTime ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> dateTimeTo = mapping(
-                toBoolean(LocalDateTime.class, dateTimeTrue),
+                Converters.localDateTimeToNumber()
+                        .to(Integer.class, Converters.numberToBoolean())
+                        .cast(SpreadsheetConverterContext.class),
                 Converters.localDateTimeToLocalDate(),
                 Converters.simple(), // dateTime -> dateTime
                 ExpressionNumberConverters.toNumberOrExpressionNumber(

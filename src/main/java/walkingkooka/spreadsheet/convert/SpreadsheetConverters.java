@@ -97,8 +97,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                                                                  final Parser<SpreadsheetParserContext> numberParser,
                                                                  final SpreadsheetFormatter textFormatter,
                                                                  final SpreadsheetFormatter timeFormatter,
-                                                                 final Parser<SpreadsheetParserContext> timeParser,
-                                                                 final long dateOffset) {
+                                                                 final Parser<SpreadsheetParserContext> timeParser) {
         return GeneralSpreadsheetConverter.with(
                 dateFormatter,
                 dateParser,
@@ -108,8 +107,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 numberParser,
                 textFormatter,
                 timeFormatter,
-                timeParser,
-                dateOffset
+                timeParser
         );
     }
 

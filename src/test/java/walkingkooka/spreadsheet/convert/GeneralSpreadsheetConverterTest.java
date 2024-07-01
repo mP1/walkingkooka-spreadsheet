@@ -72,9 +72,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetConverterTestCase<GeneralSpreadsheetConverter>
         implements ConverterTesting2<GeneralSpreadsheetConverter, SpreadsheetConverterContext> {
 
-    private final static long DATE_OFFSET = Converters.JAVA_EPOCH_OFFSET;
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-
     // with.............................................................................................................
 
     @Test
@@ -232,13 +229,16 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                         numberParser,
                         textFormatter,
                         timeFormatter,
-                        timeParser,
-                        DATE_OFFSET
+                        timeParser
                 )
         );
     }
 
     // convert..........................................................................................................
+
+    private final static long DATE_OFFSET = Converters.JAVA_EPOCH_OFFSET;
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static int NUMBER_TRUE = 1;
     private final static int NUMBER_FALSE = 0;
@@ -717,7 +717,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         this.convertAndCheck(
                 null,
                 LocalDate.class,
-                DATE_FALSE
+                null
         );
     }
 
@@ -726,7 +726,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         this.convertAndCheck(
                 null,
                 LocalDateTime.class,
-                LocalDateTime.of(DATE_FALSE, TIME_FALSE)
+                null
         );
     }
 
@@ -1072,8 +1072,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                         numberParser(),
                         textFormatter(),
                         timeFormatter(),
-                        timeParser(),
-                        DATE_OFFSET
+                        timeParser()
                 ),
                 ExpressionNumberKind.DEFAULT.create(1),
                 Character.class,
@@ -1455,8 +1454,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser(),
-                DATE_OFFSET
+                timeParser()
         );
     }
 
@@ -1566,7 +1564,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
-                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                DATE_OFFSET, // dateOffset
                                 Converters.fake(),
                                 DateTimeContexts.locale(
                                         Locale.ENGLISH,
