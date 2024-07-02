@@ -26,6 +26,9 @@ import walkingkooka.convert.provider.ConverterInfo;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.UrlPath;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.convert.provider.TreeExpressionConvertProviders;
 
@@ -40,12 +43,25 @@ import java.util.Set;
 final class SpreadsheetConvertersConverterProvider implements ConverterProvider {
 
     /**
-     * Singleton
+     * Factory
      */
-    final static SpreadsheetConvertersConverterProvider INSTANCE = new SpreadsheetConvertersConverterProvider();
+    static SpreadsheetConvertersConverterProvider with(final SpreadsheetMetadata metadata,
+                                                       final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                       final SpreadsheetParserProvider spreadsheetParserProvider) {
+        return new SpreadsheetConvertersConverterProvider(
+                Objects.requireNonNull(metadata, "metadata"),
+                Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
+                Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider")
+        );
+    }
 
-    private SpreadsheetConvertersConverterProvider() {
+    private SpreadsheetConvertersConverterProvider(final SpreadsheetMetadata metadata,
+                                                   final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                   final SpreadsheetParserProvider spreadsheetParserProvider) {
         super();
+        this.metadata = metadata;
+        this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
+        this.spreadsheetParserProvider = spreadsheetParserProvider;
     }
 
     @Override
@@ -80,6 +96,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.errorToString();
                 break;
+            case GENERAL_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = general();
+                break;
             case SELECTION_TO_SELECTION_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -104,6 +125,21 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 Cast.to(converter)
         );
     }
+
+    private Converter<SpreadsheetConverterContext> general() {
+        final SpreadsheetMetadata metadata = this.metadata;
+
+        return metadata.converter(
+                this.spreadsheetFormatterProvider,
+                this.spreadsheetParserProvider
+        );
+    }
+
+    private final SpreadsheetMetadata metadata;
+
+    private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
+
+    private final SpreadsheetParserProvider spreadsheetParserProvider;
 
     private void parameterCountCheck(final List<?> values,
                                      final int expected) {
@@ -138,6 +174,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName ERROR_TO_STRING = ConverterName.with(ERROR_TO_STRING_STRING);
 
+    private final static String GENERAL_STRING = "general";
+
+    final static ConverterName GENERAL = ConverterName.with(GENERAL_STRING);
+
     private final static String SELECTION_TO_SELECTION_STRING = "selection-to-selection";
 
     final static ConverterName SELECTION_TO_SELECTION = ConverterName.with(SELECTION_TO_SELECTION_STRING);
@@ -160,6 +200,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),
             converterInfo(ERROR_TO_STRING),
+            converterInfo(GENERAL),
             converterInfo(SPREADSHEET_CELL_TO),
             converterInfo(SELECTION_TO_SELECTION),
             converterInfo(STRING_TO_SELECTION)
