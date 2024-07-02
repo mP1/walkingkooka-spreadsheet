@@ -707,8 +707,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testConvertNullToBoolean() {
         this.convertAndCheck(
                 null,
-                Boolean.class,
-                null
+                Boolean.class
         );
     }
 
@@ -716,8 +715,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testConvertNullToDate() {
         this.convertAndCheck(
                 null,
-                LocalDate.class,
-                null
+                LocalDate.class
         );
     }
 
@@ -725,8 +723,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testConvertNullToDateTime() {
         this.convertAndCheck(
                 null,
-                LocalDateTime.class,
-                null
+                LocalDateTime.class
         );
     }
 
@@ -743,8 +740,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testConvertNullToExpressionNumber() {
         this.convertAndCheck(
                 null,
-                ExpressionNumber.class,
-                null
+                ExpressionNumber.class
         );
     }
 
@@ -752,8 +748,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testConvertNullToNumber() {
         this.convertAndCheck(
                 null,
-                Number.class,
-                null
+                Number.class
         );
     }
 
