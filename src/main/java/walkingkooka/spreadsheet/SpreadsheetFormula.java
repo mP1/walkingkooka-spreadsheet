@@ -247,7 +247,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     /**
-     * The expression parsed parse the text form of this formula. This can then be executed to produce a {@link #value}
+     * The expression from the {@link #token()} which was parsed from the {@link #text()}.
+     * The expression can be executed to produce a value or error.
      */
     private final Optional<Expression> expression;
 
