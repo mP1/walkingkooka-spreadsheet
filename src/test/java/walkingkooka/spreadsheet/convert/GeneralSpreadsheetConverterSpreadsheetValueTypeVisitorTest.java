@@ -35,15 +35,18 @@ public final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitorTest ex
 
     @Test
     public void testToString() {
-        final GeneralSpreadsheetConverterMapping<Converter<ConverterContext>> mapping = GeneralSpreadsheetConverterMapping.with(Converters.fake().setToString("Boolean1"),
+        final GeneralSpreadsheetConverterMapping<Converter<ConverterContext>> mapping = GeneralSpreadsheetConverterMapping.with(
+                Converters.fake().setToString("Boolean1"),
                 Converters.fake().setToString("Date2"),
                 Converters.fake().setToString("DateTime3"),
                 Converters.fake().setToString("Number4"),
-                Converters.fake().setToString("Selection5"),
-                Converters.fake().setToString("String6"),
-                Converters.fake().setToString("Time7"));
-        this.toStringAndCheck(new GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping),
-                "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, selection=Selection5, string=String6, time=Time7");
+                Converters.fake().setToString("String5"),
+                Converters.fake().setToString("Time6")
+        );
+        this.toStringAndCheck(
+                new GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping),
+                "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6"
+        );
     }
 
     @Test
@@ -53,14 +56,13 @@ public final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitorTest ex
                 Converters.fake().setToString("Date2"),
                 Converters.fake().setToString("DateTime3"),
                 Converters.fake().setToString("Number4"),
-                Converters.fake().setToString("Selection5"),
-                Converters.fake().setToString("String6"),
-                Converters.fake().setToString("Time7")
+                Converters.fake().setToString("String5"),
+                Converters.fake().setToString("Time6")
         );
         final GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext> visitor = new GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping);
         visitor.accept(LocalDate.class);
 
-        this.toStringAndCheck(visitor, "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, selection=Selection5, string=String6, time=Time7, general=Date2");
+        this.toStringAndCheck(visitor, "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6, general=Date2");
     }
 
     @Override

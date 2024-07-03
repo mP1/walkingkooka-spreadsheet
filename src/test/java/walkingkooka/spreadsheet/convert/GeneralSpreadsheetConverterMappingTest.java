@@ -36,14 +36,13 @@ public final class GeneralSpreadsheetConverterMappingTest extends GeneralSpreads
                 Converters.fake().setToString("Date2"),
                 Converters.fake().setToString("DateTime3"),
                 Converters.fake().setToString("Number4"),
-                Converters.fake().setToString("Selection5"),
-                Converters.fake().setToString("String6"),
-                Converters.fake().setToString("Time7")
+                Converters.fake().setToString("String5"),
+                Converters.fake().setToString("Time6")
         );
 
         this.toStringAndCheck(
                 mapping,
-                "boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, selection=Selection5, string=String6, time=Time7"
+                "boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6"
         );
     }
 

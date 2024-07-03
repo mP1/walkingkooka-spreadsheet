@@ -61,33 +61,8 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
-    protected void visitCellRange() {
-        this.converter = this.mapping.selection;
-    }
-
-    @Override
-    protected void visitCellReference() {
-        this.converter = this.mapping.selection;
-    }
-
-    @Override
-    protected void visitCellReferenceOrRange() {
-        this.converter = this.mapping.selection;
-    }
-
-    @Override
     protected void visitCharacter() {
         this.converter = this.mapping.string;
-    }
-
-    @Override
-    protected void visitColumnReference() {
-        this.converter = this.mapping.selection;
-    }
-
-    @Override
-    protected void visitColumnRangeReference() {
-        this.converter = this.mapping.selection;
     }
 
     @Override
@@ -101,11 +76,6 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
-    protected void visitExpressionReference() {
-        this.converter = this.mapping.selection;
-    }
-
-    @Override
     protected void visitFloat() {
         this.converter = this.mapping.number;
     }
@@ -113,11 +83,6 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     @Override
     protected void visitInteger() {
         this.converter = this.mapping.number;
-    }
-
-    @Override
-    protected void visitLabel() {
-        this.converter = this.mapping.selection;
     }
 
     @Override
@@ -146,23 +111,8 @@ final class GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor<C extends Con
     }
 
     @Override
-    protected void visitRowReference() {
-        this.converter = this.mapping.selection;
-    }
-
-    @Override
-    protected void visitRowRangeReference() {
-        this.converter = this.mapping.selection;
-    }
-
-    @Override
     protected void visitShort() {
         this.converter = this.mapping.number;
-    }
-
-    @Override
-    protected void visitSpreadsheetSelection() {
-        this.converter = this.mapping.selection;
     }
 
     @Override

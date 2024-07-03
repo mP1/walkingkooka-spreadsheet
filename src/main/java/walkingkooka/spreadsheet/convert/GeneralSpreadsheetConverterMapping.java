@@ -30,7 +30,6 @@ final class GeneralSpreadsheetConverterMapping<T> {
                                                           final T date,
                                                           final T dateTime,
                                                           final T number,
-                                                          final T selection,
                                                           final T string,
                                                           final T time) {
         return new GeneralSpreadsheetConverterMapping<>(
@@ -38,7 +37,6 @@ final class GeneralSpreadsheetConverterMapping<T> {
                 date,
                 dateTime,
                 number,
-                selection,
                 string,
                 time
         );
@@ -51,7 +49,6 @@ final class GeneralSpreadsheetConverterMapping<T> {
                                                final T date,
                                                final T dateTime,
                                                final T number,
-                                               final T selection,
                                                final T string,
                                                final T time) {
         super();
@@ -60,7 +57,6 @@ final class GeneralSpreadsheetConverterMapping<T> {
         this.date = date;
         this.dateTime = dateTime;
         this.number = number;
-        this.selection = selection;
         this.string = string;
         this.time = time;
     }
@@ -69,8 +65,6 @@ final class GeneralSpreadsheetConverterMapping<T> {
     final T date;
     final T dateTime;
     final T number;
-
-    final T selection;
 
     /**
      * String also includes character.
@@ -87,7 +81,6 @@ final class GeneralSpreadsheetConverterMapping<T> {
                 .label("date" ).value(this.date)
                 .label("dateTime" ).value(this.dateTime)
                 .label("number" ).value(this.number)
-                .label("selection" ).value(this.selection)
                 .label("string").value(this.string)
                 .label("time").value(this.time)
                 .build();
