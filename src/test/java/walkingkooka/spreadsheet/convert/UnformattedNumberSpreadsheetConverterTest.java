@@ -41,10 +41,8 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
         SpreadsheetMetadataTesting,
         ToStringTesting<UnformattedNumberSpreadsheetConverter> {
 
-    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
-
     @Test
-    public void testConvertToNumberFails() {
+    public void testConvertStringToNumberFails() {
         this.convertFails(
                 "123",
                 Number.class
@@ -52,7 +50,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testBooleanTrue() {
+    public void testConvertBooleanTrueToString() {
         this.convertToStringAndCheck(
                 true,
                 "true"
@@ -60,7 +58,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testBooleanFalse() {
+    public void testConvertBooleanFalseToString() {
         this.convertToStringAndCheck(
                 false,
                 "false"
@@ -68,7 +66,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testBigDecimal() {
+    public void testConvertBigDecimalToString() {
         this.convertToStringAndCheck(
                 BigDecimal.valueOf(1.25),
                 "1.25"
@@ -76,7 +74,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testBigInteger() {
+    public void testConvertBigIntegerToString() {
         this.convertToStringAndCheck(
                 BigInteger.valueOf(125),
                 "125"
@@ -84,7 +82,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testDouble() {
+    public void testConvertDoubleToString() {
         this.convertToStringAndCheck(
                 1.25,
                 "1.25"
@@ -92,7 +90,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testExpressionNumberBigDecimal() {
+    public void testConvertExpressionNumberBigDecimalToString() {
         this.convertToStringAndCheck(
                 ExpressionNumberKind.BIG_DECIMAL.create(12.5),
                 "12.5"
@@ -100,7 +98,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testExpressionNumberDouble() {
+    public void testConvertExpressionNumberDoubleToString() {
         this.convertToStringAndCheck(
                 ExpressionNumberKind.DOUBLE.create(12.5),
                 "12.5"
@@ -108,7 +106,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testFloat() {
+    public void testConvertFloatToString() {
         this.convertToStringAndCheck(
                 123.5f,
                 "123.5"
@@ -116,7 +114,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testInteger() {
+    public void testConvertIntegerToString() {
         this.convertToStringAndCheck(
                 123,
                 "123"
@@ -124,7 +122,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testLocalDate() {
+    public void testConvertLocalDateToString() {
         this.convertToStringAndCheck(
                 LocalDate.of(1999, 12, 31),
                 "date: 31/12/1999"
@@ -132,7 +130,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testLocalDateTime() {
+    public void testConvertLocalDateTimeToString() {
         this.convertToStringAndCheck(
                 LocalDateTime.of(
                         LocalDate.of(1999, 12, 31),
@@ -143,7 +141,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testLocalTime() {
+    public void testConvertLocalTimeToString() {
         this.convertToStringAndCheck(
                 LocalTime.of(12, 58, 59),
                 "time: 12:58:59"
@@ -151,7 +149,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testLong() {
+    public void testConvertLongToString() {
         this.convertToStringAndCheck(
                 123L,
                 "123"
@@ -159,7 +157,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
     }
 
     @Test
-    public void testString() {
+    public void testConvertStringToString() {
         this.convertAndCheck("Hello");
     }
 
@@ -172,18 +170,12 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
         );
     }
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createConverter(),
-                UnformattedNumberSpreadsheetConverter.class.getSimpleName()
-        );
-    }
-
     @Override
     public UnformattedNumberSpreadsheetConverter createConverter() {
         return UnformattedNumberSpreadsheetConverter.INSTANCE;
     }
+
+    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     @Override
     public SpreadsheetConverterContext createContext() {
@@ -213,6 +205,18 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 )
         );
     }
+
+    // ToString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createConverter(),
+                UnformattedNumberSpreadsheetConverter.class.getSimpleName()
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<UnformattedNumberSpreadsheetConverter> type() {
