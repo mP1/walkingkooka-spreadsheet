@@ -34,7 +34,7 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 /**
- * A {@link Converter} that supports converting all the spreadsheet types to other types.
+ * A {@link Converter} that supports converting all but not any {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection} the spreadsheet value types to other value types.
  */
 final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverterContext> {
 
@@ -100,7 +100,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                         .to(Integer.class, Converters.numberToLocalDateTime())
                         .cast(SpreadsheetConverterContext.class),
                 ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.booleanToNumber()),
-                null, // selection
                 GeneralSpreadsheetConverterBooleanString.with(
                         booleanTo(
                                 String.class,
@@ -125,7 +124,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
                         Converters.localDateToNumber()
                 ),
-                null, // selection
                 dateFormatter.converter()
                         .cast(SpreadsheetConverterContext.class),
                 null // date -> time INVALID
@@ -141,7 +139,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
                         Converters.localDateTimeToNumber()
                 ),
-                null, // selection
                 dateTimeFormatter.converter()
                         .cast(SpreadsheetConverterContext.class),
                 Converters.localDateTimeToLocalTime()
@@ -170,7 +167,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                                         Converters.numberToNumber()
                                 )
                 ).cast(SpreadsheetConverterContext.class),
-                null, // selection
                 ExpressionNumberConverters.numberOrExpressionNumberToNumber()
                         .cast(SpreadsheetConverterContext.class)
                         .to(
@@ -182,17 +178,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                                 Number.class,
                                 Converters.numberToLocalTime()
                         ).cast(SpreadsheetConverterContext.class)
-        );
-
-        // selection
-        final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> selectionTo = GeneralSpreadsheetConverterMapping.with(
-                null, // boolean
-                null, // date
-                null, // date-time
-                null, // number
-                SELECTION_TO_SELECTION, // selection
-                Converters.objectToString(), // string
-                null // time
         );
 
         // most attempts to support conversions such as Date -> Character are pointless but keep for the error failures.
@@ -220,9 +205,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                         )
                 ),
                 characterOrStringTo(
-                        SpreadsheetConverters.stringToSelection()
-                ), // selection
-                characterOrStringTo(
                         toCharacterOrString(
                                 Converters.simple() // String -> String
                         )
@@ -240,7 +222,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
                         Converters.localTimeToNumber()
                 ),
-                null, // selection
                 timeFormatter.converter()
                         .cast(SpreadsheetConverterContext.class),
                 Converters.simple()
@@ -251,7 +232,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 dateTo,
                 dateTimeTo,
                 numberTo,
-                selectionTo,
                 stringTo,
                 timeTo
         );
@@ -336,7 +316,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
             final Converter<SpreadsheetConverterContext> date,
             final Converter<SpreadsheetConverterContext> dateTime,
             final Converter<SpreadsheetConverterContext> number,
-            final Converter<SpreadsheetConverterContext> selection,
             final Converter<SpreadsheetConverterContext> string,
             final Converter<SpreadsheetConverterContext> time) {
         return GeneralSpreadsheetConverterMapping.with(
@@ -344,7 +323,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 date,
                 dateTime,
                 number,
-                selection,
                 toCharacterOrString(string),
                 time
         );
@@ -361,7 +339,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                               final SpreadsheetConverterContext context) {
         return isNonNullAndValueIsInstanceofType(value, targetType) ||
                 isSupportedValueAndType(value, targetType) ||
-                SELECTION_TO_SELECTION.canConvert(value, targetType, context) ||
                 StringToSpreadsheetSelectionConverter.INSTANCE.canConvert(value, targetType, context);
     }
 
@@ -450,11 +427,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     }
 
     private final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>>> mapping;
-
-    /**
-     * Singleton
-     */
-    private final static Converter<SpreadsheetConverterContext> SELECTION_TO_SELECTION = SpreadsheetConverters.selectionToSelection();
 
     // toString.........................................................................................................
 

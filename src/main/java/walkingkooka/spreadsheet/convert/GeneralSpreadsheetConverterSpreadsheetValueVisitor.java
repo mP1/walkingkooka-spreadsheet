@@ -138,22 +138,22 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
 
     @Override
     protected void visit(final SpreadsheetCellRangeReference value) {
-        this.converter(this.mapping.selection);
+        // fail
     }
 
     @Override
     protected void visit(final SpreadsheetCellReference value) {
-        this.converter(this.mapping.selection);
+        // fail
     }
 
     @Override
     protected void visit(final SpreadsheetColumnRangeReference value) {
-        this.converter(this.mapping.selection);
+        // fail
     }
 
     @Override
     protected void visit(final SpreadsheetColumnReference value) {
-        this.converter(this.mapping.selection);
+        // fail
     }
 
     @Override
@@ -171,17 +171,17 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
 
     @Override
     protected void visit(final SpreadsheetLabelName value) {
-        this.converter(this.mapping.selection);
+        // fail
     }
 
     @Override
     protected void visit(final SpreadsheetRowRangeReference value) {
-        this.converter(this.mapping.selection);
+        // fail
     }
 
     @Override
     protected void visit(final SpreadsheetRowReference value) {
-        this.converter(this.mapping.selection);
+        // fail
     }
 
     @Override
