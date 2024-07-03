@@ -85,6 +85,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.selectionToSelection();
                 break;
+            case SPREADSHEET_CELL_TO_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.spreadsheetCellTo();
+                break;
             case STRING_TO_SELECTION_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -137,6 +142,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SELECTION_TO_SELECTION = ConverterName.with(SELECTION_TO_SELECTION_STRING);
 
+    private final static String SPREADSHEET_CELL_TO_STRING = "spreadsheet-cell-to";
+
+    final static ConverterName SPREADSHEET_CELL_TO = ConverterName.with(SPREADSHEET_CELL_TO_STRING);
+
     private final static String STRING_TO_SELECTION_STRING = "string-to-selection";
 
     final static ConverterName STRING_TO_SELECTION = ConverterName.with(STRING_TO_SELECTION_STRING);
@@ -151,6 +160,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),
             converterInfo(ERROR_TO_STRING),
+            converterInfo(SPREADSHEET_CELL_TO),
             converterInfo(SELECTION_TO_SELECTION),
             converterInfo(STRING_TO_SELECTION)
     );
