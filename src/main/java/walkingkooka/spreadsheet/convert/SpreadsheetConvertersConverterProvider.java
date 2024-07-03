@@ -117,19 +117,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         return Cast.to(value);
     }
 
-    @Override
-    public Set<ConverterInfo> converterInfos() {
-        return Sets.of(
-                converterInfo(BASIC_SPREADSHEET_CONVERTER),
-                converterInfo(ERROR_THROWING),
-                converterInfo(ERROR_TO_NUMBER),
-                converterInfo(ERROR_TO_STRING),
-                converterInfo(SELECTION_TO_SELECTION),
-                converterInfo(STRING_TO_SELECTION),
-                converterInfo(ERROR_TO_NUMBER)
-        );
-    }
-
     private final static String BASIC_SPREADSHEET_CONVERTER_STRING = "basic-spreadsheet-converter";
 
     final static ConverterName BASIC_SPREADSHEET_CONVERTER = ConverterName.with(BASIC_SPREADSHEET_CONVERTER_STRING);
@@ -153,6 +140,20 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String STRING_TO_SELECTION_STRING = "string-to-selection";
 
     final static ConverterName STRING_TO_SELECTION = ConverterName.with(STRING_TO_SELECTION_STRING);
+
+    @Override
+    public Set<ConverterInfo> converterInfos() {
+        return INFOS;
+    }
+
+    private final static Set<ConverterInfo> INFOS = Sets.of(
+            converterInfo(BASIC_SPREADSHEET_CONVERTER),
+            converterInfo(ERROR_THROWING),
+            converterInfo(ERROR_TO_NUMBER),
+            converterInfo(ERROR_TO_STRING),
+            converterInfo(SELECTION_TO_SELECTION),
+            converterInfo(STRING_TO_SELECTION)
+    );
 
     /**
      * Helper that creates a {@link ConverterInfo} from the given {@link ConverterName} and {@link TreeExpressionConvertProviders#BASE_URL}.
