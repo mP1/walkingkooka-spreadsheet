@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderCollection;
 
 import java.util.Objects;
@@ -38,7 +39,7 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
     private SpreadsheetComparatorProviderCollection(final Set<SpreadsheetComparatorProvider> providers) {
         this.providers = ProviderCollection.with(
                 Function.identity(), // inputToName
-                SpreadsheetComparatorProvider::spreadsheetComparator,
+                (p, n, v) -> p.spreadsheetComparator(n),
                 SpreadsheetComparatorProvider::spreadsheetComparatorInfos,
                 SpreadsheetComparator.class.getSimpleName(),
                 providers
@@ -49,7 +50,10 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
     public Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name) {
         Objects.requireNonNull(name, "name");
 
-        return this.providers.get(name);
+        return this.providers.get(
+                name,
+                Lists.empty()
+        );
     }
 
     @Override

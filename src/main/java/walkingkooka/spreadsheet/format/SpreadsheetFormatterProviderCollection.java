@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderCollection;
 
 import java.util.Objects;
@@ -37,7 +38,7 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     private SpreadsheetFormatterProviderCollection(final Set<SpreadsheetFormatterProvider> providers) {
         this.providers = ProviderCollection.with(
                 SpreadsheetFormatterSelector::name, // inputToName
-                SpreadsheetFormatterProvider::spreadsheetFormatter,
+                (p, s, v) -> p.spreadsheetFormatter(s),
                 SpreadsheetFormatterProvider::spreadsheetFormatterInfos,
                 SpreadsheetFormatter.class.getSimpleName(),
                 providers
@@ -48,7 +49,10 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return this.providers.get(selector);
+        return this.providers.get(
+                selector,
+                Lists.empty()
+        );
     }
 
     @Override
