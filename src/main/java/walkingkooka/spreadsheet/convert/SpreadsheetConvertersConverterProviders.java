@@ -17,7 +17,10 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
@@ -27,6 +30,14 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
  * A {@link ConverterProvider} for {@link SpreadsheetConverters}.
  */
 public final class SpreadsheetConvertersConverterProviders implements PublicStaticHelper {
+
+    /**
+     * This is the base {@link AbsoluteUrl} for all {@link Converter} in this package. The name of each
+     * converter will be appended to this base.
+     */
+    public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
+            "https://github.com/mP1/walkingkooka-spreadsheet/" + Converter.class.getSimpleName()
+    );
 
     /**
      * {@see SpreadsheetConvertersConverterProvider}
