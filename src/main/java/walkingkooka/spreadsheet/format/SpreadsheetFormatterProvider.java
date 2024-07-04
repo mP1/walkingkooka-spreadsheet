@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.plugin.Provider;
+
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,7 +29,7 @@ import java.util.Set;
  * dd/mmm/yyyy
  * </pre>.
  */
-public interface SpreadsheetFormatterProvider {
+public interface SpreadsheetFormatterProvider extends Provider {
 
     /**
      * Resolves the given {@link SpreadsheetFormatterName} to a {@link SpreadsheetFormatterName}.
