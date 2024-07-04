@@ -2005,6 +2005,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // IsMethodTesting...................................................................................................
 
     @Test
+    public void testIsCellReferenceOrCellRangeReference() {
+        this.checkEquals(
+                this instanceof SpreadsheetCellReferenceTest ||
+                        this instanceof SpreadsheetCellRangeReferenceTest,
+                this.createSelection().isCellReferenceOrCellRangeReference()
+        );
+    }
+    
+    @Test
     public void testIsColumnReferenceOrColumnRangeReference() {
         this.checkEquals(
                 this instanceof SpreadsheetColumnReferenceTest ||
@@ -2046,6 +2055,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         "isLast",
                         "isHidden",
                         "isScalar",
+                        "isCellReferenceOrCellRangeReference",
                         "isColumnReferenceOrColumnRangeReference",
                         "isRowReferenceOrRowRangeReference"
                 )
