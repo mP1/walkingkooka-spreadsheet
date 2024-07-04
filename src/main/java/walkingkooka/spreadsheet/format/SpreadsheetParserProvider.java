@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.plugin.Provider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 
@@ -30,7 +31,7 @@ import java.util.Set;
  * dd/mmm/yyyy
  * </pre>.
  */
-public interface SpreadsheetParserProvider {
+public interface SpreadsheetParserProvider extends Provider {
 
     /**
      * Resolves the given {@link SpreadsheetParserSelector} to a {@link walkingkooka.text.cursor.parser.Parser}.
