@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 import walkingkooka.color.Color;
+import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -96,6 +97,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     // properties..........................................................................................................
 
     protected void visitCellCharacterWidth(final int value) {
+        // nop
+    }
+
+    protected void visitConverters(final ConverterInfoSet converters) {
         // nop
     }
 

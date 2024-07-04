@@ -19,10 +19,12 @@ package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
@@ -53,7 +55,16 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
             .loadFromLocale()
             .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 1)
-            .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
+            .set(
+                    SpreadsheetMetadataPropertyName.CONVERTERS,
+                    ConverterInfoSet.with(
+                            SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                    SpreadsheetMetadata.EMPTY,
+                                    SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                                    SpreadsheetParserProviders.spreadsheetParsePattern()
+                            ).converterInfos()
+                    )
+            ).set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
             .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
             .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector())

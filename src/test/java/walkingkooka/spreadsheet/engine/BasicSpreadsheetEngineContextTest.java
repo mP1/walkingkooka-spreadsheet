@@ -1014,6 +1014,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-Red\": 3,\n" +
                         "  \"color-White\": 2,\n" +
                         "  \"color-Yellow\": 6,\n" +
+                        "  \"converters\": [\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/general\",\n" +
+                        "      \"name\": \"general\"\n" +
+                        "    }\n" +
+                        "  ],\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"date-parser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
@@ -1267,6 +1273,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-Red\": 3,\n" +
                         "  \"color-White\": 2,\n" +
                         "  \"color-Yellow\": 6,\n" +
+                        "  \"converters\": [\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/general\",\n" +
+                        "      \"name\": \"general\"\n" +
+                        "    }\n" +
+                        "  ],\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"date-parser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +

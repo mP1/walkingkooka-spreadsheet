@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -116,6 +118,22 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 0);
+    }
+
+    @Test
+    public void testVisitConverters() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitConverters(final ConverterInfoSet c) {
+                this.visited = c;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.CONVERTERS,
+                ConverterInfoSet.with(
+                        ConverterProviders.converters()
+                                .converterInfos()
+                )
+        );
     }
 
     @Test
