@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.plugin.Provider;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * A provider supports listing available {@link SpreadsheetComparatorInfo} and fetching implementations by {@link SpreadsheetComparatorName}.
  */
-public interface SpreadsheetComparatorProvider {
+public interface SpreadsheetComparatorProvider extends Provider {
 
     /**
      * Resolves the given {@link SpreadsheetComparatorName} to a {@link SpreadsheetComparatorName}.
