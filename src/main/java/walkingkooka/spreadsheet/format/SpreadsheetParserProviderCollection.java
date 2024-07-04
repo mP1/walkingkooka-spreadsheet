@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderCollection;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
@@ -39,7 +40,7 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
     private SpreadsheetParserProviderCollection(final Set<SpreadsheetParserProvider> providers) {
         this.providers = ProviderCollection.with(
                 SpreadsheetParserSelector::name, // inputToName
-                SpreadsheetParserProvider::spreadsheetParser,
+                (p, s, v) -> p.spreadsheetParser(s),
                 SpreadsheetParserProvider::spreadsheetParserInfos,
                 Parser.class.getSimpleName(),
                 providers
@@ -50,7 +51,10 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
     public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return this.providers.get(selector);
+        return this.providers.get(
+                selector,
+                Lists.empty()
+        );
     }
 
     @Override
