@@ -19,18 +19,16 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.plugin.ProviderTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserProvider> extends ClassTesting2<T>,
-        TreePrintableTesting {
+public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserProvider> extends ProviderTesting<T> {
 
     @Test
     default void testSpreadsheetParserWithNullFails() {
