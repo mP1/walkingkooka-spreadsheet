@@ -2004,6 +2004,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // IsMethodTesting...................................................................................................
 
+    @Test
+    public void testIsColumnReferenceOrColumnRangeReference() {
+        this.checkEquals(
+                this instanceof SpreadsheetColumnReferenceTest ||
+                        this instanceof SpreadsheetColumnRangeReferenceTest,
+                this.createSelection().isColumnReferenceOrColumnRangeReference()
+        );
+    }
+
     @Override
     public final S createIsMethodObject() {
         return this.createSelection();
@@ -2022,7 +2031,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
         return Predicates.setContains(
-                Sets.of("isAll", "isFirst", "isLast", "isHidden", "isScalar")
+                Sets.of(
+                        "isAll",
+                        "isFirst",
+                        "isLast",
+                        "isHidden",
+                        "isScalar",
+                        "isColumnReferenceOrColumnRangeReference"
+                )
         );
     }
 

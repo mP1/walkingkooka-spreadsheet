@@ -865,6 +865,10 @@ public abstract class SpreadsheetSelection implements HasText,
         return this instanceof SpreadsheetColumnRangeReference;
     }
 
+    public final boolean isColumnReferenceOrColumnRangeReference() {
+        return this.isColumnReference() || this.isColumnRangeReference();
+    }
+
     public final boolean isLabelName() {
         return this instanceof SpreadsheetLabelName;
     }
