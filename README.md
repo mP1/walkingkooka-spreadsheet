@@ -100,6 +100,34 @@ A wide variety of items are stored for each spreadsheet including but not limite
 There are many internal components that contribute to the core functionality of a spreadsheet. Eventually each of
 these will be a plugin where users can contribute an alternative or supplementary choice.
 
+### [SpreadsheetConverters](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
+
+These `Converters` along with a few others belonging to other repos are used to convert values from one type to another.
+
+- errorThrowing
+- errorToNumber
+- errorToString
+- general
+- parser
+- selectionToSelection
+- spreadsheetCellTo
+- stringToDate
+- stringToDateTime
+- stringToExpressionNumber
+- stringToFormatPattern
+- stringToSelection
+- unformattedNumber
+
+- [walkingkooka-convert](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/Converters.java)
+- [walkingkooka-tree](https://github.com/mP1/walkingkooka-tree/blob/master/src/main/java/walkingkooka/tree/expression/ExpressionNumberConverters.java)
+
+Converter(s) are part of many core features, some are listed below and the more will be created.
+
+- Within a formula expression converting a date to a number within an addition and other places containing math with non
+  number values.
+- Converting the clipboard contents to match a PASTE, eg copying a `SpreadsheetCell` and then PASTING only
+  the `TextStyle` (style) to a new target.
+
 ### [SpreadsheetComparators](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java)
 
 All sorting is performed by using a selected `SpreadsheetComparator`, which is identical to a `java.util.Comparator`
