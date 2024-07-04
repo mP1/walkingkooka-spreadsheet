@@ -19,16 +19,14 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.plugin.ProviderTesting;
 
 import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ClassTesting2<T>,
-        TreePrintableTesting {
+public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ProviderTesting<T> {
 
     @Test
     default void testSpreadsheetComparatorWithNullFails() {
