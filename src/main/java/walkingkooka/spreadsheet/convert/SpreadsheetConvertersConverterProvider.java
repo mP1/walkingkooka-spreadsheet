@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.convert.provider.TreeExpressionConvertProviders;
 
 import java.util.List;
 import java.util.Objects;
@@ -207,11 +206,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     );
 
     /**
-     * Helper that creates a {@link ConverterInfo} from the given {@link ConverterName} and {@link TreeExpressionConvertProviders#BASE_URL}.
+     * Helper that creates a {@link ConverterInfo} from the given {@link ConverterName} and {@link SpreadsheetConvertersConverterProviders#BASE_URL}.
      */
     private static ConverterInfo converterInfo(final ConverterName name) {
         return ConverterInfo.with(
-                TreeExpressionConvertProviders.BASE_URL.appendPath(
+                SpreadsheetConvertersConverterProviders.BASE_URL.appendPath(
                         UrlPath.parse(
                                 name.value()
                         )
