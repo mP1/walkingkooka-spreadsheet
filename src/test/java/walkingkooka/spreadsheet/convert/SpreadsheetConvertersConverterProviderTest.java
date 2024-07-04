@@ -18,10 +18,29 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderTesting;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
-public class SpreadsheetConvertersConverterProviderTest implements ConverterProviderTesting<SpreadsheetConvertersConverterProvider> {
+import java.math.MathContext;
+import java.time.LocalDateTime;
+import java.util.Locale;
+
+public class SpreadsheetConvertersConverterProviderTest implements ConverterProviderTesting<SpreadsheetConvertersConverterProvider>,
+        SpreadsheetMetadataTesting {
 
     @Test
     public void testConverterWithBasicSpreadsheetConverter() {
@@ -56,6 +75,45 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterWithGeneral() {
+        final ConverterProvider provider = this.createConverterProvider();
+
+        final Converter<SpreadsheetConverterContext> general = provider.converterOrFail(
+                SpreadsheetConvertersConverterProvider.GENERAL,
+                Lists.empty()
+        );
+
+        final ExpressionNumberKind kind = ExpressionNumberKind.BIG_DECIMAL;
+
+        this.checkEquals(
+                kind.create(123.5),
+                general.convertOrFail(
+                        "123.5",
+                        ExpressionNumber.class,
+                        SpreadsheetConverterContexts.basic(
+                                SpreadsheetConverters.basic(),
+                                SpreadsheetLabelNameResolvers.fake(),
+                                ExpressionNumberConverterContexts.basic(
+                                        Converters.fake(),
+                                        ConverterContexts.basic(
+                                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                                Converters.fake(),
+                                                DateTimeContexts.locale(
+                                                        Locale.ENGLISH,
+                                                        1900,
+                                                        20,
+                                                        LocalDateTime::now
+                                                ),
+                                                DecimalNumberContexts.american(MathContext.DECIMAL32)
+                                        ),
+                                        kind
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testConverterWithSelectionToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION + "",
@@ -73,7 +131,11 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
 
     @Override
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
-        return SpreadsheetConvertersConverterProvider.INSTANCE;
+        return SpreadsheetConvertersConverterProvider.with(
+                SpreadsheetMetadataTesting.METADATA_EN_AU,
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                SpreadsheetParserProviders.spreadsheetParsePattern()
+        );
     }
 
     @Override

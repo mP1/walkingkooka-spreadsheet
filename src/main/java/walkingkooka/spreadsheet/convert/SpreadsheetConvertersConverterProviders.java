@@ -19,6 +19,9 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 
 /**
  * A {@link ConverterProvider} for {@link SpreadsheetConverters}.
@@ -28,8 +31,14 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
     /**
      * {@see SpreadsheetConvertersConverterProvider}
      */
-    public static ConverterProvider spreadsheetConverters() {
-        return SpreadsheetConvertersConverterProvider.INSTANCE;
+    public static ConverterProvider spreadsheetConverters(final SpreadsheetMetadata metadata,
+                                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                          final SpreadsheetParserProvider spreadsheetParserProvider) {
+        return SpreadsheetConvertersConverterProvider.with(
+                metadata,
+                spreadsheetFormatterProvider,
+                spreadsheetParserProvider
+        );
     }
 
     /**
