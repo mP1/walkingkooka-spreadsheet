@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConversionException;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
@@ -40,6 +41,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
@@ -128,6 +130,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
     private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
+
+    private final static ConverterProvider CONVERTER_PROVIDER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+            METADATA,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            SPREADSHEET_PARSER_PROVIDER
+    );
 
     private final static String TEST_CONTEXT_LOADCELL = "test-context-loadCell";
 
@@ -306,6 +314,27 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         null,
+                        CONVERTER_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        ENGINE,
+                        FRACTIONER,
+                        STORE_REPOSITORY,
+                        SERVER_URL,
+                        NOW
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullConverterFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        METADATA,
+                        null,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -325,6 +354,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
+                        CONVERTER_PROVIDER,
                         null,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -344,6 +374,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
+                        CONVERTER_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         null,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -363,6 +394,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
+                        CONVERTER_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         null,
@@ -382,6 +414,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
+                        CONVERTER_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -401,6 +434,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
+                        CONVERTER_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -420,6 +454,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
+                        CONVERTER_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -439,6 +474,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
+                        CONVERTER_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -458,6 +494,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
+                        CONVERTER_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -477,6 +514,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
+                        CONVERTER_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -1440,6 +1478,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         return BasicSpreadsheetEngineContext.with(
                 metadata,
+                CONVERTER_PROVIDER,
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
