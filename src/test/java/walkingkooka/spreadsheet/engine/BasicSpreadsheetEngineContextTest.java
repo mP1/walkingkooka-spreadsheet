@@ -282,6 +282,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             );
         }
     };
+
+    private final static SpreadsheetEngine ENGINE = SpreadsheetEngines.fake();
     
     @Test
     public void testWithNullMetadataFails() {
@@ -293,7 +295,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
-                        this.engine(),
+                        ENGINE,
                         FRACTIONER,
                         this.storeRepository(),
                         SERVER_URL,
@@ -312,7 +314,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
-                        this.engine(),
+                        ENGINE,
                         FRACTIONER,
                         this.storeRepository(),
                         SERVER_URL,
@@ -331,7 +333,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         null,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
-                        this.engine(),
+                        ENGINE,
                         FRACTIONER,
                         this.storeRepository(),
                         SERVER_URL,
@@ -350,7 +352,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         null,
                         SPREADSHEET_PARSER_PROVIDER,
-                        this.engine(),
+                        ENGINE,
                         FRACTIONER,
                         this.storeRepository(),
                         SERVER_URL,
@@ -369,7 +371,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         null,
-                        this.engine(),
+                        ENGINE,
                         FRACTIONER,
                         this.storeRepository(),
                         SERVER_URL,
@@ -407,7 +409,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
-                        this.engine(),
+                        ENGINE,
                         null,
                         this.storeRepository(),
                         SERVER_URL,
@@ -426,7 +428,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
-                        this.engine(),
+                        ENGINE,
                         FRACTIONER,
                         null,
                         SERVER_URL,
@@ -445,7 +447,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
-                        this.engine(),
+                        ENGINE,
                         FRACTIONER,
                         this.storeRepository(),
                         null,
@@ -464,7 +466,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
-                        this.engine(),
+                        ENGINE,
                         FRACTIONER,
                         this.storeRepository(),
                         SERVER_URL,
@@ -1427,7 +1429,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
-                this.engine(),
+                ENGINE,
                 FRACTIONER,
                 new FakeSpreadsheetStoreRepository() {
 
@@ -1459,10 +1461,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return Expression.value(
                 this.number(value)
         );
-    }
-
-    private SpreadsheetEngine engine() {
-        return SpreadsheetEngines.fake();
     }
 
     @Override
