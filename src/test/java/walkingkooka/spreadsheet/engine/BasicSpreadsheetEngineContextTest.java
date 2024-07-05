@@ -95,11 +95,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext> {
 
-    private final static SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();
-
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
-
-    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
+    private final static String CURRENCY = "CURR";
+    private final static char DECIMAL = '.';
+    private final static String EXPONENT = "e";
+    private final static char GROUP_SEPARATOR = ',';
+    private final static char MINUS = '!';
+    private final static char PERCENT = '#';
+    private final static char PLUS = '@';
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
@@ -108,6 +110,27 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
+
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+            .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+            .loadFromLocale()
+            .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
+            .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
+            .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)
+            .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT)
+            .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
+            .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, MINUS)
+            .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, PLUS)
+            .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
+            .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+            .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
+
+    private final static SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();
+
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
+    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
 
     @Test
     public void testWithNullMetadataFails() {
@@ -133,7 +156,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
-                        this.metadata(),
+                        METADATA,
                         null,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
@@ -152,7 +175,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         null,
                         this.functionProvider(),
@@ -171,7 +194,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         null,
@@ -190,7 +213,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
@@ -209,7 +232,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
@@ -228,7 +251,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
@@ -247,7 +270,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
@@ -266,7 +289,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
@@ -285,7 +308,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
-                        this.metadata(),
+                        METADATA,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         this.functionProvider(),
@@ -571,7 +594,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         ),
                         Lists.empty()
                 ),
-                this.metadata()
+                METADATA
         );
     }
 
@@ -601,7 +624,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         this.formatAndStyleAndCheck(
                 this.createContext(
-                        this.metadata(),
+                        METADATA,
                         SpreadsheetLabelStores.fake(),
                         SpreadsheetCellRangeStores.treeMap()
                 ),
@@ -647,7 +670,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         this.formatAndStyleAndCheck(
                 this.createContext(
-                        this.metadata(),
+                        METADATA,
                         SpreadsheetLabelStores.fake(),
                         rangeToConditionalFormattingRules
                 ),
@@ -961,7 +984,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testToStringMetadataLotsProperties() {
-        SpreadsheetMetadata metadata = this.metadata();
+        SpreadsheetMetadata metadata = METADATA;
 
         for (int i = SpreadsheetColors.MIN; i <= SpreadsheetColors.MAX; i++) {
             metadata = metadata.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
@@ -1219,7 +1242,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
         return this.createContext(
-                this.metadata(),
+                METADATA,
                 labelStore
         );
     }
@@ -1275,23 +1298,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SERVER_URL,
                 NOW
         );
-    }
-
-    private SpreadsheetMetadata metadata() {
-        return SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-                .loadFromLocale()
-                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
-                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)
-                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT)
-                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
-                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, MINUS)
-                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, PLUS)
-                .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-                .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
     }
 
     private ExpressionNumber number(final Number value) {
@@ -1471,14 +1477,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             }
         };
     }
-
-    final static String CURRENCY = "CURR";
-    final static char DECIMAL = '.';
-    final static String EXPONENT = "e";
-    final static char GROUP_SEPARATOR = ',';
-    final static char MINUS = '!';
-    final static char PERCENT = '#';
-    final static char PLUS = '@';
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
