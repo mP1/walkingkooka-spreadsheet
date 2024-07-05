@@ -27,6 +27,9 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.HasLocale;
@@ -550,6 +553,27 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
+    // ConverterProvider.........................................................................................
+
+    /**
+     * Returns a {@link ConverterProvider} that only contains the selected {@link Converter}
+     * in {@link SpreadsheetMetadataPropertyName#CONVERTERS}
+     */
+    public final ConverterProvider converterProvider(final ConverterProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ConverterInfoSet converterInfos = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
+
+        components.reportIfMissing();
+
+        return ConverterProviders.mapped(
+                converterInfos,
+                provider
+        );
+    }
+    
     // HasDateTimeContext...............................................................................................
 
     /**
