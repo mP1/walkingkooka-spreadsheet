@@ -20,9 +20,14 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
@@ -37,6 +42,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -532,6 +538,88 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
+    // Converters...........................................................................................
+
+    @Test
+    public void testConvertersWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.converterProvider(null)
+        );
+    }
+
+    @Test
+    public void testConvertersWithMissingPropertyFails() {
+        assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.converterProvider(
+                        ConverterProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testConverters() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.CONVERTERS,
+                ConverterInfoSet.parse(
+                        SpreadsheetConvertersConverterProviders.BASE_URL + "/general different,https://example/Converters/test-converter-22 zzz"
+                )
+        ).set(
+                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+                        .spreadsheetFormatterSelector()
+        ).set(
+                SpreadsheetMetadataPropertyName.DATE_PARSER,
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                        .spreadsheetParserSelector()
+        ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy")
+                        .spreadsheetFormatterSelector()
+        ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
+                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy")
+                        .spreadsheetParserSelector()
+        ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+                SpreadsheetPattern.parseNumberFormatPattern("$0.00")
+                        .spreadsheetFormatterSelector()
+        ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("$0.00")
+                        .spreadsheetParserSelector()
+        ).set(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                SpreadsheetPattern.parseTextFormatPattern("@")
+                        .spreadsheetFormatterSelector()
+        ).set(
+                SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+                SpreadsheetPattern.parseTimeFormatPattern("hh:mm")
+                        .spreadsheetFormatterSelector()
+        ).set(
+                SpreadsheetMetadataPropertyName.TIME_PARSER,
+                SpreadsheetPattern.parseTimeParsePattern("hh:mm")
+                        .spreadsheetParserSelector()
+        );
+
+        final ConverterProvider provider = metadata.converterProvider(
+                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                        metadata,
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                )
+        );
+
+        this.checkNotEquals(
+                null,
+                provider.converterOrFail(
+                        ConverterName.with("different"),
+                        Lists.empty()
+                )
+        );
+    }
+    
     // ExpressionFunctions..............................................................................................
 
     @Test
