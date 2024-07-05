@@ -107,9 +107,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
     private final static char VALUE_SEPARATOR = ',';
     private final static int WIDTH = 1;
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
-
-    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -298,6 +295,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     };
 
     private final static SpreadsheetStoreRepository STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
+
+    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
+
+    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     @Test
     public void testWithNullMetadataFails() {
@@ -1502,6 +1503,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_UP)
         );
     }
+
+    // ClassTesting.....................................................................................................
 
     @Override
     public Class<BasicSpreadsheetEngineContext> type() {
