@@ -297,6 +297,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
     };
 
+    private final static SpreadsheetStoreRepository STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
+
     @Test
     public void testWithNullMetadataFails() {
         assertThrows(
@@ -309,7 +311,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_PARSER_PROVIDER,
                         ENGINE,
                         FRACTIONER,
-                        this.storeRepository(),
+                        STORE_REPOSITORY,
                         SERVER_URL,
                         NOW
                 )
@@ -328,7 +330,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_PARSER_PROVIDER,
                         ENGINE,
                         FRACTIONER,
-                        this.storeRepository(),
+                        STORE_REPOSITORY,
                         SERVER_URL,
                         NOW
                 )
@@ -347,7 +349,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_PARSER_PROVIDER,
                         ENGINE,
                         FRACTIONER,
-                        this.storeRepository(),
+                        STORE_REPOSITORY,
                         SERVER_URL,
                         NOW
                 )
@@ -366,7 +368,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_PARSER_PROVIDER,
                         ENGINE,
                         FRACTIONER,
-                        this.storeRepository(),
+                        STORE_REPOSITORY,
                         SERVER_URL,
                         NOW
                 )
@@ -385,7 +387,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         null,
                         ENGINE,
                         FRACTIONER,
-                        this.storeRepository(),
+                        STORE_REPOSITORY,
                         SERVER_URL,
                         NOW
                 )
@@ -404,7 +406,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_PARSER_PROVIDER,
                         null,
                         FRACTIONER,
-                        this.storeRepository(),
+                        STORE_REPOSITORY,
                         SERVER_URL,
                         NOW
                 )
@@ -423,7 +425,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_PARSER_PROVIDER,
                         ENGINE,
                         null,
-                        this.storeRepository(),
+                        STORE_REPOSITORY,
                         SERVER_URL,
                         NOW
                 )
@@ -461,7 +463,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_PARSER_PROVIDER,
                         ENGINE,
                         FRACTIONER,
-                        this.storeRepository(),
+                        STORE_REPOSITORY,
                         null,
                         NOW
                 )
@@ -480,7 +482,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_PARSER_PROVIDER,
                         ENGINE,
                         FRACTIONER,
-                        this.storeRepository(),
+                        STORE_REPOSITORY,
                         SERVER_URL,
                         null
                 )
@@ -1499,10 +1501,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE,
                 new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_UP)
         );
-    }
-
-    private SpreadsheetStoreRepository storeRepository() {
-        return SpreadsheetStoreRepositories.fake();
     }
 
     @Override
