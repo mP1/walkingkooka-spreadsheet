@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -38,6 +39,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetEngineContext}
      */
     public static SpreadsheetEngineContext basic(final SpreadsheetMetadata metadata,
+                                                 final ConverterProvider converterProvider,
                                                  final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                                  final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                  final ExpressionFunctionProvider expressionFunctionProvider,
@@ -49,6 +51,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Supplier<LocalDateTime> now) {
         return BasicSpreadsheetEngineContext.with(
                 metadata,
+                converterProvider,
                 spreadsheetComparatorProvider,
                 spreadsheetFormatterProvider,
                 expressionFunctionProvider,

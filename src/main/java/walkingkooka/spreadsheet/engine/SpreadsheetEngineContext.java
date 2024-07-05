@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
@@ -47,6 +48,7 @@ import java.util.Optional;
  * mentioned.
  */
 public interface SpreadsheetEngineContext extends Context,
+        ConverterProvider,
         ExpressionFunctionProvider,
         ExpressionPurityContext,
         HasSpreadsheetMetadata,

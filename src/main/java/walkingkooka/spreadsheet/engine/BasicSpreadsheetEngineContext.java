@@ -19,6 +19,11 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.provider.ConverterInfo;
+import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -59,6 +64,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -75,6 +81,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
     static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
+                                              final ConverterProvider converterProvider,
                                               final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                               final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                               final ExpressionFunctionProvider expressionFunctionProvider,
@@ -85,6 +92,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final AbsoluteUrl serverUrl,
                                               final Supplier<LocalDateTime> now) {
         Objects.requireNonNull(metadata, "metadata");
+        Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider");
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
@@ -97,6 +105,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         return new BasicSpreadsheetEngineContext(
                 metadata,
+                converterProvider,
                 spreadsheetComparatorProvider,
                 spreadsheetFormatterProvider,
                 expressionFunctionProvider,
@@ -113,6 +122,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Private ctor use factory.
      */
     private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
+                                          final ConverterProvider converterProvider,
                                           final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                           final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                           final ExpressionFunctionProvider expressionFunctionProvider,
@@ -125,6 +135,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         super();
 
         this.metadata = metadata;
+
+        this.converterProvider = converterProvider;
 
         this.spreadsheetComparatorProvider = spreadsheetComparatorProvider;
 
@@ -166,6 +178,23 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                         .labels()
         );
     }
+
+    // ConverterProvider................................................................................................
+    @Override
+    public <C extends ConverterContext> Optional<Converter<C>> converter(final ConverterName name,
+                                                                         final List<?> values) {
+        return this.converterProvider.converter(
+                name,
+                values
+        );
+    }
+
+    @Override
+    public Set<ConverterInfo> converterInfos() {
+        return this.converterProvider.converterInfos();
+    }
+
+    private final ConverterProvider converterProvider;
 
     // spreadsheetComparatorProvider.................................................................................................
 

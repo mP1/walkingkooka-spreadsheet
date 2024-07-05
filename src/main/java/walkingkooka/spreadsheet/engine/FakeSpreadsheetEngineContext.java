@@ -17,7 +17,11 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.FakeConverterContext;
+import walkingkooka.convert.provider.ConverterInfo;
+import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
@@ -43,11 +47,26 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetEngineContext extends FakeConverterContext implements SpreadsheetEngineContext, Fake {
+
+    @Override
+    public <C extends ConverterContext> Optional<Converter<C>> converter(final ConverterName name,
+                                                                         final List<?> values) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<ConverterInfo> converterInfos() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
