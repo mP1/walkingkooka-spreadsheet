@@ -284,7 +284,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     };
 
     private final static SpreadsheetEngine ENGINE = SpreadsheetEngines.fake();
-    
+
+    private final Function<BigDecimal, Fraction> FRACTIONER = new Function<>() {
+        @Override
+        public Fraction apply(final BigDecimal bigDecimal) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String toString() {
+            return "Fractioner123";
+        }
+    };
+
     @Test
     public void testWithNullMetadataFails() {
         assertThrows(
@@ -1488,18 +1500,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_UP)
         );
     }
-
-    private final Function<BigDecimal, Fraction> FRACTIONER = new Function<>() {
-        @Override
-        public Fraction apply(final BigDecimal bigDecimal) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public String toString() {
-            return "Fractioner123";
-        }
-    };
 
     private SpreadsheetStoreRepository storeRepository() {
         return SpreadsheetStoreRepositories.fake();
