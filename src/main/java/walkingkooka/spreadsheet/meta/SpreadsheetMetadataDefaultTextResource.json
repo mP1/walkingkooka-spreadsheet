@@ -64,6 +64,12 @@
   "color-Yellow": 6,
   "color-Magenta": 7,
   "color-Cyan": 8,
+  "converters": [
+    {
+      "url": "https://github.com/mP1/walkingkooka-spreadsheet/Converter/general",
+      "name": "general"
+    }
+  ],
   "date-time-offset": -25569,
   "default-year": 1900,
   "expression-functions": [],
