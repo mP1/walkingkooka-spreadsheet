@@ -1016,8 +1016,36 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-Yellow\": 6,\n" +
                         "  \"converters\": [\n" +
                         "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/basic-spreadsheet-converter\",\n" +
+                        "      \"name\": \"basic-spreadsheet-converter\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-throwing\",\n" +
+                        "      \"name\": \"error-throwing\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-number\",\n" +
+                        "      \"name\": \"error-to-number\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-string\",\n" +
+                        "      \"name\": \"error-to-string\"\n" +
+                        "    },\n" +
+                        "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/general\",\n" +
                         "      \"name\": \"general\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/selection-to-selection\",\n" +
+                        "      \"name\": \"selection-to-selection\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-cell-to\",\n" +
+                        "      \"name\": \"spreadsheet-cell-to\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/string-to-selection\",\n" +
+                        "      \"name\": \"string-to-selection\"\n" +
                         "    }\n" +
                         "  ],\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
@@ -1276,8 +1304,36 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-Yellow\": 6,\n" +
                         "  \"converters\": [\n" +
                         "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/basic-spreadsheet-converter\",\n" +
+                        "      \"name\": \"basic-spreadsheet-converter\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-throwing\",\n" +
+                        "      \"name\": \"error-throwing\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-number\",\n" +
+                        "      \"name\": \"error-to-number\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-string\",\n" +
+                        "      \"name\": \"error-to-string\"\n" +
+                        "    },\n" +
+                        "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/general\",\n" +
                         "      \"name\": \"general\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/selection-to-selection\",\n" +
+                        "      \"name\": \"selection-to-selection\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-cell-to\",\n" +
+                        "      \"name\": \"spreadsheet-cell-to\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/string-to-selection\",\n" +
+                        "      \"name\": \"string-to-selection\"\n" +
                         "    }\n" +
                         "  ],\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
