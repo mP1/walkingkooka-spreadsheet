@@ -538,10 +538,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    // Converters...........................................................................................
+    // ConverterProvider................................................................................................
 
     @Test
-    public void testConvertersWithNullFails() {
+    public void testConverterProviderWithNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.converterProvider(null)
@@ -549,7 +549,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testConvertersWithMissingPropertyFails() {
+    public void testConverterProviderWithMissingPropertyFails() {
         assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.converterProvider(
@@ -559,7 +559,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testConverters() {
+    public void testConverterProvider() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.CONVERTERS,
                 ConverterInfoSet.parse(
