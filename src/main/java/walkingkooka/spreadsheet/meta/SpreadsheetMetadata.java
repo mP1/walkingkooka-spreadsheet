@@ -1176,6 +1176,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         SpreadsheetParserProviders.spreadsheetParsePattern()
                                 .spreadsheetParserInfos()
                 )
+        ).set(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                SpreadsheetFormatters.defaultText().
         );
     }
 
