@@ -470,7 +470,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // Converter.......................................................................................................
 
     /**
-     * Returns a {@link Converter} using the required properties.
+     * Returns a {@link Converter} that will be used in expressions, using the required properties.
      * <ul>
      * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
@@ -486,6 +486,29 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final Converter<SpreadsheetConverterContext> converter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                                   final SpreadsheetParserProvider spreadsheetParserProvider) {
+        return this.generalConverter(
+                spreadsheetFormatterProvider,
+                spreadsheetParserProvider
+        );
+    }
+
+    /**
+     * Returns a general {@link Converter} using the required properties.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_PARSER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSER}</li>
+     * </ul>
+     */
+    public final Converter<SpreadsheetConverterContext> generalConverter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                                         final SpreadsheetParserProvider spreadsheetParserProvider) {
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
 

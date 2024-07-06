@@ -596,6 +596,62 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
+    // GeneralConverter.................................................................................................
+
+    @Test
+    public void testGeneralConverterWithNullSpreadsheetFormatterProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.generalConverter(
+                        null,
+                        SpreadsheetParserProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testGeneralConverterWithNullSpreadsheetParserProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.generalConverter(
+                        SpreadsheetFormatterProviders.fake(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testGeneralConverterWithMissingPropertyFails() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.generalConverter(
+                        SpreadsheetFormatterProviders.fake(),
+                        SpreadsheetParserProviders.fake()
+                )
+        );
+        this.checkEquals(
+                "Required properties \"date-formatter\", \"date-parser\", \"date-time-formatter\", \"date-time-parser\", \"number-formatter\", \"number-parser\", \"text-formatter\", \"time-formatter\", \"time-parser\" missing.",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testGeneralConverter() {
+        final Converter<SpreadsheetConverterContext> converter = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+                .set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        Locale.forLanguageTag("EN-AU")
+                ).loadFromLocale()
+                .generalConverter(
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                );
+        this.checkNotEquals(
+                null,
+                converter
+        );
+    }
+
     // ConverterProvider................................................................................................
 
     @Test
