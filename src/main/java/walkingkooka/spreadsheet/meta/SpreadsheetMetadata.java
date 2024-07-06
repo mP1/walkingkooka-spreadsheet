@@ -1178,7 +1178,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 )
         ).set(
                 SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                SpreadsheetFormatters.defaultText().
+                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
         );
     }
 
