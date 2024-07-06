@@ -40,6 +40,14 @@ public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFo
         TreePrintable {
 
     /**
+     * A {@link SpreadsheetFormatterSelector} that selects a {@link SpreadsheetFormatter} with a pattern that prints only the value.
+     */
+    public final static SpreadsheetFormatterSelector DEFAULT_TEXT_FORMAT = SpreadsheetFormatterSelector.parse(
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN +
+                    " @"
+    );
+
+    /**
      * Parses the given text into a {@link SpreadsheetFormatterSelector}.
      * <br>
      * Note the format is formatter-name SPACE optional-text, for {@link SpreadsheetPatternSpreadsheetFormatter} the text will hold the raw pattern, without
