@@ -30,6 +30,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.HasLocale;
@@ -467,29 +468,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // Converter.......................................................................................................
+    // Converter........................................................................................................
 
     /**
-     * Returns a {@link Converter} that will be used in expressions, using the required properties.
+     * Returns a {@link Converter} using the required properties.
      * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_PARSER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#EXPRESSION_CONVERTER}</li>
      * </ul>
      */
-    public final Converter<SpreadsheetConverterContext> converter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                                  final SpreadsheetParserProvider spreadsheetParserProvider) {
-        return this.generalConverter(
-                spreadsheetFormatterProvider,
-                spreadsheetParserProvider
-        );
+    public final Converter<SpreadsheetConverterContext> expressionConverter(final ConverterProvider converterProvider) {
+        Objects.requireNonNull(converterProvider, "converterProvider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ConverterSelector converter = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER);
+
+        components.reportIfMissing();
+
+        return converter.parseTextAndCreate(converterProvider);
     }
 
     /**
@@ -546,12 +542,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link ExpressionNumberConverterContext}
      */
-    public final SpreadsheetConverterContext converterContext(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                              final SpreadsheetParserProvider spreadsheetParserProvider,
+    public final SpreadsheetConverterContext converterContext(final ConverterProvider converterProvider,
                                                               final Supplier<LocalDateTime> now,
                                                               final SpreadsheetLabelNameResolver labelNameResolver) {
-        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
-        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
+        Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
 
@@ -563,9 +557,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         components.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
-                this.converter(
-                        spreadsheetFormatterProvider,
-                        spreadsheetParserProvider
+                this.expressionConverter(
+                        converterProvider
                 ),
                 labelNameResolver,
                 ExpressionNumberConverterContexts.basic(
@@ -859,10 +852,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public final SpreadsheetFormatterContext formatterContext(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                              final SpreadsheetParserProvider spreadsheetParserProvider,
+    public final SpreadsheetFormatterContext formatterContext(final ConverterProvider converterProvider,
+                                                              final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                               final Supplier<LocalDateTime> now,
                                                               final SpreadsheetLabelNameResolver labelNameResolver) {
+        Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
@@ -881,8 +875,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 generalNumberFormatDigitCount,
                 this.formatter(spreadsheetFormatterProvider),
                 this.converterContext(
-                        spreadsheetFormatterProvider,
-                        spreadsheetParserProvider,
+                        converterProvider,
                         now,
                         labelNameResolver
                 )

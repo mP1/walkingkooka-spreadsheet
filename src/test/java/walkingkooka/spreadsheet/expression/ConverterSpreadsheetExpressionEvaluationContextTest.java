@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.AbsoluteUrl;
@@ -31,6 +32,7 @@ import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -94,6 +96,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, 0L)
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
+            .set(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, ConverterSelector.parse("general"))
             .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
@@ -489,9 +492,12 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         CELL_STORE,
                         SERVER_URL,
                         METADATA,
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                METADATA,
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                                SpreadsheetParserProviders.spreadsheetParsePattern()
+                        ),
                         EXPRESSION_FUNCTION_PROVIDER,
-                        SpreadsheetParserProviders.spreadsheetParsePattern(),
                         REFERENCES,
                         LABEL_NAME_RESOLVER,
                         LocalDateTime::now

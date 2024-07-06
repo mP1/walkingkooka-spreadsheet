@@ -267,12 +267,12 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // general........................................................................................................
 
     @Test
-    public void testNonLocaleDefaultsConverter() {
+    public void testNonLocaleDefaultsGeneralConverter() {
         SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .loadFromLocale()
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-                .converter(
+                .generalConverter(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
                         SpreadsheetParserProviders.spreadsheetParsePattern()
                 );
@@ -540,55 +540,47 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    // Converter........................................................................................................
+    // ExpressionConverter..............................................................................................
 
     @Test
-    public void testConverterWithNullSpreadsheetFormatterProviderFails() {
+    public void testExpressionConverterWithNullConverterProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.converter(
-                        null,
-                        SpreadsheetParserProviders.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testConverterWithNullSpreadsheetParserProviderFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.converter(
-                        SpreadsheetFormatterProviders.fake(),
+                () -> SpreadsheetMetadata.EMPTY.expressionConverter(
                         null
                 )
         );
     }
 
     @Test
-    public void testConverterWithMissingPropertyFails() {
+    public void testExpressionConverterWithMissingPropertyFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.converter(
-                        SpreadsheetFormatterProviders.fake(),
-                        SpreadsheetParserProviders.fake()
+                () -> SpreadsheetMetadata.EMPTY.expressionConverter(
+                        ConverterProviders.fake()
                 )
         );
         this.checkEquals(
-                "Required properties \"date-formatter\", \"date-parser\", \"date-time-formatter\", \"date-time-parser\", \"number-formatter\", \"number-parser\", \"text-formatter\", \"time-formatter\", \"time-parser\" missing.",
+                "Required properties \"expression-converter\" missing.",
                 thrown.getMessage()
         );
     }
 
     @Test
-    public void testConverter() {
-        final Converter<SpreadsheetConverterContext> converter = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+    public void testExpressionConverter() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(
                         SpreadsheetMetadataPropertyName.LOCALE,
                         Locale.forLanguageTag("EN-AU")
-                ).loadFromLocale()
-                .converter(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                ).loadFromLocale();
+
+        final Converter<SpreadsheetConverterContext> converter = metadata
+                .expressionConverter(
+                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                metadata,
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                                SpreadsheetParserProviders.spreadsheetParsePattern()
+                        )
                 );
         this.checkNotEquals(
                 null,

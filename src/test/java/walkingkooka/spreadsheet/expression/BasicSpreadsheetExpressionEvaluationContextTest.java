@@ -19,20 +19,18 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
-import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -41,21 +39,20 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<BasicSpreadsheetExpressionEvaluationContext> {
+public final class BasicSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<BasicSpreadsheetExpressionEvaluationContext>,
+        SpreadsheetMetadataTesting {
 
     private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.parseCell("B2");
 
@@ -67,13 +64,15 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
-    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY;
-
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU;
 
     private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.fake();
 
-    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
+    private final static ConverterProvider CONVERTER_PROVIDER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+            METADATA,
+            SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+            SpreadsheetParserProviders.spreadsheetParsePattern()
+    );
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -92,9 +91,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                SPREADSHEET_FORMATTER_PROVIDER,
+                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -108,9 +106,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 SERVER_URL,
                 METADATA,
-                SPREADSHEET_FORMATTER_PROVIDER,
+                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -124,9 +121,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 null,
                 METADATA,
-                SPREADSHEET_FORMATTER_PROVIDER,
+                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -140,9 +136,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 null,
-                SPREADSHEET_FORMATTER_PROVIDER,
+                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -150,7 +145,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
-    public void testWithNullSpreadsheetFormatterProviderFails() {
+    public void testWithNullConverterProviderFails() {
         this.withFails(
                 CELL,
                 CELL_STORE,
@@ -158,7 +153,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -172,24 +166,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                null,
-                SPREADSHEET_PARSER_PROVIDER,
-                REFERENCES,
-                LABEL_NAME_RESOLVER,
-                NOW
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetParserProviderFails() {
-        this.withFails(
-                CELL,
-                CELL_STORE,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
+                CONVERTER_PROVIDER,
                 null,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
@@ -204,9 +181,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                SPREADSHEET_FORMATTER_PROVIDER,
+                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 null,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -220,9 +196,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                SPREADSHEET_FORMATTER_PROVIDER,
+                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 null,
                 NOW
@@ -236,9 +211,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                SPREADSHEET_FORMATTER_PROVIDER,
+                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 null
@@ -249,9 +223,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final SpreadsheetCellStore cellStore,
                            final AbsoluteUrl serverUrl,
                            final SpreadsheetMetadata spreadsheetMetadata,
-                           final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                           final ConverterProvider converterProvider,
                            final ExpressionFunctionProvider expressionFunctionProvider,
-                           final SpreadsheetParserProvider spreadsheetParserProvider,
                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
                            final SpreadsheetLabelNameResolver labelNameResolver,
                            final Supplier<LocalDateTime> now) {
@@ -262,9 +235,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         cellStore,
                         serverUrl,
                         spreadsheetMetadata,
-                        spreadsheetFormatterProvider,
+                        converterProvider,
                         expressionFunctionProvider,
-                        spreadsheetParserProvider,
                         references,
                         labelNameResolver,
                         now
@@ -471,7 +443,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         return DECIMAL_NUMBER_CONTEXT.positiveSign();
     }
 
-    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL32);
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = METADATA.decimalNumberContext();
 
     // ClassTesting......................................................................................................
 
@@ -490,18 +462,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 cellStore,
                 SERVER_URL,
-                SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-                        .loadFromLocale()
-                        .set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
-                        .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, DECIMAL_NUMBER_CONTEXT.mathContext().getRoundingMode())
-                        .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, 0L)
-                        .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
-                        .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
-                        .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-                        .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20),
-                SPREADSHEET_FORMATTER_PROVIDER,
+                METADATA,
+                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW

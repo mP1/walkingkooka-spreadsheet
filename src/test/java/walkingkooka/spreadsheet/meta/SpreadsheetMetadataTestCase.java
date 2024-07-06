@@ -25,6 +25,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterTesting;
+import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
@@ -33,7 +34,6 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
-import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.CharSequences;
@@ -410,27 +410,14 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
-    // converter........................................................................................................
+    // expressionConverter........................................................................................................
 
     @Test
-    public final void testConverterWithNullSpreadsheetFormatterProviderFails() {
+    public final void testExpressionConverterWithNullConverterProviderFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createObject()
-                        .converter(
-                                null,
-                                SpreadsheetParserProviders.fake()
-                        )
-        );
-    }
-
-    @Test
-    public final void testConverterWithNullSpreadsheetParserProviderFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .converter(
-                                SpreadsheetFormatterProviders.fake(),
+                        .expressionConverter(
                                 null
                         )
         );
@@ -438,18 +425,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
 
     @Test
-    public final void testConverterRequiredPropertiesAbsentFails() {
+    public final void testExpressionConverterRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> this.createObject()
-                        .converter(
-                                SpreadsheetFormatterProviders.fake(),
-                                SpreadsheetParserProviders.fake()
+                        .expressionConverter(
+                                ConverterProviders.fake()
                         )
         );
         checkMessage(
                 thrown,
-                "Required properties \"date-formatter\", \"date-parser\", \"date-time-formatter\", \"date-time-parser\", \"number-formatter\", \"number-parser\", \"text-formatter\", \"time-formatter\", \"time-parser\" missing."
+                "Required properties \"expression-converter\" missing."
         );
     }
 

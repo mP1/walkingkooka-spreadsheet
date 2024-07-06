@@ -6,11 +6,14 @@ import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -149,6 +152,7 @@ public class TestGwtTest extends GWTTestCase {
                     .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM").spreadsheetParserSelector())
                     .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
                     .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1900)
+                    .set(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, ConverterSelector.parse("general"))
                     .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
                     .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"))
@@ -195,6 +199,11 @@ public class TestGwtTest extends GWTTestCase {
         final SpreadsheetMetadata metadata = metadata();
         final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
         final SpreadsheetParserProvider spreadsheetParserProvider = SpreadsheetParserProviders.spreadsheetParsePattern();
+        final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                metadata,
+                spreadsheetFormatterProvider,
+                spreadsheetParserProvider
+        );
 
         return new FakeSpreadsheetEngineContext() {
 
@@ -235,8 +244,7 @@ public class TestGwtTest extends GWTTestCase {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
-                                        spreadsheetFormatterProvider,
-                                        spreadsheetParserProvider,
+                                        converterProvider,
                                         NOW,
                                         LABEL_NAME_RESOLVER
                                 )
@@ -294,8 +302,8 @@ public class TestGwtTest extends GWTTestCase {
                 return formatter.format(
                         value,
                         metadata.formatterContext(
+                                converterProvider,
                                 spreadsheetFormatterProvider,
-                                spreadsheetParserProvider,
                                 NOW,
                                 LABEL_NAME_RESOLVER
                         )
