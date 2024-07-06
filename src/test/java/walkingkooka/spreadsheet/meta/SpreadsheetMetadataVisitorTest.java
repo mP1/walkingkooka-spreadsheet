@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -259,6 +260,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, ".");
+    }
+
+    @Test
+    public void testVisitExpressionConverter() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitExpressionConverter(final ConverterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                ConverterSelector.parse("general")
+        );
     }
 
     @Test

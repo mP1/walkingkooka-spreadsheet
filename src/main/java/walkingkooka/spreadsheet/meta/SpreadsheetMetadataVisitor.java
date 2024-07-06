@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -137,6 +138,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitExponentSymbol(final String exponentSymbol) {
+        // nop
+    }
+
+    protected void visitExpressionConverter(final ConverterSelector selector) {
         // nop
     }
 

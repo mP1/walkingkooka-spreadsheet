@@ -29,6 +29,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
@@ -2589,6 +2590,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
+        properties.put(
+                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                ConverterSelector.parse("general")
+        );
         properties.put(
                 SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS,
                 ExpressionFunctionInfoSet.with(Sets.empty())
