@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
@@ -42,6 +43,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -535,6 +537,62 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 expected,
                 metadata.shouldViewRefresh(previous),
                 () -> metadata + " shouldViewsRefresh " + previous
+        );
+    }
+
+    // Converter........................................................................................................
+
+    @Test
+    public void testConverterWithNullSpreadsheetFormatterProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.converter(
+                        null,
+                        SpreadsheetParserProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testConverterWithNullSpreadsheetParserProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.converter(
+                        SpreadsheetFormatterProviders.fake(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testConverterWithMissingPropertyFails() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.converter(
+                        SpreadsheetFormatterProviders.fake(),
+                        SpreadsheetParserProviders.fake()
+                )
+        );
+        this.checkEquals(
+                "Required properties \"date-formatter\", \"date-parser\", \"date-time-formatter\", \"date-time-parser\", \"number-formatter\", \"number-parser\", \"text-formatter\", \"time-formatter\", \"time-parser\" missing.",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testConverter() {
+        final Converter<SpreadsheetConverterContext> converter = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+                .set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        Locale.forLanguageTag("EN-AU")
+                ).loadFromLocale()
+                .converter(
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                );
+        this.checkNotEquals(
+                null,
+                converter
         );
     }
 
