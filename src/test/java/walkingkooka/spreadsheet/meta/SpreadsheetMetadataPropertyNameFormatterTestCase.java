@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
-public abstract class SpreadsheetMetadataPropertyNameFormatterTestCase<N extends SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector>> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetFormatterSelector> {
+public abstract class SpreadsheetMetadataPropertyNameFormatterTestCase<N extends SpreadsheetMetadataPropertyNameFormatter> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetFormatterSelector> {
 
     SpreadsheetMetadataPropertyNameFormatterTestCase() {
         super();
