@@ -19,7 +19,9 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
@@ -36,9 +38,15 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
     private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
 
+    private final static ConverterProvider CONVERTER_PROVIDER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+            METADATA_EN_AU,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            SPREADSHEET_PARSER_PROVIDER
+    );
+
     @Test
-    public void testConverter() {
-        METADATA_EN_AU.converter(
+    public void testGeneralConverter() {
+        METADATA_EN_AU.generalConverter(
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER
         );
@@ -47,13 +55,12 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testConverterContext() {
         METADATA_EN_AU.converterContext(
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                        LocalDateTime::now,
-                        (label) -> {
-                            throw new UnsupportedOperationException();
-                        }
-                );
+                CONVERTER_PROVIDER,
+                LocalDateTime::now,
+                (label) -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
     }
 
     @Test
@@ -69,8 +76,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testFormatterContext() {
         METADATA_EN_AU.formatterContext(
+                CONVERTER_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
                 LocalDateTime::now,
                 (label) -> {
                     throw new UnsupportedOperationException();

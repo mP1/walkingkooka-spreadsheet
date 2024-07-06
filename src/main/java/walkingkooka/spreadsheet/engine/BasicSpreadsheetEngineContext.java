@@ -285,9 +285,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 this.storeRepository.cells(),
                 this.serverUrl,
                 this.spreadsheetMetadata(),
-                this.spreadsheetFormatterProvider,
+                this.converterProvider,
                 this.expressionFunctionProvider,
-                this.spreadsheetParserProvider,
                 this.referenceFunction,
                 this::resolveIfLabel,
                 this.now
@@ -323,8 +322,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 value,
                 this.spreadsheetMetadata()
                         .formatterContext(
+                                this.converterProvider,
                                 this.spreadsheetFormatterProvider,
-                                this.spreadsheetParserProvider,
                                 this::now,
                                 this::resolveIfLabel
                         )

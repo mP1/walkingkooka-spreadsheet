@@ -128,7 +128,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private Converter<SpreadsheetConverterContext> general() {
         final SpreadsheetMetadata metadata = this.metadata;
 
-        return metadata.converter(
+        return metadata.generalConverter(
                 this.spreadsheetFormatterProvider,
                 this.spreadsheetParserProvider
         );

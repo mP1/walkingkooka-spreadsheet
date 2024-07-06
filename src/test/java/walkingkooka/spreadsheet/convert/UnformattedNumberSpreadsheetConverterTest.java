@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterTesting2;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -189,17 +190,21 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 SpreadsheetMetadataPropertyName.TIME_FORMATTER,
                 SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss").spreadsheetFormatterSelector()
         );
-        final Converter<SpreadsheetConverterContext> converter = metadata.converter(
+        final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                metadata,
                 SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
                 SpreadsheetParserProviders.spreadsheetParsePattern()
+        );
+
+        final Converter<SpreadsheetConverterContext> converter = metadata.expressionConverter(
+                converterProvider
         );
 
         return SpreadsheetConverterContexts.basic(
                 converter,
                 LABEL_NAME_RESOLVER,
                 metadata.converterContext(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                        SpreadsheetParserProviders.spreadsheetParsePattern(),
+                        converterProvider,
                         LocalDateTime::now,
                         LABEL_NAME_RESOLVER
                 )

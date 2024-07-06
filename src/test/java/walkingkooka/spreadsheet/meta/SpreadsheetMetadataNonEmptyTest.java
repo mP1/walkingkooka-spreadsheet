@@ -1531,174 +1531,212 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // HasConverter.....................................................................................................
 
     @Test
-    public void testConverterExpressionNumberToString() {
-        this.convertAndCheck2(EXPRESSION_NUMBER_KIND.create(123.5),
+    public void testExpressionConverterExpressionNumberToString() {
+        this.expressionConverterConvertAndCheck(
+                EXPRESSION_NUMBER_KIND.create(123.5),
                 "Number 123.500");
     }
 
     @Test
-    public void testConverterBigDecimalToString() {
-        this.convertAndCheck2(BigDecimal.valueOf(123.5),
-                "Number 123.500");
+    public void testExpressionConverterBigDecimalToString() {
+        this.expressionConverterConvertAndCheck(
+                BigDecimal.valueOf(123.5),
+                "Number 123.500"
+        );
     }
 
     @Test
-    public void testConverterBigIntegerToString() {
-        this.convertAndCheck2(BigInteger.valueOf(123),
-                "Number 123.000");
+    public void testExpressionConverterBigIntegerToString() {
+        this.expressionConverterConvertAndCheck(
+                BigInteger.valueOf(123),
+                "Number 123.000"
+        );
     }
 
     @Test
-    public void testConverterByteToString() {
-        this.convertAndCheck2((byte) 123,
-                "Number 123.000");
+    public void testExpressionConverterByteToString() {
+        this.expressionConverterConvertAndCheck(
+                (byte) 123,
+                "Number 123.000"
+        );
     }
 
     @Test
-    public void testConverterShortToString() {
-        this.convertAndCheck2((short) 123,
-                "Number 123.000");
+    public void testExpressionConverterShortToString() {
+        this.expressionConverterConvertAndCheck(
+                (short) 123,
+                "Number 123.000"
+        );
     }
 
     @Test
-    public void testConverterIntegerToString() {
-        this.convertAndCheck2(123,
-                "Number 123.000");
+    public void testExpressionConverterIntegerToString() {
+        this.expressionConverterConvertAndCheck(
+                123,
+                "Number 123.000"
+        );
     }
 
     @Test
-    public void testConverterLongToString() {
-        this.convertAndCheck2(123L,
-                "Number 123.000");
+    public void testExpressionConverterLongToString() {
+        this.expressionConverterConvertAndCheck(
+                123L,
+                "Number 123.000"
+        );
     }
 
     @Test
-    public void testConverterFloatToString() {
-        this.convertAndCheck2(123.5f,
-                "Number 123.500");
+    public void testExpressionConverterFloatToString() {
+        this.expressionConverterConvertAndCheck(
+                123.5f,
+                "Number 123.500"
+        );
     }
 
     @Test
-    public void testConverterDoubleToString() {
-        this.convertAndCheck2(123.5,
-                "Number 123.500");
+    public void testExpressionConverterDoubleToString() {
+        this.expressionConverterConvertAndCheck(
+                123.5,
+                "Number 123.500"
+        );
     }
 
     @Test
-    public void testConverterStringToExpressionNumber() {
-        this.convertAndCheck2(
+    public void testExpressionConverterStringToExpressionNumber() {
+        this.expressionConverterConvertAndCheck(
                 "Number 123.500",
                 EXPRESSION_NUMBER_KIND.create(123.5)
         );
     }
 
     @Test
-    public void testConverterStringToBigDecimal() {
-        this.convertAndCheck2(
+    public void testExpressionConverterStringToBigDecimal() {
+        this.expressionConverterConvertAndCheck(
                 "Number 123.500",
                 BigDecimal.valueOf(123.5)
         );
     }
 
     @Test
-    public void testConverterStringToBigInteger() {
-        this.convertAndCheck2(
+    public void testExpressionConverterStringToBigInteger() {
+        this.expressionConverterConvertAndCheck(
                 "Number 123.000",
                 BigInteger.valueOf(123)
         );
     }
 
     @Test
-    public void testConverterStringToByte() {
-        this.convertAndCheck2(
+    public void testExpressionConverterStringToByte() {
+        this.expressionConverterConvertAndCheck(
                 "Number 123.000",
                 (byte) 123
         );
     }
 
     @Test
-    public void testConverterStringToShort() {
-        this.convertAndCheck2(
+    public void testExpressionConverterStringToShort() {
+        this.expressionConverterConvertAndCheck(
                 "Number 123.000",
                 (short) 123
         );
     }
 
     @Test
-    public void testConverterStringToInteger() {
-        this.convertAndCheck2(
+    public void testExpressionConverterStringToInteger() {
+        this.expressionConverterConvertAndCheck(
                 "Number 123.000",
                 123
         );
     }
 
     @Test
-    public void testConverterStringToLong() {
-        this.convertAndCheck2(
+    public void testExpressionConverterStringToLong() {
+        this.expressionConverterConvertAndCheck(
                 "Number 123.000",
                 123L
         );
     }
 
     @Test
-    public void testConverterStringToFloat() {
-        this.convertAndCheck2(
+    public void testExpressionConverterStringToFloat() {
+        this.expressionConverterConvertAndCheck(
                 "Number 123.500",
                 123.5f
         );
     }
 
     @Test
-    public void testConverterStringToDouble() {
-        this.convertAndCheck2(
+    public void testExpressionConverterStringToDouble() {
+        this.expressionConverterConvertAndCheck(
                 "Number 123.500",
                 123.5
         );
     }
 
     @Test
-    public void testConverterDateToString() {
-        this.convertAndCheck2("Date 2000 12 31", LocalDate.of(2000, 12, 31));
+    public void testExpressionConverterDateToString() {
+        this.expressionConverterConvertAndCheck(
+                "Date 2000 12 31",
+                LocalDate.of(2000, 12, 31)
+        );
     }
 
     @Test
-    public void testConverterStringToDate() {
-        this.convertAndCheck2(LocalDate.of(2000, 12, 31), "Date 2000 12 31");
+    public void testExpressionConverterStringToDate() {
+        this.expressionConverterConvertAndCheck(
+                LocalDate.of(2000, 12, 31),
+                "Date 2000 12 31"
+        );
     }
 
     @Test
-    public void testConverterDateTimeToString() {
-        this.convertAndCheck2("DateTime 2000 12", LocalDateTime.of(2000, 1, 1, 12, 0, 0));
+    public void testExpressionConverterDateTimeToString() {
+        this.expressionConverterConvertAndCheck(
+                "DateTime 2000 12",
+                LocalDateTime.of(2000, 1, 1, 12, 0, 0)
+        );
     }
 
     @Test
-    public void testConverterStringToDateTime() {
-        this.convertAndCheck2(LocalDateTime.of(2000, 1, 1, 12, 0, 0), "DateTime 2000 12");
+    public void testExpressionConverterStringToDateTime() {
+        this.expressionConverterConvertAndCheck(
+                LocalDateTime.of(2000, 1, 1, 12, 0, 0),
+                "DateTime 2000 12"
+        );
     }
 
     @Test
-    public void testConverterStringToString() {
+    public void testExpressionConverterStringToString() {
         final String text = "abc123";
-        this.convertAndCheck2(text, text);
+        this.expressionConverterConvertAndCheck(text, text);
     }
 
     @Test
-    public void testConverterTimeToString() {
-        this.convertAndCheck2("Time 59 12", LocalTime.of(12, 0, 59));
+    public void testExpressionConverterTimeToString() {
+        this.expressionConverterConvertAndCheck(
+                "Time 59 12",
+                LocalTime.of(12, 0, 59)
+        );
     }
 
     @Test
-    public void testConverterStringToTime() {
-        this.convertAndCheck2(LocalTime.of(12, 58, 59), "Time 59 12");
+    public void testExpressionConverterStringToTime() {
+        this.expressionConverterConvertAndCheck(
+                LocalTime.of(12, 58, 59),
+                "Time 59 12"
+        );
     }
 
-    private void convertAndCheck2(final Object value,
-                                  final Object expected) {
+    private void expressionConverterConvertAndCheck(final Object value,
+                                                    final Object expected) {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
 
-        final Converter<SpreadsheetConverterContext> converter = metadata.converter(
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER
+        final Converter<SpreadsheetConverterContext> converter = metadata.expressionConverter(
+                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                        metadata,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER
+                )
         );
 
         this.convertAndCheck3(
@@ -1735,6 +1773,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("\"DateTime\" yyyy hh").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, ConverterSelector.parse("general"))
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000").spreadsheetFormatterSelector())
@@ -1759,18 +1798,22 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testConvertWithConverterContext() {
+    public void testGeneralConvertWithConverterContext() {
         final SpreadsheetMetadata metadata = createSpreadsheetMetadataWithConverterAndConverterContext();
+
         this.convertAndCheck3(
                 LocalTime.of(12, 58, 59),
                 "Time 59 12",
-                metadata.converter(
+                metadata.generalConverter(
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
                 ),
                 metadata.converterContext(
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
+                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                metadata,
+                                SPREADSHEET_FORMATTER_PROVIDER,
+                                SPREADSHEET_PARSER_PROVIDER
+                        ),
                         NOW,
                         LABEL_NAME_RESOLVER
                 )
@@ -2101,8 +2144,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
                 null,
                 metadata.formatterContext(
+                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                metadata,
+                                SPREADSHEET_FORMATTER_PROVIDER,
+                                SPREADSHEET_PARSER_PROVIDER
+                        ),
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
                         NOW,
                         LABEL_NAME_RESOLVER
                 )

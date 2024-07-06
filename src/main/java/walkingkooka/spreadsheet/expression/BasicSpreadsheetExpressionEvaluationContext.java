@@ -21,12 +21,11 @@ import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
-import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -65,9 +64,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetCellStore cellStore,
                                                             final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
-                                                            final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                            final ConverterProvider converterProvider,
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
-                                                            final SpreadsheetParserProvider spreadsheetParserProvider,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                             final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
                                                             final Supplier<LocalDateTime> now) {
@@ -75,9 +73,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
-        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
-        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
         Objects.requireNonNull(references, "references");
         Objects.requireNonNull(SpreadsheetLabelNameResolver, "SpreadsheetLabelNameResolver");
         Objects.requireNonNull(now, "now");
@@ -87,9 +84,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 cellStore,
                 serverUrl,
                 spreadsheetMetadata,
-                spreadsheetFormatterProvider,
+                converterProvider,
                 expressionFunctionProvider,
-                spreadsheetParserProvider,
                 references,
                 SpreadsheetLabelNameResolver,
                 now
@@ -100,9 +96,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetCellStore cellStore,
                                                         final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
-                                                        final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                        final ConverterProvider converterProvider,
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
-                                                        final SpreadsheetParserProvider spreadsheetParserProvider,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                         final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
                                                         final Supplier<LocalDateTime> now) {
@@ -111,8 +106,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.cellStore = cellStore;
         this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
-        this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
-        this.spreadsheetParserProvider = spreadsheetParserProvider;
+        this.converterProvider = converterProvider;
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.references = references;
         this.SpreadsheetLabelNameResolver = SpreadsheetLabelNameResolver;
@@ -192,11 +186,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Converter<SpreadsheetConverterContext> converter() {
-        return this.spreadsheetMetadata.converter(
-                this.spreadsheetFormatterProvider,
-                this.spreadsheetParserProvider
+        return this.spreadsheetMetadata.expressionConverter(
+                this.converterProvider
         );
     }
+
+    private final ConverterProvider converterProvider;
 
     // ExpressionEvaluationContext........................................................................................
 
@@ -410,16 +405,11 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private ConverterContext converterContext() {
         return this.spreadsheetMetadata()
                 .converterContext(
-                        this.spreadsheetFormatterProvider,
-                        this.spreadsheetParserProvider,
+                        this.converterProvider,
                         this.now,
                         this.SpreadsheetLabelNameResolver
                 );
     }
-
-    private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
-
-    private final SpreadsheetParserProvider spreadsheetParserProvider;
 
     private final Supplier<LocalDateTime> now;
 

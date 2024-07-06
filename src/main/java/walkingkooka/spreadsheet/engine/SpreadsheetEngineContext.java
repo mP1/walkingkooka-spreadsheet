@@ -83,8 +83,7 @@ public interface SpreadsheetEngineContext extends Context,
                                       final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetMetadata()
                 .converterContext(
-                        this, // SpreadsheetFormatterProvider
-                        this, // SpreadsheetParserProvider
+                        this, // ConverterProvider
                         this::now,
                         this::resolveIfLabel
                 ).convertOrFail(

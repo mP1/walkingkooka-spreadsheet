@@ -26,6 +26,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -45,6 +46,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -13306,12 +13308,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
+            public <C extends ConverterContext> Optional<Converter<C>> converter(final ConverterName name,
+                                                                                 final List<?> values) {
+                return SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                        this.spreadsheetMetadata(),
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER
+                ).converter(name, values);
+            }
+
+            @Override
             public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
                 return SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatter(selector);
             }
 
             @Override
-            public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(SpreadsheetParserSelector selector) {
+            public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
                 return SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(selector);
             }
 
@@ -13348,15 +13360,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+
                 return token.toExpression(
                         SpreadsheetExpressionEvaluationContexts.basic(
                                 Optional.empty(), // cell
                                 SpreadsheetCellStores.fake(),
                                 SERVER_URL,
-                                this.spreadsheetMetadata(),
-                                SPREADSHEET_FORMATTER_PROVIDER,
+                                metadata,
+                                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                        metadata,
+                                        SPREADSHEET_FORMATTER_PROVIDER,
+                                        SPREADSHEET_PARSER_PROVIDER
+                                ),
                                 this.expressionFunctionProvider(),
-                                SPREADSHEET_PARSER_PROVIDER,
                                 (r) -> {
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
@@ -13369,15 +13386,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public Object evaluate(final Expression node,
                                    final Optional<SpreadsheetCell> cell) {
+                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+
                 return node.toValue(
                         SpreadsheetExpressionEvaluationContexts.basic(
                                 cell,
                                 storeRepository.cells(),
                                 Url.parseAbsolute("http://server123"), // serverUrl
-                                this.spreadsheetMetadata(), // metadata
-                                SPREADSHEET_FORMATTER_PROVIDER,
+                                metadata, // metadata
+                                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                        metadata,
+                                        SPREADSHEET_FORMATTER_PROVIDER,
+                                        SPREADSHEET_PARSER_PROVIDER
+                                ),
                                 this.expressionFunctionProvider(),
-                                SPREADSHEET_PARSER_PROVIDER,
                                 this.references(), // references
                                 (s) -> {
                                     throw new UnsupportedOperationException(s.toString()); // resolveLabel
@@ -13561,13 +13583,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             private ConverterContext converterContext() {
-                return this.spreadsheetMetadata()
-                        .converterContext(
+                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+
+                return metadata.converterContext(
+                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                metadata,
                                 SPREADSHEET_FORMATTER_PROVIDER,
-                                SPREADSHEET_PARSER_PROVIDER,
-                                NOW,
-                                LABEL_NAME_RESOLVER
-                        );
+                                SPREADSHEET_PARSER_PROVIDER
+                        ),
+                        NOW,
+                        LABEL_NAME_RESOLVER
+                );
             }
 
             @Override

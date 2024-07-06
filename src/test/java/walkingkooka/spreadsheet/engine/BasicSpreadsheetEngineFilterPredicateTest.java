@@ -18,24 +18,24 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
-import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -147,15 +147,16 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                     }
 
                     @Override
-                    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
-                        return SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                                .spreadsheetFormatter(selector);
-                    }
-
-                    @Override
-                    public Parser<SpreadsheetParserContext> spreadsheetParserOrFail(final SpreadsheetParserSelector selector) {
-                        return SpreadsheetParserProviders.spreadsheetParsePattern()
-                                .spreadsheetParserOrFail(selector);
+                    public <C extends ConverterContext> Optional<Converter<C>> converter(final ConverterName name,
+                                                                                         final List<?> values) {
+                        return SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                METADATA_EN_AU,
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                                SpreadsheetParserProviders.spreadsheetParsePattern()
+                        ).converter(
+                                name,
+                                values
+                        );
                     }
 
                     @Override
