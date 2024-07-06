@@ -64,123 +64,14 @@
   "color-Yellow": 6,
   "color-Magenta": 7,
   "color-Cyan": 8,
-  "converters": [
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/Converter/general",
-      "name": "general"
-    }
-  ],
   "date-time-offset": -25569,
   "default-year": 1900,
   "expression-converter": "general",
-  "expression-functions": [],
   "expression-number-kind": "BIG_DECIMAL",
   "general-number-format-digit-count": 9,
   "hide-zero-values": false,
   "precision": 10,
   "rounding-mode": "HALF_UP",
-  "spreadsheet-comparators": [
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date",
-      "name": "date"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time",
-      "name": "date-time"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month",
-      "name": "day-of-month"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-week",
-      "name": "day-of-week"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-am-pm",
-      "name": "hour-of-am-pm"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-day",
-      "name": "hour-of-day"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/minute-of-hour",
-      "name": "minute-of-hour"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/month-of-year",
-      "name": "month-of-year"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/nano-of-second",
-      "name": "nano-of-second"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/number",
-      "name": "number"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute",
-      "name": "seconds-of-minute"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text",
-      "name": "text"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive",
-      "name": "text-case-insensitive"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time",
-      "name": "time"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year",
-      "name": "year"
-    }
-  ],
-  "spreadsheet-formatters": [
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern",
-      "name": "date-format-pattern"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern",
-      "name": "date-time-format-pattern"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern",
-      "name": "number-format-pattern"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern",
-      "name": "text-format-pattern"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern",
-      "name": "time-format-pattern"
-    }
-  ],
-  "spreadsheet-parsers": [
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern",
-      "name": "date-parse-pattern"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern",
-      "name": "date-time-parse-pattern"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/Parser/number-parse-pattern",
-      "name": "number-parse-pattern"
-    },
-    {
-      "url": "https://github.com/mP1/walkingkooka-spreadsheet/Parser/time-parse-pattern",
-      "name": "time-parse-pattern"
-    }
-  ],
   "style": {
     "background-color": "#ffffff",
     "border-left-color": "#000000",

@@ -40,19 +40,23 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
@@ -72,6 +76,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
@@ -1139,6 +1144,38 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                 .text()
                 ),
                 SpreadsheetMetadata.class
+        ).set(
+                SpreadsheetMetadataPropertyName.CONVERTERS,
+                ConverterInfoSet.with(
+                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                SpreadsheetMetadata.EMPTY,
+                                SpreadsheetFormatterProviders.fake(),
+                                SpreadsheetParserProviders.fake()
+                        ).converterInfos()
+                )
+        ).set(
+                SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS,
+                ExpressionFunctionInfoSet.with(
+                        Sets.empty()
+                )
+        ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
+                SpreadsheetComparatorInfoSet.with(
+                        SpreadsheetComparatorProviders.spreadsheetComparators()
+                                .spreadsheetComparatorInfos()
+                )
+        ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
+                SpreadsheetFormatterInfoSet.with(
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                                .spreadsheetFormatterInfos()
+                )
+        ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
+                SpreadsheetParserInfoSet.with(
+                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                                .spreadsheetParserInfos()
+                )
         );
     }
 
