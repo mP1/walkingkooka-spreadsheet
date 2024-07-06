@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -153,6 +154,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
      */
     public static final SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameExponentSymbol.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> EXPRESSION_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterExpression.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>
@@ -668,6 +674,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     static {
         Color.BLACK.alpha();
+        ConverterSelector.parse("Dummy");
         EmailAddress.tryParse("user@example.com");
         ExpressionNumberKind.DEFAULT.name();
         FontFamily.with("MS Sans Serif");
