@@ -42,7 +42,7 @@ public interface CanReplaceReferencesTesting<T extends CanReplaceReferences<T>> 
         assertSame(
                 can,
                 can.replaceReferences(mapper),
-                () -> can.toString()
+                can::toString
         );
     }
 
@@ -52,7 +52,7 @@ public interface CanReplaceReferencesTesting<T extends CanReplaceReferences<T>> 
         this.checkEquals(
                 expected,
                 can.replaceReferences(mapper),
-                () -> can.toString()
+                can::toString
         );
     }
 

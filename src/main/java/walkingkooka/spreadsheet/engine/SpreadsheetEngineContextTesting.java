@@ -118,7 +118,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         this.checkEquals(
                 expected,
                 context.toExpression(token),
-                () -> token.toString()
+                token::toString
         );
     }
 

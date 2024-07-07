@@ -201,7 +201,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkEquals(
                 expected,
                 selection.columnOrRowReferenceKind(),
-                () -> selection.toString()
+                selection::toString
         );
     }
 

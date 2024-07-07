@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.naming.HasName;
 import walkingkooka.net.UrlPath;
 
 import java.util.Map;
@@ -84,7 +85,12 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                     SpreadsheetComparators.time(),
                     SpreadsheetComparators.year()
             ).stream()
-                    .collect(Collectors.toMap(n -> n.name(), n -> n))
+                    .collect(
+                            Collectors.toMap(
+                                    HasName::name,
+                                    n -> n
+                            )
+                    )
     );
 
     @Override

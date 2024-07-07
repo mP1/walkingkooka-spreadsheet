@@ -220,7 +220,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         cellRange.comparatorNamesCheck(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
                         comparators.stream()
-                                .map(c -> c.toSpreadsheetColumnOrRowSpreadsheetComparatorNames())
+                                .map(SpreadsheetColumnOrRowSpreadsheetComparators::toSpreadsheetColumnOrRowSpreadsheetComparatorNames)
                                 .collect(Collectors.toList())
                 )
         );

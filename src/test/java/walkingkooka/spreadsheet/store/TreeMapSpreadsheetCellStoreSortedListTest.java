@@ -819,7 +819,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
         this.checkEquals(
                 Lists.of(cells),
                 list.cells,
-                () -> list.toString()
+                list::toString
         );
     }
 

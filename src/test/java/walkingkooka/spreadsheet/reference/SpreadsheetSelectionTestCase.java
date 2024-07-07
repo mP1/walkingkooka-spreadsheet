@@ -1900,7 +1900,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.checkEquals(
                 expected,
                 selection.toParserToken(),
-                () -> selection.toString()
+                selection::toString
         );
     }
 
@@ -1941,7 +1941,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.checkEquals(
                 selection.toStringMaybeStar(),
                 expected,
-                () -> selection.toString()
+                selection::toString
         );
     }
 

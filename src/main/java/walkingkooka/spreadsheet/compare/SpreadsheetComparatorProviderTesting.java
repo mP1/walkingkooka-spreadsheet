@@ -88,7 +88,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
         this.checkEquals(
                 expected,
                 provider.spreadsheetComparator(name),
-                () -> name.toString()
+                name::toString
         );
     }
 
@@ -121,7 +121,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
         this.checkEquals(
                 expected,
                 provider.spreadsheetComparatorInfos(),
-                () -> provider.toString()
+                provider::toString
         );
     }
 

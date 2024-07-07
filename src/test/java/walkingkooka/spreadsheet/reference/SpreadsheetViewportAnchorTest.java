@@ -737,7 +737,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     private void toColumnRangeAnchorFails(final SpreadsheetViewportAnchor anchor) {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> anchor.toColumnOrColumnRangeAnchor()
+                anchor::toColumnOrColumnRangeAnchor
         );
         this.checkEquals(
                 "Cannot convert " + anchor + " to a column range compatible anchor",
@@ -814,7 +814,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         assertSame(
                 expected,
                 anchor.toColumnOrColumnRangeAnchor(),
-                () -> anchor.toString()
+                anchor::toString
         );
     }
 
@@ -833,7 +833,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     private void toRowRangeAnchorFails(final SpreadsheetViewportAnchor anchor) {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> anchor.toRowOrRowRangeAnchor()
+                anchor::toRowOrRowRangeAnchor
         );
         this.checkEquals(
                 "Cannot convert " + anchor + " to a row range compatible anchor",
@@ -910,7 +910,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         assertSame(
                 expected,
                 anchor.toRowOrRowRangeAnchor(),
-                () -> anchor.toString()
+                anchor::toString
         );
     }
 

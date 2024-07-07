@@ -125,7 +125,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
         this.checkEquals(
                 expected,
                 provider.spreadsheetParser(selector),
-                () -> selector.toString()
+                selector::toString
         );
     }
 
@@ -160,7 +160,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
         this.checkEquals(
                 expected,
                 provider.spreadsheetParserInfos(),
-                () -> provider.toString()
+                provider::toString
         );
     }
 }
