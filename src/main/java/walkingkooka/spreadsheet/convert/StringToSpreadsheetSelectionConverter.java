@@ -78,6 +78,6 @@ final class StringToSpreadsheetSelectionConverter implements Converter<Spreadshe
 
     @Override
     public String toString() {
-        return "String->" + SpreadsheetSelection.class.getSimpleName();
+        return "String to Selection";
     }
 }
