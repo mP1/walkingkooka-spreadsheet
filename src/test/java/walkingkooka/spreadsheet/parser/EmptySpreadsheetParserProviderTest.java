@@ -15,27 +15,24 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.reflect.JavaVisibility;
 
-import java.util.Optional;
-import java.util.Set;
+public final class EmptySpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<EmptySpreadsheetParserProvider> {
 
-public class FakeSpreadsheetParserProvider implements SpreadsheetParserProvider {
-
-    public FakeSpreadsheetParserProvider() {
-        super();
+    @Override
+    public EmptySpreadsheetParserProvider createSpreadsheetParserProvider() {
+        return EmptySpreadsheetParserProvider.INSTANCE;
     }
 
     @Override
-    public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
-        throw new UnsupportedOperationException();
+    public Class<EmptySpreadsheetParserProvider> type() {
+        return EmptySpreadsheetParserProvider.class;
     }
 
     @Override
-    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
-        throw new UnsupportedOperationException();
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

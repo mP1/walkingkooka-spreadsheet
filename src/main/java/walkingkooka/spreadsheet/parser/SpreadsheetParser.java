@@ -15,24 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.cursor.parser.Parser;
 
-public final class EmptySpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<EmptySpreadsheetParserProvider> {
-
-    @Override
-    public EmptySpreadsheetParserProvider createSpreadsheetParserProvider() {
-        return EmptySpreadsheetParserProvider.INSTANCE;
-    }
-
-    @Override
-    public Class<EmptySpreadsheetParserProvider> type() {
-        return EmptySpreadsheetParserProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
+/**
+ * A specialised {@link Parser} that supports extra operations
+ */
+public interface SpreadsheetParser extends Parser<SpreadsheetParserContext> {
 }

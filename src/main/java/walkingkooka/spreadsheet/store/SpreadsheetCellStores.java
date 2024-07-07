@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.format.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 
 import java.time.LocalDateTime;
 import java.util.function.Supplier;

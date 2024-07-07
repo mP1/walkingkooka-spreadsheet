@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;

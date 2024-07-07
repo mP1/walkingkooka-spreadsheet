@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -30,7 +30,7 @@ import java.util.Set;
 public final class SpreadsheetParserProviders implements PublicStaticHelper {
 
     /**
-     * This is the base {@link AbsoluteUrl} for all {@link SpreadsheetFormatter} in this package. The name of each
+     * This is the base {@link AbsoluteUrl} for all {@link Parser} in this package. The name of each
      * formatter will be appended to this base.
      */
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(

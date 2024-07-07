@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.Sets;

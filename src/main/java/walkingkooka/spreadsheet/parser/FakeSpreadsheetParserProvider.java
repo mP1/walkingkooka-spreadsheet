@@ -15,38 +15,26 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * A {@link SpreadsheetParserProvider} that is empty and always returns nothing when queried.
- */
-final class EmptySpreadsheetParserProvider implements SpreadsheetParserProvider {
+public class FakeSpreadsheetParserProvider implements SpreadsheetParserProvider {
 
-    /**
-     * Singleton.
-     */
-    final static EmptySpreadsheetParserProvider INSTANCE = new EmptySpreadsheetParserProvider();
-
-    private EmptySpreadsheetParserProvider() {
+    public FakeSpreadsheetParserProvider() {
         super();
     }
 
     @Override
     public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
-        Objects.requireNonNull(selector, "selector");
-        return Optional.empty();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
-        return Sets.empty();
+        throw new UnsupportedOperationException();
     }
 }
