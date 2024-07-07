@@ -126,6 +126,6 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Conve
 
     @Override
     public String toString() {
-        return "cell->cellRange|cellRange->cell";
+        return "selection to selection";
     }
 }
