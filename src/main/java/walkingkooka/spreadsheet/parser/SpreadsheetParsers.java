@@ -170,6 +170,13 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName VALUE_SEPARATOR_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("VALUE_SEPARATOR_SYMBOL");
 
     /**
+     * {@see FakeSpreadsheetParser}
+     */
+    public static SpreadsheetParser fake() {
+        return new FakeSpreadsheetParser();
+    }
+
+    /**
      * A parser that returns {@see SpreadsheetFunctionName}
      */
     public static Parser<SpreadsheetParserContext> functionName() {
