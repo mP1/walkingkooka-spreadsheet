@@ -18,11 +18,13 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest implements ConverterTesting2<SpreadsheetSelectionToSpreadsheetSelectionConverter, SpreadsheetConverterContext> {
+public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest implements ConverterTesting2<SpreadsheetSelectionToSpreadsheetSelectionConverter, SpreadsheetConverterContext>,
+        ToStringTesting<SpreadsheetSelectionToSpreadsheetSelectionConverter> {
 
     @Test
     public void testCellToSpreadsheetSelection() {
@@ -81,6 +83,18 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     public SpreadsheetConverterContext createContext() {
         return SpreadsheetConverterContexts.fake();
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                SpreadsheetSelectionToSpreadsheetSelectionConverter.INSTANCE,
+                "selection to selection"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetSelectionToSpreadsheetSelectionConverter> type() {
