@@ -242,6 +242,13 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final Parser<SpreadsheetParserContext> NAMED_FUNCTION_PARSER;
 
     /**
+     * {@see ParserSpreadsheetParser}
+     */
+    public static Parser<SpreadsheetParserContext> parser(final Parser<SpreadsheetParserContext> parser) {
+        return ParserSpreadsheetParser.with(parser);
+    }
+
+    /**
      * {@see SpreadsheetRowReferenceParser}
      */
     public static Parser<SpreadsheetParserContext> row() {
