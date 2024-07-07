@@ -123,7 +123,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         this.checkEquals(
                 expected,
                 provider.spreadsheetFormatter(selector),
-                () -> selector.toString()
+                selector::toString
         );
     }
 
@@ -158,7 +158,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         this.checkEquals(
                 expected,
                 provider.spreadsheetFormatterInfos(),
-                () -> provider.toString()
+                provider::toString
         );
     }
 }

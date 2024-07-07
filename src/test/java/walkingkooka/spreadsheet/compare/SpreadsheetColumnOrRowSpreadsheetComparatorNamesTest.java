@@ -1399,7 +1399,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         this.checkEquals(
                 names,
                 SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse(names.toString()),
-                () -> names.toString()
+                names::toString
         );
     }
 

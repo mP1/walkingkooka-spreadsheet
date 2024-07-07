@@ -493,10 +493,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         );
         this.replaceReferencesAndCheck(
                 cell,
-                (c) ->
-                        Optional.of(
-                                c
-                        )
+                Optional::of
         );
     }
 

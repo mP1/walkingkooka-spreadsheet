@@ -404,7 +404,7 @@ public final class SpreadsheetCellRangeReferencePathTest implements ClassTesting
         this.checkEquals(
                 expected,
                 path.labelText(),
-                () -> path.toString()
+                path::toString
         );
     }
 

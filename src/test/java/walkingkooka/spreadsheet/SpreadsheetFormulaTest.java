@@ -777,7 +777,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         expected
                 ),
                 consumer,
-                () -> formula.toString()
+                formula::toString
         );
     }
 

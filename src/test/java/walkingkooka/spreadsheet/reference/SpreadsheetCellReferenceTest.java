@@ -876,7 +876,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testReplaceReferenceSelf() {
         this.replaceReferencesAndCheck(
                 SpreadsheetSelection.parseCell("B2"),
-                (r) -> Optional.of(r)
+                Optional::of
         );
     }
 

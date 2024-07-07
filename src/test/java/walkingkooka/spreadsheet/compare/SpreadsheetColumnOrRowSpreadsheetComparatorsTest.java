@@ -216,7 +216,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
         this.checkEquals(
                 expected,
                 comparators.toSpreadsheetColumnOrRowSpreadsheetComparatorNames(),
-                () -> comparators.toString()
+                comparators::toString
         );
     }
 

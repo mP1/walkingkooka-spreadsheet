@@ -735,7 +735,7 @@ public abstract class SpreadsheetSelection implements HasText,
             final SpreadsheetCellRangeReference cellRange = this.toCellRange();
 
             final String outOfBounds = comparatorNames.stream()
-                    .map(c -> c.columnOrRow())
+                    .map(SpreadsheetColumnOrRowSpreadsheetComparatorNames::columnOrRow)
                     .filter(c -> false == cellRange.test(c))
                     .map(Object::toString)
                     .collect(Collectors.joining(", "));

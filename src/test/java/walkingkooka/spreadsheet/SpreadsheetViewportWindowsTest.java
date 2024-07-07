@@ -836,7 +836,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
         this.checkEquals(
                 cells,
                 windows.cells(),
-                () -> windows.toString()
+                windows::toString
         );
     }
     
@@ -912,7 +912,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
         this.checkEquals(
                 columns,
                 windows.columns(),
-                () -> windows.toString()
+                windows::toString
         );
     }
 
@@ -988,7 +988,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
         this.checkEquals(
                 rows,
                 windows.rows(),
-                () -> windows.toString()
+                windows::toString
         );
     }
 

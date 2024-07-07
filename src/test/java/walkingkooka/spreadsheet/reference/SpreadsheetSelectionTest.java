@@ -1454,7 +1454,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.checkEquals(
                 expected,
                 selection.toCellRange(),
-                () -> selection.toString()
+                selection::toString
         );
     }
 
@@ -1582,7 +1582,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 selection.toCellRangeResolvingLabels(
                         labelToCellRangeLabels
                 ),
-                () -> selection.toString()
+                selection::toString
         );
     }
     
@@ -1651,7 +1651,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.checkEquals(
                 expected,
                 selection.notFound(kind),
-                () -> selection.toString()
+                selection::toString
         );
     }
 

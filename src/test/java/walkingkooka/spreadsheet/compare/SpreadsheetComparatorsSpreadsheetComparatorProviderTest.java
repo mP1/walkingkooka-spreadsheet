@@ -33,7 +33,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     @Test
     public void testSpreadsheetComparator() {
         Arrays.stream(SpreadsheetComparators.class.getMethods())
-                .filter(m -> MethodAttributes.STATIC.is(m))
+                .filter(MethodAttributes.STATIC::is)
                 .filter(m -> SpreadsheetComparator.class.equals(m.getReturnType()))
                 .filter(m -> m.getParameterTypes().length == 0)
                 .map(m -> CaseKind.CAMEL.change(
@@ -52,7 +52,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
         this.spreadsheetComparatorInfosAndCheck(
                 SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE,
                 Arrays.stream(SpreadsheetComparators.class.getMethods())
-                        .filter(m -> MethodAttributes.STATIC.is(m))
+                        .filter(MethodAttributes.STATIC::is)
                         .filter(m -> SpreadsheetComparator.class.equals(m.getReturnType()))
                         .filter(m -> m.getParameterTypes().length == 0)
                         .map(m -> CaseKind.CAMEL.change(

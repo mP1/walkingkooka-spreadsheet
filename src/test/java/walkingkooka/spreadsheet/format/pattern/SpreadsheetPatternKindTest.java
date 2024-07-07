@@ -786,7 +786,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         assertSame(
                 kind,
                 kind.toFormat(),
-                () -> kind.toString()
+                kind::toString
         );
     }
 
@@ -827,7 +827,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         this.checkEquals(
                 expected,
                 kind.toFormat(),
-                () -> kind.toString()
+                kind::toString
         );
     }
 
@@ -921,7 +921,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         this.checkEquals(
                 expected,
                 kind.toParse(),
-                () -> kind.toString()
+                kind::toString
         );
     }
 

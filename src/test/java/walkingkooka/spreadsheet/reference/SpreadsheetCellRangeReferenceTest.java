@@ -649,7 +649,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testReplaceReferenceSame() {
         this.replaceReferencesAndCheck(
                 this.createReplaceReference(),
-                r -> Optional.of(r)
+                Optional::of
         );
     }
 

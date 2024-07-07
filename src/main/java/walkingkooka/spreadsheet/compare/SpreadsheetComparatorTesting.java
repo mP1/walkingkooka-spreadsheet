@@ -26,7 +26,7 @@ public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>
         this.checkEquals(
                 expected,
                 comparator.type(),
-                () -> comparator.toString()
+                comparator::toString
         );
     }
 
