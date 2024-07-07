@@ -486,7 +486,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
 
     private void columnOrRowRangeAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                           final SpreadsheetSelection selection,
-                                          final SpreadsheetColumnOrRowRangeReference expected) {
+                                          final SpreadsheetColumnOrRowRangeReference<?> expected) {
         this.checkEquals(
                 expected,
                 kind.columnOrRowRange(selection),
