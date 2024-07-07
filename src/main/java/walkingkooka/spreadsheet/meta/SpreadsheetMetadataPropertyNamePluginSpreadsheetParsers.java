@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.format.SpreadsheetParserInfo;
-import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
-import walkingkooka.spreadsheet.format.SpreadsheetParserName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link SpreadsheetParserInfoSet}.

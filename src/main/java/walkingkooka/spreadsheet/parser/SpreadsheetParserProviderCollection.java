@@ -15,11 +15,10 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderCollection;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Objects;

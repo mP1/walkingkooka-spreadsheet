@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.naming.HasName;
 import walkingkooka.plugin.PluginSelector;

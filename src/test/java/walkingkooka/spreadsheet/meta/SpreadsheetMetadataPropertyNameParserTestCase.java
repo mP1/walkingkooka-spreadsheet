@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 
 public abstract class SpreadsheetMetadataPropertyNameParserTestCase<N extends SpreadsheetMetadataPropertyName<SpreadsheetParserSelector>> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetParserSelector> {
 

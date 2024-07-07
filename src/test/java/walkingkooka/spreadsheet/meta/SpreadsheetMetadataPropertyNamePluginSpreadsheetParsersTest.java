@@ -19,10 +19,10 @@
 package walkingkooka.spreadsheet.meta;
 
 
-import walkingkooka.spreadsheet.format.SpreadsheetParserInfo;
-import walkingkooka.spreadsheet.format.SpreadsheetParserInfoSet;
-import walkingkooka.spreadsheet.format.SpreadsheetParserName;
-import walkingkooka.spreadsheet.format.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 
 public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers, SpreadsheetParserInfoSet, SpreadsheetParserInfo, SpreadsheetParserName> {
 

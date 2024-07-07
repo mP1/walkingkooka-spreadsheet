@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.PluginInfoLikeTesting;
