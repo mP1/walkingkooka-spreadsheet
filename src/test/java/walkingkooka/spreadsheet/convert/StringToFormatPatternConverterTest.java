@@ -65,7 +65,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
     // boolean.........................................................................................................
 
     @Test
-    public void testBooleanFalse() {
+    public void testConvertStringToBooleanFalse() {
         this.convertAndCheck(
                 StringToFormatPatternConverter.with("$000.000"),
                 false,
@@ -76,7 +76,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
     }
 
     @Test
-    public void testBooleanTrue() {
+    public void testConvertStringToBooleanTrue() {
         this.convertAndCheck(
                 StringToFormatPatternConverter.with("$000.000"),
                 true,
@@ -91,62 +91,62 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
     private final static int NUMBER = 123;
 
     @Test
-    public void testBigDecimal() {
-        this.convertNumberAndCheck(
+    public void testConvertStringToBigDecimal() {
+        this.convertStringToNumberAndCheck(
                 BigDecimal.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testBigInteger() {
-        this.convertNumberAndCheck(
+    public void testConvertStringToBigInteger() {
+        this.convertStringToNumberAndCheck(
                 BigInteger.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testFloat() {
-        this.convertNumberAndCheck(
+    public void testConvertStringToFloat() {
+        this.convertStringToNumberAndCheck(
                 Float.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testDouble() {
-        this.convertNumberAndCheck(
+    public void testConvertStringToDouble() {
+        this.convertStringToNumberAndCheck(
                 Double.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testExpressionNumber() {
-        this.convertNumberAndCheck(
+    public void testConvertStringToExpressionNumber() {
+        this.convertStringToNumberAndCheck(
                 KIND.create(NUMBER)
         );
     }
 
     @Test
-    public void testInteger() {
-        this.convertNumberAndCheck(
+    public void testConvertStringToInteger() {
+        this.convertStringToNumberAndCheck(
                 Integer.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testLong() {
-        this.convertNumberAndCheck(
+    public void testConvertStringToLong() {
+        this.convertStringToNumberAndCheck(
                 Integer.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testShort() {
-        this.convertNumberAndCheck(
+    public void testConvertStringToShort() {
+        this.convertStringToNumberAndCheck(
                 Short.valueOf((short) NUMBER)
         );
     }
 
-    private void convertNumberAndCheck(final Number number) {
+    private void convertStringToNumberAndCheck(final Number number) {
         this.convertAndCheck(
                 StringToFormatPatternConverter.with("$000.000"),
                 number,
@@ -159,7 +159,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
     // date time ......................................................................................................
 
     @Test
-    public void testLocalDate() {
+    public void testConvertStringToLocalDate() {
         this.convertAndCheck(
                 StringToFormatPatternConverter.with("yyyy mm dd"),
                 LocalDate.of(1999, 12, 31),
@@ -170,7 +170,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
     }
 
     @Test
-    public void testLocalDateTime() {
+    public void testConvertStringToLocalDateTime() {
         this.convertAndCheck(
                 StringToFormatPatternConverter.with("yyyy mm dd hh mm ss"),
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
@@ -181,7 +181,7 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
     }
 
     @Test
-    public void testLocalTime() {
+    public void testConvertStringToLocalTime() {
         this.convertAndCheck(
                 StringToFormatPatternConverter.with("ss mm hh"),
                 LocalTime.of(12, 58, 59),
@@ -194,59 +194,59 @@ public final class StringToFormatPatternConverterTest implements ConverterTestin
     // String.... ......................................................................................................
 
     @Test
-    public void testCharacter() {
+    public void testConvertStringToCharacter() {
         this.convertStringAndCheck("Hello");
     }
 
     @Test
-    public void testString() {
+    public void testConvertStringToString() {
         this.convertStringAndCheck("Hello");
     }
 
     @Test
-    public void testCell() {
+    public void testConvertStringToCell() {
         this.convertStringAndCheck(
                 SpreadsheetSelection.parseCell("$A1")
         );
     }
 
     @Test
-    public void testCellRange() {
+    public void testConvertStringToCellRange() {
         this.convertStringAndCheck(
                 SpreadsheetSelection.parseCellRange("$A1:$B2")
         );
     }
 
     @Test
-    public void testColumn() {
+    public void testConvertStringToColumn() {
         this.convertStringAndCheck(
                 SpreadsheetSelection.parseColumn("$A")
         );
     }
 
     @Test
-    public void testColumnRange() {
+    public void testConvertStringToColumnRange() {
         this.convertStringAndCheck(
                 SpreadsheetSelection.parseColumnRange("$A:$B")
         );
     }
 
     @Test
-    public void testRow() {
+    public void testConvertStringToRow() {
         this.convertStringAndCheck(
                 SpreadsheetSelection.parseRow("$12")
         );
     }
 
     @Test
-    public void testRowRange() {
+    public void testConvertStringToRowRange() {
         this.convertStringAndCheck(
                 SpreadsheetSelection.parseRowRange("$12:$34")
         );
     }
 
     @Test
-    public void testLabel() {
+    public void testConvertStringToLabel() {
         this.convertStringAndCheck(
                 SpreadsheetSelection.labelName("Label123")
         );
