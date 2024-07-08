@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -101,24 +102,24 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     // HasParser........................................................................................................
 
     /**
-     * Returns a {@link Parser} which will try all the patterns.<br>
+     * Returns a {@link SpreadsheetParser} which will try all the patterns.<br>
      * {@link java.time.LocalDate}, {@link java.time.LocalDateTime}, {@link java.time.LocalTime} will all fail to parse
      * the if the value has extra trailing text. If this parse is for {@link walkingkooka.tree.expression.ExpressionNumber}
      * and will be used to parse number literals the {@link Parser#andEmptyTextCursor()} must be called afterwards.
      */
-    public final Parser<SpreadsheetParserContext> parser() {
+    public final SpreadsheetParser parser() {
         if (null == this.parser) {
             this.parser = this.createParser();
         }
         return this.parser;
     }
 
-    private Parser<SpreadsheetParserContext> parser;
+    private SpreadsheetParser parser;
 
     /**
-     * Factory that lazily creates a {@link Parser}
+     * Factory that lazily creates a {@link SpreadsheetParser}
      */
-    abstract Parser<SpreadsheetParserContext> createParser();
+    abstract SpreadsheetParser createParser();
 
     // parse........................................................................................................
 
