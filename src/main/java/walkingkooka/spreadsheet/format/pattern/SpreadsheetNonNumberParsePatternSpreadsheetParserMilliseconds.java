@@ -29,16 +29,16 @@ import java.time.LocalTime;
 /**
  * A {@link Parser} that matches the milliseconds and returns a {@link walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken}
  */
-final class SpreadsheetNonNumberParsePatternParserMilliseconds extends SpreadsheetNonNumberParsePatternParser {
+final class SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds extends SpreadsheetNonNumberParsePatternSpreadsheetParser {
 
     /**
      * Singleton instance
      */
-    static SpreadsheetNonNumberParsePatternParserMilliseconds with(final String pattern) {
-        return new SpreadsheetNonNumberParsePatternParserMilliseconds(pattern);
+    static SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds with(final String pattern) {
+        return new SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds(pattern);
     }
 
-    private SpreadsheetNonNumberParsePatternParserMilliseconds(final String pattern) {
+    private SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds(final String pattern) {
         super();
         this.pattern = pattern;
     }

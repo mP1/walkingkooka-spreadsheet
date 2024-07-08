@@ -31,21 +31,21 @@ import java.util.function.Function;
 /**
  * A {@link Parser} that handles partial matches parse a list taken parse the {@link SpreadsheetParserContext}.
  */
-final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonNumberParsePatternParser {
+final class SpreadsheetNonNumberParsePatternSpreadsheetParserString extends SpreadsheetNonNumberParsePatternSpreadsheetParser {
 
-    static SpreadsheetNonNumberParsePatternParserString with(final Function<SpreadsheetParserContext, List<String>> values,
-                                                             final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
-                                                             final String pattern) {
-        return new SpreadsheetNonNumberParsePatternParserString(
+    static SpreadsheetNonNumberParsePatternSpreadsheetParserString with(final Function<SpreadsheetParserContext, List<String>> values,
+                                                                        final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
+                                                                        final String pattern) {
+        return new SpreadsheetNonNumberParsePatternSpreadsheetParserString(
                 values,
                 tokenFactory,
                 pattern
         );
     }
 
-    private SpreadsheetNonNumberParsePatternParserString(final Function<SpreadsheetParserContext, List<String>> values,
-                                                         final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
-                                                         final String pattern) {
+    private SpreadsheetNonNumberParsePatternSpreadsheetParserString(final Function<SpreadsheetParserContext, List<String>> values,
+                                                                    final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
+                                                                    final String pattern) {
         super();
         this.values = values;
         this.tokenFactory = tokenFactory;

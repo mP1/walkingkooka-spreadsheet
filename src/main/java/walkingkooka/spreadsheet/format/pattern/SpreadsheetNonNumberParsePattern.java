@@ -17,8 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 
@@ -26,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * Base class for any class that creates a {@link Parser} parse a {@link DateTimeFormatter}.
+ * Base class for any class that creates a {@link SpreadsheetParser} parse a {@link DateTimeFormatter}.
  */
 abstract class SpreadsheetNonNumberParsePattern<V> extends SpreadsheetParsePattern {
 
@@ -45,7 +44,7 @@ abstract class SpreadsheetNonNumberParsePattern<V> extends SpreadsheetParsePatte
      * Creates a {@link Parsers#alternatives(List)} that tries each of the individual patterns until success.
      */
     @Override
-    final Parser<SpreadsheetParserContext> createParser() {
-        return SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor.toParser(this.value());
+    final SpreadsheetParser createParser() {
+        return SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor.toParser(this.value());
     }
 }
