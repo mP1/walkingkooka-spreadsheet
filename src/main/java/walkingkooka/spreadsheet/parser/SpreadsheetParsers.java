@@ -155,13 +155,13 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * Returns a {@link Parser} that parsers expressions.
+     * Returns a {@link SpreadsheetParser} that parsers expressions.
      */
-    public static Parser<SpreadsheetParserContext> expression() {
+    public static SpreadsheetParser expression() {
         return EXPRESSION_PARSER;
     }
 
-    private static final Parser<SpreadsheetParserContext> EXPRESSION_PARSER;
+    private static final SpreadsheetParser EXPRESSION_PARSER;
 
     private static void functions(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
         predefined.put(FUNCTION_NAME_IDENTIFIER, functionName());
@@ -545,7 +545,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         CELL_OR_CELL_RANGE_OR_LABEL_PARSER = parsers.get(EbnfIdentifierName.with("CELL_OR_CELL_RANGE_OR_LABEL"));
         CELL_RANGE_PARSER = parsers.get(EbnfIdentifierName.with("CELL_RANGE"));
-        EXPRESSION_PARSER = parsers.get(EbnfIdentifierName.with("EXPRESSION"));
+        EXPRESSION_PARSER = parser(
+                parsers.get(
+                        EbnfIdentifierName.with("EXPRESSION")
+                )
+        );
         FUNCTION_PARAMETERS_PARSER = parsers.get(EbnfIdentifierName.with("FUNCTION_PARAMETERS"));
         LAMBDA_FUNCTION = parsers.get(EbnfIdentifierName.with("LAMBDA_FUNCTION"));
         NAMED_FUNCTION_PARSER = parsers.get(EbnfIdentifierName.with("NAMED_FUNCTION"));
