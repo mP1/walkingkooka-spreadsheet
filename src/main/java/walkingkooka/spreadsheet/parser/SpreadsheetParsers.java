@@ -463,13 +463,14 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.* TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1254">default formula value parsing after apostrophe-string, date, datetime, number & time</a>
      */
-    public static Parser<SpreadsheetParserContext> valueOrExpression(final Parser<SpreadsheetParserContext> value) {
+    public static SpreadsheetParser valueOrExpression(final Parser<SpreadsheetParserContext> value) {
         Objects.requireNonNull(value, "value");
 
-        return resolveParsers(value)
+        return parser(
+                resolveParsers(value)
                 .get(VALUE_OR_EXPRESSION_IDENTIFIER)
                 .transform(SpreadsheetParsers::transformValueOrExpression)
-                .cast();
+        );
     }
 
     private static final EbnfIdentifierName VALUE_OR_EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("VALUE_OR_EXPRESSION");
