@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Holds a valid {@link SpreadsheetDateParsePattern}.
  */
-public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParsePattern<LocalDate> {
+public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParsePattern {
 
     /**
      * Factory that creates a {@link ParserToken} parse the given tokens.

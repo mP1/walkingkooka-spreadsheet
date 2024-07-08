@@ -17,12 +17,10 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.Cast;
-
-public final class SpreadsheetNonNumberParsePatternTest extends SpreadsheetNonNumberParsePatternTestCase<SpreadsheetNonNumberParsePattern<?>> {
+public final class SpreadsheetNonNumberParsePatternTest extends SpreadsheetNonNumberParsePatternTestCase<SpreadsheetNonNumberParsePattern> {
 
     @Override
-    public Class<SpreadsheetNonNumberParsePattern<?>> type() {
-        return Cast.to(SpreadsheetNonNumberParsePattern.class);
+    public Class<SpreadsheetNonNumberParsePattern> type() {
+        return SpreadsheetNonNumberParsePattern.class;
     }
 }
