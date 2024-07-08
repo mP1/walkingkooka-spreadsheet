@@ -27,13 +27,13 @@ import walkingkooka.text.cursor.parser.Parser;
 /**
  * A {@link Parser} that matches the {@link SpreadsheetParserContext#decimalSeparator()} and returns a {@link SpreadsheetDecimalSeparatorSymbolParserToken}
  */
-final class SpreadsheetNonNumberParsePatternParserDecimalSeparator extends SpreadsheetNonNumberParsePatternParser {
+final class SpreadsheetNonNumberParsePatternSpreadsheetParserDecimalSeparator extends SpreadsheetNonNumberParsePatternSpreadsheetParser {
 
-    static SpreadsheetNonNumberParsePatternParserDecimalSeparator instance() {
-        return new SpreadsheetNonNumberParsePatternParserDecimalSeparator();
+    static SpreadsheetNonNumberParsePatternSpreadsheetParserDecimalSeparator instance() {
+        return new SpreadsheetNonNumberParsePatternSpreadsheetParserDecimalSeparator();
     }
 
-    private SpreadsheetNonNumberParsePatternParserDecimalSeparator() {
+    private SpreadsheetNonNumberParsePatternSpreadsheetParserDecimalSeparator() {
         super();
     }
 
