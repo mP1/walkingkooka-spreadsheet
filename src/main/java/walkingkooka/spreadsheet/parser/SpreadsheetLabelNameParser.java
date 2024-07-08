@@ -30,9 +30,9 @@ import walkingkooka.text.cursor.parser.Parsers;
 import java.util.Optional;
 
 /**
- * A {@link Parser} that consumes a {@link SpreadsheetLabelNameParserToken}
+ * A {@link SpreadsheetParser} that consumes a {@link SpreadsheetLabelNameParserToken}
  */
-final class SpreadsheetLabelNameParser implements Parser<SpreadsheetParserContext> {
+final class SpreadsheetLabelNameParser implements SpreadsheetParser {
 
     /**
      * Singleton
