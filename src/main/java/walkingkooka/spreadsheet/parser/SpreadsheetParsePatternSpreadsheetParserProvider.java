@@ -39,7 +39,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     }
 
     @Override
-    public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
         return selector.spreadsheetParsePattern()

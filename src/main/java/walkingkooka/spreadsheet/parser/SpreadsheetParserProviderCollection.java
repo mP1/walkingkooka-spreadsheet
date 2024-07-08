@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderCollection;
-import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -41,13 +40,13 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
                 SpreadsheetParserSelector::name, // inputToName
                 (p, s, v) -> p.spreadsheetParser(s),
                 SpreadsheetParserProvider::spreadsheetParserInfos,
-                Parser.class.getSimpleName(),
+                SpreadsheetParser.class.getSimpleName(),
                 providers
         );
     }
 
     @Override
-    public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
         return this.providers.get(
@@ -63,7 +62,7 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
 
     private final ProviderCollection<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserProvider,
             SpreadsheetParserSelector,
-            Parser<SpreadsheetParserContext>> providers;
+            SpreadsheetParser> providers;
 
     @Override
     public String toString() {

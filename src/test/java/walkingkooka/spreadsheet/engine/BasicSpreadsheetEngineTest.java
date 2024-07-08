@@ -60,7 +60,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
@@ -105,7 +105,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -13323,7 +13322,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+            public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
                 return SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(selector);
             }
 
