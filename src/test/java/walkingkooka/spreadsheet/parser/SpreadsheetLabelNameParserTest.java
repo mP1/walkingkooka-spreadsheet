@@ -18,80 +18,83 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetLabelNameParserTest extends SpreadsheetParserTestCase<SpreadsheetLabelNameParser, SpreadsheetLabelNameParserToken> {
+public final class SpreadsheetLabelNameParserTest implements SpreadsheetParserTesting2<SpreadsheetLabelNameParser>,
+        ClassTesting2<SpreadsheetLabelNameParser> {
 
     @Test
-    public void testWrongFirstCharFail() {
+    public void testParseWrongFirstCharFail() {
         this.parseFailAndCheck("1");
     }
 
     @Test
-    public void testColumnOnly() {
+    public void testParseColumnOnly() {
         this.parseAndCheck2("A");
     }
 
     @Test
-    public void testColumnAndRowFail() {
+    public void testParseColumnAndRowFail() {
         this.parseFailAndCheck("A1");
     }
 
     @Test
-    public void testColumnAndRowFail2() {
+    public void testParseColumnAndRowFail2() {
         this.parseFailAndCheck("AA11");
     }
 
     @Test
-    public void testAbsoluteColumnAndRowFail() {
+    public void testParseAbsoluteColumnAndRowFail() {
         this.parseFailAndCheck("$A1");
     }
 
     @Test
-    public void testColumnAndAbsoluteRowFail() {
+    public void testParseColumnAndAbsoluteRowFail() {
         this.parseFailAndCheck("A$1");
     }
 
     @Test
-    public void testMaxColumn() {
+    public void testParseMaxColumn() {
         // A1 column+row
         this.parseAndCheck2("A" + SpreadsheetRowReference.MAX_VALUE + 1);
     }
 
     @Test
-    public void testMaxRow() {
+    public void testParseMaxRow() {
         // A1 column+row
         this.parseAndCheck2("XFE1");
     }
 
     @Test
-    public void testLabel() {
+    public void testParseLabel() {
         this.parseAndCheck2("Hello");
     }
 
     @Test
-    public void testLabel2() {
+    public void testParseLabel2() {
         this.parseAndCheck2("Hello", "...");
     }
 
     @Test
-    public void testLabel3() {
+    public void testParseLabel3() {
         this.parseAndCheck2("Hello_");
     }
 
     @Test
-    public void testLabel4() {
+    public void testParseLabel4() {
         this.parseAndCheck2("Hello_", "...");
     }
 
     @Test
-    public void testLabel5() {
+    public void testParseLabel5() {
         this.parseAndCheck2("Hello123");
     }
 
     @Test
-    public void testLabel6() {
+    public void testParseLabel6() {
         this.parseAndCheck2("Hello123", "...");
     }
 
@@ -118,7 +121,19 @@ public final class SpreadsheetLabelNameParserTest extends SpreadsheetParserTestC
     }
 
     @Override
+    public SpreadsheetParserContext createContext() {
+        return SpreadsheetParserContexts.fake();
+    }
+
+    // class............................................................................................................
+
+    @Override
     public Class<SpreadsheetLabelNameParser> type() {
         return SpreadsheetLabelNameParser.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

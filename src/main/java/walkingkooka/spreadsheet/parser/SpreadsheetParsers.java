@@ -227,7 +227,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * {@see SpreadsheetLabelNameParser}
      */
-    public static Parser<SpreadsheetParserContext> labelName() {
+    public static SpreadsheetParser labelName() {
         return SpreadsheetLabelNameParser.INSTANCE;
     }
 
