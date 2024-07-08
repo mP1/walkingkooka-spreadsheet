@@ -58,18 +58,21 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     public static final CharacterConstant RANGE_SEPARATOR = CharacterConstant.with(':');
 
     /**
-     * A parser that knows how to parse a cell reference, but not cell-range or label.
+     * A {@link SpreadsheetParser} that knows how to parse a cell reference, but not cell-range or label.
      */
-    public static Parser<SpreadsheetParserContext> cell() {
+    public static SpreadsheetParser cell() {
         return CELL;
     }
 
-    private static final Parser<SpreadsheetParserContext> CELL = column()
-            .builder()
-            .required(row())
-            .build()
-            .transform(SpreadsheetParsers::transformCell)
-            .setToString("cell");
+    private static final SpreadsheetParser CELL =
+            parser(
+                    column()
+                            .builder()
+                            .required(row())
+                            .build()
+                            .transform(SpreadsheetParsers::transformCell)
+                            .setToString("cell")
+            );
 
     private static ParserToken transformCell(final ParserToken token,
                                              final SpreadsheetParserContext context) {
