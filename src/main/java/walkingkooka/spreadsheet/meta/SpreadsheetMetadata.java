@@ -57,6 +57,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
@@ -887,7 +888,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link Parser} that can be used to parse formulas.
      */
-    public final Parser<SpreadsheetParserContext> parser(final SpreadsheetParserProvider provider) {
+    public final SpreadsheetParser parser(final SpreadsheetParserProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
