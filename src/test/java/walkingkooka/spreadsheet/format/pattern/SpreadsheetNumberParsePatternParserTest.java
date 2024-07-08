@@ -28,12 +28,12 @@ import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPercentSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPlusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -43,7 +43,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNumberParsePatternTestCase2<SpreadsheetNumberParsePatternParser>
-        implements ParserTesting2<SpreadsheetNumberParsePatternParser, SpreadsheetParserContext>,
+        implements SpreadsheetParserTesting2<SpreadsheetNumberParsePatternParser>,
         HashCodeEqualsDefinedTesting2<SpreadsheetNumberParsePatternParser> {
 
     private final static char VALUE_SEPARATOR = ';';

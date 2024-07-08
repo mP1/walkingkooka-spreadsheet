@@ -18,19 +18,19 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- * The {@link Parser} returned by {@link SpreadsheetNumberParsePattern#converter()}.
+ * The {@link SpreadsheetParser} returned by {@link SpreadsheetNumberParsePattern#converter()}.
  */
-final class SpreadsheetNumberParsePatternParser implements Parser<SpreadsheetParserContext> {
+final class SpreadsheetNumberParsePatternParser implements SpreadsheetParser {
 
     static SpreadsheetNumberParsePatternParser with(final SpreadsheetNumberParsePattern pattern,
                                                     final SpreadsheetNumberParsePatternMode mode) {
