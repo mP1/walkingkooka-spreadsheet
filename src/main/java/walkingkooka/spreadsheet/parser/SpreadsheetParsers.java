@@ -108,13 +108,13 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
 
     /**
-     * A {@link Parser} that returns a range but not cell reference or labels.
+     * A {@link SpreadsheetParser} that returns a range but not cell reference or labels.
      */
-    public static Parser<SpreadsheetParserContext> cellRange() {
+    public static SpreadsheetParser cellRange() {
         return CELL_RANGE_PARSER;
     }
 
-    private final static Parser<SpreadsheetParserContext> CELL_RANGE_PARSER;
+    private final static SpreadsheetParser CELL_RANGE_PARSER;
 
     /**
      * {@see SpreadsheetColumnReferenceParser}
@@ -557,7 +557,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                         EbnfIdentifierName.with("CELL_OR_CELL_RANGE_OR_LABEL")
                 )
         );
-        CELL_RANGE_PARSER = parsers.get(EbnfIdentifierName.with("CELL_RANGE"));
+        CELL_RANGE_PARSER = parser(
+                parsers.get(
+                        EbnfIdentifierName.with("CELL_RANGE")
+                )
+        );
         EXPRESSION_PARSER = parser(
                 parsers.get(
                         EbnfIdentifierName.with("EXPRESSION")
