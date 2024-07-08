@@ -27,7 +27,7 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
         ToStringTesting<SpreadsheetSelectionToSpreadsheetSelectionConverter> {
 
     @Test
-    public void testCellToSpreadsheetSelection() {
+    public void testConvertCellToSpreadsheetSelection() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
                 SpreadsheetSelection.class
@@ -35,7 +35,7 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     }
 
     @Test
-    public void testCellToCellRange() {
+    public void testConvertCellToCellRange() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
                 SpreadsheetSelection.parseCellRange("Z99")
@@ -43,7 +43,7 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     }
 
     @Test
-    public void testCellRangeToCell() {
+    public void testConvertCellRangeToCell() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3"),
                 SpreadsheetSelection.parseCell("B2")
@@ -51,7 +51,7 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     }
 
     @Test
-    public void testCellRangeToSpreadsheetSelection() {
+    public void testConvertCellRangeToSpreadsheetSelection() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3"),
                 SpreadsheetSelection.class
@@ -59,7 +59,7 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     }
 
     @Test
-    public void testCellToExpressionReference() {
+    public void testConvertCellToExpressionReference() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
                 SpreadsheetExpressionReference.class
@@ -67,7 +67,7 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     }
 
     @Test
-    public void testCellRangeToExpressionReference() {
+    public void testConvertCellRangeToExpressionReference() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3"),
                 SpreadsheetExpressionReference.class
