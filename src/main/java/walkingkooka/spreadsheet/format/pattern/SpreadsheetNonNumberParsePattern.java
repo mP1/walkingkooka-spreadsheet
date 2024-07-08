@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Base class for any class that creates a {@link SpreadsheetParser} parse a {@link DateTimeFormatter}.
  */
-abstract class SpreadsheetNonNumberParsePattern<V> extends SpreadsheetParsePattern {
+abstract class SpreadsheetNonNumberParsePattern extends SpreadsheetParsePattern {
 
     // ctor.............................................................................................................
 
