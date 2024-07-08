@@ -31,17 +31,17 @@ import java.math.BigDecimal;
 public final class SpreadsheetErrorToNumberConverterTest implements ConverterTesting2<SpreadsheetErrorToNumberConverter, SpreadsheetConverterContext> {
 
     @Test
-    public void testNonErrorFails() {
+    public void testConvertNonErrorFails() {
         this.convertFails(15, String.class);
     }
 
     @Test
-    public void testNonErrorStringFails() {
+    public void testConvertNonErrorStringFails() {
         this.convertFails("Hello", String.class);
     }
 
     @Test
-    public void testErrorToExpressionNumber() {
+    public void testConvertErrorToExpressionNumber() {
         this.convertFails(
                 SpreadsheetErrorKind.ERROR.setMessage("Message will be ignored"),
                 ExpressionNumber.class
@@ -49,7 +49,7 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
     }
 
     @Test
-    public void testErrorErrorToString() {
+    public void testConvertErrorErrorToString() {
         this.convertFails(
                 SpreadsheetErrorKind.ERROR.setMessage("Message will be ignored"),
                 String.class
@@ -57,7 +57,7 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
     }
 
     @Test
-    public void testNameLabelToExpressionNumber() {
+    public void testConvertNameLabelToExpressionNumber() {
         this.convertFails(
                 SpreadsheetSelection.labelName("Label123"),
                 ExpressionNumber.class
@@ -65,7 +65,7 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
     }
 
     @Test
-    public void testErrorNotFoundToBigDecimal() {
+    public void testConvertErrorNotFoundToBigDecimal() {
         this.convertAndCheck(
                 SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1),
                 BigDecimal.class,
@@ -74,7 +74,7 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
     }
 
     @Test
-    public void testErrorNotFoundToExpressionNumber() {
+    public void testConvertErrorNotFoundToExpressionNumber() {
         this.convertAndCheck(
                 SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1),
                 ExpressionNumber.class,
@@ -83,20 +83,12 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
     }
 
     @Test
-    public void testErrorNameToString() {
+    public void testConvertErrorNameToString() {
         final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
 
         this.convertFails(
                 kind.setMessage("Message will be ignored2"),
                 String.class
-        );
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                SpreadsheetErrorToNumberConverter.INSTANCE,
-                "SpreadsheetError to Number"
         );
     }
 
@@ -116,6 +108,18 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
     }
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                SpreadsheetErrorToNumberConverter.INSTANCE,
+                "SpreadsheetError to Number"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetErrorToNumberConverter> type() {
