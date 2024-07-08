@@ -49,19 +49,19 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     private final static char VALUE_SEPARATOR = ';';
 
     @Test
-    public void testHashInvalidFails() {
+    public void testParseHashInvalidFails() {
         this.parseAndFail2("#", "A");
     }
 
     // expression parser fail...........................................................................................
 
     @Test
-    public void testExpressionGroupSeparatorFails() {
+    public void testParseExpressionGroupSeparatorFails() {
         this.parseExpressionFails("#,###.##");
     }
 
     @Test
-    public void testExpressionTextLiteralFails() {
+    public void testParseExpressionTextLiteralFails() {
         this.parseExpressionFails("#\"text\"#");
     }
 
@@ -75,7 +75,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     // integer values single digit pattern..............................................................................
 
     @Test
-    public void testHashZero() {
+    public void testParseHashZero() {
         this.parseAndCheck2(
                 "#",
                 "0",
@@ -84,7 +84,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashPlusInteger() {
+    public void testParseHashPlusInteger() {
         this.parseAndCheck2(
                 "#",
                 PLUS + "1",
@@ -94,7 +94,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashPlusInteger2() {
+    public void testParseHashPlusInteger2() {
         this.parseAndCheck2(
                 "#",
                 PLUS + "23",
@@ -104,7 +104,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashPlusInteger3() {
+    public void testParseHashPlusInteger3() {
         this.parseAndCheck2(
                 "#",
                 PLUS + "456",
@@ -114,7 +114,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashMinusInteger() {
+    public void testParseHashMinusInteger() {
         this.parseAndCheck2(
                 "#",
                 MINUS + "1",
@@ -124,7 +124,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashMinusInteger2() {
+    public void testParseHashMinusInteger2() {
         this.parseAndCheck2(
                 "#",
                 MINUS + "23",
@@ -134,7 +134,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashMinusInteger3() {
+    public void testParseHashMinusInteger3() {
         this.parseAndCheck2(
                 "#",
                 MINUS + "456",
@@ -144,7 +144,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashDecimalLeadingZeroInteger() {
+    public void testParseHashDecimalLeadingZeroInteger() {
         this.parseAndCheck2(
                 "#",
                 "0789",
@@ -153,7 +153,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashDecimalLeadingZeroInteger2() {
+    public void testParseHashDecimalLeadingZeroInteger2() {
         this.parseAndCheck2(
                 "#",
                 "00789",
@@ -162,7 +162,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testQuestionMarkDecimalLeadingZeroInteger2() {
+    public void testParseQuestionMarkDecimalLeadingZeroInteger2() {
         this.parseAndCheck2(
                 "?",
                 "00789",
@@ -171,7 +171,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testZeroDecimalLeadingZeroInteger2() {
+    public void testParseZeroDecimalLeadingZeroInteger2() {
         this.parseAndCheck2(
                 "0",
                 "00789",
@@ -180,7 +180,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashHashDecimal() {
+    public void testParseHashHashDecimal() {
         this.parseAndCheck2(
                 "##",
                 "12",
@@ -189,7 +189,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testQuestionQuestionQuestionDecimal() {
+    public void testParseQuestionQuestionQuestionDecimal() {
         this.parseAndCheck2(
                 "???",
                 "123",
@@ -198,7 +198,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testZeroZeroZeroZeroDecimal() {
+    public void testParseZeroZeroZeroZeroDecimal() {
         this.parseAndCheck2(
                 "0000",
                 "1234",
@@ -207,7 +207,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashHashDecimalExtraPattern() {
+    public void testParseHashHashDecimalExtraPattern() {
         this.parseAndCheck2(
                 "##",
                 "9",
@@ -216,7 +216,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testQuestionQuestionQuestionDecimalExtraPattern() {
+    public void testParseQuestionQuestionQuestionDecimalExtraPattern() {
         this.parseAndCheck2(
                 "???",
                 "78",
@@ -225,7 +225,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testZeroZeroZeroZeroDecimalExtraPattern() {
+    public void testParseZeroZeroZeroZeroDecimalExtraPattern() {
         this.parseAndCheck2(
                 "0000",
                 "6",
@@ -236,7 +236,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     // fraction values .................................................................................................
 
     @Test
-    public void testHashDecimalFraction() {
+    public void testParseHashDecimalFraction() {
         final String text = "1";
         final String after = DECIMAL + "5";
 
@@ -255,7 +255,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashDecimalHashDecimalFraction() {
+    public void testParseHashDecimalHashDecimalFraction() {
         this.parseAndCheck2(
                 "#.#",
                 "0" + DECIMAL + "5",
@@ -266,7 +266,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testQuestionDecimalQuestionDecimalFraction() {
+    public void testParseQuestionDecimalQuestionDecimalFraction() {
         this.parseAndCheck2(
                 "?.?",
                 "0" + DECIMAL + "5",
@@ -277,7 +277,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testZeroDecimalZeroDecimalFraction() {
+    public void testParseZeroDecimalZeroDecimalFraction() {
         this.parseAndCheck2(
                 "0.0",
                 "0" + DECIMAL + "5",
@@ -288,7 +288,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testZeroDecimalZeroDecimalFractionExtraPattern() {
+    public void testParseZeroDecimalZeroDecimalFractionExtraPattern() {
         this.parseAndCheck2(
                 "0.00",
                 "0" + DECIMAL + "5",
@@ -299,7 +299,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testZeroDecimalZeroDecimalFractionExtraPattern2() {
+    public void testParseZeroDecimalZeroDecimalFractionExtraPattern2() {
         this.parseAndCheck2(
                 "0.000",
                 "0" + DECIMAL + "5",
@@ -310,7 +310,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testZeroDecimalZeroZeroDecimalFraction() {
+    public void testParseZeroDecimalZeroZeroDecimalFraction() {
         this.parseAndCheck2(
                 "0.00",
                 "0" + DECIMAL + "56",
@@ -321,7 +321,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testZeroDecimalZeroZeroZeroDecimalFraction() {
+    public void testParseZeroDecimalZeroZeroZeroDecimalFraction() {
         this.parseAndCheck2(
                 "0.000",
                 "0" + DECIMAL + "56",
@@ -334,7 +334,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     // mixed patterns...................................................................................................
 
     @Test
-    public void testHashQuestionZeroDecimalDigit() {
+    public void testParseHashQuestionZeroDecimalDigit() {
         this.parseAndCheck2(
                 "#?0",
                 "1",
@@ -343,7 +343,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashQuestionZeroDecimalSpaceDigit() {
+    public void testParseHashQuestionZeroDecimalSpaceDigit() {
         this.parseAndCheck2(
                 "#?0",
                 "1 ",
@@ -353,7 +353,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashQuestionZeroDecimalDigitSpaceDigit() {
+    public void testParseHashQuestionZeroDecimalDigitSpaceDigit() {
         this.parseAndCheck2(
                 "#?0",
                 "0 1",
@@ -364,7 +364,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashQuestionZeroDecimalDigitSpaceDigit2() {
+    public void testParseHashQuestionZeroDecimalDigitSpaceDigit2() {
         this.parseAndCheck2(
                 "#?0",
                 "3 4",
@@ -377,7 +377,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     // exponent.........................................................................................................
 
     @Test
-    public void testHashExponentPlusHashDecimalDigitExponentDigit() {
+    public void testParseHashExponentPlusHashDecimalDigitExponentDigit() {
         this.parseAndCheck2(
                 "#E+#",
                 "2" + EXPONENT + PLUS + "3",
@@ -389,7 +389,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashExponentMinusHashDecimalDigitExponentDigit() {
+    public void testParseHashExponentMinusHashDecimalDigitExponentDigit() {
         this.parseAndCheck2(
                 "#E+#",
                 "2" + EXPONENT + MINUS + "3",
@@ -401,7 +401,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashExponentPlusHashDecimalDigitExponentDigit2() {
+    public void testParseHashExponentPlusHashDecimalDigitExponentDigit2() {
         this.parseAndCheck2(
                 "#E+#",
                 "2" + EXPONENT + PLUS + "3",
@@ -413,7 +413,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashExponentPlusHashDecimalDigitExponentPlusDigit() {
+    public void testParseHashExponentPlusHashDecimalDigitExponentPlusDigit() {
         this.parseAndCheck2(
                 "#E+#",
                 4 + EXPONENT + PLUS + 5,
@@ -425,7 +425,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashExponentPlusHashDecimalDigitExponentMinusDigit() {
+    public void testParseHashExponentPlusHashDecimalDigitExponentMinusDigit() {
         this.parseAndCheck2(
                 "#E+#",
                 6 + EXPONENT + MINUS + 7,
@@ -437,7 +437,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashExponentPlusHashHashDecimalDigitExponentDigit() {
+    public void testParseHashExponentPlusHashHashDecimalDigitExponentDigit() {
         this.parseAndCheck2(
                 "#E+##",
                 7 + EXPONENT + 890,
@@ -448,7 +448,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashExponentPlusQuestionDecimalDigitExponentSpaceDigit() {
+    public void testParseHashExponentPlusQuestionDecimalDigitExponentSpaceDigit() {
         this.parseAndCheck2(
                 "#E+?",
                 1 + EXPONENT + PLUS + " 2",
@@ -463,7 +463,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     // currency.........................................................................................................
 
     @Test
-    public void testCurrencyHashDecimal() {
+    public void testParseCurrencyHashDecimal() {
         this.parseAndCheck2(
                 "$#",
                 CURRENCY + "1",
@@ -473,7 +473,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashCurrencyDecimal() {
+    public void testParseHashCurrencyDecimal() {
         this.parseAndCheck2(
                 "#$",
                 "1" + CURRENCY,
@@ -485,7 +485,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     // percent..........................................................................................................
 
     @Test
-    public void testPercentHashDecimalPercentDigit() {
+    public void testParsePercentHashDecimalPercentDigit() {
         this.parseAndCheck2(
                 "%#",
                 PERCENT + "1",
@@ -495,7 +495,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashPercentDecimalDigitPercent() {
+    public void testParseHashPercentDecimalDigitPercent() {
         this.parseAndCheck2(
                 "#%",
                 "1" + PERCENT,
@@ -505,7 +505,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashPercentDecimalDigitDigitDigitPercent() {
+    public void testParseHashPercentDecimalDigitDigitDigitPercent() {
         this.parseAndCheck2(
                 "#%",
                 "123" + PERCENT,
@@ -515,7 +515,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testHashDecimalPercentDecimalDigitDigitDigitPercent() {
+    public void testParseHashDecimalPercentDecimalDigitDigitDigitPercent() {
         this.parseAndCheck2(
                 "#.#%",
                 "45" + DECIMAL + "6" + PERCENT,
@@ -529,7 +529,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     // several patterns.................................................................................................
 
     @Test
-    public void testFirstPatternMatches() {
+    public void testParseFirstPatternMatches() {
         this.parseAndCheck2(
                 "0;$0",
                 "1",
@@ -538,7 +538,7 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Test
-    public void testLastPatternMatches() {
+    public void testParseLastPatternMatches() {
         this.parseAndCheck2(
                 "$0;0",
                 "2",
