@@ -84,13 +84,13 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * A {@link Parser} that returns a cell reference token of some sort.
+     * A {@link SpreadsheetParser} that returns a cell reference token of some sort.
      */
-    public static Parser<SpreadsheetParserContext> cellOrCellRangeOrLabel() {
+    public static SpreadsheetParser cellOrCellRangeOrLabel() {
         return CELL_OR_CELL_RANGE_OR_LABEL_PARSER;
     }
 
-    private final static Parser<SpreadsheetParserContext> CELL_OR_CELL_RANGE_OR_LABEL_PARSER;
+    private final static SpreadsheetParser CELL_OR_CELL_RANGE_OR_LABEL_PARSER;
 
     private static void cellOrCellRangeOrLabel(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
         predefined.put(CELL_IDENTIFIER, CELL);
@@ -552,7 +552,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     static {
         final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.fake());
 
-        CELL_OR_CELL_RANGE_OR_LABEL_PARSER = parsers.get(EbnfIdentifierName.with("CELL_OR_CELL_RANGE_OR_LABEL"));
+        CELL_OR_CELL_RANGE_OR_LABEL_PARSER = parser(
+                parsers.get(
+                        EbnfIdentifierName.with("CELL_OR_CELL_RANGE_OR_LABEL")
+                )
+        );
         CELL_RANGE_PARSER = parsers.get(EbnfIdentifierName.with("CELL_RANGE"));
         EXPRESSION_PARSER = parser(
                 parsers.get(
