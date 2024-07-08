@@ -32,17 +32,17 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetParser} that consumes a {@link SpreadsheetLabelNameParserToken}
  */
-final class SpreadsheetLabelNameParser implements SpreadsheetParser {
+final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser {
 
     /**
      * Singleton
      */
-    final static SpreadsheetLabelNameParser INSTANCE = new SpreadsheetLabelNameParser();
+    final static SpreadsheetLabelNameSpreadsheetParser INSTANCE = new SpreadsheetLabelNameSpreadsheetParser();
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetLabelNameParser() {
+    private SpreadsheetLabelNameSpreadsheetParser() {
         super();
     }
 

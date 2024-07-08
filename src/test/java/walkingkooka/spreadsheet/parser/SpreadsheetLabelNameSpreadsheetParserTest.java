@@ -23,8 +23,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetLabelNameParserTest implements SpreadsheetParserTesting2<SpreadsheetLabelNameParser>,
-        ClassTesting2<SpreadsheetLabelNameParser> {
+public final class SpreadsheetLabelNameSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetLabelNameSpreadsheetParser>,
+        ClassTesting2<SpreadsheetLabelNameSpreadsheetParser> {
 
     @Test
     public void testParseWrongFirstCharFail() {
@@ -116,8 +116,8 @@ public final class SpreadsheetLabelNameParserTest implements SpreadsheetParserTe
     }
 
     @Override
-    public SpreadsheetLabelNameParser createParser() {
-        return SpreadsheetLabelNameParser.INSTANCE;
+    public SpreadsheetLabelNameSpreadsheetParser createParser() {
+        return SpreadsheetLabelNameSpreadsheetParser.INSTANCE;
     }
 
     @Override
@@ -128,8 +128,8 @@ public final class SpreadsheetLabelNameParserTest implements SpreadsheetParserTe
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetLabelNameParser> type() {
-        return SpreadsheetLabelNameParser.class;
+    public Class<SpreadsheetLabelNameSpreadsheetParser> type() {
+        return SpreadsheetLabelNameSpreadsheetParser.class;
     }
 
     @Override

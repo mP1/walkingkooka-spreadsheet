@@ -228,10 +228,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final SpreadsheetParser FUNCTION_PARAMETERS_PARSER;
 
     /**
-     * {@see SpreadsheetLabelNameParser}
+     * {@see SpreadsheetLabelNameSpreadsheetParser}
      */
     public static SpreadsheetParser labelName() {
-        return SpreadsheetLabelNameParser.INSTANCE;
+        return SpreadsheetLabelNameSpreadsheetParser.INSTANCE;
     }
 
     /**
