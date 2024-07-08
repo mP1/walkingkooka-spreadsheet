@@ -22,9 +22,9 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
-public abstract class SpreadsheetColumnOrRowReferenceParserTestCase<P extends SpreadsheetColumnOrRowReferenceParser> implements SpreadsheetParserTesting2<P>, ClassTesting2<P> {
+public abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<P extends SpreadsheetColumnOrRowReferenceSpreadsheetParser> implements SpreadsheetParserTesting2<P>, ClassTesting2<P> {
 
-    SpreadsheetColumnOrRowReferenceParserTestCase() {
+    SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase() {
         super();
     }
 

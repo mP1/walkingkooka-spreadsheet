@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 
-public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetColumnOrRowReferenceParserTestCase<SpreadsheetColumnReferenceParser> {
+public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<SpreadsheetColumnReferenceSpreadsheetParser> {
 
     private final static int A_VALUE = 0;
     private final static String A_TEXT = "A";
@@ -134,12 +134,12 @@ public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetColum
     }
 
     @Override
-    public SpreadsheetColumnReferenceParser createParser() {
-        return SpreadsheetColumnReferenceParser.INSTANCE;
+    public SpreadsheetColumnReferenceSpreadsheetParser createParser() {
+        return SpreadsheetColumnReferenceSpreadsheetParser.INSTANCE;
     }
 
     @Override
-    public Class<SpreadsheetColumnReferenceParser> type() {
-        return SpreadsheetColumnReferenceParser.class;
+    public Class<SpreadsheetColumnReferenceSpreadsheetParser> type() {
+        return SpreadsheetColumnReferenceSpreadsheetParser.class;
     }
 }
