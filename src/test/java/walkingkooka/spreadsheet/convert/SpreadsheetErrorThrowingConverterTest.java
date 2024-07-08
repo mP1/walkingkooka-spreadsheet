@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetErrorThrowingConverterTest implements ConverterTesting2<SpreadsheetErrorThrowingConverter, ConverterContext> {
 
     @Test
-    public void testNonErrorFails() {
+    public void testConvertNonErrorFails() {
         this.convertFails(
                 15,
                 String.class
@@ -39,7 +39,7 @@ public final class SpreadsheetErrorThrowingConverterTest implements ConverterTes
     }
 
     @Test
-    public void testThrows() {
+    public void testConvetErrorToThrows() {
         assertThrows(
                 SpreadsheetErrorException.class,
                 () -> SpreadsheetErrorThrowingConverter.INSTANCE.convert(
