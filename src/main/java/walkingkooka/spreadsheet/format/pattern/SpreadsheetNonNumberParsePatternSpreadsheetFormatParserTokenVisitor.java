@@ -94,12 +94,6 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor 
                 );
     }
 
-    private static ParserToken flat(final ParserToken token,
-                                    final SpreadsheetParserContext context) {
-        return token.cast(SequenceParserToken.class)
-                .flat();
-    }
-
     SpreadsheetNonNumberParsePatternSpreadsheetFormatParserTokenVisitor() {
         super();
     }
