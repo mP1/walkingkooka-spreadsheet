@@ -232,13 +232,13 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * Returns a {@link Parser} that parsers expression invocations, starting with the name and parameters.
+     * Returns a {@link SpreadsheetParser} that parsers expression invocations, starting with the name and parameters.
      */
-    public static Parser<SpreadsheetParserContext> lambdaFunction() {
+    public static SpreadsheetParser lambdaFunction() {
         return LAMBDA_FUNCTION;
     }
 
-    private static final Parser<SpreadsheetParserContext> LAMBDA_FUNCTION;
+    private static final SpreadsheetParser LAMBDA_FUNCTION;
 
     /**
      * Returns a {@link Parser} that parsers expression invocations, starting with the name and parameters.
@@ -561,7 +561,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                         EbnfIdentifierName.with("FUNCTION_PARAMETERS")
                 )
         );
-        LAMBDA_FUNCTION = parsers.get(EbnfIdentifierName.with("LAMBDA_FUNCTION"));
+        LAMBDA_FUNCTION = parser(
+                parsers.get(
+                        EbnfIdentifierName.with("LAMBDA_FUNCTION")
+                )
+        );
         NAMED_FUNCTION_PARSER = parsers.get(EbnfIdentifierName.with("NAMED_FUNCTION"));
     }
 
