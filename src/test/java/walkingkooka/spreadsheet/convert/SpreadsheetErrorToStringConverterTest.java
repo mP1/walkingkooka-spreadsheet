@@ -26,17 +26,17 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 public final class SpreadsheetErrorToStringConverterTest implements ConverterTesting2<SpreadsheetErrorToStringConverter, ConverterContext> {
 
     @Test
-    public void testNonErrorFails() {
+    public void testConvertNonErrorFails() {
         this.convertFails(15, String.class);
     }
 
     @Test
-    public void testNonErrorStringFails() {
+    public void testConvertNonErrorStringFails() {
         this.convertFails("Hello", String.class);
     }
 
     @Test
-    public void testErrorErrorToString() {
+    public void testConvertErrorErrorToString() {
         final SpreadsheetErrorKind kind = SpreadsheetErrorKind.ERROR;
 
         this.convertAndCheck(
@@ -47,7 +47,7 @@ public final class SpreadsheetErrorToStringConverterTest implements ConverterTes
     }
 
     @Test
-    public void testErrorDiv0ToString() {
+    public void testConvertErrorDiv0ToString() {
         final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
 
         this.convertAndCheck(
@@ -58,18 +58,10 @@ public final class SpreadsheetErrorToStringConverterTest implements ConverterTes
     }
 
     @Test
-    public void testToNumber() {
+    public void testConvertToNumber() {
         this.convertFails(
                 SpreadsheetErrorKind.DIV0.setMessage("!!"),
                 Number.class
-        );
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                SpreadsheetErrorToStringConverter.INSTANCE,
-                "SpreadsheetError to String"
         );
     }
 
@@ -82,6 +74,18 @@ public final class SpreadsheetErrorToStringConverterTest implements ConverterTes
     public ConverterContext createContext() {
         return ConverterContexts.fake();
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                SpreadsheetErrorToStringConverter.INSTANCE,
+                "SpreadsheetError to String"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetErrorToStringConverter> type() {
