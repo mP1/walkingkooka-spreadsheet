@@ -33,77 +33,77 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
     private final static String INVALID = "XFE";
 
     @Test
-    public void testInvalidFails() {
+    public void testParseInvalidFails() {
         this.parseFailAndCheck("123");
     }
 
     @Test
-    public void testDollarFails() {
+    public void testParseDollarFails() {
         this.parseFailAndCheck("$");
     }
 
     @Test
-    public void testDollarFails2() {
+    public void testParseDollarFails2() {
         this.parseFailAndCheck("$123");
     }
 
     @Test
-    public void testRelativeReference() {
+    public void testParseRelativeReference() {
         this.parseAndCheck2(A_TEXT, SpreadsheetReferenceKind.RELATIVE, A_VALUE);
     }
 
     @Test
-    public void testRelativeReference1() {
+    public void testParseRelativeReference1() {
         this.parseAndCheck2(A_TEXT, SpreadsheetReferenceKind.RELATIVE, A_VALUE, TEXT_AFTER);
     }
 
     @Test
-    public void testRelativeReference2() {
+    public void testParseRelativeReference2() {
         this.parseAndCheck2(AD_TEXT, SpreadsheetReferenceKind.RELATIVE, AD_VALUE);
     }
 
     @Test
-    public void testRelativeReference3() {
+    public void testParseRelativeReference3() {
         this.parseAndCheck2(AD_TEXT, SpreadsheetReferenceKind.RELATIVE, AD_VALUE, TEXT_AFTER);
     }
 
     @Test
-    public void testRelativeReferenceLowerCase() {
+    public void testParseRelativeReferenceLowerCase() {
         this.parseAndCheck2(AD_TEXT.toLowerCase(), SpreadsheetReferenceKind.RELATIVE, AD_VALUE, TEXT_AFTER);
     }
 
     @Test
-    public void testAbsoluteReference() {
+    public void testParseAbsoluteReference() {
         this.parseAndCheck2("$" + AD_TEXT, SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE);
     }
 
     @Test
-    public void testAbsoluteReference1() {
+    public void testParseAbsoluteReference1() {
         this.parseAndCheck2("$" + AD_TEXT, SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE, TEXT_AFTER);
     }
 
     @Test
-    public void testAbsoluteReference2() {
+    public void testParseAbsoluteReference2() {
         this.parseAndCheck2("$" + AD_TEXT, SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE);
     }
 
     @Test
-    public void testAbsoluteReference3() {
+    public void testParseAbsoluteReference3() {
         this.parseAndCheck2("$" + AD_TEXT, SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE, TEXT_AFTER);
     }
 
     @Test
-    public void testAbsoluteReferenceLowerCase() {
+    public void testParseAbsoluteReferenceLowerCase() {
         this.parseAndCheck2("$" + AD_TEXT.toLowerCase(), SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE, TEXT_AFTER);
     }
 
     @Test
-    public void testRange() {
+    public void testParseRange() {
         this.parseAndCheck2("A", SpreadsheetReferenceKind.RELATIVE, A_VALUE, ":B");
     }
 
     @Test
-    public void testMax() {
+    public void testParseMax() {
         this.parseAndCheck(
                 "XFD",
                 SpreadsheetColumnReferenceParserToken.columnReference(SpreadsheetReferenceKind.RELATIVE.lastColumn(), "XFD"),
@@ -112,12 +112,12 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
     }
 
     @Test
-    public void testRelativeReferenceInvalid() {
+    public void testParseRelativeReferenceInvalid() {
         this.parseThrows("" + INVALID, "Invalid column value 16384 expected between 0 and 16384");
     }
 
     @Test
-    public void testAbsoluteReferenceInvalid() {
+    public void testParseAbsoluteReferenceInvalid() {
         this.parseThrows("$" + INVALID, "Invalid column value 16384 expected between 0 and 16384");
     }
 
