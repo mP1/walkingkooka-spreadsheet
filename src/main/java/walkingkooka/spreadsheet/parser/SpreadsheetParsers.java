@@ -179,9 +179,9 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * A parser that returns {@see SpreadsheetFunctionName}
+     * A {@link SpreadsheetParser} that returns {@see SpreadsheetFunctionName}
      */
-    public static Parser<SpreadsheetParserContext> functionName() {
+    public static SpreadsheetParser functionName() {
         return FUNCTION_NAME;
     }
 
@@ -191,16 +191,22 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                         CharPredicates.range('a', 'z')
                 ); // SpreadsheetFunctionName.INITIAL
 
-        FUNCTION_NAME = Parsers.<SpreadsheetParserContext>stringInitialAndPartCharPredicate(
-                initial,
-                initial.or(CharPredicates.range('0', '9').or(CharPredicates.is('.'))), // SpreadsheetFunctionName.PART,
-                1,
-                SpreadsheetFunctionName.MAX_LENGTH)
-                .transform(SpreadsheetParsers::transformFunctionName)
-                .setToString(SpreadsheetFunctionName.class.getSimpleName());
+        FUNCTION_NAME =
+                SpreadsheetParsers.parser(
+                        Parsers.<SpreadsheetParserContext>stringInitialAndPartCharPredicate(
+                                        initial,
+                                        initial.or(
+                                                CharPredicates.range('0', '9')
+                                                        .or(CharPredicates.is('.'))
+                                        ), // SpreadsheetFunctionName.PART,
+                                        1,
+                                        SpreadsheetFunctionName.MAX_LENGTH)
+                                .transform(SpreadsheetParsers::transformFunctionName)
+                                .setToString(SpreadsheetFunctionName.class.getSimpleName())
+                );
     }
 
-    private final static Parser<SpreadsheetParserContext> FUNCTION_NAME;
+    private final static SpreadsheetParser FUNCTION_NAME;
 
     private static ParserToken transformFunctionName(final ParserToken token, final SpreadsheetParserContext context) {
         return SpreadsheetParserToken.functionName(
