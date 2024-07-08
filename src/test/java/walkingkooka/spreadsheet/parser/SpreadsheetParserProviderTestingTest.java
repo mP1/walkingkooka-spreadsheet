@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.Parsers;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -32,7 +30,7 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
 
     private final static String SELECTOR = "date-parse-pattern dd/mm/yyyy";
 
-    private final static Parser<SpreadsheetParserContext> PARSER = Parsers.fake();
+    private final static SpreadsheetParser PARSER = SpreadsheetParsers.fake();
 
     private final static SpreadsheetParserInfo INFO = SpreadsheetParserInfo.with(
             Url.parseAbsolute("https://example.com/123"),
@@ -62,7 +60,7 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
 
     class TestSpreadsheetParserProvider implements SpreadsheetParserProvider {
         @Override
-        public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+        public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
             Objects.requireNonNull(selector, "selector");
 
             checkEquals("date-parse-pattern", selector.name().value());

@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.text.cursor.parser.Parser;
-
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,7 +27,7 @@ public class FakeSpreadsheetParserProvider implements SpreadsheetParserProvider 
     }
 
     @Override
-    public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
         throw new UnsupportedOperationException();
     }
 

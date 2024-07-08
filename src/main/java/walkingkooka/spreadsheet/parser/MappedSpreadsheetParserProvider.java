@@ -36,7 +36,6 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.text.CharacterConstant;
-import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -73,7 +72,7 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
     }
 
     @Override
-    public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
         return this.nameMapper.apply(selector.name())

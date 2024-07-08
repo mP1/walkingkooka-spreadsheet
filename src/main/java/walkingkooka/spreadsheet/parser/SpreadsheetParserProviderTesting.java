@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
-import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Optional;
 import java.util.Set;
@@ -72,7 +71,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     }
 
     default void spreadsheetParserAndCheck(final String selector,
-                                           final Parser<SpreadsheetParserContext> expected) {
+                                           final SpreadsheetParser expected) {
         this.spreadsheetParserAndCheck(
                 this.createSpreadsheetParserProvider(),
                 SpreadsheetParserSelector.parse(selector),
@@ -82,7 +81,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
 
     default void spreadsheetParserAndCheck(final SpreadsheetParserProvider provider,
                                            final String selector,
-                                           final Parser<SpreadsheetParserContext> expected) {
+                                           final SpreadsheetParser expected) {
         this.spreadsheetParserAndCheck(
                 provider,
                 SpreadsheetParserSelector.parse(selector),
@@ -91,7 +90,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     }
 
     default void spreadsheetParserAndCheck(final SpreadsheetParserSelector selector,
-                                           final Parser<SpreadsheetParserContext> expected) {
+                                           final SpreadsheetParser expected) {
         this.spreadsheetParserAndCheck(
                 this.createSpreadsheetParserProvider(),
                 selector,
@@ -101,7 +100,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
 
     default void spreadsheetParserAndCheck(final SpreadsheetParserProvider provider,
                                            final SpreadsheetParserSelector selector,
-                                           final Parser<SpreadsheetParserContext> expected) {
+                                           final SpreadsheetParser expected) {
         this.spreadsheetParserAndCheck(
                 provider,
                 selector,
@@ -110,7 +109,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     }
 
     default void spreadsheetParserAndCheck(final SpreadsheetParserSelector selector,
-                                           final Optional<Parser<SpreadsheetParserContext>> expected) {
+                                           final Optional<SpreadsheetParser> expected) {
         this.spreadsheetParserAndCheck(
                 this.createSpreadsheetParserProvider(),
                 selector,
@@ -120,7 +119,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
 
     default void spreadsheetParserAndCheck(final SpreadsheetParserProvider provider,
                                            final SpreadsheetParserSelector selector,
-                                           final Optional<Parser<SpreadsheetParserContext>> expected) {
+                                           final Optional<SpreadsheetParser> expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetParser(selector),

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -39,7 +38,7 @@ final class EmptySpreadsheetParserProvider implements SpreadsheetParserProvider 
     }
 
     @Override
-    public Optional<Parser<SpreadsheetParserContext>> spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
         return Optional.empty();
     }
