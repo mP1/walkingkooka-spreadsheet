@@ -450,11 +450,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     );
 
     /**
-     * Text, parses excel style double quoted text, including escaped (triple) double quotes.
+     * A {@link SpreadsheetParser} that parses excel style double quoted text, including escaped (triple) double quotes.
      */
-    public static Parser<SpreadsheetParserContext> text() {
-        return SpreadsheetDoubleQuotesParser.INSTANCE;
+    public static SpreadsheetParser text() {
+        return TEXT;
     }
+
+    private final static SpreadsheetParser TEXT = parser(
+            SpreadsheetDoubleQuotesParser.INSTANCE
+    );
 
     /**
      * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.* TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1254">default formula value parsing after apostrophe-string, date, datetime, number & time</a>
