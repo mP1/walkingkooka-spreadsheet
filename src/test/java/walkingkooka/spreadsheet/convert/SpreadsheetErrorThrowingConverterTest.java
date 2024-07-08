@@ -39,7 +39,7 @@ public final class SpreadsheetErrorThrowingConverterTest implements ConverterTes
     }
 
     @Test
-    public void testConvetErrorToThrows() {
+    public void testConvertErrorToThrows() {
         assertThrows(
                 SpreadsheetErrorException.class,
                 () -> SpreadsheetErrorThrowingConverter.INSTANCE.convert(
