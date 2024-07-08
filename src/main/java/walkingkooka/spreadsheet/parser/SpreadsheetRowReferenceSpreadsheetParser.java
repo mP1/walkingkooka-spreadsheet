@@ -25,17 +25,17 @@ import walkingkooka.text.cursor.parser.ParserToken;
 /**
  * A {@link Parser} that consumes a {@link SpreadsheetRowReferenceParserToken}
  */
-final class SpreadsheetRowReferenceParser extends SpreadsheetColumnOrRowReferenceParser {
+final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOrRowReferenceSpreadsheetParser {
 
     /**
      * Singleton
      */
-    final static SpreadsheetRowReferenceParser INSTANCE = new SpreadsheetRowReferenceParser();
+    final static SpreadsheetRowReferenceSpreadsheetParser INSTANCE = new SpreadsheetRowReferenceSpreadsheetParser();
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetRowReferenceParser() {
+    private SpreadsheetRowReferenceSpreadsheetParser() {
         super();
     }
 

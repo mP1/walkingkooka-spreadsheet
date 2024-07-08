@@ -117,10 +117,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private final static SpreadsheetParser CELL_RANGE_PARSER;
 
     /**
-     * {@see SpreadsheetColumnReferenceParser}
+     * {@see SpreadsheetColumnReferenceSpreadsheetParser}
      */
     public static SpreadsheetParser column() {
-        return SpreadsheetColumnReferenceParser.INSTANCE;
+        return SpreadsheetColumnReferenceSpreadsheetParser.INSTANCE;
     }
 
     /**
@@ -260,10 +260,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetRowReferenceParser}
+     * {@see SpreadsheetRowReferenceSpreadsheetParser}
      */
     public static SpreadsheetParser row() {
-        return SpreadsheetRowReferenceParser.INSTANCE;
+        return SpreadsheetRowReferenceSpreadsheetParser.INSTANCE;
     }
 
     // conditions.............................................................................................................
@@ -608,7 +608,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     public static int valueFromDigit(final char c) {
         final int digit = Character.toUpperCase(c) - 'A';
-        return digit >= 0 && digit < SpreadsheetColumnReferenceParser.RADIX ? digit + 1 : -1;
+        return digit >= 0 && digit < SpreadsheetColumnReferenceSpreadsheetParser.RADIX ? digit + 1 : -1;
     }
 
     /**

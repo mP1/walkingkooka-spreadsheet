@@ -27,12 +27,12 @@ import java.util.Optional;
 /**
  * Base class for either a column or row reference {@link SpreadsheetParser}.
  */
-abstract class SpreadsheetColumnOrRowReferenceParser implements SpreadsheetParser {
+abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements SpreadsheetParser {
 
     /**
      * Package private ctor use singleton
      */
-    SpreadsheetColumnOrRowReferenceParser() {
+    SpreadsheetColumnOrRowReferenceSpreadsheetParser() {
         super();
     }
 

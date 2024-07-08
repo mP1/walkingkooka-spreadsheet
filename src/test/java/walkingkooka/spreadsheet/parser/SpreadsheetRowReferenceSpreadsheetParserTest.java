@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
-public final class SpreadsheetRowReferenceParserTest extends SpreadsheetColumnOrRowReferenceParserTestCase<SpreadsheetRowReferenceParser> {
+public final class SpreadsheetRowReferenceSpreadsheetParserTest extends SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<SpreadsheetRowReferenceSpreadsheetParser> {
 
     private final static String ROW_TEXT = "1";
     private final static int ROW_VALUE = 0;
@@ -138,12 +138,12 @@ public final class SpreadsheetRowReferenceParserTest extends SpreadsheetColumnOr
     }
 
     @Override
-    public SpreadsheetRowReferenceParser createParser() {
-        return SpreadsheetRowReferenceParser.INSTANCE;
+    public SpreadsheetRowReferenceSpreadsheetParser createParser() {
+        return SpreadsheetRowReferenceSpreadsheetParser.INSTANCE;
     }
 
     @Override
-    public Class<SpreadsheetRowReferenceParser> type() {
-        return SpreadsheetRowReferenceParser.class;
+    public Class<SpreadsheetRowReferenceSpreadsheetParser> type() {
+        return SpreadsheetRowReferenceSpreadsheetParser.class;
     }
 }
