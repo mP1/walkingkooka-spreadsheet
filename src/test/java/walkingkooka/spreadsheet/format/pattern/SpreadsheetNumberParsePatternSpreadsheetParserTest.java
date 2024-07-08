@@ -42,9 +42,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNumberParsePatternTestCase2<SpreadsheetNumberParsePatternParser>
-        implements SpreadsheetParserTesting2<SpreadsheetNumberParsePatternParser>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetNumberParsePatternParser> {
+public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends SpreadsheetNumberParsePatternTestCase2<SpreadsheetNumberParsePatternSpreadsheetParser>
+        implements SpreadsheetParserTesting2<SpreadsheetNumberParsePatternSpreadsheetParser>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetNumberParsePatternSpreadsheetParser> {
 
     private final static char VALUE_SEPARATOR = ';';
 
@@ -571,11 +571,11 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     // ParserTesting....................................................................................................
 
     @Override
-    public SpreadsheetNumberParsePatternParser createParser() {
+    public SpreadsheetNumberParsePatternSpreadsheetParser createParser() {
         return this.createParser("#");
     }
 
-    private SpreadsheetNumberParsePatternParser createParser(final String pattern) {
+    private SpreadsheetNumberParsePatternSpreadsheetParser createParser(final String pattern) {
         return SpreadsheetNumberParsePattern.parseNumberParsePattern(pattern).createParser();
     }
 
@@ -638,15 +638,15 @@ public final class SpreadsheetNumberParsePatternParserTest extends SpreadsheetNu
     }
 
     @Override
-    public SpreadsheetNumberParsePatternParser createObject() {
+    public SpreadsheetNumberParsePatternSpreadsheetParser createObject() {
         return this.createParser();
     }
 
     // Class............................................................................................................
 
     @Override
-    public Class<SpreadsheetNumberParsePatternParser> type() {
-        return SpreadsheetNumberParsePatternParser.class;
+    public Class<SpreadsheetNumberParsePatternSpreadsheetParser> type() {
+        return SpreadsheetNumberParsePatternSpreadsheetParser.class;
     }
 
     @Override

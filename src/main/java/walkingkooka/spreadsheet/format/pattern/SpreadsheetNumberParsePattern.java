@@ -105,8 +105,8 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
     // HasParser........................................................................................................
 
     @Override
-    SpreadsheetNumberParsePatternParser createParser() {
-        return SpreadsheetNumberParsePatternParser.with(this, SpreadsheetNumberParsePatternMode.VALUE);
+    SpreadsheetNumberParsePatternSpreadsheetParser createParser() {
+        return SpreadsheetNumberParsePatternSpreadsheetParser.with(this, SpreadsheetNumberParsePatternMode.VALUE);
     }
 
     /**
@@ -121,8 +121,8 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
 
     private Parser<SpreadsheetParserContext> expressionParser;
 
-    private SpreadsheetNumberParsePatternParser createExpressionParser() {
-        return SpreadsheetNumberParsePatternParser.with(this, SpreadsheetNumberParsePatternMode.EXPRESSION);
+    private SpreadsheetNumberParsePatternSpreadsheetParser createExpressionParser() {
+        return SpreadsheetNumberParsePatternSpreadsheetParser.with(this, SpreadsheetNumberParsePatternMode.EXPRESSION);
     }
 
     /**
