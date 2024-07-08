@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.Cast;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -53,6 +54,25 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
 
     private final Parser<SpreadsheetParserContext> parser;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.parser.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof ParserSpreadsheetParser &&
+                        this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final ParserSpreadsheetParser other) {
+        return this.parser.equals(other.parser);
+    }
+
+    @Override
     public String toString() {
         return this.parser.toString();
     }

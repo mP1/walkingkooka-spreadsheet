@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.parser.Parser;
@@ -27,7 +28,9 @@ import walkingkooka.text.cursor.parser.Parsers;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesting2<ParserSpreadsheetParser>, ToStringTesting<ParserSpreadsheetParser> {
+public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesting2<ParserSpreadsheetParser>,
+        HashCodeEqualsDefinedTesting2<ParserSpreadsheetParser>,
+        ToStringTesting<ParserSpreadsheetParser> {
 
     private final static String TOKEN = "Hello123";
 
@@ -76,6 +79,21 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     @Override
     public SpreadsheetParserContext createContext() {
         return SpreadsheetParserContexts.fake();
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentParser() {
+        this.checkNotEquals(
+                ParserSpreadsheetParser.with(Parsers.fake()),
+                ParserSpreadsheetParser.with(Parsers.fake())
+        );
+    }
+
+    @Override
+    public ParserSpreadsheetParser createObject() {
+        return this.createParser();
     }
 
     // toString.........................................................................................................
