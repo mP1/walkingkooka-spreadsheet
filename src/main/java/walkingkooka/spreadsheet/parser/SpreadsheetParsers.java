@@ -485,16 +485,18 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * Whitespace
      */
-    public static Parser<SpreadsheetParserContext> whitespace() {
+    public static SpreadsheetParser whitespace() {
         return WHITESPACE;
     }
 
-    private final static Parser<SpreadsheetParserContext> WHITESPACE = Parsers.<SpreadsheetParserContext>stringCharPredicate(
-            CharPredicates.whitespace(),
-            1,
-            Integer.MAX_VALUE
-    ).transform(SpreadsheetParsers::transformWhitespace)
-            .setToString(SpreadsheetWhitespaceParserToken.class.getSimpleName());
+    private final static SpreadsheetParser WHITESPACE = parser(
+            Parsers.<SpreadsheetParserContext>stringCharPredicate(
+                            CharPredicates.whitespace(),
+                            1,
+                            Integer.MAX_VALUE
+                    ).transform(SpreadsheetParsers::transformWhitespace)
+                    .setToString(SpreadsheetWhitespaceParserToken.class.getSimpleName())
+    );
 
     private static ParserToken transformWhitespace(final ParserToken token,
                                                    final SpreadsheetParserContext context) {
