@@ -30,18 +30,18 @@ import java.util.Optional;
 /**
  * The {@link SpreadsheetParser} returned by {@link SpreadsheetNumberParsePattern#converter()}.
  */
-final class SpreadsheetNumberParsePatternParser implements SpreadsheetParser {
+final class SpreadsheetNumberParsePatternSpreadsheetParser implements SpreadsheetParser {
 
-    static SpreadsheetNumberParsePatternParser with(final SpreadsheetNumberParsePattern pattern,
-                                                    final SpreadsheetNumberParsePatternMode mode) {
-        return new SpreadsheetNumberParsePatternParser(
+    static SpreadsheetNumberParsePatternSpreadsheetParser with(final SpreadsheetNumberParsePattern pattern,
+                                                               final SpreadsheetNumberParsePatternMode mode) {
+        return new SpreadsheetNumberParsePatternSpreadsheetParser(
                 pattern,
                 mode
         );
     }
 
-    private SpreadsheetNumberParsePatternParser(final SpreadsheetNumberParsePattern pattern,
-                                                final SpreadsheetNumberParsePatternMode mode) {
+    private SpreadsheetNumberParsePatternSpreadsheetParser(final SpreadsheetNumberParsePattern pattern,
+                                                           final SpreadsheetNumberParsePatternMode mode) {
         super();
         this.pattern = pattern;
         this.mode = mode;
@@ -90,10 +90,10 @@ final class SpreadsheetNumberParsePatternParser implements SpreadsheetParser {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetNumberParsePatternParser && this.equals0((SpreadsheetNumberParsePatternParser) other);
+                other instanceof SpreadsheetNumberParsePatternSpreadsheetParser && this.equals0((SpreadsheetNumberParsePatternSpreadsheetParser) other);
     }
 
-    private boolean equals0(final SpreadsheetNumberParsePatternParser other) {
+    private boolean equals0(final SpreadsheetNumberParsePatternSpreadsheetParser other) {
         return this.pattern.equals(other.pattern);
     }
 

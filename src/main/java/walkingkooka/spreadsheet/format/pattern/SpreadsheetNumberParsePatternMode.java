@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Internal enum that is used hen creating a {@link SpreadsheetNumberParsePatternParser} to differentiate between
+ * Internal enum that is used hen creating a {@link SpreadsheetNumberParsePatternSpreadsheetParser} to differentiate between
  * a number that parses a value and numbers within an expression.
  */
 enum SpreadsheetNumberParsePatternMode {
