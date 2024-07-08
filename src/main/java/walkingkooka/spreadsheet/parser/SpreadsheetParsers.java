@@ -123,17 +123,19 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * Returns a {@link Parser} that errors such as <code>#REF!</code>.
      */
-    public static Parser<SpreadsheetParserContext> error() {
+    public static SpreadsheetParser error() {
         return ERROR_PARSER;
     }
 
-    private static final Parser<SpreadsheetParserContext> ERROR_PARSER = errorParser();
+    private static final SpreadsheetParser ERROR_PARSER = errorParser();
 
-    private static Parser<SpreadsheetParserContext> errorParser() {
-        return Parsers.alternatives(
-                Arrays.stream(SpreadsheetErrorKind.values())
-                        .map(SpreadsheetParsers::errorParser0)
-                        .collect(Collectors.toList())
+    private static SpreadsheetParser errorParser() {
+        return SpreadsheetParsers.parser(
+                Parsers.alternatives(
+                        Arrays.stream(SpreadsheetErrorKind.values())
+                                .map(SpreadsheetParsers::errorParser0)
+                                .collect(Collectors.toList())
+                )
         );
     }
 
