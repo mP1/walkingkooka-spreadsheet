@@ -20,15 +20,14 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Optional;
 
 /**
- * Base class for either a column or row reference {@link Parser}.
+ * Base class for either a column or row reference {@link SpreadsheetParser}.
  */
-abstract class SpreadsheetColumnOrRowReferenceParser implements Parser<SpreadsheetParserContext> {
+abstract class SpreadsheetColumnOrRowReferenceParser implements SpreadsheetParser {
 
     /**
      * Package private ctor use singleton
@@ -41,7 +40,8 @@ abstract class SpreadsheetColumnOrRowReferenceParser implements Parser<Spreadshe
     // required digits
     // SpreadsheetRowReference/SpreadsheetColumnReference
     @Override
-    public final Optional<ParserToken> parse(final TextCursor cursor, final SpreadsheetParserContext context) {
+    public final Optional<ParserToken> parse(final TextCursor cursor,
+                                             final SpreadsheetParserContext context) {
         Optional<ParserToken> result = Optional.empty();
 
         if (!cursor.isEmpty()) {

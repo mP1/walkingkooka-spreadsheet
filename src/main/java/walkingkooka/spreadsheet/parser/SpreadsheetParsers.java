@@ -116,7 +116,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * {@see SpreadsheetColumnReferenceParser}
      */
-    public static Parser<SpreadsheetParserContext> column() {
+    public static SpreadsheetParser column() {
         return SpreadsheetColumnReferenceParser.INSTANCE;
     }
 
@@ -251,7 +251,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * {@see SpreadsheetRowReferenceParser}
      */
-    public static Parser<SpreadsheetParserContext> row() {
+    public static SpreadsheetParser row() {
         return SpreadsheetRowReferenceParser.INSTANCE;
     }
 

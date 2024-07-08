@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
-public final class SpreadsheetRowReferenceParserTest extends SpreadsheetParserTestCase<SpreadsheetRowReferenceParser, SpreadsheetRowReferenceParserToken> {
+public final class SpreadsheetRowReferenceParserTest extends SpreadsheetColumnOrRowReferenceParserTestCase<SpreadsheetRowReferenceParser> {
 
     private final static String ROW_TEXT = "1";
     private final static int ROW_VALUE = 0;
@@ -30,92 +30,111 @@ public final class SpreadsheetRowReferenceParserTest extends SpreadsheetParserTe
     private final static int ROW2_VALUE = 122;
 
     @Test
-    public void testInvalidFails() {
+    public void testParseInvalidFails() {
         this.parseFailAndCheck("ABC");
     }
 
     @Test
-    public void testDollarFails() {
+    public void testParseDollarFails() {
         this.parseFailAndCheck("$");
     }
 
     @Test
-    public void testDollarFails2() {
+    public void testParseDollarFails2() {
         this.parseFailAndCheck("$ABC");
     }
 
     @Test
-    public void testRelativeReference() {
+    public void testParseRelativeReference() {
         this.parseAndCheck2(ROW_TEXT, SpreadsheetReferenceKind.RELATIVE, ROW_VALUE);
     }
 
     @Test
-    public void testRelativeReference1() {
+    public void testParseRelativeReference1() {
         this.parseAndCheck2(ROW_TEXT, SpreadsheetReferenceKind.RELATIVE, ROW_VALUE, "...");
     }
 
     @Test
-    public void testRelativeReference2() {
+    public void testParseRelativeReference2() {
         this.parseAndCheck2(ROW2_TEXT, SpreadsheetReferenceKind.RELATIVE, ROW2_VALUE);
     }
 
     @Test
-    public void testRelativeReference3() {
+    public void testParseRelativeReference3() {
         this.parseAndCheck2(ROW2_TEXT, SpreadsheetReferenceKind.RELATIVE, ROW2_VALUE, "...");
     }
 
     @Test
-    public void testAbsoluteReference() {
+    public void testParseAbsoluteReference() {
         this.parseAndCheck2("$1", SpreadsheetReferenceKind.ABSOLUTE, ROW_VALUE);
     }
 
     @Test
-    public void testAbsoluteReference1() {
+    public void testParseAbsoluteReference1() {
         this.parseAndCheck2("$1", SpreadsheetReferenceKind.ABSOLUTE, ROW_VALUE, "...");
     }
 
     @Test
-    public void testAbsoluteReference2() {
+    public void testParseAbsoluteReference2() {
         this.parseAndCheck2("$" + ROW2_TEXT, SpreadsheetReferenceKind.ABSOLUTE, ROW2_VALUE);
     }
 
     @Test
-    public void testAbsoluteReference3() {
+    public void testParseAbsoluteReference3() {
         this.parseAndCheck2("$" + ROW2_TEXT, SpreadsheetReferenceKind.ABSOLUTE, ROW2_VALUE, "...");
     }
 
     @Test
-    public void testRelativeReferenceInvalid() {
+    public void testParseRelativeReferenceInvalid() {
         final int value = SpreadsheetRowReference.MAX_VALUE + 1 + 1;
         this.parseThrows("" + value, "Invalid row value 1048576 expected between 0 and 1048576");
     }
 
     @Test
-    public void testAbsoluteReferenceInvalid() {
+    public void testParseAbsoluteReferenceInvalid() {
         final int value = SpreadsheetRowReference.MAX_VALUE + 1 + 1;
         this.parseThrows("$" + value, "Invalid row value 1048576 expected between 0 and 1048576");
     }
 
     @Test
-    public void testRange() {
+    public void testParseRange() {
         this.parseAndCheck2("2", SpreadsheetReferenceKind.RELATIVE, 1, ":34");
     }
 
     @Test
-    public void testMaxValue() {
+    public void testParseMaxValue() {
         this.parseAndCheck2("1048576", SpreadsheetReferenceKind.RELATIVE, SpreadsheetRowReference.MAX_VALUE);
     }
 
-    private void parseAndCheck2(final String text, final SpreadsheetReferenceKind referenceKind, final int row) {
-        this.parseAndCheck2(text, referenceKind, row, "");
+    private void parseAndCheck2(final String text,
+                                final SpreadsheetReferenceKind referenceKind,
+                                final int row) {
+        this.parseAndCheck2(
+                text,
+                referenceKind,
+                row,
+                ""
+        );
     }
 
-    private void parseAndCheck2(final String text, final SpreadsheetReferenceKind referenceKind, final int row, final String textAfter) {
-        this.parseAndCheck(text + textAfter, this.token(referenceKind, row, text), text, textAfter);
+    private void parseAndCheck2(final String text,
+                                final SpreadsheetReferenceKind referenceKind,
+                                final int row,
+                                final String textAfter) {
+        this.parseAndCheck(text + textAfter,
+                this.token(referenceKind, row, text),
+                text,
+                textAfter
+        );
     }
 
-    private SpreadsheetRowReferenceParserToken token(final SpreadsheetReferenceKind referenceKind, final int row, final String text) {
-        return SpreadsheetParserToken.rowReference(referenceKind.row(row), text);
+    private SpreadsheetRowReferenceParserToken token(final SpreadsheetReferenceKind referenceKind,
+                                                     final int row,
+                                                     final String text) {
+        return SpreadsheetParserToken.rowReference(
+                referenceKind.row(row),
+                text
+        );
     }
 
     @Override
