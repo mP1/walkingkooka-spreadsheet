@@ -244,7 +244,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * {@see ParserSpreadsheetParser}
      */
-    public static Parser<SpreadsheetParserContext> parser(final Parser<SpreadsheetParserContext> parser) {
+    public static SpreadsheetParser parser(final Parser<SpreadsheetParserContext> parser) {
         return ParserSpreadsheetParser.with(parser);
     }
 
