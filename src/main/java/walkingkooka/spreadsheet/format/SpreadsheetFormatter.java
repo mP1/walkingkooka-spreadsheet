@@ -25,7 +25,7 @@ import walkingkooka.tree.text.TextNode;
 import java.util.Optional;
 
 /**
- * A formatter may be queried to determine if it can format a given type of value into text possibly with a {@link walkingkooka.color.Color}.
+ * A formatter is used to format a value into a {@link TextNode}.
  */
 public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterContext> {
 
