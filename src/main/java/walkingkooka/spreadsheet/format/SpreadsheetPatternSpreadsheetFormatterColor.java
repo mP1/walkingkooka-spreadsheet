@@ -67,12 +67,6 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     }
 
     @Override
-    public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) {
-        return this.formatter.canFormat(value, context);
-    }
-
-    @Override
     public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");

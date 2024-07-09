@@ -46,26 +46,20 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
     }
 
     @Override
-    public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) {
-        return context.canConvert(value, String.class);
-    }
-
-    @Override
     public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
-        
-        return this.canFormat(value, context) ?
-                Optional.of(
+
+        return Optional.ofNullable(
+                context.canConvert(value, String.class) ?
                         SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor.format(
                                 this.token,
                                 context.convertOrFail(value, String.class),
                                 context
-                        )
-                ) :
-                Optional.empty();
+                        ) :
+                        null
+        );
     }
 
     // Object...........................................................................................................

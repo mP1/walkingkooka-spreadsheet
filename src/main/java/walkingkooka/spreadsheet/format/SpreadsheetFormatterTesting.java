@@ -28,15 +28,6 @@ import java.util.Optional;
  */
 public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
 
-    default void canFormatAndCheck(final SpreadsheetFormatter formatter,
-                                   final Object value,
-                                   final SpreadsheetFormatterContext context,
-                                   final boolean expected) {
-        this.checkEquals(expected,
-                formatter.canFormat(value, context),
-                () -> formatter + " canFormat " + CharSequences.quoteIfChars(value));
-    }
-
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetFormatterContext context) {

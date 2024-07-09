@@ -21,11 +21,6 @@ import org.junit.jupiter.api.Test;
 
 public final class EmptySpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<EmptySpreadsheetFormatter> {
 
-    @Override
-    public void testCanFormatFalse() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testFormat() {
         this.formatAndCheck(

@@ -31,11 +31,6 @@ public class FakeSpreadsheetPatternSpreadsheetFormatter implements SpreadsheetPa
     }
 
     @Override
-    public boolean canFormat(final Object value, final SpreadsheetFormatterContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
                                                            final SpreadsheetFormatterContext context) {
         throw new UnsupportedOperationException();

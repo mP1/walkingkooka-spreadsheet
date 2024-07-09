@@ -66,18 +66,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
         );
     }
 
-    // canFormat........................................................................................................
-
-    @Test
-    public void testCanFormatFirst() {
-        this.canFormatAndCheck(VALUE1, true);
-    }
-
-    @Test
-    public void testCanFormatSecond() {
-        this.canFormatAndCheck(VALUE2, true);
-    }
-
     // format...........................................................................................................
 
     @Test
@@ -133,21 +121,18 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
     private static SpreadsheetPatternSpreadsheetFormatter formatter(final Object value,
                                                                     final String text) {
         return new FakeSpreadsheetPatternSpreadsheetFormatter() {
-            @Override
-            public boolean canFormat(final Object v,
-                                     final SpreadsheetFormatterContext context) {
-                Objects.requireNonNull(v, "value");
-
-                return value.equals(v);
-            }
 
             @Override
-            public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+            public Optional<SpreadsheetText> formatSpreadsheetText(final Object v,
                                                                    final SpreadsheetFormatterContext context) {
-                Objects.requireNonNull(value, "value");
+                Objects.requireNonNull(v, "value");
                 Objects.requireNonNull(context, "context");
 
-                return Optional.of(spreadsheetText(text));
+                return Optional.ofNullable(
+                        value.equals(v) ?
+                                spreadsheetText(text) :
+                                null
+                );
             }
 
             @Override

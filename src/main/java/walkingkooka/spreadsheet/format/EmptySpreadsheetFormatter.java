@@ -36,12 +36,6 @@ final class EmptySpreadsheetFormatter extends SpreadsheetFormatter2 {
     }
 
     @Override
-    public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) {
-        return true;
-    }
-
-    @Override
     Optional<TextNode> format0(final Object value,
                                final SpreadsheetFormatterContext context) {
         return Optional.empty();

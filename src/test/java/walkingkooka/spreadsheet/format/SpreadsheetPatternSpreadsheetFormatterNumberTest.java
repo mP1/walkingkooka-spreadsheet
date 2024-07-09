@@ -19,13 +19,10 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
-import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporterException;
@@ -49,31 +46,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         SpreadsheetFormatNumberParserToken> {
 
     private final static Color RED = Color.parse("#FF0000");
-    
-    @Test
-    public void testCanConvertBigDecimalFails() {
-        final SpreadsheetPatternSpreadsheetFormatterNumber formatter = SpreadsheetPatternSpreadsheetFormatterNumber.with(
-                SpreadsheetFormatParserToken.number(
-                        Lists.of(
-                                SpreadsheetFormatParserToken.digit("1", "1")
-                        ),
-                        "#"
-                )
-        );
-        assertThrows(
-                ConversionException.class,
-                () ->
-                        formatter.canFormat(
-                                BigDecimal.ZERO,
-                                new FakeSpreadsheetFormatterContext() {
-                                    @Override
-                                    public boolean canConvert(final Object value,
-                                                              final Class<?> type) {
-                                        return false;
-                                    }
-                                })
-        );
-    }
 
     // text-literal, escaped etc........................................................................................
 

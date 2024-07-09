@@ -39,12 +39,6 @@ final class ContextFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 
     }
 
     @Override
-    public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) {
-        return ContextFormatTextSpreadsheetFormatterSpreadsheetValueVisitor.isSpreadsheetValue(value);
-    }
-
-    @Override
     Optional<TextNode> format0(final Object value, final SpreadsheetFormatterContext context) {
         return context.format(value);
     }

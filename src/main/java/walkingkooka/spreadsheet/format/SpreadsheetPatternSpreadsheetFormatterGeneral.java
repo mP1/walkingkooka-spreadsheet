@@ -46,18 +46,6 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     }
 
     @Override
-    public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) {
-        Objects.requireNonNull(value, "value");
-        Objects.requireNonNull(context, "context");
-
-        return context.canConvert(
-                value,
-                ExpressionNumber.class
-        );
-    }
-
-    @Override
     public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
@@ -74,6 +62,14 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
                 context
         ) :
                 SpreadsheetFormatter.EMPTY;
+    }
+
+    private boolean canFormat(final Object value,
+                              final SpreadsheetFormatterContext context) {
+        return context.canConvert(
+                value,
+                ExpressionNumber.class
+        );
     }
 
     private Optional<SpreadsheetText> formatNumber(final ExpressionNumber number,

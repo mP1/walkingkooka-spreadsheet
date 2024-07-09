@@ -42,12 +42,6 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
     );
 
     /**
-     * Tests if the given value can be formatted by this formatter.
-     */
-    boolean canFormat(final Object value,
-                      final SpreadsheetFormatterContext context);
-
-    /**
      * Accepts a value and returns a {@link TextNode} if it could format the value.
      */
     Optional<TextNode> format(final Object value,

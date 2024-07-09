@@ -64,21 +64,10 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
     // SpreadsheetFormatter.............................................................................................
 
     @Override
-    public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) {
-        return this.formatter(value, context).isPresent();
-    }
-
-    @Override
     public Optional<TextNode> format(final Object value,
                                      final SpreadsheetFormatterContext context) {
-        return this.formatter(value, context)
-                .flatMap(f -> f.format(value, context));
-    }
-
-    Optional<SpreadsheetFormatter> formatter(final Object value, final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
-                .filter(f -> f.canFormat(value, context))
+                .flatMap(f -> f.format(value, context).stream())
                 .findFirst();
     }
 
