@@ -32,11 +32,6 @@ public class FakeSpreadsheetFormatter implements SpreadsheetFormatter, Fake {
     }
 
     @Override
-    public boolean canFormat(final Object value, final SpreadsheetFormatterContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Optional<TextNode> format(final Object value, final SpreadsheetFormatterContext context) {
         throw new UnsupportedOperationException();
     }

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Either;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 
 import java.time.LocalDateTime;
@@ -55,17 +56,6 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
         this.millisecondDecimals = analysis.millisecondDecimals;
     }
 
-    @Override
-    public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) {
-        return null != value &&
-                this.valueType.equals(value.getClass()) &&
-                context.canConvertOrFail(
-                        value,
-                        LocalDateTime.class
-                );
-    }
-
     /**
      * Used to filter allowing different formatters for different {@link Temporal} types.
      */
@@ -77,14 +67,20 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
-        return Optional.of(
-                this.formatLocalDateTime(
-                        context.convertOrFail(
-                                value,
-                                LocalDateTime.class
-                        ),
-                        context
-                )
+        final Either<LocalDateTime, String> valueAsDateTime = value.getClass() == this.valueType ?
+                context.convert(
+                        value,
+                        LocalDateTime.class
+                ) :
+                null;
+
+        return Optional.ofNullable(
+                null != valueAsDateTime && valueAsDateTime.isLeft() ?
+                        this.formatLocalDateTime(
+                                valueAsDateTime.leftValue(),
+                                context
+                        ) :
+                        null
         );
     }
 

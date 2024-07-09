@@ -20,9 +20,6 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.color.Color;
-import walkingkooka.convert.ConversionException;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -37,7 +34,6 @@ import java.time.temporal.Temporal;
 import java.util.Locale;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<
@@ -56,57 +52,19 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // tests.............................................................................................................
 
     @Test
-    public void testFormatConvertLocalDateTimeFails() {
-        final LocalDateTime value = LocalDateTime.now();
-
-        assertThrows(
-                ConversionException.class,
-                () -> this.createFormatter().format(
-                        value,
-                        new FakeSpreadsheetFormatterContext() {
-
-                            @Override
-                            public <T> Either<T, String> convert(final Object v,
-                                                                 final Class<T> type) {
-                                assertSame(value, v, "value");
-                                checkEquals(LocalDateTime.class, type, "type");
-                                return Either.right("Failed!");
-                            }
-                        }
-                )
+    public void testFormatDateFails() {
+        this.formatAndCheck(
+                this.createFormatter("dd/mm/yyyy"),
+                LocalDate.of(2000, 12, 31)
         );
     }
 
     @Test
-    public void testConvertLocalDateTimeFails() {
-        final LocalTime time = LocalTime.now();
-
-        assertThrows(
-                ConversionException.class,
-                () -> this.createFormatter()
-                        .formatSpreadsheetText(
-                        time,
-                        new FakeSpreadsheetFormatterContext() {
-                            @Override
-                            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                                assertSame(time, value, "value");
-                                checkEquals(LocalDateTime.class, target, "target");
-
-                                return this.failConversion(value, target);
-                            }
-                        })
+    public void testFormatTimeFails() {
+        this.formatAndCheck(
+                this.createFormatter("hh:mm:ss"),
+                LocalTime.of(12, 58, 59)
         );
-    }
-
-    @SuppressWarnings("unused")
-    @Override
-    public void testCanFormatFalse() {
-        // SpreadsheetPatternSpreadsheetFormatterDateTime says it can format anything. It converts all values to LocalDateTime before formatting.
-    }
-
-    @SuppressWarnings("unused")
-    @Override
-    public void testFormatUnsupportedValueFails() {
     }
 
     // year.............................................................................................................
@@ -689,134 +647,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                 "31/12/2000T15:58:04D167000");
     }
 
-    // Date.............................................................................................................
-
     @Test
-    public void testFormatDate() {
-        this.parseFormatAndCheck(
-                "yyyy/mm/dd",
-                LocalDate.of(2000, 12, 31),
-                SpreadsheetText.with("2000/12/31")
-        );
-    }
-
-    @Test
-    public void testFormatDateIncludesColorName() {
-        this.parseFormatAndCheck(
-                "[RED]yyyy/mm/dd",
-                LocalDate.of(2000, 12, 31),
-                SpreadsheetText.with("2000/12/31")
-                        .setColor(
-                                Optional.of(RED)
-                        )
-        );
-    }
-
-    @Test
-    public void testFormatDateIncludesColorNumber() {
-        this.parseFormatAndCheck(
-                "[color44]yyyy/mm/dd",
-                LocalDate.of(2000, 12, 31),
-                SpreadsheetText.with("2000/12/31")
-                        .setColor(
-                                Optional.of(RED)
-                        )
-        );
-    }
-
-    private void parseFormatAndCheck(final String pattern,
-                                     final LocalDate value,
-                                     final SpreadsheetText text) {
-        this.parseFormatAndCheck(
-                pattern,
-                value,
-                new TestSpreadsheetFormatterContext() {
-
-                    @Override
-                    public boolean canConvert(final Object value,
-                                              final Class<?> target) {
-                        return Converters.localDateToLocalDateTime()
-                                .canConvert(value, target, ConverterContexts.fake());
-                    }
-
-                    @Override
-                    public <T> Either<T, String> convert(final Object value,
-                                                         final Class<T> target) {
-                        checkEquals(
-                                LocalDateTime.class,
-                                target,
-                                "target"
-                        );
-                        return Converters.localDateToLocalDateTime()
-                                .convert(
-                                        value,
-                                        target,
-                                        ConverterContexts.fake()
-                                );
-                    }
-                },
-                text
-        );
-    }
-
-    // Time.............................................................................................................
-
-    @Test
-    public void testFormatTime() {
-        this.parseFormatAndCheck(
-                "hh/mm/ss",
-                LocalTime.of(12, 58, 59),
-                SpreadsheetText.with("12/58/59")
-        );
-    }
-
-    @Test
-    public void testFormatTimeWithColorName() {
-        this.parseFormatAndCheck(
-                "[RED]hh/mm/ss",
-                LocalTime.of(12, 58, 59),
+    public void testFormatWithColorName() {
+        this.formatAndCheck(
+                this.createFormatter("[RED]hh/mm/ss"),
+                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
                 SpreadsheetText.with("12/58/59")
                         .setColor(
                                 Optional.of(RED)
                         )
-        );
-    }
-
-    private void parseFormatAndCheck(final String pattern,
-                                     final LocalTime value,
-                                     final SpreadsheetText text) {
-        this.parseFormatAndCheck(
-                pattern,
-                value,
-                new TestSpreadsheetFormatterContext() {
-
-                    @Override
-                    public boolean canConvert(final Object value,
-                                              final Class<?> target) {
-                        return value instanceof LocalTime && target == LocalDateTime.class;
-                    }
-
-                    @Override
-                    public <T> Either<T, String> convert(final Object value,
-                                                         final Class<T> target) {
-                        checkEquals(
-                                LocalDateTime.class,
-                                target,
-                                "target"
-                        );
-
-                        return this.successfulConversion(
-                                target.cast(
-                                        LocalDateTime.of(
-                                                LocalDate.of(2000, 10, 31),
-                                                (LocalTime) value
-                                        )
-                                ),
-                                target
-                        );
-                    }
-                },
-                text
         );
     }
 

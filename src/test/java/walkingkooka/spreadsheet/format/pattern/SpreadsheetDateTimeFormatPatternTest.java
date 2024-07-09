@@ -28,7 +28,6 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
@@ -46,7 +45,6 @@ import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -97,27 +95,6 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     @Test
     public void testWithTimeFails() {
         this.withInvalidCharacterFails(this.time());
-    }
-
-    // canFormat........................................................................................................
-
-    @Test
-    public void testCanFormatOtherTemporalType() {
-        this.canFormatAndCheck4(LocalDate.of(2000, 12, 31));
-    }
-
-    @Test
-    public void testCanFormatOtherTemporalType2() {
-        this.canFormatAndCheck4(LocalTime.of(12, 58, 59));
-    }
-
-    private void canFormatAndCheck4(final Temporal temporal) {
-        this.canFormatAndCheck(
-                this.createPattern().formatter(),
-                temporal,
-                SpreadsheetFormatterContexts.fake(),
-                false
-        );
     }
 
     // ParseString.......................................................................................................

@@ -41,11 +41,11 @@ final class SpreadsheetFormatterConverter implements Converter<SpreadsheetConver
     public boolean canConvert(final Object value,
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
-        return String.class == type &&
-                this.formatter.canFormat(
-                        value,
-                        SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context)
-                );
+        return this.convert(
+                value,
+                type,
+                context
+        ).isLeft();
     }
 
     @Override

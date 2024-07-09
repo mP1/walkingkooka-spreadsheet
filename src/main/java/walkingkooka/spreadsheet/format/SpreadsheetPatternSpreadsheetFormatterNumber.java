@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -64,36 +65,31 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     }
 
     @Override
-    public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) {
-        return ExpressionNumber.is(value) &&
-                context.canConvertOrFail(
-                        value,
-                        ExpressionNumber.class
-                );
-    }
-
-    @Override
     public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
-        return Optional.of(
-                SpreadsheetText.with(
-                        this.format1(
-                                this.normalOrScientific.context(
-                                        context.convertOrFail(
-                                                value,
-                                                ExpressionNumber.class
-                                        ).bigDecimal(),
-                                        this,
-                                        context
+        final Either<ExpressionNumber, String> valueAsNumber = context.convert(
+                value,
+                ExpressionNumber.class
+        );
+
+        return Optional.ofNullable(
+                valueAsNumber.isLeft() ?
+                        SpreadsheetText.with(
+                                this.format1(
+                                        this.normalOrScientific.context(
+                                                valueAsNumber.leftValue()
+                                                        .bigDecimal(),
+                                                this,
+                                                context
+                                        )
                                 )
-                        )
-                ).setColor(
-                        this.color(context)
-                )
+                        ).setColor(
+                                this.color(context)
+                        ) :
+                        null
         );
     }
 

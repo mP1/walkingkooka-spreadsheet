@@ -51,18 +51,6 @@ public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTes
         assertSame(formatter, ChainSpreadsheetFormatter.with(Lists.of(formatter)));
     }
 
-    // canFormat........................................................................................................
-
-    @Test
-    public void testCanFormatFirst() {
-        this.canFormatAndCheck(VALUE1, true);
-    }
-
-    @Test
-    public void testCanFormatSecond() {
-        this.canFormatAndCheck(VALUE2, true);
-    }
-
     // format...........................................................................................................
 
     @Test
@@ -101,24 +89,20 @@ public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTes
     }
 
     private SpreadsheetFormatter formatter(final Object value, final String text) {
-        return new SpreadsheetFormatter() {
-            @Override
-            public boolean canFormat(final Object v,
-                                     final SpreadsheetFormatterContext context) {
-                Objects.requireNonNull(v, "value");
-
-                return value.equals(v);
-            }
+        return new FakeSpreadsheetFormatter() {
 
             @Override
-            public Optional<TextNode> format(final Object value,
+            public Optional<TextNode> format(final Object v,
                                              final SpreadsheetFormatterContext context) {
-                Objects.requireNonNull(value, "value");
+                Objects.requireNonNull(v, "value");
                 Objects.requireNonNull(context, "context");
 
-                return Optional.of(
-                        SpreadsheetText.with(text)
-                                .toTextNode()
+                return Optional.ofNullable(
+                        v.equals(value) ?
+                                SpreadsheetText.with(text)
+                                        .toTextNode()
+                                :
+                                null
                 );
             }
 

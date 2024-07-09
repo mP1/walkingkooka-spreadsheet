@@ -67,12 +67,6 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
     }
 
     @Override
-    public boolean canFormat(final Object value,
-                             final SpreadsheetFormatterContext context) {
-        return value instanceof BigDecimal;
-    }
-
-    @Override
     public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");

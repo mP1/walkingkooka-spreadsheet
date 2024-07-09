@@ -301,12 +301,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private final static int CELL_CHARACTER_WIDTH = 1;
 
     private SpreadsheetFormatter formatter() {
-        return new SpreadsheetFormatter() {
-            @Override
-            public boolean canFormat(final Object value,
-                                     final SpreadsheetFormatterContext context) {
-                return value instanceof BigDecimal;
-            }
+        return new FakeSpreadsheetFormatter() {
 
             @Override
             public Optional<TextNode> format(final Object value,
