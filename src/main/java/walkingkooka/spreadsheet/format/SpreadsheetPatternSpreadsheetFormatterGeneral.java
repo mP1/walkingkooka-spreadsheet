@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CharSequences;
@@ -212,8 +213,19 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     @Override
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
+
+        return TEXT_COMPONENTS;
     }
+
+    private final static Optional<List<SpreadsheetFormatterSelectorTextComponent>> TEXT_COMPONENTS = Optional.of(
+            Lists.of(
+                    SpreadsheetFormatterSelectorTextComponent.with(
+                            "General",
+                            "General",
+                            Lists.empty()
+                    )
+            )
+    );
 
     // Object...........................................................................................................
 
