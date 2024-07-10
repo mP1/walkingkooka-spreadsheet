@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -385,6 +386,20 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
                 return 'P';
             }
         };
+    }
+
+    // textComponents...................................................................................................
+
+    @Test
+    public void testTextComponents() {
+        this.textComponentsAndCheck(
+                SpreadsheetFormatterContexts.fake(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "General",
+                        "General",
+                        Lists.empty()
+                )
+        );
     }
 
     // ClassTesting.....................................................................................................
