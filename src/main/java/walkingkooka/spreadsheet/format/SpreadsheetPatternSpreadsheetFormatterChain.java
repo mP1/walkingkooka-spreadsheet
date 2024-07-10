@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that forms a chain of {@link SpreadsheetPatternSpreadsheetFormatter formatters}.
@@ -67,8 +68,16 @@ final class SpreadsheetPatternSpreadsheetFormatterChain implements SpreadsheetPa
     public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
                                                            final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
-                .flatMap(f -> f.formatSpreadsheetText(value, context).stream())
-                .findFirst();
+                .flatMap(f -> optionalStream(
+                                f.formatSpreadsheetText(value, context)
+                        )
+                ).findFirst();
+    }
+
+    // TODO Missing GWT JRE Optional#stream
+    private Stream<SpreadsheetText> optionalStream(final Optional<SpreadsheetText> optional) {
+        return optional.map(v -> Stream.of(v))
+                .orElse(Stream.of());
     }
 
     final List<SpreadsheetPatternSpreadsheetFormatter> formatters;
