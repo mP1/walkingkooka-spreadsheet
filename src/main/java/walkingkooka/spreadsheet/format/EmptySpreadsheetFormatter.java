@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
@@ -50,10 +49,8 @@ final class EmptySpreadsheetFormatter implements SpreadsheetFormatter {
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
-        return TEXT_COMPONENTS;
+        return EMPTY_TEXT_COMPONENTS;
     }
-
-    private final static Optional<List<SpreadsheetFormatterSelectorTextComponent>> TEXT_COMPONENTS = Optional.of(Lists.empty());
 
     @Override
     public String toString() {
