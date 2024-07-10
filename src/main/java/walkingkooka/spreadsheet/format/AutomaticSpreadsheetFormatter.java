@@ -83,6 +83,7 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
 
     @Override
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
         throw new UnsupportedOperationException();
     }
 
