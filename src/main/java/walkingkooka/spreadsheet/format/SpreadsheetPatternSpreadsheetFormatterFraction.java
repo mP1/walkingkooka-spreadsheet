@@ -110,6 +110,11 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
                 context));
     }
 
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * A non zero value multiplied against the {@link BigDecimal} being formatted as text.
      */

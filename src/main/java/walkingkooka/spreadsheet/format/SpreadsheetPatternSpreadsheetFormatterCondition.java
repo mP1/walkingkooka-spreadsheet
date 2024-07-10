@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -66,6 +67,11 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
                         context
                 ) :
                 Optional.empty();
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
     }
 
     /**

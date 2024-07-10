@@ -22,6 +22,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -51,6 +52,11 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
                         ).toTextNode()
                 ) :
                 Optional.empty();
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
     }
 
     private final Converter<ExpressionNumberConverterContext> converter;

@@ -35,7 +35,7 @@ abstract class SpreadsheetNumberParsePatternComponentNonDigit extends Spreadshee
     }
 
     /**
-     * This method should never be invoked on non digit components.
+     * This method should never be invoked on non digit textComponents.
      */
     @Override
     final SpreadsheetNumberParsePatternComponent lastDigit(final SpreadsheetNumberParsePatternComponentDigitMode mode) {

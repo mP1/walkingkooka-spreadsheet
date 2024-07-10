@@ -80,6 +80,11 @@ final class SpreadsheetPatternSpreadsheetFormatterChain implements SpreadsheetPa
                 .orElse(Stream.of());
     }
 
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
+    }
+
     final List<SpreadsheetPatternSpreadsheetFormatter> formatters;
 
     // Object...........................................................................................................

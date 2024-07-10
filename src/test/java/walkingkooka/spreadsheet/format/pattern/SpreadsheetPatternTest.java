@@ -2118,7 +2118,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // components......................................................................................................
+    // textComponents......................................................................................................
 
     @Test
     public void testComponentsWithNullBiConsumerFails() {
@@ -2725,7 +2725,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.checkEquals(
                 Lists.of(expected),
                 components,
-                () -> pattern + " components"
+                () -> pattern + " textComponents"
         );
     }
 

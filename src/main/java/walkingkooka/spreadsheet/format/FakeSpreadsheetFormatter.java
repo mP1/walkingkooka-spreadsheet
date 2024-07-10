@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -33,6 +34,11 @@ public class FakeSpreadsheetFormatter implements SpreadsheetFormatter, Fake {
 
     @Override
     public Optional<TextNode> format(final Object value, final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
         throw new UnsupportedOperationException();
     }
 }

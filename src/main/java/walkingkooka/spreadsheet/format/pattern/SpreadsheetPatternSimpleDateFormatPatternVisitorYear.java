@@ -23,12 +23,12 @@ package walkingkooka.spreadsheet.format.pattern;
 enum SpreadsheetPatternSimpleDateFormatPatternVisitorYear {
 
     /**
-     * Year components will appear as a two digit year. <code>dd/mm/yyyy</code> into <code>dd/mm/yy</code>
+     * Year textComponents will appear as a two digit year. <code>dd/mm/yyyy</code> into <code>dd/mm/yy</code>
      */
     ALWAYS_2_DIGITS,
 
     /**
-     * Year components will appear as a two digit year. <code>dd/mm/yy</code> into <code>dd/mm/yyyy</code>
+     * Year textComponents will appear as a two digit year. <code>dd/mm/yy</code> into <code>dd/mm/yyyy</code>
      */
     ALWAYS_4_DIGITS,
 

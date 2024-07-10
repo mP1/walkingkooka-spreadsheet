@@ -76,7 +76,7 @@ import java.util.function.BiFunction;
 
 /**
  * A {@link SpreadsheetFormatParserTokenVisitor} that creates a parser, by mapping {@link SpreadsheetFormatParserToken}
- * into a parser made up of multiple components.
+ * into a parser made up of multiple textComponents.
  */
 final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
@@ -600,7 +600,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
     }
 
     /**
-     * Multiple parsers for each of the components in the pattern.
+     * Multiple parsers for each of the textComponents in the pattern.
      */
     private SequenceParserBuilder<SpreadsheetParserContext> sequenceParserBuilder;
 

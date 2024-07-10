@@ -116,11 +116,16 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     private final Object color;
 
     /**
-     * Executes each of the format components eventually resulting in a {@link String}.
+     * Executes each of the format textComponents eventually resulting in a {@link String}.
      */
     private String format1(final SpreadsheetPatternSpreadsheetFormatterNumberContext context) {
         this.components.forEach(c -> c.append(context));
         return context.formattedText();
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
     }
 
     private final SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific normalOrScientific;

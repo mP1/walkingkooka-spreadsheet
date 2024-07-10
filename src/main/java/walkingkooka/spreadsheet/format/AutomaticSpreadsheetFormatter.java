@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Cast;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -78,6 +79,11 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
         return value.isPresent() ?
                 value :
                 or.get();
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
     }
 
     final SpreadsheetFormatter date;
