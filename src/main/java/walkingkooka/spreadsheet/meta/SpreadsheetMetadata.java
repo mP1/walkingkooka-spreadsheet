@@ -486,7 +486,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         components.reportIfMissing();
 
-        return converter.parseTextAndCreate(converterProvider);
+        return converter.evaluateText(converterProvider);
     }
 
     /**
