@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 
-public final class EmptySpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<EmptySpreadsheetFormatter> {
+public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<EmptySpreadsheetFormatter> {
 
     @Test
     public void testFormat() {
