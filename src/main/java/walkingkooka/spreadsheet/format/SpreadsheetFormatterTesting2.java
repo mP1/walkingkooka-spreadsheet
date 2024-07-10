@@ -22,6 +22,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -74,6 +76,14 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
     default void formatAndCheck(final Object value,
                                 final TextNode text) {
         this.formatAndCheck(
+                value,
+                Optional.of(text)
+        );
+    }
+
+    default void formatAndCheck(final Object value,
+                                final Optional<TextNode> text) {
+        this.formatAndCheck(
                 this.createFormatter(),
                 value,
                 text
@@ -103,6 +113,16 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final TextNode text) {
+        this.formatAndCheck(
+                formatter,
+                value,
+                Optional.of(text)
+        );
+    }
+
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Object value,
+                                final Optional<TextNode> text) {
         this.formatAndCheck(
                 formatter,
                 value,
