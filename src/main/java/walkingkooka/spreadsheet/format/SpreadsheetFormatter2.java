@@ -53,6 +53,8 @@ abstract class SpreadsheetFormatter2 implements SpreadsheetFormatter {
 
     @Override
     public final Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+
         throw new UnsupportedOperationException();
     }
 

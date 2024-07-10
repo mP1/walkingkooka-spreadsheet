@@ -125,6 +125,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
 
     @Override
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
         throw new UnsupportedOperationException();
     }
 
