@@ -17,14 +17,17 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
  * A {@link SpreadsheetFormatter} that unconditionally always returns {@link Optional#empty()}.
  */
-final class EmptySpreadsheetFormatter extends SpreadsheetFormatter2 {
+final class EmptySpreadsheetFormatter implements SpreadsheetFormatter {
 
     /**
      * Singleton
@@ -36,10 +39,21 @@ final class EmptySpreadsheetFormatter extends SpreadsheetFormatter2 {
     }
 
     @Override
-    Optional<TextNode> format0(final Object value,
-                               final SpreadsheetFormatterContext context) {
+    public Optional<TextNode> format(final Object value, final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
+
         return Optional.empty();
     }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return TEXT_COMPONENTS;
+    }
+
+    private final static Optional<List<SpreadsheetFormatterSelectorTextComponent>> TEXT_COMPONENTS = Optional.of(Lists.empty());
 
     @Override
     public String toString() {

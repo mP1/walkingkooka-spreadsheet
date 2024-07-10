@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.tree.text.TextNode;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -41,6 +43,13 @@ final class ContextFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 
     @Override
     Optional<TextNode> format0(final Object value, final SpreadsheetFormatterContext context) {
         return context.format(value);
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+
+        throw new UnsupportedOperationException();
     }
 
     @Override
