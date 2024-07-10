@@ -1,0 +1,111 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.format;
+
+import walkingkooka.Cast;
+import walkingkooka.tree.text.TextNode;
+
+import java.util.Objects;
+import java.util.Optional;
+
+/**
+ * This {@link SpreadsheetFormatter} selects one of its given {@link SpreadsheetFormatter} using the type of the value.
+ */
+final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
+
+    static AutomaticSpreadsheetFormatter with(final SpreadsheetFormatter date,
+                                              final SpreadsheetFormatter dateTime,
+                                              final SpreadsheetFormatter number,
+                                              final SpreadsheetFormatter text,
+                                              final SpreadsheetFormatter time) {
+        return new AutomaticSpreadsheetFormatter(
+                Objects.requireNonNull(date, "date"),
+                Objects.requireNonNull(dateTime, "dateTime"),
+                Objects.requireNonNull(number, "number"),
+                Objects.requireNonNull(text, "text"),
+                Objects.requireNonNull(time, "time")
+        );
+    }
+
+    private AutomaticSpreadsheetFormatter(final SpreadsheetFormatter date,
+                                          final SpreadsheetFormatter dateTime,
+                                          final SpreadsheetFormatter number,
+                                          final SpreadsheetFormatter text,
+                                          final SpreadsheetFormatter time) {
+        this.date = date;
+        this.dateTime = dateTime;
+        this.number = number;
+        this.text = text;
+        this.time = time;
+    }
+
+    @Override
+    public Optional<TextNode> format(final Object value,
+                                     final SpreadsheetFormatterContext context) {
+        final SpreadsheetFormatter formatter = SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVisitor.select(
+                this,
+                value
+        );
+        // if the formatter didnt work format with text
+        return formatter.format(
+                value,
+                context
+        ).or(
+                () -> this.text.format(value, context)
+        );
+    }
+
+    final SpreadsheetFormatter date;
+    final SpreadsheetFormatter dateTime;
+    final SpreadsheetFormatter number;
+    final SpreadsheetFormatter text;
+    final SpreadsheetFormatter time;
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                this.date,
+                this.dateTime,
+                this.number,
+                this.text,
+                this.time
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof AutomaticSpreadsheetFormatter &&
+                        this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final AutomaticSpreadsheetFormatter other) {
+        return this.date.equals(other.date) &&
+                this.dateTime.equals(other.dateTime) &&
+                this.number.equals(other.number) &&
+                this.text.equals(other.text) &&
+                this.time.equals(other.time);
+    }
+
+    @Override
+    public String toString() {
+        return this.date + " | " + this.dateTime + " | " + this.number + " | " + this.text + " | " + this.time;
+    }
+}

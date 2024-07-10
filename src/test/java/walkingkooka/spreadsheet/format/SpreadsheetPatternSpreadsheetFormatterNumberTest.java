@@ -35,6 +35,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -45,32 +48,84 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterNumber,
         SpreadsheetFormatNumberParserToken> {
 
+    @Test
+    public void testFormatDateFails() {
+        this.formatAndCheck(
+                this.createFormatter("0.00"),
+                LocalDate.of(1999, 12, 31),
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> type) {
+                        return ExpressionNumberConverters.toNumberOrExpressionNumber(
+                                Converters.localDateTimeToNumber()
+                        ).convert(
+                                value,
+                                type,
+                                this
+                        );
+                    }
+
+                    @Override
+                    public ExpressionNumberKind expressionNumberKind() {
+                        return ExpressionNumberKind.DOUBLE;
+                    }
+                }
+        );
+    }
+
+    @Test
+    public void testFormatDateTimeFails() {
+        this.formatAndCheck(
+                this.createFormatter("0.00"),
+                LocalDateTime.of(1999, 12, 31, 12, 58)
+        );
+    }
+
+    @Test
+    public void testFormatTimeFails() {
+        this.formatAndCheck(
+                this.createFormatter("0.00"),
+                LocalTime.of(12, 58, 59)
+        );
+    }
+
+    @Test
+    public void testFormatTextFails() {
+        this.formatAndCheck(
+                this.createFormatter("0.00"),
+                "Text123",
+                this.createContext(),
+                Optional.empty()
+        );
+    }
+
     private final static Color RED = Color.parse("#FF0000");
 
     // text-literal, escaped etc........................................................................................
 
     @Test
-    public void testFormatCloseParens() {
+    public void testFormatNumberWithPatternCloseParens() {
         this.parseFormatAndCheck2(")");
     }
 
     @Test
-    public void testFormatColon() {
+    public void testFormatNumberWithPatternColon() {
         this.parseFormatAndCheck2(":");
     }
 
     @Test
-    public void testFormatMinus() {
+    public void testFormatNumberWithPatternMinus() {
         this.parseFormatAndCheck2("-");
     }
 
     @Test
-    public void testFormatPlus() {
+    public void testFormatNumberWithPatternPlus() {
         this.parseFormatAndCheck2("+");
     }
 
     @Test
-    public void testFormatOpenParens() {
+    public void testFormatNumberWithPatternOpenParens() {
         this.parseFormatAndCheck2("(");
     }
 
@@ -79,12 +134,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatEscaped() {
+    public void testFormatNumberWithPatternEscaped() {
         this.parseFormatAndCheck2("\\A", "A");
     }
 
     @Test
-    public void testFormatTextLiteral() {
+    public void testFormatNumberWithPatternTextLiteral() {
         this.parseFormatAndCheck2("\"Quoted text\"", "Quoted text");
     }
 
@@ -100,7 +155,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // integers ......................................................................................................
 
     @Test
-    public void testFormatHash0() {
+    public void testFormatNumberWithPatternHash0() {
         this.parseFormatAndCheck(
                 "#",
                 0,
@@ -109,7 +164,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHash1() {
+    public void testFormatNumberWithPatternHash1() {
         this.parseFormatAndCheck(
                 "#",
                 1,
@@ -118,7 +173,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHash12() {
+    public void testFormatNumberWithPatternHash12() {
         this.parseFormatAndCheck(
                 "#",
                 12,
@@ -127,7 +182,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHash123() {
+    public void testFormatNumberWithPatternHash123() {
         this.parseFormatAndCheck(
                 "#",
                 123,
@@ -136,7 +191,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHash1000() {
+    public void testFormatNumberWithPatternHash1000() {
         this.parseFormatAndCheck(
                 "#",
                 1000,
@@ -145,7 +200,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHash1234() {
+    public void testFormatNumberWithPatternHash1234() {
         this.parseFormatAndCheck(
                 "#",
                 1234,
@@ -154,7 +209,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHash0_025() {
+    public void testFormatNumberWithPatternHash0_025() {
         this.parseFormatAndCheck(
                 "#",
                 0.025,
@@ -163,7 +218,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatExtraHash0_025() {
+    public void testFormatNumberWithPatternExtraHash0_025() {
         this.parseFormatAndCheck(
                 "###",
                 0.025,
@@ -172,7 +227,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestion0() {
+    public void testFormatNumberWithPatternQuestion0() {
         this.parseFormatAndCheck(
                 "?",
                 0,
@@ -181,7 +236,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestion1() {
+    public void testFormatNumberWithPatternQuestion1() {
         this.parseFormatAndCheck(
                 "?",
                 1,
@@ -190,7 +245,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestion12() {
+    public void testFormatNumberWithPatternQuestion12() {
         this.parseFormatAndCheck(
                 "?",
                 12,
@@ -199,7 +254,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestion123() {
+    public void testFormatNumberWithPatternQuestion123() {
         this.parseFormatAndCheck(
                 "?",
                 123,
@@ -208,7 +263,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestion1234() {
+    public void testFormatNumberWithPatternQuestion1234() {
         this.parseFormatAndCheck(
                 "?",
                 1234,
@@ -217,7 +272,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestion0_025() {
+    public void testFormatNumberWithPatternQuestion0_025() {
         this.parseFormatAndCheck(
                 "?",
                 0.025,
@@ -226,7 +281,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatExtraQuestion() {
+    public void testFormatNumberWithPatternExtraQuestion() {
         this.parseFormatAndCheck(
                 "???",
                 12,
@@ -235,7 +290,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZero0() {
+    public void testFormatNumberWithPatternZero0() {
         this.parseFormatAndCheck(
                 "0",
                 0,
@@ -244,7 +299,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZero1() {
+    public void testFormatNumberWithPatternZero1() {
         this.parseFormatAndCheck(
                 "0",
                 1,
@@ -253,7 +308,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZero12() {
+    public void testFormatNumberWithPatternZero12() {
         this.parseFormatAndCheck(
                 "0",
                 12,
@@ -262,7 +317,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZero123() {
+    public void testFormatNumberWithPatternZero123() {
         this.parseFormatAndCheck(
                 "0",
                 123,
@@ -271,7 +326,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZero1000() {
+    public void testFormatNumberWithPatternZero1000() {
         this.parseFormatAndCheck(
                 "0",
                 1000,
@@ -280,7 +335,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZero1234() {
+    public void testFormatNumberWithPatternZero1234() {
         this.parseFormatAndCheck(
                 "0",
                 1234,
@@ -289,7 +344,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZero0_025() {
+    public void testFormatNumberWithPatternZero0_025() {
         this.parseFormatAndCheck(
                 "0",
                 0.025,
@@ -298,7 +353,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatExtraZero() {
+    public void testFormatNumberWithPatternExtraZero() {
         this.parseFormatAndCheck(
                 "0000",
                 12,
@@ -309,7 +364,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // pattern longer than digits
 
     @Test
-    public void testFormatHashHashHashHashHash0() {
+    public void testFormatNumberWithPatternHashHashHashHashHash0() {
         this.parseFormatAndCheck(
                 "#####",
                 0,
@@ -318,7 +373,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashHashHashHashHash1() {
+    public void testFormatNumberWithPatternHashHashHashHashHash1() {
         this.parseFormatAndCheck(
                 "#####",
                 1,
@@ -327,7 +382,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashHashHashHashHash12() {
+    public void testFormatNumberWithPatternHashHashHashHashHash12() {
         this.parseFormatAndCheck(
                 "#####",
                 12,
@@ -336,7 +391,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashHashHashHashHash123() {
+    public void testFormatNumberWithPatternHashHashHashHashHash123() {
         this.parseFormatAndCheck(
                 "#####",
                 123,
@@ -345,7 +400,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashHashHashHashHash1234() {
+    public void testFormatNumberWithPatternHashHashHashHashHash1234() {
         this.parseFormatAndCheck(
                 "#####",
                 1234,
@@ -354,7 +409,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionQuestionQuestionQuestionQuestion0() {
+    public void testFormatNumberWithPatternQuestionQuestionQuestionQuestionQuestion0() {
         this.parseFormatAndCheck(
                 "?????",
                 0,
@@ -363,7 +418,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionQuestionQuestionQuestionQuestion1() {
+    public void testFormatNumberWithPatternQuestionQuestionQuestionQuestionQuestion1() {
         this.parseFormatAndCheck(
                 "?????",
                 1,
@@ -372,7 +427,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionQuestionQuestionQuestionQuestion12() {
+    public void testFormatNumberWithPatternQuestionQuestionQuestionQuestionQuestion12() {
         this.parseFormatAndCheck(
                 "?????",
                 12,
@@ -381,7 +436,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionQuestionQuestionQuestionQuestion123() {
+    public void testFormatNumberWithPatternQuestionQuestionQuestionQuestionQuestion123() {
         this.parseFormatAndCheck(
                 "?????",
                 123,
@@ -390,7 +445,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionQuestionQuestionQuestionQuestion1234() {
+    public void testFormatNumberWithPatternQuestionQuestionQuestionQuestionQuestion1234() {
         this.parseFormatAndCheck(
                 "?????",
                 1234,
@@ -399,7 +454,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroZeroZeroZeroZero0() {
+    public void testFormatNumberWithPatternZeroZeroZeroZeroZero0() {
         this.parseFormatAndCheck(
                 "00000",
                 0,
@@ -408,7 +463,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroZeroZeroZeroZero1() {
+    public void testFormatNumberWithPatternZeroZeroZeroZeroZero1() {
         this.parseFormatAndCheck(
                 "00000",
                 1,
@@ -417,7 +472,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroZeroZeroZeroZero12() {
+    public void testFormatNumberWithPatternZeroZeroZeroZeroZero12() {
         this.parseFormatAndCheck(
                 "00000",
                 12,
@@ -426,7 +481,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroZeroZeroZeroZero123() {
+    public void testFormatNumberWithPatternZeroZeroZeroZeroZero123() {
         this.parseFormatAndCheck(
                 "00000",
                 123,
@@ -435,7 +490,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroZeroZeroZeroZero1234() {
+    public void testFormatNumberWithPatternZeroZeroZeroZeroZero1234() {
         this.parseFormatAndCheck(
                 "00000",
                 1234,
@@ -446,7 +501,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // hash + zero + question
 
     @Test
-    public void testFormatHashHashZeroZeroQuestionQuestionHash5() {
+    public void testFormatNumberWithPatternHashHashZeroZeroQuestionQuestionHash5() {
         this.parseFormatAndCheck(
                 "##00??#",
                 5,
@@ -457,7 +512,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // negative.........................................................................................................
 
     @Test
-    public void testFormatHashHashZeroZeroQuestionQuestionHashNegative5() {
+    public void testFormatNumberWithPatternHashHashZeroZeroQuestionQuestionHashNegative5() {
         this.parseFormatAndCheck(
                 "##00??#",
                 -5,
@@ -468,7 +523,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // plus.............................................................................................................
 
     @Test
-    public void testFormatPlusNegativeNumber() {
+    public void testFormatNumberWithPatternPlusNegativeNumber() {
         this.parseFormatAndCheck(
                 "+#",
                 -5,
@@ -477,7 +532,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatPlusPositiveNumber() {
+    public void testFormatNumberWithPatternPlusPositiveNumber() {
         this.parseFormatAndCheck(
                 "+#",
                 +5,
@@ -488,7 +543,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // minus............................................................................................................
 
     @Test
-    public void testFormatMinusNegativeNumber() {
+    public void testFormatNumberWithPatternMinusNegativeNumber() {
         this.parseFormatAndCheck(
                 "-#",
                 -5,
@@ -497,7 +552,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatMinusPositiveNumber() {
+    public void testFormatNumberWithPatternMinusPositiveNumber() {
         this.parseFormatAndCheck(
                 "-#",
                 +5,
@@ -508,7 +563,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // fraction.......................................................................................................
 
     @Test
-    public void testFormatDecimal0_0() {
+    public void testFormatNumberWithPatternDecimal0_0() {
         this.parseFormatAndCheck(
                 ".",
                 0,
@@ -517,7 +572,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatDecimal0_4() {
+    public void testFormatNumberWithPatternDecimal0_4() {
         this.parseFormatAndCheck(
                 ".",
                 0.4,
@@ -526,7 +581,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatDecimal0_75() {
+    public void testFormatNumberWithPatternDecimal0_75() {
         this.parseFormatAndCheck(
                 ".",
                 0.75,
@@ -537,7 +592,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // fraction hash decimal hash dot............................................................................................
 
     @Test
-    public void testFormatHashDecimal0_0() {
+    public void testFormatNumberWithPatternHashDecimal0_0() {
         this.parseFormatAndCheck(
                 "#.",
                 0.0,
@@ -546,7 +601,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimal0_2() {
+    public void testFormatNumberWithPatternHashDecimal0_2() {
         this.parseFormatAndCheck(
                 "#.",
                 0.2,
@@ -555,7 +610,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimal0_7() {
+    public void testFormatNumberWithPatternHashDecimal0_7() {
         this.parseFormatAndCheck(
                 "#.",
                 0.7,
@@ -564,7 +619,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimal1_4() {
+    public void testFormatNumberWithPatternHashDecimal1_4() {
         this.parseFormatAndCheck(
                 "#.",
                 1.4,
@@ -573,7 +628,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimal1_7() {
+    public void testFormatNumberWithPatternHashDecimal1_7() {
         this.parseFormatAndCheck(
                 "#.",
                 1.7,
@@ -582,7 +637,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimal0_025() {
+    public void testFormatNumberWithPatternHashDecimal0_025() {
         this.parseFormatAndCheck(
                 "#.",
                 0.025,
@@ -593,7 +648,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // fraction space. space dot............................................................................................
 
     @Test
-    public void testFormatQuestionDecimal0_0() {
+    public void testFormatNumberWithPatternQuestionDecimal0_0() {
         this.parseFormatAndCheck(
                 "?.",
                 0.0,
@@ -602,7 +657,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimal0_2() {
+    public void testFormatNumberWithPatternQuestionDecimal0_2() {
         this.parseFormatAndCheck(
                 "?.",
                 0.2,
@@ -611,7 +666,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimal0_7() {
+    public void testFormatNumberWithPatternQuestionDecimal0_7() {
         this.parseFormatAndCheck(
                 "?.",
                 0.7,
@@ -620,7 +675,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimal1_4() {
+    public void testFormatNumberWithPatternQuestionDecimal1_4() {
         this.parseFormatAndCheck(
                 "?.",
                 1.4,
@@ -629,7 +684,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimal1_7() {
+    public void testFormatNumberWithPatternQuestionDecimal1_7() {
         this.parseFormatAndCheck(
                 "?.",
                 1.7,
@@ -638,7 +693,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimal0_025() {
+    public void testFormatNumberWithPatternQuestionDecimal0_025() {
         this.parseFormatAndCheck(
                 "?.",
                 0.025,
@@ -649,7 +704,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // fraction zero. zero dot............................................................................................
 
     @Test
-    public void testFormatZeroDecimal0_0() {
+    public void testFormatNumberWithPatternZeroDecimal0_0() {
         this.parseFormatAndCheck(
                 "0.",
                 0.0,
@@ -658,7 +713,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimal0_2() {
+    public void testFormatNumberWithPatternZeroDecimal0_2() {
         this.parseFormatAndCheck(
                 "0.",
                 0.2,
@@ -667,7 +722,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimal0_7() {
+    public void testFormatNumberWithPatternZeroDecimal0_7() {
         this.parseFormatAndCheck(
                 "0.",
                 0.7,
@@ -676,7 +731,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimal1_4() {
+    public void testFormatNumberWithPatternZeroDecimal1_4() {
         this.parseFormatAndCheck(
                 "0.",
                 1.4,
@@ -685,7 +740,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimal1_7() {
+    public void testFormatNumberWithPatternZeroDecimal1_7() {
         this.parseFormatAndCheck(
                 "0.",
                 1.7,
@@ -694,7 +749,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimal0_025() {
+    public void testFormatNumberWithPatternZeroDecimal0_025() {
         this.parseFormatAndCheck(
                 "0.",
                 0.025,
@@ -703,7 +758,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimal0_075() {
+    public void testFormatNumberWithPatternZeroDecimal0_075() {
         this.parseFormatAndCheck(
                 "0.",
                 0.075,
@@ -714,7 +769,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // fraction space. space dot space ...................................................................................
 
     @Test
-    public void testFormatHashDecimalHash0_0() {
+    public void testFormatNumberWithPatternHashDecimalHash0_0() {
         this.parseFormatAndCheck(
                 "#.#",
                 0.0,
@@ -723,7 +778,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash0_2() {
+    public void testFormatNumberWithPatternHashDecimalHash0_2() {
         this.parseFormatAndCheck(
                 "#.#",
                 0.2,
@@ -732,7 +787,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash0_6() {
+    public void testFormatNumberWithPatternHashDecimalHash0_6() {
         this.parseFormatAndCheck(
                 "#.#",
                 0.6,
@@ -741,7 +796,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash0_01() {
+    public void testFormatNumberWithPatternHashDecimalHash0_01() {
         this.parseFormatAndCheck(
                 "#.#",
                 0.01,
@@ -750,7 +805,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash0_71() {
+    public void testFormatNumberWithPatternHashDecimalHash0_71() {
         this.parseFormatAndCheck(
                 "#.#",
                 0.71,
@@ -759,7 +814,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash0_85() {
+    public void testFormatNumberWithPatternHashDecimalHash0_85() {
         this.parseFormatAndCheck(
                 "#.#",
                 0.85,
@@ -768,7 +823,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash1_0() {
+    public void testFormatNumberWithPatternHashDecimalHash1_0() {
         this.parseFormatAndCheck(
                 "#.#",
                 1,
@@ -777,7 +832,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash1_99() {
+    public void testFormatNumberWithPatternHashDecimalHash1_99() {
         this.parseFormatAndCheck(
                 "#.#",
                 1.99,
@@ -786,7 +841,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash0_025() {
+    public void testFormatNumberWithPatternHashDecimalHash0_025() {
         this.parseFormatAndCheck(
                 "#.#",
                 0.025,
@@ -795,7 +850,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash0_075() {
+    public void testFormatNumberWithPatternHashDecimalHash0_075() {
         this.parseFormatAndCheck(
                 "#.#",
                 0.075,
@@ -804,7 +859,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHash0_0001() {
+    public void testFormatNumberWithPatternHashDecimalHash0_0001() {
         this.parseFormatAndCheck(
                 "#.#",
                 0.0001,
@@ -813,7 +868,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHash0_01() {
+    public void testFormatNumberWithPatternHashDecimalHashHash0_01() {
         this.parseFormatAndCheck(
                 "#.##",
                 0.01,
@@ -822,7 +877,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHash0_012() {
+    public void testFormatNumberWithPatternHashDecimalHashHash0_012() {
         this.parseFormatAndCheck(
                 "#.##",
                 0.012,
@@ -831,7 +886,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHash0_0123() {
+    public void testFormatNumberWithPatternHashDecimalHashHash0_0123() {
         this.parseFormatAndCheck(
                 "#.##",
                 0.0123,
@@ -840,7 +895,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashHash0_001() {
+    public void testFormatNumberWithPatternHashDecimalHashHashHash0_001() {
         this.parseFormatAndCheck(
                 "#.###",
                 0.001,
@@ -849,7 +904,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashHash0_0012() {
+    public void testFormatNumberWithPatternHashDecimalHashHashHash0_0012() {
         this.parseFormatAndCheck(
                 "#.###",
                 0.0012,
@@ -858,7 +913,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashHash0_00123() {
+    public void testFormatNumberWithPatternHashDecimalHashHashHash0_00123() {
         this.parseFormatAndCheck(
                 "#.###",
                 0.00123,
@@ -867,7 +922,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashHash0_001234() {
+    public void testFormatNumberWithPatternHashDecimalHashHashHash0_001234() {
         this.parseFormatAndCheck(
                 "#.###",
                 0.001234,
@@ -878,7 +933,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // fraction space. space dot space ...................................................................................
 
     @Test
-    public void testFormatQuestionDecimalQuestion0_0() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion0_0() {
         this.parseFormatAndCheck(
                 "?.?",
                 0.0,
@@ -887,7 +942,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestion0_2() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion0_2() {
         this.parseFormatAndCheck(
                 "?.?",
                 0.2,
@@ -896,7 +951,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestion0_6() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion0_6() {
         this.parseFormatAndCheck(
                 "?.?",
                 0.6,
@@ -905,7 +960,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestion0_71() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion0_71() {
         this.parseFormatAndCheck(
                 "?.?",
                 0.71,
@@ -914,7 +969,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestion0_85() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion0_85() {
         this.parseFormatAndCheck(
                 "?.?",
                 0.85,
@@ -923,7 +978,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestion1_0() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion1_0() {
         this.parseFormatAndCheck(
                 "?.?",
                 1,
@@ -932,7 +987,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestion1_99() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion1_99() {
         this.parseFormatAndCheck(
                 "?.?",
                 1.99,
@@ -941,7 +996,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestion0_025() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion0_025() {
         this.parseFormatAndCheck(
                 "?.?",
                 0.025,
@@ -950,7 +1005,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestion0_075() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion0_075() {
         this.parseFormatAndCheck(
                 "?.?",
                 0.075,
@@ -959,7 +1014,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestion0_0001() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestion0_0001() {
         this.parseFormatAndCheck(
                 "?.?",
                 0.0001,
@@ -970,7 +1025,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // fraction zero. zero dot zero ...................................................................................
 
     @Test
-    public void testFormatZeroDecimalZero0_0() {
+    public void testFormatNumberWithPatternZeroDecimalZero0_0() {
         this.parseFormatAndCheck(
                 "0.0",
                 0.0,
@@ -979,7 +1034,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero0_2() {
+    public void testFormatNumberWithPatternZeroDecimalZero0_2() {
         this.parseFormatAndCheck(
                 "0.0",
                 0.2,
@@ -988,7 +1043,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero0_6() {
+    public void testFormatNumberWithPatternZeroDecimalZero0_6() {
         this.parseFormatAndCheck(
                 "0.0",
                 0.6,
@@ -997,7 +1052,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero0_71() {
+    public void testFormatNumberWithPatternZeroDecimalZero0_71() {
         this.parseFormatAndCheck(
                 "0.0",
                 0.71,
@@ -1006,7 +1061,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero0_85() {
+    public void testFormatNumberWithPatternZeroDecimalZero0_85() {
         this.parseFormatAndCheck(
                 "0.0",
                 0.85,
@@ -1015,7 +1070,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero1_0() {
+    public void testFormatNumberWithPatternZeroDecimalZero1_0() {
         this.parseFormatAndCheck(
                 "0.0",
                 1,
@@ -1024,7 +1079,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero1_25() {
+    public void testFormatNumberWithPatternZeroDecimalZero1_25() {
         this.parseFormatAndCheck(
                 "0.0",
                 1.25,
@@ -1033,7 +1088,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero1_975() {
+    public void testFormatNumberWithPatternZeroDecimalZero1_975() {
         this.parseFormatAndCheck(
                 "0.0",
                 1.975,
@@ -1042,7 +1097,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero0_025() {
+    public void testFormatNumberWithPatternZeroDecimalZero0_025() {
         this.parseFormatAndCheck(
                 "0.0",
                 0.025,
@@ -1051,7 +1106,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero0_075() {
+    public void testFormatNumberWithPatternZeroDecimalZero0_075() {
         this.parseFormatAndCheck(
                 "0.0",
                 0.075,
@@ -1060,7 +1115,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZero0_0005() {
+    public void testFormatNumberWithPatternZeroDecimalZero0_0005() {
         this.parseFormatAndCheck(
                 "0.0",
                 0.0005,
@@ -1071,7 +1126,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // long fraction patterns
 
     @Test
-    public void testFormatHashDecimalHashHashHash0_0000005() {
+    public void testFormatNumberWithPatternHashDecimalHashHashHash0_0000005() {
         this.parseFormatAndCheck(
                 "#.###",
                 0.0000005,
@@ -1080,7 +1135,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionQuestionQuestion0_0000005() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionQuestionQuestion0_0000005() {
         this.parseFormatAndCheck(
                 "?.???",
                 0.0000005,
@@ -1089,7 +1144,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroZeroZero0_0000005() {
+    public void testFormatNumberWithPatternZeroDecimalZeroZeroZero0_0000005() {
         this.parseFormatAndCheck(
                 "0.000",
                 0.0000005,
@@ -1100,7 +1155,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // hash space zero.................................................................................
 
     @Test
-    public void testFormatHashDecimalSpaceHash1_05() {
+    public void testFormatNumberWithPatternHashDecimalSpaceHash1_05() {
         this.parseFormatAndCheck(
                 "?.?#",
                 1.05,
@@ -1109,7 +1164,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalZeroHash1_05() {
+    public void testFormatNumberWithPatternHashDecimalZeroHash1_05() {
         this.parseFormatAndCheck(
                 "?.?0",
                 1.05,
@@ -1118,7 +1173,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalSpaceZeroHash1_00005() {
+    public void testFormatNumberWithPatternHashDecimalSpaceZeroHash1_00005() {
         this.parseFormatAndCheck(
                 "?.?",
                 1.005,
@@ -1131,7 +1186,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // zero exponent minus.......................................................................................
 
     @Test
-    public void testFormatZeroExponentZero0() {
+    public void testFormatNumberWithPatternZeroExponentZero0() {
         this.parseFormatAndCheck(
                 "0E-0",
                 0,
@@ -1140,7 +1195,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroExponentZero1() {
+    public void testFormatNumberWithPatternZeroExponentZero1() {
         this.parseFormatAndCheck(
                 "0E-0",
                 1,
@@ -1149,7 +1204,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroExponentZero12() {
+    public void testFormatNumberWithPatternZeroExponentZero12() {
         this.parseFormatAndCheck(
                 "0E-0",
                 12,
@@ -1158,7 +1213,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroExponentZero90() {
+    public void testFormatNumberWithPatternZeroExponentZero90() {
         this.parseFormatAndCheck(
                 "0E-0",
                 90,
@@ -1167,7 +1222,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroExponentZero123() {
+    public void testFormatNumberWithPatternZeroExponentZero123() {
         this.parseFormatAndCheck(
                 "0E-0",
                 123,
@@ -1176,7 +1231,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroExponentZero123456789() {
+    public void testFormatNumberWithPatternZeroExponentZero123456789() {
         this.parseFormatNumberAndCheck(
                 "0E-0",
                 "12345678901",
@@ -1185,7 +1240,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroExponentZero0_0123() {
+    public void testFormatNumberWithPatternZeroExponentZero0_0123() {
         this.parseFormatAndCheck(
                 "0E-0",
                 0.0123,
@@ -1196,7 +1251,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // hash exponent minus.......................................................................................
 
     @Test
-    public void testFormatHashExponentHash0() {
+    public void testFormatNumberWithPatternHashExponentHash0() {
         this.parseFormatAndCheck(
                 "#E-#",
                 0,
@@ -1205,7 +1260,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashExponentHash1() {
+    public void testFormatNumberWithPatternHashExponentHash1() {
         this.parseFormatAndCheck(
                 "#E-#",
                 1,
@@ -1214,7 +1269,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashExponentHash12() {
+    public void testFormatNumberWithPatternHashExponentHash12() {
         this.parseFormatAndCheck(
                 "#E-#",
                 12,
@@ -1223,7 +1278,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashExponentHash19() {
+    public void testFormatNumberWithPatternHashExponentHash19() {
         this.parseFormatAndCheck(
                 "#E-#",
                 19,
@@ -1232,7 +1287,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashExponentHash90() {
+    public void testFormatNumberWithPatternHashExponentHash90() {
         this.parseFormatAndCheck(
                 "#E-#",
                 90,
@@ -1241,7 +1296,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashExponentHash123() {
+    public void testFormatNumberWithPatternHashExponentHash123() {
         this.parseFormatAndCheck(
                 "#E-#",
                 123,
@@ -1250,7 +1305,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashExponentHash1234567890() {
+    public void testFormatNumberWithPatternHashExponentHash1234567890() {
         this.parseFormatNumberAndCheck(
                 "#E-#",
                 "12345678901",
@@ -1259,7 +1314,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashExponentHash0_0123() {
+    public void testFormatNumberWithPatternHashExponentHash0_0123() {
         this.parseFormatAndCheck(
                 "#E-#",
                 0.0123,
@@ -1270,7 +1325,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // question exponent minus.......................................................................................
 
     @Test
-    public void testFormatQuestionExponentQuestion0() {
+    public void testFormatNumberWithPatternQuestionExponentQuestion0() {
         this.parseFormatAndCheck(
                 "?E-?",
                 0,
@@ -1279,7 +1334,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionExponentQuestion1() {
+    public void testFormatNumberWithPatternQuestionExponentQuestion1() {
         this.parseFormatAndCheck(
                 "?E-?",
                 1,
@@ -1288,7 +1343,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionExponentQuestion12() {
+    public void testFormatNumberWithPatternQuestionExponentQuestion12() {
         this.parseFormatAndCheck(
                 "?E-?",
                 12,
@@ -1297,7 +1352,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionExponentQuestion19() {
+    public void testFormatNumberWithPatternQuestionExponentQuestion19() {
         this.parseFormatAndCheck(
                 "?E-?",
                 19,
@@ -1306,7 +1361,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionExponentQuestion90() {
+    public void testFormatNumberWithPatternQuestionExponentQuestion90() {
         this.parseFormatAndCheck(
                 "?E-?",
                 90,
@@ -1315,7 +1370,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionExponentQuestion123() {
+    public void testFormatNumberWithPatternQuestionExponentQuestion123() {
         this.parseFormatAndCheck(
                 "?E-?",
                 123,
@@ -1324,7 +1379,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionExponentQuestion1234567890() {
+    public void testFormatNumberWithPatternQuestionExponentQuestion1234567890() {
         this.parseFormatNumberAndCheck(
                 "?E-?",
                 "12345678901",
@@ -1333,7 +1388,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionExponentQuestion0_0123() {
+    public void testFormatNumberWithPatternQuestionExponentQuestion0_0123() {
         this.parseFormatAndCheck(
                 "?E-?",
                 0.0123,
@@ -1344,7 +1399,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // zero decimal Exponent.......................................................................................
 
     @Test
-    public void testFormatZeroDecimalExponentZero0() {
+    public void testFormatNumberWithPatternZeroDecimalExponentZero0() {
         this.parseFormatAndCheck(
                 "0.E-0",
                 0,
@@ -1353,7 +1408,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalExponentZero1() {
+    public void testFormatNumberWithPatternZeroDecimalExponentZero1() {
         this.parseFormatAndCheck(
                 "0.E-0",
                 1,
@@ -1362,7 +1417,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalExponentZero12() {
+    public void testFormatNumberWithPatternZeroDecimalExponentZero12() {
         this.parseFormatAndCheck(
                 "0.E-0",
                 12,
@@ -1371,7 +1426,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalExponentZero19() {
+    public void testFormatNumberWithPatternZeroDecimalExponentZero19() {
         this.parseFormatAndCheck(
                 "0.E-0",
                 19,
@@ -1380,7 +1435,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalExponentZero90() {
+    public void testFormatNumberWithPatternZeroDecimalExponentZero90() {
         this.parseFormatAndCheck(
                 "0.E-0",
                 90,
@@ -1389,7 +1444,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalExponentZero123() {
+    public void testFormatNumberWithPatternZeroDecimalExponentZero123() {
         this.parseFormatAndCheck(
                 "0.E-0",
                 123,
@@ -1398,7 +1453,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalExponentZero1234567890() {
+    public void testFormatNumberWithPatternZeroDecimalExponentZero1234567890() {
         this.parseFormatNumberAndCheck(
                 "0.E-0",
                 "12345678901",
@@ -1407,7 +1462,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalExponentZero0_0123() {
+    public void testFormatNumberWithPatternZeroDecimalExponentZero0_0123() {
         this.parseFormatAndCheck(
                 "0.E-0",
                 0.0123,
@@ -1418,7 +1473,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // hash decimal Exponent.......................................................................................
 
     @Test
-    public void testFormatHashDecimalExponentHash0() {
+    public void testFormatNumberWithPatternHashDecimalExponentHash0() {
         this.parseFormatAndCheck(
                 "#.E-#",
                 0,
@@ -1427,7 +1482,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalExponentHash1() {
+    public void testFormatNumberWithPatternHashDecimalExponentHash1() {
         this.parseFormatAndCheck(
                 "#.E-#",
                 1,
@@ -1436,7 +1491,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalExponentHash12() {
+    public void testFormatNumberWithPatternHashDecimalExponentHash12() {
         this.parseFormatAndCheck(
                 "#.E-#",
                 12,
@@ -1445,7 +1500,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalExponentHash19() {
+    public void testFormatNumberWithPatternHashDecimalExponentHash19() {
         this.parseFormatAndCheck(
                 "#.E-#",
                 19,
@@ -1454,7 +1509,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalExponentHash129() {
+    public void testFormatNumberWithPatternHashDecimalExponentHash129() {
         this.parseFormatAndCheck(
                 "#.E-#",
                 129,
@@ -1463,7 +1518,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalExponentHash12345678901() {
+    public void testFormatNumberWithPatternHashDecimalExponentHash12345678901() {
         this.parseFormatNumberAndCheck(
                 "#.E-#",
                 "12345678901",
@@ -1472,7 +1527,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalExponentHash0_0123() {
+    public void testFormatNumberWithPatternHashDecimalExponentHash0_0123() {
         this.parseFormatAndCheck(
                 "#.E-#",
                 0.0123,
@@ -1483,7 +1538,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // question decimal Exponent.......................................................................................
 
     @Test
-    public void testFormatQuestionDecimalExponentQuestion0() {
+    public void testFormatNumberWithPatternQuestionDecimalExponentQuestion0() {
         this.parseFormatAndCheck(
                 "?.E-?",
                 0,
@@ -1492,7 +1547,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalExponentQuestion1() {
+    public void testFormatNumberWithPatternQuestionDecimalExponentQuestion1() {
         this.parseFormatAndCheck(
                 "?.E-?",
                 1,
@@ -1501,7 +1556,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalExponentQuestion12() {
+    public void testFormatNumberWithPatternQuestionDecimalExponentQuestion12() {
         this.parseFormatAndCheck(
                 "?.E-?",
                 12,
@@ -1510,7 +1565,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalExponentQuestion19() {
+    public void testFormatNumberWithPatternQuestionDecimalExponentQuestion19() {
         this.parseFormatAndCheck(
                 "?.E-?",
                 19,
@@ -1519,7 +1574,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalExponentQuestion123() {
+    public void testFormatNumberWithPatternQuestionDecimalExponentQuestion123() {
         this.parseFormatAndCheck(
                 "?.E-?",
                 123,
@@ -1528,7 +1583,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalExponentQuestion12345678901() {
+    public void testFormatNumberWithPatternQuestionDecimalExponentQuestion12345678901() {
         this.parseFormatNumberAndCheck(
                 "?.E-?",
                 "12345678901",
@@ -1537,7 +1592,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalExponentQuestion0_0123() {
+    public void testFormatNumberWithPatternQuestionDecimalExponentQuestion0_0123() {
         this.parseFormatAndCheck(
                 "?.E-?",
                 0.0123,
@@ -1546,7 +1601,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroExponentZero0() {
+    public void testFormatNumberWithPatternZeroDecimalZeroExponentZero0() {
         this.parseFormatAndCheck(
                 "0.0E-0",
                 0,
@@ -1555,7 +1610,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroExponentZero1() {
+    public void testFormatNumberWithPatternZeroDecimalZeroExponentZero1() {
         this.parseFormatAndCheck(
                 "0.0E-0",
                 1,
@@ -1564,7 +1619,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroExponentZero12() {
+    public void testFormatNumberWithPatternZeroDecimalZeroExponentZero12() {
         this.parseFormatAndCheck(
                 "0.0E-0",
                 12,
@@ -1573,7 +1628,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroExponentZero123() {
+    public void testFormatNumberWithPatternZeroDecimalZeroExponentZero123() {
         this.parseFormatAndCheck(
                 "0.0E-0",
                 123,
@@ -1582,7 +1637,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroExponentZero129() {
+    public void testFormatNumberWithPatternZeroDecimalZeroExponentZero129() {
         this.parseFormatAndCheck(
                 "0.0E-0",
                 129,
@@ -1591,7 +1646,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroExponentZero12345678901() {
+    public void testFormatNumberWithPatternZeroDecimalZeroExponentZero12345678901() {
         this.parseFormatNumberAndCheck(
                 "0.0E-0",
                 "12345678901",
@@ -1600,7 +1655,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroExponentZero0_0123() {
+    public void testFormatNumberWithPatternZeroDecimalZeroExponentZero0_0123() {
         this.parseFormatAndCheck(
                 "0.E-0",
                 0.0123,
@@ -1611,7 +1666,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // hash decimal hash Exponent.......................................................................................
 
     @Test
-    public void testFormatHashDecimalHashExponentHash0() {
+    public void testFormatNumberWithPatternHashDecimalHashExponentHash0() {
         this.parseFormatAndCheck(
                 "#.#E-#",
                 0,
@@ -1620,7 +1675,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashExponentHash1() {
+    public void testFormatNumberWithPatternHashDecimalHashExponentHash1() {
         this.parseFormatAndCheck(
                 "#.#E-#",
                 1,
@@ -1629,7 +1684,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashExponentHash12() {
+    public void testFormatNumberWithPatternHashDecimalHashExponentHash12() {
         this.parseFormatAndCheck(
                 "#.#E-#",
                 12,
@@ -1638,7 +1693,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashExponentHash123() {
+    public void testFormatNumberWithPatternHashDecimalHashExponentHash123() {
         this.parseFormatAndCheck(
                 "#.#E-#",
                 123,
@@ -1647,7 +1702,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashExponentHash129() {
+    public void testFormatNumberWithPatternHashDecimalHashExponentHash129() {
         this.parseFormatAndCheck(
                 "#.#E-#",
                 129,
@@ -1656,7 +1711,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashExponentHash12345678901() {
+    public void testFormatNumberWithPatternHashDecimalHashExponentHash12345678901() {
         this.parseFormatNumberAndCheck(
                 "#.#E-#",
                 "12345678901",
@@ -1665,7 +1720,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashExponentHash0_0123() {
+    public void testFormatNumberWithPatternHashDecimalHashExponentHash0_0123() {
         this.parseFormatAndCheck(
                 "#.#E-#",
                 0.0123,
@@ -1676,7 +1731,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // question decimal question Exponent.......................................................................................
 
     @Test
-    public void testFormatQuestionDecimalQuestionExponentQuestion0() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionExponentQuestion0() {
         this.parseFormatAndCheck(
                 "?.?E-?",
                 0,
@@ -1685,7 +1740,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionExponentQuestion1() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionExponentQuestion1() {
         this.parseFormatAndCheck(
                 "?.?E-?",
                 1,
@@ -1694,7 +1749,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionExponentQuestion12() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionExponentQuestion12() {
         this.parseFormatAndCheck(
                 "?.?E-?",
                 12,
@@ -1703,7 +1758,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionExponentQuestion122() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionExponentQuestion122() {
         this.parseFormatAndCheck(
                 "?.?E-?",
                 122,
@@ -1712,7 +1767,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionExponentQuestion129() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionExponentQuestion129() {
         this.parseFormatAndCheck(
                 "?.?E-?",
                 129,
@@ -1721,7 +1776,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionExponentQuestion12345678901() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionExponentQuestion12345678901() {
         this.parseFormatNumberAndCheck(
                 "?.?E-?",
                 "12345678901",
@@ -1730,7 +1785,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionExponentQuestion0_0123() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionExponentQuestion0_0123() {
         this.parseFormatAndCheck(
                 "?.?E-?",
                 0.0123,
@@ -1741,7 +1796,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // zero decimal zero Exponent plus.......................................................................................
 
     @Test
-    public void testFormatZeroDecimalZeroZeroExponentZero0() {
+    public void testFormatNumberWithPatternZeroDecimalZeroZeroExponentZero0() {
         this.parseFormatAndCheck(
                 "0.00E-0",
                 0,
@@ -1750,7 +1805,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroZeroExponentZero1() {
+    public void testFormatNumberWithPatternZeroDecimalZeroZeroExponentZero1() {
         this.parseFormatAndCheck(
                 "0.00E-0",
                 1,
@@ -1759,7 +1814,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroZeroExponentZero12() {
+    public void testFormatNumberWithPatternZeroDecimalZeroZeroExponentZero12() {
         this.parseFormatAndCheck(
                 "0.00E-0",
                 12,
@@ -1768,7 +1823,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroZeroExponentZero123_1() {
+    public void testFormatNumberWithPatternZeroDecimalZeroZeroExponentZero123_1() {
         this.parseFormatAndCheck(
                 "0.00E-0",
                 123.1,
@@ -1777,7 +1832,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroZeroExponentZero124_9() {
+    public void testFormatNumberWithPatternZeroDecimalZeroZeroExponentZero124_9() {
         this.parseFormatAndCheck(
                 "0.00E-0",
                 124.9,
@@ -1786,7 +1841,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroZeroExponentHash12345678901() {
+    public void testFormatNumberWithPatternZeroDecimalZeroZeroExponentHash12345678901() {
         this.parseFormatNumberAndCheck(
                 "0.00E-#",
                 "12345678901",
@@ -1795,7 +1850,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatZeroDecimalZeroZeroExponentZero0_0123() {
+    public void testFormatNumberWithPatternZeroDecimalZeroZeroExponentZero0_0123() {
         this.parseFormatAndCheck(
                 "0.00E-0",
                 0.0123,
@@ -1806,7 +1861,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // hash decimal hash Exponent.......................................................................................
 
     @Test
-    public void testFormatHashDecimalHashHashExponentHash0() {
+    public void testFormatNumberWithPatternHashDecimalHashHashExponentHash0() {
         this.parseFormatAndCheck(
                 "#.##E-#",
                 0,
@@ -1815,7 +1870,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashExponentHash1() {
+    public void testFormatNumberWithPatternHashDecimalHashHashExponentHash1() {
         this.parseFormatAndCheck(
                 "#.##E-#",
                 1,
@@ -1824,7 +1879,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashExponentHash12() {
+    public void testFormatNumberWithPatternHashDecimalHashHashExponentHash12() {
         this.parseFormatAndCheck(
                 "#.##E-#",
                 12,
@@ -1833,7 +1888,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashExponentHash122_1() {
+    public void testFormatNumberWithPatternHashDecimalHashHashExponentHash122_1() {
         this.parseFormatAndCheck(
                 "#.##E-#",
                 122.1,
@@ -1842,7 +1897,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashExponentHash122_9() {
+    public void testFormatNumberWithPatternHashDecimalHashHashExponentHash122_9() {
         this.parseFormatAndCheck(
                 "#.##E-#",
                 122.9,
@@ -1851,7 +1906,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashExponentHash12345678901() {
+    public void testFormatNumberWithPatternHashDecimalHashHashExponentHash12345678901() {
         this.parseFormatNumberAndCheck(
                 "#.##E-#",
                 "12345678901",
@@ -1860,7 +1915,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatHashDecimalHashHashExponentHash0_0123() {
+    public void testFormatNumberWithPatternHashDecimalHashHashExponentHash0_0123() {
         this.parseFormatAndCheck(
                 "#.##E-#",
                 0.0123,
@@ -1871,7 +1926,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // question decimal question Exponent.......................................................................................
 
     @Test
-    public void testFormatQuestionDecimalQuestionQuestionExponentQuestion0() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionQuestionExponentQuestion0() {
         this.parseFormatAndCheck(
                 "?.??E-?",
                 0,
@@ -1880,7 +1935,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionQuestionExponentQuestion1() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionQuestionExponentQuestion1() {
         this.parseFormatAndCheck(
                 "?.??E-?",
                 1,
@@ -1889,7 +1944,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionQuestionExponentQuestion12() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionQuestionExponentQuestion12() {
         this.parseFormatAndCheck(
                 "?.??E-?",
                 12,
@@ -1898,7 +1953,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionQuestionExponentQuestion122_1() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionQuestionExponentQuestion122_1() {
         this.parseFormatAndCheck(
                 "?.??E-?",
                 122.1,
@@ -1907,7 +1962,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionQuestionExponentQuestion122_9() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionQuestionExponentQuestion122_9() {
         this.parseFormatAndCheck(
                 "?.??E-?",
                 122.9,
@@ -1916,7 +1971,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionQuestionExponentQuestion12345678901() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionQuestionExponentQuestion12345678901() {
         this.parseFormatNumberAndCheck(
                 "?.??E-?",
                 "12345678901",
@@ -1925,7 +1980,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatQuestionDecimalQuestionQuestionExponentQuestion0_0123() {
+    public void testFormatNumberWithPatternQuestionDecimalQuestionQuestionExponentQuestion0_0123() {
         this.parseFormatAndCheck(
                 "?.??E-?",
                 0.0123,
@@ -1938,7 +1993,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // currency .........................................................................................
 
     @Test
-    public void testFormatCurrency() {
+    public void testFormatNumberWithPatternCurrency() {
         this.parseFormatAndCheck(
                 "$000",
                 100,
@@ -1949,7 +2004,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // percentage .........................................................................................
 
     @Test
-    public void testFormatPercentage0() {
+    public void testFormatNumberWithPatternPercentage0() {
         this.parseFormatAndCheck(
                 "0%",
                 0,
@@ -1958,7 +2013,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatPercentagePositive1() {
+    public void testFormatNumberWithPatternPercentagePositive1() {
         this.parseFormatAndCheck(
                 "0%",
                 1,
@@ -1967,7 +2022,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatPercentageNegative1() {
+    public void testFormatNumberWithPatternPercentageNegative1() {
         this.parseFormatAndCheck(
                 "0%",
                 -1,
@@ -1976,7 +2031,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatPercentagePositive0_01() {
+    public void testFormatNumberWithPatternPercentagePositive0_01() {
         this.parseFormatAndCheck(
                 "0%",
                 0.01,
@@ -1985,7 +2040,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatPercentagePositive0_001() {
+    public void testFormatNumberWithPatternPercentagePositive0_001() {
         this.parseFormatAndCheck(
                 "0.#%",
                 0.001,
@@ -1996,7 +2051,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // groupSeparator...................................................................................................
 
     @Test
-    public void testFormatGroupSeparator0() {
+    public void testFormatNumberWithPatternGroupSeparator0() {
         this.parseFormatAndCheck(
                 "#,0",
                 0,
@@ -2005,7 +2060,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparatorPositive1() {
+    public void testFormatNumberWithPatternGroupSeparatorPositive1() {
         this.parseFormatAndCheck(
                 "#,0",
                 1,
@@ -2014,7 +2069,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparatorNegative1() {
+    public void testFormatNumberWithPatternGroupSeparatorNegative1() {
         this.parseFormatAndCheck(
                 "#,0",
                 -1,
@@ -2023,7 +2078,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparator12() {
+    public void testFormatNumberWithPatternGroupSeparator12() {
         this.parseFormatAndCheck(
                 "#,0",
                 12,
@@ -2032,7 +2087,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparator123() {
+    public void testFormatNumberWithPatternGroupSeparator123() {
         this.parseFormatAndCheck(
                 "#,0",
                 123,
@@ -2041,7 +2096,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparator1234() {
+    public void testFormatNumberWithPatternGroupSeparator1234() {
         this.parseFormatAndCheck(
                 "#,0",
                 1234,
@@ -2050,7 +2105,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparator12345() {
+    public void testFormatNumberWithPatternGroupSeparator12345() {
         this.parseFormatAndCheck(
                 "#,0",
                 12345,
@@ -2059,7 +2114,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparator123456() {
+    public void testFormatNumberWithPatternGroupSeparator123456() {
         this.parseFormatAndCheck(
                 "#,0",
                 123456,
@@ -2068,7 +2123,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparator1234567() {
+    public void testFormatNumberWithPatternGroupSeparator1234567() {
         this.parseFormatAndCheck(
                 "#,0",
                 1234567,
@@ -2077,7 +2132,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparatorGroupSeparator1234567() {
+    public void testFormatNumberWithPatternGroupSeparatorGroupSeparator1234567() {
         this.parseFormatAndCheck(
                 "#,0",
                 1234567,
@@ -2086,7 +2141,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparator0_1() {
+    public void testFormatNumberWithPatternGroupSeparator0_1() {
         this.parseFormatAndCheck(
                 "#,#.#",
                 0.1,
@@ -2097,7 +2152,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     // groupSeparator multiplier .........................................................................................
 
     @Test
-    public void testFormatGroupSeparatorDividerDigitComma0() {
+    public void testFormatNumberWithPatternGroupSeparatorDividerDigitComma0() {
         this.parseFormatAndCheck(
                 "0,",
                 0,
@@ -2106,7 +2161,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparatorDividerCommaDecimal12345() {
+    public void testFormatNumberWithPatternGroupSeparatorDividerCommaDecimal12345() {
         this.parseFormatAndCheck(
                 "0,.0#######,",
                 12345,
@@ -2115,7 +2170,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparatorDividerCommaTextLiteralDecimal12345() {
+    public void testFormatNumberWithPatternGroupSeparatorDividerCommaTextLiteralDecimal12345() {
         this.parseFormatAndCheck(
                 "0,\"Text\".0#######,",
                 12345,
@@ -2124,7 +2179,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Test
-    public void testFormatGroupSeparatorDividerCommaCommaDecimal123456789() {
+    public void testFormatNumberWithPatternGroupSeparatorDividerCommaCommaDecimal123456789() {
         this.parseFormatAndCheck(
                 "0,,.0000##########,",
                 123456789,
