@@ -22,6 +22,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * This {@link SpreadsheetFormatter} selects one of its given {@link SpreadsheetFormatter} using the type of the value.
@@ -62,12 +63,21 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
                 value
         );
         // if the formatter didnt work format with text
-        return formatter.format(
-                value,
-                context
-        ).or(
+        return or(
+                formatter.format(
+                        value,
+                        context
+                ),
                 () -> this.text.format(value, context)
         );
+    }
+
+    // Missing GWT JRE method Optional#or(Supplier)
+    private Optional<TextNode> or(final Optional<TextNode> value,
+                                  final Supplier<Optional<TextNode>> or) {
+        return value.isPresent() ?
+                value :
+                or.get();
     }
 
     final SpreadsheetFormatter date;

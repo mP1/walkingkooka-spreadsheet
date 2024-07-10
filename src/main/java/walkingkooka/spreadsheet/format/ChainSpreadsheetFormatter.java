@@ -24,6 +24,7 @@ import walkingkooka.tree.text.TextNode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * A {@link SpreadsheetFormatter} that forms a chain trying one or many {@link SpreadsheetFormatter formatters}.
@@ -67,8 +68,14 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
     public Optional<TextNode> format(final Object value,
                                      final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
-                .flatMap(f -> f.format(value, context).stream())
+                .flatMap(f -> optionalStream(f.format(value, context)))
                 .findFirst();
+    }
+
+    // TODO Missing GWT JRE Optional#stream
+    private Stream<TextNode> optionalStream(final Optional<TextNode> optional) {
+        return optional.map(v -> Stream.of(v))
+                .orElse(Stream.of());
     }
 
     final List<SpreadsheetFormatter> formatters;
