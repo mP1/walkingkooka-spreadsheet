@@ -52,7 +52,7 @@ final class ContextFormatTextSpreadsheetFormatter implements SpreadsheetFormatte
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
-        return Optional.empty();
+        return NO_TEXT_COMPONENTS;
     }
 
     @Override
