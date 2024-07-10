@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -60,6 +61,11 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
                         ) :
                         null
         );
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
     }
 
     // Object...........................................................................................................

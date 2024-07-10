@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * Individual components or tokens with an entire pattern.
+ * Individual textComponents or tokens with an entire pattern.
  */
 abstract class SpreadsheetPatternSpreadsheetFormatterNumberComponent {
 

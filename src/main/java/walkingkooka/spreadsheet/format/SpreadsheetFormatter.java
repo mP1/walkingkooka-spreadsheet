@@ -22,6 +22,7 @@ import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -64,4 +65,10 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
     default Converter<SpreadsheetConverterContext> converter() {
         return SpreadsheetFormatterConverter.with(this);
     }
+
+    /**
+     * Returns a list of {@link SpreadsheetFormatterSelectorTextComponent} if this {@link SpreadsheetFormatter} supports
+     * tokenizing its pattern. A {@link SpreadsheetFormatterContext} could be useful such as displaying day names in the label for an {@link SpreadsheetFormatterSelectorTextComponentAlternative}.
+     */
+    Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context);
 }

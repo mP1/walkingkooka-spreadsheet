@@ -241,7 +241,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
     }
 
     /**
-     * Components represent each of the components of the original pattern.
+     * Components represent each of the textComponents of the original pattern.
      */
     final List<SpreadsheetPatternSpreadsheetFormatterNumberComponent> components = Lists.array();
 

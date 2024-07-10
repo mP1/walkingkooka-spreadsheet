@@ -23,6 +23,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -206,6 +207,11 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
                         text.substring(0, last) :
                         text
         );
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
     }
 
     // Object...........................................................................................................

@@ -24,7 +24,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Holds a date value along with the components and original text.
+ * Holds a date value along with the textComponents and original text.
  */
 public final class SpreadsheetDateParserToken extends SpreadsheetParentParserToken {
 
@@ -37,7 +37,7 @@ public final class SpreadsheetDateParserToken extends SpreadsheetParentParserTok
     }
 
     /**
-     * Creates a {@link LocalDate} parse the components in this {@link SpreadsheetDateParserToken}.
+     * Creates a {@link LocalDate} parse the textComponents in this {@link SpreadsheetDateParserToken}.
      */
     public LocalDate toLocalDate(final DateTimeContext context) {
         return SpreadsheetParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(

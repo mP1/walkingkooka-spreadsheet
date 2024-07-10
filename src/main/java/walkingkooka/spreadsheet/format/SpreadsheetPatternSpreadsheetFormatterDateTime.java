@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserTok
 
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -91,6 +92,11 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
                 context,
                 this.twelveHour,
                 this.millisecondDecimals);
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
     }
 
     private final boolean twelveHour;

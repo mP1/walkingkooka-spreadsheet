@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -76,6 +77,11 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
                 value,
                 context
         ).map(t -> t.setColor(this.color(context)));
+    }
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        throw new UnsupportedOperationException();
     }
 
     /**

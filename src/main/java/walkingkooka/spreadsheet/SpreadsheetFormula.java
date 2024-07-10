@@ -539,7 +539,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     /**
-     * Creates an JSON object with all the components of this formula.
+     * Creates an JSON object with all the textComponents of this formula.
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         // always marshall formula text
