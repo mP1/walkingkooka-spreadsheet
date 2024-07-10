@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -155,6 +157,40 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                 formatter,
                 value,
                 this.createContext()
+        );
+    }
+
+    // textComponentsAndCheck...........................................................................................
+
+    default void textComponentsAndCheck(final SpreadsheetFormatterContext context) {
+        this.textComponentsAndCheck(
+                context,
+                Optional.empty()
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetFormatterContext context,
+                                        final SpreadsheetFormatterSelectorTextComponent... expected) {
+        this.textComponentsAndCheck(
+                context,
+                Lists.of(expected)
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetFormatterContext context,
+                                        final List<SpreadsheetFormatterSelectorTextComponent> expected) {
+        this.textComponentsAndCheck(
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetFormatterContext context,
+                                        final Optional<List<SpreadsheetFormatterSelectorTextComponent>> expected) {
+        this.textComponentsAndCheck(
+                this.createFormatter(),
+                context,
+                expected
         );
     }
 
