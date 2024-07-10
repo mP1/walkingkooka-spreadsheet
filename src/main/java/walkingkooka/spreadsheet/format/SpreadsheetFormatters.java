@@ -44,6 +44,23 @@ import java.util.function.Function;
 public final class SpreadsheetFormatters implements PublicStaticHelper {
 
     /**
+     * {@see AutomaticSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter automatic(final SpreadsheetFormatter date,
+                                                 final SpreadsheetFormatter dateTime,
+                                                 final SpreadsheetFormatter number,
+                                                 final SpreadsheetFormatter text,
+                                                 final SpreadsheetFormatter time) {
+        return AutomaticSpreadsheetFormatter.with(
+                date,
+                dateTime,
+                number,
+                text,
+                time
+        );
+    }
+
+    /**
      * {@see ChainSpreadsheetFormatter}
      */
     public static SpreadsheetFormatter chain(final List<SpreadsheetFormatter> formatters) {
