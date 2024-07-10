@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public final class ContextFormatTextSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<ContextFormatTextSpreadsheetFormatter> {
+public final class ContextFormatTextSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ContextFormatTextSpreadsheetFormatter> {
 
     private final static BigDecimal BIG_DECIMAL = BigDecimal.valueOf(123);
     private final static String BIGDECIMAL_STRING = "123D00Text";
