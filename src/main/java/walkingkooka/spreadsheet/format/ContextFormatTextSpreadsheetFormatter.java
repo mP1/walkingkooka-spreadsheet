@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetFormatter} that delegates formatting to {@link SpreadsheetFormatterContext#format(Object)}.
  */
-final class ContextFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 {
+final class ContextFormatTextSpreadsheetFormatter implements SpreadsheetFormatter {
 
     /**
      * The {@link ContextFormatTextSpreadsheetFormatter} singleton instance.
@@ -41,7 +41,10 @@ final class ContextFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 
     }
 
     @Override
-    Optional<TextNode> format0(final Object value, final SpreadsheetFormatterContext context) {
+    public Optional<TextNode> format(final Object value, final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
+
         return context.format(value);
     }
 
@@ -49,7 +52,7 @@ final class ContextFormatTextSpreadsheetFormatter extends SpreadsheetFormatter2 
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
-        throw new UnsupportedOperationException();
+        return Optional.empty();
     }
 
     @Override
