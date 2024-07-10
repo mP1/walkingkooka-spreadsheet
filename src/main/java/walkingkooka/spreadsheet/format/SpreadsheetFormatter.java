@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -46,6 +47,11 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
      * Useful constant for {@link SpreadsheetFormatter} with no text components.
      */
     Optional<List<SpreadsheetFormatterSelectorTextComponent>> NO_TEXT_COMPONENTS = Optional.empty();
+
+    /**
+     * Useful constant for {@link SpreadsheetFormatter} with empty text components.
+     */
+    Optional<List<SpreadsheetFormatterSelectorTextComponent>> EMPTY_TEXT_COMPONENTS = Optional.of(Lists.empty());
 
     /**
      * Accepts a value and returns a {@link TextNode} if it could format the value.
