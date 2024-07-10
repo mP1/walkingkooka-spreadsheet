@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 
 public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<EmptySpreadsheetFormatter> {
 
@@ -25,6 +26,14 @@ public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatter
     public void testFormat() {
         this.formatAndCheck(
                 "Hello2"
+        );
+    }
+
+    @Test
+    public void testTextComponent() {
+        this.textComponentsAndCheck(
+                this.createContext(),
+                Lists.empty()
         );
     }
 
