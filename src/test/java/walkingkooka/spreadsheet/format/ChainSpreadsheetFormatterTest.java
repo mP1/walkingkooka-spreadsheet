@@ -28,7 +28,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTestCase<ChainSpreadsheetFormatter> {
+public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ChainSpreadsheetFormatter> {
 
     private final static Integer VALUE1 = 11;
     private final static Double VALUE2 = 222.5;
