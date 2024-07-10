@@ -17,16 +17,20 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
  * Mixin interface with default methods to assist testing of a given {@link SpreadsheetFormatter}.
  */
 public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
+
+    // formatAndCheck...................................................................................................
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
@@ -81,6 +85,46 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
                 text,
                 formatter.format(value, context),
                 () -> formatter + " " + CharSequences.quoteIfChars(value)
+        );
+    }
+
+    // textComponentsAndCheck...........................................................................................
+
+    default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
+                                        final SpreadsheetFormatterContext context) {
+        this.textComponentsAndCheck(
+                formatter,
+                context,
+                Optional.empty()
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
+                                        final SpreadsheetFormatterContext context,
+                                        final SpreadsheetFormatterSelectorTextComponent... expected) {
+        this.textComponentsAndCheck(
+                formatter,
+                context,
+                Lists.of(expected)
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
+                                        final SpreadsheetFormatterContext context,
+                                        final List<SpreadsheetFormatterSelectorTextComponent> expected) {
+        this.textComponentsAndCheck(
+                formatter,
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
+                                        final SpreadsheetFormatterContext context,
+                                        final Optional<List<SpreadsheetFormatterSelectorTextComponent>> expected) {
+        this.checkEquals(
+                expected,
+                formatter.textComponents(context)
         );
     }
 }
