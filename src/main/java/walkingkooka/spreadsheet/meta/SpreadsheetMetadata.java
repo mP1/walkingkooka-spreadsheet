@@ -822,7 +822,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // HasSpreadsheetFormatter..........................................................................................
 
     /**
-     * Creates a {@link SpreadsheetFormatter} that creates a single formatter from all formatters.
+     * Creates a {@link SpreadsheetFormatter} that creates a single formatter that formats values using {@link SpreadsheetFormatters#automatic(SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter)}
      */
     public final SpreadsheetFormatter formatter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
@@ -837,14 +837,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         components.reportIfMissing();
 
-        return SpreadsheetFormatters.chain(
-                Lists.of(
-                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(date),
-                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateTime),
-                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(number),
-                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(text),
-                        spreadsheetFormatterProvider.spreadsheetFormatterOrFail(time)
-                )
+        return SpreadsheetFormatters.automatic(
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(date),
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateTime),
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(number),
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(text),
+                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(time)
         );
     }
 
