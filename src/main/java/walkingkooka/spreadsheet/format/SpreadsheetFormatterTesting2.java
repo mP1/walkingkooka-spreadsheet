@@ -162,6 +162,14 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
 
     // textComponentsAndCheck...........................................................................................
 
+    @Test
+    default void testTextComponentWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createFormatter().textComponents(null)
+        );
+    }
+
     default void textComponentsAndCheck(final SpreadsheetFormatterContext context) {
         this.textComponentsAndCheck(
                 context,
