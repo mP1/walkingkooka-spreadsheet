@@ -38,26 +38,29 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     public void testTypeNaming() {
         throw new UnsupportedOperationException();
     }
+
+    // format...........................................................................................................
+
     @Test
-    public void testPlaceholder() {
+    public void testFormatPlaceholder() {
         this.parseFormatAndCheck("@", TEXT, TEXT);
     }
 
     @Test
-    public void testQuotedTextAndPlaceholder() {
+    public void testFormatQuotedTextAndPlaceholder() {
         final String quoted = "Quoted456";
         this.parseFormatAndCheck("@\"" + quoted + "\"@", TEXT, TEXT + quoted + TEXT);
     }
 
     @Test
-    public void testTextAndUnderscore() {
+    public void testFormatTextAndUnderscore() {
         this.parseFormatAndCheck("@_A",
                 TEXT,
                 TEXT + "A");
     }
 
     @Test
-    public void testTextAndStar() {
+    public void testFormatTextAndStar() {
         this.parseFormatAndCheck("@*A",
                 TEXT,
                 new TestSpreadsheetFormatterContext() {
@@ -71,21 +74,21 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     }
 
     @Test
-    public void testTextAndLeftAndRightParens() {
+    public void testFormatTextAndLeftAndRightParens() {
         this.parseFormatAndCheck("(@)",
                 TEXT,
                 "(" + TEXT + ")");
     }
 
     @Test
-    public void testTextAndEscaped() {
+    public void testFormatTextAndEscaped() {
         this.parseFormatAndCheck("@\\B",
                 TEXT,
                 TEXT + "B");
     }
 
     @Test
-    public void testColorNameAndTextPlaceholder() {
+    public void testFormatColorNameAndTextPlaceholder() {
         this.parseFormatAndCheck(
                 "[RED]@",
                 TEXT,
@@ -98,7 +101,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     }
 
     @Test
-    public void testColorNumberAndTextPlaceholder() {
+    public void testFormatColorNumberAndTextPlaceholder() {
         this.parseFormatAndCheck(
                 "[color44]@",
                 TEXT,
@@ -143,13 +146,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     Parser<SpreadsheetFormatParserContext> parser() {
         return SpreadsheetFormatParsers.textFormat()
                 .transform((v, c) -> v.cast(SequenceParserToken.class).value().get(0));
-    }
-
-    //toString .......................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createFormatter(), this.pattern());
     }
 
     @Override
@@ -216,6 +212,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
             );
         }
     }
+
+    // toString ........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createFormatter(), this.pattern());
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetPatternSpreadsheetFormatterText> type() {
