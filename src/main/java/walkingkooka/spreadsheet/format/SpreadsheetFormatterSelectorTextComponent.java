@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.PluginSelectorTextComponent;
 import walkingkooka.plugin.PluginSelectorTextComponentLike;
 import walkingkooka.tree.json.JsonNode;
@@ -34,6 +35,11 @@ import java.util.List;
  * </pre>
  */
 public final class SpreadsheetFormatterSelectorTextComponent implements PluginSelectorTextComponentLike<SpreadsheetFormatterSelectorTextComponentAlternative> {
+
+    /**
+     * A constant representing no alternatives.
+     */
+    public final static List<SpreadsheetFormatterSelectorTextComponentAlternative> NO_ALTERNATIVES = Lists.empty();
 
     /**
      * General purpose factory that creates a new {@link SpreadsheetFormatterSelectorTextComponent}.
