@@ -78,13 +78,14 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
                 .orElse(Stream.of());
     }
 
+    final List<SpreadsheetFormatter> formatters;
+
     @Override
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
-    }
 
-    final List<SpreadsheetFormatter> formatters;
+        return SpreadsheetFormatter.NO_TEXT_COMPONENTS;
+    }
 
     // Object...........................................................................................................
 
