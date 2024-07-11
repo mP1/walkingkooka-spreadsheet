@@ -21,11 +21,13 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.PluginSelectorTextComponent;
 import walkingkooka.plugin.PluginSelectorTextComponentLike;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Can be used to represent a single token with a format pattern or large text representation.
@@ -40,6 +42,19 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
      * A constant representing no alternatives.
      */
     public final static List<SpreadsheetFormatterSelectorTextComponentAlternative> NO_ALTERNATIVES = Lists.empty();
+
+    /**
+     * This method is intended to only be called by {@link SpreadsheetFormatter} that contain a {@link SpreadsheetFormatParserToken}.
+     */
+    static Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatParserToken token,
+                                                                                    final SpreadsheetFormatterContext context) {
+        return Optional.of(
+                SpreadsheetFormatterSelectorTextComponentSpreadsheetFormatParserTokenVisitor.textComponents(
+                        token,
+                        context
+                )
+        );
+    }
 
     /**
      * General purpose factory that creates a new {@link SpreadsheetFormatterSelectorTextComponent}.
