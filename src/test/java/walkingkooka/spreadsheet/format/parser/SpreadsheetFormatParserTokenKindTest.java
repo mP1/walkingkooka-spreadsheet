@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -36,6 +37,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -1096,18 +1098,31 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         );
     }
 
-    private SpreadsheetFormatColorParserToken colorParserToken;
-
     @Test
     public void testPatternsColorNumber() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.patternsParseAndCheck(
-                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER,
-                        SpreadsheetPattern::parseDateFormatPattern
+        final SpreadsheetPattern pattern = SpreadsheetPattern.parseTextFormatPattern("[Color 12]@");
+
+        new SpreadsheetFormatParserTokenVisitor() {
+            @Override
+            protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+                SpreadsheetFormatParserTokenKindTest.this.colorParserToken = token;
+                return super.startVisit(token);
+            }
+        }.accept(pattern.value());
+
+        this.checkEquals(
+                IntStream.range(
+                                SpreadsheetColors.MIN,
+                                SpreadsheetColors.MAX + 1
+                        ).mapToObj(n -> "[Color " + n + "]")
+                        .collect(Collectors.toList()),
+                new ArrayList<>(
+                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER.patterns()
                 )
         );
     }
+
+    private SpreadsheetFormatColorParserToken colorParserToken;
 
     @Test
     public void testPatterns_DAY_WITH_LEADING_ZERO() {
