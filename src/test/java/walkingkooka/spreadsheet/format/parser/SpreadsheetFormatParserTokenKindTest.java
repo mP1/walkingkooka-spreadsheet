@@ -1056,16 +1056,6 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     // patterns.........................................................................................................
 
     @Test
-    public void testPatternsAllNonEmpty() {
-        this.checkEquals(
-                Lists.empty(),
-                Arrays.stream(SpreadsheetFormatParserTokenKind.values())
-                        .filter(k -> k.patterns().isEmpty())
-                        .collect(Collectors.toList())
-        );
-    }
-
-    @Test
     public void testPatternsColorName() {
         final SpreadsheetPattern pattern = SpreadsheetPattern.parseTextFormatPattern("[RED]@");
 
@@ -1429,6 +1419,14 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
                     wrong
             );
         }
+    }
+
+    @Test
+    public void testPatterns_CONDITION() {
+        this.checkEquals(
+                Sets.empty(),
+                SpreadsheetFormatParserTokenKind.CONDITION.patterns()
+        );
     }
 
     // ClassTesting.....................................................................................................
