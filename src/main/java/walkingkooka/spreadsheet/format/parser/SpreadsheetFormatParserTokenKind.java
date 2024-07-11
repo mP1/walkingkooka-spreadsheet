@@ -63,7 +63,7 @@ public enum SpreadsheetFormatParserTokenKind {
     // CONDITIONAL......................................................................................................
 
     CONDITION(
-            "=0"
+            Predicates.never()
     ),
 
     // DATE.............................................................................................................
@@ -240,9 +240,6 @@ public enum SpreadsheetFormatParserTokenKind {
                 null != duplicate ?
                         duplicate :
                         (other) -> this == other;
-        if (null == patterns || patterns.length == 0) {
-            throw new IllegalArgumentException("Expected at least 1 pattern but got " + Arrays.toString(patterns));
-        }
         this.patterns = Sets.of(patterns);
     }
 
