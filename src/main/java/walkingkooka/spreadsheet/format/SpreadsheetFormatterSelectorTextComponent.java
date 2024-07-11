@@ -35,9 +35,12 @@ import java.util.List;
  */
 public final class SpreadsheetFormatterSelectorTextComponent implements PluginSelectorTextComponentLike<SpreadsheetFormatterSelectorTextComponentAlternative> {
 
-    static SpreadsheetFormatterSelectorTextComponent with(final String label,
-                                                          final String text,
-                                                          final List<SpreadsheetFormatterSelectorTextComponentAlternative> alternatives) {
+    /**
+     * General purpose factory that creates a new {@link SpreadsheetFormatterSelectorTextComponent}.
+     */
+    public static SpreadsheetFormatterSelectorTextComponent with(final String label,
+                                                                 final String text,
+                                                                 final List<SpreadsheetFormatterSelectorTextComponentAlternative> alternatives) {
         return new SpreadsheetFormatterSelectorTextComponent(
                 PluginSelectorTextComponent.with(
                         label,
