@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -722,6 +723,76 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     Parser<SpreadsheetFormatParserContext> parser() {
         return SpreadsheetFormatParsers.dateTimeFormat()
                 .transform((v, c) -> v.cast(SequenceParserToken.class).value().get(0));
+    }
+
+    // textComponents...................................................................................................
+
+    @Test
+    public void testTextComponents() {
+        this.textComponentsAndCheck(
+                this.createFormatter("d/mm/yyyy"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "d",
+                        "d",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "dd",
+                                        "dd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "ddd",
+                                        "ddd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "dddd",
+                                        "dddd"
+                                )
+                        )
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "/",
+                        "/",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "mm",
+                        "mm",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "m",
+                                        "m"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmm",
+                                        "mmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmmm",
+                                        "mmmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmmmm",
+                                        "mmmmm"
+                                )
+                        )
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "/",
+                        "/",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "yyyy",
+                        "yyyy",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "yy",
+                                        "yy"
+                                )
+                        )
+                )
+        );
     }
 
     //toString .......................................................................................................
