@@ -461,6 +461,41 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
 
     private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
+    // textComponents...................................................................................................
+
+    @Test
+    public void testTextComponents() {
+        this.textComponentsAndCheck(
+                this.createFormatter("00/00"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "/",
+                        "/",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                )
+        );
+    }
+
     // equals...........................................................................................................
 
     @Test
