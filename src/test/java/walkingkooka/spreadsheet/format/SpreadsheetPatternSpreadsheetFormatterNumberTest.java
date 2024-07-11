@@ -2546,6 +2546,46 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         };
     }
 
+    // textComponents...................................................................................................
+
+    @Test
+    public void testTextComponents() {
+        this.textComponentsAndCheck(
+                this.createFormatter("$#0.00"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "$",
+                        "$",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "#",
+                        "#",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        ".",
+                        ".",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                )
+        );
+    }
+
     // equals...........................................................................................................
 
     @Test
