@@ -82,9 +82,6 @@ final class SpreadsheetPatternSpreadsheetFormatterChain implements SpreadsheetPa
 
     final List<SpreadsheetPatternSpreadsheetFormatter> formatters;
 
-    /**
-     * If all {@link SpreadsheetFormatter} have components then combine them and return the result otherwise return nothing.
-     */
     @Override
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
