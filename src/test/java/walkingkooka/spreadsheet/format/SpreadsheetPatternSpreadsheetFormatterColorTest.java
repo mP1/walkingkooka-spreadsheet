@@ -84,8 +84,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                 this.createContext());
     }
 
+    // format...........................................................................................................
+    
     @Test
-    public void testColorNameAndTextFormatted() {
+    public void testFormatColorNameAndTextFormatted() {
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
         this.formatAndCheck(
@@ -104,7 +106,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     }
 
     @Test
-    public void testColorNameAndTextFormattedAbsent() {
+    public void testFormatColorNameAndTextFormattedAbsent() {
         final String text = "abc123";
         final Optional<Color> color = Optional.empty();
         this.formatAndCheck(
@@ -123,7 +125,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     }
 
     @Test
-    public void testColorNumberAndTextFormatted() {
+    public void testFormatColorNumberAndTextFormatted() {
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
         this.formatAndCheck(
@@ -142,7 +144,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     }
 
     @Test
-    public void testColorNumberAndTextFormattedAfterDoubleWrapping() {
+    public void testFormatColorNumberAndTextFormattedAfterDoubleWrapping() {
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
 
@@ -176,7 +178,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     }
 
     @Test
-    public void testColorNumberAndTextFormattedAbsent() {
+    public void testFormatColorNumberAndTextFormattedAbsent() {
         final String text = "abc123";
         final Optional<Color> color = Optional.empty();
         this.formatAndCheck(
@@ -216,11 +218,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                 context,
                 formattedText.toTextNode()
         );
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createFormatter(), this.pattern() + " " + TEXT_PATTERN);
     }
 
     @Override
@@ -305,9 +302,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         }
     }
 
-    @Override
-    public Class<SpreadsheetPatternSpreadsheetFormatterColor> type() {
-        return SpreadsheetPatternSpreadsheetFormatterColor.class;
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createFormatter(), this.pattern() + " " + TEXT_PATTERN);
     }
 
     // equals...........................................................................................................
@@ -345,5 +344,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                                 .formatter()
                 )
         );
+    }
+
+    // Class...........................................................................................................
+
+    @Override
+    public Class<SpreadsheetPatternSpreadsheetFormatterColor> type() {
+        return SpreadsheetPatternSpreadsheetFormatterColor.class;
     }
 }
