@@ -80,13 +80,17 @@ final class SpreadsheetPatternSpreadsheetFormatterChain implements SpreadsheetPa
                 .orElse(Stream.of());
     }
 
+    final List<SpreadsheetPatternSpreadsheetFormatter> formatters;
+
+    /**
+     * If all {@link SpreadsheetFormatter} have components then combine them and return the result otherwise return nothing.
+     */
     @Override
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
-    }
 
-    final List<SpreadsheetPatternSpreadsheetFormatter> formatters;
+        return SpreadsheetFormatter.NO_TEXT_COMPONENTS;
+    }
 
     // Object...........................................................................................................
 
