@@ -436,17 +436,6 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
-    public void testAlternativesDayWithoutLeadingZeroDifferentCase() {
-        this.alternativeAndCheck(
-                SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO,
-                "d",
-                "dd",
-                "ddd",
-                "dddd"
-        );
-    }
-
-    @Test
     public void testAlternativesDayWithLeadingZero() {
         this.alternativeAndCheck(
                 SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO,
@@ -483,7 +472,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
 
     private void alternativeAndCheck(final SpreadsheetFormatParserTokenKind kind,
                                      final SpreadsheetFormatParserTokenKind... expected) {
-        final Set<String> patterns = Sets.sorted();
+        final Set<String> patterns = Sets.ordered();
         patterns.addAll(kind.patterns());
 
         for (final SpreadsheetFormatParserTokenKind e : expected) {

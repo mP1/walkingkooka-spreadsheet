@@ -267,7 +267,7 @@ public enum SpreadsheetFormatParserTokenKind {
                             .flatMap(k -> k.patterns.stream())
                             .collect(
                                     Collectors.toCollection(
-                                            Sets::sorted
+                                            this.isColor() ? Sets::ordered : Sets::sorted
                                     )
                             )
             );
