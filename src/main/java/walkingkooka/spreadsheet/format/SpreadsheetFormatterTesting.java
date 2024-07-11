@@ -124,7 +124,8 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
                                         final Optional<List<SpreadsheetFormatterSelectorTextComponent>> expected) {
         this.checkEquals(
                 expected,
-                formatter.textComponents(context)
+                formatter.textComponents(context),
+                formatter::toString
         );
     }
 }
