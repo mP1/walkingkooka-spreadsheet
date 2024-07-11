@@ -455,6 +455,14 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     }
 
     @Test
+    public void testAlternativesCondition() {
+        this.alternativeAndCheck(
+                SpreadsheetFormatParserTokenKind.CONDITION,
+                new String[0]
+        );
+    }
+
+    @Test
     public void testAlternativesDigit() {
         this.alternativeAndCheck(
                 SpreadsheetFormatParserTokenKind.DIGIT,
