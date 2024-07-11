@@ -22,10 +22,12 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.visit.Visiting;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
@@ -1074,14 +1076,27 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
 
     @Test
     public void testPatternsColorName() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.patternsParseAndCheck(
-                        SpreadsheetFormatParserTokenKind.COLOR_NAME,
-                        SpreadsheetPattern::parseDateFormatPattern
+        final SpreadsheetPattern pattern = SpreadsheetPattern.parseTextFormatPattern("[RED]@");
+
+        new SpreadsheetFormatParserTokenVisitor() {
+            @Override
+            protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+                SpreadsheetFormatParserTokenKindTest.this.colorParserToken = token;
+                return super.startVisit(token);
+            }
+        }.accept(pattern.value());
+
+        this.checkEquals(
+                SpreadsheetColorName.DEFAULTS.stream()
+                        .map(c -> "[" + c.value() + "]")
+                        .collect(Collectors.toList()),
+                new ArrayList<>(
+                        SpreadsheetFormatParserTokenKind.COLOR_NAME.patterns()
                 )
         );
     }
+
+    private SpreadsheetFormatColorParserToken colorParserToken;
 
     @Test
     public void testPatternsColorNumber() {
