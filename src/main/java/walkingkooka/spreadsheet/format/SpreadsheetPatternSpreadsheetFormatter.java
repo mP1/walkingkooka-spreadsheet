@@ -22,7 +22,8 @@ import walkingkooka.tree.text.TextNode;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} for a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern}.
+ * A {@link SpreadsheetFormatter} for a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern} that produces
+ * {@link SpreadsheetText} which is more limiting than a {@link TextNode}.
  */
 public interface SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetFormatter {
 
@@ -35,6 +36,10 @@ public interface SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetForma
         ).map(SpreadsheetText::toTextNode);
     }
 
+    /**
+     * Implementors should implement this method and only produce a {@link SpreadsheetText} rather than the richer
+     * {@link TextNode}.
+     */
     Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
                                                     final SpreadsheetFormatterContext context);
 }
