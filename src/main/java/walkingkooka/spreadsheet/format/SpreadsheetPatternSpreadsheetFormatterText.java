@@ -65,8 +65,10 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
 
     @Override
     public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
-        Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
+        return SpreadsheetFormatterSelectorTextComponent.textComponents(
+                this.token,
+                context
+        );
     }
 
     // Object...........................................................................................................

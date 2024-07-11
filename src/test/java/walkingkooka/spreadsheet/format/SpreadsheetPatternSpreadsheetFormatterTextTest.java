@@ -213,6 +213,39 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
         }
     }
 
+    // textComponents ..................................................................................................
+
+    @Test
+    public void testTextComponentsTextWithPlaceholder() {
+        this.textComponentsAndCheck(
+                this.createFormatter("@"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "@",
+                        "@",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                )
+        );
+    }
+
+    @Test
+    public void testTextComponentsTextWithPlaceholderTextLiteral() {
+        this.textComponentsAndCheck(
+                this.createFormatter("@\"Hello\""),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "@",
+                        "@",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "\"Hello\"",
+                        "\"Hello\"",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                )
+        );
+    }
+
     // toString ........................................................................................................
 
     @Test
