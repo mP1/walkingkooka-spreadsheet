@@ -72,7 +72,10 @@ final class SpreadsheetFormatterSelectorTextComponentSpreadsheetFormatParserToke
             );
         }
 
-        return Visiting.CONTINUE;
+        // dont want to visit children if a parent has a kind.
+        return maybeKind.isPresent() ?
+                Visiting.SKIP :
+                Visiting.CONTINUE;
     }
 
     private List<SpreadsheetFormatterSelectorTextComponentAlternative> alternatives(final SpreadsheetFormatParserTokenKind kind,

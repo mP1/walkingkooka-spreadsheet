@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -30,7 +31,11 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -300,6 +305,55 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                             target
                     );
         }
+    }
+
+    // textComponents...................................................................................................
+
+    @Test
+    public void testTextComponentsColorNumber() {
+        this.textComponentsAndCheck(
+                this.createFormatter("[Color 1]"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "[Color 1]",
+                        "[Color 1]",
+                        alternatives(
+                                "Black,White,Red,Green,Blue,Yellow,Magenta,Cyan," +
+                                        IntStream.rangeClosed(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
+                                                .filter(i -> i != 1)
+                                                .mapToObj(i -> "Color " + i)
+                                                .collect(Collectors.joining(","))
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testTextComponentsColorName() {
+        this.textComponentsAndCheck(
+                this.createFormatter("[Red]"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "[Red]",
+                        "[Red]",
+                        alternatives(
+                                "Black,White,Green,Blue,Yellow,Magenta,Cyan," +
+                                        IntStream.rangeClosed(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
+                                                .mapToObj(i -> "Color " + i)
+                                                .collect(Collectors.joining(","))
+                        )
+                )
+        );
+    }
+
+    private List<SpreadsheetFormatterSelectorTextComponentAlternative> alternatives(final String csv) {
+        return Arrays.stream(csv.split(","))
+                .map(t -> "[" + t + "]")
+                .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                t,
+                                t
+                        )
+                ).collect(Collectors.toList());
     }
 
     // toString.........................................................................................................
