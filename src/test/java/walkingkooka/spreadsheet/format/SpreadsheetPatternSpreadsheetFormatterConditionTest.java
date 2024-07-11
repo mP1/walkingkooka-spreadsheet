@@ -219,18 +219,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         );
     }
 
-    // toString.........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createFormatter(),
-                this.pattern() + " " + TEXT_PATTERN
-        );
-    }
-
-    // helpers..........................................................................................................
-
     private SpreadsheetPatternSpreadsheetFormatterCondition createFormatter0(final String expression) {
         return this.createFormatter0(this.parsePatternOrFail(expression));
     }
@@ -347,11 +335,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         };
     }
 
-    @Override
-    public Class<SpreadsheetPatternSpreadsheetFormatterCondition> type() {
-        return SpreadsheetPatternSpreadsheetFormatterCondition.class;
-    }
-
     // equals...........................................................................................................
 
     @Test
@@ -387,5 +370,22 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                                 .formatter()
                 )
         );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createFormatter(),
+                this.pattern() + " " + TEXT_PATTERN
+        );
+    }
+
+    // Class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetPatternSpreadsheetFormatterCondition> type() {
+        return SpreadsheetPatternSpreadsheetFormatterCondition.class;
     }
 }
