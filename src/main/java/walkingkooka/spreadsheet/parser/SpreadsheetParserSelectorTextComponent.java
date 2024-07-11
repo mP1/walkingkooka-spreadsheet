@@ -35,9 +35,12 @@ import java.util.List;
  */
 public final class SpreadsheetParserSelectorTextComponent implements PluginSelectorTextComponentLike<SpreadsheetParserSelectorTextComponentAlternative> {
 
-    static SpreadsheetParserSelectorTextComponent with(final String label,
-                                                       final String text,
-                                                       final List<SpreadsheetParserSelectorTextComponentAlternative> alternatives) {
+    /**
+     * General purpose factory that creates a new {@link SpreadsheetParserSelectorTextComponent}.
+     */
+    public static SpreadsheetParserSelectorTextComponent with(final String label,
+                                                              final String text,
+                                                              final List<SpreadsheetParserSelectorTextComponentAlternative> alternatives) {
         return new SpreadsheetParserSelectorTextComponent(
                 PluginSelectorTextComponent.with(
                         label,
