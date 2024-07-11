@@ -78,18 +78,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
         this.formatAndCheck(VALUE2, TEXT2);
     }
 
-    // toString.........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createFormatter(),
-                VALUE1 + ";" + VALUE2
-        );
-    }
-
-    // helpers..........................................................................................................
-
     @Override
     String pattern() {
         return "General";
@@ -156,16 +144,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
         return SpreadsheetFormatterContexts.fake();
     }
 
-    @Override
-    public Class<SpreadsheetPatternSpreadsheetFormatterChain> type() {
-        return SpreadsheetPatternSpreadsheetFormatterChain.class;
-    }
-
-    @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
-    }
-
     // equals...........................................................................................................
 
     @Test
@@ -186,5 +164,29 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
                         )
                 )
         );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createFormatter(),
+                VALUE1 + ";" + VALUE2
+        );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetPatternSpreadsheetFormatterChain> type() {
+        return SpreadsheetPatternSpreadsheetFormatterChain.class;
+    }
+
+    // type naming......................................................................................................
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
