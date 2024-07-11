@@ -144,6 +144,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
         return SpreadsheetFormatterContexts.fake();
     }
 
+    // textComponents...................................................................................................
+
+    @Test
+    public void testTextComponents() {
+        this.textComponentsAndCheck(
+                this.createContext()
+        );
+    }
+
     // equals...........................................................................................................
 
     @Test
