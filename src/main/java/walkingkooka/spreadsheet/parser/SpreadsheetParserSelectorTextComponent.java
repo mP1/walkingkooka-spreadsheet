@@ -26,6 +26,13 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
+/**
+ * Can be used to represent a single token with a parser pattern or large text representation.
+ * For a date pattern such as (ignore added spaces) would have 5 tokens, the year, slash, month, slash and day.
+ * <pre>
+ * yyyy / mm / dd
+ * </pre>
+ */
 public final class SpreadsheetParserSelectorTextComponent implements PluginSelectorTextComponentLike<SpreadsheetParserSelectorTextComponentAlternative> {
 
     static SpreadsheetParserSelectorTextComponent with(final String label,
