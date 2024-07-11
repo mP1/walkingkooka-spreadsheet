@@ -335,6 +335,34 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         };
     }
 
+    // textComponents...................................................................................................
+
+    @Test
+    public void testTextComponentsEquals() {
+        this.textComponentsAndCheck(
+                this.createFormatter("[=0]"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "[=0]",
+                        "[=0]",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                )
+        );
+    }
+
+    @Test
+    public void testTextComponentsLessThan() {
+        this.textComponentsAndCheck(
+                this.createFormatter("[<1]"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "[<1]",
+                        "[<1]",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                )
+        );
+    }
+
     // equals...........................................................................................................
 
     @Test
