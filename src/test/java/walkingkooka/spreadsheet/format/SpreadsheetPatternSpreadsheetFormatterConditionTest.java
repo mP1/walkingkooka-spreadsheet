@@ -52,10 +52,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         assertThrows(NullPointerException.class, () -> SpreadsheetPatternSpreadsheetFormatterCondition.with(this.parsePatternOrFail(this.pattern()), null));
     }
 
-    // EQ.....................................................................................
+    // EQ...............................................................................................................
 
     @Test
-    public void testFormattedEQ() {
+    public void testFormatEQ() {
         this.formatConditionTrueAndCheck(
                 "[=50]",
                 "50",
@@ -64,17 +64,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedEQ2() {
+    public void testFormatEQ2() {
         this.formatConditionFalseAndCheck(
                 "[=50]",
                 "99"
         ); // fail
     }
 
-    // GT.....................................................................................
+    // GT...............................................................................................................
 
     @Test
-    public void testFormattedGT() {
+    public void testFormatGT() {
         this.formatConditionTrueAndCheck(
                 "[>9]",
                 "50",
@@ -83,7 +83,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedGT2() {
+    public void testFormatGT2() {
         this.formatConditionFalseAndCheck(
                 "[>9]",
                 "5"
@@ -91,17 +91,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedGT3() {
+    public void testFormatGT3() {
         this.formatConditionFalseAndCheck(
                 "[>9]",
                 "9"
         ); // 9 > 9 fail
     }
 
-    // GTE.....................................................................................
+    // GTE..............................................................................................................
 
     @Test
-    public void testFormattedGTE() {
+    public void testFormatGTE() {
         this.formatConditionTrueAndCheck(
                 "[>=9]",
                 "50",
@@ -110,7 +110,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedGTE2() {
+    public void testFormatGTE2() {
         this.formatConditionFalseAndCheck(
                 "[>=9]",
                 "5"
@@ -118,7 +118,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedGTE3() {
+    public void testFormatGTE3() {
         this.formatConditionTrueAndCheck(
                 "[>=9]",
                 "9",
@@ -126,10 +126,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         ); // 9 >= 9 pass
     }
 
-    // LT.....................................................................................
+    // LT...............................................................................................................
 
     @Test
-    public void testFormattedLT() {
+    public void testFormatLT() {
         this.formatConditionFalseAndCheck(
                 "[<9]",
                 "50"
@@ -137,7 +137,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedLT2() {
+    public void testFormatLT2() {
         this.formatConditionTrueAndCheck(
                 "[<9]",
                 "5",
@@ -146,17 +146,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedLT3() {
+    public void testFormatLT3() {
         this.formatConditionFalseAndCheck(
                 "[<9]",
                 "9"
         ); // 9 < 9 fail
     }
 
-    // LTE.....................................................................................
+    // LTE..............................................................................................................
 
     @Test
-    public void testFormattedLTE() {
+    public void testFormatLTE() {
         this.formatConditionFalseAndCheck(
                 "[<=9]",
                 "50"
@@ -164,7 +164,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedLTE2() {
+    public void testFormatLTE2() {
         this.formatConditionTrueAndCheck(
                 "[<=9]",
                 "5",
@@ -173,7 +173,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedLTE3() {
+    public void testFormatLTE3() {
         this.formatConditionTrueAndCheck(
                 "[<=9]",
                 "9",
@@ -181,10 +181,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         ); // 9 <= 9 pass
     }
 
-    // NE.....................................................................................
+    // NE...............................................................................................................
 
     @Test
-    public void testFormattedNE() {
+    public void testFormatNE() {
         this.formatConditionTrueAndCheck(
                 "[<>50]",
                 "99",
@@ -193,7 +193,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Test
-    public void testFormattedNE2() {
+    public void testFormatNE2() {
         this.formatConditionFalseAndCheck(
                 "[<>50]",
                 "50"
