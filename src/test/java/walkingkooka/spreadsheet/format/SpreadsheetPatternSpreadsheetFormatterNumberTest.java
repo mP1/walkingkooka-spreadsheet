@@ -2316,15 +2316,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    //toString .........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createFormatter(), this.pattern());
-    }
-
-    //helpers ..........................................................................................................
-
     private void parseFormatAndCheck(final String pattern,
                                      final double value,
                                      final String text) {
@@ -2555,11 +2546,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         };
     }
 
-    @Override
-    public Class<SpreadsheetPatternSpreadsheetFormatterNumber> type() {
-        return SpreadsheetPatternSpreadsheetFormatterNumber.class;
-    }
-
     // equals...........................................................................................................
 
     @Test
@@ -2568,5 +2554,19 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
                 this.createFormatter("$0.00"),
                 this.createFormatter("#.##")
         );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createFormatter(), this.pattern());
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetPatternSpreadsheetFormatterNumber> type() {
+        return SpreadsheetPatternSpreadsheetFormatterNumber.class;
     }
 }
