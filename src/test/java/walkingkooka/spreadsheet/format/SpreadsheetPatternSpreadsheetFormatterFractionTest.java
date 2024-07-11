@@ -65,90 +65,90 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         return this.parsePatternOrFail("#/#");
     }
 
-    // text-literal, escaped etc........................................................................................
+    // format text-literal, escaped etc.................................................................................
 
     @Test
-    public void testCloseParensFails() {
+    public void testFormatCloseParensFails() {
         this.parsePatternFails(")");
     }
 
     @Test
-    public void testColonFails() {
+    public void testFormatColonFails() {
         this.parsePatternFails(":");
     }
 
     @Test
-    public void testDecimalFails() {
+    public void testFormatDecimalFails() {
         this.parsePatternFails(".");
     }
 
     @Test
-    public void testMinusFails() {
+    public void testFormatMinusFails() {
         this.parsePatternFails("-");
     }
 
     @Test
-    public void testPlusFails() {
+    public void testFormatPlusFails() {
         this.parsePatternFails("+");
     }
 
     @Test
-    public void testOpenParensFails() {
+    public void testFormatOpenParensFails() {
         this.parsePatternFails("(");
     }
 
     @Test
-    public void testEscapedFails() {
+    public void testFormatEscapedFails() {
         this.parsePatternFails("\\A");
     }
 
     @Test
-    public void testTextLiteralFails() {
+    public void testFormatTextLiteralFails() {
         this.parsePatternFails("\"Quoted text\"");
     }
 
     @Test
-    public void testHashFails() {
+    public void testFormatHashFails() {
         this.parsePatternFails("#");
     }
 
     @Test
-    public void testQuestionFails() {
+    public void testFormatQuestionFails() {
         this.parsePatternFails("?");
     }
 
     @Test
-    public void testZeroFails() {
+    public void testFormatZeroFails() {
         this.parsePatternFails("0");
     }
 
     @Test
-    public void testHashDecimalFails() {
+    public void testFormatHashDecimalFails() {
         this.parsePatternFails("#.");
     }
 
     @Test
-    public void testQuestionDecimalFails() {
+    public void testFormatQuestionDecimalFails() {
         this.parsePatternFails("?.");
     }
 
     @Test
-    public void testZeroDecimalFails() {
+    public void testFormatZeroDecimalFails() {
         this.parsePatternFails("0.");
     }
 
     @Test
-    public void testHashSlashFails() {
+    public void testFormatHashSlashFails() {
         this.parsePatternFails("#/");
     }
 
     @Test
-    public void testQuestionSlashFails() {
+    public void testFormatQuestionSlashFails() {
         this.parsePatternFails("?/");
     }
 
     @Test
-    public void testZeroSlashFails() {
+    public void testFormatZeroSlashFails() {
         this.parsePatternFails("0/");
     }
 
@@ -163,206 +163,206 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     // fraction space. space dot space ...................................................................................
 
     @Test
-    public void testHashFractionHash0_0() {
+    public void testFormatHashFractionHash0_0() {
         this.parseFormatAndCheck("#/#", 0.0, "/1");
     }
 
     @Test
-    public void testHashFractionHash0_2() {
+    public void testFormatHashFractionHash0_2() {
         this.parseFormatAndCheck("#/#", 0.2, "1/5");
     }
 
     @Test
-    public void testHashFractionHash0_6() {
+    public void testFormatHashFractionHash0_6() {
         this.parseFormatAndCheck("#/#", 0.6, "3/5");
     }
 
     @Test
-    public void testHashFractionHash0_71() {
+    public void testFormatHashFractionHash0_71() {
         this.parseFormatAndCheck("#/#", 0.61, "3/5");
     }
 
     @Test
-    public void testHashFractionHash0_85() {
+    public void testFormatHashFractionHash0_85() {
         this.parseFormatAndCheck("#/#", 0.85, "4/5");
     }
 
     @Test
-    public void testHashFractionHash1_0() {
+    public void testFormatHashFractionHash1_0() {
         this.parseFormatAndCheck("#/#", 1, "5/5");
     }
 
     @Test
-    public void testHashFractionHash1_99() {
+    public void testFormatHashFractionHash1_99() {
         this.parseFormatAndCheck("#/#", 1.99, "10/5");
     }
 
     @Test
-    public void testHashFractionHash0_025() {
+    public void testFormatHashFractionHash0_025() {
         this.parseFormatAndCheck("#/#", 0.025, "/1");
     }
 
     // fraction space. space dot space ...................................................................................
 
     @Test
-    public void testQuestionFractionQuestion0_0() {
+    public void testFormatQuestionFractionQuestion0_0() {
         this.parseFormatAndCheck("?/?", 0.0, " /1");
     }
 
     @Test
-    public void testQuestionFractionQuestion0_2() {
+    public void testFormatQuestionFractionQuestion0_2() {
         this.parseFormatAndCheck("?/?", 0.2, "1/5");
     }
 
     @Test
-    public void testQuestionFractionQuestion0_6() {
+    public void testFormatQuestionFractionQuestion0_6() {
         this.parseFormatAndCheck("?/?", 0.6, "3/5");
     }
 
     @Test
-    public void testQuestionFractionQuestion0_85() {
+    public void testFormatQuestionFractionQuestion0_85() {
         this.parseFormatAndCheck("?/?", 0.85, "4/5");
     }
 
     @Test
-    public void testQuestionFractionQuestion1_0() {
+    public void testFormatQuestionFractionQuestion1_0() {
         this.parseFormatAndCheck("?/?", 1, "5/5");
     }
 
     @Test
-    public void testQuestionFractionQuestion1_99() {
+    public void testFormatQuestionFractionQuestion1_99() {
         this.parseFormatAndCheck("?/?", 1.99, "10/5");
     }
 
     @Test
-    public void testQuestionFractionQuestion0_025() {
+    public void testFormatQuestionFractionQuestion0_025() {
         this.parseFormatAndCheck("?/?", 0.025, " /1");
     }
 
     // fraction zero. zero dot zero ...................................................................................
 
     @Test
-    public void testZeroFractionZero0_0() {
+    public void testFormatZeroFractionZero0_0() {
         this.parseFormatAndCheck("0/0", 0.0, "0/1");
     }
 
     @Test
-    public void testZeroFractionZero0_2() {
+    public void testFormatZeroFractionZero0_2() {
         this.parseFormatAndCheck("0/0", 0.2, "1/5");
     }
 
     @Test
-    public void testZeroFractionZero0_6() {
+    public void testFormatZeroFractionZero0_6() {
         this.parseFormatAndCheck("0/0", 0.6, "3/5");
     }
 
     @Test
-    public void testZeroFractionZero0_71() {
+    public void testFormatZeroFractionZero0_71() {
         this.parseFormatAndCheck("0/0", 0.71, "3/5");
     }
 
     @Test
-    public void testZeroFractionZero0_85() {
+    public void testFormatZeroFractionZero0_85() {
         this.parseFormatAndCheck("0/0", 0.85, "4/5");
     }
 
     @Test
-    public void testZeroFractionZero1_0() {
+    public void testFormatZeroFractionZero1_0() {
         this.parseFormatAndCheck("0/0", 1, "5/5");
     }
 
     @Test
-    public void testZeroFractionZero1_25() {
+    public void testFormatZeroFractionZero1_25() {
         this.parseFormatAndCheck("0/0", 1.25, "6/5");
     }
 
     @Test
-    public void testZeroFractionZero1_975() {
+    public void testFormatZeroFractionZero1_975() {
         this.parseFormatAndCheck("0/0", 1.975, "10/5");
     }
 
     @Test
-    public void testZeroFractionZero0_025() {
+    public void testFormatZeroFractionZero0_025() {
         this.parseFormatAndCheck("0/0", 0.025, "0/1");
     }
 
     // long fraction patterns
 
     @Test
-    public void testHashFractionHashHashHash0_0000005() {
+    public void testFormatHashFractionHashHashHash0_0000005() {
         this.parseFormatAndCheck("#/###", 0.0000005, "/1");
     }
 
     @Test
-    public void testQuestionFractionQuestionQuestionQuestion0_0000005() {
+    public void testFormatQuestionFractionQuestionQuestionQuestion0_0000005() {
         this.parseFormatAndCheck("?/???", 0.0000005, " /  1");
     }
 
     @Test
-    public void testZeroFractionZeroZeroZero0_0000005() {
+    public void testFormatZeroFractionZeroZeroZero0_0000005() {
         this.parseFormatAndCheck("0/000", 0.0000005, "0/001");
     }
 
     // hash space zero.................................................................................
 
     @Test
-    public void testHashFractionSpaceHash1_05() {
+    public void testFormatHashFractionSpaceHash1_05() {
         this.parseFormatAndCheck("?/?#", 1.05, "52/50");
     }
 
     @Test
-    public void testHashFractionZeroHash1_05() {
+    public void testFormatHashFractionZeroHash1_05() {
         this.parseFormatAndCheck("?/?0", 1.05, "52/50");
     }
 
     @Test
-    public void testHashFractionSpaceZeroHash1_00005() {
+    public void testFormatHashFractionSpaceZeroHash1_00005() {
         this.parseFormatAndCheck("?/?", 1.005, "5/5");
     }
 
     // currency .........................................................................................
 
     @Test
-    public void testCurrency() {
+    public void testFormatCurrency() {
         this.parseFormatAndCheck("$0/0", 0.4, "D2/5");
     }
 
     // percentage .........................................................................................
 
     @Test
-    public void testPercentage0() {
+    public void testFormatPercentage0() {
         this.parseFormatAndCheck("0/0%", 0, "0/1P");
     }
 
     @Test
-    public void testPercentagePositive1() {
+    public void testFormatPercentagePositive1() {
         this.parseFormatAndCheck("0/0%", 1, "500/5P");
     }
 
     @Test
-    public void testPercentageNegative1() {
+    public void testFormatPercentageNegative1() {
         this.parseFormatAndCheck("0/0%", -1, "M500/5P");
     }
 
     // thousands divider .........................................................................................
 
     @Test
-    public void testThousandsDividerDigitComma0() {
+    public void testFormatThousandsDividerDigitComma0() {
         this.parseFormatAndCheck("0/0,", 1, "0/1");
     }
 
     @Test
-    public void testThousandsDividerCommaSlash12345() {
+    public void testFormatThousandsDividerCommaSlash12345() {
         this.parseFormatAndCheck("0,/#", 12345, "61/5");
     }
 
     @Test
-    public void testThousandsDividerCommaTextLiteralSLash12345() {
+    public void testFormatThousandsDividerCommaTextLiteralSLash12345() {
         this.parseFormatAndCheck("0,\"Text\"/#", 12345, "61Text/5");
     }
 
     @Test
-    public void testThousandsDividerCommaCommaSlash123456789() {
+    public void testFormatThousandsDividerCommaCommaSlash123456789() {
         this.parseFormatAndCheck("0,,/#", 123456789, "617/5");
     }
 
@@ -393,13 +393,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Override
     String pattern() {
         return "#/#";
-    }
-
-    //toString .......................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createFormatter(), this.pattern());
     }
 
     @Override
@@ -468,11 +461,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
 
     private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
-    @Override
-    public Class<SpreadsheetPatternSpreadsheetFormatterFraction> type() {
-        return SpreadsheetPatternSpreadsheetFormatterFraction.class;
-    }
-
     // equals...........................................................................................................
 
     @Test
@@ -491,5 +479,19 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
                 SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null),
                 SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null)
         );
+    }
+
+    // toString ........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createFormatter(), this.pattern());
+    }
+
+    // class ...........................................................................................................
+
+    @Override
+    public Class<SpreadsheetPatternSpreadsheetFormatterFraction> type() {
+        return SpreadsheetPatternSpreadsheetFormatterFraction.class;
     }
 }
