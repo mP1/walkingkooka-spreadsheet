@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderCollection;
+import walkingkooka.plugin.ProviderCollectionProviderGetter;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetComparatorProvider} view of a collection of {@link SpreadsheetComparatorProvider providers}.
@@ -38,8 +40,20 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
 
     private SpreadsheetComparatorProviderCollection(final Set<SpreadsheetComparatorProvider> providers) {
         this.providers = ProviderCollection.with(
-                Function.identity(), // inputToName
-                (p, n, v) -> p.spreadsheetComparator(n),
+                new ProviderCollectionProviderGetter<SpreadsheetComparatorProvider, SpreadsheetComparatorName, PluginSelectorLike<SpreadsheetComparatorName>, SpreadsheetComparator<?>>() {
+                    @Override
+                    public Optional<SpreadsheetComparator<?>> get(final SpreadsheetComparatorProvider provider,
+                                                                  final SpreadsheetComparatorName name,
+                                                                  final List<?> values) {
+                        return provider.spreadsheetComparator(name);
+                    }
+
+                    @Override
+                    public Optional<SpreadsheetComparator<?>> get(final SpreadsheetComparatorProvider provider,
+                                                                  final PluginSelectorLike<SpreadsheetComparatorName> selector) {
+                        throw new UnsupportedOperationException();
+                    }
+                },
                 SpreadsheetComparatorProvider::spreadsheetComparatorInfos,
                 SpreadsheetComparator.class.getSimpleName(),
                 providers
@@ -61,9 +75,7 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
         return this.providers.infos();
     }
 
-    private final ProviderCollection<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorProvider,
-            SpreadsheetComparatorName,
-            SpreadsheetComparator<?>> providers;
+    private final ProviderCollection<SpreadsheetComparatorProvider, SpreadsheetComparatorName, SpreadsheetComparatorInfo, PluginSelectorLike<SpreadsheetComparatorName>, SpreadsheetComparator<?>> providers;
 
     @Override
     public String toString() {

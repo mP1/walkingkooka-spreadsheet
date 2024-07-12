@@ -17,9 +17,10 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderCollection;
+import walkingkooka.plugin.ProviderCollectionProviderGetter;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -37,8 +38,22 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
 
     private SpreadsheetParserProviderCollection(final Set<SpreadsheetParserProvider> providers) {
         this.providers = ProviderCollection.with(
-                SpreadsheetParserSelector::name, // inputToName
-                (p, s, v) -> p.spreadsheetParser(s),
+                new ProviderCollectionProviderGetter<>() {
+                    @Override
+                    public Optional<SpreadsheetParser> get(final SpreadsheetParserProvider provider,
+                                                           final SpreadsheetParserName name,
+                                                           final List<?> values) {
+                        throw new UnsupportedOperationException();
+                    }
+
+                    @Override
+                    public Optional<SpreadsheetParser> get(final SpreadsheetParserProvider provider,
+                                                           final SpreadsheetParserSelector selector) {
+                        return provider.spreadsheetParser(
+                                selector
+                        );
+                    }
+                },
                 SpreadsheetParserProvider::spreadsheetParserInfos,
                 SpreadsheetParser.class.getSimpleName(),
                 providers
@@ -49,10 +64,7 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
     public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return this.providers.get(
-                selector,
-                Lists.empty()
-        );
+        return this.providers.get(selector);
     }
 
     @Override
@@ -60,9 +72,7 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
         return this.providers.infos();
     }
 
-    private final ProviderCollection<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserProvider,
-            SpreadsheetParserSelector,
-            SpreadsheetParser> providers;
+    private final ProviderCollection<SpreadsheetParserProvider, SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserSelector, SpreadsheetParser> providers;
 
     @Override
     public String toString() {
