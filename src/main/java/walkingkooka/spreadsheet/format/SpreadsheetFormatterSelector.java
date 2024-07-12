@@ -17,13 +17,11 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.naming.HasName;
 import walkingkooka.plugin.PluginSelector;
+import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
-import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
-import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -35,9 +33,7 @@ import java.util.Optional;
 /**
  * Contains the {@link SpreadsheetFormatterName} and some text which may contain the pattern text for {@link SpreadsheetPatternSpreadsheetFormatter}.
  */
-public final class SpreadsheetFormatterSelector implements HasName<SpreadsheetFormatterName>,
-        HasText,
-        TreePrintable {
+public final class SpreadsheetFormatterSelector implements PluginSelectorLike<SpreadsheetFormatterName> {
 
     /**
      * A {@link SpreadsheetFormatterSelector} that selects a {@link SpreadsheetFormatter} with a pattern that prints only the value.
