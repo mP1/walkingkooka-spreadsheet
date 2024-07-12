@@ -170,6 +170,12 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         );
     }
 
+    default void textComponentsAndCheck() {
+        this.textComponentsAndCheck(
+                this.createContext()
+        );
+    }
+
     default void textComponentsAndCheck(final SpreadsheetFormatterContext context) {
         this.textComponentsAndCheck(
                 context,
