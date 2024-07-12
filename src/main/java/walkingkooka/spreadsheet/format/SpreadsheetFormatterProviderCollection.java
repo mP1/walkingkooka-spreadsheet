@@ -17,9 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderCollection;
+import walkingkooka.plugin.ProviderCollectionProviderGetter;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -37,8 +38,22 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
 
     private SpreadsheetFormatterProviderCollection(final Set<SpreadsheetFormatterProvider> providers) {
         this.providers = ProviderCollection.with(
-                SpreadsheetFormatterSelector::name, // inputToName
-                (p, s, v) -> p.spreadsheetFormatter(s),
+                new ProviderCollectionProviderGetter<>() {
+                    @Override
+                    public Optional<SpreadsheetFormatter> get(final SpreadsheetFormatterProvider provider,
+                                                           final SpreadsheetFormatterName name,
+                                                           final List<?> values) {
+                        throw new UnsupportedOperationException();
+                    }
+
+                    @Override
+                    public Optional<SpreadsheetFormatter> get(final SpreadsheetFormatterProvider provider,
+                                                           final SpreadsheetFormatterSelector selector) {
+                        return provider.spreadsheetFormatter(
+                                selector
+                        );
+                    }
+                },
                 SpreadsheetFormatterProvider::spreadsheetFormatterInfos,
                 SpreadsheetFormatter.class.getSimpleName(),
                 providers
@@ -49,10 +64,7 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return this.providers.get(
-                selector,
-                Lists.empty()
-        );
+        return this.providers.get(selector);
     }
 
     @Override
@@ -60,9 +72,7 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
         return this.providers.infos();
     }
 
-    private final ProviderCollection<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterProvider,
-            SpreadsheetFormatterSelector,
-            SpreadsheetFormatter> providers;
+    private final ProviderCollection<SpreadsheetFormatterProvider, SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterSelector, SpreadsheetFormatter> providers;
 
     @Override
     public String toString() {
