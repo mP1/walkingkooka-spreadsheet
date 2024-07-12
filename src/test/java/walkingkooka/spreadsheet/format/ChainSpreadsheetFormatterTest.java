@@ -123,6 +123,17 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
         return SpreadsheetFormatterContexts.fake();
     }
 
+    // textComponents...................................................................................................
+
+    @Test
+    public void testTextComponents() {
+        this.textComponentsAndCheck(
+                this.createContext()
+        );
+    }
+
+    // class............................................................................................................
+
     @Override
     public Class<ChainSpreadsheetFormatter> type() {
         return ChainSpreadsheetFormatter.class;
