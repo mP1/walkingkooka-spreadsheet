@@ -81,17 +81,18 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
                 or.get();
     }
 
-    @Override
-    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
-        Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
-    }
-
     final SpreadsheetFormatter date;
     final SpreadsheetFormatter dateTime;
     final SpreadsheetFormatter number;
     final SpreadsheetFormatter text;
     final SpreadsheetFormatter time;
+
+    @Override
+    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return NO_TEXT_COMPONENTS;
+    }
 
     // Object...........................................................................................................
 
