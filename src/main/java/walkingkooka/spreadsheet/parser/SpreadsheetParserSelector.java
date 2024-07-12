@@ -17,13 +17,11 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.naming.HasName;
 import walkingkooka.plugin.PluginSelector;
+import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
-import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
-import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -35,9 +33,7 @@ import java.util.Optional;
 /**
  * Contains the {@link SpreadsheetParserName} and some text which may contain the pattern text for {@link SpreadsheetParsePattern}.
  */
-public final class SpreadsheetParserSelector implements HasName<SpreadsheetParserName>,
-        HasText,
-        TreePrintable {
+public final class SpreadsheetParserSelector implements PluginSelectorLike<SpreadsheetParserName> {
 
     /**
      * Parses the given text into a {@link SpreadsheetParserSelector}.
