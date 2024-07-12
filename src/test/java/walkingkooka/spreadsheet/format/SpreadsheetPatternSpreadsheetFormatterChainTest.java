@@ -148,9 +148,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
 
     @Test
     public void testTextComponents() {
-        this.textComponentsAndCheck(
-                this.createContext()
-        );
+        this.textComponentsAndCheck();
     }
 
     // equals...........................................................................................................

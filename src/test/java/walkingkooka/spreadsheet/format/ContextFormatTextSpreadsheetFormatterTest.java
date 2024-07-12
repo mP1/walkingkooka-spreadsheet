@@ -52,9 +52,7 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
 
     @Test
     public void testTextComponents() {
-        this.textComponentsAndCheck(
-                this.createContext()
-        );
+        this.textComponentsAndCheck();
     }
 
     @Test
