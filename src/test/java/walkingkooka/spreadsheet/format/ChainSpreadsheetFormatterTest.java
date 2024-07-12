@@ -63,18 +63,6 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
         this.formatAndCheck(VALUE2, TEXT2);
     }
 
-    // toString.........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createFormatter(),
-                VALUE1 + ";" + VALUE2
-        );
-    }
-
-    // helpers..........................................................................................................
-
     @Override
     public ChainSpreadsheetFormatter createFormatter() {
         return Cast.to(ChainSpreadsheetFormatter.with(Lists.of(this.formatter1(), this.formatter2())));
@@ -129,6 +117,16 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
     public void testTextComponents() {
         this.textComponentsAndCheck(
                 this.createContext()
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createFormatter(),
+                VALUE1 + ";" + VALUE2
         );
     }
 
