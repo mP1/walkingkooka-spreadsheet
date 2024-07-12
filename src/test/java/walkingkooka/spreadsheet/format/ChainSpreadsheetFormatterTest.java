@@ -115,9 +115,7 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
 
     @Test
     public void testTextComponents() {
-        this.textComponentsAndCheck(
-                this.createContext()
-        );
+        this.textComponentsAndCheck();
     }
 
     // toString.........................................................................................................
