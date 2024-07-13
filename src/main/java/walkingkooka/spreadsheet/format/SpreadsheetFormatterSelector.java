@@ -113,6 +113,14 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
         return this.selector.text();
     }
 
+    @Override
+    public SpreadsheetFormatterSelector setText(final String text) {
+        final PluginSelector<SpreadsheetFormatterName> different = this.selector.setText(text);
+        return this.selector.equals(different) ?
+                this :
+                new SpreadsheetFormatterSelector(different);
+    }
+    
     private final PluginSelector<SpreadsheetFormatterName> selector;
 
     // spreadsheetFormatPattern.........................................................................................

@@ -105,6 +105,14 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
         return this.selector.text();
     }
 
+    @Override
+    public SpreadsheetParserSelector setText(final String text) {
+        final PluginSelector<SpreadsheetParserName> different = this.selector.setText(text);
+        return this.selector.equals(different) ?
+                this :
+                new SpreadsheetParserSelector(different);
+    }
+
     private final PluginSelector<SpreadsheetParserName> selector;
 
     // spreadsheetParsePattern.........................................................................................
