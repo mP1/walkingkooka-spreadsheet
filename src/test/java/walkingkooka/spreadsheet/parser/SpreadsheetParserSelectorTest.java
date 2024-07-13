@@ -18,157 +18,30 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.InvalidCharacterException;
-import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.HasTextTesting;
-import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTesting<SpreadsheetParserSelector, SpreadsheetParserName> {
 
-public final class SpreadsheetParserSelectorTest implements ClassTesting2<SpreadsheetParserSelector>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetParserSelector>,
-        HasTextTesting,
-        ToStringTesting<SpreadsheetParserSelector>,
-        ParseStringTesting<SpreadsheetParserSelector>,
-        JsonNodeMarshallingTesting<SpreadsheetParserSelector>,
-        TreePrintableTesting {
-
-    private final static SpreadsheetParserName NAME = SpreadsheetParserName.with("number-parse-pattern");
-
-    private final static String TEXT = "$0.00";
-
-    @Test
-    public void testWithNullNameFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetParserSelector.with(
-                        null,
-                        TEXT
-                )
+    @Override
+    public SpreadsheetParserSelector createPluginSelectorLike(final SpreadsheetParserName name,
+                                                              final String text) {
+        return SpreadsheetParserSelector.with(
+                name,
+                text
         );
     }
 
-    @Test
-    public void testWithNullTextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetParserSelector.with(
-                        NAME,
-                        null
-                )
-        );
-    }
-
-    @Test
-    public void testWith() {
-        final SpreadsheetParserSelector selector = SpreadsheetParserSelector.with(
-                NAME,
-                TEXT
-        );
-
-        this.checkEquals(NAME, selector.name(), "name");
-        this.textAndCheck(
-                selector,
-                TEXT
-        );
-    }
-
-    // setName..........................................................................................................
-
-    @Test
-    public void testSetNameWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetParserSelector.with(
-                        NAME,
-                        TEXT
-                ).setName(null)
-        );
-    }
-
-    @Test
-    public void testSetNameWithSame() {
-        final SpreadsheetParserSelector selector = SpreadsheetParserSelector.with(
-                NAME,
-                TEXT
-        );
-        assertSame(
-                selector,
-                selector.setName(NAME)
-        );
-    }
-
-    @Test
-    public void testSetNameWithDifferent() {
-        final SpreadsheetParserSelector selector = SpreadsheetParserSelector.with(
-                NAME,
-                TEXT
-        );
-        final SpreadsheetParserName differentName = SpreadsheetParserName.with("different");
-        final SpreadsheetParserSelector different = selector.setName(differentName);
-
-        assertNotSame(
-                different,
-                selector
-        );
-        this.checkEquals(
-                differentName,
-                different.name(),
-                "name"
-        );
-        this.textAndCheck(
-                selector,
-                TEXT
-        );
-    }
-
-    // parse............................................................................................................
-
-    @Test
-    public void testParseInvalidSpreadsheetParserNameFails() {
-        this.parseStringFails(
-                "A!34",
-                new InvalidCharacterException("A!34", 1)
-                        .appendToMessage(" in \"A!34\"")
-        );
-    }
-
-    @Test
-    public void testParseSpreadsheetParserName() {
-        final String text = "text-format";
-        this.parseStringAndCheck(
-                text,
-                SpreadsheetParserSelector.with(
-                        SpreadsheetParserName.with(text),
-                        ""
-                )
-        );
-    }
-
-    @Test
-    public void testParseSpreadsheetParserNameSpace() {
-        final String text = "text-format";
-        this.parseStringAndCheck(
-                text + " ",
-                SpreadsheetParserSelector.with(
-                        SpreadsheetParserName.with(text),
-                        ""
-                )
-        );
+    @Override
+    public SpreadsheetParserName createName(final String value) {
+        return SpreadsheetParserName.with(value);
     }
 
     @Test
@@ -185,43 +58,9 @@ public final class SpreadsheetParserSelectorTest implements ClassTesting2<Spread
         );
     }
 
-    // SpreadsheetParserSelector.parse must be able to parse all SpreadsheetParserSelector.toString.
-
-    @Test
-    public void testParseToString() {
-        final SpreadsheetParserSelector selector = SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
-                .spreadsheetParserSelector();
-
-        this.parseStringAndCheck(
-                selector.toString(),
-                selector
-        );
-    }
-
-    @Test
-    public void testParseToStringWithQuotes() {
-        final SpreadsheetParserSelector selector = SpreadsheetPattern.parseNumberParsePattern("\"Hello\" $0.00")
-                .spreadsheetParserSelector();
-
-        this.parseStringAndCheck(
-                selector.toString(),
-                selector
-        );
-    }
-
     @Override
     public SpreadsheetParserSelector parseString(final String text) {
         return SpreadsheetParserSelector.parse(text);
-    }
-
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
-        return thrown;
     }
 
     // spreadsheetParsePattern.........................................................................................
@@ -266,60 +105,6 @@ public final class SpreadsheetParserSelectorTest implements ClassTesting2<Spread
         );
     }
 
-    // equals...........................................................................................................
-
-    @Test
-    public void testEqualsDifferentName() {
-        this.checkNotEquals(
-                SpreadsheetParserSelector.with(
-                        SpreadsheetParserName.with("different"),
-                        TEXT
-                )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentText() {
-        this.checkNotEquals(
-                SpreadsheetParserSelector.with(
-                        NAME,
-                        "different"
-                )
-        );
-    }
-
-    @Override
-    public SpreadsheetParserSelector createObject() {
-        return SpreadsheetParserSelector.with(
-                NAME,
-                TEXT
-        );
-    }
-
-    // ToString.........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                SpreadsheetParserSelector.with(
-                        NAME,
-                        TEXT
-                ),
-                "number-parse-pattern $0.00"
-        );
-    }
-
-    @Test
-    public void testToStringWithQuotes() {
-        this.toStringAndCheck(
-                SpreadsheetParserSelector.with(
-                        NAME,
-                        "\"Hello\""
-                ),
-                "number-parse-pattern \"Hello\""
-        );
-    }
-
     // ClassTesting.....................................................................................................
 
     @Override
@@ -361,25 +146,17 @@ public final class SpreadsheetParserSelectorTest implements ClassTesting2<Spread
 
     @Override
     public SpreadsheetParserSelector createJsonNodeMarshallingValue() {
-        return this.createObject();
-    }
-
-    // TreePrintable....................................................................................................
-
-    @Test
-    public void testTreePrintWithoutText() {
-        this.treePrintAndCheck(
-                SpreadsheetParserSelector.parse("abc123"),
-                "abc123\n"
+        return SpreadsheetParserSelector.with(
+                SpreadsheetParserName.NUMBER_PARSER,
+                "$0.00"
         );
     }
 
-    @Test
-    public void testTreePrintWithText() {
-        this.treePrintAndCheck(
-                SpreadsheetParserSelector.parse("number-parse-pattern $0.00"),
-                "number-parse-pattern\n" +
-                        "  \"$0.00\"\n"
-        );
+    // type name........................................................................................................
+
+    @Override
+    public String typeNamePrefix() {
+        return SpreadsheetParser.class.getSimpleName();
     }
+
 }
