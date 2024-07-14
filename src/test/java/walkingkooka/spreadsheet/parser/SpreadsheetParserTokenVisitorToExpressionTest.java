@@ -154,7 +154,7 @@ public final class SpreadsheetParserTokenVisitorToExpressionTest extends Spreads
                         new FakeSpreadsheetExpressionEvaluationContext() {
 
                             @Override
-                            public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+                            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
                                 Objects.requireNonNull(FunctionExpressionName.with("error"), "name");
                                 return Cast.to(
                                         SpreadsheetExpressionFunctions.error()

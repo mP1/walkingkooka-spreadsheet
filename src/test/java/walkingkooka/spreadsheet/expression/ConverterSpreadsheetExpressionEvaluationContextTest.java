@@ -171,19 +171,15 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     private final ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider() {
         @Override
-        public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName n) {
+        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName n) {
             Objects.requireNonNull(n, "name");
 
             if (CONCAT.name().get().equals(n)) {
-                return Optional.of(
-                        Cast.to(CONCAT)
-                );
+                return Cast.to(CONCAT);
             }
 
             if (ECHO.name().get().equals(n)) {
-                return Optional.of(
-                        Cast.to(ECHO)
-                );
+                return Cast.to(ECHO);
             }
 
             throw new UnknownExpressionFunctionException(n);
@@ -440,7 +436,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         final ConverterSpreadsheetExpressionEvaluationContext context = this.createContext();
         final ExpressionFunction<T, ExpressionEvaluationContext> function2 =
                 Cast.to(
-                        context.expressionFunctionOrFail(functionName)
+                        context.expressionFunction(functionName)
                 );
 
         this.checkEquals(

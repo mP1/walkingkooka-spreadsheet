@@ -81,7 +81,7 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
     }
 
     @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
         throw new UnsupportedOperationException();
     }
 

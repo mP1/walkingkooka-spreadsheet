@@ -221,7 +221,7 @@ public final class Sample {
             }
 
             @Override
-            public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
+            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
                 return spreadsheetParserProvider.spreadsheetParser(selector);
             }
 

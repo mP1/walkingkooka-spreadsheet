@@ -22,7 +22,6 @@ import walkingkooka.plugin.ProviderCollectionProviderGetter;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -40,15 +39,15 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
         this.providers = ProviderCollection.with(
                 new ProviderCollectionProviderGetter<>() {
                     @Override
-                    public Optional<SpreadsheetFormatter> get(final SpreadsheetFormatterProvider provider,
-                                                           final SpreadsheetFormatterName name,
-                                                           final List<?> values) {
+                    public SpreadsheetFormatter get(final SpreadsheetFormatterProvider provider,
+                                                    final SpreadsheetFormatterName name,
+                                                    final List<?> values) {
                         throw new UnsupportedOperationException();
                     }
 
                     @Override
-                    public Optional<SpreadsheetFormatter> get(final SpreadsheetFormatterProvider provider,
-                                                           final SpreadsheetFormatterSelector selector) {
+                    public SpreadsheetFormatter get(final SpreadsheetFormatterProvider provider,
+                                                    final SpreadsheetFormatterSelector selector) {
                         return provider.spreadsheetFormatter(
                                 selector
                         );
@@ -61,7 +60,7 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     }
 
     @Override
-    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
         return this.providers.get(selector);

@@ -24,7 +24,6 @@ import walkingkooka.plugin.ProviderCollectionProviderGetter;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -42,15 +41,15 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
         this.providers = ProviderCollection.with(
                 new ProviderCollectionProviderGetter<SpreadsheetComparatorProvider, SpreadsheetComparatorName, PluginSelectorLike<SpreadsheetComparatorName>, SpreadsheetComparator<?>>() {
                     @Override
-                    public Optional<SpreadsheetComparator<?>> get(final SpreadsheetComparatorProvider provider,
-                                                                  final SpreadsheetComparatorName name,
-                                                                  final List<?> values) {
+                    public SpreadsheetComparator<?> get(final SpreadsheetComparatorProvider provider,
+                                                        final SpreadsheetComparatorName name,
+                                                        final List<?> values) {
                         return provider.spreadsheetComparator(name);
                     }
 
                     @Override
-                    public Optional<SpreadsheetComparator<?>> get(final SpreadsheetComparatorProvider provider,
-                                                                  final PluginSelectorLike<SpreadsheetComparatorName> selector) {
+                    public SpreadsheetComparator<?> get(final SpreadsheetComparatorProvider provider,
+                                                        final PluginSelectorLike<SpreadsheetComparatorName> selector) {
                         throw new UnsupportedOperationException();
                     }
                 },
@@ -61,7 +60,7 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
     }
 
     @Override
-    public Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
         Objects.requireNonNull(name, "name");
 
         return this.providers.get(

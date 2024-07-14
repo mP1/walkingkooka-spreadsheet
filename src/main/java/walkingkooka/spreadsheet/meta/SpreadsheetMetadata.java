@@ -528,15 +528,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         components.reportIfMissing();
 
         return SpreadsheetConverters.general(
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateFormat),
-                spreadsheetParserProvider.spreadsheetParserOrFail(dateParser),
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateTimeFormat),
-                spreadsheetParserProvider.spreadsheetParserOrFail(dateTimeParser),
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(numberFormat),
-                spreadsheetParserProvider.spreadsheetParserOrFail(numberParser),
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(textFormat),
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(timeFormat),
-                spreadsheetParserProvider.spreadsheetParserOrFail(timeParser)
+                spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat),
+                spreadsheetParserProvider.spreadsheetParser(dateParser),
+                spreadsheetFormatterProvider.spreadsheetFormatter(dateTimeFormat),
+                spreadsheetParserProvider.spreadsheetParser(dateTimeParser),
+                spreadsheetFormatterProvider.spreadsheetFormatter(numberFormat),
+                spreadsheetParserProvider.spreadsheetParser(numberParser),
+                spreadsheetFormatterProvider.spreadsheetFormatter(textFormat),
+                spreadsheetFormatterProvider.spreadsheetFormatter(timeFormat),
+                spreadsheetParserProvider.spreadsheetParser(timeParser)
         );
     }
 
@@ -838,11 +838,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         components.reportIfMissing();
 
         return SpreadsheetFormatters.automatic(
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(date),
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(dateTime),
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(number),
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(text),
-                spreadsheetFormatterProvider.spreadsheetFormatterOrFail(time)
+                spreadsheetFormatterProvider.spreadsheetFormatter(date),
+                spreadsheetFormatterProvider.spreadsheetFormatter(dateTime),
+                spreadsheetFormatterProvider.spreadsheetFormatter(number),
+                spreadsheetFormatterProvider.spreadsheetFormatter(text),
+                spreadsheetFormatterProvider.spreadsheetFormatter(time)
         );
     }
 
@@ -901,11 +901,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return SpreadsheetParsers.valueOrExpression(
                 Parsers.alternatives(
                         Lists.of(
-                                provider.spreadsheetParserOrFail(date),
-                                provider.spreadsheetParserOrFail(dateTime),
-                                provider.spreadsheetParserOrFail(number)
+                                provider.spreadsheetParser(date),
+                                provider.spreadsheetParser(dateTime),
+                                provider.spreadsheetParser(number)
                                         .andEmptyTextCursor(),
-                                provider.spreadsheetParserOrFail(time)
+                                provider.spreadsheetParser(time)
                         )
                 )
         );

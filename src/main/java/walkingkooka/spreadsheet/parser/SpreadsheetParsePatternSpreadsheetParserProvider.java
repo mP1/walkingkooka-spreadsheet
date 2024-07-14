@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -39,11 +38,12 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     }
 
     @Override
-    public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
         return selector.spreadsheetParsePattern()
-                .map(SpreadsheetParsePattern::parser);
+                .map(SpreadsheetParsePattern::parser)
+                .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + selector.name()));
     }
 
     @Override

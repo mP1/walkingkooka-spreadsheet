@@ -55,11 +55,13 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
     }
 
     @Override
-    public Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
         Objects.requireNonNull(name, "name");
 
-        return this.nameMapper.apply(name)
-                .flatMap(this.provider::spreadsheetComparator);
+        return this.provider.spreadsheetComparator(
+                this.nameMapper.apply(name)
+                        .orElseThrow(() -> new IllegalArgumentException("Unknown comparator " + name))
+        );
     }
 
     /**

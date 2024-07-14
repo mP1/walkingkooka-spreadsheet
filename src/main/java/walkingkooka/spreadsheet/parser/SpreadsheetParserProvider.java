@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.plugin.Provider;
 
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -34,16 +33,7 @@ public interface SpreadsheetParserProvider extends Provider {
     /**
      * Resolves the given {@link SpreadsheetParserSelector} to a {@link walkingkooka.text.cursor.parser.Parser}.
      */
-    Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector);
-
-    /**
-     * Helper that invokes {@link #spreadsheetParser(SpreadsheetParserSelector)} and throws a {@link IllegalArgumentException}
-     * if none was found.
-     */
-    default SpreadsheetParser spreadsheetParserOrFail(final SpreadsheetParserSelector selector) {
-        return this.spreadsheetParser(selector)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + selector.name()));
-    }
+    SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector);
 
     /**
      * Returns all available {@link SpreadsheetParserInfo}

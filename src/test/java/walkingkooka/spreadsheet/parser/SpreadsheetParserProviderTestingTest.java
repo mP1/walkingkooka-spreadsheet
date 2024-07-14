@@ -23,7 +23,6 @@ import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 public final class SpreadsheetParserProviderTestingTest implements SpreadsheetParserProviderTesting<SpreadsheetParserProviderTestingTest.TestSpreadsheetParserProvider> {
@@ -60,11 +59,11 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
 
     class TestSpreadsheetParserProvider implements SpreadsheetParserProvider {
         @Override
-        public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
+        public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
             Objects.requireNonNull(selector, "selector");
 
             checkEquals("date-parse-pattern", selector.name().value());
-            return Optional.of(PARSER);
+            return PARSER;
         }
 
         @Override

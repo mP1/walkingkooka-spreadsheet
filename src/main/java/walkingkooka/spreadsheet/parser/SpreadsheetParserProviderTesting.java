@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
 
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,35 +37,33 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
 
     T createSpreadsheetParserProvider();
 
-    default void spreadsheetParserAndCheck(final String selector) {
-        this.spreadsheetParserAndCheck(
+    default void spreadsheetParserFails(final String selector) {
+        this.spreadsheetParserFails(
                 this.createSpreadsheetParserProvider(),
                 SpreadsheetParserSelector.parse(selector)
         );
     }
 
-    default void spreadsheetParserAndCheck(final SpreadsheetParserProvider provider,
-                                           final String selector) {
-        this.spreadsheetParserAndCheck(
+    default void spreadsheetParserFails(final SpreadsheetParserProvider provider,
+                                        final String selector) {
+        this.spreadsheetParserFails(
                 provider,
                 SpreadsheetParserSelector.parse(selector)
         );
     }
 
-    default void spreadsheetParserAndCheck(final SpreadsheetParserSelector selector) {
-        this.spreadsheetParserAndCheck(
+    default void spreadsheetParserFails(final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserFails(
                 this.createSpreadsheetParserProvider(),
-                selector,
-                Optional.empty()
+                selector
         );
     }
 
-    default void spreadsheetParserAndCheck(final SpreadsheetParserProvider provider,
-                                           final SpreadsheetParserSelector selector) {
-        this.spreadsheetParserAndCheck(
-                provider,
-                selector,
-                Optional.empty()
+    default void spreadsheetParserFails(final SpreadsheetParserProvider provider,
+                                        final SpreadsheetParserSelector selector) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetParser(selector)
         );
     }
 
@@ -94,32 +91,13 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
         this.spreadsheetParserAndCheck(
                 this.createSpreadsheetParserProvider(),
                 selector,
-                Optional.of(expected)
-        );
-    }
-
-    default void spreadsheetParserAndCheck(final SpreadsheetParserProvider provider,
-                                           final SpreadsheetParserSelector selector,
-                                           final SpreadsheetParser expected) {
-        this.spreadsheetParserAndCheck(
-                provider,
-                selector,
-                Optional.of(expected)
-        );
-    }
-
-    default void spreadsheetParserAndCheck(final SpreadsheetParserSelector selector,
-                                           final Optional<SpreadsheetParser> expected) {
-        this.spreadsheetParserAndCheck(
-                this.createSpreadsheetParserProvider(),
-                selector,
                 expected
         );
     }
 
     default void spreadsheetParserAndCheck(final SpreadsheetParserProvider provider,
                                            final SpreadsheetParserSelector selector,
-                                           final Optional<SpreadsheetParser> expected) {
+                                           final SpreadsheetParser expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetParser(selector),

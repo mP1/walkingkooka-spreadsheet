@@ -259,7 +259,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
 
             result.add(
                     direction.apply(
-                            spreadsheetComparatorProvider.spreadsheetComparatorOrFail(spreadsheetComparatorName)
+                            spreadsheetComparatorProvider.spreadsheetComparator(spreadsheetComparatorName)
                     )
             );
 

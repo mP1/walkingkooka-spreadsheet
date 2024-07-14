@@ -181,8 +181,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     // ConverterProvider................................................................................................
     @Override
-    public <C extends ConverterContext> Optional<Converter<C>> converter(final ConverterName name,
-                                                                         final List<?> values) {
+    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                               final List<?> values) {
         return this.converterProvider.converter(
                 name,
                 values
@@ -199,7 +199,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // spreadsheetComparatorProvider.................................................................................................
 
     @Override
-    public Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
         return this.spreadsheetComparatorProvider.spreadsheetComparator(name);
     }
 
@@ -213,7 +213,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // expressionFunctionProvider.................................................................................................
 
     @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
         return this.expressionFunctionProvider.expressionFunction(name);
     }
 
@@ -256,8 +256,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public boolean isPure(final FunctionExpressionName function) {
         return this.expressionFunctionProvider.expressionFunction(function)
-                .map(f -> f.isPure(this))
-                .orElse(false);
+                .isPure(this);
     }
 
     @Override
@@ -333,7 +332,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // FORMAT .........................................................................................................
 
     @Override
-    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         return this.spreadsheetFormatterProvider.spreadsheetFormatter(selector);
     }
 
@@ -422,7 +421,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // SpreadsheetParserProvider........................................................................................
 
     @Override
-    public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
         return this.spreadsheetParserProvider.spreadsheetParser(selector);
     }
 

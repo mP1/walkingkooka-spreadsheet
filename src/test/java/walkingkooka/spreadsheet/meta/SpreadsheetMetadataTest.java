@@ -719,7 +719,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.checkNotEquals(
                 null,
-                provider.converterOrFail(
+                provider.converter(
                         ConverterName.with("different"),
                         Lists.empty()
                 )
@@ -770,7 +770,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.checkEquals(
                 "Hello",
-                provider.expressionFunctionOrFail(
+                provider.expressionFunction(
                         FunctionExpressionName.with("sin")
                 ).apply(
                         ExpressionFunction.NO_PARAMETER_VALUES,
@@ -814,7 +814,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.checkEquals(
                 comparator1,
-                provider.spreadsheetComparatorOrFail(
+                provider.spreadsheetComparator(
                         SpreadsheetComparatorName.with("xyz")
                 )
         );
@@ -856,7 +856,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.checkEquals(
                 formatter,
-                provider.spreadsheetFormatterOrFail(
+                provider.spreadsheetFormatter(
                         SpreadsheetFormatterSelector.parse("xyz @@")
                 )
         );
@@ -898,7 +898,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.checkEquals(
                 parser,
-                provider.spreadsheetParserOrFail(
+                provider.spreadsheetParser(
                         SpreadsheetParserSelector.parse("xyz yyyy/mm/dd")
                 )
         );

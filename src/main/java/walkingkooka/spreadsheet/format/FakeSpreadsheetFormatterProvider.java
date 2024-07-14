@@ -17,12 +17,11 @@
 
 package walkingkooka.spreadsheet.format;
 
-import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
     @Override
-    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         throw new UnsupportedOperationException();
     }
 

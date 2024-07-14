@@ -479,7 +479,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Override
-    public void testExpressionFunctionNullFunctionNameFails() {
+    public void testExpressionFunctionWithNullFunctionNameFails() {
         throw new UnsupportedOperationException();
     }
 

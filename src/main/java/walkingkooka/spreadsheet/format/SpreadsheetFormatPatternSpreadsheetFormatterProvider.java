@@ -22,7 +22,6 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -38,10 +37,12 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     }
 
     @Override
-    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
+
         return selector.spreadsheetFormatPattern()
-                .map(SpreadsheetPattern::formatter);
+                .map(SpreadsheetPattern::formatter)
+                .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + selector.name()));
     }
 
     @Override
