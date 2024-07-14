@@ -27,6 +27,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -122,6 +123,16 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     }
     
     private final PluginSelector<SpreadsheetFormatterName> selector;
+
+    // setValue.........................................................................................................
+
+    @Override
+    public SpreadsheetFormatterSelector setValues(final List<?> values) {
+        final PluginSelector<SpreadsheetFormatterName> different = this.selector.setValues(values);
+        return this.selector.equals(different) ?
+                this :
+                new SpreadsheetFormatterSelector(different);
+    }
 
     // spreadsheetFormatPattern.........................................................................................
 
