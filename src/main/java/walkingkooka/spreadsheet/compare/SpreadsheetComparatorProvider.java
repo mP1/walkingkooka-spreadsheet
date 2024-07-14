@@ -21,7 +21,6 @@ import walkingkooka.plugin.Provider;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,18 +30,9 @@ import java.util.stream.Collectors;
 public interface SpreadsheetComparatorProvider extends Provider {
 
     /**
-     * Resolves the given {@link SpreadsheetComparatorName} to a {@link SpreadsheetComparatorName}.
+     * Resolves the given {@link SpreadsheetComparatorName} to a {@link SpreadsheetComparator}.
      */
-    Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name);
-
-    /**
-     * Helper that invokes {@link #spreadsheetComparator(SpreadsheetComparatorName)} and throws a {@link IllegalArgumentException}
-     * if none was found.
-     */
-    default SpreadsheetComparator<?> spreadsheetComparatorOrFail(final SpreadsheetComparatorName name) {
-        return this.spreadsheetComparator(name)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown comparator " + name));
-    }
+    SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name);
 
     /**
      * Returns all available {@link SpreadsheetComparatorInfo}
@@ -62,7 +52,7 @@ public interface SpreadsheetComparatorProvider extends Provider {
                                 .map(
                                         nad -> nad.direction()
                                                 .apply(
-                                                        this.spreadsheetComparatorOrFail(nad.name())
+                                                        this.spreadsheetComparator(nad.name())
                                                 )
                                 ).collect(Collectors.toList())
                 )).collect(Collectors.toList());

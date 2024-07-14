@@ -13298,14 +13298,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name) {
+            public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
                 return SpreadsheetComparatorProviders.spreadsheetComparators()
                         .spreadsheetComparator(name);
             }
 
             @Override
-            public <C extends ConverterContext> Optional<Converter<C>> converter(final ConverterName name,
-                                                                                 final List<?> values) {
+            public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                       final List<?> values) {
                 return SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         this.spreadsheetMetadata(),
                         SPREADSHEET_FORMATTER_PROVIDER,
@@ -13314,12 +13314,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+            public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
                 return SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatter(selector);
             }
 
             @Override
-            public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
+            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
                 return SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(selector);
             }
 
@@ -13411,148 +13411,136 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public boolean isPure(final FunctionExpressionName function) {
                 return this.expressionFunctionProvider()
                         .expressionFunction(function)
-                        .map(f -> f.isPure(this))
-                        .orElse(false);
+                        .isPure(this);
             }
 
             private ExpressionFunctionProvider expressionFunctionProvider() {
                 return new FakeExpressionFunctionProvider() {
                     @Override
-                    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
                         switch (name.value()) {
                             case "BasicSpreadsheetEngineTestNumberParameter":
-                                return Optional.of(
+                                return new FakeExpressionFunction<>() {
+                                    @Override
+                                    public Object apply(final List<Object> parameters,
+                                                        final ExpressionEvaluationContext context) {
+                                        return NUMBER.getOrFail(
+                                                parameters,
+                                                0
+                                        );
+                                    }
 
-                                        new FakeExpressionFunction<>() {
-                                            @Override
-                                            public Object apply(final List<Object> parameters,
-                                                                final ExpressionEvaluationContext context) {
-                                                return NUMBER.getOrFail(
-                                                        parameters,
-                                                        0
-                                                );
-                                            }
+                                    private final ExpressionFunctionParameter<ExpressionNumber> NUMBER = ExpressionFunctionParameterName.with("parameters")
+                                            .required(ExpressionNumber.class)
+                                            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
 
-                                            private final ExpressionFunctionParameter<ExpressionNumber> NUMBER = ExpressionFunctionParameterName.with("parameters")
-                                                    .required(ExpressionNumber.class)
-                                                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
+                                    @Override
+                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                        return Lists.of(NUMBER);
+                                    }
 
-                                            @Override
-                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                                return Lists.of(NUMBER);
-                                            }
-
-                                            @Override
-                                            public boolean isPure(final ExpressionPurityContext context) {
-                                                return false;
-                                            }
-                                        }
-                                );
+                                    @Override
+                                    public boolean isPure(final ExpressionPurityContext context) {
+                                        return false;
+                                    }
+                                };
                             case "BasicSpreadsheetEngineTestStringParameter":
-                                return Optional.of(
-                                        new FakeExpressionFunction<>() {
-                                            @Override
-                                            public Object apply(final List<Object> parameters,
-                                                                final ExpressionEvaluationContext context) {
-                                                return STRING.getOrFail(
-                                                        parameters,
-                                                        0
-                                                );
-                                            }
+                                return new FakeExpressionFunction<>() {
+                                    @Override
+                                    public Object apply(final List<Object> parameters,
+                                                        final ExpressionEvaluationContext context) {
+                                        return STRING.getOrFail(
+                                                parameters,
+                                                0
+                                        );
+                                    }
 
-                                            private final ExpressionFunctionParameter<String> STRING = ExpressionFunctionParameterName.with("parameters")
-                                                    .required(String.class)
-                                                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
+                                    private final ExpressionFunctionParameter<String> STRING = ExpressionFunctionParameterName.with("parameters")
+                                            .required(String.class)
+                                            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
 
-                                            @Override
-                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                                return Lists.of(STRING);
-                                            }
+                                    @Override
+                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                        return Lists.of(STRING);
+                                    }
 
-                                            @Override
-                                            public boolean isPure(final ExpressionPurityContext context) {
-                                                return false;
-                                            }
-                                        }
-                                );
+                                    @Override
+                                    public boolean isPure(final ExpressionPurityContext context) {
+                                        return false;
+                                    }
+                                };
                             case "BasicSpreadsheetEngineTestSum":
-                                return Optional.of(
-                                        new FakeExpressionFunction<>() {
-                                            @Override
-                                            public Object apply(final List<Object> parameters,
-                                                                final ExpressionEvaluationContext context) {
-                                                return parameters.stream()
-                                                        .map(ExpressionNumber.class::cast)
-                                                        .reduce(context.expressionNumberKind().zero(), (l, r) -> l.add(r, context));
-                                            }
+                                return new FakeExpressionFunction<>() {
+                                    @Override
+                                    public Object apply(final List<Object> parameters,
+                                                        final ExpressionEvaluationContext context) {
+                                        return parameters.stream()
+                                                .map(ExpressionNumber.class::cast)
+                                                .reduce(context.expressionNumberKind().zero(), (l, r) -> l.add(r, context));
+                                    }
 
-                                            @Override
-                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                                return Lists.of(
-                                                        ExpressionFunctionParameterName.with("parameters")
-                                                                .variable(Object.class)
-                                                                .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
-                                                );
-                                            }
-                                        }
-                                );
+                                    @Override
+                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                        return Lists.of(
+                                                ExpressionFunctionParameterName.with("parameters")
+                                                        .variable(Object.class)
+                                                        .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
+                                        );
+                                    }
+                                };
                             case "BasicSpreadsheetEngineTestValue":
-                                return Optional.of(
-                                        new FakeExpressionFunction<>() {
-                                            @Override
-                                            public Object apply(final List<Object> parameters,
-                                                                final ExpressionEvaluationContext context) {
-                                                return BasicSpreadsheetEngineTest.this.value;
-                                            }
+                                return new FakeExpressionFunction<>() {
+                                    @Override
+                                    public Object apply(final List<Object> parameters,
+                                                        final ExpressionEvaluationContext context) {
+                                        return BasicSpreadsheetEngineTest.this.value;
+                                    }
 
-                                            @Override
-                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                                return Lists.of(
-                                                        ExpressionFunctionParameterName.with("parameters")
-                                                                .variable(Object.class)
-                                                );
-                                            }
+                                    @Override
+                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                        return Lists.of(
+                                                ExpressionFunctionParameterName.with("parameters")
+                                                        .variable(Object.class)
+                                        );
+                                    }
 
-                                            @Override
-                                            public boolean isPure(final ExpressionPurityContext context) {
-                                                return false;
-                                            }
-                                        }
-                                );
+                                    @Override
+                                    public boolean isPure(final ExpressionPurityContext context) {
+                                        return false;
+                                    }
+                                };
                             case "BasicSpreadsheetEngineTestFilterCellsPredicate":
-                                return Optional.of(
-                                        new FakeExpressionFunction<>() {
-                                            @Override
-                                            public Object apply(final List<Object> parameters,
-                                                                final ExpressionEvaluationContext context) {
-                                                checkEquals(
-                                                        Lists.empty(),
-                                                        parameters,
-                                                        "parameters"
-                                                );
+                                return new FakeExpressionFunction<>() {
+                                    @Override
+                                    public Object apply(final List<Object> parameters,
+                                                        final ExpressionEvaluationContext context) {
+                                        checkEquals(
+                                                Lists.empty(),
+                                                parameters,
+                                                "parameters"
+                                        );
 
-                                                return Boolean.valueOf(
-                                                        SpreadsheetExpressionEvaluationContext.class.cast(context)
-                                                                .cellOrFail()
-                                                                .formula()
-                                                                .text()
-                                                );
-                                            }
+                                        return Boolean.valueOf(
+                                                SpreadsheetExpressionEvaluationContext.class.cast(context)
+                                                        .cellOrFail()
+                                                        .formula()
+                                                        .text()
+                                        );
+                                    }
 
-                                            @Override
-                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                                return Lists.of(
-                                                        ExpressionFunctionParameterName.with("parameters")
-                                                                .variable(Object.class)
-                                                );
-                                            }
+                                    @Override
+                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                        return Lists.of(
+                                                ExpressionFunctionParameterName.with("parameters")
+                                                        .variable(Object.class)
+                                        );
+                                    }
 
-                                            @Override
-                                            public boolean isPure(final ExpressionPurityContext context) {
-                                                return false;
-                                            }
-                                        }
-                                );
+                                    @Override
+                                    public boolean isPure(final ExpressionPurityContext context) {
+                                        return false;
+                                    }
+                                };
                             default:
                                 throw new UnknownExpressionFunctionException(name);
                         }

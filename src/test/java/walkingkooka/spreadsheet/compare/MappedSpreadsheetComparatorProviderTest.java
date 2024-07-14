@@ -24,7 +24,6 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -71,8 +70,8 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
     }
 
     @Test
-    public void testSpreadsheetComparatorUnknown() {
-        this.spreadsheetComparatorAndCheck(
+    public void testSpreadsheetComparatorUnknownFails() {
+        this.spreadsheetComparatorFails(
                 SpreadsheetComparatorName.with("unknown")
         );
     }
@@ -107,12 +106,10 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
                 new FakeSpreadsheetComparatorProvider() {
 
                     @Override
-                    public Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name) {
-                        return Optional.ofNullable(
-                                name.equals(ORIGINAL_NAME) ?
-                                        COMPARATOR :
-                                        null
-                        );
+                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+                        return name.equals(ORIGINAL_NAME) ?
+                                COMPARATOR :
+                                null;
                     }
 
                     @Override

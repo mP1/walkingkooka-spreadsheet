@@ -266,7 +266,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     // eval delegated..................................................................................................
 
     @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
         return this.context.expressionFunction(name);
     }
 

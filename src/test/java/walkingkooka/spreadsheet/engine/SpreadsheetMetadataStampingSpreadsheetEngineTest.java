@@ -510,7 +510,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
+            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
                 return SpreadsheetParserProviders.spreadsheetParsePattern()
                         .spreadsheetParser(selector);
             }

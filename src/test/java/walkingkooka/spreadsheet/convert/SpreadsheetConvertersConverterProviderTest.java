@@ -78,7 +78,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterWithGeneral() {
         final ConverterProvider provider = this.createConverterProvider();
 
-        final Converter<SpreadsheetConverterContext> general = provider.converterOrFail(
+        final Converter<SpreadsheetConverterContext> general = provider.converter(
                 SpreadsheetConvertersConverterProvider.GENERAL,
                 Lists.empty()
         );

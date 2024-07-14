@@ -147,7 +147,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                     }
 
                     @Override
-                    public <C extends ConverterContext> Optional<Converter<C>> converter(final ConverterName name,
+                    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
                                                                                          final List<?> values) {
                         return SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 METADATA_EN_AU,

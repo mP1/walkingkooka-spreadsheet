@@ -33,7 +33,6 @@ import walkingkooka.text.CharSequences;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -64,8 +63,8 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     }
 
     @Override
-    public <C extends ConverterContext> Optional<Converter<C>> converter(final ConverterName name,
-                                                                         final List<?> values) {
+    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                               final List<?> values) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
 
@@ -116,13 +115,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 converter = SpreadsheetConverters.stringToSelection();
                 break;
             default:
-                converter = null;
-                break;
+                throw new IllegalArgumentException("Unknown converter " + name);
         }
 
-        return Optional.ofNullable(
-                Cast.to(converter)
-        );
+        return Cast.to(converter);
     }
 
     private Converter<SpreadsheetConverterContext> general() {

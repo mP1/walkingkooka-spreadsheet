@@ -72,11 +72,17 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
     }
 
     @Override
-    public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return this.nameMapper.apply(selector.name())
-                .flatMap(n -> this.provider.spreadsheetParser(selector.setName(n)));
+        return this.provider.spreadsheetParser(
+                selector.setName(
+                        this.nameMapper.apply(selector.name())
+                                .orElseThrow(
+                                        () -> new IllegalArgumentException("Unknown parser " + selector.name())
+                                )
+                )
+        );
     }
 
     /**

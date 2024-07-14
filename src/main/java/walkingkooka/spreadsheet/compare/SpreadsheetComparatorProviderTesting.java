@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
 
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,44 +36,23 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
         );
     }
 
-    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorName name) {
-        this.spreadsheetComparatorAndCheck(
+    default void spreadsheetComparatorFails(final SpreadsheetComparatorName name) {
+        this.spreadsheetComparatorFails(
                 this.createSpreadsheetComparatorProvider(),
-                name,
-                Optional.empty()
+                name
         );
     }
 
-    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
-                                               final SpreadsheetComparatorName name) {
-        this.spreadsheetComparatorAndCheck(
-                provider,
-                name,
-                Optional.empty()
+    default void spreadsheetComparatorFails(final SpreadsheetComparatorProvider provider,
+                                            final SpreadsheetComparatorName name) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetComparator(name)
         );
     }
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorName name,
                                                final SpreadsheetComparator<?> expected) {
-        this.spreadsheetComparatorAndCheck(
-                this.createSpreadsheetComparatorProvider(),
-                name,
-                Optional.of(expected)
-        );
-    }
-
-    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
-                                               final SpreadsheetComparatorName name,
-                                               final SpreadsheetComparator<?> expected) {
-        this.spreadsheetComparatorAndCheck(
-                provider,
-                name,
-                Optional.of(expected)
-        );
-    }
-
-    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorName name,
-                                               final Optional<SpreadsheetComparator<?>> expected) {
         this.spreadsheetComparatorAndCheck(
                 this.createSpreadsheetComparatorProvider(),
                 name,
@@ -84,7 +62,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final SpreadsheetComparatorName name,
-                                               final Optional<SpreadsheetComparator<?>> expected) {
+                                               final SpreadsheetComparator<?> expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetComparator(name),

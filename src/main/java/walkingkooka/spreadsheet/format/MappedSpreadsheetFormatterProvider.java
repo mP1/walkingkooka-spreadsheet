@@ -55,11 +55,15 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
     }
 
     @Override
-    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return this.nameMapper.apply(selector.name())
-                .flatMap(n -> this.provider.spreadsheetFormatter(selector.setName(n)));
+        return this.provider.spreadsheetFormatter(
+                selector.setName(
+                        this.nameMapper.apply(selector.name())
+                                .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + selector.name()))
+                )
+        );
     }
 
     /**

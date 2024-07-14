@@ -21,7 +21,6 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.collect.set.Sets;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -39,9 +38,10 @@ final class EmptySpreadsheetFormatterProvider implements SpreadsheetFormatterPro
     }
 
     @Override
-    public Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
-        return Optional.empty();
+
+        throw new IllegalArgumentException("Unknown formatter " + selector.name());
     }
 
     @Override

@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
 
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,35 +37,33 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
     T createSpreadsheetFormatterProvider();
 
-    default void spreadsheetFormatterAndCheck(final String selector) {
-        this.spreadsheetFormatterAndCheck(
+    default void spreadsheetFormatterFails(final String selector) {
+        this.spreadsheetFormatterFails(
                 this.createSpreadsheetFormatterProvider(),
                 SpreadsheetFormatterSelector.parse(selector)
         );
     }
 
-    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
-                                              final String selector) {
-        this.spreadsheetFormatterAndCheck(
+    default void spreadsheetFormatterFails(final SpreadsheetFormatterProvider provider,
+                                           final String selector) {
+        this.spreadsheetFormatterFails(
                 provider,
                 SpreadsheetFormatterSelector.parse(selector)
         );
     }
 
-    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterSelector selector) {
-        this.spreadsheetFormatterAndCheck(
+    default void spreadsheetFormatterFails(final SpreadsheetFormatterSelector selector) {
+        this.spreadsheetFormatterFails(
                 this.createSpreadsheetFormatterProvider(),
-                selector,
-                Optional.empty()
+                selector
         );
     }
 
-    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
-                                              final SpreadsheetFormatterSelector selector) {
-        this.spreadsheetFormatterAndCheck(
-                provider,
-                selector,
-                Optional.empty()
+    default void spreadsheetFormatterFails(final SpreadsheetFormatterProvider provider,
+                                           final SpreadsheetFormatterSelector selector) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetFormatter(selector)
         );
     }
 
@@ -94,32 +91,13 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         this.spreadsheetFormatterAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 selector,
-                Optional.of(expected)
-        );
-    }
-
-    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
-                                              final SpreadsheetFormatterSelector selector,
-                                              final SpreadsheetFormatter expected) {
-        this.spreadsheetFormatterAndCheck(
-                provider,
-                selector,
-                Optional.of(expected)
-        );
-    }
-
-    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterSelector selector,
-                                              final Optional<SpreadsheetFormatter> expected) {
-        this.spreadsheetFormatterAndCheck(
-                this.createSpreadsheetFormatterProvider(),
-                selector,
                 expected
         );
     }
 
     default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
                                               final SpreadsheetFormatterSelector selector,
-                                              final Optional<SpreadsheetFormatter> expected) {
+                                              final SpreadsheetFormatter expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetFormatter(selector),

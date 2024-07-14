@@ -55,8 +55,8 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testTextParsePattern() {
-        this.spreadsheetParserAndCheck(
+    public void testTextParsePatternFails() {
+        this.spreadsheetParserFails(
                 "text-parse-pattern @@\"Hello\""
         );
     }

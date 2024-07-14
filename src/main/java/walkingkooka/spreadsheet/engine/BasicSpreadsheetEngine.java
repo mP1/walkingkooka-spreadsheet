@@ -456,7 +456,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 .map(
                                         nad -> nad.direction()
                                                 .apply(
-                                                        context.spreadsheetComparatorOrFail(
+                                                        context.spreadsheetComparator(
                                                                 nad.name()
                                                         )
                                                 )
@@ -1137,7 +1137,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         .text()
                         ),
                         cell.parser()
-                                .flatMap(context::spreadsheetParser)
+                                .map(context::spreadsheetParser)
                                 .orElseGet(
                                         () -> SpreadsheetParsers.valueOrExpression(
                                                 metadata.parser(context) // SpreadsheetEngineContext implements SpreadsheetParserProvider
@@ -1215,7 +1215,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             result = context.formatValueAndStyle(
                     result,
                     cell.formatter()
-                            .flatMap(context::spreadsheetFormatter)
+                            .map(context::spreadsheetFormatter)
             );
         } catch (final Exception cause) {
             result = context.formatThrowableAndStyle(

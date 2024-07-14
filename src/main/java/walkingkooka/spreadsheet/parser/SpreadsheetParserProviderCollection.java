@@ -22,7 +22,6 @@ import walkingkooka.plugin.ProviderCollectionProviderGetter;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -40,15 +39,15 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
         this.providers = ProviderCollection.with(
                 new ProviderCollectionProviderGetter<>() {
                     @Override
-                    public Optional<SpreadsheetParser> get(final SpreadsheetParserProvider provider,
-                                                           final SpreadsheetParserName name,
-                                                           final List<?> values) {
+                    public SpreadsheetParser get(final SpreadsheetParserProvider provider,
+                                                 final SpreadsheetParserName name,
+                                                 final List<?> values) {
                         throw new UnsupportedOperationException();
                     }
 
                     @Override
-                    public Optional<SpreadsheetParser> get(final SpreadsheetParserProvider provider,
-                                                           final SpreadsheetParserSelector selector) {
+                    public SpreadsheetParser get(final SpreadsheetParserProvider provider,
+                                                 final SpreadsheetParserSelector selector) {
                         return provider.spreadsheetParser(
                                 selector
                         );
@@ -61,10 +60,14 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
     }
 
     @Override
-    public Optional<SpreadsheetParser> spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return this.providers.get(selector);
+        final SpreadsheetParser parser = this.providers.get(selector);
+        if(null == parser) {
+            throw new IllegalArgumentException("Unknown parser " + selector.name());
+        }
+        return parser;
     }
 
     @Override

@@ -17,12 +17,11 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
     @Override
-    public Optional<SpreadsheetComparator<?>> spreadsheetComparator(final SpreadsheetComparatorName name) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
         throw new UnsupportedOperationException();
     }
 

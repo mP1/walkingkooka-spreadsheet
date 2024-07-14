@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.plugin.Provider;
 
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -32,18 +31,9 @@ import java.util.Set;
 public interface SpreadsheetFormatterProvider extends Provider {
 
     /**
-     * Resolves the given {@link SpreadsheetFormatterName} to a {@link SpreadsheetFormatterName}.
+     * Resolves the given {@link SpreadsheetFormatterName} to a {@link SpreadsheetFormatter}.
      */
-    Optional<SpreadsheetFormatter> spreadsheetFormatter(final SpreadsheetFormatterSelector selector);
-
-    /**
-     * Helper that invokes {@link #spreadsheetFormatter(SpreadsheetFormatterSelector)} and throws a {@link IllegalArgumentException}
-     * if none was found.
-     */
-    default SpreadsheetFormatter spreadsheetFormatterOrFail(final SpreadsheetFormatterSelector selector) {
-        return this.spreadsheetFormatter(selector)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + selector.name()));
-    }
+    SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector);
 
     /**
      * Returns all available {@link SpreadsheetFormatterInfo}
