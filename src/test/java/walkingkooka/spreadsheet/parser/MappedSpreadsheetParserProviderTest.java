@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
@@ -58,11 +59,22 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     private final static String NEW_PARSER_NAME = "new-date-parse-pattern";
 
     @Test
-    public void testSpreadsheetParser() {
+    public void testSpreadsheetParserSelector() {
         final String pattern = "yyyy/mm/dd";
 
         this.spreadsheetParserAndCheck(
                 NEW_PARSER_NAME + " " + pattern,
+                SpreadsheetPattern.parseDateParsePattern(pattern).parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameAndValues() {
+        final String pattern = "yyyy/mm/dd";
+
+        this.spreadsheetParserAndCheck(
+                SpreadsheetParserName.with(NEW_PARSER_NAME),
+                Lists.of(pattern),
                 SpreadsheetPattern.parseDateParsePattern(pattern).parser()
         );
     }

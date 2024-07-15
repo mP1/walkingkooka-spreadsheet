@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -440,6 +441,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
         return this.spreadsheetParserProvider.spreadsheetParser(selector);
+    }
+
+    @Override
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
+                                               final List<?> values) {
+        return this.spreadsheetParserProvider.spreadsheetParser(
+                name,
+                values
+        );
     }
 
     @Override

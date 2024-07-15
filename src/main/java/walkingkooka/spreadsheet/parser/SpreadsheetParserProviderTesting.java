@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,6 +37,8 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     }
 
     T createSpreadsheetParserProvider();
+
+    // spreadsheetParser(SpreadsheetParserSelector).....................................................................
 
     default void spreadsheetParserFails(final String selector) {
         this.spreadsheetParserFails(
@@ -104,6 +107,56 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                 selector::toString
         );
     }
+
+    // spreadsheetParser(SpreadsheetParserName, List)...................................................................
+
+    default void spreadsheetParserFails(final SpreadsheetParserName name,
+                                        final List<?> values) {
+        this.spreadsheetParserFails(
+                this.createSpreadsheetParserProvider(),
+                name,
+                values
+        );
+    }
+
+    default void spreadsheetParserFails(final SpreadsheetParserProvider provider,
+                                        final SpreadsheetParserName name,
+                                        final List<?> values) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetParser(
+                        name,
+                        values
+                )
+        );
+    }
+
+    default void spreadsheetParserAndCheck(final SpreadsheetParserName name,
+                                           final List<?> values,
+                                           final SpreadsheetParser expected) {
+        this.spreadsheetParserAndCheck(
+                this.createSpreadsheetParserProvider(),
+                name,
+                values,
+                expected
+        );
+    }
+
+    default void spreadsheetParserAndCheck(final SpreadsheetParserProvider provider,
+                                           final SpreadsheetParserName name,
+                                           final List<?> values,
+                                           final SpreadsheetParser expected) {
+        this.checkEquals(
+                expected,
+                provider.spreadsheetParser(
+                        name,
+                        values
+                ),
+                () -> name + " " + values
+        );
+    }
+
+    // spreadsheetParserInfo............................................................................................
 
     default void spreadsheetParserInfosAndCheck(final SpreadsheetParserInfo... expected) {
         this.spreadsheetParserInfosAndCheck(

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -35,7 +36,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     }
 
     @Test
-    public void testGet() {
+    public void testSpreadsheetParserSelection() {
         final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern();
 
         this.spreadsheetParserAndCheck(
@@ -43,6 +44,21 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
                         Sets.of(provider)
                 ),
                 SpreadsheetParserSelector.parse("date-parse-pattern yyyy/mm/dd"),
+                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                        .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserName() {
+        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern();
+
+        this.spreadsheetParserAndCheck(
+                SpreadsheetParserProviderCollection.with(
+                        Sets.of(provider)
+                ),
+                SpreadsheetParserName.DATE_PARSER,
+                Lists.of("yyyy/mm/dd"),
                 SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                         .parser()
         );

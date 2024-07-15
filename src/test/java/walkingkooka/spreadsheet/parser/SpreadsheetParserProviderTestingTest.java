@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -63,6 +64,13 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
             Objects.requireNonNull(selector, "selector");
 
             checkEquals("date-parse-pattern", selector.name().value());
+            return PARSER;
+        }
+
+        @Override
+        public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
+                                                   final List<?> values) {
+            checkEquals("date-parse-pattern", name.value());
             return PARSER;
         }
 
