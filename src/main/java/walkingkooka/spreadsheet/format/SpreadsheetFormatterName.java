@@ -46,6 +46,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
 
     // SpreadsheetFormatterName instances...............................................................................
 
+    final static String AUTOMATIC_STRING = "automatic";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName AUTOMATIC = new SpreadsheetFormatterName(
+            AUTOMATIC_STRING,
+            null
+    );
+
     final static String DATE_FORMAT_PATTERN_STRING = "date-format-pattern";
 
     /**
