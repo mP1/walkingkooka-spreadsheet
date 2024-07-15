@@ -25,6 +25,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.provider.ConverterInfo;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.UrlPath;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -60,6 +61,13 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         this.metadata = metadata;
         this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
         this.spreadsheetParserProvider = spreadsheetParserProvider;
+    }
+
+    @Override
+    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        return selector.evaluateText(this);
     }
 
     @Override
