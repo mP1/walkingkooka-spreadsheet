@@ -17,11 +17,14 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.text.cursor.parser.Parser;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -44,6 +47,29 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         return selector.spreadsheetParsePattern()
                 .map(SpreadsheetParsePattern::parser)
                 .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + selector.name()));
+    }
+
+    @Override
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
+                                               final List<?> values) {
+        Objects.requireNonNull(name, "name");
+
+        final SpreadsheetPatternKind kind = name.patternKind;
+        if (null == kind) {
+            throw new IllegalArgumentException("Unknown parser " + name);
+        }
+
+        final List<?> copy = Lists.immutable(values);
+        final int count = copy.size();
+        switch (count) {
+            case 1:
+                final SpreadsheetParsePattern pattern = (SpreadsheetParsePattern) kind.parse(
+                        (String) copy.get(0)
+                );
+                return pattern.parser();
+            default:
+                throw new IllegalArgumentException("Expected 0 values got " + count);
+        }
     }
 
     @Override

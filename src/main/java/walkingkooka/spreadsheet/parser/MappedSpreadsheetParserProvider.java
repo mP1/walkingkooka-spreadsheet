@@ -37,6 +37,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.text.CharacterConstant;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -82,6 +83,20 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
                                         () -> new IllegalArgumentException("Unknown parser " + selector.name())
                                 )
                 )
+        );
+    }
+
+    @Override
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
+                                               final List<?> values) {
+        Objects.requireNonNull(name, "name");
+
+        return this.provider.spreadsheetParser(
+                this.nameMapper.apply(name)
+                        .orElseThrow(
+                                () -> new IllegalArgumentException("Unknown parser " + name)
+                        ),
+                values
         );
     }
 

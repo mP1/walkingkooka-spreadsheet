@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -168,6 +169,12 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
 
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
+                                               final List<?> values) {
         throw new UnsupportedOperationException();
     }
 

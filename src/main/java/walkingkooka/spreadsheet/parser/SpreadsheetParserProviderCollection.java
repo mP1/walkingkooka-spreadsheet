@@ -42,7 +42,10 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
                     public SpreadsheetParser get(final SpreadsheetParserProvider provider,
                                                  final SpreadsheetParserName name,
                                                  final List<?> values) {
-                        throw new UnsupportedOperationException();
+                        return provider.spreadsheetParser(
+                                name,
+                                values
+                        );
                     }
 
                     @Override
@@ -66,6 +69,19 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
         final SpreadsheetParser parser = this.providers.get(selector);
         if(null == parser) {
             throw new IllegalArgumentException("Unknown parser " + selector.name());
+        }
+        return parser;
+    }
+
+    @Override
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
+                                               final List<?> values) {
+        final SpreadsheetParser parser = this.providers.get(
+                name,
+                values
+        );
+        if (null == parser) {
+            throw new IllegalArgumentException("Unknown parser " + name);
         }
         return parser;
     }

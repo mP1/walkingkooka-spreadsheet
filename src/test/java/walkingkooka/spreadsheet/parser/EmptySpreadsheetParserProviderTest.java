@@ -17,9 +17,26 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class EmptySpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<EmptySpreadsheetParserProvider> {
+
+    @Test
+    public void testSpreadsheetParserSelectorFails() {
+        this.spreadsheetParserFails(
+                SpreadsheetParserName.DATE_TIME_PARSER.setText("")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameFails() {
+        this.spreadsheetParserFails(
+                SpreadsheetParserName.DATE_TIME_PARSER,
+                Lists.empty()
+        );
+    }
 
     @Override
     public EmptySpreadsheetParserProvider createSpreadsheetParserProvider() {

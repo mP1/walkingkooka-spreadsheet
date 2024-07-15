@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
@@ -28,7 +29,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         ToStringTesting<SpreadsheetParsePatternSpreadsheetParserProvider> {
 
     @Test
-    public void testDateParsePattern() {
+    public void testSpreadsheetParserSelectorDateParsePattern() {
         this.spreadsheetParserAndCheck(
                 "date-parse-pattern dd/mm/yy",
                 SpreadsheetPattern.parseDateParsePattern("dd/mm/yy")
@@ -37,7 +38,17 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testDateTimeParsePattern() {
+    public void testSpreadsheetParserNameDateParsePattern() {
+        this.spreadsheetParserAndCheck(
+                SpreadsheetParserName.DATE_PARSER,
+                Lists.of("dd/mm/yy"),
+                SpreadsheetPattern.parseDateParsePattern("dd/mm/yy")
+                        .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorDateTimeParsePattern() {
         this.spreadsheetParserAndCheck(
                 "date-time-parse-pattern dd/mm/yyyy hh:mm:ss",
                 SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
@@ -46,7 +57,17 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testNumberParsePattern() {
+    public void testSpreadsheetParserNameDateTimeParsePattern() {
+        this.spreadsheetParserAndCheck(
+                SpreadsheetParserName.DATE_TIME_PARSER,
+                Lists.of("dd/mm/yyyy hh:mm:ss"),
+                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
+                        .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorNumberParsePattern() {
         this.spreadsheetParserAndCheck(
                 "number-parse-pattern $0.00",
                 SpreadsheetPattern.parseNumberParsePattern("$0.00")
@@ -55,16 +76,44 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testTextParsePatternFails() {
+    public void testSpreadsheetParserNameNumberParsePattern() {
+        this.spreadsheetParserAndCheck(
+                SpreadsheetParserName.NUMBER_PARSER,
+                Lists.of("$0.00"),
+                SpreadsheetPattern.parseNumberParsePattern("$0.00")
+                        .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorTextParsePatternFails() {
         this.spreadsheetParserFails(
                 "text-parse-pattern @@\"Hello\""
         );
     }
 
     @Test
-    public void testTimeParsePattern() {
+    public void testSpreadsheetParserNameTextParsePatternFails() {
+        this.spreadsheetParserFails(
+                SpreadsheetParserName.with("text"),
+                Lists.of("@@\"Hello\"")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorTimeParsePattern() {
         this.spreadsheetParserAndCheck(
                 "time-parse-pattern hh:mm:ss",
+                SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
+                        .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameTimeParsePattern() {
+        this.spreadsheetParserAndCheck(
+                SpreadsheetParserName.TIME_PARSER,
+                Lists.of("hh:mm:ss"),
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
                         .parser()
         );
@@ -88,7 +137,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     // ToString.........................................................................................................
 
     @Test
-    public void testToString() {
+    public void testSpreadsheetParserSelectorToString() {
         this.toStringAndCheck(
                 SpreadsheetParsePatternSpreadsheetParserProvider.INSTANCE,
                 "SpreadsheetPattern.parser"
@@ -98,7 +147,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     // TreePrintable....................................................................................................
 
     @Test
-    public void testTreePrintable() {
+    public void testSpreadsheetParserSelectorTreePrintable() {
         this.treePrintAndCheck(
                 SpreadsheetParserInfoSet.with(
                         SpreadsheetParsePatternSpreadsheetParserProvider.INSTANCE.spreadsheetParserInfos()
@@ -114,7 +163,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     // json.............................................................................................................
 
     @Test
-    public void testMarshall() {
+    public void testSpreadsheetParserSelectorMarshall() {
         this.checkEquals(
                 JsonNode.parse(
                         "[\n" +
