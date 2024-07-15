@@ -179,22 +179,16 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
      */
     public Optional<SpreadsheetFormatPattern> spreadsheetFormatPattern() {
         if (null == this.spreadsheetFormatPattern) {
-            final SpreadsheetPatternKind patternKind = this.name().patternKind;
+            final SpreadsheetPatternKind patternKind = this.name()
+                    .patternKind;
 
-            SpreadsheetFormatPattern formatPattern;
-
-            try {
-                formatPattern = null == patternKind ?
-                        null :
-                        patternKind.parse(
-                                this.text()
-                        ).toFormat();
-            } catch (final RuntimeException fail) {
-                formatPattern = null;
-            }
-
-
-            this.spreadsheetFormatPattern = Optional.ofNullable(formatPattern);
+            this.spreadsheetFormatPattern = Optional.ofNullable(
+                    null == patternKind ?
+                            null :
+                            patternKind.parse(
+                                    this.text()
+                            ).toFormat()
+            );
         }
 
         return this.spreadsheetFormatPattern;

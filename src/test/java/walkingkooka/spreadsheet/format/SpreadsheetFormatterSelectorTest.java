@@ -28,6 +28,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetFormatterSelector, SpreadsheetFormatterName> {
 
     @Override
@@ -64,6 +66,17 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
     }
 
     // spreadsheetFormatPattern.........................................................................................
+
+    @Test
+    public void testSpreadsheetFormatPatternWithTextFormatPatternInvalidPatternFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetFormatterSelector.with(
+                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+                        ""
+                ).spreadsheetFormatPattern()
+        );
+    }
 
     @Test
     public void testSpreadsheetFormatPatternWithDateFormatPattern() {
