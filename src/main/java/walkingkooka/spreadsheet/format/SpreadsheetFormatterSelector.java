@@ -21,6 +21,12 @@ import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -133,6 +139,37 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
                 this :
                 new SpreadsheetFormatterSelector(different);
     }
+
+    /**
+     * Parses the text as an expression that may contain String literals, numbers or {@link SpreadsheetFormatterName}.
+     */
+    public SpreadsheetFormatter evaluateText(final SpreadsheetFormatterProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        return this.selector.evaluateText(
+                (final TextCursor cursor, final ParserContext context) -> SPREADSHEET_FORMATTER_NAME_PARSER.parse(
+                        cursor,
+                        context
+                ).map(
+                        (final ParserToken token) ->
+                                SpreadsheetFormatterName.with(
+                                        token.cast(StringParserToken.class)
+                                                .value()
+                                )
+                ),
+                provider::spreadsheetFormatter
+        );
+    }
+
+    /**
+     * A parser that returns a {@link SpreadsheetFormatterName}.
+     */
+    private final static Parser<ParserContext> SPREADSHEET_FORMATTER_NAME_PARSER = Parsers.stringInitialAndPartCharPredicate(
+            (c) -> SpreadsheetFormatterName.isChar(0, c),
+            (c) -> SpreadsheetFormatterName.isChar(1, c),
+            1,
+            SpreadsheetFormatterName.MAX_LENGTH
+    );
 
     // spreadsheetFormatPattern.........................................................................................
 
