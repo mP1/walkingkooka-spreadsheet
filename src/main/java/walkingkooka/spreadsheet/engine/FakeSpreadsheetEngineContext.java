@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfo;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
@@ -134,6 +135,12 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     // formatting.......................................................................................................
+
+    @Override
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
+                                                     final List<?> values) {
+        throw new IllegalArgumentException("Unknown formatter " + name);
+    }
 
     @Override
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {

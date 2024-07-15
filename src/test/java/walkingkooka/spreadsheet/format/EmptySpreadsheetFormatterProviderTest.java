@@ -17,9 +17,27 @@
 
 package walkingkooka.spreadsheet.format;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<EmptySpreadsheetFormatterProvider> {
+
+    @Test
+    public void testSpreadsheetFormatterSelectorFails() {
+        this.spreadsheetFormatterFails(
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterNameFails() {
+        this.spreadsheetFormatterFails(
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+                Lists.empty()
+        );
+    }
+
     @Override
     public EmptySpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
         return EmptySpreadsheetFormatterProvider.INSTANCE;

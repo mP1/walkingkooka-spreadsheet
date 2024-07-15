@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.plugin.Provider;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,9 +32,15 @@ import java.util.Set;
 public interface SpreadsheetFormatterProvider extends Provider {
 
     /**
-     * Resolves the given {@link SpreadsheetFormatterName} to a {@link SpreadsheetFormatter}.
+     * Resolves the given {@link SpreadsheetFormatterSelector} to a {@link SpreadsheetFormatter}.
      */
     SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector);
+
+    /**
+     * Resolves the given {@link SpreadsheetFormatterName} to a {@link SpreadsheetFormatter}.
+     */
+    SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
+                                              final List<?> values);
 
     /**
      * Returns all available {@link SpreadsheetFormatterInfo}

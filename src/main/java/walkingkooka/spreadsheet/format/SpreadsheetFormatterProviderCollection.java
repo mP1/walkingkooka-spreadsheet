@@ -42,7 +42,10 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
                     public SpreadsheetFormatter get(final SpreadsheetFormatterProvider provider,
                                                     final SpreadsheetFormatterName name,
                                                     final List<?> values) {
-                        throw new UnsupportedOperationException();
+                        return provider.spreadsheetFormatter(
+                                name,
+                                values
+                        );
                     }
 
                     @Override
@@ -65,6 +68,19 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
 
         return this.providers.get(selector);
     }
+
+    @Override
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
+                                                     final List<?> values) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
+
+        return this.providers.get(
+                name,
+                values
+        );
+    }
+
 
     @Override
     public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {

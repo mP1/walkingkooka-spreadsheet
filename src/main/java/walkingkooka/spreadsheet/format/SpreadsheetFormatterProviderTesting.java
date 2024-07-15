@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,6 +37,8 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     T createSpreadsheetFormatterProvider();
+
+    // SpreadsheetFormatter(SpreadsheetFormatterSelector)...............................................................
 
     default void spreadsheetFormatterFails(final String selector) {
         this.spreadsheetFormatterFails(
@@ -104,6 +107,56 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                 selector::toString
         );
     }
+
+    // SpreadsheetFormatter(SpreadsheetFormatterSelector)...............................................................
+
+    default void spreadsheetFormatterFails(final SpreadsheetFormatterName name,
+                                           final List<?> values) {
+        this.spreadsheetFormatterFails(
+                this.createSpreadsheetFormatterProvider(),
+                name,
+                values
+        );
+    }
+
+    default void spreadsheetFormatterFails(final SpreadsheetFormatterProvider provider,
+                                           final SpreadsheetFormatterName name,
+                                           final List<?> values) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetFormatter(
+                        name,
+                        values
+                )
+        );
+    }
+
+    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterName name,
+                                              final List<?> values,
+                                              final SpreadsheetFormatter expected) {
+        this.spreadsheetFormatterAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                name,
+                values,
+                expected
+        );
+    }
+
+    default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
+                                              final SpreadsheetFormatterName name,
+                                              final List<?> values,
+                                              final SpreadsheetFormatter expected) {
+        this.checkEquals(
+                expected,
+                provider.spreadsheetFormatter(
+                        name,
+                        values
+                ),
+                () -> name + " " + values
+        );
+    }
+
+    // SpreadsheetFormatterInfos........................................................................................
 
     default void spreadsheetFormatterInfosAndCheck(final SpreadsheetFormatterInfo... expected) {
         this.spreadsheetFormatterInfosAndCheck(
