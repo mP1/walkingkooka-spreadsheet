@@ -17,10 +17,13 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -43,6 +46,31 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         return selector.spreadsheetFormatPattern()
                 .map(SpreadsheetPattern::formatter)
                 .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + selector.name()));
+    }
+
+    @Override
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
+                                                     final List<?> values) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
+
+
+        final SpreadsheetPatternKind kind = name.patternKind;
+        if (null == kind) {
+            throw new IllegalArgumentException("Unknown formatter " + name);
+        }
+
+        final List<?> copy = Lists.immutable(values);
+        final int count = copy.size();
+
+        switch (count) {
+            case 1:
+                return kind.parse(
+                        (String) copy.get(0)
+                ).formatter();
+            default:
+                throw new IllegalArgumentException("Expected 1 value got " + count);
+        }
     }
 
     @Override

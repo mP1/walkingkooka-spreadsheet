@@ -46,7 +46,7 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
 
     // SpreadsheetFormatterName instances...............................................................................
 
-    private final static String DATE_FORMAT_PATTERN_STRING = "date-format-pattern";
+    final static String DATE_FORMAT_PATTERN_STRING = "date-format-pattern";
 
     /**
      * The name of the date {@link SpreadsheetFormatter}
@@ -56,7 +56,7 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             SpreadsheetPatternKind.DATE_FORMAT_PATTERN
     );
 
-    private final static String DATE_TIME_FORMAT_PATTERN_STRING = "date-time-format-pattern";
+    final static String DATE_TIME_FORMAT_PATTERN_STRING = "date-time-format-pattern";
 
     /**
      * The name of the date-time {@link SpreadsheetFormatter}
@@ -66,7 +66,7 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
     );
 
-    private final static String NUMBER_FORMAT_PATTERN_STRING = "number-format-pattern";
+    final static String NUMBER_FORMAT_PATTERN_STRING = "number-format-pattern";
 
     /**
      * The name of the number {@link SpreadsheetFormatter}
@@ -75,7 +75,7 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             NUMBER_FORMAT_PATTERN_STRING,
             SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
     );
-    private final static String TEXT_FORMAT_PATTERN_STRING = "text-format-pattern";
+    final static String TEXT_FORMAT_PATTERN_STRING = "text-format-pattern";
 
     /**
      * The name of the text {@link SpreadsheetFormatter}
@@ -85,7 +85,7 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
     );
 
-    private final static String TIME_FORMAT_PATTERN_STRING = "time-format-pattern";
+    final static String TIME_FORMAT_PATTERN_STRING = "time-format-pattern";
 
     /**
      * The name of the time {@link SpreadsheetFormatter}

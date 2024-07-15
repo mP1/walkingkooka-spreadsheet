@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -65,6 +66,17 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
             checkEquals("text-format-pattern", selector.name().value());
             return FORMATTER;
         }
+
+        @Override
+        public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
+                                                         final List<?> values) {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(values, "values");
+
+            checkEquals("text-format-pattern", name.value());
+            return FORMATTER;
+        }
+
 
         @Override
         public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {

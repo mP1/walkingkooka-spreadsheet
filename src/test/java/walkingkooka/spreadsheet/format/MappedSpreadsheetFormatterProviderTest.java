@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
@@ -58,12 +59,25 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     private final static String NEW_FORMATTER_NAME = "new-date-format-pattern";
 
     @Test
-    public void testSpreadsheetFormatter() {
+    public void testSpreadsheetFormatterSelector() {
         final String pattern = "yyyy/mm/dd";
 
         this.spreadsheetFormatterAndCheck(
                 NEW_FORMATTER_NAME + " " + pattern,
-                SpreadsheetPattern.parseDateFormatPattern(pattern).formatter()
+                SpreadsheetPattern.parseDateFormatPattern(pattern)
+                        .formatter()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterName() {
+        final String pattern = "yyyy/mm/dd";
+
+        this.spreadsheetFormatterAndCheck(
+                SpreadsheetFormatterName.with(NEW_FORMATTER_NAME),
+                Lists.of(pattern),
+                SpreadsheetPattern.parseDateFormatPattern(pattern)
+                        .formatter()
         );
     }
 

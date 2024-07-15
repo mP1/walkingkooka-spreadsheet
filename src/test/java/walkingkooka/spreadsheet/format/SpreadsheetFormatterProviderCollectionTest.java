@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -35,7 +36,19 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     }
 
     @Test
-    public void testGet() {
+    public void testSpreadsheetFormatterSelectorMissingValuesFails() {
+        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
+        this.spreadsheetFormatterFails(
+                SpreadsheetFormatterProviderCollection.with(
+                        Sets.of(provider)
+                ),
+                SpreadsheetFormatterSelector.parse("text-format-pattern")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelector() {
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
         this.spreadsheetFormatterAndCheck(
@@ -43,6 +56,34 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
                         Sets.of(provider)
                 ),
                 SpreadsheetFormatterSelector.parse("text-format-pattern @@"),
+                SpreadsheetPattern.parseTextFormatPattern("@@")
+                        .formatter()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterNameMissingValuesFails() {
+        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
+        this.spreadsheetFormatterFails(
+                SpreadsheetFormatterProviderCollection.with(
+                        Sets.of(provider)
+                ),
+                SpreadsheetFormatterName.with("text-format-pattern"),
+                Lists.of()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterName() {
+        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
+        this.spreadsheetFormatterAndCheck(
+                SpreadsheetFormatterProviderCollection.with(
+                        Sets.of(provider)
+                ),
+                SpreadsheetFormatterName.with("text-format-pattern"),
+                Lists.of("@@"),
                 SpreadsheetPattern.parseTextFormatPattern("@@")
                         .formatter()
         );

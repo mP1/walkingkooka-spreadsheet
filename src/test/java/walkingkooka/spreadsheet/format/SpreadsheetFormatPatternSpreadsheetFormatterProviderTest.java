@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
@@ -28,7 +29,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
         ToStringTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider> {
 
     @Test
-    public void testDateFormatPattern() {
+    public void testSpreadsheetFormatterSelectorDateFormatPattern() {
         this.spreadsheetFormatterAndCheck(
                 "date-format-pattern dd/mm/yy",
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter()
@@ -36,7 +37,16 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     }
 
     @Test
-    public void testDateTimeFormatPattern() {
+    public void testSpreadsheetFormatterNameDateFormatPattern() {
+        this.spreadsheetFormatterAndCheck(
+                SpreadsheetFormatterName.with("date-format-pattern"),
+                Lists.of("dd/mm/yy"),
+                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorDateTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
                 "date-time-format-pattern dd/mm/yyyy hh:mm:ss",
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm:ss").formatter()
@@ -44,7 +54,18 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     }
 
     @Test
-    public void testNumberFormatPattern() {
+    public void testSpreadsheetFormatterNameDateTimeFormatPattern() {
+        this.spreadsheetFormatterAndCheck(
+                SpreadsheetFormatterName.with("date-time-format-pattern"),
+                Lists.of(
+                        "dd/mm/yyyy hh:mm:ss"
+                ),
+                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm:ss").formatter()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorNumberFormatPattern() {
         this.spreadsheetFormatterAndCheck(
                 "number-format-pattern $0.00",
                 SpreadsheetPattern.parseNumberFormatPattern("$0.00").formatter()
@@ -52,7 +73,16 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     }
 
     @Test
-    public void testTextFormatPattern() {
+    public void testSpreadsheetFormatterNameNumberFormatPattern() {
+        this.spreadsheetFormatterAndCheck(
+                SpreadsheetFormatterName.with("number-format-pattern"),
+                Lists.of("$0.00"),
+                SpreadsheetPattern.parseNumberFormatPattern("$0.00").formatter()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorTextFormatPattern() {
         this.spreadsheetFormatterAndCheck(
                 "text-format-pattern @@\"Hello\"",
                 SpreadsheetPattern.parseTextFormatPattern("@@\"Hello\"").formatter()
@@ -60,9 +90,29 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     }
 
     @Test
-    public void testTimeFormatPattern() {
+    public void testSpreadsheetFormatterNameTextFormatPattern() {
+        this.spreadsheetFormatterAndCheck(
+                SpreadsheetFormatterName.with("text-format-pattern"),
+                Lists.of(
+                        "@@\"Hello\""
+                ),
+                SpreadsheetPattern.parseTextFormatPattern("@@\"Hello\"").formatter()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
                 "time-format-pattern hh:mm:ss",
+                SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").formatter()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterNameTimeFormatPattern() {
+        this.spreadsheetFormatterAndCheck(
+                SpreadsheetFormatterName.with("time-format-pattern"),
+                Lists.of("hh:mm:ss"),
                 SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").formatter()
         );
     }

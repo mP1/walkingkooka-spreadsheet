@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.text.CharacterConstant;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -63,6 +64,19 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
                         this.nameMapper.apply(selector.name())
                                 .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + selector.name()))
                 )
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
+                                                     final List<?> values) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
+
+        return this.provider.spreadsheetFormatter(
+                this.nameMapper.apply(name)
+                        .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name)),
+                values
         );
     }
 
