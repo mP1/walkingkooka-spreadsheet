@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.FakeConverterContext;
 import walkingkooka.convert.provider.ConverterInfo;
 import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
@@ -52,6 +53,13 @@ import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetEngineContext extends FakeConverterContext implements SpreadsheetEngineContext, Fake {
+
+    @Override
+    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public <C extends ConverterContext> Converter<C> converter(final ConverterName name,

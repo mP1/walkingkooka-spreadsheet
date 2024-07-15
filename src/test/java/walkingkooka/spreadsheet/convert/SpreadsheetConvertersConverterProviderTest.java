@@ -43,7 +43,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         SpreadsheetMetadataTesting {
 
     @Test
-    public void testConverterWithBasicSpreadsheetConverter() {
+    public void testConverterSelectorWithBasicSpreadsheetConverter() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER + "",
                 SpreadsheetConverters.basic()
@@ -51,7 +51,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterWithErrorThrowing() {
+    public void testConverterNameWithBasicSpreadsheetConverter() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER,
+                Lists.empty(),
+                SpreadsheetConverters.basic()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithErrorThrowing() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_THROWING + "",
                 SpreadsheetConverters.errorThrowing()
@@ -59,7 +68,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterWithErrorToNumber() {
+    public void testConverterNameWithErrorThrowing() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.ERROR_THROWING,
+                Lists.empty(),
+                SpreadsheetConverters.errorThrowing()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithErrorToNumber() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_TO_NUMBER + "",
                 SpreadsheetConverters.errorToNumber()
@@ -67,7 +85,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterWithErrorToString() {
+    public void testConverterNameWithErrorToNumber() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.ERROR_TO_NUMBER,
+                Lists.empty(),
+                SpreadsheetConverters.errorToNumber()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithErrorToString() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_TO_STRING + "",
                 SpreadsheetConverters.errorToString()
@@ -75,7 +102,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterWithGeneral() {
+    public void testConverterNameWithErrorToString() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.ERROR_TO_STRING,
+                Lists.empty(),
+                SpreadsheetConverters.errorToString()
+        );
+    }
+
+    @Test
+    public void testConverterNameWithGeneral() {
         final ConverterProvider provider = this.createConverterProvider();
 
         final Converter<SpreadsheetConverterContext> general = provider.converter(
@@ -114,7 +150,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterWithSelectionToSelection() {
+    public void testConverterSelectorWithSelectionToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION + "",
                 SpreadsheetConverters.selectionToSelection()
@@ -122,9 +158,27 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterWithStringToSelection() {
+    public void testConverterNameWithSelectionToSelection() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION,
+                Lists.empty(),
+                SpreadsheetConverters.selectionToSelection()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithStringToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.STRING_TO_SELECTION + "",
+                SpreadsheetConverters.stringToSelection()
+        );
+    }
+
+    @Test
+    public void testConverterNameWithStringToSelection() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.STRING_TO_SELECTION,
+                Lists.empty(),
                 SpreadsheetConverters.stringToSelection()
         );
     }

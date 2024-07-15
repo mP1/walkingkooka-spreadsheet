@@ -24,6 +24,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.provider.ConverterInfo;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -180,6 +181,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     }
 
     // ConverterProvider................................................................................................
+
+    @Override
+    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector) {
+        return this.converterProvider.converter(selector);
+    }
+
     @Override
     public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
                                                                final List<?> values) {
