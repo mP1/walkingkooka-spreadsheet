@@ -43,9 +43,19 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return selector.spreadsheetFormatPattern()
+        SpreadsheetFormatter formatter = selector.spreadsheetFormatPattern()
                 .map(SpreadsheetPattern::formatter)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + selector.name()));
+                .orElse(null);
+
+        if(null == formatter) {
+            if(SpreadsheetFormatterName.AUTOMATIC.equals(selector.name())) {
+                formatter = selector.evaluateText(this);
+            } else {
+                new IllegalArgumentException("Unknown formatter " + selector.name());
+            }
+        }
+
+        return formatter;
     }
 
     @Override
@@ -54,23 +64,43 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
 
-
-        final SpreadsheetPatternKind kind = name.patternKind;
-        if (null == kind) {
-            throw new IllegalArgumentException("Unknown formatter " + name);
-        }
-
         final List<?> copy = Lists.immutable(values);
         final int count = copy.size();
 
-        switch (count) {
-            case 1:
-                return kind.parse(
-                        (String) copy.get(0)
-                ).formatter();
-            default:
-                throw new IllegalArgumentException("Expected 1 value got " + count);
+        SpreadsheetFormatter formatter;
+
+        final SpreadsheetPatternKind kind = name.patternKind;
+        if (null == kind) {
+            if (SpreadsheetFormatterName.AUTOMATIC.equals(name)) {
+                switch (count) {
+                    case 5:
+                        formatter = SpreadsheetFormatters.automatic(
+                                (SpreadsheetFormatter) copy.get(0), // date
+                                (SpreadsheetFormatter) copy.get(1), // date-time
+                                (SpreadsheetFormatter) copy.get(2), // number
+                                (SpreadsheetFormatter) copy.get(3), // text
+                                (SpreadsheetFormatter) copy.get(4) // time
+                        );
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Expected 5 value(s) got " + count);
+                }
+            } else {
+                throw new IllegalArgumentException("Unknown formatter " + name);
+            }
+        } else {
+            switch (count) {
+                case 1:
+                    formatter = kind.parse(
+                            (String) copy.get(0)
+                    ).formatter();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Expected 1 value got " + count);
+            }
         }
+
+        return formatter;
     }
 
     @Override
