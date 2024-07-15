@@ -31,7 +31,7 @@ import java.util.Set;
 public interface SpreadsheetParserProvider extends Provider {
 
     /**
-     * Resolves the given {@link SpreadsheetParserSelector} to a {@link walkingkooka.text.cursor.parser.Parser}.
+     * Resolves the given {@link SpreadsheetParserSelector} to a {@link SpreadsheetParser}.
      */
     SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector);
 
