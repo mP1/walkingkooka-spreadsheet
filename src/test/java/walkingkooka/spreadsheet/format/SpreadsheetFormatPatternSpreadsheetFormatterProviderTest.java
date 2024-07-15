@@ -29,6 +29,20 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
         ToStringTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider> {
 
     @Test
+    public void testSpreadsheetFormatterSelectorAutomatic() {
+        this.spreadsheetFormatterAndCheck(
+                "automatic (date-format-pattern(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+                SpreadsheetFormatters.automatic(
+                        SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
+                        SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yy hh:mm").formatter(),
+                        SpreadsheetPattern.parseNumberFormatPattern("0.00").formatter(),
+                        SpreadsheetPattern.parseTextFormatPattern("@@").formatter(),
+                        SpreadsheetPattern.parseTimeFormatPattern("hh:mm").formatter()
+                )
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterSelectorDateFormatPattern() {
         this.spreadsheetFormatterAndCheck(
                 "date-format-pattern dd/mm/yy",
