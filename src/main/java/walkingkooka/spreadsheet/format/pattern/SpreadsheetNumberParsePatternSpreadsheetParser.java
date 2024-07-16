@@ -86,7 +86,10 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
     public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 
-        throw new UnsupportedOperationException();
+        return SpreadsheetParserSelectorTextComponent.textComponents(
+                this.pattern.value(),
+                context
+        );
     }
 
     // Object...........................................................................................................
