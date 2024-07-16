@@ -666,7 +666,7 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
     // hashCode/equals..................................................................................................
 
     @Test
-    public void testDifferentPattern() {
+    public void testEqualsDifferentPattern() {
         this.checkNotEquals(
                 this.createParser("0.00"),
                 this.createParser("$0.00")
