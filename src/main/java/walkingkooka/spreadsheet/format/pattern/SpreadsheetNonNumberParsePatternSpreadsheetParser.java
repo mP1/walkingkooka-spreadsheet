@@ -60,7 +60,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
     private final Parser<SpreadsheetParserContext> parser;
 
     @Override
-    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+    public List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context) {
         return SpreadsheetParserSelectorTextComponent.textComponents(
                 this.token,
                 context

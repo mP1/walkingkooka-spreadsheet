@@ -54,7 +54,7 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
     }
 
     @Override
-    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+    public List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 
         throw new UnsupportedOperationException();

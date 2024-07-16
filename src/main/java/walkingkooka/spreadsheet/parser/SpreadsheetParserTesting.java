@@ -21,20 +21,10 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserTesting;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SpreadsheetParserTesting extends ParserTesting {
 
     // textComponentsAndCheck...........................................................................................
-
-    default void textComponentsAndCheck(final SpreadsheetParser parser,
-                                        final SpreadsheetParserContext context) {
-        this.textComponentsAndCheck(
-                parser,
-                context,
-                Optional.empty()
-        );
-    }
 
     default void textComponentsAndCheck(final SpreadsheetParser parser,
                                         final SpreadsheetParserContext context,
@@ -49,16 +39,6 @@ public interface SpreadsheetParserTesting extends ParserTesting {
     default void textComponentsAndCheck(final SpreadsheetParser parser,
                                         final SpreadsheetParserContext context,
                                         final List<SpreadsheetParserSelectorTextComponent> expected) {
-        this.textComponentsAndCheck(
-                parser,
-                context,
-                Optional.of(expected)
-        );
-    }
-
-    default void textComponentsAndCheck(final SpreadsheetParser parser,
-                                        final SpreadsheetParserContext context,
-                                        final Optional<List<SpreadsheetParserSelectorTextComponent>> expected) {
         this.checkEquals(
                 expected,
                 parser.textComponents(context),

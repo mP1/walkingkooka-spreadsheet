@@ -83,7 +83,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
     private final SpreadsheetNumberParsePatternMode mode;
 
     @Override
-    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+    public List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 
         return SpreadsheetParserSelectorTextComponent.textComponents(
