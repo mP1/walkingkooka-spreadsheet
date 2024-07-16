@@ -70,6 +70,9 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
         @Override
         public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
                                                    final List<?> values) {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(values, "values");
+
             checkEquals("date-parse-pattern", name.value());
             return PARSER;
         }

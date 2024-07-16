@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
 
@@ -29,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserProvider> extends ProviderTesting<T> {
 
     @Test
-    default void testSpreadsheetParserWithNullFails() {
+    default void testSpreadsheetParserWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetParserProvider().spreadsheetParser(null)
@@ -109,6 +110,28 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     }
 
     // spreadsheetParser(SpreadsheetParserName, List)...................................................................
+
+    @Test
+    default void testSpreadsheetParserWithNullNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetParserProvider().spreadsheetParser(
+                        null,
+                        Lists.empty()
+                )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetParserWithNullListOfValuesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetParserProvider().spreadsheetParser(
+                        SpreadsheetParserName.TIME_PARSER,
+                        null
+                )
+        );
+    }
 
     default void spreadsheetParserFails(final SpreadsheetParserName name,
                                         final List<?> values) {
