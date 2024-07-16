@@ -105,7 +105,7 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser {
     private final static Parser<SpreadsheetParserContext> LABEL;
 
     @Override
-    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+    public List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 
         return NO_TEXT_COMPONENTS;

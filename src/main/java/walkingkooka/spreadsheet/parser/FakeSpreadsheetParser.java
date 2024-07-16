@@ -31,7 +31,7 @@ public class FakeSpreadsheetParser implements SpreadsheetParser {
     }
 
     @Override
-    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+    public List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context) {
         throw new UnsupportedOperationException();
     }
 }

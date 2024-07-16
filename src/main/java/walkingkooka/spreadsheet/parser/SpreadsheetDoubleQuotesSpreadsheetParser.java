@@ -122,7 +122,7 @@ final class SpreadsheetDoubleQuotesSpreadsheetParser implements SpreadsheetParse
     final static SpreadsheetDoubleQuoteSymbolParserToken DOUBLE_QUOTE_TOKEN = SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"");
 
     @Override
-    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+    public List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 
         throw new UnsupportedOperationException();
