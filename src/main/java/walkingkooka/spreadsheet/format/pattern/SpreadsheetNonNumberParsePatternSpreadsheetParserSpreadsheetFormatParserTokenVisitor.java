@@ -55,7 +55,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetMonthNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
@@ -87,14 +86,15 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         final SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
 
-        return SpreadsheetParsers.parser(
+        return SpreadsheetNonNumberParsePatternSpreadsheetParser.with(
                 Parsers.alternatives(visitor.parsers)
                         .andEmptyTextCursor()
                         .setToString(
                                 CharSequences.quoteAndEscape(
                                         token.toString()
                                 ).toString()
-                        )
+                        ),
+                token
         );
     }
 
