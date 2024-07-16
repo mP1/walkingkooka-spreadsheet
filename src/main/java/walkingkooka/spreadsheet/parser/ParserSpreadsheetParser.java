@@ -22,6 +22,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -50,6 +51,13 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
                 text,
                 context
         );
+    }
+
+    @Override
+    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+        Objects.requireNonNull(context, "context");
+
+        throw new UnsupportedOperationException();
     }
 
     private final Parser<SpreadsheetParserContext> parser;

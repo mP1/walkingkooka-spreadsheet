@@ -17,7 +17,56 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface SpreadsheetParserTesting2<P extends SpreadsheetParser> extends SpreadsheetParserTesting, ParserTesting2<P, SpreadsheetParserContext> {
+    @Test
+    default void testTextComponentsWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createParser().textComponents(null)
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetParserContext context) {
+        this.textComponentsAndCheck(
+                this.createParser(),
+                context,
+                Optional.empty()
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetParserContext context,
+                                        final SpreadsheetParserSelectorTextComponent... expected) {
+        this.textComponentsAndCheck(
+                this.createParser(),
+                context,
+                Lists.of(expected)
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetParserContext context,
+                                        final List<SpreadsheetParserSelectorTextComponent> expected) {
+        this.textComponentsAndCheck(
+                this.createParser(),
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void textComponentsAndCheck(final SpreadsheetParserContext context,
+                                        final Optional<List<SpreadsheetParserSelectorTextComponent>> expected) {
+        this.textComponentsAndCheck(
+                this.createParser(),
+                context,
+                expected
+        );
+    }
 }

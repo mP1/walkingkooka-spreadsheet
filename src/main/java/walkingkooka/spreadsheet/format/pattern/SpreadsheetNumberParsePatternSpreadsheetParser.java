@@ -20,11 +20,13 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorTextComponent;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -79,6 +81,13 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
     }
 
     private final SpreadsheetNumberParsePatternMode mode;
+
+    @Override
+    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+        Objects.requireNonNull(context, "context");
+
+        throw new UnsupportedOperationException();
+    }
 
     // Object...........................................................................................................
 
