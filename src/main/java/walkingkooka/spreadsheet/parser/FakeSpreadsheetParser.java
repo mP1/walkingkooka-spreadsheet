@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserToken;
 
+import java.util.List;
 import java.util.Optional;
 
 public class FakeSpreadsheetParser implements SpreadsheetParser {
@@ -27,5 +28,10 @@ public class FakeSpreadsheetParser implements SpreadsheetParser {
     public Optional<ParserToken> parse(final TextCursor cursor,
                                        final SpreadsheetParserContext context) {
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+        throw new UnsupportedOperationException();
     }
 }

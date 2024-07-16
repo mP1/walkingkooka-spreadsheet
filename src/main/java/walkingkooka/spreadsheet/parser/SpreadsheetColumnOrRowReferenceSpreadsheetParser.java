@@ -22,6 +22,8 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.ParserToken;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -120,4 +122,11 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
     abstract ParserToken token1(final SpreadsheetReferenceKind absoluteOrRelative,
                                 final int row,
                                 final String text);
+
+    @Override
+    public final Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+        Objects.requireNonNull(context, "context");
+
+        throw new UnsupportedOperationException();
+    }
 }

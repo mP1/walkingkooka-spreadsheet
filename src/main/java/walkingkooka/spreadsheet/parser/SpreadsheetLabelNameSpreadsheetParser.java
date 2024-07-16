@@ -27,6 +27,8 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -100,6 +102,13 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser {
     }
 
     private final static Parser<SpreadsheetParserContext> LABEL;
+
+    @Override
+    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+        Objects.requireNonNull(context, "context");
+
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public String toString() {

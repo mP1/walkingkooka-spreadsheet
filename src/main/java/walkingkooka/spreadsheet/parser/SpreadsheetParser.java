@@ -19,8 +19,17 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.text.cursor.parser.Parser;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * A specialised {@link Parser} that supports extra operations
  */
 public interface SpreadsheetParser extends Parser<SpreadsheetParserContext> {
+
+    /**
+     * Returns a list of {@link SpreadsheetParserSelectorTextComponent} if this {@link SpreadsheetParser} supports
+     * tokenizing its pattern. A {@link SpreadsheetParserContext} could be useful such as displaying day names in the label for an {@link SpreadsheetParserSelectorTextComponentAlternative}.
+     */
+    Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context);
 }
