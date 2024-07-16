@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
-public final class SpreadsheetNonNumberParsePatternSpreadsheetParserMillisecondsTest extends SpreadsheetNonNumberParsePatternSpreadsheetParserTestCase<SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds> {
+public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserMilliseconds> {
 
     @Test
     public void testParseFails() {
@@ -156,8 +156,8 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds
     }
 
     @Override
-    public SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds createParser() {
-        return SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds.with(PATTERN);
+    public SpreadsheetNonNumberParsePatternParserMilliseconds createParser() {
+        return SpreadsheetNonNumberParsePatternParserMilliseconds.with(PATTERN);
     }
 
     @Override
@@ -166,8 +166,8 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds
     }
 
     @Override
-    public Class<SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds> type() {
-        return SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds.class;
+    public Class<SpreadsheetNonNumberParsePatternParserMilliseconds> type() {
+        return SpreadsheetNonNumberParsePatternParserMilliseconds.class;
     }
 
     @Override

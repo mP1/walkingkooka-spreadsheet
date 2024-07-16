@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -30,38 +30,38 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * Abstract {@link SpreadsheetParser} that requires a {@link SpreadsheetParserContext} that provides some template methods.
+ * Abstract {@link Parser} that requires a {@link SpreadsheetParserContext} that provides some template methods.
  */
-abstract class SpreadsheetNonNumberParsePatternSpreadsheetParser implements SpreadsheetParser {
+abstract class SpreadsheetNonNumberParsePatternParser implements Parser<SpreadsheetParserContext> {
 
     /**
-     * @see SpreadsheetNonNumberParsePatternSpreadsheetParserDecimalSeparator
+     * @see SpreadsheetNonNumberParsePatternParserDecimalSeparator
      */
-    static SpreadsheetNonNumberParsePatternSpreadsheetParserDecimalSeparator decimalSeparator() {
-        return SpreadsheetNonNumberParsePatternSpreadsheetParserDecimalSeparator.instance();
+    static SpreadsheetNonNumberParsePatternParserDecimalSeparator decimalSeparator() {
+        return SpreadsheetNonNumberParsePatternParserDecimalSeparator.instance();
     }
 
     /**
-     * @see SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds
+     * @see SpreadsheetNonNumberParsePatternParserMilliseconds
      */
-    static SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds milliseconds(final String pattern) {
-        return SpreadsheetNonNumberParsePatternSpreadsheetParserMilliseconds.with(pattern);
+    static SpreadsheetNonNumberParsePatternParserMilliseconds milliseconds(final String pattern) {
+        return SpreadsheetNonNumberParsePatternParserMilliseconds.with(pattern);
     }
 
     /**
-     * @see SpreadsheetNonNumberParsePatternSpreadsheetParserString
+     * @see SpreadsheetNonNumberParsePatternParserString
      */
-    static SpreadsheetNonNumberParsePatternSpreadsheetParserString stringChoices(final Function<SpreadsheetParserContext, List<String>> values,
-                                                                                 final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
-                                                                                 final String pattern) {
-        return SpreadsheetNonNumberParsePatternSpreadsheetParserString.with(
+    static SpreadsheetNonNumberParsePatternParserString stringChoices(final Function<SpreadsheetParserContext, List<String>> values,
+                                                                      final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
+                                                                      final String pattern) {
+        return SpreadsheetNonNumberParsePatternParserString.with(
                 values,
                 tokenFactory,
                 pattern
         );
     }
 
-    SpreadsheetNonNumberParsePatternSpreadsheetParser() {
+    SpreadsheetNonNumberParsePatternParser() {
         super();
     }
 
