@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
@@ -40,6 +41,15 @@ public abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<P
                         this.decimalNumberContext()
                 ),
                 VALUE_SEPARATOR
+        );
+    }
+
+    // textComponents...................................................................................................
+
+    @Test
+    public final void testTextComponents() {
+        this.textComponentsAndCheck(
+                this.createContext()
         );
     }
 
