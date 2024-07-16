@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.PluginSelectorTextComponent;
 import walkingkooka.plugin.PluginSelectorTextComponentLike;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -46,8 +47,8 @@ public final class SpreadsheetParserSelectorTextComponent implements PluginSelec
     /**
      * This method is intended to only be called by {@link SpreadsheetParser} that contain a {@link SpreadsheetFormatParserToken}.
      */
-    static Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetFormatParserToken token,
-                                                                                 final SpreadsheetParserContext context) {
+    public static Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final ParserToken token,
+                                                                                        final SpreadsheetParserContext context) {
         return Optional.of(
                 SpreadsheetParserSelectorTextComponentSpreadsheetFormatParserTokenVisitor.textComponents(
                         token,

@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -35,8 +36,8 @@ import java.util.stream.Collectors;
 final class SpreadsheetParserSelectorTextComponentSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     // only called by SpreadsheetParserSelectorTextComponent#textComponents
-    static List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetFormatParserToken token,
-                                                                          final SpreadsheetParserContext context) {
+    static List<SpreadsheetParserSelectorTextComponent> textComponents(final ParserToken token,
+                                                                       final SpreadsheetParserContext context) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(context, "context");
 
