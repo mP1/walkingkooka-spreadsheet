@@ -216,7 +216,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
         this.text(
-                SpreadsheetNonNumberParsePatternSpreadsheetParser.stringChoices(
+                SpreadsheetNonNumberParsePatternParser.stringChoices(
                         SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor::ampm,
                         SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor::spreadsheetAmPmParserToken,
                         token.text()
@@ -327,7 +327,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
                 break;
             case 3:
                 this.addParser(
-                        SpreadsheetNonNumberParsePatternSpreadsheetParser.stringChoices(
+                        SpreadsheetNonNumberParsePatternParser.stringChoices(
                                 SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor::monthNamesAbbreviations,
                                 SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor::monthNameAbbreviationParserToken,
                                 token.text()
@@ -336,7 +336,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
                 break;
             default:
                 this.addParser(
-                        SpreadsheetNonNumberParsePatternSpreadsheetParser.stringChoices(
+                        SpreadsheetNonNumberParsePatternParser.stringChoices(
                                 SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor::monthNames,
                                 SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor::monthNameParserToken,
                                 token.text()
@@ -355,7 +355,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         return SpreadsheetParserToken.monthName(
                 value + 1,
                 text
-        ); // JAN=1 but SpreadsheetNonNumberParsePatternSpreadsheetParser.stringChoices 1st = 0.
+        ); // JAN=1 but SpreadsheetNonNumberParsePatternParser.stringChoices 1st = 0.
     }
 
     private static List<String> monthNamesAbbreviations(final SpreadsheetParserContext context) {
@@ -367,7 +367,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         return SpreadsheetParserToken.monthNameAbbreviation(
                 value + 1,
                 text
-        ); // JAN=1 but SpreadsheetNonNumberParsePatternSpreadsheetParser.stringChoices 1st = 0.
+        ); // JAN=1 but SpreadsheetNonNumberParsePatternParser.stringChoices 1st = 0.
     }
 
     /**
@@ -491,7 +491,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         );
     }
 
-    private void text(final SpreadsheetNonNumberParsePatternSpreadsheetParser parser) {
+    private void text(final SpreadsheetNonNumberParsePatternParser parser) {
         this.appendDecimalSeparatorMillisecondsIfNecessary();
         this.addParser(parser);
     }
@@ -577,8 +577,8 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
 
             this.sequenceParserBuilder.optional(
                     Parsers.<SpreadsheetParserContext>sequenceParserBuilder()
-                            .required(SpreadsheetNonNumberParsePatternSpreadsheetParser.decimalSeparator())
-                            .optional(SpreadsheetNonNumberParsePatternSpreadsheetParser.milliseconds(CharSequences.repeating('0', millis - 1).toString()))
+                            .required(SpreadsheetNonNumberParsePatternParser.decimalSeparator())
+                            .optional(SpreadsheetNonNumberParsePatternParser.milliseconds(CharSequences.repeating('0', millis - 1).toString()))
                             .build()
             );
 

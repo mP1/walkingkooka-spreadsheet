@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
-public final class SpreadsheetNonNumberParsePatternSpreadsheetParserStringTest extends SpreadsheetNonNumberParsePatternSpreadsheetParserTestCase<SpreadsheetNonNumberParsePatternSpreadsheetParserString> {
+public final class SpreadsheetNonNumberParsePatternParserStringTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserString> {
 
     private final static String PATTERN = "Pattern-123";
 
@@ -165,8 +165,8 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserStringTest e
     }
 
     @Override
-    public SpreadsheetNonNumberParsePatternSpreadsheetParserString createParser() {
-        return SpreadsheetNonNumberParsePatternSpreadsheetParserString.stringChoices(
+    public SpreadsheetNonNumberParsePatternParserString createParser() {
+        return SpreadsheetNonNumberParsePatternParserString.stringChoices(
                 DateTimeContext::monthNames,
                 SpreadsheetParserToken::monthName,
                 PATTERN
@@ -178,7 +178,7 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserStringTest e
         return new FakeSpreadsheetParserContext() {
             @Override
             public List<String> monthNames() {
-                return SpreadsheetNonNumberParsePatternSpreadsheetParserStringTest.this.monthNames();
+                return SpreadsheetNonNumberParsePatternParserStringTest.this.monthNames();
             }
         };
     }
@@ -193,8 +193,8 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserStringTest e
     }
 
     @Override
-    public Class<SpreadsheetNonNumberParsePatternSpreadsheetParserString> type() {
-        return SpreadsheetNonNumberParsePatternSpreadsheetParserString.class;
+    public Class<SpreadsheetNonNumberParsePatternParserString> type() {
+        return SpreadsheetNonNumberParsePatternParserString.class;
     }
 
     @Override

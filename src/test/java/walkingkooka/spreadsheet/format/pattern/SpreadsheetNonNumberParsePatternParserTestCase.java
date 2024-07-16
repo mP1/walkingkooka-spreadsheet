@@ -22,13 +22,13 @@ import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 
-public abstract class SpreadsheetNonNumberParsePatternSpreadsheetParserTestCase<P extends SpreadsheetNonNumberParsePatternSpreadsheetParser>
+public abstract class SpreadsheetNonNumberParsePatternParserTestCase<P extends SpreadsheetNonNumberParsePatternParser>
         extends SpreadsheetNonNumberParsePatternTestCase<P>
         implements ParserTesting2<P, SpreadsheetParserContext>,
         ToStringTesting<P>,
         TypeNameTesting<P> {
 
-    SpreadsheetNonNumberParsePatternSpreadsheetParserTestCase() {
+    SpreadsheetNonNumberParsePatternParserTestCase() {
         super();
     }
 
@@ -36,6 +36,6 @@ public abstract class SpreadsheetNonNumberParsePatternSpreadsheetParserTestCase<
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetNonNumberParsePatternSpreadsheetParser.class.getSimpleName();
+        return SpreadsheetNonNumberParsePatternParser.class.getSimpleName();
     }
 }
