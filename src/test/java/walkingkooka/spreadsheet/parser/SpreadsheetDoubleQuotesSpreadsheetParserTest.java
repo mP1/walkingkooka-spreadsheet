@@ -20,10 +20,9 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.text.cursor.parser.ParserTesting2;
 
-public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<SpreadsheetDoubleQuotesParser, SpreadsheetParserContext>,
-        ToStringTesting<SpreadsheetDoubleQuotesParser> {
+public final class SpreadsheetDoubleQuotesSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetDoubleQuotesSpreadsheetParser>,
+        ToStringTesting<SpreadsheetDoubleQuotesSpreadsheetParser> {
 
     @Test
     public void testNotDoubleQuote() {
@@ -92,19 +91,19 @@ public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<S
 
     private void parseAndCheck3(final String content,
                                 final String after) {
-        final String quotes = "" + SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE;
+        final String quotes = "" + SpreadsheetDoubleQuotesSpreadsheetParser.DOUBLE_QUOTE;
         final String withQuotes = quotes + content + quotes;
 
         this.parseAndCheck(
                 withQuotes + after,
                 SpreadsheetParserToken.text(
                         Lists.of(
-                                SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE_TOKEN,
+                                SpreadsheetDoubleQuotesSpreadsheetParser.DOUBLE_QUOTE_TOKEN,
                                 SpreadsheetParserToken.textLiteral(
                                         content.replace(quotes + quotes, quotes),
                                         content
                                 ),
-                                SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE_TOKEN
+                                SpreadsheetDoubleQuotesSpreadsheetParser.DOUBLE_QUOTE_TOKEN
                         ),
                         withQuotes
                 ),
@@ -119,8 +118,8 @@ public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<S
     }
 
     @Override
-    public SpreadsheetDoubleQuotesParser createParser() {
-        return SpreadsheetDoubleQuotesParser.INSTANCE;
+    public SpreadsheetDoubleQuotesSpreadsheetParser createParser() {
+        return SpreadsheetDoubleQuotesSpreadsheetParser.INSTANCE;
     }
 
     @Override
@@ -129,7 +128,7 @@ public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<S
     }
 
     @Override
-    public Class<SpreadsheetDoubleQuotesParser> type() {
-        return SpreadsheetDoubleQuotesParser.class;
+    public Class<SpreadsheetDoubleQuotesSpreadsheetParser> type() {
+        return SpreadsheetDoubleQuotesSpreadsheetParser.class;
     }
 }

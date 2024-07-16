@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -37,14 +37,14 @@ import java.util.Optional;
  *  ="The movie """ &B5 &""" is good."
  * </pre>
  */
-final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserContext> {
+final class SpreadsheetDoubleQuotesSpreadsheetParser implements SpreadsheetParser {
 
     /**
      * Singleton instance
      */
-    static final SpreadsheetDoubleQuotesParser INSTANCE = new SpreadsheetDoubleQuotesParser();
+    static final SpreadsheetDoubleQuotesSpreadsheetParser INSTANCE = new SpreadsheetDoubleQuotesSpreadsheetParser();
 
-    private SpreadsheetDoubleQuotesParser() {
+    private SpreadsheetDoubleQuotesSpreadsheetParser() {
         super();
     }
 
@@ -120,6 +120,13 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
     }
 
     final static SpreadsheetDoubleQuoteSymbolParserToken DOUBLE_QUOTE_TOKEN = SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"");
+
+    @Override
+    public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
+        Objects.requireNonNull(context, "context");
+
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public String toString() {
