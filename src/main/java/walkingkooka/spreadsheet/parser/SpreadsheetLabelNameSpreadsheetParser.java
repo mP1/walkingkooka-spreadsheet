@@ -32,7 +32,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetParser} that consumes a {@link SpreadsheetLabelNameParserToken}
+ * A {@link SpreadsheetParser} that consumes a {@link SpreadsheetLabelNameParserToken} matching a label.
+ * Note {@link #textComponents(SpreadsheetParserContext)} has no pattern representation and always returns {@link #NO_TEXT_COMPONENTS}.
  */
 final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser {
 
@@ -107,7 +108,7 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser {
     public Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 
-        throw new UnsupportedOperationException();
+        return NO_TEXT_COMPONENTS;
     }
 
     @Override
