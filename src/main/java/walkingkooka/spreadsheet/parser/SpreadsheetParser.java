@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.List;
@@ -26,6 +27,16 @@ import java.util.Optional;
  * A specialised {@link Parser} that supports extra operations
  */
 public interface SpreadsheetParser extends Parser<SpreadsheetParserContext> {
+
+    /**
+     * Useful constant for {@link SpreadsheetParser} with no text components.
+     */
+    Optional<List<SpreadsheetParserSelectorTextComponent>> NO_TEXT_COMPONENTS = Optional.empty();
+
+    /**
+     * Useful constant for {@link SpreadsheetParser} with empty text components.
+     */
+    Optional<List<SpreadsheetParserSelectorTextComponent>> EMPTY_TEXT_COMPONENTS = Optional.of(Lists.empty());
 
     /**
      * Returns a list of {@link SpreadsheetParserSelectorTextComponent} if this {@link SpreadsheetParser} supports
