@@ -46,12 +46,7 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
     /**
      * Useful constant for {@link SpreadsheetFormatter} with no text components.
      */
-    Optional<List<SpreadsheetFormatterSelectorTextComponent>> NO_TEXT_COMPONENTS = Optional.empty();
-
-    /**
-     * Useful constant for {@link SpreadsheetFormatter} with empty text components.
-     */
-    Optional<List<SpreadsheetFormatterSelectorTextComponent>> EMPTY_TEXT_COMPONENTS = Optional.of(Lists.empty());
+    List<SpreadsheetFormatterSelectorTextComponent> NO_TEXT_COMPONENTS = Lists.empty();
 
     /**
      * Accepts a value and returns a {@link TextNode} if it could format the value.
@@ -81,5 +76,5 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
      * Returns a list of {@link SpreadsheetFormatterSelectorTextComponent} if this {@link SpreadsheetFormatter} supports
      * tokenizing its pattern. A {@link SpreadsheetFormatterContext} could be useful such as displaying day names in the label for an {@link SpreadsheetFormatterSelectorTextComponentAlternative}.
      */
-    Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context);
+    List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context);
 }

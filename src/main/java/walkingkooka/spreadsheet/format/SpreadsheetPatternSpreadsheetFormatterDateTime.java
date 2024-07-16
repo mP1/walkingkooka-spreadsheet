@@ -95,7 +95,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
     }
 
     @Override
-    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+    public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
         return SpreadsheetFormatterSelectorTextComponent.textComponents(
                 this.token,
                 context

@@ -211,19 +211,17 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     }
 
     @Override
-    public Optional<List<SpreadsheetFormatterSelectorTextComponent>> textComponents(final SpreadsheetFormatterContext context) {
+    public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
         return TEXT_COMPONENTS;
     }
 
-    private final static Optional<List<SpreadsheetFormatterSelectorTextComponent>> TEXT_COMPONENTS = Optional.of(
-            Lists.of(
-                    SpreadsheetFormatterSelectorTextComponent.with(
-                            "General",
-                            "General",
-                            Lists.empty()
-                    )
+    private final static List<SpreadsheetFormatterSelectorTextComponent> TEXT_COMPONENTS = Lists.of(
+            SpreadsheetFormatterSelectorTextComponent.with(
+                    "General",
+                    "General",
+                    Lists.empty()
             )
     );
 

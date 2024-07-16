@@ -176,13 +176,6 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         );
     }
 
-    default void textComponentsAndCheck(final SpreadsheetFormatterContext context) {
-        this.textComponentsAndCheck(
-                context,
-                Optional.empty()
-        );
-    }
-
     default void textComponentsAndCheck(final SpreadsheetFormatterContext context,
                                         final SpreadsheetFormatterSelectorTextComponent... expected) {
         this.textComponentsAndCheck(
@@ -193,14 +186,6 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
 
     default void textComponentsAndCheck(final SpreadsheetFormatterContext context,
                                         final List<SpreadsheetFormatterSelectorTextComponent> expected) {
-        this.textComponentsAndCheck(
-                context,
-                Optional.of(expected)
-        );
-    }
-
-    default void textComponentsAndCheck(final SpreadsheetFormatterContext context,
-                                        final Optional<List<SpreadsheetFormatterSelectorTextComponent>> expected) {
         this.textComponentsAndCheck(
                 this.createFormatter(),
                 context,

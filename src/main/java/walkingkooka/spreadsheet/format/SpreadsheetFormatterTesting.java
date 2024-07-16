@@ -91,15 +91,6 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
     // textComponentsAndCheck...........................................................................................
 
     default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
-                                        final SpreadsheetFormatterContext context) {
-        this.textComponentsAndCheck(
-                formatter,
-                context,
-                Optional.empty()
-        );
-    }
-
-    default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
                                         final SpreadsheetFormatterContext context,
                                         final SpreadsheetFormatterSelectorTextComponent... expected) {
         this.textComponentsAndCheck(
@@ -112,16 +103,6 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
     default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
                                         final SpreadsheetFormatterContext context,
                                         final List<SpreadsheetFormatterSelectorTextComponent> expected) {
-        this.textComponentsAndCheck(
-                formatter,
-                context,
-                Optional.of(expected)
-        );
-    }
-
-    default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
-                                        final SpreadsheetFormatterContext context,
-                                        final Optional<List<SpreadsheetFormatterSelectorTextComponent>> expected) {
         this.checkEquals(
                 expected,
                 formatter.textComponents(context),
