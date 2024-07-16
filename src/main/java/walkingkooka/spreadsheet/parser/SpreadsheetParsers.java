@@ -124,7 +124,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * Returns a {@link Parser} that errors such as <code>#REF!</code>.
+     * Returns a {@link Parser} that parsers errors such as <code>#REF!</code>.
      */
     public static SpreadsheetParser error() {
         return ERROR_PARSER;
@@ -158,7 +158,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * Returns a {@link SpreadsheetParser} that parsers expressions.
+     * Returns a {@link SpreadsheetParser} that parses expressions.
      */
     public static SpreadsheetParser expression() {
         return EXPRESSION_PARSER;
@@ -182,7 +182,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * A {@link SpreadsheetParser} that returns {@see SpreadsheetFunctionName}
+     * A {@link SpreadsheetParser} that matches {@see SpreadsheetFunctionName}
      */
     public static SpreadsheetParser functionName() {
         return FUNCTION_NAME;
@@ -219,7 +219,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * Returns a {@link SpreadsheetParser} that parsers expression invocations, starting with the name and parameters.
+     * Returns a {@link SpreadsheetParser} that matches a function including its parameters
      */
     public static SpreadsheetParser functionParameters() {
         return FUNCTION_PARAMETERS_PARSER;
@@ -235,7 +235,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * Returns a {@link SpreadsheetParser} that parsers expression invocations, starting with the name and parameters.
+     * Returns a {@link SpreadsheetParser} that matches a lambda function
      */
     public static SpreadsheetParser lambdaFunction() {
         return LAMBDA_FUNCTION;
@@ -244,7 +244,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final SpreadsheetParser LAMBDA_FUNCTION;
 
     /**
-     * Returns a {@link SpreadsheetParser} that parsers expression invocations, starting with the name and parameters.
+     * Returns a {@link SpreadsheetParser} that matches a named function and its parameters.
      */
     public static SpreadsheetParser namedFunction() {
         return NAMED_FUNCTION_PARSER;
