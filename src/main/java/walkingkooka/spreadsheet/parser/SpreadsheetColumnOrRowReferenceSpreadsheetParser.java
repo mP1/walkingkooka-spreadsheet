@@ -127,6 +127,6 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
     public final Optional<List<SpreadsheetParserSelectorTextComponent>> textComponents(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 
-        throw new UnsupportedOperationException();
+        return NO_TEXT_COMPONENTS;
     }
 }
