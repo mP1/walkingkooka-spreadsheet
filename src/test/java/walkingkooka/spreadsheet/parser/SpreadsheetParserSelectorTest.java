@@ -147,7 +147,7 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
     @Override
     public SpreadsheetParserSelector createJsonNodeMarshallingValue() {
         return SpreadsheetParserSelector.with(
-                SpreadsheetParserName.NUMBER_PARSER,
+                SpreadsheetParserName.NUMBER_PARSER_PATTERN,
                 "$0.00"
         );
     }

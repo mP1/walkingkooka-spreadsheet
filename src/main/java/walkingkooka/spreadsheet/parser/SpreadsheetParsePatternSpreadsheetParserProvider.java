@@ -78,10 +78,10 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     }
 
     private final static Set<SpreadsheetParserInfo> INFOS = Sets.of(
-            spreadsheetParserInfo(SpreadsheetParserName.DATE_PARSER),
-            spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME_PARSER),
-            spreadsheetParserInfo(SpreadsheetParserName.NUMBER_PARSER),
-            spreadsheetParserInfo(SpreadsheetParserName.TIME_PARSER)
+            spreadsheetParserInfo(SpreadsheetParserName.DATE_PARSER_PATTERN),
+            spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN),
+            spreadsheetParserInfo(SpreadsheetParserName.NUMBER_PARSER_PATTERN),
+            spreadsheetParserInfo(SpreadsheetParserName.TIME_PARSER_PATTERN)
     );
 
 

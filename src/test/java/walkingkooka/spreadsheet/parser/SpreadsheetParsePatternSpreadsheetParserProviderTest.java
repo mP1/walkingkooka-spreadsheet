@@ -40,7 +40,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserNameDateParsePattern() {
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserName.DATE_PARSER,
+                SpreadsheetParserName.DATE_PARSER_PATTERN,
                 Lists.of("dd/mm/yy"),
                 SpreadsheetPattern.parseDateParsePattern("dd/mm/yy")
                         .parser()
@@ -59,7 +59,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserNameDateTimeParsePattern() {
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserName.DATE_TIME_PARSER,
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN,
                 Lists.of("dd/mm/yyyy hh:mm:ss"),
                 SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
                         .parser()
@@ -78,7 +78,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserNameNumberParsePattern() {
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserName.NUMBER_PARSER,
+                SpreadsheetParserName.NUMBER_PARSER_PATTERN,
                 Lists.of("$0.00"),
                 SpreadsheetPattern.parseNumberParsePattern("$0.00")
                         .parser()
@@ -112,7 +112,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserNameTimeParsePattern() {
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserName.TIME_PARSER,
+                SpreadsheetParserName.TIME_PARSER_PATTERN,
                 Lists.of("hh:mm:ss"),
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
                         .parser()

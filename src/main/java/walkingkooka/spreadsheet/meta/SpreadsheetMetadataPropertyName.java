@@ -684,7 +684,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 "dd/mm/yyyy"
         );
         SpreadsheetParserSelector.with(
-                SpreadsheetParserName.DATE_PARSER,
+                SpreadsheetParserName.DATE_PARSER_PATTERN,
                 "dd/mm/yyyy"
         );
         //noinspection ResultOfMethodCallIgnored
