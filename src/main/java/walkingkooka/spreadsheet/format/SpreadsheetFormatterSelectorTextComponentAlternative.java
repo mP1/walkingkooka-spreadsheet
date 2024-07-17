@@ -43,6 +43,7 @@ public final class SpreadsheetFormatterSelectorTextComponentAlternative implemen
         this.alternative = alternative;
     }
 
+    @Override
     public String label() {
         return this.alternative.label();
     }
