@@ -43,6 +43,7 @@ public final class SpreadsheetParserSelectorTextComponentAlternative implements 
         this.alternative = alternative;
     }
 
+    @Override
     public String label() {
         return this.alternative.label();
     }
