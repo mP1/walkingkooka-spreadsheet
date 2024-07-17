@@ -57,7 +57,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
                 SpreadsheetParserProviderCollection.with(
                         Sets.of(provider)
                 ),
-                SpreadsheetParserName.DATE_PARSER,
+                SpreadsheetParserName.DATE_PARSER_PATTERN,
                 Lists.of("yyyy/mm/dd"),
                 SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                         .parser()

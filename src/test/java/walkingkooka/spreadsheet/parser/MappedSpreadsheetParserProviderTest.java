@@ -88,15 +88,15 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
                 ),
                 SpreadsheetParserInfo.with(
                         url("date-time-parse-pattern"),
-                        SpreadsheetParserName.DATE_TIME_PARSER
+                        SpreadsheetParserName.DATE_TIME_PARSER_PATTERN
                 ),
                 SpreadsheetParserInfo.with(
                         url("number-parse-pattern"),
-                        SpreadsheetParserName.NUMBER_PARSER
+                        SpreadsheetParserName.NUMBER_PARSER_PATTERN
                 ),
                 SpreadsheetParserInfo.with(
                         url("time-parse-pattern"),
-                        SpreadsheetParserName.TIME_PARSER
+                        SpreadsheetParserName.TIME_PARSER_PATTERN
                 )
         );
     }

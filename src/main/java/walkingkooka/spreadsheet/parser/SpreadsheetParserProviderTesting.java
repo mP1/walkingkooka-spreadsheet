@@ -127,7 +127,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetParserProvider().spreadsheetParser(
-                        SpreadsheetParserName.TIME_PARSER,
+                        SpreadsheetParserName.TIME_PARSER_PATTERN,
                         null
                 )
         );

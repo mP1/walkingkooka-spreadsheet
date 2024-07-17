@@ -26,14 +26,14 @@ public final class EmptySpreadsheetParserProviderTest implements SpreadsheetPars
     @Test
     public void testSpreadsheetParserSelectorFails() {
         this.spreadsheetParserFails(
-                SpreadsheetParserName.DATE_TIME_PARSER.setText("")
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("")
         );
     }
 
     @Test
     public void testSpreadsheetParserNameFails() {
         this.spreadsheetParserFails(
-                SpreadsheetParserName.DATE_TIME_PARSER,
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN,
                 Lists.empty()
         );
     }

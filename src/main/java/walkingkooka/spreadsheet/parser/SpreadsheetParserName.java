@@ -47,43 +47,43 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
 
     // SpreadsheetParserName instances...............................................................................
 
-    private final static String DATE_PARSER_STRING = "date-parse-pattern";
+    private final static String DATE_PARSER_PATTERN_STRING = "date-parse-pattern";
 
     /**
      * The name of the date {@link Parser}
      */
-    public final static SpreadsheetParserName DATE_PARSER = new SpreadsheetParserName(
-            DATE_PARSER_STRING,
+    public final static SpreadsheetParserName DATE_PARSER_PATTERN = new SpreadsheetParserName(
+            DATE_PARSER_PATTERN_STRING,
             SpreadsheetPatternKind.DATE_PARSE_PATTERN
     );
 
-    private final static String DATE_TIME_PARSER_STRING = "date-time-parse-pattern";
+    private final static String DATE_TIME_PARSER_PATTERN_STRING = "date-time-parse-pattern";
 
     /**
      * The name of the date-time {@link Parser}
      */
-    public final static SpreadsheetParserName DATE_TIME_PARSER = new SpreadsheetParserName(
-            DATE_TIME_PARSER_STRING,
+    public final static SpreadsheetParserName DATE_TIME_PARSER_PATTERN = new SpreadsheetParserName(
+            DATE_TIME_PARSER_PATTERN_STRING,
             SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
     );
 
-    private final static String NUMBER_PARSER_STRING = "number-parse-pattern";
+    private final static String NUMBER_PARSER_PATTERN_STRING = "number-parse-pattern";
 
     /**
      * The name of the number {@link Parser}
      */
-    public final static SpreadsheetParserName NUMBER_PARSER = new SpreadsheetParserName(
-            NUMBER_PARSER_STRING,
+    public final static SpreadsheetParserName NUMBER_PARSER_PATTERN = new SpreadsheetParserName(
+            NUMBER_PARSER_PATTERN_STRING,
             SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
     );
 
-    private final static String TIME_PARSER_STRING = "time-parse-pattern";
+    private final static String TIME_PARSER_PATTERN_STRING = "time-parse-pattern";
 
     /**
      * The name of the time {@link Parser}
      */
-    public final static SpreadsheetParserName TIME_PARSER = new SpreadsheetParserName(
-            TIME_PARSER_STRING,
+    public final static SpreadsheetParserName TIME_PARSER_PATTERN = new SpreadsheetParserName(
+            TIME_PARSER_PATTERN_STRING,
             SpreadsheetPatternKind.TIME_PARSE_PATTERN
     );
 
@@ -96,17 +96,17 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         final SpreadsheetParserName parserName;
 
         switch (name) {
-            case DATE_PARSER_STRING:
-                parserName = DATE_PARSER;
+            case DATE_PARSER_PATTERN_STRING:
+                parserName = DATE_PARSER_PATTERN;
                 break;
-            case DATE_TIME_PARSER_STRING:
-                parserName = DATE_TIME_PARSER;
+            case DATE_TIME_PARSER_PATTERN_STRING:
+                parserName = DATE_TIME_PARSER_PATTERN;
                 break;
-            case NUMBER_PARSER_STRING:
-                parserName = NUMBER_PARSER;
+            case NUMBER_PARSER_PATTERN_STRING:
+                parserName = NUMBER_PARSER_PATTERN;
                 break;
-            case TIME_PARSER_STRING:
-                parserName = TIME_PARSER;
+            case TIME_PARSER_PATTERN_STRING:
+                parserName = TIME_PARSER_PATTERN;
                 break;
             default:
                 parserName = new SpreadsheetParserName(

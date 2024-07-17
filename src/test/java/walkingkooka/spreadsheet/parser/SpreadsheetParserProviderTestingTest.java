@@ -34,7 +34,7 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
 
     private final static SpreadsheetParserInfo INFO = SpreadsheetParserInfo.with(
             Url.parseAbsolute("https://example.com/123"),
-            SpreadsheetParserName.DATE_PARSER
+            SpreadsheetParserName.DATE_PARSER_PATTERN
     );
 
     @Test
