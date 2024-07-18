@@ -207,8 +207,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         );
     }
 
-    default void nextTextComponentAndCheck(final SpreadsheetFormatter formatter,
-                                           final int index,
+    default void nextTextComponentAndCheck(final int index,
                                            final SpreadsheetFormatterContext context) {
         this.nextTextComponentAndCheck(
                 this.createFormatter(),
