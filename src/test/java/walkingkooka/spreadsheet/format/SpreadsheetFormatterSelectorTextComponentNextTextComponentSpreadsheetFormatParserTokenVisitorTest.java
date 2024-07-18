@@ -22,37 +22,39 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 public final class SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor> {
 
     @Test
-    public void testNextTextComponentUnknownIndexFails() {
-        assertThrows(
-                IndexOutOfBoundsException.class,
-                () ->
-                        SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor.nextTextComponent(
-                                SpreadsheetPattern.parseDateFormatPattern("yy/mm")
-                                        .value(),
-                                4
-                        )
-        );
-    }
-
-    @Test
-    public void testNextTextComponentWithDate() {
+    public void testNextTextComponentWithDateEndsInYear() {
         this.nextTextComponentAndCheck(
-                SpreadsheetPattern.parseDateFormatPattern("yy/mm")
+                SpreadsheetPattern.parseDateFormatPattern("yy")
                         .value(),
-                3, // after the minutes,
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
                 SpreadsheetFormatterSelectorTextComponent.with(
                         "",
                         "",
                         Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "d",
+                                        "d"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "dd",
+                                        "dd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "ddd",
+                                        "ddd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "dddd",
+                                        "dddd"
+                                ),
                                 SpreadsheetFormatterSelectorTextComponentAlternative.with(
                                         "m",
                                         "m"
@@ -79,22 +81,167 @@ public final class SpreadsheetFormatterSelectorTextComponentNextTextComponentSpr
     }
 
     @Test
-    public void testNextTextComponentWithTime() {
+    public void testNextTextComponentWithDateEndsInMonth() {
         this.nextTextComponentAndCheck(
-                SpreadsheetPattern.parseTimeFormatPattern("hh:mm")
+                SpreadsheetPattern.parseDateFormatPattern("yy/mm")
                         .value(),
-                3, // after the minutes,
+                SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
                 SpreadsheetFormatterSelectorTextComponent.with(
                         "",
                         "",
                         Lists.of(
                                 SpreadsheetFormatterSelectorTextComponentAlternative.with(
-                                        "m",
-                                        "m"
+                                        "d",
+                                        "d"
                                 ),
                                 SpreadsheetFormatterSelectorTextComponentAlternative.with(
-                                        "mm",
-                                        "mm"
+                                        "dd",
+                                        "dd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "ddd",
+                                        "ddd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "dddd",
+                                        "dddd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "yy",
+                                        "yy"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "yyyy",
+                                        "yyyy"
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNextTextComponentWithNumber() {
+        this.nextTextComponentAndCheck(
+                SpreadsheetPattern.parseNumberFormatPattern("$0.00")
+                        .value(),
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN,
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "",
+                        "",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "#",
+                                        "#"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "$",
+                                        "$"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "%",
+                                        "%"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        ",",
+                                        ","
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        ".",
+                                        "."
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "/",
+                                        "/"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "?",
+                                        "?"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "E",
+                                        "E"
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNextTextComponentWithText() {
+        this.nextTextComponentAndCheck(
+                SpreadsheetPattern.parseTextFormatPattern("@\"Hello\"")
+                        .value(),
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "",
+                        "",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "* ",
+                                        "* "
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "@",
+                                        "@"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "_ ",
+                                        "_ "
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNextTextComponentWithTimeEndsInMinutes() {
+        this.nextTextComponentAndCheck(
+                SpreadsheetPattern.parseTimeFormatPattern("hh:mm")
+                        .value(),
+                SpreadsheetPatternKind.TIME_FORMAT_PATTERN,
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "",
+                        "",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        ".",
+                                        "."
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "0",
+                                        "0"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "A/P",
+                                        "A/P"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "AM/PM",
+                                        "AM/PM"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "a/p",
+                                        "a/p"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "am/pm",
+                                        "am/pm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "h",
+                                        "h"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "hh",
+                                        "hh"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "s",
+                                        "s"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "ss",
+                                        "ss"
                                 )
                         )
                 )
@@ -102,22 +249,21 @@ public final class SpreadsheetFormatterSelectorTextComponentNextTextComponentSpr
     }
 
     private void nextTextComponentAndCheck(final ParserToken token,
-                                           final int index,
+                                           final SpreadsheetPatternKind patternKind,
                                            final SpreadsheetFormatterSelectorTextComponent textComponent) {
         this.checkEquals(
                 Optional.of(textComponent),
                 SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor.nextTextComponent(
                         token,
-                        index
-                )
+                        patternKind
+                ),
+                () -> token + " " + patternKind
         );
     }
 
     @Override
     public SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor(
-                -1
-        );
+        return new SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override

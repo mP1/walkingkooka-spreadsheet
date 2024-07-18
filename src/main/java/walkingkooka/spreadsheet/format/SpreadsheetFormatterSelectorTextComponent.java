@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.PluginSelectorTextComponent;
 import walkingkooka.plugin.PluginSelectorTextComponentLike;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -58,10 +59,10 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
      * This method is intended to return the next components only be called by {@link SpreadsheetFormatter} that contain a {@link SpreadsheetFormatParserToken}.
      */
     static Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatParserToken token,
-                                                                                 final int index) {
+                                                                                 final SpreadsheetPatternKind patternKind) {
         return SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor.nextTextComponent(
                 token,
-                index
+                patternKind
         );
     }
 
