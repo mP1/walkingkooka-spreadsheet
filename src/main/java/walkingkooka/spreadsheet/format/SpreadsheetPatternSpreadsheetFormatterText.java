@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
 import java.util.List;
 import java.util.Objects;
@@ -74,7 +75,11 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
     @Override
     public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
+
+        return SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor.nextTextComponent(
+                this.token,
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+        );
     }
 
     // Object...........................................................................................................
