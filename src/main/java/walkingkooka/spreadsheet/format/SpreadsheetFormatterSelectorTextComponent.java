@@ -27,6 +27,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Can be used to represent a single token with a format pattern or large text representation.
@@ -50,6 +51,17 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
         return SpreadsheetFormatterSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor.textComponents(
                 token,
                 context
+        );
+    }
+
+    /**
+     * This method is intended to return the next components only be called by {@link SpreadsheetFormatter} that contain a {@link SpreadsheetFormatParserToken}.
+     */
+    static Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatParserToken token,
+                                                                                 final int index) {
+        return SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor.nextTextComponent(
+                token,
+                index
         );
     }
 
