@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -153,6 +154,70 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                         values
                 ),
                 () -> name + " " + values
+        );
+    }
+
+    // spreadsheetFormatterNextTextComponentsAndCheck...................................................................
+
+    @Test
+    default void testSpreadsheetFormatterNextTextComponentWithNullSelectorFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetFormatterProvider().spreadsheetFormatterNextTextComponent(null)
+        );
+    }
+
+    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterSelector selector) {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                selector
+        );
+    }
+
+    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterSelector selector,
+                                                               final SpreadsheetFormatterSelectorTextComponent expected) {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                selector,
+                expected
+        );
+    }
+
+    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterSelector selector,
+                                                               final Optional<SpreadsheetFormatterSelectorTextComponent> expected) {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                selector,
+                expected
+        );
+    }
+
+    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterProvider provider,
+                                                               final SpreadsheetFormatterSelector selector) {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                provider,
+                selector,
+                Optional.empty()
+        );
+    }
+
+    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterProvider provider,
+                                                               final SpreadsheetFormatterSelector selector,
+                                                               final SpreadsheetFormatterSelectorTextComponent expected) {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                provider,
+                selector,
+                Optional.of(expected)
+        );
+    }
+
+    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterProvider provider,
+                                                               final SpreadsheetFormatterSelector selector,
+                                                               final Optional<SpreadsheetFormatterSelectorTextComponent> expected) {
+        this.checkEquals(
+                expected,
+                provider.spreadsheetFormatterNextTextComponent(selector),
+                provider::toString
         );
     }
 
