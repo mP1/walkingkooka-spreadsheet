@@ -56,7 +56,8 @@ final class EmptySpreadsheetFormatter implements SpreadsheetFormatter {
     public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
                                                                                  final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
+
+        return NO_NEXT_TEXT_COMPONENT;
     }
 
     @Override
