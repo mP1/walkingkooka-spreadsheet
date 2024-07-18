@@ -26,6 +26,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class ContextFormatTextSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ContextFormatTextSpreadsheetFormatter> {
 
     private final static BigDecimal BIG_DECIMAL = BigDecimal.valueOf(123);
@@ -53,6 +55,24 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
     @Test
     public void testTextComponents() {
         this.textComponentsAndCheck();
+    }
+
+    // nextTextComponent................................................................................................
+
+    @Test
+    public void testNextTextComponentWithNonZeroIndexFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createFormatter().nextTextComponent(-1, this.createContext())
+        );
+    }
+
+    @Test
+    public void testNextTextComponent() {
+        this.nextTextComponentAndCheck(
+                0,
+                this.createContext()
+        );
     }
 
     @Test
