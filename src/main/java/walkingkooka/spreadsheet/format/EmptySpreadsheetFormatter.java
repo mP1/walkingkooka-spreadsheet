@@ -53,6 +53,13 @@ final class EmptySpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
+    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
+                                                                                 final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public String toString() {
         return "";
     }

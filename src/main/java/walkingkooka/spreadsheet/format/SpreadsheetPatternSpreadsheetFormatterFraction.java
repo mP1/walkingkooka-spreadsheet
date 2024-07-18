@@ -118,6 +118,13 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
         );
     }
 
+    @Override
+    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
+                                                                                 final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * A non zero value multiplied against the {@link BigDecimal} being formatted as text.
      */

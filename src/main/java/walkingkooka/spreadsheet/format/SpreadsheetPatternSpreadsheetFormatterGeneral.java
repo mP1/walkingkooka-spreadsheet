@@ -225,6 +225,13 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
             )
     );
 
+    @Override
+    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
+                                                                                 final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+        throw new UnsupportedOperationException();
+    }
+
     // Object...........................................................................................................
 
     @Override
