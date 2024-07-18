@@ -80,6 +80,13 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
         );
     }
 
+    @Override
+    public Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * A function that maps incoming {@link SpreadsheetFormatterName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
      */

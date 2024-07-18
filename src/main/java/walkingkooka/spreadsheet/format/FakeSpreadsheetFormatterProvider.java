@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
@@ -29,6 +30,11 @@ public class FakeSpreadsheetFormatterProvider implements SpreadsheetFormatterPro
     @Override
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
                                                      final List<?> values) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
         throw new UnsupportedOperationException();
     }
 
