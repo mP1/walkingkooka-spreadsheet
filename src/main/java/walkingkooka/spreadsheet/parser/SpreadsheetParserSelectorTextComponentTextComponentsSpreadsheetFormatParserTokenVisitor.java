@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * A {@link SpreadsheetFormatParserTokenVisitor} that is used to visit tokens and produce {@link SpreadsheetParserSelectorTextComponent} including alternatives.
  * Note currently labels in all cases are pattern text not actual labels such as DAY but pattern symbols such as D or DD.
  */
-final class SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     // only called by SpreadsheetParserSelectorTextComponent#textComponents
     static List<SpreadsheetParserSelectorTextComponent> textComponents(final ParserToken token,
@@ -41,12 +41,12 @@ final class SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenV
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor(context);
+        final SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor(context);
         visitor.accept(token);
         return visitor.textComponents;
     }
 
-    SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor(final SpreadsheetParserContext context) {
+    SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor(final SpreadsheetParserContext context) {
         this.textComponents = Lists.array();
         this.context = context;
     }
