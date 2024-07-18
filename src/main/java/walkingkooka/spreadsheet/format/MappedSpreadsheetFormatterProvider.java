@@ -84,7 +84,14 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
     public Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        throw new UnsupportedOperationException();
+        final SpreadsheetFormatterName name = selector.name();
+
+        return this.provider.spreadsheetFormatterNextTextComponent(
+                selector.setName(
+                        this.nameMapper.apply(name)
+                                .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name))
+                )
+        );
     }
 
     /**
