@@ -109,4 +109,43 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
                 formatter::toString
         );
     }
+
+    // nextTextComponentsAndCheck...........................................................................................
+
+    default void nextTextComponentAndCheck(final SpreadsheetFormatter formatter,
+                                           final int index,
+                                           final SpreadsheetFormatterContext context) {
+        this.nextTextComponentAndCheck(
+                formatter,
+                index,
+                context,
+                Optional.empty()
+        );
+    }
+
+    default void nextTextComponentAndCheck(final SpreadsheetFormatter formatter,
+                                           final int index,
+                                           final SpreadsheetFormatterContext context,
+                                           final SpreadsheetFormatterSelectorTextComponent expected) {
+        this.nextTextComponentAndCheck(
+                formatter,
+                index,
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void nextTextComponentAndCheck(final SpreadsheetFormatter formatter,
+                                           final int index,
+                                           final SpreadsheetFormatterContext context,
+                                           final Optional<SpreadsheetFormatterSelectorTextComponent> expected) {
+        this.checkEquals(
+                expected,
+                formatter.nextTextComponent(
+                        index,
+                        context
+                ),
+                formatter + " " + index
+        );
+    }
 }
