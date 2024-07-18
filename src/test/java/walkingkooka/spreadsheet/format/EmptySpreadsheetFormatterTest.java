@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<EmptySpreadsheetFormatter> {
 
     @Test
@@ -38,6 +40,14 @@ public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatter
     }
 
     // nextTextComponent................................................................................................
+
+    @Test
+    public void testNextTextComponentWithNonZeroIndexFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createFormatter().nextTextComponent(-1, this.createContext())
+        );
+    }
 
     @Test
     public void testNextTextComponent() {
