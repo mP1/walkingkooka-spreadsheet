@@ -40,7 +40,7 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
 
     @Test
     public void testSpreadsheetFormatterNextTextComponentFails() {
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+        this.spreadsheetFormatterNextTextComponentFails(
                 SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + "")
         );
     }
