@@ -32,6 +32,8 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Objects;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterGeneral, SpreadsheetFormatGeneralParserToken> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
@@ -265,6 +267,24 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
                         generalFormatNumberDigitCount
                 ),
                 text
+        );
+    }
+
+    // nextTextComponent................................................................................................
+
+    @Test
+    public void testNextTextComponent() {
+        this.nextTextComponentAndCheck(
+                0,
+                this.createContext()
+        );
+    }
+
+    @Test
+    public void testNextTextComponentWithNonZeroIndexFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createFormatter().nextTextComponent(-1, this.createContext())
         );
     }
 

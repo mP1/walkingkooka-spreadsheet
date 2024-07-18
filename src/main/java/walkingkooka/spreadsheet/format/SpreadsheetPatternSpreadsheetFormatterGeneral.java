@@ -228,8 +228,12 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     @Override
     public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
                                                                                  final SpreadsheetFormatterContext context) {
+        if (0 != index) {
+            throw new IndexOutOfBoundsException("Invalid index " + index);
+        }
         Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
+
+        return NO_NEXT_TEXT_COMPONENT;
     }
 
     // Object...........................................................................................................
