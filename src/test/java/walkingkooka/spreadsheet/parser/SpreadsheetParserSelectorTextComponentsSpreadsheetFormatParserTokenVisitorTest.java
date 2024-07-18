@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
-public final class SpreadsheetParserSelectorTextComponentSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParserSelectorTextComponentSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor> {
     @Override
-    public SpreadsheetParserSelectorTextComponentSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetParserSelectorTextComponentSpreadsheetFormatParserTokenVisitor(null);
+    public SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor(null);
     }
 
     @Override
@@ -37,7 +37,7 @@ public final class SpreadsheetParserSelectorTextComponentSpreadsheetFormatParser
     }
 
     @Override
-    public Class<SpreadsheetParserSelectorTextComponentSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetParserSelectorTextComponentSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor.class;
     }
 }
