@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
-public final class SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor> {
     @Override
-    public SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor(null);
+    public SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor(null);
     }
 
     @Override
@@ -37,7 +37,7 @@ public final class SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParse
     }
 
     @Override
-    public Class<SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetParserSelectorTextComponentsSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor.class;
     }
 }
