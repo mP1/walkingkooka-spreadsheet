@@ -29,12 +29,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ConverterSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ConverterSpreadsheetFormatter> {
 
     @Test
-    public void testConvertable() {
-        this.formatAndCheck(LocalDate.of(1999, 12, 31), "1999-12-31");
+    public void testFormatConvertedValue() {
+        this.formatAndCheck(
+                LocalDate.of(1999, 12, 31),
+                "1999-12-31"
+        );
     }
 
     @Test
-    public void testInvalid() {
+    public void testFormatInvalidFails() {
         this.formatAndCheck("fail!");
     }
 
