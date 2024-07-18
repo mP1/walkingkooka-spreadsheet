@@ -167,6 +167,23 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         );
     }
 
+    default void spreadsheetFormatterNextTextComponentFails(final SpreadsheetFormatterSelector selector) {
+        this.spreadsheetFormatterNextTextComponentFails(
+                this.createSpreadsheetFormatterProvider(),
+                selector
+        );
+    }
+
+    default void spreadsheetFormatterNextTextComponentFails(final SpreadsheetFormatterProvider provider,
+                                                            final SpreadsheetFormatterSelector selector) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetFormatterNextTextComponent(
+                        selector
+                )
+        );
+    }
+
     default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterSelector selector) {
         this.spreadsheetFormatterNextTextComponentAndCheck(
                 this.createSpreadsheetFormatterProvider(),
