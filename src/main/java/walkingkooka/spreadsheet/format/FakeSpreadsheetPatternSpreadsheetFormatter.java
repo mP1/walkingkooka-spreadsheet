@@ -19,13 +19,12 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.test.Fake;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that always fails.
  */
-public class FakeSpreadsheetPatternSpreadsheetFormatter implements SpreadsheetPatternSpreadsheetFormatter, Fake {
+public class FakeSpreadsheetPatternSpreadsheetFormatter extends FakeSpreadsheetFormatter implements SpreadsheetPatternSpreadsheetFormatter, Fake {
 
     protected FakeSpreadsheetPatternSpreadsheetFormatter() {
         super();
@@ -34,17 +33,6 @@ public class FakeSpreadsheetPatternSpreadsheetFormatter implements SpreadsheetPa
     @Override
     public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
                                                            final SpreadsheetFormatterContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
-                                                                                 final SpreadsheetFormatterContext context) {
         throw new UnsupportedOperationException();
     }
 }
