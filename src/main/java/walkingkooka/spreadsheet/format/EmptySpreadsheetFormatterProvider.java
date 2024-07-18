@@ -59,7 +59,7 @@ final class EmptySpreadsheetFormatterProvider implements SpreadsheetFormatterPro
     public Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        throw new UnsupportedOperationException();
+        throw new IllegalArgumentException("Unknown formatter " + selector.name());
     }
 
     @Override

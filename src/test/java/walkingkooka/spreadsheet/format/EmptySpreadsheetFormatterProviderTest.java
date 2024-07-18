@@ -38,6 +38,13 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
         );
     }
 
+    @Test
+    public void testSpreadsheetFormatterNextTextComponentFails() {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + "")
+        );
+    }
+
     @Override
     public EmptySpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
         return EmptySpreadsheetFormatterProvider.INSTANCE;
