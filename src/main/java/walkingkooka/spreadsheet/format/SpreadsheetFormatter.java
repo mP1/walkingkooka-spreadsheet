@@ -84,8 +84,9 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
     Optional<SpreadsheetFormatterSelectorTextComponent> NO_NEXT_TEXT_COMPONENT = Optional.empty();
 
     /**
-     * Returns the {@link SpreadsheetFormatterSelectorTextComponent} at the given index with this selector.
+     * Returns the next {@link SpreadsheetFormatterSelectorTextComponent} at the end of this {@link SpreadsheetFormatter}.
+     * The label and text should be empty strings with {@link SpreadsheetFormatterSelectorTextComponent#alternatives()}
+     * holding possible tokens.
      */
-    Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
-                                                                          final SpreadsheetFormatterContext context);
+    Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context);
 }

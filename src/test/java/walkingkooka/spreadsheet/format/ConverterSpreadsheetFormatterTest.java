@@ -24,8 +24,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 public final class ConverterSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ConverterSpreadsheetFormatter> {
 
     @Test
@@ -46,16 +44,7 @@ public final class ConverterSpreadsheetFormatterTest implements SpreadsheetForma
     @Test
     public void testNextTextComponent() {
         this.nextTextComponentAndCheck(
-                0,
                 this.createContext()
-        );
-    }
-
-    @Test
-    public void testNextTextComponentWithNonZeroIndexFails() {
-        assertThrows(
-                IndexOutOfBoundsException.class,
-                () -> this.createFormatter().nextTextComponent(-1, this.createContext())
         );
     }
 
