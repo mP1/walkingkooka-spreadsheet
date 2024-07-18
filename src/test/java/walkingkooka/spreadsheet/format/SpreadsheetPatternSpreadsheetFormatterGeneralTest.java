@@ -270,36 +270,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
         );
     }
 
-    // nextTextComponent................................................................................................
-
-    @Test
-    public void testNextTextComponent() {
-        this.nextTextComponentAndCheck(
-                0,
-                this.createContext()
-        );
-    }
-
-    @Test
-    public void testNextTextComponentWithNonZeroIndexFails() {
-        assertThrows(
-                IndexOutOfBoundsException.class,
-                () -> this.createFormatter().nextTextComponent(-1, this.createContext())
-        );
-    }
-
-    // toString.........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE,
-                "General"
-        );
-    }
-
-    // SpreadsheetFormatterTestCase.....................................................................................
-
     @Override
     String pattern() {
         return "General";
@@ -421,6 +391,37 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
                 )
         );
     }
+
+    // nextTextComponent................................................................................................
+
+    @Test
+    public void testNextTextComponent() {
+        this.nextTextComponentAndCheck(
+                0,
+                this.createContext()
+        );
+    }
+
+    @Test
+    public void testNextTextComponentWithNonZeroIndexFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createFormatter().nextTextComponent(-1, this.createContext())
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE,
+                "General"
+        );
+    }
+
+    // SpreadsheetFormatterTestCase.....................................................................................
+
 
     // ClassTesting.....................................................................................................
 
