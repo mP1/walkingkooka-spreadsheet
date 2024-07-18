@@ -22,6 +22,7 @@ import walkingkooka.plugin.ProviderCollectionProviderGetter;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -81,6 +82,12 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
         );
     }
 
+    @Override
+    public Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {

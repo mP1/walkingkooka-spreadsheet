@@ -58,7 +58,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         return new TestSpreadsheetFormatterProvider();
     }
 
-    class TestSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
+    class TestSpreadsheetFormatterProvider extends FakeSpreadsheetFormatterProvider {
         @Override
         public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
             Objects.requireNonNull(selector, "selector");
@@ -76,7 +76,6 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
             checkEquals("text-format-pattern", name.value());
             return FORMATTER;
         }
-
 
         @Override
         public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.plugin.Provider;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -41,6 +42,11 @@ public interface SpreadsheetFormatterProvider extends Provider {
      */
     SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
                                               final List<?> values);
+
+    /**
+     * Returns the next {@link SpreadsheetFormatterSelectorTextComponent} for the given {@link SpreadsheetFormatterSelector}.
+     */
+    Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector);
 
     /**
      * Returns all available {@link SpreadsheetFormatterInfo}
