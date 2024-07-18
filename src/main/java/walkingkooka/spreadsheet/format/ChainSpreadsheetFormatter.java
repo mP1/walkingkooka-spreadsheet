@@ -87,6 +87,13 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
         return SpreadsheetFormatter.NO_TEXT_COMPONENTS;
     }
 
+    @Override
+    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
+                                                                                 final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+        throw new UnsupportedOperationException();
+    }
+
     // Object...........................................................................................................
 
     @Override
