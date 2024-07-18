@@ -47,7 +47,7 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
      */
     static List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatParserToken token,
                                                                           final SpreadsheetFormatterContext context) {
-        return SpreadsheetFormatterSelectorTextComponentsSpreadsheetFormatParserTokenVisitor.textComponents(
+        return SpreadsheetFormatterSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor.textComponents(
                 token,
                 context
         );
