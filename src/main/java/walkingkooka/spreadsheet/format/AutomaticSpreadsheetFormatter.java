@@ -97,6 +97,9 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
     @Override
     public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
                                                                                  final SpreadsheetFormatterContext context) {
+        if(0 != index) {
+            throw new IndexOutOfBoundsException("Invalid index " + index);
+        }
         Objects.requireNonNull(context, "context");
 
         return NO_NEXT_TEXT_COMPONENT;
