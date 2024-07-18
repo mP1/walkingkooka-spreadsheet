@@ -77,6 +77,13 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
         );
     }
 
+    @Override
+    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
+                                                                                 final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * The formatter that will be executed if the guard (condition) test passes.
      */

@@ -131,6 +131,13 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
         );
     }
 
+    @Override
+    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
+                                                                                 final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(context, "context");
+        throw new UnsupportedOperationException();
+    }
+
     private final SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific normalOrScientific;
 
     /**
