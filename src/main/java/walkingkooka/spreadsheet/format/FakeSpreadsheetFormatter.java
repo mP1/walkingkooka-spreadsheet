@@ -43,8 +43,7 @@ public class FakeSpreadsheetFormatter implements SpreadsheetFormatter, Fake {
     }
 
     @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
-                                                                                 final SpreadsheetFormatterContext context) {
+    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
         throw new UnsupportedOperationException();
     }
 }

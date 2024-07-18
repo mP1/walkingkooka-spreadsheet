@@ -201,38 +201,31 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                 NullPointerException.class,
                 () -> this.createFormatter()
                         .nextTextComponent(
-                                0,
                                 null
                         )
         );
     }
 
-    default void nextTextComponentAndCheck(final int index,
-                                           final SpreadsheetFormatterContext context) {
+    default void nextTextComponentAndCheck(final SpreadsheetFormatterContext context) {
         this.nextTextComponentAndCheck(
                 this.createFormatter(),
-                index,
                 context
         );
     }
 
-    default void nextTextComponentAndCheck(final int index,
-                                           final SpreadsheetFormatterContext context,
+    default void nextTextComponentAndCheck(final SpreadsheetFormatterContext context,
                                            final SpreadsheetFormatterSelectorTextComponent expected) {
         this.nextTextComponentAndCheck(
                 this.createFormatter(),
-                index,
                 context,
                 expected
         );
     }
 
-    default void nextTextComponentAndCheck(final int index,
-                                           final SpreadsheetFormatterContext context,
+    default void nextTextComponentAndCheck(final SpreadsheetFormatterContext context,
                                            final Optional<SpreadsheetFormatterSelectorTextComponent> expected) {
         this.nextTextComponentAndCheck(
                 this.createFormatter(),
-                index,
                 context,
                 expected
         );

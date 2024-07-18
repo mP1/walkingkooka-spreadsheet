@@ -78,8 +78,7 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
     }
 
     @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final int index,
-                                                                                 final SpreadsheetFormatterContext context) {
+    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
         throw new UnsupportedOperationException();
     }
