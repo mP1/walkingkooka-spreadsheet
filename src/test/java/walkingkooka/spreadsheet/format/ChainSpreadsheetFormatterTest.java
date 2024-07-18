@@ -118,6 +118,24 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
         this.textComponentsAndCheck();
     }
 
+    // nextTextComponent................................................................................................
+
+    @Test
+    public void testNextTextComponentWithNonZeroIndexFails() {
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> this.createFormatter().nextTextComponent(-1, this.createContext())
+        );
+    }
+
+    @Test
+    public void testNextTextComponent() {
+        this.nextTextComponentAndCheck(
+                0,
+                this.createContext()
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test
