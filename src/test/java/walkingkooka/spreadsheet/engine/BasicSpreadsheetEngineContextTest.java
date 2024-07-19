@@ -1131,6 +1131,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "      \"name\": \"automatic\"\n" +
                         "    },\n" +
                         "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection\",\n" +
+                        "      \"name\": \"collection\"\n" +
+                        "    },\n" +
+                        "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern\",\n" +
                         "      \"name\": \"date-format-pattern\"\n" +
                         "    },\n" +
@@ -1425,6 +1429,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic\",\n" +
                         "      \"name\": \"automatic\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection\",\n" +
+                        "      \"name\": \"collection\"\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern\",\n" +
