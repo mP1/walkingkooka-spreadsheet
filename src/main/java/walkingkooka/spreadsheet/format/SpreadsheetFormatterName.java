@@ -56,6 +56,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             null
     );
 
+    final static String COLLECTION_STRING = "collection";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName COLLECTION = new SpreadsheetFormatterName(
+            COLLECTION_STRING,
+            null
+    );
+
     final static String DATE_FORMAT_PATTERN_STRING = "date-format-pattern";
 
     /**
@@ -126,6 +136,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         switch (name) {
             case AUTOMATIC_STRING:
                 spreadsheetFormatterName = AUTOMATIC;
+                break;
+            case COLLECTION_STRING:
+                spreadsheetFormatterName = COLLECTION;
                 break;
             case DATE_FORMAT_PATTERN_STRING:
                 spreadsheetFormatterName = DATE_FORMAT_PATTERN;
