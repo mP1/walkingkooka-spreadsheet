@@ -28,12 +28,12 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * A {@link SpreadsheetFormatter} that forms a chain trying one or many {@link SpreadsheetFormatter formatters}.
+ * A {@link SpreadsheetFormatter} that forms a collection trying each {@link SpreadsheetFormatter formatter} until success.
  */
-final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
+final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
 
     /**
-     * Creates a new {@link ChainSpreadsheetFormatter} as necessary.
+     * Creates a new {@link SpreadsheetFormatterCollection} as necessary.
      */
     static SpreadsheetFormatter with(final List<SpreadsheetFormatter> formatters) {
         Objects.requireNonNull(formatters, "formatters");
@@ -48,7 +48,7 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
                 result = copy.iterator().next();
                 break;
             default:
-                result = new ChainSpreadsheetFormatter(copy);
+                result = new SpreadsheetFormatterCollection(copy);
                 break;
         }
 
@@ -58,7 +58,7 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
     /**
      * Private ctor.
      */
-    private ChainSpreadsheetFormatter(final List<SpreadsheetFormatter> formatters) {
+    private SpreadsheetFormatterCollection(final List<SpreadsheetFormatter> formatters) {
         super();
         this.formatters = formatters;
     }
@@ -105,11 +105,11 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof ChainSpreadsheetFormatter &&
+                other instanceof SpreadsheetFormatterCollection &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final ChainSpreadsheetFormatter other) {
+    private boolean equals0(final SpreadsheetFormatterCollection other) {
         return this.formatters.equals(other.formatters);
     }
 
