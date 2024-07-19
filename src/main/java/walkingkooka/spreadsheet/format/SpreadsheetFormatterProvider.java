@@ -44,6 +44,11 @@ public interface SpreadsheetFormatterProvider extends Provider {
                                               final List<?> values);
 
     /**
+     * Constant for {@link #spreadsheetFormatterNextTextComponent(SpreadsheetFormatterSelector)} when there is no next.
+     */
+    Optional<SpreadsheetFormatterSelectorTextComponent> NO_NEXT_TEXT_COMPONENT = Optional.empty();
+
+    /**
      * Returns the next {@link SpreadsheetFormatterSelectorTextComponent} for the given {@link SpreadsheetFormatterSelector}.
      */
     Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector);
