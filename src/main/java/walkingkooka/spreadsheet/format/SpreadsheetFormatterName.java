@@ -56,13 +56,13 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             null
     );
 
-    final static String COLLECTION_STRING = "collection";
+    final static String CHAIN_STRING = "chain";
 
     /**
      * The name of the date {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName COLLECTION = new SpreadsheetFormatterName(
-            COLLECTION_STRING,
+    public final static SpreadsheetFormatterName CHAIN = new SpreadsheetFormatterName(
+            CHAIN_STRING,
             null
     );
 
@@ -137,8 +137,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             case AUTOMATIC_STRING:
                 spreadsheetFormatterName = AUTOMATIC;
                 break;
-            case COLLECTION_STRING:
-                spreadsheetFormatterName = COLLECTION;
+            case CHAIN_STRING:
+                spreadsheetFormatterName = CHAIN;
                 break;
             case DATE_FORMAT_PATTERN_STRING:
                 spreadsheetFormatterName = DATE_FORMAT_PATTERN;
