@@ -94,13 +94,6 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
         return NO_TEXT_COMPONENTS;
     }
 
-    @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
-        Objects.requireNonNull(context, "context");
-
-        return NO_NEXT_TEXT_COMPONENT;
-    }
-
     // Object...........................................................................................................
 
     @Override

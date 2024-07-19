@@ -37,15 +37,6 @@ public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatter
         );
     }
 
-    // nextTextComponent................................................................................................
-
-    @Test
-    public void testNextTextComponent() {
-        this.nextTextComponentAndCheck(
-                this.createContext()
-        );
-    }
-
     @Override
     public EmptySpreadsheetFormatter createFormatter() {
         return EmptySpreadsheetFormatter.INSTANCE;

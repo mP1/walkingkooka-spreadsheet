@@ -120,15 +120,6 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
         this.textComponentsAndCheck();
     }
 
-    // nextTextComponent................................................................................................
-
-    @Test
-    public void testNextTextComponent() {
-        this.nextTextComponentAndCheck(
-                this.createContext()
-        );
-    }
-
     // equals...........................................................................................................
 
     @Test

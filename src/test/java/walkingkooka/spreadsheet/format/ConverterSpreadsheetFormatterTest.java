@@ -39,15 +39,6 @@ public final class ConverterSpreadsheetFormatterTest implements SpreadsheetForma
         this.formatAndCheck("fail!");
     }
 
-    // nextTextComponent................................................................................................
-
-    @Test
-    public void testNextTextComponent() {
-        this.nextTextComponentAndCheck(
-                this.createContext()
-        );
-    }
-
     @Override
     public ConverterSpreadsheetFormatter createFormatter() {
         return ConverterSpreadsheetFormatter.with(

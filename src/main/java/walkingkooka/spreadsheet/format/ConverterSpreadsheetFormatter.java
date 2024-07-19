@@ -60,13 +60,6 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
-        Objects.requireNonNull(context, "context");
-
-        return NO_NEXT_TEXT_COMPONENT;
-    }
-
     private final Converter<ExpressionNumberConverterContext> converter;
 
     @Override

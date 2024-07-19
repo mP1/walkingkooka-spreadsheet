@@ -102,12 +102,6 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
         );
     }
 
-    @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
-        Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
-    }
-
     private final boolean twelveHour;
     private final int millisecondDecimals;
 
