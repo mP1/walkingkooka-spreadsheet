@@ -76,6 +76,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
     );
 
+    final static String GENERAL_STRING = "general";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName GENERAL = new SpreadsheetFormatterName(
+            GENERAL_STRING,
+            null
+    );
+
     final static String NUMBER_FORMAT_PATTERN_STRING = "number-format-pattern";
 
     /**
@@ -119,6 +129,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case DATE_TIME_FORMAT_PATTERN_STRING:
                 spreadsheetFormatterName = DATE_TIME_FORMAT_PATTERN;
+                break;
+            case GENERAL_STRING:
+                spreadsheetFormatterName = GENERAL;
                 break;
             case NUMBER_FORMAT_PATTERN_STRING:
                 spreadsheetFormatterName = NUMBER_FORMAT_PATTERN;
