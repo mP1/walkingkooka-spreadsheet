@@ -20,13 +20,18 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * A {link SpreadsheetFormatterProvider} that supports creating {@link SpreadsheetFormatter} for each of the
@@ -115,7 +120,83 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     public Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        throw new UnsupportedOperationException();
+        SpreadsheetFormatterSelectorTextComponent next;
+
+        final SpreadsheetFormatterName name = selector.name();
+        switch(name.value()) {
+            case SpreadsheetFormatterName.AUTOMATIC_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.DATE_FORMAT_PATTERN_STRING:
+                next = formatPatternNextTextComponent(
+                        selector,
+                        SpreadsheetFormatParserTokenKind::isDate
+                );
+                break;
+            case SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN_STRING:
+                next = formatPatternNextTextComponent(
+                        selector,
+                        SpreadsheetFormatParserTokenKind::isDateTime
+                );
+                break;
+            case SpreadsheetFormatterName.GENERAL_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN_STRING:
+                next = formatPatternNextTextComponent(
+                        selector,
+                        SpreadsheetFormatParserTokenKind::isNumber
+                );
+                break;
+            case SpreadsheetFormatterName.TEXT_FORMAT_PATTERN_STRING:
+                next = formatPatternNextTextComponent(
+                        selector,
+                        SpreadsheetFormatParserTokenKind::isText
+                );
+                break;
+            case SpreadsheetFormatterName.TIME_FORMAT_PATTERN_STRING:
+                next = formatPatternNextTextComponent(
+                        selector,
+                        SpreadsheetFormatParserTokenKind::isTime
+                );
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown selector " + name);
+        }
+
+        return Optional.ofNullable(next);
+    }
+
+    private SpreadsheetFormatterSelectorTextComponent formatPatternNextTextComponent(final SpreadsheetFormatterSelector selector,
+                                                                                     final Predicate<SpreadsheetFormatParserTokenKind> filter) {
+        SpreadsheetFormatterSelectorTextComponent next;
+
+        final String text = selector.text()
+                .trim();
+        final SpreadsheetPatternKind kind = selector.name()
+                .patternKind;
+        if (text.isEmpty()) {
+            next = SpreadsheetFormatterSelectorTextComponent.with(
+                    "", // label
+                    "", // text
+                    Arrays.stream(SpreadsheetFormatParserTokenKind.values())
+                            .filter(filter)
+                            .flatMap(k -> k.alternatives().stream())
+                            .distinct()
+                            .sorted()
+                            .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                            .collect(Collectors.toList())
+            );
+        } else {
+            final SpreadsheetFormatPattern formatPattern = kind.parse(text)
+                    .toFormat();
+            next = SpreadsheetFormatterSelectorTextComponent.nextTextComponent(
+                    formatPattern.value(),
+                    kind
+            );
+        }
+
+        return next;
     }
 
     @Override

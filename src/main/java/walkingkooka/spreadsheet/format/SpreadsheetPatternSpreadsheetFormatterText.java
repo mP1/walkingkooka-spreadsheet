@@ -76,9 +76,11 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
     public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
-        return SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor.nextTextComponent(
-                this.token,
-                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+        return Optional.of(
+                SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor.nextTextComponent(
+                        this.token,
+                        SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+                )
         );
     }
 
