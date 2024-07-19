@@ -29,8 +29,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ChainSpreadsheetFormatter>,
-        HashCodeEqualsDefinedTesting2<ChainSpreadsheetFormatter> {
+public final class SpreadsheetFormatterCollectionTest implements SpreadsheetFormatterTesting2<SpreadsheetFormatterCollection>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetFormatterCollection> {
 
     private final static Integer VALUE1 = 11;
     private final static Double VALUE2 = 222.5;
@@ -39,18 +39,18 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
 
     @Test
     public void testWithNullFails() {
-        assertThrows(NullPointerException.class, () -> ChainSpreadsheetFormatter.with(null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetFormatterCollection.with(null));
     }
 
     @Test
     public void testWithEmptyFails() {
-        assertThrows(IllegalArgumentException.class, () -> ChainSpreadsheetFormatter.with(Lists.empty()));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetFormatterCollection.with(Lists.empty()));
     }
 
     @Test
     public void testWithOneUnwraps() {
         final SpreadsheetFormatter formatter = SpreadsheetFormatters.fake();
-        assertSame(formatter, ChainSpreadsheetFormatter.with(Lists.of(formatter)));
+        assertSame(formatter, SpreadsheetFormatterCollection.with(Lists.of(formatter)));
     }
 
     // format...........................................................................................................
@@ -66,8 +66,8 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
     }
 
     @Override
-    public ChainSpreadsheetFormatter createFormatter() {
-        return Cast.to(ChainSpreadsheetFormatter.with(Lists.of(this.formatter1(), this.formatter2())));
+    public SpreadsheetFormatterCollection createFormatter() {
+        return Cast.to(SpreadsheetFormatterCollection.with(Lists.of(this.formatter1(), this.formatter2())));
     }
 
     private SpreadsheetFormatter formatter1() {
@@ -134,13 +134,13 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
     @Test
     public void testEqualsDifferentFormatters() {
         this.checkNotEquals(
-                ChainSpreadsheetFormatter.with(
+                SpreadsheetFormatterCollection.with(
                         Lists.of(
                                 this.formatter1(),
                                 this.formatter2()
                         )
                 ),
-                ChainSpreadsheetFormatter.with(
+                SpreadsheetFormatterCollection.with(
                         Lists.of(
                                 this.formatter1()
                         )
@@ -149,9 +149,9 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
     }
 
     @Override
-    public ChainSpreadsheetFormatter createObject() {
-        return (ChainSpreadsheetFormatter)
-                ChainSpreadsheetFormatter.with(
+    public SpreadsheetFormatterCollection createObject() {
+        return (SpreadsheetFormatterCollection)
+                SpreadsheetFormatterCollection.with(
                         Lists.of(
                                 SpreadsheetFormatters.defaultText(),
                                 SpreadsheetFormatters.defaultText()
@@ -172,7 +172,12 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
     // class............................................................................................................
 
     @Override
-    public Class<ChainSpreadsheetFormatter> type() {
-        return ChainSpreadsheetFormatter.class;
+    public Class<SpreadsheetFormatterCollection> type() {
+        return SpreadsheetFormatterCollection.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
