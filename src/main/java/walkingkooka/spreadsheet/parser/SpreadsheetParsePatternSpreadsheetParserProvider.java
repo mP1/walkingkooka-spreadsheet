@@ -26,6 +26,7 @@ import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -70,6 +71,13 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
             default:
                 throw new IllegalArgumentException("Expected 0 values got " + count);
         }
+    }
+
+    @Override
+    public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        throw new UnsupportedOperationException();
     }
 
     @Override

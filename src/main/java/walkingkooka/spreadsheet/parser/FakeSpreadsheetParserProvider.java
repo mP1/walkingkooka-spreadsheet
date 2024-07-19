@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetParserProvider implements SpreadsheetParserProvider {
@@ -34,6 +35,11 @@ public class FakeSpreadsheetParserProvider implements SpreadsheetParserProvider 
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
                                                final List<?> values) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
         throw new UnsupportedOperationException();
     }
 

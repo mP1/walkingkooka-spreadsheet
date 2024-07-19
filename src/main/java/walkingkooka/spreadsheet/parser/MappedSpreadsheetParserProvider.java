@@ -100,6 +100,13 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
         );
     }
 
+    @Override
+    public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * A function that maps incoming {@link SpreadsheetParserName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
      */

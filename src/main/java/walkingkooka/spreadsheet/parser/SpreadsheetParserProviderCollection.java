@@ -22,6 +22,7 @@ import walkingkooka.plugin.ProviderCollectionProviderGetter;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -84,6 +85,13 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
             throw new IllegalArgumentException("Unknown parser " + name);
         }
         return parser;
+    }
+
+    @Override
+    public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        throw new UnsupportedOperationException();
     }
 
     @Override
