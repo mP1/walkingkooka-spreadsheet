@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorTextComponent;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -456,6 +457,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 name,
                 values
         );
+    }
+
+    @Override
+    public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        throw new UnsupportedOperationException();
     }
 
     @Override

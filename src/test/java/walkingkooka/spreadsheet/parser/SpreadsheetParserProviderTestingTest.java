@@ -24,6 +24,7 @@ import walkingkooka.reflect.JavaVisibility;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public final class SpreadsheetParserProviderTestingTest implements SpreadsheetParserProviderTesting<SpreadsheetParserProviderTestingTest.TestSpreadsheetParserProvider> {
@@ -75,6 +76,13 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
 
             checkEquals("date-parse-pattern", name.value());
             return PARSER;
+        }
+
+        @Override
+        public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
+            Objects.requireNonNull(selector, "selector");
+
+            throw new UnsupportedOperationException();
         }
 
         @Override

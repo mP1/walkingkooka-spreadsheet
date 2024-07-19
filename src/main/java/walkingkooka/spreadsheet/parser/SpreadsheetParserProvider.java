@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.plugin.Provider;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -41,6 +42,11 @@ public interface SpreadsheetParserProvider extends Provider {
      */
     SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
                                         final List<?> values);
+
+    /**
+     * Returns the next {@link SpreadsheetParserSelectorTextComponent} for the given {@link SpreadsheetParserSelector}.
+     */
+    Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector);
 
     /**
      * Returns all available {@link SpreadsheetParserInfo}
