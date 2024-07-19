@@ -117,8 +117,10 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     }
 
     private final static Set<SpreadsheetFormatterInfo> INFOS = Sets.of(
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.AUTOMATIC),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME_FORMAT_PATTERN)

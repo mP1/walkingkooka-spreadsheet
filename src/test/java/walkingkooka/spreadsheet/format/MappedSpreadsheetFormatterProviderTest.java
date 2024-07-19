@@ -85,12 +85,20 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     public void testSpreadsheetInfos() {
         this.spreadsheetFormatterInfosAndCheck(
                 SpreadsheetFormatterInfo.with(
+                        url("automatic"),
+                        SpreadsheetFormatterName.AUTOMATIC
+                ),
+                SpreadsheetFormatterInfo.with(
                         url("date-format-pattern"),
                         SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
                 ),
                 SpreadsheetFormatterInfo.with(
                         url("date-time-format-pattern"),
                         SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN
+                ),
+                SpreadsheetFormatterInfo.with(
+                        url("general"),
+                        SpreadsheetFormatterName.GENERAL
                 ),
                 SpreadsheetFormatterInfo.with(
                         url("number-format-pattern"),
