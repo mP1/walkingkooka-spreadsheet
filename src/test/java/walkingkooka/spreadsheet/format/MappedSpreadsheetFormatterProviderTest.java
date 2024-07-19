@@ -82,6 +82,111 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     }
 
     @Test
+    public void testSpreadsheetFormatterNextTextComponentAutomatic() {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                SpreadsheetFormatterSelector.parse("automatic")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterNextTextComponentDifferentFormatterName() {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                SpreadsheetFormatterSelector.parse("" + NEW_FORMATTER_NAME),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "",
+                        "",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "d",
+                                        "d"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "dd",
+                                        "dd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "ddd",
+                                        "ddd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "dddd",
+                                        "dddd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "m",
+                                        "m"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mm",
+                                        "mm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmm",
+                                        "mmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmmm",
+                                        "mmmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmmmm",
+                                        "mmmmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "yy",
+                                        "yy"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "yyyy",
+                                        "yyyy"
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterNextTextComponentDifferentFormatterNameNotEmptyText() {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                SpreadsheetFormatterSelector.parse("" + NEW_FORMATTER_NAME + " dd"),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "",
+                        "",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "m",
+                                        "m"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mm",
+                                        "mm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmm",
+                                        "mmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmmm",
+                                        "mmmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmmmm",
+                                        "mmmmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "yy",
+                                        "yy"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "yyyy",
+                                        "yyyy"
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testSpreadsheetInfos() {
         this.spreadsheetFormatterInfosAndCheck(
                 SpreadsheetFormatterInfo.with(
