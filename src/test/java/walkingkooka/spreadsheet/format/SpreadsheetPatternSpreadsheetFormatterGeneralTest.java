@@ -400,9 +400,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
         );
     }
 
-    // SpreadsheetFormatterTestCase.....................................................................................
-
-
     // ClassTesting.....................................................................................................
 
     @Override
