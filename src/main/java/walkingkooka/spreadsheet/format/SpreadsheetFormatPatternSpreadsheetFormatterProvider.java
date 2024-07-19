@@ -54,6 +54,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
+            case SpreadsheetFormatterName.COLLECTION_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
                 formatter = selector.evaluateText(this);
                 break;
@@ -94,6 +95,19 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                         throw new IllegalArgumentException("Expected 5 value(s) got " + count);
                 }
                 break;
+            case SpreadsheetFormatterName.COLLECTION_STRING:
+                switch (count) {
+                    case 5:
+                        formatter = SpreadsheetFormatters.collection(
+                                values.stream()
+                                        .map(c -> (SpreadsheetFormatter)c)
+                                        .collect(Collectors.toList())
+                        );
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Expected 5 value(s) got " + count);
+                }
+                break;
             case SpreadsheetFormatterName.GENERAL_STRING:
                 if (0 != count) {
                     throw new IllegalArgumentException("Expected 0 value(s) got " + count);
@@ -125,6 +139,9 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         final SpreadsheetFormatterName name = selector.name();
         switch(name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.COLLECTION_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.DATE_FORMAT_PATTERN_STRING:
@@ -206,6 +223,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
 
     private final static Set<SpreadsheetFormatterInfo> INFOS = Sets.of(
             spreadsheetFormatterInfo(SpreadsheetFormatterName.AUTOMATIC),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),

@@ -194,6 +194,10 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
                         SpreadsheetFormatterName.AUTOMATIC
                 ),
                 SpreadsheetFormatterInfo.with(
+                        url("collection"),
+                        SpreadsheetFormatterName.COLLECTION
+                ),
+                SpreadsheetFormatterInfo.with(
                         url("date-format-pattern"),
                         SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
                 ),
