@@ -390,15 +390,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
         );
     }
 
-    // nextTextComponent................................................................................................
-
-    @Test
-    public void testNextTextComponent() {
-        this.nextTextComponentAndCheck(
-                this.createContext()
-        );
-    }
-
     // toString.........................................................................................................
 
     @Test

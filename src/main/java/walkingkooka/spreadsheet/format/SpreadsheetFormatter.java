@@ -77,16 +77,4 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
      * tokenizing its pattern. A {@link SpreadsheetFormatterContext} could be useful such as displaying day names in the label for an {@link SpreadsheetFormatterSelectorTextComponentAlternative}.
      */
     List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context);
-
-    /**
-     * Useful constant for {@link SpreadsheetFormatter} with no next text components.
-     */
-    Optional<SpreadsheetFormatterSelectorTextComponent> NO_NEXT_TEXT_COMPONENT = Optional.empty();
-
-    /**
-     * Returns the next {@link SpreadsheetFormatterSelectorTextComponent} at the end of this {@link SpreadsheetFormatter}.
-     * The label and text should be empty strings with {@link SpreadsheetFormatterSelectorTextComponent#alternatives()}
-     * holding possible tokens.
-     */
-    Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context);
 }

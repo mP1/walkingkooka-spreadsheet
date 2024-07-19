@@ -365,15 +365,6 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         this.textComponentsAndCheck();
     }
 
-    // nextTextComponent................................................................................................
-
-    @Test
-    public void testNextTextComponent() {
-        this.nextTextComponentAndCheck(
-                this.createContext()
-        );
-    }
-
     // class............................................................................................................
 
     @Override

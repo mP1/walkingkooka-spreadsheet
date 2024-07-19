@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -243,30 +242,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
                         "\"Hello\"",
                         "\"Hello\"",
                         SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
-                )
-        );
-    }
-
-    // nextTextComponents ..............................................................................................
-
-    @Test
-    public void testNextTextComponentsTextEndsWithPlaceholder() {
-        this.nextTextComponentAndCheck(
-                this.createFormatter("@"),
-                this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
-                        "",
-                        "",
-                        Lists.of(
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
-                                        "* ",
-                                        "* "
-                                ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
-                                        "_ ",
-                                        "_ "
-                                )
-                        )
                 )
         );
     }

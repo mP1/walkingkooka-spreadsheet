@@ -53,13 +53,6 @@ final class EmptySpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
-        Objects.requireNonNull(context, "context");
-
-        return NO_NEXT_TEXT_COMPONENT;
-    }
-
-    @Override
     public String toString() {
         return "";
     }

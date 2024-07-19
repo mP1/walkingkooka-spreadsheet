@@ -87,12 +87,6 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
         );
     }
 
-    @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
-        Objects.requireNonNull(context, "context");
-        throw new UnsupportedOperationException();
-    }
-
     /**
      * The {@link SpreadsheetFormatter} that will have its color replaced if it was successful.
      */

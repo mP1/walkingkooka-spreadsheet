@@ -41,9 +41,4 @@ public class FakeSpreadsheetFormatter implements SpreadsheetFormatter, Fake {
     public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
         throw new UnsupportedOperationException();
     }
-
-    @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
-        throw new UnsupportedOperationException();
-    }
 }

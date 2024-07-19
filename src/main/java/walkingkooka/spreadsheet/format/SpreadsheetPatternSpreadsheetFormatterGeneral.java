@@ -225,13 +225,6 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
             )
     );
 
-    @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatterContext context) {
-        Objects.requireNonNull(context, "context");
-
-        return NO_NEXT_TEXT_COMPONENT;
-    }
-
     // Object...........................................................................................................
 
     @Override

@@ -55,15 +55,6 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
         this.textComponentsAndCheck();
     }
 
-    // nextTextComponent................................................................................................
-
-    @Test
-    public void testNextTextComponent() {
-        this.nextTextComponentAndCheck(
-                this.createContext()
-        );
-    }
-
     @Test
     public void testToString() {
         this.toStringAndCheck(

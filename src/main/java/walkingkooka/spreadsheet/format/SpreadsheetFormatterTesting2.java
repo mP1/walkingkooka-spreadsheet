@@ -193,44 +193,6 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         );
     }
 
-    // nextTextComponent................................................................................................
-
-    @Test
-    default void testNextTextComponentWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createFormatter()
-                        .nextTextComponent(
-                                null
-                        )
-        );
-    }
-
-    default void nextTextComponentAndCheck(final SpreadsheetFormatterContext context) {
-        this.nextTextComponentAndCheck(
-                this.createFormatter(),
-                context
-        );
-    }
-
-    default void nextTextComponentAndCheck(final SpreadsheetFormatterContext context,
-                                           final SpreadsheetFormatterSelectorTextComponent expected) {
-        this.nextTextComponentAndCheck(
-                this.createFormatter(),
-                context,
-                expected
-        );
-    }
-
-    default void nextTextComponentAndCheck(final SpreadsheetFormatterContext context,
-                                           final Optional<SpreadsheetFormatterSelectorTextComponent> expected) {
-        this.nextTextComponentAndCheck(
-                this.createFormatter(),
-                context,
-                expected
-        );
-    }
-
     // TypeNameTesting .................................................................................................
 
     @Override
