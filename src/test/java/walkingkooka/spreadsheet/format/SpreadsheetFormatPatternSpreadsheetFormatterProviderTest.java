@@ -153,16 +153,6 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
         return SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE;
     }
 
-    @Override
-    public Class<SpreadsheetFormatPatternSpreadsheetFormatterProvider> type() {
-        return SpreadsheetFormatPatternSpreadsheetFormatterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
     // ToString.........................................................................................................
 
     @Test
@@ -236,5 +226,17 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                                 )
                         )
         );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetFormatPatternSpreadsheetFormatterProvider> type() {
+        return SpreadsheetFormatPatternSpreadsheetFormatterProvider.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
