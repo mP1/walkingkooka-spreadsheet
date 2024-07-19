@@ -1127,12 +1127,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  ],\n" +
                         "  \"spreadsheet-formatters\": [\n" +
                         "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic\",\n" +
+                        "      \"name\": \"automatic\"\n" +
+                        "    },\n" +
+                        "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern\",\n" +
                         "      \"name\": \"date-format-pattern\"\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern\",\n" +
                         "      \"name\": \"date-time-format-pattern\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general\",\n" +
+                        "      \"name\": \"general\"\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern\",\n" +
@@ -1415,12 +1423,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  ],\n" +
                         "  \"spreadsheet-formatters\": [\n" +
                         "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic\",\n" +
+                        "      \"name\": \"automatic\"\n" +
+                        "    },\n" +
+                        "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern\",\n" +
                         "      \"name\": \"date-format-pattern\"\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern\",\n" +
                         "      \"name\": \"date-time-format-pattern\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general\",\n" +
+                        "      \"name\": \"general\"\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern\",\n" +
