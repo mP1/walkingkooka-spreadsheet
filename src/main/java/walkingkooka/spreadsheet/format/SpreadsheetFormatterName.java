@@ -124,6 +124,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         final SpreadsheetFormatterName spreadsheetFormatterName;
 
         switch (name) {
+            case AUTOMATIC_STRING:
+                spreadsheetFormatterName = AUTOMATIC;
+                break;
             case DATE_FORMAT_PATTERN_STRING:
                 spreadsheetFormatterName = DATE_FORMAT_PATTERN;
                 break;
