@@ -96,17 +96,11 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                 }
                 break;
             case SpreadsheetFormatterName.COLLECTION_STRING:
-                switch (count) {
-                    case 5:
-                        formatter = SpreadsheetFormatters.collection(
-                                values.stream()
-                                        .map(c -> (SpreadsheetFormatter)c)
-                                        .collect(Collectors.toList())
-                        );
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Expected 5 value(s) got " + count);
-                }
+                formatter = SpreadsheetFormatters.collection(
+                        values.stream()
+                                .map(c -> (SpreadsheetFormatter) c)
+                                .collect(Collectors.toList())
+                );
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
                 if (0 != count) {
