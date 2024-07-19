@@ -23,6 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -179,6 +180,87 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
         );
     }
 
+    // spreadsheetParserNextTextComponentsAndCheck......................................................................
+
+    @Test
+    default void testSpreadsheetParserNextTextComponentWithNullSelectorFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetParserProvider().spreadsheetParserNextTextComponent(null)
+        );
+    }
+
+    default void spreadsheetParserNextTextComponentFails(final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserNextTextComponentFails(
+                this.createSpreadsheetParserProvider(),
+                selector
+        );
+    }
+
+    default void spreadsheetParserNextTextComponentFails(final SpreadsheetParserProvider provider,
+                                                         final SpreadsheetParserSelector selector) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetParserNextTextComponent(
+                        selector
+                )
+        );
+    }
+
+    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserNextTextComponentAndCheck(
+                this.createSpreadsheetParserProvider(),
+                selector
+        );
+    }
+
+    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserSelector selector,
+                                                            final SpreadsheetParserSelectorTextComponent expected) {
+        this.spreadsheetParserNextTextComponentAndCheck(
+                this.createSpreadsheetParserProvider(),
+                selector,
+                expected
+        );
+    }
+
+    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserSelector selector,
+                                                            final Optional<SpreadsheetParserSelectorTextComponent> expected) {
+        this.spreadsheetParserNextTextComponentAndCheck(
+                this.createSpreadsheetParserProvider(),
+                selector,
+                expected
+        );
+    }
+
+    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserProvider provider,
+                                                            final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserNextTextComponentAndCheck(
+                provider,
+                selector,
+                Optional.empty()
+        );
+    }
+
+    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserProvider provider,
+                                                            final SpreadsheetParserSelector selector,
+                                                            final SpreadsheetParserSelectorTextComponent expected) {
+        this.spreadsheetParserNextTextComponentAndCheck(
+                provider,
+                selector,
+                Optional.of(expected)
+        );
+    }
+
+    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserProvider provider,
+                                                            final SpreadsheetParserSelector selector,
+                                                            final Optional<SpreadsheetParserSelectorTextComponent> expected) {
+        this.checkEquals(
+                expected,
+                provider.spreadsheetParserNextTextComponent(selector),
+                provider::toString
+        );
+    }
+    
     // spreadsheetParserInfo............................................................................................
 
     default void spreadsheetParserInfosAndCheck(final SpreadsheetParserInfo... expected) {
