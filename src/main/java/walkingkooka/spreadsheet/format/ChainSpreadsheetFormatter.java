@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.text.TextNode;
@@ -95,6 +96,22 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.formatters.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof ChainSpreadsheetFormatter &&
+                        this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final ChainSpreadsheetFormatter other) {
+        return this.formatters.equals(other.formatters);
+    }
 
     @Override
     public String toString() {

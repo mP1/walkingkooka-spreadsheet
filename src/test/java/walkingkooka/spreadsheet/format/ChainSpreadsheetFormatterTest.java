@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.tree.text.TextNode;
 
@@ -28,7 +29,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ChainSpreadsheetFormatter> {
+public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ChainSpreadsheetFormatter>,
+        HashCodeEqualsDefinedTesting2<ChainSpreadsheetFormatter> {
 
     private final static Integer VALUE1 = 11;
     private final static Double VALUE2 = 222.5;
@@ -125,6 +127,36 @@ public final class ChainSpreadsheetFormatterTest implements SpreadsheetFormatter
         this.nextTextComponentAndCheck(
                 this.createContext()
         );
+    }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentFormatters() {
+        this.checkNotEquals(
+                ChainSpreadsheetFormatter.with(
+                        Lists.of(
+                                this.formatter1(),
+                                this.formatter2()
+                        )
+                ),
+                ChainSpreadsheetFormatter.with(
+                        Lists.of(
+                                this.formatter1()
+                        )
+                )
+        );
+    }
+
+    @Override
+    public ChainSpreadsheetFormatter createObject() {
+        return (ChainSpreadsheetFormatter)
+                ChainSpreadsheetFormatter.with(
+                        Lists.of(
+                                SpreadsheetFormatters.defaultText(),
+                                SpreadsheetFormatters.defaultText()
+                        )
+                );
     }
 
     // toString.........................................................................................................
