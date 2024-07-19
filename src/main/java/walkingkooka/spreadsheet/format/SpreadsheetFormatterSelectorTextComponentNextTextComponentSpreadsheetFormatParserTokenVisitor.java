@@ -34,8 +34,8 @@ import java.util.stream.Collectors;
 final class SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     // only called by SpreadsheetFormatterSelectorTextComponent#nextTextComponent
-    static Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final ParserToken token,
-                                                                                 final SpreadsheetPatternKind patternKind) {
+    static SpreadsheetFormatterSelectorTextComponent nextTextComponent(final ParserToken token,
+                                                                       final SpreadsheetPatternKind patternKind) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(patternKind, "patternKind");
 
@@ -44,8 +44,7 @@ final class SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadshee
 
         final SpreadsheetFormatParserTokenKind kind = visitor.kind;
 
-        return Optional.of(
-                SpreadsheetFormatterSelectorTextComponent.with(
+        return SpreadsheetFormatterSelectorTextComponent.with(
                         "", // label
                         "", // text
                         patternKind.spreadsheetFormatParserTokenKinds()
@@ -57,8 +56,7 @@ final class SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadshee
                                 .sorted()
                                 .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
                                 .collect(Collectors.toList())
-                )
-        );
+                );
     }
 
     private static boolean keep(final SpreadsheetFormatParserTokenKind kind) {

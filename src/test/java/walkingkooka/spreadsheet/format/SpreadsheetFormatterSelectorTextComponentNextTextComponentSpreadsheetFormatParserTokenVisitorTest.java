@@ -25,8 +25,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.text.cursor.parser.ParserToken;
 
-import java.util.Optional;
-
 public final class SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor> {
 
     @Test
@@ -252,7 +250,7 @@ public final class SpreadsheetFormatterSelectorTextComponentNextTextComponentSpr
                                            final SpreadsheetPatternKind patternKind,
                                            final SpreadsheetFormatterSelectorTextComponent textComponent) {
         this.checkEquals(
-                Optional.of(textComponent),
+                textComponent,
                 SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor.nextTextComponent(
                         token,
                         patternKind

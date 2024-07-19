@@ -23,12 +23,12 @@ import walkingkooka.plugin.PluginSelectorTextComponent;
 import walkingkooka.plugin.PluginSelectorTextComponentLike;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Can be used to represent a single token with a format pattern or large text representation.
@@ -58,8 +58,8 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
     /**
      * This method is intended to return the next components only be called by {@link SpreadsheetFormatter} that contain a {@link SpreadsheetFormatParserToken}.
      */
-    static Optional<SpreadsheetFormatterSelectorTextComponent> nextTextComponent(final SpreadsheetFormatParserToken token,
-                                                                                 final SpreadsheetPatternKind patternKind) {
+    static SpreadsheetFormatterSelectorTextComponent nextTextComponent(final ParserToken token,
+                                                                       final SpreadsheetPatternKind patternKind) {
         return SpreadsheetFormatterSelectorTextComponentNextTextComponentSpreadsheetFormatParserTokenVisitor.nextTextComponent(
                 token,
                 patternKind
