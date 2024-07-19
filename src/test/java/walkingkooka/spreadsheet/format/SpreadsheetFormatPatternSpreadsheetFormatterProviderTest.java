@@ -79,6 +79,23 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     }
 
     @Test
+    public void testSpreadsheetFormatterNameGeneral() {
+        this.spreadsheetFormatterAndCheck(
+                SpreadsheetFormatterName.with("general"),
+                Lists.empty(),
+                SpreadsheetFormatters.general()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorGeneral() {
+        this.spreadsheetFormatterAndCheck(
+                "general",
+                SpreadsheetFormatters.general()
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterSelectorNumberFormatPattern() {
         this.spreadsheetFormatterAndCheck(
                 "number-format-pattern $0.00",

@@ -44,16 +44,19 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        SpreadsheetFormatter formatter = selector.spreadsheetFormatPattern()
-                .map(SpreadsheetPattern::formatter)
-                .orElse(null);
+        final SpreadsheetFormatter formatter;
 
-        if(null == formatter) {
-            if(SpreadsheetFormatterName.AUTOMATIC.equals(selector.name())) {
+        final SpreadsheetFormatterName name = selector.name();
+        switch (name.value()) {
+            case SpreadsheetFormatterName.AUTOMATIC_STRING:
+            case SpreadsheetFormatterName.GENERAL_STRING:
                 formatter = selector.evaluateText(this);
-            } else {
-                new IllegalArgumentException("Unknown formatter " + selector.name());
-            }
+                break;
+            default:
+                formatter = selector.spreadsheetFormatPattern()
+                        .map(SpreadsheetPattern::formatter)
+                        .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name));
+                break;
         }
 
         return formatter;
@@ -68,11 +71,10 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         final List<?> copy = Lists.immutable(values);
         final int count = copy.size();
 
-        SpreadsheetFormatter formatter;
+        final SpreadsheetFormatter formatter;
 
-        final SpreadsheetPatternKind kind = name.patternKind;
-        if (null == kind) {
-            if (SpreadsheetFormatterName.AUTOMATIC.equals(name)) {
+        switch (name.value()) {
+            case SpreadsheetFormatterName.AUTOMATIC_STRING:
                 switch (count) {
                     case 5:
                         formatter = SpreadsheetFormatters.automatic(
@@ -86,19 +88,24 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                     default:
                         throw new IllegalArgumentException("Expected 5 value(s) got " + count);
                 }
-            } else {
-                throw new IllegalArgumentException("Unknown formatter " + name);
-            }
-        } else {
-            switch (count) {
-                case 1:
-                    formatter = kind.parse(
-                            (String) copy.get(0)
-                    ).formatter();
-                    break;
-                default:
-                    throw new IllegalArgumentException("Expected 1 value got " + count);
-            }
+                break;
+            case SpreadsheetFormatterName.GENERAL_STRING:
+                if (0 != count) {
+                    throw new IllegalArgumentException("Expected 0 value(s) got " + count);
+                }
+                formatter = SpreadsheetFormatters.general();
+                break;
+            default:
+                final SpreadsheetPatternKind kind = name.patternKind;
+                if (null == kind) {
+                    throw new IllegalArgumentException("Unknown formatter " + name);
+                }
+                if (1 != count) {
+                    throw new IllegalArgumentException("Expected 1 value(s) got " + count);
+                }
+                formatter = kind.parse(
+                        (String) copy.get(0)
+                ).formatter();
         }
 
         return formatter;
