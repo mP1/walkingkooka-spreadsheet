@@ -56,6 +56,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
+            case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = selector.evaluateText(this);
                 break;
             default:
@@ -108,6 +109,13 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                 }
                 formatter = SpreadsheetFormatters.general();
                 break;
+            case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
+                formatter = SpreadsheetFormatters.spreadsheetPatternCollection(
+                        values.stream()
+                                .map(c -> (SpreadsheetPatternSpreadsheetFormatter) c)
+                                .collect(Collectors.toList())
+                );
+                break;
             default:
                 final SpreadsheetPatternKind kind = name.patternKind;
                 if (null == kind) {
@@ -158,6 +166,9 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                         selector,
                         SpreadsheetFormatParserTokenKind::isNumber
                 );
+                break;
+            case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
+                next = null;
                 break;
             case SpreadsheetFormatterName.TEXT_FORMAT_PATTERN_STRING:
                 next = formatPatternNextTextComponent(
@@ -222,6 +233,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME_FORMAT_PATTERN)
     );
