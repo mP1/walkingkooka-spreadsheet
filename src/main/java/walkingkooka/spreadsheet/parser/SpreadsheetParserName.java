@@ -46,18 +46,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
     // SpreadsheetParserName instances...............................................................................
-
-    private final static String COLLECTION_STRING = "collection";
-
-    /**
-     * The name of the collection {@link Parser}
-     */
-    public final static SpreadsheetParserName COLLECTION = new SpreadsheetParserName(
-            COLLECTION_STRING,
-            null
-    );
     
-    private final static String DATE_PARSER_PATTERN_STRING = "date-parse-pattern";
+    final static String DATE_PARSER_PATTERN_STRING = "date-parse-pattern";
 
     /**
      * The name of the date {@link Parser}
@@ -67,7 +57,7 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
             SpreadsheetPatternKind.DATE_PARSE_PATTERN
     );
 
-    private final static String DATE_TIME_PARSER_PATTERN_STRING = "date-time-parse-pattern";
+    final static String DATE_TIME_PARSER_PATTERN_STRING = "date-time-parse-pattern";
 
     /**
      * The name of the date-time {@link Parser}
@@ -77,7 +67,7 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
             SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
     );
 
-    private final static String NUMBER_PARSER_PATTERN_STRING = "number-parse-pattern";
+    final static String NUMBER_PARSER_PATTERN_STRING = "number-parse-pattern";
 
     /**
      * The name of the number {@link Parser}
@@ -87,7 +77,7 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
             SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
     );
 
-    private final static String TIME_PARSER_PATTERN_STRING = "time-parse-pattern";
+    final static String TIME_PARSER_PATTERN_STRING = "time-parse-pattern";
 
     /**
      * The name of the time {@link Parser}
@@ -106,9 +96,6 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         final SpreadsheetParserName parserName;
 
         switch (name) {
-            case COLLECTION_STRING:
-                parserName = COLLECTION;
-                break;
             case DATE_PARSER_PATTERN_STRING:
                 parserName = DATE_PARSER_PATTERN;
                 break;

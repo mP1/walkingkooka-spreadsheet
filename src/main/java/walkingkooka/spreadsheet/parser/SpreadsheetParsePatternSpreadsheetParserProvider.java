@@ -20,14 +20,18 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.text.cursor.parser.Parser;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * A {link SpreadsheetParserProvider} that supports creating {@link Parser} for each of the
@@ -77,7 +81,87 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        throw new UnsupportedOperationException();
+        SpreadsheetParserSelectorTextComponent next;
+
+        final SpreadsheetParserName name = selector.name();
+        switch(name.value()) {
+            case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
+                next = spreadsheetParserNextTextComponent(
+                        selector,
+                        SpreadsheetFormatParserTokenKind::isDate
+                );
+                break;
+            case SpreadsheetParserName.DATE_TIME_PARSER_PATTERN_STRING:
+                next = spreadsheetParserNextTextComponent(
+                        selector,
+                        SpreadsheetFormatParserTokenKind::isDateTime
+                );
+                break;
+            case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
+                next = spreadsheetParserNextTextComponent(
+                        selector,
+                        SpreadsheetFormatParserTokenKind::isNumber
+                );
+                break;
+            case SpreadsheetParserName.TIME_PARSER_PATTERN_STRING:
+                next = spreadsheetParserNextTextComponent(
+                        selector,
+                        SpreadsheetFormatParserTokenKind::isTime
+                );
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown parser " + name);
+        }
+
+        return Optional.ofNullable(next);
+    }
+
+    private SpreadsheetParserSelectorTextComponent spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector,
+                                                                                      final Predicate<SpreadsheetFormatParserTokenKind> filter) {
+        SpreadsheetParserSelectorTextComponent next;
+
+        final String text = selector.text()
+                .trim();
+        final SpreadsheetPatternKind kind = selector.name()
+                .patternKind;
+        if (text.isEmpty()) {
+            next = SpreadsheetParserSelectorTextComponent.with(
+                    "", // label
+                    "", // text
+                    Arrays.stream(SpreadsheetFormatParserTokenKind.values())
+                            .filter(filter)
+                            .flatMap(k -> k.alternatives().stream())
+                            .distinct()
+                            .sorted()
+                            .map(t -> SpreadsheetParserSelectorTextComponentAlternative.with(t, t))
+                            .collect(Collectors.toList())
+            );
+        } else {
+            final SpreadsheetParsePattern pattern = (SpreadsheetParsePattern)kind.parse(text);
+            next = SpreadsheetFormatParserTokenKind.last(
+                            pattern.value()
+                    ).map(k -> toSpreadsheetParserSelectorTextComponent(kind, k))
+                    .orElse(null);
+        }
+
+        return next;
+    }
+
+    private static SpreadsheetParserSelectorTextComponent toSpreadsheetParserSelectorTextComponent(final SpreadsheetPatternKind kind,
+                                                                                                   final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
+        return SpreadsheetParserSelectorTextComponent.with(
+                "", // label
+                "", // text
+                kind.spreadsheetFormatParserTokenKinds()
+                        .stream()
+                        .filter(k -> false == k.isNextTextComponentIgnored())
+                        .filter(k -> null == k || false == spreadsheetFormatParserTokenKind.isDuplicate(k))
+                        .flatMap(k -> k.alternatives().stream())
+                        .distinct()
+                        .sorted()
+                        .map(t -> SpreadsheetParserSelectorTextComponentAlternative.with(t, t))
+                        .collect(Collectors.toList())
+        );
     }
 
     @Override
