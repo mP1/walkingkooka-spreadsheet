@@ -212,13 +212,50 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         } else {
             final SpreadsheetFormatPattern formatPattern = kind.parse(text)
                     .toFormat();
-            next = SpreadsheetFormatterSelectorTextComponent.nextTextComponent(
-                    formatPattern.value(),
-                    kind
-            );
+            next = SpreadsheetFormatParserTokenKind.last(
+                    formatPattern.value()
+            ).map(k -> toSpreadsheetFormatterSelectorTextComponent(kind, k))
+                    .orElse(null);
         }
 
         return next;
+    }
+
+    private static SpreadsheetFormatterSelectorTextComponent toSpreadsheetFormatterSelectorTextComponent(final SpreadsheetPatternKind kind,
+                                                                                                         final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
+        return SpreadsheetFormatterSelectorTextComponent.with(
+                "", // label
+                "", // text
+                kind.spreadsheetFormatParserTokenKinds()
+                        .stream()
+                        .filter(SpreadsheetFormatPatternSpreadsheetFormatterProvider::SpreadsheetFormatParserTokenKindFilter)
+                        .filter(k -> null == k || false == spreadsheetFormatParserTokenKind.isDuplicate(k))
+                        .flatMap(k -> k.alternatives().stream())
+                        .distinct()
+                        .sorted()
+                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    private static boolean SpreadsheetFormatParserTokenKindFilter(final SpreadsheetFormatParserTokenKind kind) {
+        final boolean keep;
+
+        switch (kind) {
+            case COLOR_NAME:
+            case COLOR_NUMBER:
+            case CONDITION:
+            case GENERAL:
+            case TEXT_LITERAL:
+            case SEPARATOR:
+                keep = false;
+                break;
+            default:
+                keep = true;
+                break;
+        }
+
+        return keep;
     }
 
     @Override
