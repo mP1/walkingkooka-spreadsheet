@@ -78,7 +78,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
             i++;
         }
 
-        return SpreadsheetFormatters.spreadsheetPatternChain(formatters);
+        return SpreadsheetFormatters.spreadsheetPatternCollection(formatters);
     }
 
     SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(final ParserToken token) {

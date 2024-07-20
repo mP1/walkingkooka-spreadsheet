@@ -32,7 +32,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterChain, SpreadsheetFormatParserToken> {
+public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterCollection, SpreadsheetFormatParserToken> {
 
     private final static Integer VALUE1 = 11;
     private final static Double VALUE2 = 222.5;
@@ -43,7 +43,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
     public void testWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetPatternSpreadsheetFormatterChain.with(null)
+                () -> SpreadsheetPatternSpreadsheetFormatterCollection.with(null)
         );
     }
 
@@ -51,7 +51,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
     public void testWithEmptyFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetPatternSpreadsheetFormatterChain.with(Lists.empty())
+                () -> SpreadsheetPatternSpreadsheetFormatterCollection.with(Lists.empty())
         );
     }
 
@@ -60,7 +60,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
         final SpreadsheetPatternSpreadsheetFormatter formatter = SpreadsheetFormatters.fakeSpreadsheetPattern();
         assertSame(
                 formatter,
-                SpreadsheetPatternSpreadsheetFormatterChain.with(
+                SpreadsheetPatternSpreadsheetFormatterCollection.with(
                         Lists.of(formatter)
                 )
         );
@@ -89,11 +89,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
     }
 
     @Override
-    SpreadsheetPatternSpreadsheetFormatterChain createFormatter0(final SpreadsheetFormatParserToken token) {
-        Objects.requireNonNull(token, "token"); // token is ignored by SpreadsheetPatternSpreadsheetFormatterChain
+    SpreadsheetPatternSpreadsheetFormatterCollection createFormatter0(final SpreadsheetFormatParserToken token) {
+        Objects.requireNonNull(token, "token"); // token is ignored by SpreadsheetPatternSpreadsheetFormatterCollection
 
         return Cast.to(
-                SpreadsheetPatternSpreadsheetFormatterChain.with(
+                SpreadsheetPatternSpreadsheetFormatterCollection.with(
                         Lists.of(
                                 FORMATTER1,
                                 FORMATTER2
@@ -156,7 +156,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
     @Test
     public void testEqualsDifferentFormatters() {
         this.checkNotEquals(
-                SpreadsheetPatternSpreadsheetFormatterChain.with(
+                SpreadsheetPatternSpreadsheetFormatterCollection.with(
                         Lists.of(
                                 SpreadsheetPattern.parseTextFormatPattern("@")
                                         .formatter(),
@@ -164,7 +164,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
                                         .formatter()
                         )
                 ),
-                SpreadsheetPatternSpreadsheetFormatterChain.with(
+                SpreadsheetPatternSpreadsheetFormatterCollection.with(
                         Lists.of(
                                 SpreadsheetPattern.parseTextFormatPattern("@@@")
                                         .formatter()
@@ -186,8 +186,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterChainTest extends Sprea
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetPatternSpreadsheetFormatterChain> type() {
-        return SpreadsheetPatternSpreadsheetFormatterChain.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterCollection> type() {
+        return SpreadsheetPatternSpreadsheetFormatterCollection.class;
     }
 
     // type naming......................................................................................................
