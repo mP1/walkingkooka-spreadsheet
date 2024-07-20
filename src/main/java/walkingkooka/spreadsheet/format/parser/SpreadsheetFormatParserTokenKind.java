@@ -545,6 +545,17 @@ public enum SpreadsheetFormatParserTokenKind {
     }
 
     /**
+     * Some {@link SpreadsheetFormatParserTokenKind} should be ignored and not present in next alternatives.
+     */
+    public boolean isNextTextComponentIgnored() {
+        return this.isColor() ||
+                this.isCondition() ||
+                this.isGeneral() ||
+                this.isTextLiteral() ||
+                this == SEPARATOR;
+    }
+
+    /**
      * Unique but generic English label text for this {@link SpreadsheetFormatParserTokenKind}.
      * <br>
      * The initial use-case is for this text to become the label for a single {@link SpreadsheetFormatParserTokenKind}
