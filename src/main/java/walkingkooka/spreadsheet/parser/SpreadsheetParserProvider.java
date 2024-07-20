@@ -44,6 +44,11 @@ public interface SpreadsheetParserProvider extends Provider {
                                         final List<?> values);
 
     /**
+     * Constant for {@link #spreadsheetParserNextTextComponent(SpreadsheetParserSelector)} when there is no next.
+     */
+    Optional<SpreadsheetParserSelectorTextComponent> NO_NEXT_TEXT_COMPONENT = Optional.empty();
+    
+    /**
      * Returns the next {@link SpreadsheetParserSelectorTextComponent} for the given {@link SpreadsheetParserSelector}.
      */
     Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector);
