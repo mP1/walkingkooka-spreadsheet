@@ -452,8 +452,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * A {@link SpreadsheetParser} that parses excel style double quoted text, including escaped (triple) double quotes.
      */
-    public static SpreadsheetParser text() {
-        return SpreadsheetDoubleQuotesSpreadsheetParser.INSTANCE;
+    public static Parser<SpreadsheetParserContext> text() {
+        return SpreadsheetDoubleQuotesParser.INSTANCE;
     }
 
     /**
