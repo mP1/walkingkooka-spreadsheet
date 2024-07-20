@@ -524,6 +524,31 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     }
 
     @Test
+    public void testSpreadsheetFormatterSelectorSpreadsheetPatternCollection() {
+        this.spreadsheetFormatterAndCheck(
+                "spreadsheet-pattern-collection (date-format-pattern(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+                SpreadsheetFormatters.spreadsheetPatternCollection(
+                        Lists.of(
+                                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
+                                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yy hh:mm").formatter(),
+                                SpreadsheetPattern.parseNumberFormatPattern("0.00").formatter(),
+                                SpreadsheetPattern.parseTextFormatPattern("@@").formatter(),
+                                SpreadsheetPattern.parseTimeFormatPattern("hh:mm").formatter()
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorNextTextComponentSpreadsheetPatternCollection() {
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                SpreadsheetFormatterSelector.parse(
+                        "spreadsheet-pattern-collection (date-format-pattern(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
+                )
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterSelectorTextFormatPattern() {
         this.spreadsheetFormatterAndCheck(
                 "text-format-pattern @@\"Hello\"",
@@ -749,6 +774,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern date-time-format-pattern\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern number-format-pattern\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\n"
         );
@@ -784,6 +810,10 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                                 "  {\n" +
                                 "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern\",\n" +
                                 "    \"name\": \"number-format-pattern\"\n" +
+                                "  },\n" +
+                                "  {\n" +
+                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection\",\n" +
+                                "    \"name\": \"spreadsheet-pattern-collection\"\n" +
                                 "  },\n" +
                                 "  {\n" +
                                 "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern\",\n" +

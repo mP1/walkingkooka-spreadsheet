@@ -1151,6 +1151,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "      \"name\": \"number-format-pattern\"\n" +
                         "    },\n" +
                         "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection\",\n" +
+                        "      \"name\": \"spreadsheet-pattern-collection\"\n" +
+                        "    },\n" +
+                        "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern\",\n" +
                         "      \"name\": \"text-format-pattern\"\n" +
                         "    },\n" +
@@ -1449,6 +1453,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern\",\n" +
                         "      \"name\": \"number-format-pattern\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection\",\n" +
+                        "      \"name\": \"spreadsheet-pattern-collection\"\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern\",\n" +

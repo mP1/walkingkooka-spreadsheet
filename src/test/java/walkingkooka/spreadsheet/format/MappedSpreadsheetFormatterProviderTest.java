@@ -214,6 +214,10 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
                         SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN
                 ),
                 SpreadsheetFormatterInfo.with(
+                        url("spreadsheet-pattern-collection"),
+                        SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION
+                ),
+                SpreadsheetFormatterInfo.with(
                         url("text-format-pattern"),
                         SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
                 ),
