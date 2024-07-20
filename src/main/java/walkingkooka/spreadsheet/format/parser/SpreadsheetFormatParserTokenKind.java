@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -578,4 +579,11 @@ public enum SpreadsheetFormatParserTokenKind {
     }
 
     private final Set<String> patterns;
+
+    /**
+     * Returns the {@link SpreadsheetFormatParserTokenKind} for the last {@link ParserToken}.
+     */
+    public static Optional<SpreadsheetFormatParserTokenKind> last(final ParserToken token) {
+        return SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitor.last(token);
+    }
 }
