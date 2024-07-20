@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
@@ -27,6 +28,9 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterText, SpreadsheetFormatTextParserToken> {
 
@@ -241,6 +245,33 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
                 SpreadsheetFormatterSelectorTextComponent.with(
                         "\"Hello\"",
                         "\"Hello\"",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                )
+        );
+    }
+
+    @Test
+    public void testTextComponentsTextWithColor() {
+        this.textComponentsAndCheck(
+                this.createFormatter("[RED]@"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "[RED]",
+                        "[RED]",
+                        Stream.concat(
+                                SpreadsheetColorName.DEFAULTS.stream()
+                                        .map(n -> "[" + n.text() + "]")
+                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t)),
+                                IntStream.rangeClosed(
+                                                SpreadsheetColors.MIN,
+                                                SpreadsheetColors.MAX
+                                        ).mapToObj(n -> "[Color " + n + "]")
+                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                        ).collect(Collectors.toList())
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "@",
+                        "@",
                         SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
                 )
         );
