@@ -47,6 +47,16 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
 
     // SpreadsheetParserName instances...............................................................................
 
+    private final static String COLLECTION_STRING = "collection";
+
+    /**
+     * The name of the collection {@link Parser}
+     */
+    public final static SpreadsheetParserName COLLECTION = new SpreadsheetParserName(
+            COLLECTION_STRING,
+            null
+    );
+    
     private final static String DATE_PARSER_PATTERN_STRING = "date-parse-pattern";
 
     /**
@@ -96,6 +106,9 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         final SpreadsheetParserName parserName;
 
         switch (name) {
+            case COLLECTION_STRING:
+                parserName = COLLECTION;
+                break;
             case DATE_PARSER_PATTERN_STRING:
                 parserName = DATE_PARSER_PATTERN;
                 break;
