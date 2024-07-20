@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -34,6 +35,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.Temporal;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -732,6 +736,88 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
         this.textComponentsAndCheck(
                 this.createFormatter("d/mm/yyyy"),
                 this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "d",
+                        "d",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "dd",
+                                        "dd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "ddd",
+                                        "ddd"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "dddd",
+                                        "dddd"
+                                )
+                        )
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "/",
+                        "/",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "mm",
+                        "mm",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "m",
+                                        "m"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmm",
+                                        "mmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmmm",
+                                        "mmmm"
+                                ),
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "mmmmm",
+                                        "mmmmm"
+                                )
+                        )
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "/",
+                        "/",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "yyyy",
+                        "yyyy",
+                        Lists.of(
+                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                        "yy",
+                                        "yy"
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testTextComponentsWithColor() {
+        this.textComponentsAndCheck(
+                this.createFormatter("[RED]d/mm/yyyy"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "[RED]",
+                        "[RED]",
+                        Stream.concat(
+                                SpreadsheetColorName.DEFAULTS.stream()
+                                        .map(n -> "[" + n.text() + "]")
+                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t)),
+                                IntStream.rangeClosed(
+                                                SpreadsheetColors.MIN,
+                                                SpreadsheetColors.MAX
+                                        ).mapToObj(n -> "[Color " + n + "]")
+                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                        ).collect(Collectors.toList())
+                ),
                 SpreadsheetFormatterSelectorTextComponent.with(
                         "d",
                         "d",
