@@ -228,7 +228,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                 "", // text
                 kind.spreadsheetFormatParserTokenKinds()
                         .stream()
-                        .filter(SpreadsheetFormatPatternSpreadsheetFormatterProvider::SpreadsheetFormatParserTokenKindFilter)
+                        .filter(k -> false == k.isNextTextComponentIgnored())
                         .filter(k -> null == k || false == spreadsheetFormatParserTokenKind.isDuplicate(k))
                         .flatMap(k -> k.alternatives().stream())
                         .distinct()
@@ -236,26 +236,6 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                         .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
                         .collect(Collectors.toList())
         );
-    }
-
-    private static boolean SpreadsheetFormatParserTokenKindFilter(final SpreadsheetFormatParserTokenKind kind) {
-        final boolean keep;
-
-        switch (kind) {
-            case COLOR_NAME:
-            case COLOR_NUMBER:
-            case CONDITION:
-            case GENERAL:
-            case TEXT_LITERAL:
-            case SEPARATOR:
-                keep = false;
-                break;
-            default:
-                keep = true;
-                break;
-        }
-
-        return keep;
     }
 
     @Override
