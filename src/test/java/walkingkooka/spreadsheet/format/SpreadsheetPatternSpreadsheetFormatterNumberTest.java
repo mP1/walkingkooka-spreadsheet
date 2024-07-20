@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
+import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -39,6 +40,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -2562,6 +2566,48 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
                         "#",
                         "#",
                         SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        ".",
+                        ".",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                ),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "0",
+                        "0",
+                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                )
+        );
+    }
+
+    @Test
+    public void testTextComponentsWithColor() {
+        this.textComponentsAndCheck(
+                this.createFormatter("[RED]0.00"),
+                this.createContext(),
+                SpreadsheetFormatterSelectorTextComponent.with(
+                        "[RED]",
+                        "[RED]",
+                        Stream.concat(
+                                SpreadsheetColorName.DEFAULTS.stream()
+                                        .map(n -> "[" + n.text() + "]")
+                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t)),
+                                IntStream.rangeClosed(
+                                                SpreadsheetColors.MIN,
+                                                SpreadsheetColors.MAX
+                                        ).mapToObj(n -> "[Color " + n + "]")
+                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                        ).collect(Collectors.toList())
                 ),
                 SpreadsheetFormatterSelectorTextComponent.with(
                         "0",
