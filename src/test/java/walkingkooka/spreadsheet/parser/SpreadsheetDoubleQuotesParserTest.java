@@ -20,9 +20,10 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.text.cursor.parser.ParserTesting2;
 
-public final class SpreadsheetDoubleQuotesSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetDoubleQuotesSpreadsheetParser>,
-        ToStringTesting<SpreadsheetDoubleQuotesSpreadsheetParser> {
+public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<SpreadsheetDoubleQuotesParser, SpreadsheetParserContext>,
+        ToStringTesting<SpreadsheetDoubleQuotesParser> {
 
     @Test
     public void testNotDoubleQuote() {
@@ -91,19 +92,19 @@ public final class SpreadsheetDoubleQuotesSpreadsheetParserTest implements Sprea
 
     private void parseAndCheck3(final String content,
                                 final String after) {
-        final String quotes = "" + SpreadsheetDoubleQuotesSpreadsheetParser.DOUBLE_QUOTE;
+        final String quotes = "" + SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE;
         final String withQuotes = quotes + content + quotes;
 
         this.parseAndCheck(
                 withQuotes + after,
                 SpreadsheetParserToken.text(
                         Lists.of(
-                                SpreadsheetDoubleQuotesSpreadsheetParser.DOUBLE_QUOTE_TOKEN,
+                                SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE_TOKEN,
                                 SpreadsheetParserToken.textLiteral(
                                         content.replace(quotes + quotes, quotes),
                                         content
                                 ),
-                                SpreadsheetDoubleQuotesSpreadsheetParser.DOUBLE_QUOTE_TOKEN
+                                SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE_TOKEN
                         ),
                         withQuotes
                 ),
@@ -118,8 +119,8 @@ public final class SpreadsheetDoubleQuotesSpreadsheetParserTest implements Sprea
     }
 
     @Override
-    public SpreadsheetDoubleQuotesSpreadsheetParser createParser() {
-        return SpreadsheetDoubleQuotesSpreadsheetParser.INSTANCE;
+    public SpreadsheetDoubleQuotesParser createParser() {
+        return SpreadsheetDoubleQuotesParser.INSTANCE;
     }
 
     @Override
@@ -128,7 +129,7 @@ public final class SpreadsheetDoubleQuotesSpreadsheetParserTest implements Sprea
     }
 
     @Override
-    public Class<SpreadsheetDoubleQuotesSpreadsheetParser> type() {
-        return SpreadsheetDoubleQuotesSpreadsheetParser.class;
+    public Class<SpreadsheetDoubleQuotesParser> type() {
+        return SpreadsheetDoubleQuotesParser.class;
     }
 }
