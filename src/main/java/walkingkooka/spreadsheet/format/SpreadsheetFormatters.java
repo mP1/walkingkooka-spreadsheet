@@ -160,10 +160,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetPatternSpreadsheetFormatterChain}
+     * {@see SpreadsheetPatternSpreadsheetFormatterCollection}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter spreadsheetPatternChain(final List<SpreadsheetPatternSpreadsheetFormatter> formatters) {
-        return SpreadsheetPatternSpreadsheetFormatterChain.with(formatters);
+    public static SpreadsheetPatternSpreadsheetFormatter spreadsheetPatternCollection(final List<SpreadsheetPatternSpreadsheetFormatter> formatters) {
+        return SpreadsheetPatternSpreadsheetFormatterCollection.with(formatters);
     }
 
     /**

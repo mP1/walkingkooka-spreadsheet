@@ -29,10 +29,10 @@ import java.util.stream.Stream;
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that forms a chain of {@link SpreadsheetPatternSpreadsheetFormatter formatters}.
  * When a format request is made, each will be tried one by one until success.
  */
-final class SpreadsheetPatternSpreadsheetFormatterChain implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterCollection implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
-     * Creates a new {@link SpreadsheetPatternSpreadsheetFormatterChain} as necessary.
+     * Creates a new {@link SpreadsheetPatternSpreadsheetFormatterCollection} as necessary.
      */
     static SpreadsheetPatternSpreadsheetFormatter with(final List<SpreadsheetPatternSpreadsheetFormatter> formatters) {
         Objects.requireNonNull(formatters, "formatters");
@@ -47,7 +47,7 @@ final class SpreadsheetPatternSpreadsheetFormatterChain implements SpreadsheetPa
                 result = copy.iterator().next();
                 break;
             default:
-                result = new SpreadsheetPatternSpreadsheetFormatterChain(copy);
+                result = new SpreadsheetPatternSpreadsheetFormatterCollection(copy);
                 break;
         }
 
@@ -57,7 +57,7 @@ final class SpreadsheetPatternSpreadsheetFormatterChain implements SpreadsheetPa
     /**
      * Private ctor.
      */
-    private SpreadsheetPatternSpreadsheetFormatterChain(final List<SpreadsheetPatternSpreadsheetFormatter> formatters) {
+    private SpreadsheetPatternSpreadsheetFormatterCollection(final List<SpreadsheetPatternSpreadsheetFormatter> formatters) {
         super();
         this.formatters = formatters;
     }
@@ -99,10 +99,10 @@ final class SpreadsheetPatternSpreadsheetFormatterChain implements SpreadsheetPa
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetPatternSpreadsheetFormatterChain && this.equals0((SpreadsheetPatternSpreadsheetFormatterChain) other);
+                other instanceof SpreadsheetPatternSpreadsheetFormatterCollection && this.equals0((SpreadsheetPatternSpreadsheetFormatterCollection) other);
     }
 
-    private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterChain other) {
+    private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterCollection other) {
         return this.formatters.equals(other.formatters);
     }
 
