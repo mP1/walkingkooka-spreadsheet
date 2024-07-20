@@ -21,6 +21,12 @@ import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -125,6 +131,37 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
                 this :
                 new SpreadsheetParserSelector(different);
     }
+
+    /**
+     * Parses the text as an expression that may contain String literals, numbers or {@link SpreadsheetParserName}.
+     */
+    public SpreadsheetParser evaluateText(final SpreadsheetParserProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        return this.selector.evaluateText(
+                (final TextCursor cursor, final ParserContext context) -> NAME_PARSER.parse(
+                        cursor,
+                        context
+                ).map(
+                        (final ParserToken token) ->
+                                SpreadsheetParserName.with(
+                                        token.cast(StringParserToken.class)
+                                                .value()
+                                )
+                ),
+                provider::spreadsheetParser
+        );
+    }
+
+    /**
+     * A parser that returns a {@link SpreadsheetParserName}.
+     */
+    private final static Parser<ParserContext> NAME_PARSER = Parsers.stringInitialAndPartCharPredicate(
+            (c) -> SpreadsheetParserName.isChar(0, c),
+            (c) -> SpreadsheetParserName.isChar(1, c),
+            1,
+            SpreadsheetParserName.MAX_LENGTH
+    );
 
     // spreadsheetParsePattern.........................................................................................
 
