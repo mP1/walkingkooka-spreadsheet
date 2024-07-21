@@ -90,6 +90,18 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     }
 
     @Test
+    public void testSpreadsheetFormatterNextTextComponent() {
+        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
+        this.spreadsheetFormatterNextTextComponentAndCheck(
+                SpreadsheetFormatterProviderCollection.with(
+                        Sets.of(provider)
+                ),
+                SpreadsheetFormatterSelector.parse("text-format-pattern")
+        );
+    }
+
+    @Test
     public void testInfos() {
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
