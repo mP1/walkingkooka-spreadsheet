@@ -38,6 +38,13 @@ public final class EmptySpreadsheetParserProviderTest implements SpreadsheetPars
         );
     }
 
+    @Test
+    public void testSpreadsheetParserNextTextComponentFails() {
+        this.spreadsheetParserNextTextComponentFails(
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("")
+        );
+    }
+
     @Override
     public EmptySpreadsheetParserProvider createSpreadsheetParserProvider() {
         return EmptySpreadsheetParserProvider.INSTANCE;

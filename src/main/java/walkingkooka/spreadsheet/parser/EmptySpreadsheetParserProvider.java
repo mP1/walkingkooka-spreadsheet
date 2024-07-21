@@ -58,7 +58,7 @@ final class EmptySpreadsheetParserProvider implements SpreadsheetParserProvider 
     public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        throw new UnsupportedOperationException();
+        throw new IllegalArgumentException("Unknown parser " + selector.name());
     }
 
     @Override
