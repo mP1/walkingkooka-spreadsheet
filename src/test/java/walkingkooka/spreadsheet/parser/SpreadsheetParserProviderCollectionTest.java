@@ -65,6 +65,18 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     }
 
     @Test
+    public void testSpreadsheetParserNextTextComponent() {
+        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern();
+
+        this.spreadsheetParserNextTextComponentAndCheck(
+                SpreadsheetParserProviderCollection.with(
+                        Sets.of(provider)
+                ),
+                SpreadsheetParserSelector.parse("date-parse-pattern")
+        );
+    }
+
+    @Test
     public void testInfos() {
         final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern();
 
