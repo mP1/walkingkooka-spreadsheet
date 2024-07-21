@@ -91,7 +91,7 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
     public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        throw new UnsupportedOperationException();
+        return NO_NEXT_TEXT_COMPONENT;
     }
 
     @Override
