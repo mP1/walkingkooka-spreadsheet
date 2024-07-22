@@ -166,7 +166,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     }
 
     @Override
-    public Optional<SpreadsheetFormatterSelector> spreadsheetParserSpreadsheetFormatter(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
         throw new UnsupportedOperationException();

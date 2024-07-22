@@ -262,83 +262,83 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
         );
     }
 
-    // spreadsheetParserSpreadsheetFormatter............................................................................
+    // spreadsheetFormatterSelector.....................................................................................
 
     @Test
-    default void testSpreadsheetParserSpreadsheetFormatterWithNullSelectorFails() {
+    default void testSpreadsheetFormatterSelectorWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createSpreadsheetParserProvider().spreadsheetParserSpreadsheetFormatter(null)
+                () -> this.createSpreadsheetParserProvider().spreadsheetFormatterSelector(null)
         );
     }
 
-    default void spreadsheetParserSpreadsheetFormatterFails(final SpreadsheetParserSelector selector) {
-        this.spreadsheetParserSpreadsheetFormatterFails(
+    default void spreadsheetFormatterSelectorFails(final SpreadsheetParserSelector selector) {
+        this.spreadsheetFormatterSelectorFails(
                 this.createSpreadsheetParserProvider(),
                 selector
         );
     }
 
-    default void spreadsheetParserSpreadsheetFormatterFails(final SpreadsheetParserProvider provider,
-                                                            final SpreadsheetParserSelector selector) {
+    default void spreadsheetFormatterSelectorFails(final SpreadsheetParserProvider provider,
+                                                   final SpreadsheetParserSelector selector) {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> provider.spreadsheetParserSpreadsheetFormatter(
+                () -> provider.spreadsheetFormatterSelector(
                         selector
                 )
         );
     }
 
-    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserSelector selector) {
-        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+    default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserSelector selector) {
+        this.spreadsheetFormatterSelectorAndCheck(
                 this.createSpreadsheetParserProvider(),
                 selector
         );
     }
 
-    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserSelector selector,
-                                                               final SpreadsheetFormatterSelector expected) {
-        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+    default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserSelector selector,
+                                                      final SpreadsheetFormatterSelector expected) {
+        this.spreadsheetFormatterSelectorAndCheck(
                 this.createSpreadsheetParserProvider(),
                 selector,
                 expected
         );
     }
 
-    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserSelector selector,
-                                                               final Optional<SpreadsheetFormatterSelector> expected) {
-        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+    default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserSelector selector,
+                                                      final Optional<SpreadsheetFormatterSelector> expected) {
+        this.spreadsheetFormatterSelectorAndCheck(
                 this.createSpreadsheetParserProvider(),
                 selector,
                 expected
         );
     }
 
-    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserProvider provider,
-                                                               final SpreadsheetParserSelector selector) {
-        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+    default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserProvider provider,
+                                                      final SpreadsheetParserSelector selector) {
+        this.spreadsheetFormatterSelectorAndCheck(
                 provider,
                 selector,
                 Optional.empty()
         );
     }
 
-    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserProvider provider,
-                                                               final SpreadsheetParserSelector selector,
-                                                               final SpreadsheetFormatterSelector expected) {
-        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+    default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserProvider provider,
+                                                      final SpreadsheetParserSelector selector,
+                                                      final SpreadsheetFormatterSelector expected) {
+        this.spreadsheetFormatterSelectorAndCheck(
                 provider,
                 selector,
                 Optional.of(expected)
         );
     }
 
-    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserProvider provider,
-                                                               final SpreadsheetParserSelector selector,
-                                                               final Optional<SpreadsheetFormatterSelector> expected) {
+    default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserProvider provider,
+                                                      final SpreadsheetParserSelector selector,
+                                                      final Optional<SpreadsheetFormatterSelector> expected) {
         this.checkEquals(
                 expected,
-                provider.spreadsheetParserSpreadsheetFormatter(selector),
+                provider.spreadsheetFormatterSelector(selector),
                 provider::toString
         );
     }

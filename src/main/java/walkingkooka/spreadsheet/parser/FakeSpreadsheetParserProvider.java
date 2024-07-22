@@ -46,7 +46,7 @@ public class FakeSpreadsheetParserProvider implements SpreadsheetParserProvider 
     }
 
     @Override
-    public Optional<SpreadsheetFormatterSelector> spreadsheetParserSpreadsheetFormatter(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
         throw new UnsupportedOperationException();
     }
 

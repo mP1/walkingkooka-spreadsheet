@@ -87,7 +87,7 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
         }
 
         @Override
-        public Optional<SpreadsheetFormatterSelector> spreadsheetParserSpreadsheetFormatter(final SpreadsheetParserSelector selector) {
+        public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
             Objects.requireNonNull(selector, "selector");
 
             throw new UnsupportedOperationException();
