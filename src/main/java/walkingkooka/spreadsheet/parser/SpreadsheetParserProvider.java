@@ -56,6 +56,9 @@ public interface SpreadsheetParserProvider extends Provider {
 
     /**
      * Returns the equivalent {@link SpreadsheetFormatterSelector} if one is present for the given {@link SpreadsheetParserSelector}.
+     * <br>
+     * This will be useful for a UI where a user is building or selecting a {@link SpreadsheetParser}.
+     * A table of formatted values would show the text that would be supported by a {@link SpreadsheetParser}.
      */
     Optional<SpreadsheetFormatterSelector> spreadsheetParserSpreadsheetFormatter(final SpreadsheetParserSelector selector);
 
