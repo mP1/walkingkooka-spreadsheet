@@ -274,7 +274,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
                 .generalConverter(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                        SpreadsheetParserProviders.spreadsheetParsePattern(
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        )
                 );
     }
 
@@ -579,7 +581,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
                                 SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                                SpreadsheetParserProviders.spreadsheetParsePattern()
+                                SpreadsheetParserProviders.spreadsheetParsePattern(
+                                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                                )
                         )
                 );
         this.checkNotEquals(
@@ -636,7 +640,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 ).loadFromLocale()
                 .generalConverter(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                        SpreadsheetParserProviders.spreadsheetParsePattern(
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        )
                 );
         this.checkNotEquals(
                 null,
@@ -713,7 +719,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         metadata,
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                        SpreadsheetParserProviders.spreadsheetParsePattern(
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        )
                 )
         );
 
@@ -893,7 +901,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         final SpreadsheetParserProvider provider = metadata.spreadsheetParserProvider(
-                SpreadsheetParserProviders.spreadsheetParsePattern()
+                SpreadsheetParserProviders.spreadsheetParsePattern(
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                )
         );
 
         this.checkEquals(

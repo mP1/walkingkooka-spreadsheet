@@ -152,7 +152,9 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                         return SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 METADATA_EN_AU,
                                 SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                                SpreadsheetParserProviders.spreadsheetParsePattern()
+                                SpreadsheetParserProviders.spreadsheetParsePattern(
+                                        SpreadsheetFormatterProviders.fake()
+                                )
                         ).converter(
                                 name,
                                 values

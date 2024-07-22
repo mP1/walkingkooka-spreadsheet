@@ -22,6 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -190,10 +191,12 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 SpreadsheetMetadataPropertyName.TIME_FORMATTER,
                 SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss").spreadsheetFormatterSelector()
         );
+
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
         final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                 metadata,
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                SpreadsheetParserProviders.spreadsheetParsePattern()
+                spreadsheetFormatterProvider,
+                SpreadsheetParserProviders.spreadsheetParsePattern(spreadsheetFormatterProvider)
         );
 
         final Converter<SpreadsheetConverterContext> converter = metadata.expressionConverter(

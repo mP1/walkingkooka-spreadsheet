@@ -19,7 +19,11 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -40,10 +44,15 @@ import java.util.stream.Collectors;
  */
 final class SpreadsheetParsePatternSpreadsheetParserProvider implements SpreadsheetParserProvider {
 
-    final static SpreadsheetParsePatternSpreadsheetParserProvider INSTANCE = new SpreadsheetParsePatternSpreadsheetParserProvider();
+    static SpreadsheetParsePatternSpreadsheetParserProvider with(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+        return new SpreadsheetParsePatternSpreadsheetParserProvider(
+                Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider")
+        );
+    }
 
-    private SpreadsheetParsePatternSpreadsheetParserProvider() {
+    private SpreadsheetParsePatternSpreadsheetParserProvider(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
         super();
+        this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
     }
 
     @Override
@@ -169,8 +178,64 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        throw new UnsupportedOperationException();
+        final Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector;
+
+        final SpreadsheetParserName name = selector.name();
+        switch (name.value()) {
+            case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
+                spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
+                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+                        selector.text()
+                );
+                break;
+            case SpreadsheetParserName.DATE_TIME_PARSER_PATTERN_STRING:
+                spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
+                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
+                        selector.text()
+                );
+                break;
+            case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
+                spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN,
+                        selector.text()
+                );
+                break;
+            case SpreadsheetParserName.TIME_PARSER_PATTERN_STRING:
+                spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
+                        SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
+                        selector.text()
+                );
+                break;
+            default:
+                spreadsheetFormatterSelector = Optional.empty();
+                break;
+        }
+
+        return spreadsheetFormatterSelector;
     }
+
+    private Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetFormatterName name,
+                                                                                final String text) {
+        return SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                .spreadsheetFormatterInfos()
+                .stream()
+                .filter(i -> i.name().equals(name))
+                .map(i -> this.SpreadsheetFormatterSelector(i.url(), text))
+                .filter(s -> null != s)
+                .findFirst();
+    }
+
+    private SpreadsheetFormatterSelector SpreadsheetFormatterSelector(final AbsoluteUrl url,
+                                                                      final String text) {
+        return this.spreadsheetFormatterProvider.spreadsheetFormatterInfos()
+                .stream()
+                .filter(sfi -> sfi.url().equals(url))
+                .map(sfi -> sfi.name().setText(text))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
 
     @Override
     public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
@@ -191,6 +256,8 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                 name
         );
     }
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {

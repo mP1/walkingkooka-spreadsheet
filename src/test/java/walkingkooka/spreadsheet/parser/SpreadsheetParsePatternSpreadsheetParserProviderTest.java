@@ -21,12 +21,25 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<SpreadsheetParsePatternSpreadsheetParserProvider>,
         ToStringTesting<SpreadsheetParsePatternSpreadsheetParserProvider> {
+
+    @Test
+    public void testWithNullSpreadsheetFormatterProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetParsePatternSpreadsheetParserProvider.with(null)
+        );
+    }
 
     @Test
     public void testSpreadsheetParserSelectorDateParsePattern() {
@@ -621,9 +634,60 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         );
     }
 
+    // spreadsheetFormatterSelector.....................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithDateParsePattern() {
+        final String text = " yyyy/mm/dd";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
+                SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + text)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithDateTimeParsePattern() {
+        final String text = " yyyy/mm/dd hh:mm";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN + text),
+                SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN + text)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithNumberParsePattern() {
+        final String text = " $0.00";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetParserSelector.parse(SpreadsheetParserName.NUMBER_PARSER_PATTERN + text),
+                SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN + text)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithTimeParsePattern() {
+        final String text = " hh:mm";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetParserSelector.parse(SpreadsheetParserName.TIME_PARSER_PATTERN + text),
+                SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.TIME_FORMAT_PATTERN + text)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithNonPattern() {
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetParserSelector.parse("unknown123")
+        );
+    }
+
     @Override
     public SpreadsheetParsePatternSpreadsheetParserProvider createSpreadsheetParserProvider() {
-        return SpreadsheetParsePatternSpreadsheetParserProvider.INSTANCE;
+        return SpreadsheetParsePatternSpreadsheetParserProvider.with(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        );
     }
 
     @Override
@@ -641,7 +705,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserSelectorToString() {
         this.toStringAndCheck(
-                SpreadsheetParsePatternSpreadsheetParserProvider.INSTANCE,
+                this.createSpreadsheetParserProvider(),
                 "SpreadsheetPattern.parser"
         );
     }
@@ -652,7 +716,8 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     public void testSpreadsheetParserSelectorTreePrintable() {
         this.treePrintAndCheck(
                 SpreadsheetParserInfoSet.with(
-                        SpreadsheetParsePatternSpreadsheetParserProvider.INSTANCE.spreadsheetParserInfos()
+                        this.createSpreadsheetParserProvider()
+                                .spreadsheetParserInfos()
                 ),
                 "SpreadsheetParserInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern date-parse-pattern\n" +
@@ -690,7 +755,8 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
                 JsonNodeMarshallContexts.basic()
                         .marshall(
                                 SpreadsheetParserInfoSet.with(
-                                        SpreadsheetParsePatternSpreadsheetParserProvider.INSTANCE.spreadsheetParserInfos()
+                                        this.createSpreadsheetParserProvider()
+                                                .spreadsheetParserInfos()
                                 )
                         )
         );

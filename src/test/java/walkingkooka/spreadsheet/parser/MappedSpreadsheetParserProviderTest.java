@@ -23,6 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -83,8 +84,9 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     public void testSpreadsheetParserNextTextComponent() {
         this.spreadsheetParserNextTextComponentAndCheck(
                 SpreadsheetParserSelector.parse(NEW_PARSER_NAME),
-                SpreadsheetParserProviders.spreadsheetParsePattern()
-                        .spreadsheetParserNextTextComponent(
+                SpreadsheetParserProviders.spreadsheetParsePattern(
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        ).spreadsheetParserNextTextComponent(
                                 SpreadsheetParserName.DATE_PARSER_PATTERN.setText("")
                         )
         );
@@ -114,7 +116,9 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
 
     @Override
     public MappedSpreadsheetParserProvider createSpreadsheetParserProvider() {
-        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern();
+        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        );
 
         return MappedSpreadsheetParserProvider.with(
                 Sets.of(

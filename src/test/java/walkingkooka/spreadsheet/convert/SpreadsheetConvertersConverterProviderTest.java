@@ -188,7 +188,9 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         return SpreadsheetConvertersConverterProvider.with(
                 SpreadsheetMetadataTesting.METADATA_EN_AU,
                 SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                SpreadsheetParserProviders.spreadsheetParsePattern()
+                SpreadsheetParserProviders.spreadsheetParsePattern(
+                        SpreadsheetFormatterProviders.fake()
+                )
         );
     }
 

@@ -30,6 +30,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -516,7 +517,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.parseAndCheck(
                 text,
                 SpreadsheetParsers.valueOrExpression(
-                        SpreadsheetMetadataTesting.METADATA_EN_AU.parser(SpreadsheetParserProviders.spreadsheetParsePattern())
+                        SpreadsheetMetadataTesting.METADATA_EN_AU.parser(
+                                SpreadsheetParserProviders.spreadsheetParsePattern(
+                                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                                )
+                        )
                 ),
                 SpreadsheetFormula.EMPTY.setText(text)
                         .setValue(

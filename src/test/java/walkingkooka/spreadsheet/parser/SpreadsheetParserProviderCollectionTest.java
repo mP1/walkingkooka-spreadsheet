@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,7 +38,9 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     @Test
     public void testSpreadsheetParserSelection() {
-        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern();
+        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        );
 
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserProviderCollection.with(
@@ -51,7 +54,9 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     @Test
     public void testSpreadsheetParserName() {
-        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern();
+        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        );
 
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserProviderCollection.with(
@@ -66,7 +71,9 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     @Test
     public void testSpreadsheetParserNextTextComponent() {
-        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern();
+        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        );
 
         this.spreadsheetParserNextTextComponentAndCheck(
                 SpreadsheetParserProviderCollection.with(
@@ -78,7 +85,9 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     @Test
     public void testInfos() {
-        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern();
+        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        );
 
         this.spreadsheetParserInfosAndCheck(
                 SpreadsheetParserProviderCollection.with(Sets.of(provider)),
@@ -100,7 +109,9 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     public SpreadsheetParserProviderCollection createSpreadsheetParserProvider() {
         return SpreadsheetParserProviderCollection.with(
                 Sets.of(
-                        SpreadsheetParserProviders.spreadsheetParsePattern()
+                        SpreadsheetParserProviders.spreadsheetParsePattern(
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        )
                 )
         );
     }

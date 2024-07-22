@@ -24,6 +24,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -69,8 +70,9 @@ public final class SpreadsheetMetadataPropertyNameParserNumberTest extends Sprea
                 .get();
 
         final ExpressionNumber value = SpreadsheetConverters.stringToExpressionNumber(
-                SpreadsheetParserProviders.spreadsheetParsePattern()
-                        .spreadsheetParser(parserSelector)
+                SpreadsheetParserProviders.spreadsheetParsePattern(
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        ).spreadsheetParser(parserSelector)
         ).convertOrFail(
                 text,
                 ExpressionNumber.class,

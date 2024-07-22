@@ -62,7 +62,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
                             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                     SpreadsheetMetadata.EMPTY,
                                     SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                                    SpreadsheetParserProviders.spreadsheetParsePattern()
+                                    SpreadsheetParserProviders.spreadsheetParsePattern(
+                                            SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                                    )
                             ).converterInfos()
                     )
             ).set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
@@ -85,8 +87,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
             .set(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS, SpreadsheetComparatorInfoSet.with(SpreadsheetComparatorProviders.spreadsheetComparators().spreadsheetComparatorInfos()))
             .set(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS, SpreadsheetFormatterInfoSet.with(SpreadsheetFormatterProviders.spreadsheetFormatPattern().spreadsheetFormatterInfos()))
-            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS, SpreadsheetParserInfoSet.with(SpreadsheetParserProviders.spreadsheetParsePattern().spreadsheetParserInfos()))
-            .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
+            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS, SpreadsheetParserInfoSet.with(
+                    SpreadsheetParserProviders.spreadsheetParsePattern(
+                            SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                    ).spreadsheetParserInfos())
+            ).set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
                     .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
                     .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
             ).set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
@@ -98,7 +103,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
         return SpreadsheetFormula.parse(
                 TextCursors.charSequence(text),
                 METADATA_EN_AU
-                        .parser(SpreadsheetParserProviders.spreadsheetParsePattern()),
+                        .parser(SpreadsheetParserProviders.spreadsheetParsePattern(
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        )),
                 METADATA_EN_AU
                         .parserContext(LocalDateTime::now)
         );
