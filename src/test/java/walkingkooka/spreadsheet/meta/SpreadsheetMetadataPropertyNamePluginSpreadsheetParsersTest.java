@@ -19,6 +19,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
@@ -34,8 +35,9 @@ public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsersTest e
     @Override
     SpreadsheetParserInfoSet propertyValue() {
         return SpreadsheetParserInfoSet.with(
-                SpreadsheetParserProviders.spreadsheetParsePattern()
-                        .spreadsheetParserInfos()
+                SpreadsheetParserProviders.spreadsheetParsePattern(
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        ).spreadsheetParserInfos()
         );
     }
 

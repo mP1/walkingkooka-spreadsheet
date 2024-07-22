@@ -71,7 +71,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private final static ConverterProvider CONVERTER_PROVIDER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
             METADATA,
             SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-            SpreadsheetParserProviders.spreadsheetParsePattern()
+            SpreadsheetParserProviders.spreadsheetParsePattern(
+                    SpreadsheetFormatterProviders.fake()
+            )
     );
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();

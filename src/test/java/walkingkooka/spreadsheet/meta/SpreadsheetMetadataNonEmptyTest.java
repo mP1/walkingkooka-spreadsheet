@@ -116,7 +116,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
-    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern();
+    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
+            SPREADSHEET_FORMATTER_PROVIDER
+    );
 
     @Test
     public void testId() {
@@ -2680,8 +2682,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
                 SpreadsheetParserInfoSet.with(
-                        SpreadsheetParserProviders.spreadsheetParsePattern()
-                                .spreadsheetParserInfos()
+                        SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
                 )
         );
         properties.put(SpreadsheetMetadataPropertyName.STYLE,

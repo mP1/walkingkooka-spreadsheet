@@ -491,7 +491,9 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 METADATA,
                                 SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                                SpreadsheetParserProviders.spreadsheetParsePattern()
+                                SpreadsheetParserProviders.spreadsheetParsePattern(
+                                        SpreadsheetFormatterProviders.fake()
+                                )
                         ),
                         EXPRESSION_FUNCTION_PROVIDER,
                         REFERENCES,

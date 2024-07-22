@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Set;
@@ -72,8 +73,8 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     /**
      * {@see SpreadsheetParsePatternSpreadsheetParserProvider}
      */
-    public static SpreadsheetParserProvider spreadsheetParsePattern() {
-        return SpreadsheetParsePatternSpreadsheetParserProvider.INSTANCE;
+    public static SpreadsheetParserProvider spreadsheetParsePattern(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+        return SpreadsheetParsePatternSpreadsheetParserProvider.with(spreadsheetFormatterProvider);
     }
 
     /**

@@ -1150,6 +1150,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetSelection.parseCellRange("A1");
         TextStyle.EMPTY.isEmpty();
 
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
         return JsonNodeUnmarshallContexts.basic(
                 ExpressionNumberKind.DEFAULT,
                 MathContext.DECIMAL32
@@ -1182,14 +1184,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
                 SpreadsheetFormatterInfoSet.with(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                                .spreadsheetFormatterInfos()
+                        spreadsheetFormatterProvider.spreadsheetFormatterInfos()
                 )
         ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
                 SpreadsheetParserInfoSet.with(
-                        SpreadsheetParserProviders.spreadsheetParsePattern()
-                                .spreadsheetParserInfos()
+                        SpreadsheetParserProviders.spreadsheetParsePattern(
+                                        spreadsheetFormatterProvider
+                                ).spreadsheetParserInfos()
                 )
         ).set(
                 SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
