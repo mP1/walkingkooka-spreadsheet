@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 import java.util.List;
 import java.util.Optional;
@@ -260,7 +261,88 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                 provider::toString
         );
     }
-    
+
+    // spreadsheetParserSpreadsheetFormatter............................................................................
+
+    @Test
+    default void testSpreadsheetParserSpreadsheetFormatterWithNullSelectorFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetParserProvider().spreadsheetParserSpreadsheetFormatter(null)
+        );
+    }
+
+    default void spreadsheetParserSpreadsheetFormatterFails(final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserSpreadsheetFormatterFails(
+                this.createSpreadsheetParserProvider(),
+                selector
+        );
+    }
+
+    default void spreadsheetParserSpreadsheetFormatterFails(final SpreadsheetParserProvider provider,
+                                                            final SpreadsheetParserSelector selector) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetParserSpreadsheetFormatter(
+                        selector
+                )
+        );
+    }
+
+    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+                this.createSpreadsheetParserProvider(),
+                selector
+        );
+    }
+
+    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserSelector selector,
+                                                               final SpreadsheetFormatterSelector expected) {
+        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+                this.createSpreadsheetParserProvider(),
+                selector,
+                expected
+        );
+    }
+
+    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserSelector selector,
+                                                               final Optional<SpreadsheetFormatterSelector> expected) {
+        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+                this.createSpreadsheetParserProvider(),
+                selector,
+                expected
+        );
+    }
+
+    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserProvider provider,
+                                                               final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+                provider,
+                selector,
+                Optional.empty()
+        );
+    }
+
+    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserProvider provider,
+                                                               final SpreadsheetParserSelector selector,
+                                                               final SpreadsheetFormatterSelector expected) {
+        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+                provider,
+                selector,
+                Optional.of(expected)
+        );
+    }
+
+    default void spreadsheetParserSpreadsheetFormatterAndCheck(final SpreadsheetParserProvider provider,
+                                                               final SpreadsheetParserSelector selector,
+                                                               final Optional<SpreadsheetFormatterSelector> expected) {
+        this.checkEquals(
+                expected,
+                provider.spreadsheetParserSpreadsheetFormatter(selector),
+                provider::toString
+        );
+    }
+
     // spreadsheetParserInfo............................................................................................
 
     default void spreadsheetParserInfosAndCheck(final SpreadsheetParserInfo... expected) {
