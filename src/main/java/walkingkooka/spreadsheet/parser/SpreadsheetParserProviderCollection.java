@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.plugin.ProviderCollection;
 import walkingkooka.plugin.ProviderCollectionProviderGetter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 import java.util.List;
 import java.util.Objects;
@@ -92,6 +93,13 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
         Objects.requireNonNull(selector, "selector");
 
         return NO_NEXT_TEXT_COMPONENT;
+    }
+
+    @Override
+    public Optional<SpreadsheetFormatterSelector> spreadsheetParserSpreadsheetFormatter(final SpreadsheetParserSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        throw new UnsupportedOperationException();
     }
 
     @Override
