@@ -45,6 +45,13 @@ public final class EmptySpreadsheetParserProviderTest implements SpreadsheetPars
         );
     }
 
+    @Test
+    public void testSpreadsheetParserSpreadsheetFormatter() {
+        this.spreadsheetParserSpreadsheetFormatterAndCheck(
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("")
+        );
+    }
+
     @Override
     public EmptySpreadsheetParserProvider createSpreadsheetParserProvider() {
         return EmptySpreadsheetParserProvider.INSTANCE;
