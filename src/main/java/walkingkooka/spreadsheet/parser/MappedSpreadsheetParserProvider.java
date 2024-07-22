@@ -35,6 +35,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.text.CharacterConstant;
 
 import java.util.List;
@@ -113,6 +114,13 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
                         )
                 )
         );
+    }
+
+    @Override
+    public Optional<SpreadsheetFormatterSelector> spreadsheetParserSpreadsheetFormatter(final SpreadsheetParserSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        throw new UnsupportedOperationException();
     }
 
     /**
