@@ -93,7 +93,7 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
         Objects.requireNonNull(name, "name");
 
-        throw new UnsupportedOperationException();
+        return NO_SPREADSHEET_FORMATTER_SAMPLES;
     }
 
     @Override
