@@ -90,6 +90,13 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     }
 
     @Override
+    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSample(final SpreadsheetFormatterName name) {
+        Objects.requireNonNull(name, "name");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
         return this.providers.infos();
     }

@@ -239,6 +239,13 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     }
 
     @Override
+    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSample(final SpreadsheetFormatterName name) {
+        Objects.requireNonNull(name, "name");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
         return INFOS;
     }

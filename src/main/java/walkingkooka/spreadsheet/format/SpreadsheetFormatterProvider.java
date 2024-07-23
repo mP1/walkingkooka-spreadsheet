@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.Provider;
 
 import java.util.List;
@@ -52,6 +53,16 @@ public interface SpreadsheetFormatterProvider extends Provider {
      * Returns the next {@link SpreadsheetFormatterSelectorTextComponent} for the given {@link SpreadsheetFormatterSelector}.
      */
     Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector);
+
+    /**
+     * Constant for {@link #spreadsheetFormatterNextTextComponent(SpreadsheetFormatterSelector)} when there is no next.
+     */
+    List<SpreadsheetFormatterSample<?>> NO_SPREADSHEET_FORMATTER_SAMPLES = Lists.empty();
+
+    /**
+     * Returns {@link SpreadsheetFormatterSample samples} for the given {@link SpreadsheetFormatterName}.
+     */
+    List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSample(final SpreadsheetFormatterName name);
 
     /**
      * Returns all available {@link SpreadsheetFormatterInfo}
