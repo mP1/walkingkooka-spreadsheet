@@ -59,6 +59,18 @@ public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value
         return this.selector;
     }
 
+    public SpreadsheetFormatterSample<?> setSelector(final SpreadsheetFormatterSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        return this.selector.equals(selector) ?
+                this :
+                new SpreadsheetFormatterSample<>(
+                        this.label,
+                        selector,
+                        this.value
+                );
+    }
+
     private final SpreadsheetFormatterSelector selector;
 
     public T value() {
