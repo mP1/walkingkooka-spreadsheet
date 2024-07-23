@@ -101,9 +101,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     public SpreadsheetParserProviderCollection createSpreadsheetParserProvider() {
         return SpreadsheetParserProviderCollection.with(
                 Sets.of(
-                        SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        )
+                        spreadsheetParsePatternSpreadsheetParserProvider()
                 )
         );
     }
