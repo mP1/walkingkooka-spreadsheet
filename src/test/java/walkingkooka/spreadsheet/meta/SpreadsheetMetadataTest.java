@@ -273,10 +273,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .loadFromLocale()
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
                 .generalConverter(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                        SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        )
+                        spreadsheetFormatterProvider(),
+                        spreadsheetParserProvider()
                 );
     }
 
@@ -580,10 +578,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .expressionConverter(
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                                SpreadsheetParserProviders.spreadsheetParsePattern(
-                                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                                )
+                                spreadsheetFormatterProvider(),
+                                spreadsheetParserProvider()
                         )
                 );
         this.checkNotEquals(
@@ -639,10 +635,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         Locale.forLanguageTag("EN-AU")
                 ).loadFromLocale()
                 .generalConverter(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                        SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        )
+                        spreadsheetFormatterProvider(),
+                        spreadsheetParserProvider()
                 );
         this.checkNotEquals(
                 null,
@@ -718,10 +712,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final ConverterProvider provider = metadata.converterProvider(
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         metadata,
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                        SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        )
+                        spreadsheetFormatterProvider(),
+                        spreadsheetParserProvider()
                 )
         );
 
@@ -902,7 +894,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         final SpreadsheetParserProvider provider = metadata.spreadsheetParserProvider(
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        spreadsheetFormatterProvider()
                 )
         );
 
@@ -1244,6 +1236,16 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         return JsonNodeUnmarshallContexts.basic(
                 ExpressionNumberKind.BIG_DECIMAL,
                 MathContext.UNLIMITED
+        );
+    }
+
+    private static SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
+        return SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+    }
+
+    private static SpreadsheetParserProvider spreadsheetParserProvider() {
+        return SpreadsheetParserProviders.spreadsheetParsePattern(
+                spreadsheetFormatterProvider()
         );
     }
 }
