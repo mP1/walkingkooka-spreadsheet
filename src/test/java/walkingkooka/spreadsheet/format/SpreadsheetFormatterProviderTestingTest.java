@@ -63,6 +63,20 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
     }
 
     @Test
+    public void testSpreadsheetFormatterSamplesFails() {
+        this.spreadsheetFormatterSamplesFails(
+                new FakeSpreadsheetFormatterProvider() {
+                    @Override
+                    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
+                        throw new IllegalArgumentException("Unknown " + name);
+                    }
+                },
+                SAMPLE.selector()
+                        .name()
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterInfosAndCheck() {
         this.spreadsheetFormatterInfosAndCheck(
                 new TestSpreadsheetFormatterProvider(),
