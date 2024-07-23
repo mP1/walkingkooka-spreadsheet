@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
@@ -33,6 +34,12 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
 
     private final static SpreadsheetFormatter FORMATTER = SpreadsheetFormatters.fake();
 
+    private final static SpreadsheetFormatterSample<?> SAMPLE = SpreadsheetFormatterSample.with(
+            "Label1",
+            SpreadsheetFormatterSelector.parse(SELECTOR),
+            "Value123"
+    );
+
     private final static SpreadsheetFormatterInfo INFO = SpreadsheetFormatterInfo.with(
             Url.parseAbsolute("https://example.com/123"),
             SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
@@ -43,6 +50,15 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         this.spreadsheetFormatterAndCheck(
                 SELECTOR,
                 FORMATTER
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesAndCheck() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SAMPLE.selector()
+                        .name(),
+                SAMPLE
         );
     }
 
@@ -59,7 +75,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         return new TestSpreadsheetFormatterProvider();
     }
 
-    class TestSpreadsheetFormatterProvider extends FakeSpreadsheetFormatterProvider {
+    class TestSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
         @Override
         public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
             Objects.requireNonNull(selector, "selector");
@@ -83,6 +99,13 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
             Objects.requireNonNull(selector, "selector");
 
             return Optional.empty();
+        }
+
+        @Override
+        public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
+            Objects.requireNonNull(name, "name");
+
+            return Lists.of(SAMPLE);
         }
 
         @Override
