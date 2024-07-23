@@ -45,6 +45,13 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
         );
     }
 
+    @Test
+    public void testSpreadsheetFormatterSamples() {
+        this.spreadsheetFormatterSamplesFails(
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
+        );
+    }
+
     @Override
     public EmptySpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
         return EmptySpreadsheetFormatterProvider.INSTANCE;
