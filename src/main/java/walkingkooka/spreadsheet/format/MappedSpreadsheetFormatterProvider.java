@@ -25,6 +25,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetFormatterProvider} that wraps a view of new {@link SpreadsheetFormatterName} to a wrapped {@link SpreadsheetFormatterProvider}.
@@ -98,7 +99,15 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
     public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
         Objects.requireNonNull(name, "name");
 
-        throw new UnsupportedOperationException();
+        return this.provider.spreadsheetFormatterSamples(
+                this.nameMapper.apply(name)
+                        .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name))
+        ).stream()
+                .map(s -> s.setSelector(
+                        s.selector()
+                                .setName(name)
+                        )
+                ).collect(Collectors.toList());
     }
 
     /**
