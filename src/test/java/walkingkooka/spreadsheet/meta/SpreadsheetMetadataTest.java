@@ -850,12 +850,15 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetFormatterInfoSet.parse(SpreadsheetFormatterProviders.BASE_URL + "/text-format-pattern xyz,https://example/SpreadsheetFormatters/test-formatter-22 zzz")
         );
 
+        final SpreadsheetFormatterProvider provider = metadata.spreadsheetFormatterProvider(
+                spreadsheetFormatterProvider()
+        );
+
         this.checkEquals(
                 formatter,
-                spreadsheetFormatterProvider()
-                        .spreadsheetFormatter(
-                            SpreadsheetFormatterSelector.parse("xyz @@")
-                    )
+                provider.spreadsheetFormatter(
+                        SpreadsheetFormatterSelector.parse("xyz @@")
+                )
         );
     }
 
