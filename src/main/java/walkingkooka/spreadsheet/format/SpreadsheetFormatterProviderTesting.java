@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
 
@@ -238,6 +239,48 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         );
     }
 
+    // SpreadsheetFormatterSamples......................................................................................
+
+    @Test
+    default void testSpreadsheetFormatterSamplesWithNullNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetFormatterProvider()
+                        .spreadsheetFormatterSamples(null)
+        );
+    }
+
+    default void spreadsheetFormatterSamplesAndCheck(final SpreadsheetFormatterName name,
+                                                     final SpreadsheetFormatterSample... expected) {
+        this.spreadsheetFormatterSamplesAndCheck(
+                this.createSpreadsheetFormatterProvider(),
+                name,
+                expected
+        );
+    }
+
+    default void spreadsheetFormatterSamplesAndCheck(final SpreadsheetFormatterProvider provider,
+                                                     final SpreadsheetFormatterName name,
+                                                     final SpreadsheetFormatterSample... expected) {
+        this.spreadsheetFormatterSamplesAndCheck(
+                provider,
+                name,
+                Lists.of(
+                        expected
+                )
+        );
+    }
+
+    default void spreadsheetFormatterSamplesAndCheck(final SpreadsheetFormatterProvider provider,
+                                                     final SpreadsheetFormatterName name,
+                                                     final List<SpreadsheetFormatterSample> expected) {
+        this.checkEquals(
+                expected,
+                provider.spreadsheetFormatterSamples(name),
+                name + " samples"
+        );
+    }
+    
     // SpreadsheetFormatterInfos........................................................................................
 
     default void spreadsheetFormatterInfosAndCheck(final SpreadsheetFormatterInfo... expected) {
