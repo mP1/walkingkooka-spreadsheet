@@ -364,9 +364,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
-        Objects.requireNonNull(name, "name");
-
-        throw new UnsupportedOperationException();
+        return this.spreadsheetFormatterProvider.spreadsheetFormatterSamples(name);
     }
 
     @Override

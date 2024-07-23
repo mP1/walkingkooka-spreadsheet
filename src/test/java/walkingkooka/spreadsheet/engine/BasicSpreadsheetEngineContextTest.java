@@ -43,8 +43,10 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSample;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -936,6 +938,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         this.expression(2)
                 ),
                 true
+        );
+    }
+
+    // SpreadsheetFormatterProvider.....................................................................................
+
+    // Default
+    //  text-format-pattern
+    //    "@"
+    //  Hello 123
+    @Test
+    public void testSpreadsheetFormatterSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+                SpreadsheetFormatterSample.with(
+                        "Default",
+                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setText("@"),
+                        "Hello 123"
+                )
         );
     }
 
