@@ -280,6 +280,21 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                 name + " samples"
         );
     }
+
+    default void spreadsheetFormatterSamplesFails(final SpreadsheetFormatterName name) {
+        this.spreadsheetFormatterSamplesFails(
+                this.createSpreadsheetFormatterProvider(),
+                name
+        );
+    }
+
+    default void spreadsheetFormatterSamplesFails(final SpreadsheetFormatterProvider provider,
+                                                  final SpreadsheetFormatterName name) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetFormatterSamples(name)
+        );
+    }
     
     // SpreadsheetFormatterInfos........................................................................................
 
