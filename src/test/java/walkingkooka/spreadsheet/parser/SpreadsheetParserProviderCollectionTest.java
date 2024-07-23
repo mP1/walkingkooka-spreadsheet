@@ -38,9 +38,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     @Test
     public void testSpreadsheetParserSelection() {
-        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-        );
+        final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserProviderCollection.with(
@@ -54,9 +52,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     @Test
     public void testSpreadsheetParserName() {
-        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-        );
+        final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserProviderCollection.with(
@@ -71,9 +67,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     @Test
     public void testSpreadsheetParserNextTextComponent() {
-        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-        );
+        final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
         this.spreadsheetParserNextTextComponentAndCheck(
                 SpreadsheetParserProviderCollection.with(
@@ -85,9 +79,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     @Test
     public void testInfos() {
-        final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-        );
+        final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
         this.spreadsheetParserInfosAndCheck(
                 SpreadsheetParserProviderCollection.with(Sets.of(provider)),
@@ -113,6 +105,12 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
                                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                         )
                 )
+        );
+    }
+
+    private static SpreadsheetParserProvider spreadsheetParsePatternSpreadsheetParserProvider() {
+        return SpreadsheetParserProviders.spreadsheetParsePattern(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
         );
     }
 }
