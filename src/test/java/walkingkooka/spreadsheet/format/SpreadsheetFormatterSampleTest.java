@@ -25,6 +25,8 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSample<String>>,
@@ -102,6 +104,58 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
         this.checkEquals(LABEL, sample.label(), "label");
         this.checkEquals(SELECTOR, sample.selector(), "selector");
         this.checkEquals(value, sample.value(), "value");
+    }
+
+    // setSelector......................................................................................................
+
+    @Test
+    public void testSetSelectorWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormatterSample.with(
+                        LABEL,
+                        SELECTOR,
+                        VALUE
+                ).setSelector(null)
+        );
+    }
+
+    @Test
+    public void testSetSelectorSame() {
+        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+                LABEL,
+                SELECTOR,
+                VALUE
+        );
+        assertSame(
+                sample,
+                sample.setSelector(SELECTOR)
+        );
+    }
+
+    @Test
+    public void testSetSelectorDifferent() {
+        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+                LABEL,
+                SELECTOR,
+                VALUE
+        );
+
+        final SpreadsheetFormatterSelector differentSelector = SpreadsheetFormatterSelector.parse("different");
+        final SpreadsheetFormatterSample<?> different = sample.setSelector(differentSelector);
+
+        assertNotSame(
+                sample,
+                different
+        );
+
+        this.checkEquals(LABEL, different.label(), "label");
+        this.checkEquals(differentSelector, different.selector(), "selector");
+        this.checkEquals(VALUE, different.value(), "value");
+
+        this.checkEquals(LABEL, sample.label(), "label");
+        this.checkEquals(SELECTOR, sample.selector(), "selector");
+        this.checkEquals(VALUE, sample.value(), "value");
     }
 
     // hashcode/equals..................................................................................................
