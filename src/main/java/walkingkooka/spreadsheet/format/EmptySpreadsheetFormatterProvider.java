@@ -63,7 +63,7 @@ final class EmptySpreadsheetFormatterProvider implements SpreadsheetFormatterPro
     }
 
     @Override
-    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSample(final SpreadsheetFormatterName name) {
+    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
         Objects.requireNonNull(name, "name");
 
         throw new UnsupportedOperationException();

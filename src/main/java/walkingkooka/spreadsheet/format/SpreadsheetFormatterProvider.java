@@ -62,7 +62,7 @@ public interface SpreadsheetFormatterProvider extends Provider {
     /**
      * Returns {@link SpreadsheetFormatterSample samples} for the given {@link SpreadsheetFormatterName}.
      */
-    List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSample(final SpreadsheetFormatterName name);
+    List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name);
 
     /**
      * Returns all available {@link SpreadsheetFormatterInfo}

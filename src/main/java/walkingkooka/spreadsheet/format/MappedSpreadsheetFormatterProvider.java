@@ -95,7 +95,7 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
     }
 
     @Override
-    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSample(final SpreadsheetFormatterName name) {
+    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
         Objects.requireNonNull(name, "name");
 
         throw new UnsupportedOperationException();
