@@ -25,6 +25,7 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -188,6 +189,43 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
         );
     }
 
+    private final static LocalDateTime NOW = LocalDateTime.of(
+            1999,
+            12,
+            31,
+            12,
+            58
+    );
+
+    @Test
+    public void testSpreadsheetFormatterSamples() {
+        final SpreadsheetFormatterName name = SpreadsheetFormatterName.with(NEW_FORMATTER_NAME);
+
+        this.spreadsheetFormatterSamplesAndCheck(
+                name,
+                SpreadsheetFormatterSample.with(
+                        "Short",
+                        name.setText("d/m/yy"),
+                        NOW.toLocalDate()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Medium",
+                        name.setText("d mmm yyyy"),
+                        NOW.toLocalDate()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Long",
+                        name.setText("d mmmm yyyy"),
+                        NOW.toLocalDate()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Full",
+                        name.setText("dddd, d mmmm yyyy"),
+                        NOW.toLocalDate()
+                )
+        );
+    }
+
     @Test
     public void testSpreadsheetInfos() {
         this.spreadsheetFormatterInfosAndCheck(
@@ -234,9 +272,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     public MappedSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
                 Locale.forLanguageTag("EN-AU"),
-                () -> {
-                    throw new UnsupportedOperationException();
-                }
+                () -> NOW
         );
 
         return MappedSpreadsheetFormatterProvider.with(
