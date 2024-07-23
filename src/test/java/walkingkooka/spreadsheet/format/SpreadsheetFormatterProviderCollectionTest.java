@@ -37,7 +37,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
 
     @Test
     public void testSpreadsheetFormatterSelectorMissingValuesFails() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterFails(
                 SpreadsheetFormatterProviderCollection.with(
@@ -49,7 +49,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
 
     @Test
     public void testSpreadsheetFormatterSelector() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterAndCheck(
                 SpreadsheetFormatterProviderCollection.with(
@@ -63,7 +63,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
 
     @Test
     public void testSpreadsheetFormatterNameMissingValuesFails() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterFails(
                 SpreadsheetFormatterProviderCollection.with(
@@ -76,7 +76,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
 
     @Test
     public void testSpreadsheetFormatterName() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterAndCheck(
                 SpreadsheetFormatterProviderCollection.with(
@@ -91,7 +91,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
 
     @Test
     public void testSpreadsheetFormatterNextTextComponent() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterNextTextComponentAndCheck(
                 SpreadsheetFormatterProviderCollection.with(
@@ -103,7 +103,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
 
     @Test
     public void testInfos() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterInfosAndCheck(
                 SpreadsheetFormatterProviderCollection.with(Sets.of(provider)),
@@ -125,8 +125,12 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     public SpreadsheetFormatterProviderCollection createSpreadsheetFormatterProvider() {
         return SpreadsheetFormatterProviderCollection.with(
                 Sets.of(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        spreadsheetFormatPatternSpreadsheetFormatterProvider()
                 )
         );
+    }
+
+    private static SpreadsheetFormatterProvider spreadsheetFormatPatternSpreadsheetFormatterProvider() {
+        return SpreadsheetFormatterProviders.spreadsheetFormatPattern();
     }
 }
