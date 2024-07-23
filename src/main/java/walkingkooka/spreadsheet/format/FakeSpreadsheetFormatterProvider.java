@@ -39,6 +39,11 @@ public class FakeSpreadsheetFormatterProvider implements SpreadsheetFormatterPro
     }
 
     @Override
+    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSample(final SpreadsheetFormatterName name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
         throw new UnsupportedOperationException();
     }

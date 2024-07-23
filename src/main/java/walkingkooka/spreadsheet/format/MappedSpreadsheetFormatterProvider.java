@@ -94,6 +94,13 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
         );
     }
 
+    @Override
+    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSample(final SpreadsheetFormatterName name) {
+        Objects.requireNonNull(name, "name");
+
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * A function that maps incoming {@link SpreadsheetFormatterName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
      */
