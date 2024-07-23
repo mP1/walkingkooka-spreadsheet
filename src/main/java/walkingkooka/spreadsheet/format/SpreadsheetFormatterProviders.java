@@ -21,7 +21,10 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.PublicStaticHelper;
 
+import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * A collection of constants and factory methods for {@link SpreadsheetFormatterProvider}.
@@ -71,8 +74,12 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
     /**
      * {@see SpreadsheetFormatPatternSpreadsheetFormatterProvider}
      */
-    public static SpreadsheetFormatterProvider spreadsheetFormatPattern() {
-        return SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE;
+    public static SpreadsheetFormatterProvider spreadsheetFormatPattern(final Locale locale,
+                                                                        final Supplier<LocalDateTime> now) {
+        return SpreadsheetFormatPatternSpreadsheetFormatterProvider.with(
+                locale,
+                now
+        );
     }
 
     /**

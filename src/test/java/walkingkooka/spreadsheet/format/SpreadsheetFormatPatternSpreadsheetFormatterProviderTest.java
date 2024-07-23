@@ -25,6 +25,10 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
+import java.time.LocalDateTime;
+import java.util.Locale;
+import java.util.function.Supplier;
+
 public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider>,
         ToStringTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider> {
 
@@ -744,17 +748,325 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
         );
     }
 
+    // spreadsheetFormatterSamples......................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSamplesAutomatic() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.AUTOMATIC
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesCollection() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.COLLECTION
+        );
+    }
+
+    // Short
+    //  date-format-pattern
+    //    "d/m/yy"
+    //  1999-12-31T12:58:59
+    //
+    //Medium
+    //  date-format-pattern
+    //    "d mmm yyyy"
+    //  1999-12-31T12:58:59
+    //
+    //Long
+    //  date-format-pattern
+    //    "d mmmm yyyy"
+    //  1999-12-31T12:58:59
+    //
+    //Full
+    //  date-format-pattern
+    //    "dddd, d mmmm yyyy"
+    //  1999-12-31T12:58:59
+    @Test
+    public void testSpreadsheetFormatterSamplesDateFormatPattern() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+                SpreadsheetFormatterSample.with(
+                        "Short",
+                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("d/m/yy"),
+                        NOW.get().toLocalDate()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Medium",
+                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("d mmm yyyy"),
+                        NOW.get().toLocalDate()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Long",
+                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("d mmmm yyyy"),
+                        NOW.get().toLocalDate()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Full",
+                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("dddd, d mmmm yyyy"),
+                        NOW.get().toLocalDate()
+                )
+        );
+    }
+
+    // Short
+    //  date-time-format-pattern
+    //    "d/m/yy, h:mm AM/PM"
+    //  1999-12-31T12:58:59
+    //
+    //Medium
+    //  date-time-format-pattern
+    //    "d mmm yyyy, h:mm:ss AM/PM"
+    //  1999-12-31T12:58:59
+    //
+    //Long
+    //  date-time-format-pattern
+    //    "d mmmm yyyy \\a\\t h:mm:ss AM/PM"
+    //  1999-12-31T12:58:59
+    //
+    //Full
+    //  date-time-format-pattern
+    //    "dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"
+    //  1999-12-31T12:58:59
+    @Test
+    public void testSpreadsheetFormatterSamplesDateTimeFormatPattern() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
+                SpreadsheetFormatterSample.with(
+                        "Short",
+                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setText("d/m/yy, h:mm AM/PM"),
+                        NOW.get()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Medium",
+                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setText("d mmm yyyy, h:mm:ss AM/PM"),
+                        NOW.get()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Long",
+                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                        NOW.get()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Full",
+                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                        NOW.get()
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesGeneral() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.GENERAL,
+                SpreadsheetFormatterSample.with(
+                        "General",
+                        SpreadsheetFormatterName.GENERAL.setText(""),
+                        123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "General",
+                        SpreadsheetFormatterName.GENERAL.setText(""),
+                        -123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "General",
+                        SpreadsheetFormatterName.GENERAL.setText(""),
+                        0
+                )
+        );
+    }
+
+    // Number
+    //  number-format-pattern
+    //    "#,##0.###"
+    //  123.5
+    //
+    //Number
+    //  number-format-pattern
+    //    "#,##0.###"
+    //  -123.5
+    //
+    //Number
+    //  number-format-pattern
+    //    "#,##0.###"
+    //  0
+    //
+    //Integer
+    //  number-format-pattern
+    //    "#,##0"
+    //  123.5
+    //
+    //Integer
+    //  number-format-pattern
+    //    "#,##0"
+    //  -123.5
+    //
+    //Integer
+    //  number-format-pattern
+    //    "#,##0"
+    //  0
+    //
+    //Percent
+    //  number-format-pattern
+    //    "#,##0%"
+    //  123.5
+    //
+    //Percent
+    //  number-format-pattern
+    //    "#,##0%"
+    //  -123.5
+    //
+    //Percent
+    //  number-format-pattern
+    //    "#,##0%"
+    //  0
+    //
+    //Currency
+    //  number-format-pattern
+    //    "$#,##0.00"
+    //  123.5
+    //
+    //Currency
+    //  number-format-pattern
+    //    "$#,##0.00"
+    //  -123.5
+    //
+    //Currency
+    //  number-format-pattern
+    //    "$#,##0.00"
+    //  0
+    @Test
+    public void testSpreadsheetFormatterSamplesNumberFormatPattern() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN,
+                SpreadsheetFormatterSample.with(
+                        "Number",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0.###"),
+                        123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Number",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0.###"),
+                        -123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Number",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0.###"),
+                        0
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Integer",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0"),
+                        123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Integer",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0"),
+                        -123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Integer",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0"),
+                        0
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Percent",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0%"),
+                        123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Percent",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0%"),
+                        -123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Percent",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0%"),
+                        0
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Currency",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("$#,##0.00"),
+                        123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Currency",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("$#,##0.00"),
+                        -123.5
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Currency",
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("$#,##0.00"),
+                        0
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesTextFormatPattern() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+                SpreadsheetFormatterSample.with(
+                        "Default",
+                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setText("@"),
+                        "Hello 123"
+                )
+        );
+    }
+
+    // Short
+    //  time-format-pattern
+    //    "h:mm AM/PM"
+    //  12:58:59
+    //
+    //Long
+    //  time-format-pattern
+    //    "h:mm:ss AM/PM"
+    //  12:58:59
+    @Test
+    public void testSpreadsheetFormatterSamplesTimeFormatPattern() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
+                SpreadsheetFormatterSample.with(
+                        "Short",
+                        SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setText("h:mm AM/PM"),
+                        NOW.get().toLocalTime()
+                ),
+                SpreadsheetFormatterSample.with(
+                        "Long",
+                        SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setText("h:mm:ss AM/PM"),
+                        NOW.get().toLocalTime()
+                )
+        );
+    }
+
     @Override
     public SpreadsheetFormatPatternSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
-        return SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE;
+        return SpreadsheetFormatPatternSpreadsheetFormatterProvider.with(
+                LOCALE,
+                NOW
+        );
     }
+
+    private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
+
+    private final static Supplier<LocalDateTime> NOW = () -> LocalDateTime.of(
+            1999,
+            12,
+            31,
+            12,
+            58,
+            59
+    );
 
     // ToString.........................................................................................................
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE,
+                this.createSpreadsheetFormatterProvider(),
                 "SpreadsheetFormatPattern.spreadsheetFormatter"
         );
     }
@@ -765,7 +1077,8 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testTreePrintable() {
         this.treePrintAndCheck(
                 SpreadsheetFormatterInfoSet.with(
-                        SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE.spreadsheetFormatterInfos()
+                        this.createSpreadsheetFormatterProvider()
+                                .spreadsheetFormatterInfos()
                 ),
                 "SpreadsheetFormatterInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\n" +
@@ -828,7 +1141,8 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                 JsonNodeMarshallContexts.basic()
                         .marshall(
                                 SpreadsheetFormatterInfoSet.with(
-                                        SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE.spreadsheetFormatterInfos()
+                                        this.createSpreadsheetFormatterProvider()
+                                                .spreadsheetFormatterInfos()
                                 )
                         )
         );

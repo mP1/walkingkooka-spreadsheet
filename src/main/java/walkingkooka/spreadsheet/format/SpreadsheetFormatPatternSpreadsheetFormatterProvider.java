@@ -22,15 +22,24 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -39,10 +48,19 @@ import java.util.stream.Collectors;
  */
 final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
 
-    final static SpreadsheetFormatPatternSpreadsheetFormatterProvider INSTANCE = new SpreadsheetFormatPatternSpreadsheetFormatterProvider();
+    static SpreadsheetFormatPatternSpreadsheetFormatterProvider with(final Locale locale,
+                                                                     final Supplier<LocalDateTime> now) {
+        return new SpreadsheetFormatPatternSpreadsheetFormatterProvider(
+                Objects.requireNonNull(locale, "locale"),
+                Objects.requireNonNull(now, "now")
+        );
+    }
 
-    private SpreadsheetFormatPatternSpreadsheetFormatterProvider() {
+    private SpreadsheetFormatPatternSpreadsheetFormatterProvider(final Locale locale,
+                                                                 final Supplier<LocalDateTime> now) {
         super();
+        this.locale = locale;
+        this.now = now;
     }
 
     @Override
@@ -238,12 +256,250 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         );
     }
 
+    // spreadsheetFormatterSamples......................................................................................
+
     @Override
     public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
         Objects.requireNonNull(name, "name");
 
-        throw new UnsupportedOperationException();
+        List<SpreadsheetFormatterSample<?>> samples;
+
+        switch (name.value()) {
+            case SpreadsheetFormatterName.AUTOMATIC_STRING:
+            case SpreadsheetFormatterName.COLLECTION_STRING:
+                samples = SpreadsheetFormatterProvider.NO_SPREADSHEET_FORMATTER_SAMPLES;
+                break;
+            case SpreadsheetFormatterName.DATE_FORMAT_PATTERN_STRING:
+                samples = Lists.of(
+                        this.dateSpreadsheetFormatterSample(
+                                "Short",
+                                DateFormat.SHORT
+                        ),
+                        this.dateSpreadsheetFormatterSample(
+                                "Medium",
+                                DateFormat.MEDIUM
+                        ),
+                        this.dateSpreadsheetFormatterSample(
+                                "Long",
+                                DateFormat.LONG
+                        ),
+                        this.dateSpreadsheetFormatterSample(
+                                "Full",
+                                DateFormat.FULL
+                        )
+                );
+                break;
+            case SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN_STRING:
+                samples = Lists.of(
+                        this.dateTimeSpreadsheetFormatterSample(
+                                "Short",
+                                DateFormat.SHORT
+                        ),
+                        this.dateTimeSpreadsheetFormatterSample(
+                                "Medium",
+                                DateFormat.MEDIUM
+                        ),
+                        this.dateTimeSpreadsheetFormatterSample(
+                                "Long",
+                                DateFormat.LONG
+                        ),
+                        this.dateTimeSpreadsheetFormatterSample(
+                                "Full",
+                                DateFormat.FULL
+                        )
+                );
+                break;
+            case SpreadsheetFormatterName.GENERAL_STRING:
+                samples = Lists.of(
+                        generalSample(
+                                123.5
+                        ),
+                        generalSample(
+                                -123.5
+                        ),
+                        generalSample(
+                                0
+                        )
+                );
+                break;
+            case SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN_STRING:
+                samples = Lists.of(
+                        this.numberSpreadsheetFormatterSample(
+                                "Number",
+                                DecimalFormat::getInstance,
+                                123.5
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Number",
+                                DecimalFormat::getInstance,
+                                -123.5
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Number",
+                                DecimalFormat::getInstance,
+                                0
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Integer",
+                                DecimalFormat::getIntegerInstance,
+                                123.5
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Integer",
+                                DecimalFormat::getIntegerInstance,
+                                -123.5
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Integer",
+                                DecimalFormat::getIntegerInstance,
+                                0
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Percent",
+                                DecimalFormat::getPercentInstance,
+                                123.5
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Percent",
+                                DecimalFormat::getPercentInstance,
+                                -123.5
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Percent",
+                                DecimalFormat::getPercentInstance,
+                                0
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Currency",
+                                DecimalFormat::getCurrencyInstance,
+                                123.5
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Currency",
+                                DecimalFormat::getCurrencyInstance,
+                                -123.5
+                        ),
+                        this.numberSpreadsheetFormatterSample(
+                                "Currency",
+                                DecimalFormat::getCurrencyInstance,
+                                0
+                        )
+                );
+                break;
+            case SpreadsheetFormatterName.TEXT_FORMAT_PATTERN_STRING:
+                samples = Lists.of(
+                        SpreadsheetFormatterSample.with(
+                                "Default",
+                                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
+                                "Hello 123"
+                        )
+                );
+                break;
+            case SpreadsheetFormatterName.TIME_FORMAT_PATTERN_STRING:
+                samples = Lists.of(
+                        this.timeSpreadsheetFormatterSample(
+                                "Short",
+                                DateFormat.SHORT
+                        ),
+                        this.timeSpreadsheetFormatterSample(
+                                "Long",
+                                DateFormat.LONG
+                        )
+                );
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown formatter " + name);
+        }
+
+
+        return samples;
     }
+
+    private SpreadsheetFormatterSample<?> dateSpreadsheetFormatterSample(final String label,
+                                                                         final int dateFormatStyle) {
+        return this.sample(
+                label,
+                SpreadsheetPattern.dateParsePattern(
+                        (SimpleDateFormat) DateFormat.getDateInstance(
+                                dateFormatStyle,
+                                this.locale
+                        )
+                ),
+                this.now.get().toLocalDate()
+        );
+    }
+
+    private SpreadsheetFormatterSample<?> dateTimeSpreadsheetFormatterSample(final String label,
+                                                                             final int dateFormatStyle) {
+        return this.sample(
+                label,
+                SpreadsheetPattern.dateTimeParsePattern(
+                        (SimpleDateFormat) DateFormat.getDateTimeInstance(
+                                dateFormatStyle,
+                                dateFormatStyle,
+                                this.locale
+                        )
+                ),
+                this.now.get()
+        );
+    }
+
+    private SpreadsheetFormatterSample<?> generalSample(final Number value) {
+        return SpreadsheetFormatterSample.with(
+                "General",
+                SpreadsheetFormatterName.GENERAL.setText(""),
+                value
+        );
+    }
+
+
+    private SpreadsheetFormatterSample<?> numberSpreadsheetFormatterSample(final String label,
+                                                                           final Function<Locale, NumberFormat> decimalFormat,
+                                                                           final Number value) {
+        return this.sample(
+                label,
+                SpreadsheetPattern.decimalFormat(
+                        (DecimalFormat) decimalFormat.apply(
+                                this.locale
+                        )
+                ),
+                value
+        );
+    }
+
+    private SpreadsheetFormatterSample<?> timeSpreadsheetFormatterSample(final String label,
+                                                                         final int dateFormatStyle) {
+        return this.sample(
+                label,
+                SpreadsheetPattern.timeParsePattern(
+                        (SimpleDateFormat) DateFormat.getTimeInstance(
+                                dateFormatStyle,
+                                this.locale
+                        )
+                ),
+                this.now.get().toLocalTime()
+        );
+    }
+
+    private SpreadsheetFormatterSample<?> sample(final String label,
+                                                 final SpreadsheetParsePattern pattern,
+                                                 final Object value) {
+        return SpreadsheetFormatterSample.with(
+                label,
+                pattern.toFormat()
+                        .spreadsheetFormatterSelector(),
+                value
+        );
+    }
+
+    /**
+     * The {@link Locale} is used to provide sample format patterns.
+     */
+    private final Locale locale;
+
+    private final Supplier<LocalDateTime> now;
+
+    // spreadsheetFormatterInfos........................................................................................
 
     @Override
     public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {

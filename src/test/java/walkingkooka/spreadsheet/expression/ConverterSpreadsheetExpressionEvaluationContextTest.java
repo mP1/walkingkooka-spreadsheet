@@ -490,7 +490,12 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         METADATA,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 METADATA,
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                                        Locale.forLanguageTag("EN-AU"),
+                                        () -> {
+                                            throw new UnsupportedOperationException();
+                                        }
+                                ),
                                 SpreadsheetParserProviders.spreadsheetParsePattern(
                                         SpreadsheetFormatterProviders.fake()
                                 )

@@ -25,6 +25,8 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<MappedSpreadsheetFormatterProvider> {
@@ -230,7 +232,12 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
 
     @Override
     public MappedSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                Locale.forLanguageTag("EN-AU"),
+                () -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
 
         return MappedSpreadsheetFormatterProvider.with(
                 Sets.of(

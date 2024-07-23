@@ -30,12 +30,18 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadataTesting,
         TreePrintableTesting {
 
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+            Locale.forLanguageTag("EN-AU"),
+            () -> {
+                throw new UnsupportedOperationException();
+            }
+    );
     private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
             SPREADSHEET_FORMATTER_PROVIDER
     );

@@ -187,7 +187,12 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
         return SpreadsheetConvertersConverterProvider.with(
                 SpreadsheetMetadataTesting.METADATA_EN_AU,
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                        Locale.forLanguageTag("EN-AU"),
+                        () -> {
+                            throw new UnsupportedOperationException();
+                        }
+                ),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         SpreadsheetFormatterProviders.fake()
                 )

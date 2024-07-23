@@ -38,6 +38,7 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Locale;
 
 public final class UnformattedNumberSpreadsheetConverterTest implements ConverterTesting2<UnformattedNumberSpreadsheetConverter, SpreadsheetConverterContext>,
         SpreadsheetMetadataTesting,
@@ -192,7 +193,12 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss").spreadsheetFormatterSelector()
         );
 
-        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                Locale.forLanguageTag("EN-AU"),
+                () -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
         final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                 metadata,
                 spreadsheetFormatterProvider,

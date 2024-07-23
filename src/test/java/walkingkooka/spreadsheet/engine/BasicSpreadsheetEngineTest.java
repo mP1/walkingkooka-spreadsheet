@@ -138,6 +138,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -169,7 +170,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://server.example.com");
 
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+            Locale.forLanguageTag("EN-AU"),
+            () -> {
+                throw new UnsupportedOperationException();
+            }
+    );
 
     private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER);
 

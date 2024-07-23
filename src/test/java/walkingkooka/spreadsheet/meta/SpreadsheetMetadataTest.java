@@ -1240,7 +1240,12 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     private static SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
-        return SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        return SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                Locale.forLanguageTag("EN-AU"),
+                () -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
     }
 
     private static SpreadsheetParserProvider spreadsheetParserProvider() {
