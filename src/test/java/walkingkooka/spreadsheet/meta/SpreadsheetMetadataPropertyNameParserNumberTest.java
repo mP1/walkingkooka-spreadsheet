@@ -71,7 +71,12 @@ public final class SpreadsheetMetadataPropertyNameParserNumberTest extends Sprea
 
         final ExpressionNumber value = SpreadsheetConverters.stringToExpressionNumber(
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                                        Locale.forLanguageTag("EN-AU"),
+                                        () -> {
+                                            throw new UnsupportedOperationException();
+                                        }
+                                )
                         ).spreadsheetParser(parserSelector)
         ).convertOrFail(
                 text,

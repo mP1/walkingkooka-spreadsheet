@@ -192,7 +192,12 @@ public final class Sample {
 
     private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine) {
         final SpreadsheetMetadata metadata = metadata();
-        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                Locale.forLanguageTag("EN-AU"),
+                () -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
         final SpreadsheetParserProvider spreadsheetParserProvider = SpreadsheetParserProviders.spreadsheetParsePattern(spreadsheetFormatterProvider);
         final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                 metadata,

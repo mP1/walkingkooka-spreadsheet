@@ -36,6 +36,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -148,10 +149,15 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
 
                     @Override
                     public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                                                         final List<?> values) {
+                                                                               final List<?> values) {
                         return SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 METADATA_EN_AU,
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                                        Locale.forLanguageTag("EN-AU"),
+                                        () -> {
+                                            throw new UnsupportedOperationException();
+                                        }
+                                ),
                                 SpreadsheetParserProviders.spreadsheetParsePattern(
                                         SpreadsheetFormatterProviders.fake()
                                 )

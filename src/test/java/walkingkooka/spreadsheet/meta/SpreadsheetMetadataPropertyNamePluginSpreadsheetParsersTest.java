@@ -25,6 +25,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 
+import java.util.Locale;
+
 public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers, SpreadsheetParserInfoSet, SpreadsheetParserInfo, SpreadsheetParserName> {
 
     @Override
@@ -36,7 +38,12 @@ public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsersTest e
     SpreadsheetParserInfoSet propertyValue() {
         return SpreadsheetParserInfoSet.with(
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                                        Locale.forLanguageTag("EN-AU"),
+                                        () -> {
+                                            throw new UnsupportedOperationException();
+                                        }
+                                )
                         ).spreadsheetParserInfos()
         );
     }

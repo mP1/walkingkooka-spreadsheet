@@ -26,6 +26,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName>,
@@ -60,8 +62,12 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
     @Override
     public SpreadsheetFormatterInfoSet createSet() {
         return SpreadsheetFormatterInfoSet.with(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        .spreadsheetFormatterInfos()
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                        Locale.forLanguageTag("EN-AU"),
+                        () -> {
+                            throw new UnsupportedOperationException();
+                        }
+                ).spreadsheetFormatterInfos()
         );
     }
 

@@ -45,6 +45,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -70,7 +71,12 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static ConverterProvider CONVERTER_PROVIDER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
             METADATA,
-            SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+            SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                    Locale.forLanguageTag("EN-AU"),
+                    () -> {
+                        throw new UnsupportedOperationException();
+                    }
+            ),
             SpreadsheetParserProviders.spreadsheetParsePattern(
                     SpreadsheetFormatterProviders.fake()
             )

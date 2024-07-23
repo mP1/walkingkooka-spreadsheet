@@ -519,7 +519,12 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetParsers.valueOrExpression(
                         SpreadsheetMetadataTesting.METADATA_EN_AU.parser(
                                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                                                Locale.forLanguageTag("EN-AU"),
+                                                () -> {
+                                                    throw new UnsupportedOperationException();
+                                                }
+                                        )
                                 )
                         )
                 ),

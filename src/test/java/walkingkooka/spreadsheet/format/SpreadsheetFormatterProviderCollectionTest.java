@@ -23,6 +23,8 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterProviderCollectionTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatterProviderCollection> {
@@ -131,6 +133,11 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     }
 
     private static SpreadsheetFormatterProvider spreadsheetFormatPatternSpreadsheetFormatterProvider() {
-        return SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        return SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                Locale.forLanguageTag("EN-AU"),
+                () -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
     }
 }

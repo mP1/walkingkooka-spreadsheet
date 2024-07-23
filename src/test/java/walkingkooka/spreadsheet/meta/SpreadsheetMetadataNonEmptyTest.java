@@ -114,7 +114,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+            Locale.forLanguageTag("EN-AU"),
+            () -> {
+                throw new UnsupportedOperationException();
+            }
+    );
 
     private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
             SPREADSHEET_FORMATTER_PROVIDER
@@ -2673,7 +2678,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
                 SpreadsheetFormatterInfoSet.with(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                                        Locale.forLanguageTag("EN-AU"),
+                                        () -> {
+                                            throw new UnsupportedOperationException();
+                                        }
+                                )
                                 .spreadsheetFormatterInfos()
                 )
         );
