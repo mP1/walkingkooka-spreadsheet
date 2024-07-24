@@ -121,16 +121,6 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     }
 
     @Override
-    public Class<SpreadsheetFormatterProviderCollection> type() {
-        return SpreadsheetFormatterProviderCollection.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    @Override
     public SpreadsheetFormatterProviderCollection createSpreadsheetFormatterProvider() {
         return SpreadsheetFormatterProviderCollection.with(
                 Sets.of(
@@ -146,5 +136,17 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
                     throw new UnsupportedOperationException();
                 }
         );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetFormatterProviderCollection> type() {
+        return SpreadsheetFormatterProviderCollection.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
