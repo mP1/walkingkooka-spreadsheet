@@ -28,6 +28,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -164,6 +165,96 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
         this.checkEquals(VALUE, sample.value(), "value");
     }
 
+    // setValue.........................................................................................................
+
+    @Test
+    public void testSetValueSame() {
+        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+                LABEL,
+                SELECTOR,
+                VALUE
+        );
+        assertSame(
+                sample,
+                sample.setValue(VALUE)
+        );
+    }
+
+    @Test
+    public void testSetValueDifferent() {
+        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+                LABEL,
+                SELECTOR,
+                VALUE
+        );
+
+        final String differentValue = "different";
+        final SpreadsheetFormatterSample<String> different = sample.setValue(differentValue);
+
+        assertNotSame(
+                sample,
+                different
+        );
+
+        this.checkEquals(LABEL, different.label(), "label");
+        this.checkEquals(SELECTOR, different.selector(), "selector");
+        this.checkEquals(differentValue, different.value(), "value");
+
+        this.checkEquals(LABEL, sample.label(), "label");
+        this.checkEquals(SELECTOR, sample.selector(), "selector");
+        this.checkEquals(VALUE, sample.value(), "value");
+    }
+
+    @Test
+    public void testSetValueDifferent2() {
+        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+                LABEL,
+                SELECTOR,
+                VALUE
+        );
+
+        final BigDecimal differentValue = BigDecimal.valueOf(123);
+        final SpreadsheetFormatterSample<BigDecimal> different = sample.setValue(differentValue);
+
+        assertNotSame(
+                sample,
+                different
+        );
+
+        this.checkEquals(LABEL, different.label(), "label");
+        this.checkEquals(SELECTOR, different.selector(), "selector");
+        this.checkEquals(differentValue, different.value(), "value");
+
+        this.checkEquals(LABEL, sample.label(), "label");
+        this.checkEquals(SELECTOR, sample.selector(), "selector");
+        this.checkEquals(VALUE, sample.value(), "value");
+    }
+
+    @Test
+    public void testSetValueDifferentNull() {
+        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+                LABEL,
+                SELECTOR,
+                VALUE
+        );
+
+        final BigDecimal differentValue = null;
+        final SpreadsheetFormatterSample<BigDecimal> different = sample.setValue(differentValue);
+
+        assertNotSame(
+                sample,
+                different
+        );
+
+        this.checkEquals(LABEL, different.label(), "label");
+        this.checkEquals(SELECTOR, different.selector(), "selector");
+        this.checkEquals(differentValue, different.value(), "value");
+
+        this.checkEquals(LABEL, sample.label(), "label");
+        this.checkEquals(SELECTOR, sample.selector(), "selector");
+        this.checkEquals(VALUE, sample.value(), "value");
+    }
+    
     // hashcode/equals..................................................................................................
 
     @Test
