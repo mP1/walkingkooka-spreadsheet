@@ -84,6 +84,16 @@ public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value
         return this.value;
     }
 
+    public <TT> SpreadsheetFormatterSample<TT> setValue(final TT value) {
+        return Objects.equals(this.value, value) ?
+                (SpreadsheetFormatterSample<TT>) this :
+                new SpreadsheetFormatterSample<>(
+                        this.label,
+                        this.selector,
+                        value
+                );
+    }
+
     private final T value;
 
     // Object...........................................................................................................
