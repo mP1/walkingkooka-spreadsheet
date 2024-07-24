@@ -18,9 +18,15 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Value;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -123,5 +129,79 @@ public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value
             printer.lineStart();
         }
         printer.outdent();
+    }
+
+    // json.............................................................................................................
+
+    static SpreadsheetFormatterSample<?> unmarshall(final JsonNode node,
+                                                    final JsonNodeUnmarshallContext context) {
+        String label = null;
+        SpreadsheetFormatterSelector selector = null;
+        Object value = null;
+
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+            switch (name.value()) {
+                case LABEL_PROPERTY_STRING:
+                    label = child.stringOrFail();
+                    break;
+                case SELECTOR_PROPERTY_STRING:
+                    selector = context.unmarshall(
+                            child,
+                            SpreadsheetFormatterSelector.class
+                    );
+                    break;
+                case VALUE_PROPERTY_STRING:
+                    value = context.unmarshallWithType(child);
+                    break;
+                default:
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
+            }
+        }
+
+        if (null == label) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(LABEL_PROPERTY, node);
+        }
+        if (null == selector) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(SELECTOR_PROPERTY, node);
+        }
+
+        return SpreadsheetFormatterSample.with(
+                label,
+                selector,
+                value
+        );
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.object()
+                .setChildren(
+                        Lists.of(
+                                JsonNode.string(this.label).setName(LABEL_PROPERTY),
+                                context.marshall(this.selector).setName(SELECTOR_PROPERTY),
+                                context.marshallWithType(this.value).setName(VALUE_PROPERTY)
+                        )
+                );
+    }
+
+    private final static String LABEL_PROPERTY_STRING = "label";
+
+    private final static String SELECTOR_PROPERTY_STRING = "selector";
+    private final static String VALUE_PROPERTY_STRING = "value";
+
+    // @VisibleForTesting
+
+    final static JsonPropertyName LABEL_PROPERTY = JsonPropertyName.with(LABEL_PROPERTY_STRING);
+    final static JsonPropertyName SELECTOR_PROPERTY = JsonPropertyName.with(SELECTOR_PROPERTY_STRING);
+    final static JsonPropertyName VALUE_PROPERTY = JsonPropertyName.with(VALUE_PROPERTY_STRING);
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetFormatterSample.class),
+                SpreadsheetFormatterSample::unmarshall,
+                SpreadsheetFormatterSample::marshall,
+                SpreadsheetFormatterSample.class
+        );
     }
 }

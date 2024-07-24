@@ -24,6 +24,11 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -32,7 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSample<String>>,
         ClassTesting<SpreadsheetFormatterSample<String>>,
         ToStringTesting<SpreadsheetFormatterSample<String>>,
-        TreePrintableTesting {
+        TreePrintableTesting,
+        JsonNodeMarshallingTesting<SpreadsheetFormatterSample<String>> {
 
     private final static String LABEL = "Label123";
 
@@ -222,6 +228,77 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
                         "  text-format-pattern\n" +
                         "    \" @\"\n" +
                         "  Value123\n"
+        );
+    }
+
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+                this.createJsonNodeMarshallingValue(),
+                "{\n" +
+                        "  \"label\": \"Label123\",\n" +
+                        "  \"selector\": \"text-format-pattern  @\",\n" +
+                        "  \"value\": \"Value123\"\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testMarshallDate() {
+        this.marshallAndCheck(
+                SpreadsheetFormatterSample.with(
+                        LABEL,
+                        SELECTOR,
+                        LocalDate.of(1999, 12, 31)
+                ),
+                "{\n" +
+                        "  \"label\": \"Label123\",\n" +
+                        "  \"selector\": \"text-format-pattern  @\",\n" +
+                        "  \"value\": {\n" +
+                        "    \"type\": \"local-date\",\n" +
+                        "    \"value\": \"1999-12-31\"\n" +
+                        "  }\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testMarshallUnmarshall() {
+        this.marshallRoundTripTwiceAndCheck(
+                this.createJsonNodeMarshallingValue()
+        );
+    }
+
+    @Test
+    public void testMarshallUnmarshallWithNullValue() {
+        this.marshallRoundTripTwiceAndCheck(
+                SpreadsheetFormatterSample.with(
+                        LABEL,
+                        SELECTOR,
+                        null
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterSample<String> unmarshall(final JsonNode json,
+                                                         final JsonNodeUnmarshallContext context) {
+        return Cast.to(
+                SpreadsheetFormatterSample.unmarshall(
+                        json,
+                        context
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterSample<String> createJsonNodeMarshallingValue() {
+        return SpreadsheetFormatterSample.with(
+                LABEL,
+                SELECTOR,
+                VALUE
         );
     }
 
