@@ -79,6 +79,7 @@ public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value
 
     private final SpreadsheetFormatterSelector selector;
 
+    @Override
     public T value() {
         return this.value;
     }
