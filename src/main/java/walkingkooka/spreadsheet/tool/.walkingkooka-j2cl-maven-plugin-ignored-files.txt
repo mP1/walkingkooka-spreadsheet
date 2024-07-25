@@ -1,4 +1,0 @@
-#
-# All tools should not be translated to javascript.
-#
-*
