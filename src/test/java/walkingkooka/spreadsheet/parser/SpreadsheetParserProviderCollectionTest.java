@@ -80,6 +80,13 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     }
 
     @Test
+    public void testSpreadsheetFormatterSelector() {
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("")
+        );
+    }
+
+    @Test
     public void testInfos() {
         final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
