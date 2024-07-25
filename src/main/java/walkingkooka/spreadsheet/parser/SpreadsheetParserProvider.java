@@ -55,6 +55,11 @@ public interface SpreadsheetParserProvider extends Provider {
     Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector);
 
     /**
+     * A constant when no equivalent {@link SpreadsheetFormatterSelector} is available for a {@link SpreadsheetFormatterSelector}.
+     */
+    Optional<SpreadsheetFormatterSelector> NO_SPREADSHEET_FORMATTER_SELECTOR = Optional.empty();
+
+    /**
      * Returns the equivalent {@link SpreadsheetFormatterSelector} if one is present for the given {@link SpreadsheetParserSelector}.
      * <br>
      * This will be useful for a UI where a user is building or selecting a {@link SpreadsheetParser}.
