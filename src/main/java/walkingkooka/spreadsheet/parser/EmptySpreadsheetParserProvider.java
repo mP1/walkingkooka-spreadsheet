@@ -66,7 +66,7 @@ final class EmptySpreadsheetParserProvider implements SpreadsheetParserProvider 
     public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return Optional.empty();
+        throw new IllegalArgumentException("Unknown parser " + selector.name());
     }
 
     @Override
