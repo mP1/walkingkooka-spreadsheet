@@ -639,6 +639,16 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     // spreadsheetFormatterSelector.....................................................................................
 
     @Test
+    public void testSpreadsheetFormatterSelectorWithEmptyDateParsePattern() {
+        final String text = "";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
+                SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + text)
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterSelectorWithDateParsePattern() {
         final String text = " yyyy/mm/dd";
 
