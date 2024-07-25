@@ -100,6 +100,23 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     }
 
     @Test
+    public void testSpreadsheetFormatterSelector() {
+        this.spreadsheetFormatterSelectorAndCheck(
+                SpreadsheetParserSelector.parse(NEW_PARSER_NAME),
+                SpreadsheetParserProviders.spreadsheetParsePattern(
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(
+                                Locale.forLanguageTag("EN-AU"),
+                                () -> {
+                                    throw new UnsupportedOperationException();
+                                }
+                        )
+                ).spreadsheetFormatterSelector(
+                        SpreadsheetParserName.DATE_PARSER_PATTERN.setText("")
+                )
+        );
+    }
+
+    @Test
     public void testSpreadsheetInfos() {
         this.spreadsheetParserInfosAndCheck(
                 SpreadsheetParserInfo.with(

@@ -120,7 +120,16 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
     public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        throw new UnsupportedOperationException();
+        final SpreadsheetParserName name = selector.name();
+
+        return this.provider.spreadsheetFormatterSelector(
+                selector.setName(
+                        this.nameMapper.apply(selector.name())
+                                .orElseThrow(
+                                        () -> new IllegalArgumentException("Unknown parser " + name)
+                                )
+                )
+        );
     }
 
     /**
