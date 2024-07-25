@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviderTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
@@ -47,6 +48,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         ExpressionFunctionProviderTesting<C>,
         SpreadsheetComparatorProviderTesting<C>,
         SpreadsheetFormatterProviderTesting<C>,
+        SpreadsheetParserProviderTesting<C>,
         SpreadsheetLabelNameResolverTesting {
 
     // SpreadsheetLabelNameResolverTesting..............................................................................
@@ -358,6 +360,13 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     @Override
     default C createExpressionFunctionProvider() {
+        return this.createContext();
+    }
+
+    // SpreadsheetParserProvider........................................................................................
+
+    @Override
+    default C createSpreadsheetParserProvider() {
         return this.createContext();
     }
 }
