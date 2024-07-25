@@ -47,7 +47,7 @@ public final class EmptySpreadsheetParserProviderTest implements SpreadsheetPars
 
     @Test
     public void testSpreadsheetFormatterSelector() {
-        this.spreadsheetFormatterSelectorAndCheck(
+        this.spreadsheetFormatterSelectorFails(
                 SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("")
         );
     }
