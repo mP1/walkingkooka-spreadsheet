@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSample;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -956,6 +957,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setText("@"),
                         "Hello 123"
                 )
+        );
+    }
+
+    // SpreadsheetParserProvider........................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelector() {
+        final SpreadsheetParsePattern pattern = SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy");
+
+        this.spreadsheetFormatterSelectorAndCheck(
+                pattern.spreadsheetParserSelector(),
+                pattern.toFormat()
+                        .spreadsheetFormatterSelector()
         );
     }
 

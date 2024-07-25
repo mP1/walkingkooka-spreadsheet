@@ -472,9 +472,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
-        Objects.requireNonNull(selector, "selector");
-
-        throw new UnsupportedOperationException();
+        return this.spreadsheetParserProvider.spreadsheetFormatterSelector(selector);
     }
 
     @Override
