@@ -97,16 +97,6 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     }
 
     @Override
-    public Class<SpreadsheetParserProviderCollection> type() {
-        return SpreadsheetParserProviderCollection.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    @Override
     public SpreadsheetParserProviderCollection createSpreadsheetParserProvider() {
         return SpreadsheetParserProviderCollection.with(
                 Sets.of(
@@ -124,5 +114,17 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
                         }
                 )
         );
+    }
+
+    // Class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetParserProviderCollection> type() {
+        return SpreadsheetParserProviderCollection.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
