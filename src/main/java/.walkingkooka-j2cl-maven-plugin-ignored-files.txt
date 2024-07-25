@@ -4,7 +4,3 @@
 **/*Testing.*
 **/*Testing2.*
 
-#
-# tool
-#
-**/spreadsheet/tool/*
