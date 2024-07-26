@@ -27,7 +27,7 @@ import java.util.Optional;
 /**
  * Base class for any property that holds a {@link SpreadsheetFormatterSelector}.
  */
-abstract public class SpreadsheetMetadataPropertyNameFormatter extends SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> {
+abstract class SpreadsheetMetadataPropertyNameFormatter extends SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> {
 
     /**
      * Package private to limit sub classing.
