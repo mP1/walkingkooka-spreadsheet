@@ -609,6 +609,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         return this instanceof SpreadsheetMetadataPropertyNameFormatter;
     }
 
+    /**
+     * Returns true if this property contains a {@link SpreadsheetParserSelector}.
+     */
+    public final boolean isSpreadsheetParserSelector() {
+        return this instanceof SpreadsheetMetadataPropertyNameParser;
+    }
+
     // Object...........................................................................................................
 
     @Override
