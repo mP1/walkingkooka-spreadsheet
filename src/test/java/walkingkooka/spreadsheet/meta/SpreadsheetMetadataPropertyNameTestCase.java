@@ -23,6 +23,7 @@ import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.CharSequences;
@@ -180,6 +181,19 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                     () -> propertyName.parseUrlFragmentSaveValue("")
             );
         }
+    }
+
+    // isSpreadsheetFormatterSelector...................................................................................
+
+    @Test
+    public final void testIsSpreadsheetFormatterSelector() {
+        final N propertyName = this.createName();
+
+        this.checkEquals(
+                this.propertyValue() instanceof SpreadsheetFormatterSelector,
+                propertyName.isSpreadsheetFormatterSelector(),
+                propertyName::toString
+        );
     }
 
     // NameTesting......................................................................................................
