@@ -29,6 +29,6 @@ public final class SpreadsheetMetadataPropertyNameFormatterTest implements Class
 
     @Override
     public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+        return JavaVisibility.PUBLIC;
     }
 }
