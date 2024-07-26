@@ -600,6 +600,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         return Optional.ofNullable(kind);
     }
 
+    // isXXX............................................................................................................
+
+    /**
+     * Returns true if this property contains a {@link SpreadsheetFormatterSelector}.
+     */
+    public final boolean isSpreadsheetFormatterSelector() {
+        return this instanceof SpreadsheetMetadataPropertyNameFormatter;
+    }
+
     // Object...........................................................................................................
 
     @Override
