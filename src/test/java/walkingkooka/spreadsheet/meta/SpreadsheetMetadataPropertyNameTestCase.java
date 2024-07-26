@@ -24,6 +24,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.CharSequences;
@@ -192,6 +193,20 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         this.checkEquals(
                 this.propertyValue() instanceof SpreadsheetFormatterSelector,
                 propertyName.isSpreadsheetFormatterSelector(),
+                propertyName::toString
+        );
+    }
+
+
+    // isSpreadsheetParserSelector...................................................................................
+
+    @Test
+    public final void testIsSpreadsheetParserSelector() {
+        final N propertyName = this.createName();
+
+        this.checkEquals(
+                this.propertyValue() instanceof SpreadsheetParserSelector,
+                propertyName.isSpreadsheetParserSelector(),
                 propertyName::toString
         );
     }
