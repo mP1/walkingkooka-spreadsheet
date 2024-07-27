@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.parser.edit;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 
 public interface SpreadsheetParserSelectorEditContext extends SpreadsheetParserProvider,
+        SpreadsheetParserContext,
         SpreadsheetFormatterProvider,
         SpreadsheetFormatterContext {
 }
