@@ -27,4 +27,9 @@ public interface SpreadsheetFormatterSelectorEditContextTesting<C extends Spread
     default C createSpreadsheetFormatterProvider() {
         return this.createContext();
     }
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetFormatterSelectorEditContext.class.getSimpleName();
+    }
 }
