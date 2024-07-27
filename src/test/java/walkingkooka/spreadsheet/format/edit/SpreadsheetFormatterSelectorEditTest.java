@@ -77,7 +77,7 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
     @Test
     public void testParseOnlySpreadsheetFormatterName() {
         this.parseStringAndCheck(
-                "date-format-pattern",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.value(),
                 SpreadsheetFormatterSelectorEdit.with(
                         Optional.of(SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("")),
                         "text is empty",
@@ -90,7 +90,7 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
 
     @Test
     public void testParseSpreadsheetFormatterNameInvalidPattern() {
-        final String selector = "date-format-pattern !";
+        final String selector = SpreadsheetFormatterName.DATE_FORMAT_PATTERN + " !";
 
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
@@ -113,7 +113,7 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "date-format-pattern yyyy",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN + " yyyy",
                 SpreadsheetFormatterSelectorEdit.with(
                         Optional.of(SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("yyyy")),
                         "",
@@ -207,7 +207,7 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.parseString("date-format-pattern yyyy/mm/dd"),
+                this.parseString(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + " yyyy/mm/dd"),
                 "SpreadsheetFormatterSelectorEdit\n" +
                         "  selector\n" +
                         "    date-format-pattern\n" +
@@ -272,7 +272,7 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
 
     @Override
     public SpreadsheetFormatterSelectorEdit createJsonNodeMarshallingValue() {
-        return this.parseString("date-format-pattern dd/mm/yyyy");
+        return this.parseString(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + " dd/mm/yyyy");
     }
 
     // class............................................................................................................
