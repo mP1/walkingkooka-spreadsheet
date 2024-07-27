@@ -22,4 +22,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
 
 public interface SpreadsheetFormatterSelectorEditContextTesting<C extends SpreadsheetFormatterSelectorEditContext> extends SpreadsheetFormatterProviderTesting<C>,
         SpreadsheetFormatterContextTesting<C> {
+
+    @Override
+    default C createSpreadsheetFormatterProvider() {
+        return this.createContext();
+    }
 }
