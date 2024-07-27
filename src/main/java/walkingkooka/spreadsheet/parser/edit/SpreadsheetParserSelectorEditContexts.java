@@ -21,6 +21,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 
 public final class SpreadsheetParserSelectorEditContexts implements PublicStaticHelper {
 
+    /**
+     * {@see FakeSpreadsheetParserSelectorEditContext}
+     */
+    public static FakeSpreadsheetParserSelectorEditContext fake() {
+        return new FakeSpreadsheetParserSelectorEditContext();
+    }
+
     private SpreadsheetParserSelectorEditContexts() {
         throw new UnsupportedOperationException();
     }
