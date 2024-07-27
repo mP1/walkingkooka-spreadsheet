@@ -21,6 +21,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 
 public final class SpreadsheetFormatterSelectorEditContexts implements PublicStaticHelper {
 
+    /**
+     * {@see FakeSpreadsheetFormatterSelectorEditContext}
+     */
+    public static SpreadsheetFormatterSelectorEditContext fake() {
+        return new FakeSpreadsheetFormatterSelectorEditContext();
+    }
+
     private SpreadsheetFormatterSelectorEditContexts() {
         throw new UnsupportedOperationException();
     }
