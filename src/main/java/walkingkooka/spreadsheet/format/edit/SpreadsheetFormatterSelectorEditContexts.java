@@ -18,8 +18,21 @@
 package walkingkooka.spreadsheet.format.edit;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 
 public final class SpreadsheetFormatterSelectorEditContexts implements PublicStaticHelper {
+
+    /**
+     * {@see SpreadsheetFormatterSelectorEditContext}
+     */
+    public static SpreadsheetFormatterSelectorEditContext basic(final SpreadsheetFormatterContext spreadsheetFormatterContext,
+                                                                final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+        return BasicSpreadsheetFormatterSelectorEditContext.with(
+                spreadsheetFormatterContext,
+                spreadsheetFormatterProvider
+        );
+    }
 
     /**
      * {@see FakeSpreadsheetFormatterSelectorEditContext}
