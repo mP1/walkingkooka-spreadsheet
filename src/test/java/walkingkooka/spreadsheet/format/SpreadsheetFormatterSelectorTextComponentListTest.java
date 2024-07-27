@@ -160,8 +160,7 @@ public class SpreadsheetFormatterSelectorTextComponentListTest implements ListTe
                         "    \"type\": \"spreadsheet-formatter-selector-text-component\",\n" +
                         "    \"value\": {\n" +
                         "      \"label\": \"label1\",\n" +
-                        "      \"text\": \"text1\",\n" +
-                        "      \"alternatives\": []\n" +
+                        "      \"text\": \"text1\"\n" +
                         "    }\n" +
                         "  }\n" +
                         "]"
