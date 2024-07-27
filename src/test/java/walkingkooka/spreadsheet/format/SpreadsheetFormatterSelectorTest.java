@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -75,6 +76,28 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
                         SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
                         ""
                 ).spreadsheetFormatPattern()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatPatternInvalidCharacterExceptionMessage() {
+        final String selector = "date-format-pattern yyyy/!";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetFormatterSelector.parse(selector)
+                        .spreadsheetFormatPattern()
+        );
+
+        this.checkEquals(
+                "Invalid character '!' at 25 in \"date-format-pattern yyyy/!\"",
+                thrown.getMessage(),
+                "message"
+        );
+
+        this.checkEquals(
+                '!',
+                selector.charAt(25)
         );
     }
 
