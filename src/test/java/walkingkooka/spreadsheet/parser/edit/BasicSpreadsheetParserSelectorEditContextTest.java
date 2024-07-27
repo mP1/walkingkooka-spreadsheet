@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -56,6 +57,20 @@ public final class BasicSpreadsheetParserSelectorEditContextTest implements Spre
                 NullPointerException.class,
                 () -> BasicSpreadsheetParserSelectorEditContext.with(
                         null,
+                        SpreadsheetParserContexts.fake(),
+                        SpreadsheetFormatterContexts.fake(),
+                        SpreadsheetFormatterProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetParserContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetParserSelectorEditContext.with(
+                        SpreadsheetParserProviders.fake(),
+                        null,
                         SpreadsheetFormatterContexts.fake(),
                         SpreadsheetFormatterProviders.fake()
                 )
@@ -68,6 +83,7 @@ public final class BasicSpreadsheetParserSelectorEditContextTest implements Spre
                 NullPointerException.class,
                 () -> BasicSpreadsheetParserSelectorEditContext.with(
                         SpreadsheetParserProviders.fake(),
+                        SpreadsheetParserContexts.fake(),
                         null,
                         SpreadsheetFormatterProviders.fake()
                 )
@@ -80,6 +96,7 @@ public final class BasicSpreadsheetParserSelectorEditContextTest implements Spre
                 NullPointerException.class,
                 () -> BasicSpreadsheetParserSelectorEditContext.with(
                         SpreadsheetParserProviders.fake(),
+                        SpreadsheetParserContexts.fake(),
                         SpreadsheetFormatterContexts.fake(),
                         null
                 )
@@ -119,6 +136,7 @@ public final class BasicSpreadsheetParserSelectorEditContextTest implements Spre
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         spreadsheetFormatterProvider
                 ),
+                SpreadsheetParserContexts.fake(),
                 this.spreadsheetFormatterContext(),
                 spreadsheetFormatterProvider
         );

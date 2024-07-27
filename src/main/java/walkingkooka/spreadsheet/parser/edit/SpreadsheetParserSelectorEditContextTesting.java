@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.parser.edit;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContextTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderTesting;
 
 public interface SpreadsheetParserSelectorEditContextTesting<C extends SpreadsheetParserSelectorEditContext> extends SpreadsheetParserProviderTesting<C>,
+        SpreadsheetParserContextTesting<C>,
         SpreadsheetFormatterProviderTesting<C>,
         SpreadsheetFormatterContextTesting<C> {
 

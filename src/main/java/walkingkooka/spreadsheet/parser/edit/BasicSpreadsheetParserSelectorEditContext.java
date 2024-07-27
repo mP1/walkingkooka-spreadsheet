@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelectorTextComponent;
 import walkingkooka.spreadsheet.format.edit.SpreadsheetFormatterSelectorEditContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
@@ -57,19 +58,23 @@ import java.util.Set;
 final class BasicSpreadsheetParserSelectorEditContext implements SpreadsheetParserSelectorEditContext {
 
     static BasicSpreadsheetParserSelectorEditContext with(final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                          final SpreadsheetParserContext spreadsheetParserContext,
                                                           final SpreadsheetFormatterContext spreadsheetFormatterContext,
                                                           final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
         return new BasicSpreadsheetParserSelectorEditContext(
                 Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider"),
+                Objects.requireNonNull(spreadsheetParserContext, "spreadsheetParserContext"),
                 Objects.requireNonNull(spreadsheetFormatterContext, "spreadsheetFormatterContext"),
                 Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider")
         );
     }
 
     private BasicSpreadsheetParserSelectorEditContext(final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                      final SpreadsheetParserContext spreadsheetParserContext,
                                                       final SpreadsheetFormatterContext spreadsheetFormatterContext,
                                                       final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
         this.spreadsheetParserProvider = spreadsheetParserProvider;
+        this.spreadsheetParserContext = spreadsheetParserContext;
         this.spreadsheetFormatterContext = spreadsheetFormatterContext;
         this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
     }
@@ -94,6 +99,17 @@ final class BasicSpreadsheetParserSelectorEditContext implements SpreadsheetPars
     public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
         return this.spreadsheetParserProvider.spreadsheetParserNextTextComponent(selector);
     }
+
+    // SpreadsheetParserContext.........................................................................................
+
+    @Override
+    public char valueSeparator() {
+        return this.spreadsheetParserContext.valueSeparator();
+    }
+
+    private final SpreadsheetParserContext spreadsheetParserContext;
+
+    // SpreadsheetFormatterProvider.....................................................................................
 
     @Override
     public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
