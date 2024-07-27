@@ -60,6 +60,11 @@ public class FakeSpreadsheetParserSelectorEditContext extends FakeSpreadsheetPar
     }
 
     @Override
+    public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
         throw new UnsupportedOperationException();
     }
