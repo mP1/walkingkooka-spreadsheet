@@ -241,7 +241,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.comparatorNamesCheckAndCheckFails(
                 "1",
                 "1=TEXT;2=TEXT;33=TEXT",
-                "Some sort columns/rows are not within 1 got 2, 33"
+                "Invalid row(s) 2, 33 are not within 1"
         );
     }
 

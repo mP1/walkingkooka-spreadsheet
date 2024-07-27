@@ -522,7 +522,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
 
         this.checkEquals(
-                "Some sort columns/rows are not within A1:B2 got C, ZZ",
+                "Invalid column(s) C, ZZ are not within A1:B2",
                 thrown.getMessage()
         );
     }
@@ -559,7 +559,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
 
         this.checkEquals(
-                "Some sort columns/rows are not within A1:B2 got 3, 99",
+                "Invalid row(s) 3, 99 are not within A1:B2",
                 thrown.getMessage()
         );
     }

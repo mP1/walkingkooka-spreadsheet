@@ -597,7 +597,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
         this.comparatorNamesCheckAndCheckFails(
                 "1:3",
                 "1=TEXT;2=TEXT;33=TEXT",
-                "Some sort columns/rows are not within 1:3 got 33"
+                "Invalid row(s) 33 are not within 1:3"
         );
     }
 
