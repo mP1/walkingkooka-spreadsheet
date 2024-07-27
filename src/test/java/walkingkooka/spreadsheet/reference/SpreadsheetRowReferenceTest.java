@@ -234,11 +234,11 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
-    // comparatorNamesCheck.............................................................................................
+    // comparatorNamesBoundsCheck.......................................................................................
 
     @Test
-    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
-        this.comparatorNamesCheckAndCheckFails(
+    public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
+        this.comparatorNamesBoundsCheckAndCheckFails(
                 "1",
                 "1=TEXT;2=TEXT;33=TEXT",
                 "Invalid row(s) 2, 33 are not within 1"
@@ -246,16 +246,16 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testComparatorNamesCheckWithColumns() {
-        this.comparatorNamesCheckAndCheck(
+    public void testComparatorNamesBoundsCheckWithColumns() {
+        this.comparatorNamesBoundsCheckAndCheck(
                 "1",
                 "A=text UP;B=text DOWN;C=text UP;D=text DOWN"
         );
     }
 
     @Test
-    public void testComparatorNamesCheckWithRows() {
-        this.comparatorNamesCheckAndCheck(
+    public void testComparatorNamesBoundsCheckWithRows() {
+        this.comparatorNamesBoundsCheckAndCheck(
                 "1",
                 "1=text"
         );

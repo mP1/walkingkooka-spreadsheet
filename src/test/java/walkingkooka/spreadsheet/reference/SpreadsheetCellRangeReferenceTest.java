@@ -747,11 +747,11 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         return SpreadsheetCellRangeReference.parseCellRange("B2:C3");
     }
 
-    // comparatorNamesCheck.............................................................................................
+    // comparatorNamesBoundsCheck.......................................................................................
 
     @Test
-    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
-        this.comparatorNamesCheckAndCheckFails(
+    public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
+        this.comparatorNamesBoundsCheckAndCheckFails(
                 "A1:B2",
                 "B=TEXT;C=TEXT;ZZ=TEXT",
                 "Invalid column(s) C, ZZ are not within A1:B2"
@@ -759,8 +759,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     }
 
     @Test
-    public void testComparatorNamesCheckWithRowComparatorsOutOfBoundsFails() {
-        this.comparatorNamesCheckAndCheckFails(
+    public void testComparatorNamesBoundsCheckWithRowComparatorsOutOfBoundsFails() {
+        this.comparatorNamesBoundsCheckAndCheckFails(
                 "A1:B2",
                 "2=TEXT;3=TEXT;99=TEXT",
                 "Invalid row(s) 3, 99 are not within A1:B2"
@@ -768,16 +768,16 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     }
 
     @Test
-    public void testComparatorNamesCheckWithColumns() {
-        this.comparatorNamesCheckAndCheck(
+    public void testComparatorNamesBoundsCheckWithColumns() {
+        this.comparatorNamesBoundsCheckAndCheck(
                 "A1:C3",
                 "A=text UP;B=text DOWN"
         );
     }
 
     @Test
-    public void testComparatorNamesCheckWithRows() {
-        this.comparatorNamesCheckAndCheck(
+    public void testComparatorNamesBoundsCheckWithRows() {
+        this.comparatorNamesBoundsCheckAndCheck(
                 "A1:C3",
                 "2=text UP;3=text DOWN"
         );

@@ -217,7 +217,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
                 .columnOrRowReferenceKind();
 
         final SpreadsheetCellRangeReference cellRange = this.range();
-        cellRange.comparatorNamesCheck(
+        cellRange.comparatorNamesBoundsCheck(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
                         comparators.stream()
                                 .map(SpreadsheetColumnOrRowSpreadsheetComparators::toSpreadsheetColumnOrRowSpreadsheetComparatorNames)

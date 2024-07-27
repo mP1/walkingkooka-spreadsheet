@@ -311,11 +311,11 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
-    // comparatorNamesCheck.............................................................................................
+    // comparatorNamesBoundsCheck.......................................................................................
 
     @Test
-    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
-        this.comparatorNamesCheckAndCheckFails(
+    public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
+        this.comparatorNamesBoundsCheckAndCheckFails(
                 "A:C",
                 "A=TEXT;B=TEXT;ZZ=TEXT",
                 "Invalid column(s) ZZ are not within A:C"
@@ -323,16 +323,16 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testComparatorNamesCheckWithColumns() {
-        this.comparatorNamesCheckAndCheck(
+    public void testComparatorNamesBoundsCheckWithColumns() {
+        this.comparatorNamesBoundsCheckAndCheck(
                 "A:C",
                 "A=text UP;B=text DOWN;C=text UP"
         );
     }
 
     @Test
-    public void testComparatorNamesCheckWithRows() {
-        this.comparatorNamesCheckAndCheck(
+    public void testComparatorNamesBoundsCheckWithRows() {
+        this.comparatorNamesBoundsCheckAndCheck(
                 "A:C",
                 "1=text;2=text"
         );
