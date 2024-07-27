@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -169,28 +170,37 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
      * Returns a {@link SpreadsheetParsePattern} providing the text is not empty and a valid pattern.
      */
     public Optional<SpreadsheetParsePattern> spreadsheetParsePattern() {
-        if (null == this.spreadsheetParserPattern) {
-            final SpreadsheetPatternKind patternKind = this.name().patternKind;
+        if (null == this.spreadsheetParsePattern) {
+            final SpreadsheetPatternKind patternKind = this.name()
+                    .patternKind;
 
-            SpreadsheetParsePattern parsePattern;
-
-            try {
-                parsePattern = null == patternKind ?
-                        null :
-                        (SpreadsheetParsePattern)
-                                patternKind.parse(this.text());
-            } catch (final RuntimeException fail) {
-                parsePattern = null;
-            }
-
-
-            this.spreadsheetParserPattern = Optional.ofNullable(parsePattern);
+            this.spreadsheetParsePattern = Optional.ofNullable(
+                    null == patternKind ?
+                            null :
+                            tryParse(patternKind)
+            );
         }
 
-        return this.spreadsheetParserPattern;
+        return this.spreadsheetParsePattern;
     }
 
-    private Optional<SpreadsheetParsePattern> spreadsheetParserPattern;
+    private SpreadsheetParsePattern tryParse(final SpreadsheetPatternKind kind) {
+        final String text = this.text();
+
+        try {
+            return (SpreadsheetParsePattern)kind.parse(text);
+        } catch (final InvalidCharacterException cause) {
+            throw cause.setTextAndPosition(
+                    this.toString(),
+                    this.name()
+                            .value().length() +
+                            (text.isEmpty() ? 0 : 1) +
+                            cause.position()
+            );
+        }
+    }
+
+    private Optional<SpreadsheetParsePattern> spreadsheetParsePattern;
 
     // Object...........................................................................................................
 

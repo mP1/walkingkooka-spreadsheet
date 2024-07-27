@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -27,6 +28,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTesting<SpreadsheetParserSelector, SpreadsheetParserName> {
 
@@ -65,6 +68,28 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
 
     // spreadsheetParsePattern.........................................................................................
 
+    @Test
+    public void testSpreadsheetParsePatternInvalidCharacterExceptionMessage() {
+        final String selector = "date-parse-pattern yyyy/!";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetParserSelector.parse(selector)
+                        .spreadsheetParsePattern()
+        );
+
+        this.checkEquals(
+                "Invalid character '!' at 24 in \"date-parse-pattern yyyy/!\"",
+                thrown.getMessage(),
+                "message"
+        );
+
+        this.checkEquals(
+                '!',
+                selector.charAt(24)
+        );
+    }
+    
     @Test
     public void testSpreadsheetParsePatternWithDateParsePattern() {
         this.spreadsheetParsePatternAndCheck(
