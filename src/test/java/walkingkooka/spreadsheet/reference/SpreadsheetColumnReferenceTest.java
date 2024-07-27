@@ -151,7 +151,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.comparatorNamesCheckAndCheckFails(
                 "A",
                 "A=TEXT;B=TEXT;ZZ=TEXT",
-                "Some sort columns/rows are not within A got B, ZZ"
+                "Invalid column(s) B, ZZ are not within A"
         );
     }
 

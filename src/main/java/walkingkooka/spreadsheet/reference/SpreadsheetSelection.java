@@ -740,7 +740,18 @@ public abstract class SpreadsheetSelection implements HasText,
                     .map(Object::toString)
                     .collect(Collectors.joining(", "));
             if (false == outOfBounds.isEmpty()) {
-                throw new IllegalArgumentException("Some sort columns/rows are not within " + this + " got " + outOfBounds);
+                final SpreadsheetColumnOrRowReference first = comparatorNames.get(0).columnOrRow();
+
+                // Invalid column(s) C are not within D1:E1
+                // Invalid column(s) C, D are not within D1:E1
+                throw new IllegalArgumentException(
+                        "Invalid " +
+                                first.textLabel().toLowerCase() +
+                                "(s) " +
+                                outOfBounds +
+                                " are not within " +
+                                this
+                );
             }
         }
     }

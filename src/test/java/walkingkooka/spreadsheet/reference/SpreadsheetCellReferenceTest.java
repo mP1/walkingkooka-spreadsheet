@@ -204,7 +204,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.comparatorNamesCheckAndCheckFails(
                 "A1",
                 "A=TEXT;B=TEXT;ZZ=TEXT",
-                "Some sort columns/rows are not within A1 got B, ZZ"
+                "Invalid column(s) B, ZZ are not within A1"
         );
     }
 
@@ -213,7 +213,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.comparatorNamesCheckAndCheckFails(
                 "A1",
                 "1=TEXT;2=TEXT;99=TEXT",
-                "Some sort columns/rows are not within A1 got 2, 99"
+                "Invalid row(s) 2, 99 are not within A1"
         );
     }
 

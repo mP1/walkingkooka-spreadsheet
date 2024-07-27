@@ -754,7 +754,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         this.comparatorNamesCheckAndCheckFails(
                 "A1:B2",
                 "B=TEXT;C=TEXT;ZZ=TEXT",
-                "Some sort columns/rows are not within A1:B2 got C, ZZ"
+                "Invalid column(s) C, ZZ are not within A1:B2"
         );
     }
 
@@ -763,7 +763,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         this.comparatorNamesCheckAndCheckFails(
                 "A1:B2",
                 "2=TEXT;3=TEXT;99=TEXT",
-                "Some sort columns/rows are not within A1:B2 got 3, 99"
+                "Invalid row(s) 3, 99 are not within A1:B2"
         );
     }
 
