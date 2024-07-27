@@ -18,8 +18,24 @@
 package walkingkooka.spreadsheet.parser.edit;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 
 public final class SpreadsheetParserSelectorEditContexts implements PublicStaticHelper {
+
+    /**
+     * {see BasicSpreadsheetParserSelectorEditContext}
+     */
+    public static SpreadsheetParserSelectorEditContext basic(final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                             final SpreadsheetFormatterContext spreadsheetFormatterContext,
+                                                             final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+        return BasicSpreadsheetParserSelectorEditContext.with(
+                spreadsheetParserProvider,
+                spreadsheetFormatterContext,
+                spreadsheetFormatterProvider
+        );
+    }
 
     /**
      * {@see FakeSpreadsheetParserSelectorEditContext}
