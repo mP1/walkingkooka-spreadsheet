@@ -144,11 +144,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
-    // comparatorNamesCheck.............................................................................................
+    // comparatorNamesBoundsCheck.......................................................................................
 
     @Test
-    public void testComparatorNamesCheckWithColumnComparatorsOutOfBoundsFails() {
-        this.comparatorNamesCheckAndCheckFails(
+    public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
+        this.comparatorNamesBoundsCheckAndCheckFails(
                 "A",
                 "A=TEXT;B=TEXT;ZZ=TEXT",
                 "Invalid column(s) B, ZZ are not within A"
@@ -156,16 +156,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testComparatorNamesCheckWithColumns() {
-        this.comparatorNamesCheckAndCheck(
+    public void testComparatorNamesBoundsCheckWithColumns() {
+        this.comparatorNamesBoundsCheckAndCheck(
                 "A",
                 "A=text UP"
         );
     }
 
     @Test
-    public void testComparatorNamesCheckWithRows() {
-        this.comparatorNamesCheckAndCheck(
+    public void testComparatorNamesBoundsCheckWithRows() {
+        this.comparatorNamesBoundsCheckAndCheck(
                 "A",
                 "1=text;2=text"
         );

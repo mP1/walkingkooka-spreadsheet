@@ -718,19 +718,19 @@ public abstract class SpreadsheetSelection implements HasText,
 
     abstract Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection movedTo);
 
-    // comparatorNameCheck..............................................................................................
+    // comparatorNamesBoundsCheck.......................................................................................
 
     /**
      * Verifies all the column/rows for each {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} are the same type,
      * not overlapping and within this {@link SpreadsheetSelection}. The last check is skipped for {@link SpreadsheetLabelName}.
      */
-    public void comparatorNamesCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorNames) {
-        this.comparatorNamesCheck0(
+    public void comparatorNamesBoundsCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorNames) {
+        this.comparatorNamesBoundsCheck0(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames)
         );
     }
 
-    private void comparatorNamesCheck0(final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorNames) {
+    private void comparatorNamesBoundsCheck0(final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorNames) {
         if (false == this.isLabelName()) {
             final SpreadsheetCellRangeReference cellRange = this.toCellRange();
 

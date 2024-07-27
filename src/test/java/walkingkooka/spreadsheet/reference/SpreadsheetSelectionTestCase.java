@@ -511,52 +511,52 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         }
     }
 
-    // comparatorNamesCheck.............................................................................................
+    // comparatorNamesBoundsCheck.......................................................................................
 
     @Test
-    public final void testComparatorNamesCheckWithNullComparatorsFails() {
+    public final void testComparatorNamesBoundsCheckWithNullComparatorsFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSelection()
-                        .comparatorNamesCheck(null)
+                        .comparatorNamesBoundsCheck(null)
         );
     }
 
-    void comparatorNamesCheckAndCheck(final String selection,
-                                      final String comparatorsNameList) {
-        this.comparatorNamesCheckAndCheck(
+    void comparatorNamesBoundsCheckAndCheck(final String selection,
+                                            final String comparatorsNameList) {
+        this.comparatorNamesBoundsCheckAndCheck(
                 this.parseString(selection),
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(comparatorsNameList)
         );
     }
 
-    void comparatorNamesCheckAndCheck(final SpreadsheetSelection selection,
-                                      final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorsNameList) {
-        selection.comparatorNamesCheck(comparatorsNameList);
+    void comparatorNamesBoundsCheckAndCheck(final SpreadsheetSelection selection,
+                                            final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorsNameList) {
+        selection.comparatorNamesBoundsCheck(comparatorsNameList);
     }
 
-    void comparatorNamesCheckAndCheckFails(final String selection,
-                                           final String comparatorsNameList,
-                                           final String expected) {
-        this.comparatorNamesCheckAndCheckFails(
+    void comparatorNamesBoundsCheckAndCheckFails(final String selection,
+                                                 final String comparatorsNameList,
+                                                 final String expected) {
+        this.comparatorNamesBoundsCheckAndCheckFails(
                 this.parseString(selection),
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(comparatorsNameList),
                 expected
         );
     }
 
-    void comparatorNamesCheckAndCheckFails(final SpreadsheetSelection selection,
-                                           final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorsNameList,
-                                           final String expected) {
+    void comparatorNamesBoundsCheckAndCheckFails(final SpreadsheetSelection selection,
+                                                 final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorsNameList,
+                                                 final String expected) {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> selection.comparatorNamesCheck(comparatorsNameList)
+                () -> selection.comparatorNamesBoundsCheck(comparatorsNameList)
         );
 
         this.checkEquals(
                 expected,
                 thrown.getMessage(),
-                () -> selection + " comparatorNamesCheck " + comparatorsNameList
+                () -> selection + " comparatorNamesBoundsCheck " + comparatorsNameList
         );
     }
 
