@@ -846,7 +846,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // HasSpreadsheetFormatterContext...................................................................................
+    // SpreadsheetFormatterContext......................................................................................
 
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
