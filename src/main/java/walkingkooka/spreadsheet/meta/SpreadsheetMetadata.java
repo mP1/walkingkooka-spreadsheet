@@ -819,7 +819,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return new MathContext(precision, roundingMode);
     }
 
-    // HasSpreadsheetFormatter..........................................................................................
+    // formatter........................................................................................................
 
     /**
      * Creates a {@link SpreadsheetFormatter} that creates a single formatter that formats values using {@link SpreadsheetFormatters#automatic(SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter)}
