@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -185,13 +186,28 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
             this.spreadsheetFormatPattern = Optional.ofNullable(
                     null == patternKind ?
                             null :
-                            patternKind.parse(
-                                    this.text()
-                            ).toFormat()
+                            tryParse(patternKind)
             );
         }
 
         return this.spreadsheetFormatPattern;
+    }
+
+    private SpreadsheetFormatPattern tryParse(final SpreadsheetPatternKind kind) {
+        final String text = this.text();
+
+        try {
+            return kind.parse(text)
+                    .toFormat();
+        } catch (final InvalidCharacterException cause) {
+            throw cause.setTextAndPosition(
+                    this.toString(),
+                    this.name()
+                            .value().length() +
+                            (text.isEmpty() ? 0 : 1) +
+                            cause.position()
+            );
+        }
     }
 
     private Optional<SpreadsheetFormatPattern> spreadsheetFormatPattern;
