@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
-import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -119,7 +118,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
 
     @Override
     protected void visit(final LocalDate value) {
-        this.formatUsingFormatter(
+        this.formatUsingPattern(
                 value,
                 SpreadsheetPattern.parseDateFormatPattern(this.pattern)
         );
@@ -127,7 +126,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
 
     @Override
     protected void visit(final LocalDateTime value) {
-        this.formatUsingFormatter(
+        this.formatUsingPattern(
                 value,
                 SpreadsheetPattern.parseDateTimeFormatPattern(this.pattern)
         );
@@ -135,7 +134,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
 
     @Override
     protected void visit(final LocalTime value) {
-        this.formatUsingFormatter(
+        this.formatUsingPattern(
                 value,
                 SpreadsheetPattern.parseTimeFormatPattern(this.pattern)
         );
@@ -204,16 +203,16 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
      * Parses the pattern into a {@link SpreadsheetFormatter} and then formats the given number.
      */
     private void formatNumber(final ExpressionNumber number) {
-        this.formatUsingFormatter(
+        this.formatUsingPattern(
                 number,
                 SpreadsheetPattern.parseNumberFormatPattern(this.pattern)
         );
     }
 
-    private void formatUsingFormatter(final Object value,
-                                      final HasSpreadsheetFormatter hasSpreadsheetFormatter) {
+    private void formatUsingPattern(final Object value,
+                                    final SpreadsheetPattern pattern) {
         this.formatText(
-                hasSpreadsheetFormatter.formatter()
+                pattern.formatter()
                         .formatOrEmptyText(
                                 value,
                                 SpreadsheetFormatterContexts.basic(
