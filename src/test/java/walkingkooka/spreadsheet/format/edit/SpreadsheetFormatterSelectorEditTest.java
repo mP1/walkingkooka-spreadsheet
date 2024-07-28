@@ -276,77 +276,62 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
                         "  \"message\": \"\",\n" +
                         "  \"textComponents\": [\n" +
                         "    {\n" +
-                        "      \"type\": \"spreadsheet-formatter-selector-text-component\",\n" +
-                        "      \"value\": {\n" +
-                        "        \"label\": \"dd\",\n" +
-                        "        \"text\": \"dd\",\n" +
-                        "        \"alternatives\": [\n" +
-                        "          {\n" +
-                        "            \"label\": \"d\",\n" +
-                        "            \"text\": \"d\"\n" +
-                        "          },\n" +
-                        "          {\n" +
-                        "            \"label\": \"ddd\",\n" +
-                        "            \"text\": \"ddd\"\n" +
-                        "          },\n" +
-                        "          {\n" +
-                        "            \"label\": \"dddd\",\n" +
-                        "            \"text\": \"dddd\"\n" +
-                        "          }\n" +
-                        "        ]\n" +
-                        "      }\n" +
+                        "      \"label\": \"dd\",\n" +
+                        "      \"text\": \"dd\",\n" +
+                        "      \"alternatives\": [\n" +
+                        "        {\n" +
+                        "          \"label\": \"d\",\n" +
+                        "          \"text\": \"d\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"ddd\",\n" +
+                        "          \"text\": \"ddd\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"dddd\",\n" +
+                        "          \"text\": \"dddd\"\n" +
+                        "        }\n" +
+                        "      ]\n" +
                         "    },\n" +
                         "    {\n" +
-                        "      \"type\": \"spreadsheet-formatter-selector-text-component\",\n" +
-                        "      \"value\": {\n" +
-                        "        \"label\": \"/\",\n" +
-                        "        \"text\": \"/\"\n" +
-                        "      }\n" +
+                        "      \"label\": \"/\",\n" +
+                        "      \"text\": \"/\"\n" +
                         "    },\n" +
                         "    {\n" +
-                        "      \"type\": \"spreadsheet-formatter-selector-text-component\",\n" +
-                        "      \"value\": {\n" +
-                        "        \"label\": \"mm\",\n" +
-                        "        \"text\": \"mm\",\n" +
-                        "        \"alternatives\": [\n" +
-                        "          {\n" +
-                        "            \"label\": \"m\",\n" +
-                        "            \"text\": \"m\"\n" +
-                        "          },\n" +
-                        "          {\n" +
-                        "            \"label\": \"mmm\",\n" +
-                        "            \"text\": \"mmm\"\n" +
-                        "          },\n" +
-                        "          {\n" +
-                        "            \"label\": \"mmmm\",\n" +
-                        "            \"text\": \"mmmm\"\n" +
-                        "          },\n" +
-                        "          {\n" +
-                        "            \"label\": \"mmmmm\",\n" +
-                        "            \"text\": \"mmmmm\"\n" +
-                        "          }\n" +
-                        "        ]\n" +
-                        "      }\n" +
+                        "      \"label\": \"mm\",\n" +
+                        "      \"text\": \"mm\",\n" +
+                        "      \"alternatives\": [\n" +
+                        "        {\n" +
+                        "          \"label\": \"m\",\n" +
+                        "          \"text\": \"m\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"mmm\",\n" +
+                        "          \"text\": \"mmm\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"mmmm\",\n" +
+                        "          \"text\": \"mmmm\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"mmmmm\",\n" +
+                        "          \"text\": \"mmmmm\"\n" +
+                        "        }\n" +
+                        "      ]\n" +
                         "    },\n" +
                         "    {\n" +
-                        "      \"type\": \"spreadsheet-formatter-selector-text-component\",\n" +
-                        "      \"value\": {\n" +
-                        "        \"label\": \"/\",\n" +
-                        "        \"text\": \"/\"\n" +
-                        "      }\n" +
+                        "      \"label\": \"/\",\n" +
+                        "      \"text\": \"/\"\n" +
                         "    },\n" +
                         "    {\n" +
-                        "      \"type\": \"spreadsheet-formatter-selector-text-component\",\n" +
-                        "      \"value\": {\n" +
-                        "        \"label\": \"yyyy\",\n" +
-                        "        \"text\": \"yyyy\",\n" +
-                        "        \"alternatives\": [\n" +
-                        "          {\n" +
-                        "            \"label\": \"yy\",\n" +
-                        "            \"text\": \"yy\"\n" +
-                        "          }\n" +
-                        "        ]\n" +
-                        "      }\n" +
+                        "      \"label\": \"yyyy\",\n" +
+                        "      \"text\": \"yyyy\",\n" +
+                        "      \"alternatives\": [\n" +
+                        "        {\n" +
+                        "          \"label\": \"yy\",\n" +
+                        "          \"text\": \"yy\"\n" +
+                        "        }\n" +
+                        "      ]\n" +
                         "    }\n" +
                         "  ],\n" +
                         "  \"next\": {\n" +
@@ -424,6 +409,151 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
                         "    }\n" +
                         "  ]\n" +
                         "}"
+        );
+    }
+
+    @Test
+    public void testUnmarshall() {
+        this.unmarshallAndCheck(
+                "{\n" +
+                        "  \"selector\": \"date-format-pattern dd/mm/yyyy\",\n" +
+                        "  \"message\": \"\",\n" +
+                        "  \"textComponents\": [\n" +
+                        "    {\n" +
+                        "      \"label\": \"dd\",\n" +
+                        "      \"text\": \"dd\",\n" +
+                        "      \"alternatives\": [\n" +
+                        "        {\n" +
+                        "          \"label\": \"d\",\n" +
+                        "          \"text\": \"d\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"ddd\",\n" +
+                        "          \"text\": \"ddd\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"dddd\",\n" +
+                        "          \"text\": \"dddd\"\n" +
+                        "        }\n" +
+                        "      ]\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"label\": \"/\",\n" +
+                        "      \"text\": \"/\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"label\": \"mm\",\n" +
+                        "      \"text\": \"mm\",\n" +
+                        "      \"alternatives\": [\n" +
+                        "        {\n" +
+                        "          \"label\": \"m\",\n" +
+                        "          \"text\": \"m\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"mmm\",\n" +
+                        "          \"text\": \"mmm\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"mmmm\",\n" +
+                        "          \"text\": \"mmmm\"\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"label\": \"mmmmm\",\n" +
+                        "          \"text\": \"mmmmm\"\n" +
+                        "        }\n" +
+                        "      ]\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"label\": \"/\",\n" +
+                        "      \"text\": \"/\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"label\": \"yyyy\",\n" +
+                        "      \"text\": \"yyyy\",\n" +
+                        "      \"alternatives\": [\n" +
+                        "        {\n" +
+                        "          \"label\": \"yy\",\n" +
+                        "          \"text\": \"yy\"\n" +
+                        "        }\n" +
+                        "      ]\n" +
+                        "    }\n" +
+                        "  ],\n" +
+                        "  \"next\": {\n" +
+                        "    \"alternatives\": [\n" +
+                        "      {\n" +
+                        "        \"label\": \"d\",\n" +
+                        "        \"text\": \"d\"\n" +
+                        "      },\n" +
+                        "      {\n" +
+                        "        \"label\": \"dd\",\n" +
+                        "        \"text\": \"dd\"\n" +
+                        "      },\n" +
+                        "      {\n" +
+                        "        \"label\": \"ddd\",\n" +
+                        "        \"text\": \"ddd\"\n" +
+                        "      },\n" +
+                        "      {\n" +
+                        "        \"label\": \"dddd\",\n" +
+                        "        \"text\": \"dddd\"\n" +
+                        "      },\n" +
+                        "      {\n" +
+                        "        \"label\": \"m\",\n" +
+                        "        \"text\": \"m\"\n" +
+                        "      },\n" +
+                        "      {\n" +
+                        "        \"label\": \"mm\",\n" +
+                        "        \"text\": \"mm\"\n" +
+                        "      },\n" +
+                        "      {\n" +
+                        "        \"label\": \"mmm\",\n" +
+                        "        \"text\": \"mmm\"\n" +
+                        "      },\n" +
+                        "      {\n" +
+                        "        \"label\": \"mmmm\",\n" +
+                        "        \"text\": \"mmmm\"\n" +
+                        "      },\n" +
+                        "      {\n" +
+                        "        \"label\": \"mmmmm\",\n" +
+                        "        \"text\": \"mmmmm\"\n" +
+                        "      }\n" +
+                        "    ]\n" +
+                        "  },\n" +
+                        "  \"samples\": [\n" +
+                        "    {\n" +
+                        "      \"label\": \"Short\",\n" +
+                        "      \"selector\": \"date-format-pattern d/m/yy\",\n" +
+                        "      \"value\": {\n" +
+                        "        \"type\": \"local-date\",\n" +
+                        "        \"value\": \"1999-12-31\"\n" +
+                        "      }\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"label\": \"Medium\",\n" +
+                        "      \"selector\": \"date-format-pattern d mmm yyyy\",\n" +
+                        "      \"value\": {\n" +
+                        "        \"type\": \"local-date\",\n" +
+                        "        \"value\": \"1999-12-31\"\n" +
+                        "      }\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"label\": \"Long\",\n" +
+                        "      \"selector\": \"date-format-pattern d mmmm yyyy\",\n" +
+                        "      \"value\": {\n" +
+                        "        \"type\": \"local-date\",\n" +
+                        "        \"value\": \"1999-12-31\"\n" +
+                        "      }\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"label\": \"Full\",\n" +
+                        "      \"selector\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
+                        "      \"value\": {\n" +
+                        "        \"type\": \"local-date\",\n" +
+                        "        \"value\": \"1999-12-31\"\n" +
+                        "      }\n" +
+                        "    }\n" +
+                        "  ]\n" +
+                        "}",
+                this.createJsonNodeMarshallingValue()
         );
     }
 

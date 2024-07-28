@@ -101,13 +101,16 @@ public final class SpreadsheetFormatterSelectorTextComponentList extends Abstrac
                                                                     final JsonNodeUnmarshallContext context) {
         return with(
                 Cast.to(
-                        context.unmarshallWithTypeList(node)
+                        context.unmarshallList(
+                                node,
+                                SpreadsheetFormatterSelectorTextComponent.class
+                        )
                 )
         );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return context.marshallWithTypeCollection(this);
+        return context.marshallCollection(this);
     }
 
     static {
