@@ -101,7 +101,7 @@ public final class SpreadsheetParserSelectorEdit implements TreePrintable {
         return new SpreadsheetParserSelectorEdit(
                 Objects.requireNonNull(selector, "selector"),
                 Objects.requireNonNull(message, "message"),
-                Lists.immutable(
+                SpreadsheetParserSelectorTextComponentList.with(
                         Objects.requireNonNull(textComponents, "textComponents")
                 ),
                 Objects.requireNonNull(next, "next"),
