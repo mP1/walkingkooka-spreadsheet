@@ -22,13 +22,10 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.provider.ConverterProvider;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -38,7 +35,6 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Locale;
 
 public final class UnformattedNumberSpreadsheetConverterTest implements ConverterTesting2<UnformattedNumberSpreadsheetConverter, SpreadsheetConverterContext>,
         SpreadsheetMetadataTesting,
@@ -193,16 +189,10 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss").spreadsheetFormatterSelector()
         );
 
-        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                Locale.forLanguageTag("EN-AU"),
-                () -> {
-                    throw new UnsupportedOperationException();
-                }
-        );
         final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                 metadata,
-                spreadsheetFormatterProvider,
-                SpreadsheetParserProviders.spreadsheetParsePattern(spreadsheetFormatterProvider)
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER
         );
 
         final Converter<SpreadsheetConverterContext> converter = metadata.expressionConverter(
@@ -214,7 +204,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 LABEL_NAME_RESOLVER,
                 metadata.converterContext(
                         converterProvider,
-                        LocalDateTime::now,
+                        NOW,
                         LABEL_NAME_RESOLVER
                 )
         );
