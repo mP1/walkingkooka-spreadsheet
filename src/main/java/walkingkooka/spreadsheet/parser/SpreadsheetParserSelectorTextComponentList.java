@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.tree.json.JsonNode;
@@ -100,14 +99,15 @@ public final class SpreadsheetParserSelectorTextComponentList extends AbstractLi
     static SpreadsheetParserSelectorTextComponentList unmarshall(final JsonNode node,
                                                                  final JsonNodeUnmarshallContext context) {
         return with(
-                Cast.to(
-                        context.unmarshallWithTypeList(node)
+                context.unmarshallList(
+                        node,
+                        SpreadsheetParserSelectorTextComponent.class
                 )
         );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return context.marshallWithTypeCollection(this);
+        return context.marshallCollection(this);
     }
 
     static {

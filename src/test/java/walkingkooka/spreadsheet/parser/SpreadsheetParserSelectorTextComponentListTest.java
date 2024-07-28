@@ -144,24 +144,18 @@ public class SpreadsheetParserSelectorTextComponentListTest implements ListTesti
                 this.createList(),
                 "[\n" +
                         "  {\n" +
-                        "    \"type\": \"spreadsheet-parser-selector-text-component\",\n" +
-                        "    \"value\": {\n" +
-                        "      \"label\": \"label1\",\n" +
-                        "      \"text\": \"text1\",\n" +
-                        "      \"alternatives\": [\n" +
-                        "        {\n" +
-                        "          \"label\": \"alternative-label-1\",\n" +
-                        "          \"text\": \"alternative-text-1\"\n" +
-                        "        }\n" +
-                        "      ]\n" +
-                        "    }\n" +
+                        "    \"label\": \"label1\",\n" +
+                        "    \"text\": \"text1\",\n" +
+                        "    \"alternatives\": [\n" +
+                        "      {\n" +
+                        "        \"label\": \"alternative-label-1\",\n" +
+                        "        \"text\": \"alternative-text-1\"\n" +
+                        "      }\n" +
+                        "    ]\n" +
                         "  },\n" +
                         "  {\n" +
-                        "    \"type\": \"spreadsheet-parser-selector-text-component\",\n" +
-                        "    \"value\": {\n" +
-                        "      \"label\": \"label1\",\n" +
-                        "      \"text\": \"text1\"\n" +
-                        "    }\n" +
+                        "    \"label\": \"label1\",\n" +
+                        "    \"text\": \"text1\"\n" +
                         "  }\n" +
                         "]"
         );
@@ -172,25 +166,18 @@ public class SpreadsheetParserSelectorTextComponentListTest implements ListTesti
         this.unmarshallAndCheck(
                 "[\n" +
                         "  {\n" +
-                        "    \"type\": \"spreadsheet-parser-selector-text-component\",\n" +
-                        "    \"value\": {\n" +
-                        "      \"label\": \"label1\",\n" +
-                        "      \"text\": \"text1\",\n" +
-                        "      \"alternatives\": [\n" +
-                        "        {\n" +
-                        "          \"label\": \"alternative-label-1\",\n" +
-                        "          \"text\": \"alternative-text-1\"\n" +
-                        "        }\n" +
-                        "      ]\n" +
-                        "    }\n" +
+                        "    \"label\": \"label1\",\n" +
+                        "    \"text\": \"text1\",\n" +
+                        "    \"alternatives\": [\n" +
+                        "      {\n" +
+                        "        \"label\": \"alternative-label-1\",\n" +
+                        "        \"text\": \"alternative-text-1\"\n" +
+                        "      }\n" +
+                        "    ]\n" +
                         "  },\n" +
                         "  {\n" +
-                        "    \"type\": \"spreadsheet-parser-selector-text-component\",\n" +
-                        "    \"value\": {\n" +
-                        "      \"label\": \"label1\",\n" +
-                        "      \"text\": \"text1\",\n" +
-                        "      \"alternatives\": []\n" +
-                        "    }\n" +
+                        "    \"label\": \"label1\",\n" +
+                        "    \"text\": \"text1\"\n" +
                         "  }\n" +
                         "]",
                 this.createList()
