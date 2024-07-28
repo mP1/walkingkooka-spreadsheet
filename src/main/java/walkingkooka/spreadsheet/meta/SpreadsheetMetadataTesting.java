@@ -73,9 +73,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
             LOCALE,
-            () -> {
-                throw new UnsupportedOperationException();
-            }
+            NOW
     );
 
     SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
