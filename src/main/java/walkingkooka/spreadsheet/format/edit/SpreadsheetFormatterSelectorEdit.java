@@ -93,7 +93,7 @@ public final class SpreadsheetFormatterSelectorEdit implements TreePrintable {
         return new SpreadsheetFormatterSelectorEdit(
                 Objects.requireNonNull(selector, "selector"),
                 Objects.requireNonNull(message, "message"),
-                Lists.immutable(
+                SpreadsheetFormatterSelectorTextComponentList.with(
                         Objects.requireNonNull(textComponents, "textComponents")
                 ),
                 Objects.requireNonNull(next, "next"),
