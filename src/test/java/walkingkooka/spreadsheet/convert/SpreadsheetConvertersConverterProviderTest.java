@@ -27,9 +27,7 @@ import walkingkooka.convert.provider.ConverterProviderTesting;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -187,15 +185,8 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
         return SpreadsheetConvertersConverterProvider.with(
                 SpreadsheetMetadataTesting.METADATA_EN_AU,
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                        Locale.forLanguageTag("EN-AU"),
-                        () -> {
-                            throw new UnsupportedOperationException();
-                        }
-                ),
-                SpreadsheetParserProviders.spreadsheetParsePattern(
-                        SpreadsheetFormatterProviders.fake()
-                )
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER
         );
     }
 

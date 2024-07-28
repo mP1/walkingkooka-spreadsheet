@@ -25,18 +25,14 @@ import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
-import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -150,18 +146,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                     @Override
                     public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
                                                                                final List<?> values) {
-                        return SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                                METADATA_EN_AU,
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                                        Locale.forLanguageTag("EN-AU"),
-                                        () -> {
-                                            throw new UnsupportedOperationException();
-                                        }
-                                ),
-                                SpreadsheetParserProviders.spreadsheetParsePattern(
-                                        SpreadsheetFormatterProviders.fake()
-                                )
-                        ).converter(
+                        return CONVERTER_PROVIDER.converter(
                                 name,
                                 values
                         );

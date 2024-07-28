@@ -19,38 +19,15 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadataTesting,
         TreePrintableTesting {
-
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-            Locale.forLanguageTag("EN-AU"),
-            () -> {
-                throw new UnsupportedOperationException();
-            }
-    );
-    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
-            SPREADSHEET_FORMATTER_PROVIDER
-    );
-
-    private final static ConverterProvider CONVERTER_PROVIDER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-            METADATA_EN_AU,
-            SPREADSHEET_FORMATTER_PROVIDER,
-            SPREADSHEET_PARSER_PROVIDER
-    );
 
     @Test
     public void testGeneralConverter() {
