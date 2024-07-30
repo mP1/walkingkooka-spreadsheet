@@ -18,34 +18,19 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Either;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
-import walkingkooka.convert.FakeConverter;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
-import java.math.MathContext;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameFormatterDateTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterDate> {
+public final class SpreadsheetMetadataPropertyNameFormatterDateTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterDate>
+        implements SpreadsheetMetadataTesting{
 
     @Test
     public void testExtractLocaleAwareValue() {
@@ -60,7 +45,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterDateTest extends Spre
         final String formatted = pattern.formatter()
                 .format(
                         date,
-                        spreadsheetFormatterContext()
+                        SPREADSHEET_FORMATTER_CONTEXT
                 ).get()
                 .text();
 
@@ -68,67 +53,6 @@ public final class SpreadsheetMetadataPropertyNameFormatterDateTest extends Spre
         final String expected = simpleDateFormat.format(Date.from(date.atStartOfDay().toInstant(ZoneOffset.UTC)));
 
         this.checkEquals(expected, formatted, () -> pattern + "\nSimpleDateFormat: " + simpleDateFormat.toPattern());
-    }
-
-    private SpreadsheetFormatterContext spreadsheetFormatterContext() {
-        return SpreadsheetFormatterContexts.basic(
-                (n -> {
-                    throw new UnsupportedOperationException();
-                }),
-                (n -> {
-                    throw new UnsupportedOperationException();
-                }),
-                1, // cellCharacterWidth
-                8, // generalNumberFormatDigitCount
-                SpreadsheetFormatters.fake(),
-                SpreadsheetConverterContexts.basic(
-                        new FakeConverter<>() {
-
-                            @Override
-                            public boolean canConvert(final Object value,
-                                                      final Class<?> type,
-                                                      final SpreadsheetConverterContext context) {
-                                return value instanceof LocalDate &&
-                                        LocalDateTime.class == type;
-                            }
-
-                            @Override
-                            public <T> Either<T, String> convert(final Object value,
-                                                                 final Class<T> type,
-                                                                 final SpreadsheetConverterContext context) {
-                                return this.successfulConversion(
-                                        type.cast(
-                                                LocalDateTime.of(
-                                                        (LocalDate) value,
-                                                        LocalTime.MIDNIGHT
-                                                )
-                                        ),
-                                        type
-                                );
-                            }
-                        },
-                        LABEL_NAME_RESOLVER,
-                        SpreadsheetConverterContexts.basic(
-                                Converters.fake(),
-                                LABEL_NAME_RESOLVER,
-                                ExpressionNumberConverterContexts.basic(
-                                        Converters.fake(),
-                                        ConverterContexts.basic(
-                                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                                Converters.fake(),
-                                                DateTimeContexts.locale(
-                                                        Locale.ENGLISH,
-                                                        1900,
-                                                        20,
-                                                        LocalDateTime::now
-                                                ),
-                                                DecimalNumberContexts.american(MathContext.DECIMAL32)
-                                        ),
-                                        ExpressionNumberKind.DEFAULT
-                                )
-                        )
-                )
-        );
     }
 
     @Test

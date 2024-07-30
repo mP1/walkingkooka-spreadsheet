@@ -24,15 +24,12 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -45,7 +42,6 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -65,7 +61,6 @@ import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.MathContext;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -81,7 +76,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
         HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
         PatchableTesting<SpreadsheetCell>,
         ToStringTesting<SpreadsheetCell>,
-        TreePrintableTesting {
+        TreePrintableTesting,
+        SpreadsheetMetadataTesting {
     private final static int COLUMN = 1;
     private final static int ROW = 20;
     private final static SpreadsheetCellReference REFERENCE = reference(COLUMN, ROW);
@@ -523,28 +519,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
                 SpreadsheetParsers.valueOrExpression(
                         Parsers.never()
                 ),
-                this.parserContext()
+                SPREADSHEET_PARSER_CONTEXT
         );
     }
-
-    private SpreadsheetParserContext parserContext() {
-        return SpreadsheetParserContexts.basic(
-                DateTimeContexts.locale(
-                        Locale.forLanguageTag("EN-AU"), // locale
-                        1920,
-                        50,
-                        () -> {
-                            throw new UnsupportedOperationException("now");
-                        }
-                ),
-                ExpressionNumberContexts.basic(
-                        ExpressionNumberKind.BIG_DECIMAL,
-                        DecimalNumberContexts.american(MathContext.DECIMAL32)
-                ),
-                ','
-        );
-    }
-
 
     @Override
     public SpreadsheetCell createReplaceReference() {

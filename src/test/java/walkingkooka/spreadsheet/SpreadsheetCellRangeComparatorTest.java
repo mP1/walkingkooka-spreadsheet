@@ -22,33 +22,25 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting2;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
-import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
-import java.math.MathContext;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesting2<SpreadsheetCellRangeComparator, List<SpreadsheetCell>>,
-        TreePrintableTesting {
+        TreePrintableTesting,
+        SpreadsheetMetadataTesting {
 
     @Test
     public void testWithNullComparatorsFails() {
@@ -472,29 +464,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                         comparators,
                         SpreadsheetComparatorProviders.spreadsheetComparators()
                 ),
-                SpreadsheetComparatorContexts.basic(
-                        SpreadsheetConverterContexts.basic(
-                                converter,
-                                (label) -> {
-                                    throw new UnsupportedOperationException();
-                                },
-                                ExpressionNumberConverterContexts.basic(
-                                        Converters.fake(),
-                                        ConverterContexts.basic(
-                                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                                Converters.fake(),
-                                                DateTimeContexts.locale(
-                                                        Locale.forLanguageTag("EN-AU"),
-                                                        1950, // defaultYear
-                                                        50, // twoDigitYears
-                                                        LocalDateTime::now
-                                                ),
-                                                DecimalNumberContexts.american(MathContext.DECIMAL32)
-                                        ),
-                                        ExpressionNumberKind.BIG_DECIMAL
-                                )
-                        )
-                )
+                SPREADSHEET_COMPARATOR_CONTEXT
         );
     }
 

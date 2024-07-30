@@ -18,29 +18,16 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Either;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
-import walkingkooka.convert.FakeConverter;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
-import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameFormatterDateTimeTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterDateTime> {
+public final class SpreadsheetMetadataPropertyNameFormatterDateTimeTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterDateTime>
+        implements SpreadsheetMetadataTesting{
 
     @Test
     public void testExtractLocaleAwareValue() {
@@ -64,7 +51,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterDateTimeTest extends 
         final String formatted = pattern.formatter()
                 .format(
                         date,
-                        spreadsheetFormatterContext()
+                        SPREADSHEET_FORMATTER_CONTEXT
                 )
                 .get()
                 .text();
@@ -72,57 +59,6 @@ public final class SpreadsheetMetadataPropertyNameFormatterDateTimeTest extends 
                 "Friday, December 31, 1999 at 12:58:59 PM",
                 formatted,
                 pattern::toString
-        );
-    }
-
-    private SpreadsheetFormatterContext spreadsheetFormatterContext() {
-        return SpreadsheetFormatterContexts.basic(
-                (n -> {
-                    throw new UnsupportedOperationException();
-                }),
-                (n -> {
-                    throw new UnsupportedOperationException();
-                }),
-                1, // cellCharacterWidth
-                8, // generalNumberFormatDigitCount
-                SpreadsheetFormatters.fake(),
-                SpreadsheetConverterContexts.basic(
-                        new FakeConverter<>() {
-
-                            @Override
-                            public boolean canConvert(final Object value,
-                                                      final Class<?> type,
-                                                      final SpreadsheetConverterContext context) {
-                                return type.isInstance(value);
-                            }
-
-                            @Override
-                            public <T> Either<T, String> convert(final Object value,
-                                                                 final Class<T> type,
-                                                                 final SpreadsheetConverterContext context) {
-                                return this.successfulConversion(
-                                        type.cast(value),
-                                        type
-                                );
-                            }
-                        },
-                        LABEL_NAME_RESOLVER,
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.fake(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        DateTimeContexts.locale(
-                                                Locale.ENGLISH,
-                                                1900,
-                                                20,
-                                                LocalDateTime::now
-                                        ),
-                                        DecimalNumberContexts.american(MathContext.DECIMAL32)
-                                ),
-                                ExpressionNumberKind.DEFAULT
-                        )
-                )
         );
     }
 
