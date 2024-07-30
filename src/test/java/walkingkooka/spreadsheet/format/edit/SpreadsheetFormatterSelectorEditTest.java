@@ -61,6 +61,20 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
     }
 
     @Test
+    public void testParseStringEmpty() {
+        this.parseStringAndCheck(
+                "",
+                SpreadsheetFormatterSelectorEdit.with(
+                        Optional.empty(), // selector
+                        "text is empty",
+                        Lists.empty(),
+                        Optional.empty(),
+                        Lists.empty()
+                )
+        );
+    }
+
+    @Test
     public void testParseInvalidSpreadsheetFormatterName() {
         this.parseStringAndCheck(
                 "1",
