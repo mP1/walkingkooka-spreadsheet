@@ -246,25 +246,45 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetFormatterProvider()
-                        .spreadsheetFormatterSamples(null)
+                        .spreadsheetFormatterSamples(
+                                null,
+                                SpreadsheetFormatterContexts.fake()
+                        )
         );
     }
 
+    @Test
+    default void testSpreadsheetFormatterSamplesWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetFormatterProvider()
+                        .spreadsheetFormatterSamples(
+                                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+                                null
+                        )
+        );
+    }
+
+
     default void spreadsheetFormatterSamplesAndCheck(final SpreadsheetFormatterName name,
+                                                     final SpreadsheetFormatterContext context,
                                                      final SpreadsheetFormatterSample... expected) {
         this.spreadsheetFormatterSamplesAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 name,
+                context,
                 expected
         );
     }
 
     default void spreadsheetFormatterSamplesAndCheck(final SpreadsheetFormatterProvider provider,
                                                      final SpreadsheetFormatterName name,
+                                                     final SpreadsheetFormatterContext context,
                                                      final SpreadsheetFormatterSample... expected) {
         this.spreadsheetFormatterSamplesAndCheck(
                 provider,
                 name,
+                context,
                 Lists.of(
                         expected
                 )
@@ -273,26 +293,36 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
     default void spreadsheetFormatterSamplesAndCheck(final SpreadsheetFormatterProvider provider,
                                                      final SpreadsheetFormatterName name,
+                                                     final SpreadsheetFormatterContext context,
                                                      final List<SpreadsheetFormatterSample> expected) {
         this.checkEquals(
                 expected,
-                provider.spreadsheetFormatterSamples(name),
+                provider.spreadsheetFormatterSamples(
+                        name,
+                        context
+                ),
                 name + " samples"
         );
     }
 
-    default void spreadsheetFormatterSamplesFails(final SpreadsheetFormatterName name) {
+    default void spreadsheetFormatterSamplesFails(final SpreadsheetFormatterName name,
+                                                  final SpreadsheetFormatterContext context) {
         this.spreadsheetFormatterSamplesFails(
                 this.createSpreadsheetFormatterProvider(),
-                name
+                name,
+                context
         );
     }
 
     default void spreadsheetFormatterSamplesFails(final SpreadsheetFormatterProvider provider,
-                                                  final SpreadsheetFormatterName name) {
+                                                  final SpreadsheetFormatterName name,
+                                                  final SpreadsheetFormatterContext context) {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> provider.spreadsheetFormatterSamples(name)
+                () -> provider.spreadsheetFormatterSamples(
+                        name,
+                        context
+                )
         );
     }
     

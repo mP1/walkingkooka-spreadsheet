@@ -25,12 +25,12 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.tree.text.TextNode;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +39,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -48,19 +47,13 @@ import java.util.stream.Collectors;
  */
 final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
 
-    static SpreadsheetFormatPatternSpreadsheetFormatterProvider with(final Locale locale,
-                                                                     final Supplier<LocalDateTime> now) {
-        return new SpreadsheetFormatPatternSpreadsheetFormatterProvider(
-                Objects.requireNonNull(locale, "locale"),
-                Objects.requireNonNull(now, "now")
-        );
-    }
+    /**
+     * Singleton
+     */
+    final static SpreadsheetFormatPatternSpreadsheetFormatterProvider INSTANCE = new SpreadsheetFormatPatternSpreadsheetFormatterProvider();
 
-    private SpreadsheetFormatPatternSpreadsheetFormatterProvider(final Locale locale,
-                                                                 final Supplier<LocalDateTime> now) {
+    private SpreadsheetFormatPatternSpreadsheetFormatterProvider() {
         super();
-        this.locale = locale;
-        this.now = now;
     }
 
     @Override
@@ -259,10 +252,12 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     // spreadsheetFormatterSamples......................................................................................
 
     @Override
-    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                        final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
 
-        List<SpreadsheetFormatterSample<?>> samples;
+        List<SpreadsheetFormatterSample> samples;
 
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
@@ -273,19 +268,23 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                 samples = Lists.of(
                         this.dateSpreadsheetFormatterSample(
                                 "Short",
-                                DateFormat.SHORT
+                                DateFormat.SHORT,
+                                context
                         ),
                         this.dateSpreadsheetFormatterSample(
                                 "Medium",
-                                DateFormat.MEDIUM
+                                DateFormat.MEDIUM,
+                                context
                         ),
                         this.dateSpreadsheetFormatterSample(
                                 "Long",
-                                DateFormat.LONG
+                                DateFormat.LONG,
+                                context
                         ),
                         this.dateSpreadsheetFormatterSample(
                                 "Full",
-                                DateFormat.FULL
+                                DateFormat.FULL,
+                                context
                         )
                 );
                 break;
@@ -293,32 +292,39 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                 samples = Lists.of(
                         this.dateTimeSpreadsheetFormatterSample(
                                 "Short",
-                                DateFormat.SHORT
+                                DateFormat.SHORT,
+                                context
                         ),
                         this.dateTimeSpreadsheetFormatterSample(
                                 "Medium",
-                                DateFormat.MEDIUM
+                                DateFormat.MEDIUM,
+                                context
                         ),
                         this.dateTimeSpreadsheetFormatterSample(
                                 "Long",
-                                DateFormat.LONG
+                                DateFormat.LONG,
+                                context
                         ),
                         this.dateTimeSpreadsheetFormatterSample(
                                 "Full",
-                                DateFormat.FULL
+                                DateFormat.FULL,
+                                context
                         )
                 );
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
                 samples = Lists.of(
                         generalSample(
-                                123.5
+                                123.5,
+                                context
                         ),
                         generalSample(
-                                -123.5
+                                -123.5,
+                                context
                         ),
                         generalSample(
-                                0
+                                0,
+                                context
                         )
                 );
                 break;
@@ -327,62 +333,74 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                         this.numberSpreadsheetFormatterSample(
                                 "Number",
                                 DecimalFormat::getInstance,
-                                123.5
+                                123.5,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Number",
                                 DecimalFormat::getInstance,
-                                -123.5
+                                -123.5,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Number",
                                 DecimalFormat::getInstance,
-                                0
+                                0,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Integer",
                                 DecimalFormat::getIntegerInstance,
-                                123.5
+                                123.5,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Integer",
                                 DecimalFormat::getIntegerInstance,
-                                -123.5
+                                -123.5,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Integer",
                                 DecimalFormat::getIntegerInstance,
-                                0
+                                0,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Percent",
                                 DecimalFormat::getPercentInstance,
-                                123.5
+                                123.5,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Percent",
                                 DecimalFormat::getPercentInstance,
-                                -123.5
+                                -123.5,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Percent",
                                 DecimalFormat::getPercentInstance,
-                                0
+                                0,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Currency",
                                 DecimalFormat::getCurrencyInstance,
-                                123.5
+                                123.5,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Currency",
                                 DecimalFormat::getCurrencyInstance,
-                                -123.5
+                                -123.5,
+                                context
                         ),
                         this.numberSpreadsheetFormatterSample(
                                 "Currency",
                                 DecimalFormat::getCurrencyInstance,
-                                0
+                                0,
+                                context
                         )
                 );
                 break;
@@ -391,7 +409,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                         SpreadsheetFormatterSample.with(
                                 "Default",
                                 SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
-                                "Hello 123"
+                                TextNode.text("Hello 123")
                         )
                 );
                 break;
@@ -399,11 +417,13 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                 samples = Lists.of(
                         this.timeSpreadsheetFormatterSample(
                                 "Short",
-                                DateFormat.SHORT
+                                DateFormat.SHORT,
+                                context
                         ),
                         this.timeSpreadsheetFormatterSample(
                                 "Long",
-                                DateFormat.LONG
+                                DateFormat.LONG,
+                                context
                         )
                 );
                 break;
@@ -415,89 +435,99 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         return samples;
     }
 
-    private SpreadsheetFormatterSample<?> dateSpreadsheetFormatterSample(final String label,
-                                                                         final int dateFormatStyle) {
+    private SpreadsheetFormatterSample dateSpreadsheetFormatterSample(final String label,
+                                                                      final int dateFormatStyle,
+                                                                      final SpreadsheetFormatterContext context) {
         return this.sample(
                 label,
                 SpreadsheetPattern.dateParsePattern(
                         (SimpleDateFormat) DateFormat.getDateInstance(
                                 dateFormatStyle,
-                                this.locale
+                                context.locale()
                         )
                 ),
-                this.now.get().toLocalDate()
+                context.now()
+                        .toLocalDate(),
+                context
         );
     }
 
-    private SpreadsheetFormatterSample<?> dateTimeSpreadsheetFormatterSample(final String label,
-                                                                             final int dateFormatStyle) {
+    private SpreadsheetFormatterSample dateTimeSpreadsheetFormatterSample(final String label,
+                                                                          final int dateFormatStyle,
+                                                                          final SpreadsheetFormatterContext context) {
         return this.sample(
                 label,
                 SpreadsheetPattern.dateTimeParsePattern(
                         (SimpleDateFormat) DateFormat.getDateTimeInstance(
                                 dateFormatStyle,
                                 dateFormatStyle,
-                                this.locale
+                                context.locale()
                         )
                 ),
-                this.now.get()
+                context.now(),
+                context
         );
     }
 
-    private SpreadsheetFormatterSample<?> generalSample(final Number value) {
+    private SpreadsheetFormatterSample generalSample(final Number value,
+                                                     final SpreadsheetFormatterContext context) {
         return SpreadsheetFormatterSample.with(
                 "General",
                 SpreadsheetFormatterName.GENERAL.setText(""),
-                value
+                context.formatOrEmptyText(value)
         );
     }
 
 
-    private SpreadsheetFormatterSample<?> numberSpreadsheetFormatterSample(final String label,
-                                                                           final Function<Locale, NumberFormat> decimalFormat,
-                                                                           final Number value) {
+    private SpreadsheetFormatterSample numberSpreadsheetFormatterSample(final String label,
+                                                                        final Function<Locale, NumberFormat> decimalFormat,
+                                                                        final Number value,
+                                                                        final SpreadsheetFormatterContext context) {
         return this.sample(
                 label,
                 SpreadsheetPattern.decimalFormat(
                         (DecimalFormat) decimalFormat.apply(
-                                this.locale
+                                context.locale()
                         )
                 ),
-                value
+                value,
+                context
         );
     }
 
-    private SpreadsheetFormatterSample<?> timeSpreadsheetFormatterSample(final String label,
-                                                                         final int dateFormatStyle) {
+    private SpreadsheetFormatterSample timeSpreadsheetFormatterSample(final String label,
+                                                                      final int dateFormatStyle,
+                                                                      final SpreadsheetFormatterContext context) {
         return this.sample(
                 label,
                 SpreadsheetPattern.timeParsePattern(
                         (SimpleDateFormat) DateFormat.getTimeInstance(
                                 dateFormatStyle,
-                                this.locale
+                                context.locale()
                         )
                 ),
-                this.now.get().toLocalTime()
+                context.now()
+                        .toLocalTime(),
+                context
         );
     }
 
-    private SpreadsheetFormatterSample<?> sample(final String label,
-                                                 final SpreadsheetParsePattern pattern,
-                                                 final Object value) {
+    private SpreadsheetFormatterSample sample(final String label,
+                                              final SpreadsheetParsePattern pattern,
+                                              final Object value,
+                                              final SpreadsheetFormatterContext context) {
+        final SpreadsheetFormatPattern formatPattern = pattern.toFormat();
+
         return SpreadsheetFormatterSample.with(
                 label,
-                pattern.toFormat()
-                        .spreadsheetFormatterSelector(),
-                value
+                formatPattern.spreadsheetFormatterSelector(),
+                formatPattern.formatter()
+                        .formatOrEmptyText(
+                                value,
+                                context
+                        )
         );
     }
-
-    /**
-     * The {@link Locale} is used to provide sample format patterns.
-     */
-    private final Locale locale;
-
-    private final Supplier<LocalDateTime> now;
 
     // spreadsheetFormatterInfos........................................................................................
 

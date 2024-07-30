@@ -53,10 +53,10 @@ import java.util.Objects;
  * ]
  * </pre>
  */
-public final class SpreadsheetFormatterSampleList extends AbstractList<SpreadsheetFormatterSample<?>>
-        implements ImmutableListDefaults<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample<?>> {
+public final class SpreadsheetFormatterSampleList extends AbstractList<SpreadsheetFormatterSample>
+        implements ImmutableListDefaults<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample> {
 
-    public static SpreadsheetFormatterSampleList with(final List<SpreadsheetFormatterSample<?>> samples) {
+    public static SpreadsheetFormatterSampleList with(final List<SpreadsheetFormatterSample> samples) {
         Objects.requireNonNull(samples, "samples");
 
         return samples instanceof SpreadsheetFormatterSampleList ?
@@ -66,12 +66,12 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
                 );
     }
 
-    private SpreadsheetFormatterSampleList(final List<SpreadsheetFormatterSample<?>> samples) {
+    private SpreadsheetFormatterSampleList(final List<SpreadsheetFormatterSample> samples) {
         this.samples = samples;
     }
 
     @Override
-    public SpreadsheetFormatterSample<?> get(int index) {
+    public SpreadsheetFormatterSample get(int index) {
         return this.samples.get(index);
     }
 
@@ -80,10 +80,10 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
         return this.samples.size();
     }
 
-    private final List<SpreadsheetFormatterSample<?>> samples;
+    private final List<SpreadsheetFormatterSample> samples;
 
     @Override
-    public SpreadsheetFormatterSampleList setElements(final List<SpreadsheetFormatterSample<?>> samples) {
+    public SpreadsheetFormatterSampleList setElements(final List<SpreadsheetFormatterSample> samples) {
         final SpreadsheetFormatterSampleList copy = with(samples);
         return this.equals(copy) ?
                 this :

@@ -32,7 +32,6 @@ import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -225,12 +224,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                 .findFirst();
     }
 
-    private final static SpreadsheetFormatterProvider FORMAT_PATTERN_SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-            Locale.forLanguageTag("EN"), // Locale.ENGLISH is not available in emulated GWT Locale
-            () -> {
-                throw new UnsupportedOperationException();
-            }
-    );
+    private final static SpreadsheetFormatterProvider FORMAT_PATTERN_SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
     private SpreadsheetFormatterSelector SpreadsheetFormatterSelector(final AbsoluteUrl url,
                                                                       final String text) {

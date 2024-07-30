@@ -24,8 +24,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 
-import java.util.Locale;
-
 public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetFormattersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters, SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
 
     @Override
@@ -36,12 +34,8 @@ public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetFormattersTes
     @Override
     SpreadsheetFormatterInfoSet propertyValue() {
         return SpreadsheetFormatterInfoSet.with(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                                Locale.forLanguageTag("EN-AU"),
-                                () -> {
-                                    throw new UnsupportedOperationException();
-                                }
-                        ).spreadsheetFormatterInfos()
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        .spreadsheetFormatterInfos()
         );
     }
 

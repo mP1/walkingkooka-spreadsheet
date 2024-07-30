@@ -30,14 +30,12 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
@@ -518,14 +516,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 text,
                 SpreadsheetParsers.valueOrExpression(
                         SpreadsheetMetadataTesting.METADATA_EN_AU.parser(
-                                SpreadsheetParserProviders.spreadsheetParsePattern(
-                                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                                                Locale.forLanguageTag("EN-AU"),
-                                                () -> {
-                                                    throw new UnsupportedOperationException();
-                                                }
-                                        )
-                                )
+                                SpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER
                         )
                 ),
                 SpreadsheetFormula.EMPTY.setText(text)

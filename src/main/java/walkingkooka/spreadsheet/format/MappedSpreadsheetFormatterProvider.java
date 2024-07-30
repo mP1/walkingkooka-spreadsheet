@@ -96,12 +96,15 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
     }
 
     @Override
-    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                        final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatterSamples(
                 this.nameMapper.apply(name)
-                        .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name))
+                        .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name)),
+                context
         ).stream()
                 .map(s -> s.setSelector(
                         s.selector()

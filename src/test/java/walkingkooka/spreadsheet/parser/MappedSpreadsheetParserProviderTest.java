@@ -26,8 +26,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
-import java.util.Locale;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MappedSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<MappedSpreadsheetParserProvider> {
@@ -87,12 +85,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
         this.spreadsheetParserNextTextComponentAndCheck(
                 SpreadsheetParserSelector.parse(NEW_PARSER_NAME),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                                        Locale.forLanguageTag("EN-AU"),
-                                        () -> {
-                                            throw new UnsupportedOperationException();
-                                        }
-                                )
+                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                         ).spreadsheetParserNextTextComponent(
                                 SpreadsheetParserName.DATE_PARSER_PATTERN.setText("")
                         )
@@ -104,12 +97,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
         this.spreadsheetFormatterSelectorAndCheck(
                 SpreadsheetParserSelector.parse(NEW_PARSER_NAME),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                                Locale.forLanguageTag("EN-AU"),
-                                () -> {
-                                    throw new UnsupportedOperationException();
-                                }
-                        )
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                 ).spreadsheetFormatterSelector(
                         SpreadsheetParserName.DATE_PARSER_PATTERN.setText("")
                 )
@@ -141,12 +129,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     @Override
     public MappedSpreadsheetParserProvider createSpreadsheetParserProvider() {
         final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                        Locale.forLanguageTag("EN-AU"),
-                        () -> {
-                            throw new UnsupportedOperationException();
-                        }
-                )
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
         );
 
         return MappedSpreadsheetParserProvider.with(

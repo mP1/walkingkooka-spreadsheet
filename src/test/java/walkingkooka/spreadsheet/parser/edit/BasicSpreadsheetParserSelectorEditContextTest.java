@@ -114,10 +114,7 @@ public final class BasicSpreadsheetParserSelectorEditContextTest implements Spre
 
     @Override
     public BasicSpreadsheetParserSelectorEditContext createContext() {
-        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                Locale.forLanguageTag("EN-AU"),
-                LocalDateTime::now
-        );
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
         return BasicSpreadsheetParserSelectorEditContext.with(
                 SPREADSHEET_PARSER_PROVIDER,

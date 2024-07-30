@@ -27,29 +27,28 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.text.TextNode;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
- * A sample include a value that may be used to provide a sample of a {@link SpreadsheetFormatter}.
- * A {@link SpreadsheetFormatterProvider} will return a {@link List} providing samples of the given {@link SpreadsheetFormatter}.
+ * A sample that provides a label, {@link SpreadsheetFormatterSelector} and formatted {@link TextNode example} using the selector.
  */
-public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value<T> {
+public final class SpreadsheetFormatterSample implements TreePrintable, Value<TextNode> {
 
-    public static <T> SpreadsheetFormatterSample<T> with(final String label,
-                                                         final SpreadsheetFormatterSelector selector,
-                                                         final T value) {
-        return new SpreadsheetFormatterSample<>(
+    public static SpreadsheetFormatterSample with(final String label,
+                                                  final SpreadsheetFormatterSelector selector,
+                                                  final TextNode value) {
+        return new SpreadsheetFormatterSample(
                 CharSequences.failIfNullOrEmpty(label, "label"),
                 Objects.requireNonNull(selector, "selector"),
-                value
+                Objects.requireNonNull(value, "value")
         );
     }
 
     private SpreadsheetFormatterSample(final String label,
                                        final SpreadsheetFormatterSelector selector,
-                                       final T value) {
+                                       final TextNode value) {
         this.label = label;
         this.selector = selector;
         this.value = value;
@@ -65,12 +64,12 @@ public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value
         return this.selector;
     }
 
-    public SpreadsheetFormatterSample<?> setSelector(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatterSample setSelector(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
         return this.selector.equals(selector) ?
                 this :
-                new SpreadsheetFormatterSample<>(
+                new SpreadsheetFormatterSample(
                         this.label,
                         selector,
                         this.value
@@ -80,21 +79,23 @@ public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value
     private final SpreadsheetFormatterSelector selector;
 
     @Override
-    public T value() {
+    public TextNode value() {
         return this.value;
     }
 
-    public <TT> SpreadsheetFormatterSample<TT> setValue(final TT value) {
-        return Objects.equals(this.value, value) ?
-                (SpreadsheetFormatterSample<TT>) this :
-                new SpreadsheetFormatterSample<>(
+    public SpreadsheetFormatterSample setValue(final TextNode value) {
+        Objects.requireNonNull(value, "value");
+
+        return this.value.equals(value) ?
+                this :
+                new SpreadsheetFormatterSample(
                         this.label,
                         this.selector,
                         value
                 );
     }
 
-    private final T value;
+    private final TextNode value;
 
     // Object...........................................................................................................
 
@@ -110,13 +111,13 @@ public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterSample && this.equals0((SpreadsheetFormatterSample<?>) other);
+                other instanceof SpreadsheetFormatterSample && this.equals0((SpreadsheetFormatterSample) other);
     }
 
-    private boolean equals0(final SpreadsheetFormatterSample<?> other) {
+    private boolean equals0(final SpreadsheetFormatterSample other) {
         return this.label.equals(other.label) &&
                 this.selector.equals(other.selector) &&
-                Objects.equals(this.value, other.value);
+                this.value.equals(other.value);
     }
 
     @Override
@@ -144,11 +145,11 @@ public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value
 
     // json.............................................................................................................
 
-    static SpreadsheetFormatterSample<?> unmarshall(final JsonNode node,
+    static SpreadsheetFormatterSample unmarshall(final JsonNode node,
                                                     final JsonNodeUnmarshallContext context) {
         String label = null;
         SpreadsheetFormatterSelector selector = null;
-        Object value = null;
+        TextNode value = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -175,6 +176,9 @@ public final class SpreadsheetFormatterSample<T> implements TreePrintable, Value
             JsonNodeUnmarshallContext.requiredPropertyMissing(LABEL_PROPERTY, node);
         }
         if (null == selector) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(SELECTOR_PROPERTY, node);
+        }
+        if (null == value) {
             JsonNodeUnmarshallContext.requiredPropertyMissing(SELECTOR_PROPERTY, node);
         }
 

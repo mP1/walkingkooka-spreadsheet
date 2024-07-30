@@ -27,19 +27,17 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import walkingkooka.tree.text.TextNode;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSample<String>>,
-        ClassTesting<SpreadsheetFormatterSample<String>>,
-        ToStringTesting<SpreadsheetFormatterSample<String>>,
+public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSample>,
+        ClassTesting<SpreadsheetFormatterSample>,
+        ToStringTesting<SpreadsheetFormatterSample>,
         TreePrintableTesting,
-        JsonNodeMarshallingTesting<SpreadsheetFormatterSample<String>> {
+        JsonNodeMarshallingTesting<SpreadsheetFormatterSample> {
 
     private final static String LABEL = "Label123";
 
@@ -48,7 +46,7 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
             " @"
     );
 
-    private final static String VALUE = "Value123";
+    private final static TextNode VALUE = TextNode.text("Value123");
 
     // with.............................................................................................................
 
@@ -89,8 +87,20 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
     }
 
     @Test
+    public void testWithNullValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormatterSample.with(
+                        LABEL,
+                        SELECTOR,
+                        null
+                )
+        );
+    }
+
+    @Test
     public void testWith() {
-        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+        final SpreadsheetFormatterSample sample = SpreadsheetFormatterSample.with(
                 LABEL,
                 SELECTOR,
                 VALUE
@@ -98,19 +108,6 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
         this.checkEquals(LABEL, sample.label(), "label");
         this.checkEquals(SELECTOR, sample.selector(), "selector");
         this.checkEquals(VALUE, sample.value(), "value");
-    }
-
-    @Test
-    public void testWithNullValue() {
-        final String value = null;
-        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
-                LABEL,
-                SELECTOR,
-                value
-        );
-        this.checkEquals(LABEL, sample.label(), "label");
-        this.checkEquals(SELECTOR, sample.selector(), "selector");
-        this.checkEquals(value, sample.value(), "value");
     }
 
     // setSelector......................................................................................................
@@ -129,7 +126,7 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
 
     @Test
     public void testSetSelectorSame() {
-        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+        final SpreadsheetFormatterSample sample = SpreadsheetFormatterSample.with(
                 LABEL,
                 SELECTOR,
                 VALUE
@@ -142,14 +139,14 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
 
     @Test
     public void testSetSelectorDifferent() {
-        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+        final SpreadsheetFormatterSample sample = SpreadsheetFormatterSample.with(
                 LABEL,
                 SELECTOR,
                 VALUE
         );
 
         final SpreadsheetFormatterSelector differentSelector = SpreadsheetFormatterSelector.parse("different");
-        final SpreadsheetFormatterSample<?> different = sample.setSelector(differentSelector);
+        final SpreadsheetFormatterSample different = sample.setSelector(differentSelector);
 
         assertNotSame(
                 sample,
@@ -168,8 +165,21 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
     // setValue.........................................................................................................
 
     @Test
+    public void testSetValueWithNullFails() {
+        final SpreadsheetFormatterSample sample = SpreadsheetFormatterSample.with(
+                LABEL,
+                SELECTOR,
+                VALUE
+        );
+        assertThrows(
+                NullPointerException.class,
+                () -> sample.setValue(null)
+        );
+    }
+
+    @Test
     public void testSetValueSame() {
-        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+        final SpreadsheetFormatterSample sample = SpreadsheetFormatterSample.with(
                 LABEL,
                 SELECTOR,
                 VALUE
@@ -182,14 +192,14 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
 
     @Test
     public void testSetValueDifferent() {
-        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
+        final SpreadsheetFormatterSample sample = SpreadsheetFormatterSample.with(
                 LABEL,
                 SELECTOR,
                 VALUE
         );
 
-        final String differentValue = "different";
-        final SpreadsheetFormatterSample<String> different = sample.setValue(differentValue);
+        final TextNode differentValue = TextNode.text("different");
+        final SpreadsheetFormatterSample different = sample.setValue(differentValue);
 
         assertNotSame(
                 sample,
@@ -205,56 +215,6 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
         this.checkEquals(VALUE, sample.value(), "value");
     }
 
-    @Test
-    public void testSetValueDifferent2() {
-        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
-                LABEL,
-                SELECTOR,
-                VALUE
-        );
-
-        final BigDecimal differentValue = BigDecimal.valueOf(123);
-        final SpreadsheetFormatterSample<BigDecimal> different = sample.setValue(differentValue);
-
-        assertNotSame(
-                sample,
-                different
-        );
-
-        this.checkEquals(LABEL, different.label(), "label");
-        this.checkEquals(SELECTOR, different.selector(), "selector");
-        this.checkEquals(differentValue, different.value(), "value");
-
-        this.checkEquals(LABEL, sample.label(), "label");
-        this.checkEquals(SELECTOR, sample.selector(), "selector");
-        this.checkEquals(VALUE, sample.value(), "value");
-    }
-
-    @Test
-    public void testSetValueDifferentNull() {
-        final SpreadsheetFormatterSample<?> sample = SpreadsheetFormatterSample.with(
-                LABEL,
-                SELECTOR,
-                VALUE
-        );
-
-        final BigDecimal differentValue = null;
-        final SpreadsheetFormatterSample<BigDecimal> different = sample.setValue(differentValue);
-
-        assertNotSame(
-                sample,
-                different
-        );
-
-        this.checkEquals(LABEL, different.label(), "label");
-        this.checkEquals(SELECTOR, different.selector(), "selector");
-        this.checkEquals(differentValue, different.value(), "value");
-
-        this.checkEquals(LABEL, sample.label(), "label");
-        this.checkEquals(SELECTOR, sample.selector(), "selector");
-        this.checkEquals(VALUE, sample.value(), "value");
-    }
-    
     // hashcode/equals..................................................................................................
 
     @Test
@@ -285,13 +245,13 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
                 SpreadsheetFormatterSample.with(
                         LABEL,
                         SELECTOR,
-                        "different"
+                        TextNode.text("different")
                 )
         );
     }
 
     @Override
-    public SpreadsheetFormatterSample<String> createObject() {
+    public SpreadsheetFormatterSample createObject() {
         return SpreadsheetFormatterSample.with(
                 LABEL,
                 SELECTOR,
@@ -318,7 +278,7 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
                 "Label123\n" +
                         "  text-format-pattern\n" +
                         "    \" @\"\n" +
-                        "  Value123\n"
+                        "  Text \"Value123\"\n"
         );
     }
 
@@ -331,25 +291,9 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
                 "{\n" +
                         "  \"label\": \"Label123\",\n" +
                         "  \"selector\": \"text-format-pattern  @\",\n" +
-                        "  \"value\": \"Value123\"\n" +
-                        "}"
-        );
-    }
-
-    @Test
-    public void testMarshallDate() {
-        this.marshallAndCheck(
-                SpreadsheetFormatterSample.with(
-                        LABEL,
-                        SELECTOR,
-                        LocalDate.of(1999, 12, 31)
-                ),
-                "{\n" +
-                        "  \"label\": \"Label123\",\n" +
-                        "  \"selector\": \"text-format-pattern  @\",\n" +
                         "  \"value\": {\n" +
-                        "    \"type\": \"local-date\",\n" +
-                        "    \"value\": \"1999-12-31\"\n" +
+                        "    \"type\": \"text\",\n" +
+                        "    \"value\": \"Value123\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -362,20 +306,9 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
         );
     }
 
-    @Test
-    public void testMarshallUnmarshallWithNullValue() {
-        this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetFormatterSample.with(
-                        LABEL,
-                        SELECTOR,
-                        null
-                )
-        );
-    }
-
     @Override
-    public SpreadsheetFormatterSample<String> unmarshall(final JsonNode json,
-                                                         final JsonNodeUnmarshallContext context) {
+    public SpreadsheetFormatterSample unmarshall(final JsonNode json,
+                                                 final JsonNodeUnmarshallContext context) {
         return Cast.to(
                 SpreadsheetFormatterSample.unmarshall(
                         json,
@@ -385,7 +318,7 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
     }
 
     @Override
-    public SpreadsheetFormatterSample<String> createJsonNodeMarshallingValue() {
+    public SpreadsheetFormatterSample createJsonNodeMarshallingValue() {
         return SpreadsheetFormatterSample.with(
                 LABEL,
                 SELECTOR,
@@ -396,8 +329,8 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetFormatterSample<String>> type() {
-        return Cast.to(SpreadsheetFormatterSample.class);
+    public Class<SpreadsheetFormatterSample> type() {
+        return SpreadsheetFormatterSample.class;
     }
 
 

@@ -63,8 +63,10 @@ final class EmptySpreadsheetFormatterProvider implements SpreadsheetFormatterPro
     }
 
     @Override
-    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                        final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
 
         throw new IllegalArgumentException("Unknown formatter " + name);
     }

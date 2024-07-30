@@ -24,8 +24,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
-import java.util.Locale;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserProviderCollectionTest implements SpreadsheetParserProviderTesting<SpreadsheetParserProviderCollection> {
@@ -107,12 +105,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     private static SpreadsheetParserProvider spreadsheetParsePatternSpreadsheetParserProvider() {
         return SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                        Locale.forLanguageTag("EN-AU"),
-                        () -> {
-                            throw new UnsupportedOperationException();
-                        }
-                )
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
         );
     }
 

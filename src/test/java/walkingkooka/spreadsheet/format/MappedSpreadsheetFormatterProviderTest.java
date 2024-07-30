@@ -24,13 +24,13 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-
-import java.time.LocalDateTime;
-import java.util.Locale;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.tree.text.TextNode;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<MappedSpreadsheetFormatterProvider> {
+public final class MappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<MappedSpreadsheetFormatterProvider>,
+        SpreadsheetMetadataTesting {
 
     @Test
     public void testWithNullInfosFails() {
@@ -189,39 +189,51 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
         );
     }
 
-    private final static LocalDateTime NOW = LocalDateTime.of(
-            1999,
-            12,
-            31,
-            12,
-            58
-    );
-
+    // Short
+    //  new-date-format-pattern
+    //    "d/m/yy"
+    //  Text "31/12/99"
+    //
+    //Medium
+    //  new-date-format-pattern
+    //    "d mmm yyyy"
+    //  Text "31 Dec. 1999"
+    //
+    //Long
+    //  new-date-format-pattern
+    //    "d mmmm yyyy"
+    //  Text "31 December 1999"
+    //
+    //Full
+    //  new-date-format-pattern
+    //    "dddd, d mmmm yyyy"
+    //  Text "Friday, 31 December 1999"
     @Test
     public void testSpreadsheetFormatterSamples() {
         final SpreadsheetFormatterName name = SpreadsheetFormatterName.with(NEW_FORMATTER_NAME);
 
         this.spreadsheetFormatterSamplesAndCheck(
                 name,
+                SPREADSHEET_FORMATTER_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Short",
                         name.setText("d/m/yy"),
-                        NOW.toLocalDate()
+                        TextNode.text("31/12/99")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Medium",
                         name.setText("d mmm yyyy"),
-                        NOW.toLocalDate()
+                        TextNode.text("31 Dec. 1999")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Long",
                         name.setText("d mmmm yyyy"),
-                        NOW.toLocalDate()
+                        TextNode.text("31 December 1999")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Full",
                         name.setText("dddd, d mmmm yyyy"),
-                        NOW.toLocalDate()
+                        TextNode.text("Friday, 31 December 1999")
                 )
         );
     }
@@ -270,10 +282,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
 
     @Override
     public MappedSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                Locale.forLanguageTag("EN-AU"),
-                () -> NOW
-        );
+        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
         return MappedSpreadsheetFormatterProvider.with(
                 Sets.of(

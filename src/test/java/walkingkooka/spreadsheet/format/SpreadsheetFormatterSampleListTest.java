@@ -32,9 +32,9 @@ import walkingkooka.tree.text.TextNode;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SpreadsheetFormatterSampleListTest implements ListTesting2<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample<?>>,
+public class SpreadsheetFormatterSampleListTest implements ListTesting2<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
         ClassTesting<SpreadsheetFormatterSampleList>,
-        ImmutableListTesting<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample<?>>,
+        ImmutableListTesting<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
         JsonNodeMarshallingTesting<SpreadsheetFormatterSampleList> {
 
     private final static SpreadsheetFormatterSample SAMPLE1 = SpreadsheetFormatterSample.with(
