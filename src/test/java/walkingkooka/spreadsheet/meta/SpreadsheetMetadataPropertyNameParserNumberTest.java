@@ -24,9 +24,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -39,7 +37,8 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameParserNumberTest extends SpreadsheetMetadataPropertyNameParserTestCase<SpreadsheetMetadataPropertyNameParserNumber> {
+public final class SpreadsheetMetadataPropertyNameParserNumberTest extends SpreadsheetMetadataPropertyNameParserTestCase<SpreadsheetMetadataPropertyNameParserNumber>
+        implements SpreadsheetMetadataTesting{
 
     @Test
     public void testExtractLocaleAwareValue() throws ParseException {
@@ -70,14 +69,7 @@ public final class SpreadsheetMetadataPropertyNameParserNumberTest extends Sprea
                 .get();
 
         final ExpressionNumber value = SpreadsheetConverters.stringToExpressionNumber(
-                SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                                        Locale.forLanguageTag("EN-AU"),
-                                        () -> {
-                                            throw new UnsupportedOperationException();
-                                        }
-                                )
-                        ).spreadsheetParser(parserSelector)
+                SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(parserSelector)
         ).convertOrFail(
                 text,
                 ExpressionNumber.class,

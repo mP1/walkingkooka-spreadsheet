@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Either;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
@@ -30,7 +29,6 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
-import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -41,7 +39,6 @@ import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -443,43 +440,6 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     private final static BiConsumer<SpreadsheetCell, SpreadsheetCell> MOVED_CELLS_BICONSUMER = (from, to) -> {
         throw new UnsupportedOperationException();
     };
-
-    private final static SpreadsheetComparatorContext COMPARATOR_CONTEXT = SpreadsheetComparatorContexts.basic(
-            SpreadsheetComparatorContexts.basic(
-                    new FakeSpreadsheetConverterContext() {
-                        @Override
-                        public <T> Either<T, String> convert(final Object value,
-                                                             final Class<T> target) {
-                            if (value instanceof String && LocalDate.class == target) {
-                                try {
-                                    return this.successfulConversion(
-                                            LocalDate.parse((String) value),
-                                            target
-                                    );
-                                } catch (final Exception ignore) {
-                                    // eventually becomes a failConversion
-                                }
-                            }
-                            if (value instanceof LocalDate && LocalDate.class == target) {
-                                return this.successfulConversion(
-                                        (LocalDate) value,
-                                        target
-                                );
-                            }
-                            if (value instanceof String && String.class == target) {
-                                return this.successfulConversion(
-                                        (String) value,
-                                        target
-                                );
-                            }
-                            return this.failConversion(
-                                    value,
-                                    target
-                            );
-                        }
-                    }
-            )
-    );
 
     @Test
     public void testSortWithNullComparatorsFails() {
@@ -1121,7 +1081,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 range,
                 comparators,
                 remapped::put,
-                COMPARATOR_CONTEXT,
+                SPREADSHEET_COMPARATOR_CONTEXT,
                 expected
         );
 
@@ -1140,7 +1100,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 range,
                 comparators,
                 movedCells,
-                COMPARATOR_CONTEXT,
+                SPREADSHEET_COMPARATOR_CONTEXT,
                 expected
         );
     }
