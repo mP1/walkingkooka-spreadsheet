@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
+import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterProvider;
@@ -31,6 +32,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
@@ -155,7 +157,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 50);
+            .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 50)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.BLACK)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.WHITE)
+            .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK), 1)
+            .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.WHITE), 2);
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
