@@ -64,6 +64,20 @@ public final class SpreadsheetParserSelectorEditTest implements ParseStringTesti
     }
 
     @Test
+    public void testParseStringEmpty() {
+        this.parseStringAndCheck(
+                "",
+                SpreadsheetParserSelectorEdit.with(
+                        Optional.empty(), // selector
+                        "text is empty",
+                        Lists.empty(),
+                        Optional.empty(),
+                        Lists.empty()
+                )
+        );
+    }
+
+    @Test
     public void testParseInvalidSpreadsheetParserName() {
         this.parseStringAndCheck(
                 "1",
