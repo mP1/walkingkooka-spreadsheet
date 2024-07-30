@@ -24,6 +24,8 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
@@ -161,6 +163,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
             CONVERTER_PROVIDER,
             NOW,
             SPREADSHEET_LABEL_NAME_RESOLVER
+    );
+
+    SpreadsheetComparatorContext SPREADSHEET_COMPARATOR_CONTEXT = SpreadsheetComparatorContexts.basic(
+            SPREADSHEET_CONVERTER_CONTEXT
     );
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.formatterContext(
