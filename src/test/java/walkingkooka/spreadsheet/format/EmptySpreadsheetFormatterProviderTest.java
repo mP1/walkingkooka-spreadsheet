@@ -48,7 +48,8 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     @Test
     public void testSpreadsheetFormatterSamples() {
         this.spreadsheetFormatterSamplesFails(
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+                SpreadsheetFormatterContexts.fake()
         );
     }
 

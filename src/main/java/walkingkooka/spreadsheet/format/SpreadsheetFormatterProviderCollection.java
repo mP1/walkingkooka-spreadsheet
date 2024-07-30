@@ -90,8 +90,10 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     }
 
     @Override
-    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                        final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
 
         return NO_SPREADSHEET_FORMATTER_SAMPLES;
     }

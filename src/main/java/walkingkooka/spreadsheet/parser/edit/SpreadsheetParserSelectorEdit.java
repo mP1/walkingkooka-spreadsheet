@@ -36,6 +36,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
 import java.util.Objects;
@@ -55,7 +56,7 @@ public final class SpreadsheetParserSelectorEdit implements TreePrintable {
         String message = "";
         List<SpreadsheetParserSelectorTextComponent> textComponents = Lists.empty();
         Optional<SpreadsheetParserSelectorTextComponent> next = Optional.empty();
-        List<SpreadsheetFormatterSample<?>> samples = Lists.empty();
+        List<SpreadsheetFormatterSample> samples = Lists.empty();
 
         try {
             spreadsheetParserSelector = SpreadsheetParserSelector.parse(selector);
@@ -69,7 +70,8 @@ public final class SpreadsheetParserSelectorEdit implements TreePrintable {
                 if(maybeSpreadsheetFormatterSelector.isPresent()) {
                     samples = context.spreadsheetFormatterSamples(
                             maybeSpreadsheetFormatterSelector.get()
-                                    .name()
+                                    .name(),
+                            context
                     );
                 }
             } catch (final InvalidCharacterException cause) {
@@ -97,7 +99,7 @@ public final class SpreadsheetParserSelectorEdit implements TreePrintable {
                                               final String message,
                                               final List<SpreadsheetParserSelectorTextComponent> textComponents,
                                               final Optional<SpreadsheetParserSelectorTextComponent> next,
-                                              final List<SpreadsheetFormatterSample<?>> samples) {
+                                              final List<SpreadsheetFormatterSample> samples) {
         return new SpreadsheetParserSelectorEdit(
                 Objects.requireNonNull(selector, "selector"),
                 Objects.requireNonNull(message, "message"),
@@ -115,7 +117,7 @@ public final class SpreadsheetParserSelectorEdit implements TreePrintable {
                                           final String message,
                                           final List<SpreadsheetParserSelectorTextComponent> textComponents,
                                           final Optional<SpreadsheetParserSelectorTextComponent> next,
-                                          final List<SpreadsheetFormatterSample<?>> samples) {
+                                          final List<SpreadsheetFormatterSample> samples) {
         this.selector = selector;
         this.message = message;
         this.textComponents = textComponents;
@@ -147,11 +149,11 @@ public final class SpreadsheetParserSelectorEdit implements TreePrintable {
 
     private final Optional<SpreadsheetParserSelectorTextComponent> next;
 
-    public List<SpreadsheetFormatterSample<?>> samples() {
+    public List<SpreadsheetFormatterSample> samples() {
         return this.samples;
     }
 
-    private final List<SpreadsheetFormatterSample<?>> samples;
+    private final List<SpreadsheetFormatterSample> samples;
 
     // HashCodeEqualsDefined..........................................................................................
 
@@ -258,7 +260,7 @@ public final class SpreadsheetParserSelectorEdit implements TreePrintable {
         String message = null;
         List<SpreadsheetParserSelectorTextComponent> textComponents = null;
         SpreadsheetParserSelectorTextComponent next = null;
-        List<SpreadsheetFormatterSample<?>> samples = null;
+        List<SpreadsheetFormatterSample> samples = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -346,7 +348,7 @@ public final class SpreadsheetParserSelectorEdit implements TreePrintable {
                         SpreadsheetFormatterSample.with(
                                 "Label",
                                 SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
-                                "123"
+                                TextNode.text("123")
                         )
                 )
         );

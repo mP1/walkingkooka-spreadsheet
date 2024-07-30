@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -39,7 +40,11 @@ public class FakeSpreadsheetFormatterProvider implements SpreadsheetFormatterPro
     }
 
     @Override
-    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                        final SpreadsheetFormatterContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
+
         throw new UnsupportedOperationException();
     }
 

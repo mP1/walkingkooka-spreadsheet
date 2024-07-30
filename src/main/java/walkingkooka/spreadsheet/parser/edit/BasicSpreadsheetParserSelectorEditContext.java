@@ -332,8 +332,12 @@ final class BasicSpreadsheetParserSelectorEditContext implements SpreadsheetPars
     }
 
     @Override
-    public List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
-        return spreadsheetFormatterProvider.spreadsheetFormatterSamples(name);
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                        final SpreadsheetFormatterContext context) {
+        return spreadsheetFormatterProvider.spreadsheetFormatterSamples(
+                name,
+                context
+        );
     }
 
     @Override

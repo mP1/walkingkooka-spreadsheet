@@ -18,8 +18,19 @@
 package walkingkooka.spreadsheet.format.edit;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSample;
+
+import java.util.List;
 
 public interface SpreadsheetFormatterSelectorEditContext extends SpreadsheetFormatterProvider,
         SpreadsheetFormatterContext {
+
+    default List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name) {
+        return this.spreadsheetFormatterSamples(
+                name,
+                this
+        );
+    }
 }

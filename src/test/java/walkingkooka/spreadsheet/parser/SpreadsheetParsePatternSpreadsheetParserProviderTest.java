@@ -28,8 +28,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
-import java.util.Locale;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<SpreadsheetParsePatternSpreadsheetParserProvider>,
@@ -698,12 +696,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Override
     public SpreadsheetParsePatternSpreadsheetParserProvider createSpreadsheetParserProvider() {
         return SpreadsheetParsePatternSpreadsheetParserProvider.with(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                        Locale.forLanguageTag("EN-AU"),
-                        () -> {
-                            throw new UnsupportedOperationException();
-                        }
-                )
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
         );
     }
 

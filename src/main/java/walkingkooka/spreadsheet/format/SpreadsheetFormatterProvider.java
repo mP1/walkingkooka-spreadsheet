@@ -57,12 +57,13 @@ public interface SpreadsheetFormatterProvider extends Provider {
     /**
      * Constant for {@link #spreadsheetFormatterNextTextComponent(SpreadsheetFormatterSelector)} when there is no next.
      */
-    List<SpreadsheetFormatterSample<?>> NO_SPREADSHEET_FORMATTER_SAMPLES = Lists.empty();
+    List<SpreadsheetFormatterSample> NO_SPREADSHEET_FORMATTER_SAMPLES = Lists.empty();
 
     /**
      * Returns {@link SpreadsheetFormatterSample samples} for the given {@link SpreadsheetFormatterName}.
      */
-    List<SpreadsheetFormatterSample<?>> spreadsheetFormatterSamples(final SpreadsheetFormatterName name);
+    List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                 final SpreadsheetFormatterContext context);
 
     /**
      * Returns all available {@link SpreadsheetFormatterInfo}

@@ -21,20 +21,17 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelectorTextComponent;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelectorTextComponentAlternative;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTesting<SpreadsheetFormatterSelectorEdit>,
         TreePrintableTesting,
         JsonNodeMarshallingTesting<SpreadsheetFormatterSelectorEdit>,
+        SpreadsheetMetadataTesting,
         ClassTesting<SpreadsheetFormatterSelectorEdit> {
 
     @Test
@@ -197,17 +195,8 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
         return SpreadsheetFormatterSelectorEdit.parse(
                 selector,
                 SpreadsheetFormatterSelectorEditContexts.basic(
-                        SpreadsheetFormatterContexts.fake(),
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                                Locale.forLanguageTag("EN-AU"),
-                                () -> LocalDateTime.of(
-                                        1999,
-                                        12,
-                                        31,
-                                        12,
-                                        58
-                                )
-                        )
+                        SPREADSHEET_FORMATTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_PROVIDER
                 )
         );
     }
@@ -285,7 +274,7 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
     public void testMarshall() {
         this.marshallAndCheck(
                 this.createJsonNodeMarshallingValue(),
-                "{\n" +
+                        "{\n" +
                         "  \"selector\": \"date-format-pattern dd/mm/yyyy\",\n" +
                         "  \"message\": \"\",\n" +
                         "  \"textComponents\": [\n" +
@@ -393,32 +382,32 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
                         "      \"label\": \"Short\",\n" +
                         "      \"selector\": \"date-format-pattern d/m/yy\",\n" +
                         "      \"value\": {\n" +
-                        "        \"type\": \"local-date\",\n" +
-                        "        \"value\": \"1999-12-31\"\n" +
+                        "        \"type\": \"text\",\n" +
+                        "        \"value\": \"31/12/99\"\n" +
                         "      }\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"label\": \"Medium\",\n" +
                         "      \"selector\": \"date-format-pattern d mmm yyyy\",\n" +
                         "      \"value\": {\n" +
-                        "        \"type\": \"local-date\",\n" +
-                        "        \"value\": \"1999-12-31\"\n" +
+                        "        \"type\": \"text\",\n" +
+                        "        \"value\": \"31 Dec. 1999\"\n" +
                         "      }\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"label\": \"Long\",\n" +
                         "      \"selector\": \"date-format-pattern d mmmm yyyy\",\n" +
                         "      \"value\": {\n" +
-                        "        \"type\": \"local-date\",\n" +
-                        "        \"value\": \"1999-12-31\"\n" +
+                        "        \"type\": \"text\",\n" +
+                        "        \"value\": \"31 December 1999\"\n" +
                         "      }\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"label\": \"Full\",\n" +
                         "      \"selector\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "      \"value\": {\n" +
-                        "        \"type\": \"local-date\",\n" +
-                        "        \"value\": \"1999-12-31\"\n" +
+                        "        \"type\": \"text\",\n" +
+                        "        \"value\": \"Friday, 31 December 1999\"\n" +
                         "      }\n" +
                         "    }\n" +
                         "  ]\n" +
@@ -429,7 +418,7 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "{\n" +
+                        "{\n" +
                         "  \"selector\": \"date-format-pattern dd/mm/yyyy\",\n" +
                         "  \"message\": \"\",\n" +
                         "  \"textComponents\": [\n" +
@@ -537,32 +526,32 @@ public final class SpreadsheetFormatterSelectorEditTest implements ParseStringTe
                         "      \"label\": \"Short\",\n" +
                         "      \"selector\": \"date-format-pattern d/m/yy\",\n" +
                         "      \"value\": {\n" +
-                        "        \"type\": \"local-date\",\n" +
-                        "        \"value\": \"1999-12-31\"\n" +
+                        "        \"type\": \"text\",\n" +
+                        "        \"value\": \"31/12/99\"\n" +
                         "      }\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"label\": \"Medium\",\n" +
                         "      \"selector\": \"date-format-pattern d mmm yyyy\",\n" +
                         "      \"value\": {\n" +
-                        "        \"type\": \"local-date\",\n" +
-                        "        \"value\": \"1999-12-31\"\n" +
+                        "        \"type\": \"text\",\n" +
+                        "        \"value\": \"31 Dec. 1999\"\n" +
                         "      }\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"label\": \"Long\",\n" +
                         "      \"selector\": \"date-format-pattern d mmmm yyyy\",\n" +
                         "      \"value\": {\n" +
-                        "        \"type\": \"local-date\",\n" +
-                        "        \"value\": \"1999-12-31\"\n" +
+                        "        \"type\": \"text\",\n" +
+                        "        \"value\": \"31 December 1999\"\n" +
                         "      }\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"label\": \"Full\",\n" +
                         "      \"selector\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "      \"value\": {\n" +
-                        "        \"type\": \"local-date\",\n" +
-                        "        \"value\": \"1999-12-31\"\n" +
+                        "        \"type\": \"text\",\n" +
+                        "        \"value\": \"Friday, 31 December 1999\"\n" +
                         "      }\n" +
                         "    }\n" +
                         "  ]\n" +

@@ -1151,10 +1151,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         TextStyle.EMPTY.isEmpty();
 
         // locale and now are not actually used w/in this method.
-        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                Locale.forLanguageTag("EN-AU"),
-                LocalDateTime::now
-        );
+        final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
         return JsonNodeUnmarshallContexts.basic(
                 ExpressionNumberKind.DEFAULT,

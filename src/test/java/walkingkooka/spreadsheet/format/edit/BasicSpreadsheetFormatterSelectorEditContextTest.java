@@ -94,10 +94,7 @@ public final class BasicSpreadsheetFormatterSelectorEditContextTest implements S
     public BasicSpreadsheetFormatterSelectorEditContext createContext() {
         return BasicSpreadsheetFormatterSelectorEditContext.with(
                 this.spreadsheetFormatterContext(),
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(
-                        Locale.forLanguageTag("EN-AU"),
-                        LocalDateTime::now
-                )
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
         );
     }
 
