@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
@@ -35,6 +36,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.test.Testing;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -145,6 +147,13 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 50);
+
+    SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.formatterContext(
+            CONVERTER_PROVIDER,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            NOW,
+            SpreadsheetLabelNameResolvers.fake()
+    );
 
     static SpreadsheetFormula parseFormula(final String text) {
         return SpreadsheetFormula.parse(
