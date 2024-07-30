@@ -74,7 +74,8 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
 
     /**
      * Returns a list of {@link SpreadsheetFormatterSelectorTextComponent} if this {@link SpreadsheetFormatter} supports
-     * tokenizing its pattern. A {@link SpreadsheetFormatterContext} could be useful such as displaying day names in the label for an {@link SpreadsheetFormatterSelectorTextComponentAlternative}.
+     * tokenizing its pattern. A {@link SpreadsheetFormatterContext} could be useful to provide the {@link java.util.Locale}
+     * or {@link java.time.LocalDateTime now}  displaying day names in the label for an {@link SpreadsheetFormatterSelectorTextComponentAlternative}.
      */
     List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context);
 }
