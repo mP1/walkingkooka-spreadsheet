@@ -30,10 +30,8 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviderDelegator;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -82,7 +80,8 @@ import java.util.function.Supplier;
  * A basic and simple {@link SpreadsheetEngineContext}. Its accepts a variety of dependencies and uses them to handle
  * public methods requests.
  */
-final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
+final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
+        SpreadsheetComparatorProviderDelegator {
 
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
@@ -212,13 +211,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // spreadsheetComparatorProvider.................................................................................................
 
     @Override
-    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
-        return this.spreadsheetComparatorProvider.spreadsheetComparator(name);
-    }
-
-    @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
-        return this.spreadsheetComparatorProvider.spreadsheetComparatorInfos();
+    public SpreadsheetComparatorProvider spreadsheetComparatorProvider() {
+        return this.spreadsheetComparatorProvider;
     }
 
     private final SpreadsheetComparatorProvider spreadsheetComparatorProvider;
