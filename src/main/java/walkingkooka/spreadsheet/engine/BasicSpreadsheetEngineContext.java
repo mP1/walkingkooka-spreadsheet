@@ -38,15 +38,10 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderDelegator;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorTextComponent;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderDelegator;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -78,7 +73,8 @@ import java.util.function.Supplier;
  */
 final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         SpreadsheetComparatorProviderDelegator,
-        SpreadsheetFormatterProviderDelegator {
+        SpreadsheetFormatterProviderDelegator,
+        SpreadsheetParserProviderDelegator {
 
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
@@ -422,32 +418,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // SpreadsheetParserProvider........................................................................................
 
     @Override
-    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
-        return this.spreadsheetParserProvider.spreadsheetParser(selector);
-    }
-
-    @Override
-    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
-                                               final List<?> values) {
-        return this.spreadsheetParserProvider.spreadsheetParser(
-                name,
-                values
-        );
-    }
-
-    @Override
-    public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
-        return this.spreadsheetParserProvider.spreadsheetParserNextTextComponent(selector);
-    }
-
-    @Override
-    public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
-        return this.spreadsheetParserProvider.spreadsheetFormatterSelector(selector);
-    }
-
-    @Override
-    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
-        return this.spreadsheetParserProvider.spreadsheetParserInfos();
+    public SpreadsheetParserProvider spreadsheetParserProvider() {
+        return this.spreadsheetParserProvider;
     }
 
     private final SpreadsheetParserProvider spreadsheetParserProvider;
