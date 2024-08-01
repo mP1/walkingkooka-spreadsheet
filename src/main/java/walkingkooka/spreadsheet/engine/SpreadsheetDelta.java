@@ -1292,8 +1292,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                       final Predicate<String> patchableProperties) {
         boolean cellsPatched = false;
         boolean formulaPatched = false;
-        boolean formatPatternPatched = false;
-        boolean parsePatternPatched = false;
+        boolean formatterPatched = false;
+        boolean parserPatched = false;
         boolean stylePatched = false;
 
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
@@ -1314,7 +1314,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case COLUMNS_PROPERTY_STRING:
                     break;
                 case FORMATTER_PROPERTY_STRING:
-                    formatPatternPatched = true;
+                    formatterPatched = true;
                     break;
                 case FORMATTED_VALUE_PROPERTY_STRING:
                     break;
@@ -1322,7 +1322,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     formulaPatched = true;
                     break;
                 case PARSER_PROPERTY_STRING:
-                    parsePatternPatched = true;
+                    parserPatched = true;
                     break;
                 case ROWS_PROPERTY_STRING:
                     break;
@@ -1350,11 +1350,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             }
         }
 
-        if (cellsPatched && formatPatternPatched) {
+        if (cellsPatched && formatterPatched) {
             patchInvalidFail(CELLS_PROPERTY_STRING, FORMATTER_PROPERTY_STRING);
         }
 
-        if (cellsPatched && parsePatternPatched) {
+        if (cellsPatched && parserPatched) {
             patchInvalidFail(CELLS_PROPERTY_STRING, PARSER_PROPERTY_STRING);
         }
 
@@ -1370,15 +1370,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             );
         }
 
-        if (formatPatternPatched && parsePatternPatched) {
+        if (formatterPatched && parserPatched) {
             patchInvalidFail(FORMATTER_PROPERTY_STRING, PARSER_PROPERTY_STRING);
         }
 
-        if (formatPatternPatched && stylePatched) {
+        if (formatterPatched && stylePatched) {
             patchInvalidFail(FORMATTER_PROPERTY_STRING, STYLE_PROPERTY_STRING);
         }
 
-        if (parsePatternPatched && stylePatched) {
+        if (parserPatched && stylePatched) {
             patchInvalidFail(PARSER_PROPERTY_STRING, STYLE_PROPERTY_STRING);
         }
     }
