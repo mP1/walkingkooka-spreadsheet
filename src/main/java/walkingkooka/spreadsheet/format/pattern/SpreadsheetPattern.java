@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParser
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
@@ -56,7 +55,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -841,18 +839,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                         .getSimpleName()
                         .substring("Spreadsheet".length()),
                 CaseKind.KEBAB
-        );
-    }
-
-    /**
-     * The given {@link BiConsumer} will receive the individual textComponents of this pattern text and kind.
-     * <br>
-     * This method will be useful when creating a UI to build a pattern.
-     */
-    public final void components(final BiConsumer<SpreadsheetFormatParserTokenKind, String> consumer) {
-        SpreadsheetPatternComponentsSpreadsheetFormatParserTokenVisitor.traverse(
-                this.value,
-                consumer
         );
     }
 
