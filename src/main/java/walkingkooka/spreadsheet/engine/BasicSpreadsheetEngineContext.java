@@ -19,12 +19,8 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.provider.ConverterInfo;
-import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
-import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.convert.provider.ConverterProviderDelegator;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -60,7 +56,6 @@ import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -72,6 +67,7 @@ import java.util.function.Supplier;
  * public methods requests.
  */
 final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
+        ConverterProviderDelegator,
         SpreadsheetComparatorProviderDelegator,
         SpreadsheetFormatterProviderDelegator,
         SpreadsheetParserProviderDelegator {
@@ -181,22 +177,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // ConverterProvider................................................................................................
 
     @Override
-    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector) {
-        return this.converterProvider.converter(selector);
-    }
-
-    @Override
-    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                               final List<?> values) {
-        return this.converterProvider.converter(
-                name,
-                values
-        );
-    }
-
-    @Override
-    public Set<ConverterInfo> converterInfos() {
-        return this.converterProvider.converterInfos();
+    public ConverterProvider converterProvider() {
+        return this.converterProvider;
     }
 
     private final ConverterProvider converterProvider;
