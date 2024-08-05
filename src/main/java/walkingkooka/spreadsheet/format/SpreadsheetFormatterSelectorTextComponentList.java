@@ -114,6 +114,12 @@ public final class SpreadsheetFormatterSelectorTextComponentList extends Abstrac
     }
 
     static {
+        SpreadsheetFormatterSelectorTextComponent.with(
+                "", // label
+                "", // text
+                SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+        );
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorTextComponentList.class),
                 SpreadsheetFormatterSelectorTextComponentList::unmarshall,
