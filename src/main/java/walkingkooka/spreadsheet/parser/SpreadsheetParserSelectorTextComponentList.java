@@ -111,6 +111,12 @@ public final class SpreadsheetParserSelectorTextComponentList extends AbstractLi
     }
 
     static {
+        SpreadsheetParserSelectorTextComponent.with(
+                "", // label
+                "", // text
+                SpreadsheetParserSelectorTextComponent.NO_ALTERNATIVES
+        );
+        
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTextComponentList.class),
                 SpreadsheetParserSelectorTextComponentList::unmarshall,
