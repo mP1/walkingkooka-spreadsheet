@@ -239,9 +239,7 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.string(
-                this.toString()
-        );
+        return this.selector.marshall(context);
     }
 
     static {
