@@ -249,9 +249,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.string(
-                this.toString()
-        );
+        return this.selector.marshall(context);
     }
 
     static {
