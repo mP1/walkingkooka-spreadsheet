@@ -33,6 +33,8 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
@@ -1975,6 +1977,21 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         assertSame(metadata.decimalNumberContext(), metadata.decimalNumberContext());
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Test
+    public void testEnvironmentContext() {
+        final EnvironmentContext context = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
+                .environmentContext();
+        this.checkEquals(
+                Optional.of(CURRENCY),
+                context.environmentValue(
+                        EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL)
+                )
+        );
     }
 
     // HasExpressionNumberContext.......................................................................................

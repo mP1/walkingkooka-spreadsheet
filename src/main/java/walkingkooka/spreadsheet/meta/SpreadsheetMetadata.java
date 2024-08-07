@@ -33,6 +33,7 @@ import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.HasLocale;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
@@ -738,6 +739,23 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 provider
         );
     }
+
+    // EnvironmentContext...............................................................................................
+
+    /**
+     * Getter that returns a {@link EnvironmentContext} view o this {@link SpreadsheetMetadata}.
+     */
+    public final EnvironmentContext environmentContext() {
+        if (null == this.environmentContext) {
+            this.environmentContext = SpreadsheetMetadataEnvironmentContext.with(this);
+        }
+        return this.environmentContext;
+    }
+
+    /**
+     * Cached {@link SpreadsheetMetadataEnvironmentContext}.
+     */
+    private EnvironmentContext environmentContext;
 
     // HasExpressionNumberContext.......................................................................................
 
