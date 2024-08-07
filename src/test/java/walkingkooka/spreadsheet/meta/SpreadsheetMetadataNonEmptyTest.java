@@ -2158,6 +2158,39 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
+    // SpreadsheetFormatterProviderSamplesContext.......................................................................
+
+    @Test
+    public void testSpreadsheetFormatterProviderSamplesContext() {
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter()
+                .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
+                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
+                .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
+                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
+                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT)
+                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN);
+
+        this.checkNotEquals(
+                null,
+                metadata.spreadsheetFormatterProviderSamplesContext(
+                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                                metadata,
+                                SPREADSHEET_FORMATTER_PROVIDER,
+                                SPREADSHEET_PARSER_PROVIDER
+                        ),
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        NOW,
+                        LABEL_NAME_RESOLVER
+                )
+        );
+    }
+
     // HasJsonNodeUnmarshallContext.......................................................................................
 
     @Test
