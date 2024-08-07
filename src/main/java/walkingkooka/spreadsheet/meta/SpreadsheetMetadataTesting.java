@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -173,6 +174,13 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.formatterContext(
+            CONVERTER_PROVIDER,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            NOW,
+            SPREADSHEET_LABEL_NAME_RESOLVER
+    );
+
+    SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,
             NOW,
