@@ -20,8 +20,10 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 
-public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<EmptySpreadsheetFormatterProvider> {
+public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<EmptySpreadsheetFormatterProvider>,
+        SpreadsheetMetadataTesting {
 
     @Test
     public void testSpreadsheetFormatterSelectorFails() {
@@ -49,7 +51,7 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     public void testSpreadsheetFormatterSamples() {
         this.spreadsheetFormatterSamplesFails(
                 SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
-                SpreadsheetFormatterContexts.fake()
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
         );
     }
 

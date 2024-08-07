@@ -41,7 +41,7 @@ public class FakeSpreadsheetFormatterProvider implements SpreadsheetFormatterPro
 
     @Override
     public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
-                                                                        final SpreadsheetFormatterContext context) {
+                                                                        final SpreadsheetFormatterProviderSamplesContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(context, "context");
 

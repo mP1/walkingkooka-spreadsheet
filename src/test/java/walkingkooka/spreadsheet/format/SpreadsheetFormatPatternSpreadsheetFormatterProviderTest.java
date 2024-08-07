@@ -35,6 +35,8 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
         ToStringTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider>,
         SpreadsheetMetadataTesting {
 
+
+
     @Test
     public void testSpreadsheetFormatterSelectorAutomatic() {
         this.spreadsheetFormatterAndCheck(
@@ -757,7 +759,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testSpreadsheetFormatterSamplesAutomatic() {
         this.spreadsheetFormatterSamplesAndCheck(
                 SpreadsheetFormatterName.AUTOMATIC,
-                SpreadsheetFormatterContexts.fake()
+                SpreadsheetFormatterProviderSamplesContexts.fake()
         );
     }
 
@@ -765,7 +767,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testSpreadsheetFormatterSamplesCollection() {
         this.spreadsheetFormatterSamplesAndCheck(
                 SpreadsheetFormatterName.COLLECTION,
-                SpreadsheetFormatterContexts.fake()
+                SpreadsheetFormatterProviderSamplesContexts.fake()
         );
     }
 
@@ -792,7 +794,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testSpreadsheetFormatterSamplesDateFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
                 SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
-                SPREADSHEET_FORMATTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Short",
                         SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("d/m/yy"),
@@ -839,7 +841,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testSpreadsheetFormatterSamplesDateTimeFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
                 SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
-                SPREADSHEET_FORMATTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Short",
                         SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setText("d/m/yy, h:mm AM/PM"),
@@ -878,7 +880,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testSpreadsheetFormatterSamplesGeneral() {
         this.spreadsheetFormatterSamplesAndCheck(
                 SpreadsheetFormatterName.GENERAL,
-                SPREADSHEET_FORMATTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "General",
                         SpreadsheetFormatterName.GENERAL.setText(""),
@@ -960,7 +962,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testSpreadsheetFormatterSamplesNumberFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
                 SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN,
-                SPREADSHEET_FORMATTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Number",
                         SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0.###"),
@@ -1028,7 +1030,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testSpreadsheetFormatterSamplesTextFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
                 SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
-                SPREADSHEET_FORMATTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Default",
                         SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setText("@"),
@@ -1050,7 +1052,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testSpreadsheetFormatterSamplesTimeFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
                 SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
-                SPREADSHEET_FORMATTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Short",
                         SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setText("h:mm AM/PM"),

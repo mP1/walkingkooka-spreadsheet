@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
@@ -29,7 +30,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-public final class SpreadsheetFormatterProviderTestingTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatterProviderTestingTest.TestSpreadsheetFormatterProvider> {
+public final class SpreadsheetFormatterProviderTestingTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatterProviderTestingTest.TestSpreadsheetFormatterProvider>,
+        SpreadsheetMetadataTesting {
 
     private final static String SELECTOR = "text-format-pattern @@";
 
@@ -59,7 +61,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         this.spreadsheetFormatterSamplesAndCheck(
                 SAMPLE.selector()
                         .name(),
-                SpreadsheetFormatterContexts.fake(),
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SAMPLE
         );
     }
@@ -70,13 +72,13 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
                 new FakeSpreadsheetFormatterProvider() {
                     @Override
                     public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
-                                                                                        final SpreadsheetFormatterContext context) {
+                                                                                        final SpreadsheetFormatterProviderSamplesContext context) {
                         throw new IllegalArgumentException("Unknown " + name);
                     }
                 },
                 SAMPLE.selector()
                         .name(),
-                SpreadsheetFormatterContexts.fake()
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
         );
     }
 
@@ -121,7 +123,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
 
         @Override
         public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
-                                                                            final SpreadsheetFormatterContext context) {
+                                                                            final SpreadsheetFormatterProviderSamplesContext context) {
             Objects.requireNonNull(name, "name");
             Objects.requireNonNull(context, "context");
 
