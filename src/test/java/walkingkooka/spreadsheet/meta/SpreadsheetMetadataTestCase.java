@@ -410,6 +410,19 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
+    // EnvironmentContext...............................................................................................
+
+    @Test
+    public void testEnvironmentContextCached() {
+        final SpreadsheetMetadata metadata = this.createObject();
+
+        assertSame(
+                metadata.environmentContext(),
+                metadata.environmentContext(),
+                () -> "EnvironmentContext not cached, new instance created each time."
+        );
+    }
+
     // expressionConverter........................................................................................................
 
     @Test
