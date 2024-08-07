@@ -44,8 +44,11 @@ public interface SpreadsheetFormatterProviderDelegator extends SpreadsheetFormat
 
     @Override
     default List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
-                                                                         final SpreadsheetFormatterContext context) {
-        return this.spreadsheetFormatterProvider().spreadsheetFormatterSamples(name, context);
+                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.spreadsheetFormatterProvider().spreadsheetFormatterSamples(
+                name,
+                context
+        );
     }
 
     @Override

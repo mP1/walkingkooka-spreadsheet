@@ -248,7 +248,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                 () -> this.createSpreadsheetFormatterProvider()
                         .spreadsheetFormatterSamples(
                                 null,
-                                SpreadsheetFormatterContexts.fake()
+                                new FakeSpreadsheetFormatterProviderSamplesContext()
                         )
         );
     }
@@ -267,7 +267,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
 
     default void spreadsheetFormatterSamplesAndCheck(final SpreadsheetFormatterName name,
-                                                     final SpreadsheetFormatterContext context,
+                                                     final SpreadsheetFormatterProviderSamplesContext context,
                                                      final SpreadsheetFormatterSample... expected) {
         this.spreadsheetFormatterSamplesAndCheck(
                 this.createSpreadsheetFormatterProvider(),
@@ -279,7 +279,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
     default void spreadsheetFormatterSamplesAndCheck(final SpreadsheetFormatterProvider provider,
                                                      final SpreadsheetFormatterName name,
-                                                     final SpreadsheetFormatterContext context,
+                                                     final SpreadsheetFormatterProviderSamplesContext context,
                                                      final SpreadsheetFormatterSample... expected) {
         this.spreadsheetFormatterSamplesAndCheck(
                 provider,
@@ -293,7 +293,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
     default void spreadsheetFormatterSamplesAndCheck(final SpreadsheetFormatterProvider provider,
                                                      final SpreadsheetFormatterName name,
-                                                     final SpreadsheetFormatterContext context,
+                                                     final SpreadsheetFormatterProviderSamplesContext context,
                                                      final List<SpreadsheetFormatterSample> expected) {
         this.checkEquals(
                 expected,
@@ -306,7 +306,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     default void spreadsheetFormatterSamplesFails(final SpreadsheetFormatterName name,
-                                                  final SpreadsheetFormatterContext context) {
+                                                  final SpreadsheetFormatterProviderSamplesContext context) {
         this.spreadsheetFormatterSamplesFails(
                 this.createSpreadsheetFormatterProvider(),
                 name,
@@ -316,7 +316,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
     default void spreadsheetFormatterSamplesFails(final SpreadsheetFormatterProvider provider,
                                                   final SpreadsheetFormatterName name,
-                                                  final SpreadsheetFormatterContext context) {
+                                                  final SpreadsheetFormatterProviderSamplesContext context) {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> provider.spreadsheetFormatterSamples(

@@ -214,7 +214,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
 
         this.spreadsheetFormatterSamplesAndCheck(
                 name,
-                SPREADSHEET_FORMATTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Short",
                         name.setText("d/m/yy"),
