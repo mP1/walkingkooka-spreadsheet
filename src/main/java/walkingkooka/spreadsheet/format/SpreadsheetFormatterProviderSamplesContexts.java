@@ -25,6 +25,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetFormatterProviderSamplesContexts implements PublicStaticHelper {
 
     /**
+     * {@see BasicSpreadsheetFormatterProviderSamplesContext}
+     */
+    public static SpreadsheetFormatterProviderSamplesContext basic(final SpreadsheetFormatterContext spreadsheetFormatterContext) {
+        return BasicSpreadsheetFormatterProviderSamplesContext.with(spreadsheetFormatterContext);
+    }
+
+    /**
      * {@see SpreadsheetFormatterProviderSamplesContext}
      */
     public static SpreadsheetFormatterProviderSamplesContext fake() {
