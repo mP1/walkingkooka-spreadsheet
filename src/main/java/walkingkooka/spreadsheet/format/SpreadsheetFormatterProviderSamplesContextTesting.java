@@ -18,4 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 public interface SpreadsheetFormatterProviderSamplesContextTesting<C extends SpreadsheetFormatterProviderSamplesContext> extends SpreadsheetFormatterContextTesting<C> {
+
+    default String typeNameSuffix() {
+        return SpreadsheetFormatterProviderSamplesContext.class.getSimpleName();
+    }
 }
