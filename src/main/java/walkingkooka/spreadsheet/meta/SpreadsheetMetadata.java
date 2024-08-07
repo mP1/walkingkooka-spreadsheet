@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -887,10 +888,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public final SpreadsheetFormatterContext spreadsheetFormatterProviderSamplesContext(final ConverterProvider converterProvider,
-                                                                                        final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                                                        final Supplier<LocalDateTime> now,
-                                                                                        final SpreadsheetLabelNameResolver labelNameResolver) {
+    public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final ConverterProvider converterProvider,
+                                                                                                       final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                                                                       final Supplier<LocalDateTime> now,
+                                                                                                       final SpreadsheetLabelNameResolver labelNameResolver) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
                 this.formatterContext(
                         converterProvider,
