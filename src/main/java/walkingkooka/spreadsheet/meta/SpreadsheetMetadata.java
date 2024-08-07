@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
@@ -875,6 +876,25 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 this.formatter(spreadsheetFormatterProvider),
                 this.converterContext(
                         converterProvider,
+                        now,
+                        labelNameResolver
+                )
+        );
+    }
+
+    // SpreadsheetFormatterProviderSamplesContext.......................................................................
+
+    /**
+     * Creates a {@link SpreadsheetFormatterContext}.
+     */
+    public final SpreadsheetFormatterContext spreadsheetFormatterProviderSamplesContext(final ConverterProvider converterProvider,
+                                                                                        final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                                                        final Supplier<LocalDateTime> now,
+                                                                                        final SpreadsheetLabelNameResolver labelNameResolver) {
+        return SpreadsheetFormatterProviderSamplesContexts.basic(
+                this.formatterContext(
+                        converterProvider,
+                        spreadsheetFormatterProvider,
                         now,
                         labelNameResolver
                 )
