@@ -19,16 +19,21 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 
 public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<EmptySpreadsheetFormatterProvider>,
         SpreadsheetMetadataTesting {
 
+    private final static ProviderContext CONTEXT = ProviderContexts.fake();
+
     @Test
     public void testSpreadsheetFormatterSelectorFails() {
         this.spreadsheetFormatterFails(
-                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("")
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText(""),
+                CONTEXT
         );
     }
 
@@ -36,7 +41,8 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     public void testSpreadsheetFormatterNameFails() {
         this.spreadsheetFormatterFails(
                 SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
-                Lists.empty()
+                Lists.empty(),
+                CONTEXT
         );
     }
 

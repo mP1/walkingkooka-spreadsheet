@@ -22,6 +22,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.HasName;
 import walkingkooka.net.UrlPath;
+import walkingkooka.plugin.ProviderContext;
 
 import java.util.Map;
 import java.util.Objects;
@@ -43,8 +44,10 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
     }
 
     @Override
-    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                          final ProviderContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetComparator<?> comparator = NAME_TO_COMPARATOR.get(name);
         if(null == comparator) {

@@ -28,6 +28,8 @@ import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
@@ -65,6 +67,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         TreePrintableTesting {
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     SpreadsheetMetadataTestCase() {
         super();
@@ -431,6 +435,19 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 NullPointerException.class,
                 () -> this.createObject()
                         .expressionConverter(
+                                null,
+                                PROVIDER_CONTEXT
+                        )
+        );
+    }
+
+    @Test
+    public final void testExpressionConverterWithNullProviderContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .expressionConverter(
+                                ConverterProviders.fake(),
                                 null
                         )
         );
@@ -443,7 +460,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 IllegalStateException.class,
                 () -> this.createObject()
                         .expressionConverter(
-                                ConverterProviders.fake()
+                                ConverterProviders.fake(),
+                                PROVIDER_CONTEXT
                         )
         );
         checkMessage(
@@ -480,7 +498,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> this.createObject()
-                        .formatter(SpreadsheetFormatterProviders.fake())
+                        .formatter(
+                                SpreadsheetFormatterProviders.fake(),
+                                PROVIDER_CONTEXT
+                        )
         );
         checkMessage(
                 thrown,

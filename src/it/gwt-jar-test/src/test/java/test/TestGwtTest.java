@@ -9,6 +9,8 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -91,6 +93,7 @@ public class TestGwtTest extends GWTTestCase {
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
     public void testWithCellReference() {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext(engine);
@@ -225,8 +228,12 @@ public class TestGwtTest extends GWTTestCase {
             }
 
             @Override
-            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
-                return spreadsheetParserProvider.spreadsheetParser(selector);
+            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
+                                                       final ProviderContext context) {
+                return spreadsheetParserProvider.spreadsheetParser(
+                        selector,
+                        context
+                );
             }
 
             @Override
@@ -235,7 +242,11 @@ public class TestGwtTest extends GWTTestCase {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
                                 EXPRESSION_NUMBER_KIND,
-                                ExpressionFunctionProviders.fake()::expressionFunction,
+                                n -> ExpressionFunctionProviders.fake()
+                                        .expressionFunction(
+                                                n,
+                                                PROVIDER_CONTEXT
+                                        ),
                                 (r) -> {
                                     throw new UnsupportedOperationException();
                                 },
@@ -245,7 +256,8 @@ public class TestGwtTest extends GWTTestCase {
                                 metadata.converterContext(
                                         converterProvider,
                                         NOW,
-                                        LABEL_NAME_RESOLVER
+                                        LABEL_NAME_RESOLVER,
+                                        PROVIDER_CONTEXT
                                 )
                         )
                 );
@@ -283,7 +295,10 @@ public class TestGwtTest extends GWTTestCase {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter(spreadsheetFormatterProvider)
+                                                        .formatter(
+                                                                spreadsheetFormatterProvider,
+                                                                PROVIDER_CONTEXT
+                                                        )
                                         )
                                 ).map(
                                         f -> cell.style()
@@ -304,7 +319,8 @@ public class TestGwtTest extends GWTTestCase {
                                 converterProvider,
                                 spreadsheetFormatterProvider,
                                 NOW,
-                                LABEL_NAME_RESOLVER
+                                LABEL_NAME_RESOLVER,
+                                PROVIDER_CONTEXT
                         )
                 );
             }

@@ -27,6 +27,7 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.UrlPath;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
@@ -64,17 +65,23 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     }
 
     @Override
-    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector) {
+    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector,
+                                                               final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
 
-        return selector.evaluateText(this);
+        return selector.evaluateText(
+                this,
+                context
+        );
     }
 
     @Override
     public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                               final List<?> values) {
+                                                               final List<?> values,
+                                                               final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
+        Objects.requireNonNull(context, "context");
 
         Converter<?> converter;
 
@@ -105,7 +112,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             case GENERAL_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = general();
+                converter = general(context);
                 break;
             case SELECTION_TO_SELECTION_STRING:
                 parameterCountCheck(copy, 0);
@@ -129,12 +136,13 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         return Cast.to(converter);
     }
 
-    private Converter<SpreadsheetConverterContext> general() {
+    private Converter<SpreadsheetConverterContext> general(final ProviderContext context) {
         final SpreadsheetMetadata metadata = this.metadata;
 
         return metadata.generalConverter(
                 this.spreadsheetFormatterProvider,
-                this.spreadsheetParserProvider
+                this.spreadsheetParserProvider,
+                context
         );
     }
 

@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.ProviderTesting;
 
 import java.util.List;
@@ -31,10 +33,26 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormatterProvider> extends ProviderTesting<T> {
 
     @Test
-    default void testSpreadsheetFormatterWithNullFails() {
+    default void testSpreadsheetFormatterWithNullNameFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createSpreadsheetFormatterProvider().spreadsheetFormatter(null)
+                () -> this.createSpreadsheetFormatterProvider()
+                        .spreadsheetFormatter(
+                                null,
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetFormatterWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetFormatterProvider()
+                        .spreadsheetFormatter(
+                                SpreadsheetFormatterName.GENERAL.setText(""),
+                                null
+                        )
         );
     }
 
@@ -42,70 +60,90 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
     // SpreadsheetFormatter(SpreadsheetFormatterSelector)...............................................................
 
-    default void spreadsheetFormatterFails(final String selector) {
+    default void spreadsheetFormatterFails(final String selector,
+                                           final ProviderContext context) {
         this.spreadsheetFormatterFails(
                 this.createSpreadsheetFormatterProvider(),
-                SpreadsheetFormatterSelector.parse(selector)
+                SpreadsheetFormatterSelector.parse(selector),
+                context
         );
     }
 
     default void spreadsheetFormatterFails(final SpreadsheetFormatterProvider provider,
-                                           final String selector) {
+                                           final String selector,
+                                           final ProviderContext context) {
         this.spreadsheetFormatterFails(
                 provider,
-                SpreadsheetFormatterSelector.parse(selector)
+                SpreadsheetFormatterSelector.parse(selector),
+                context
         );
     }
 
-    default void spreadsheetFormatterFails(final SpreadsheetFormatterSelector selector) {
+    default void spreadsheetFormatterFails(final SpreadsheetFormatterSelector selector,
+                                           final ProviderContext context) {
         this.spreadsheetFormatterFails(
                 this.createSpreadsheetFormatterProvider(),
-                selector
+                selector,
+                context
         );
     }
 
     default void spreadsheetFormatterFails(final SpreadsheetFormatterProvider provider,
-                                           final SpreadsheetFormatterSelector selector) {
+                                           final SpreadsheetFormatterSelector selector,
+                                           final ProviderContext context) {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> provider.spreadsheetFormatter(selector)
+                () -> provider.spreadsheetFormatter(
+                        selector,
+                        context
+                )
         );
     }
 
     default void spreadsheetFormatterAndCheck(final String selector,
+                                              final ProviderContext context,
                                               final SpreadsheetFormatter expected) {
         this.spreadsheetFormatterAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 SpreadsheetFormatterSelector.parse(selector),
+                context,
                 expected
         );
     }
 
     default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
                                               final String selector,
+                                              final ProviderContext context,
                                               final SpreadsheetFormatter expected) {
         this.spreadsheetFormatterAndCheck(
                 provider,
                 SpreadsheetFormatterSelector.parse(selector),
+                context,
                 expected
         );
     }
 
     default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterSelector selector,
+                                              final ProviderContext context,
                                               final SpreadsheetFormatter expected) {
         this.spreadsheetFormatterAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 selector,
+                context,
                 expected
         );
     }
 
     default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
                                               final SpreadsheetFormatterSelector selector,
+                                              final ProviderContext context,
                                               final SpreadsheetFormatter expected) {
         this.checkEquals(
                 expected,
-                provider.spreadsheetFormatter(selector),
+                provider.spreadsheetFormatter(
+                        selector,
+                        context
+                ),
                 selector::toString
         );
     }
@@ -113,33 +151,39 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     // SpreadsheetFormatter(SpreadsheetFormatterSelector)...............................................................
 
     default void spreadsheetFormatterFails(final SpreadsheetFormatterName name,
-                                           final List<?> values) {
+                                           final List<?> values,
+                                           final ProviderContext context) {
         this.spreadsheetFormatterFails(
                 this.createSpreadsheetFormatterProvider(),
                 name,
-                values
+                values,
+                context
         );
     }
 
     default void spreadsheetFormatterFails(final SpreadsheetFormatterProvider provider,
                                            final SpreadsheetFormatterName name,
-                                           final List<?> values) {
+                                           final List<?> values,
+                                           final ProviderContext context) {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> provider.spreadsheetFormatter(
                         name,
-                        values
+                        values,
+                        context
                 )
         );
     }
 
     default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterName name,
                                               final List<?> values,
+                                              final ProviderContext context,
                                               final SpreadsheetFormatter expected) {
         this.spreadsheetFormatterAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 name,
                 values,
+                context,
                 expected
         );
     }
@@ -147,12 +191,14 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     default void spreadsheetFormatterAndCheck(final SpreadsheetFormatterProvider provider,
                                               final SpreadsheetFormatterName name,
                                               final List<?> values,
+                                              final ProviderContext context,
                                               final SpreadsheetFormatter expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetFormatter(
                         name,
-                        values
+                        values,
+                        context
                 ),
                 () -> name + " " + values
         );

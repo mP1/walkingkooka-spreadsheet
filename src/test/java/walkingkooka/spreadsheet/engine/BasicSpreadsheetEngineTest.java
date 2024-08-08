@@ -30,6 +30,7 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
@@ -13289,28 +13290,45 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
-                return SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(name);
+            public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                                  final ProviderContext context) {
+                return SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(
+                        name,
+                        context
+                );
             }
 
             @Override
             public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                                       final List<?> values) {
+                                                                       final List<?> values,
+                                                                       final ProviderContext context) {
                 return SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         this.spreadsheetMetadata(),
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
-                ).converter(name, values);
+                ).converter(
+                        name,
+                        values,
+                        context
+                );
             }
 
             @Override
-            public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
-                return SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatter(selector);
+            public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
+                                                             final ProviderContext context) {
+                return SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatter(
+                        selector,
+                        context
+                );
             }
 
             @Override
-            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
-                return SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(selector);
+            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
+                                                       final ProviderContext context) {
+                return SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(
+                        selector,
+                        context
+                );
             }
 
             public SpreadsheetMetadata spreadsheetMetadata() {
@@ -13327,7 +13345,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public SpreadsheetParserToken parseFormula(final TextCursor formula) {
                 return SpreadsheetParsers.valueOrExpression(
                                 BasicSpreadsheetEngineTest.this.metadata()
-                                        .parser(SPREADSHEET_PARSER_PROVIDER)
+                                        .parser(
+                                                SPREADSHEET_PARSER_PROVIDER,
+                                                PROVIDER_CONTEXT
+                                        )
                         ).orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(
                                 formula,
@@ -13360,6 +13381,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         SPREADSHEET_PARSER_PROVIDER
                                 ),
                                 this.expressionFunctionProvider(),
+                                PROVIDER_CONTEXT,
                                 (r) -> {
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
@@ -13386,6 +13408,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         SPREADSHEET_PARSER_PROVIDER
                                 ),
                                 this.expressionFunctionProvider(),
+                                PROVIDER_CONTEXT,
                                 this.references(), // references
                                 (s) -> {
                                     throw new UnsupportedOperationException(s.toString()); // resolveLabel
@@ -13400,14 +13423,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public boolean isPure(final FunctionExpressionName function) {
                 return this.expressionFunctionProvider()
-                        .expressionFunction(function)
-                        .isPure(this);
+                        .expressionFunction(
+                                function,
+                                this // ProviderContext
+                        ).isPure(this);
             }
 
             private ExpressionFunctionProvider expressionFunctionProvider() {
                 return new FakeExpressionFunctionProvider() {
                     @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
+                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+                                                                                                 final ProviderContext context) {
                         switch (name.value()) {
                             case "BasicSpreadsheetEngineTestNumberParameter":
                                 return new FakeExpressionFunction<>() {
@@ -13566,7 +13592,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SPREADSHEET_PARSER_PROVIDER
                         ),
                         NOW,
-                        LABEL_NAME_RESOLVER
+                        LABEL_NAME_RESOLVER,
+                        PROVIDER_CONTEXT
                 );
             }
 
@@ -13600,7 +13627,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                         value.get(),
                                                         formatter.orElse(
                                                                 this.spreadsheetMetadata()
-                                                                        .formatter(SPREADSHEET_FORMATTER_PROVIDER)
+                                                                        .formatter(
+                                                                                SPREADSHEET_FORMATTER_PROVIDER,
+                                                                                PROVIDER_CONTEXT
+                                                                        )
                                                         )
                                                 ).map(
                                                         f -> cell.style()
@@ -13714,8 +13744,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         if (value.isPresent()) {
             final TextNode formattedText = this.metadata()
-                    .formatter(SPREADSHEET_FORMATTER_PROVIDER)
-                    .format(
+                    .formatter(
+                            SPREADSHEET_FORMATTER_PROVIDER,
+                            PROVIDER_CONTEXT
+                    ).format(
                             value.get(),
                             SPREADSHEET_TEXT_FORMAT_CONTEXT
                     ).orElseThrow(
@@ -13745,7 +13777,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         null :
                         SpreadsheetParsers.valueOrExpression(
                                 BasicSpreadsheetEngineTest.this.metadata()
-                                        .parser(SPREADSHEET_PARSER_PROVIDER)
+                                        .parser(
+                                                SPREADSHEET_PARSER_PROVIDER,
+                                                PROVIDER_CONTEXT
+                                        )
                                 ).orFailIfCursorNotEmpty(ParserReporters.basic())
                                 .parse(TextCursors.charSequence(text),
                                         SpreadsheetParserContexts.basic(

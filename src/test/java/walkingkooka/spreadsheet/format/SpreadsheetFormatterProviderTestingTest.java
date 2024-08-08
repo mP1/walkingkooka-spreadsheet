@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.tree.text.TextNode;
@@ -48,10 +50,13 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
             SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
     );
 
+    private final static ProviderContext CONTEXT = ProviderContexts.fake();
+
     @Test
     public void testSpreadsheetFormatterAndCheck() {
         this.spreadsheetFormatterAndCheck(
                 SELECTOR,
+                CONTEXT,
                 FORMATTER
         );
     }
@@ -97,8 +102,10 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
 
     class TestSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
         @Override
-        public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+        public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
+                                                         final ProviderContext context) {
             Objects.requireNonNull(selector, "selector");
+            Objects.requireNonNull(context, "context");
 
             checkEquals("text-format-pattern", selector.name().value());
             return FORMATTER;
@@ -106,9 +113,11 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
 
         @Override
         public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
-                                                         final List<?> values) {
+                                                         final List<?> values,
+                                                         final ProviderContext context) {
             Objects.requireNonNull(name, "name");
             Objects.requireNonNull(values, "values");
+            Objects.requireNonNull(context, "context");
 
             checkEquals("text-format-pattern", name.value());
             return FORMATTER;

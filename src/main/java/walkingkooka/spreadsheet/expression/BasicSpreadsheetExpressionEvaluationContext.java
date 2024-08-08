@@ -23,6 +23,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -45,7 +46,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.math.MathContext;
@@ -54,7 +54,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -66,6 +65,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final ConverterProvider converterProvider,
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
+                                                            final ProviderContext providerContext,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                             final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
                                                             final Supplier<LocalDateTime> now) {
@@ -75,6 +75,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
+        Objects.requireNonNull(providerContext, "providerContext");
         Objects.requireNonNull(references, "references");
         Objects.requireNonNull(SpreadsheetLabelNameResolver, "SpreadsheetLabelNameResolver");
         Objects.requireNonNull(now, "now");
@@ -86,6 +87,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 spreadsheetMetadata,
                 converterProvider,
                 expressionFunctionProvider,
+                providerContext,
                 references,
                 SpreadsheetLabelNameResolver,
                 now
@@ -98,6 +100,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final ConverterProvider converterProvider,
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
+                                                        final ProviderContext providerContext,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                         final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
                                                         final Supplier<LocalDateTime> now) {
@@ -105,9 +108,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.cell = cell;
         this.cellStore = cellStore;
         this.serverUrl = serverUrl;
+
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.converterProvider = converterProvider;
         this.expressionFunctionProvider = expressionFunctionProvider;
+        this.providerContext = providerContext;
+
         this.references = references;
         this.SpreadsheetLabelNameResolver = SpreadsheetLabelNameResolver;
         this.now = now;
@@ -187,7 +193,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public Converter<SpreadsheetConverterContext> converter() {
         return this.spreadsheetMetadata.expressionConverter(
-                this.converterProvider
+                this.converterProvider,
+                this.providerContext
         );
     }
 
@@ -217,13 +224,16 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
-        return this.expressionFunctionProvider.expressionFunction(name);
+        return this.expressionFunctionProvider.expressionFunction(
+                name,
+                this.providerContext
+        );
     }
 
-    @Override
-    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
-        return this.expressionFunctionProvider.expressionFunctionInfos();
-    }
+//    @Override
+//    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+//        return this.expressionFunctionProvider.expressionFunctionInfos();
+//    }
 
     @Override
     public boolean isPure(final FunctionExpressionName name) {
@@ -253,6 +263,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     public Object handleException(final RuntimeException exception) {
         return SpreadsheetErrorKind.translate(exception);
     }
+
+    private final ProviderContext providerContext;
 
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
@@ -406,7 +418,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .converterContext(
                         this.converterProvider,
                         this.now,
-                        this.SpreadsheetLabelNameResolver
+                        this.SpreadsheetLabelNameResolver,
+                        this.providerContext
                 );
     }
 

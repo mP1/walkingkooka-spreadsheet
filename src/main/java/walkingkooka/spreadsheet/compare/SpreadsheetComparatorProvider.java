@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.plugin.Provider;
+import walkingkooka.plugin.ProviderContext;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +33,8 @@ public interface SpreadsheetComparatorProvider extends Provider {
     /**
      * Resolves the given {@link SpreadsheetComparatorName} to a {@link SpreadsheetComparator}.
      */
-    SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name);
+    SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                   final ProviderContext context);
 
     /**
      * Returns all available {@link SpreadsheetComparatorInfo}
@@ -43,7 +45,8 @@ public interface SpreadsheetComparatorProvider extends Provider {
      * Helper that maps a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} into a {@link List} of
      * {@link SpreadsheetColumnOrRowSpreadsheetComparators} including the name to comparator lookups.
      */
-    default List<SpreadsheetColumnOrRowSpreadsheetComparators> toSpreadsheetColumnOrRowSpreadsheetComparators(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names) {
+    default List<SpreadsheetColumnOrRowSpreadsheetComparators> toSpreadsheetColumnOrRowSpreadsheetComparators(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names,
+                                                                                                              final ProviderContext context) {
         return names.stream()
                 .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
                         n.columnOrRow(),
@@ -52,7 +55,10 @@ public interface SpreadsheetComparatorProvider extends Provider {
                                 .map(
                                         nad -> nad.direction()
                                                 .apply(
-                                                        this.spreadsheetComparator(nad.name())
+                                                        this.spreadsheetComparator(
+                                                                nad.name(),
+                                                                context
+                                                        )
                                                 )
                                 ).collect(Collectors.toList())
                 )).collect(Collectors.toList());

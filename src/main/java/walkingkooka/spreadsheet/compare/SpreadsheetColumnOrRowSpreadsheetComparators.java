@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 
@@ -47,7 +48,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
      * as a factory to transform spreadsheet comparator names into {@link SpreadsheetComparator} instances.
      */
     public static List<SpreadsheetColumnOrRowSpreadsheetComparators> parse(final String text,
-                                                                           final SpreadsheetComparatorProvider spreadsheetComparatorProvider) {
+                                                                           final SpreadsheetComparatorProvider provider,
+                                                                           final ProviderContext context) {
         return list(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(text)
                         .stream()
@@ -57,7 +59,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                                         .stream()
                                         .map(nad -> nad.direction()
                                                 .apply(
-                                                        spreadsheetComparatorProvider.spreadsheetComparator(nad.name())
+                                                        provider.spreadsheetComparator(
+                                                                nad.name(),
+                                                                context
+                                                        )
                                                 )
                                         ).collect(Collectors.toList())
                         )).collect(Collectors.toList())

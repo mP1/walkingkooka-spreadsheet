@@ -29,7 +29,8 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
@@ -171,7 +172,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     private final ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider() {
         @Override
-        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName n) {
+        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName n,
+                                                                                     final ProviderContext c) {
             Objects.requireNonNull(n, "name");
 
             if (CONCAT.name().get().equals(n)) {
@@ -206,6 +208,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     };
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     // tests............................................................................................................
 
@@ -496,6 +500,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                                 )
                         ),
                         EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT,
                         REFERENCES,
                         LABEL_NAME_RESOLVER,
                         LocalDateTime::now
@@ -566,10 +571,5 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     @Override
     public Class<SpreadsheetExpressionEvaluationContext> type() {
         return Cast.to(ConverterSpreadsheetExpressionEvaluationContext.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

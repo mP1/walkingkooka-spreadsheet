@@ -44,6 +44,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithBasicSpreadsheetConverter() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER + "",
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.basic()
         );
     }
@@ -53,6 +54,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER,
                 Lists.empty(),
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.basic()
         );
     }
@@ -61,6 +63,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithErrorThrowing() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_THROWING + "",
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.errorThrowing()
         );
     }
@@ -70,6 +73,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_THROWING,
                 Lists.empty(),
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.errorThrowing()
         );
     }
@@ -78,6 +82,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithErrorToNumber() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_TO_NUMBER + "",
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.errorToNumber()
         );
     }
@@ -87,6 +92,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_TO_NUMBER,
                 Lists.empty(),
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.errorToNumber()
         );
     }
@@ -95,6 +101,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithErrorToString() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_TO_STRING + "",
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.errorToString()
         );
     }
@@ -104,6 +111,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_TO_STRING,
                 Lists.empty(),
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.errorToString()
         );
     }
@@ -114,7 +122,8 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
 
         final Converter<SpreadsheetConverterContext> general = provider.converter(
                 SpreadsheetConvertersConverterProvider.GENERAL,
-                Lists.empty()
+                Lists.empty(),
+                PROVIDER_CONTEXT
         );
 
         final ExpressionNumberKind kind = ExpressionNumberKind.BIG_DECIMAL;
@@ -151,6 +160,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithSelectionToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION + "",
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.selectionToSelection()
         );
     }
@@ -160,6 +170,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION,
                 Lists.empty(),
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.selectionToSelection()
         );
     }
@@ -168,6 +179,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStringToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.STRING_TO_SELECTION + "",
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.stringToSelection()
         );
     }
@@ -177,6 +189,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.STRING_TO_SELECTION,
                 Lists.empty(),
+                PROVIDER_CONTEXT,
                 SpreadsheetConverters.stringToSelection()
         );
     }

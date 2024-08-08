@@ -35,6 +35,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.text.CharacterConstant;
 
@@ -74,8 +75,10 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
     }
 
     @Override
-    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
+                                               final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
+        Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetParser(
                 selector.setName(
@@ -83,13 +86,15 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
                                 .orElseThrow(
                                         () -> new IllegalArgumentException("Unknown parser " + selector.name())
                                 )
-                )
+                ),
+                context
         );
     }
 
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
-                                               final List<?> values) {
+                                               final List<?> values,
+                                               final ProviderContext context) {
         Objects.requireNonNull(name, "name");
 
         return this.provider.spreadsheetParser(
@@ -97,7 +102,8 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
                         .orElseThrow(
                                 () -> new IllegalArgumentException("Unknown parser " + name)
                         ),
-                values
+                values,
+                context
         );
     }
 

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store.repo;
 
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -47,28 +48,34 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     static SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository with(final SpreadsheetId id,
                                                                                        final SpreadsheetStoreRepository repository,
                                                                                        final SpreadsheetParserProvider spreadsheetParserProvider,
-                                                                                       final Supplier<LocalDateTime> now) {
+                                                                                       final Supplier<LocalDateTime> now,
+                                                                                       final ProviderContext providerContext) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(repository, "repository");
         Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
         Objects.requireNonNull(now, "now");
+        Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository(
                 id,
                 repository,
                 spreadsheetParserProvider,
-                now
+                now,
+                providerContext
         );
     }
 
     private SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository(final SpreadsheetId id,
                                                                                    final SpreadsheetStoreRepository repository,
                                                                                    final SpreadsheetParserProvider spreadsheetParserProvider,
-                                                                                   final Supplier<LocalDateTime> now) {
+                                                                                   final Supplier<LocalDateTime> now,
+                                                                                   final ProviderContext providerContext) {
         this.id = id;
         this.repository = repository;
         this.spreadsheetParserProvider = spreadsheetParserProvider;
         this.now = now;
+
+        this.providerContext = providerContext;
 
         repository.metadatas().addSaveWatcher(this::onSaveMetadata);
     }
@@ -86,7 +93,8 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
                     this.repository.cells(),
                     metadata,
                     this.spreadsheetParserProvider,
-                    this.now
+                    this.now,
+                    this.providerContext
             );
         }
     }
@@ -98,7 +106,8 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
                     this.repository.cells(),
                     this.repository.metadatas().loadOrFail(this.id),
                     this.spreadsheetParserProvider,
-                    this.now
+                    this.now,
+                    this.providerContext
             );
         }
         return cells;
@@ -107,6 +116,8 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     private final SpreadsheetParserProvider spreadsheetParserProvider;
 
     private final Supplier<LocalDateTime> now;
+
+    private final ProviderContext providerContext;
 
     /**
      * This will be updated each time a new {@link SpreadsheetMetadata} is saved.
@@ -170,6 +181,6 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
 
     @Override
     public String toString() {
-        return this.id + " " + this.repository + " " + this.spreadsheetParserProvider;
+        return this.id + " " + this.repository + " " + this.spreadsheetParserProvider + " " + this.now + " " + this.providerContext;
     }
 }

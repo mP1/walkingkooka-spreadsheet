@@ -1740,7 +1740,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         metadata,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
-                )
+                ),
+                PROVIDER_CONTEXT
         );
 
         this.convertAndCheck3(
@@ -1810,7 +1811,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "Time 59 12",
                 metadata.generalConverter(
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER
+                        SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT
                 ),
                 metadata.converterContext(
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -1819,7 +1821,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 SPREADSHEET_PARSER_PROVIDER
                         ),
                         NOW,
-                        LABEL_NAME_RESOLVER
+                        LABEL_NAME_RESOLVER,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -2070,7 +2073,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                  final String text) {
         this.formatAndCheck(
                 this.createSpreadsheetMetadataWithFormatter()
-                        .formatter(SPREADSHEET_FORMATTER_PROVIDER),
+                        .formatter(
+                                SPREADSHEET_FORMATTER_PROVIDER,
+                                PROVIDER_CONTEXT
+                        ),
                 value,
                 new FakeSpreadsheetFormatterContext() {
                     @Override
@@ -2170,7 +2176,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ),
                         SPREADSHEET_FORMATTER_PROVIDER,
                         NOW,
-                        LABEL_NAME_RESOLVER
+                        LABEL_NAME_RESOLVER,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -2203,7 +2210,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ),
                         SPREADSHEET_FORMATTER_PROVIDER,
                         NOW,
-                        LABEL_NAME_RESOLVER
+                        LABEL_NAME_RESOLVER,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -2317,7 +2325,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 );
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> metadata.parser(SPREADSHEET_PARSER_PROVIDER)
+                () -> metadata.parser(
+                        SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
         this.checkEquals(
                 "Required properties \"date-time-parser\", \"number-parser\", \"time-parser\" missing.",
@@ -2379,8 +2390,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final TextCursor cursor = TextCursors.charSequence(text);
 
         final ParserToken token = this.metadataWithParser()
-                .parser(SPREADSHEET_PARSER_PROVIDER)
-                .parse(
+                .parser(
+                        SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT
+                ).parse(
                         cursor,
                         this.metadataWithParserContext()
                                 .parserContext(NOW)

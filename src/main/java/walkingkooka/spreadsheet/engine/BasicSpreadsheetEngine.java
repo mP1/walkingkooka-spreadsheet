@@ -457,7 +457,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         nad -> nad.direction()
                                                 .apply(
                                                         context.spreadsheetComparator(
-                                                                nad.name()
+                                                                nad.name(),
+                                                                context // ProviderContext
                                                         )
                                                 )
                                 ).collect(Collectors.toList())
@@ -503,7 +504,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     .converterContext(
                                             context, // ConverterProvider
                                             context::now, // now supplier
-                                            context::resolveIfLabel
+                                            context::resolveIfLabel,
+                                            context // ProviderContext
                                     )
                     )
             );
@@ -1137,10 +1139,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         .text()
                         ),
                         cell.parser()
-                                .map(context::spreadsheetParser)
-                                .orElseGet(
+                                .map(p -> context.spreadsheetParser(
+                                                p,
+                                                context
+                                        )
+                                ).orElseGet(
                                         () -> SpreadsheetParsers.valueOrExpression(
-                                                metadata.parser(context) // SpreadsheetEngineContext implements SpreadsheetParserProvider
+                                                metadata.parser(
+                                                        context, // SpreadsheetParserProvider
+                                                        context // ProviderContext
+                                                ) // SpreadsheetEngineContext implements SpreadsheetParserProvider
                                         )
                                 ),
                         metadata.parserContext(context::now)
@@ -1215,7 +1223,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             result = context.formatValueAndStyle(
                     result,
                     cell.formatter()
-                            .map(context::spreadsheetFormatter)
+                            .map(f -> context.spreadsheetFormatter(
+                                            f,
+                                            context // ProviderContext
+                                    )
+                            )
             );
         } catch (final Exception cause) {
             result = context.formatThrowableAndStyle(

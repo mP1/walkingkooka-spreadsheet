@@ -160,7 +160,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testParserAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.parser(SpreadsheetParserProviders.fake())
+                () -> SpreadsheetMetadata.EMPTY.parser(
+                        SpreadsheetParserProviders.fake(),
+                        PROVIDER_CONTEXT
+                )
         );
         this.checkEquals(
                 "Required properties \"date-parser\", \"date-time-parser\", \"number-parser\", \"time-parser\" missing.",

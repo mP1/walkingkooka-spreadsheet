@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.plugin.ProviderCollection;
 import walkingkooka.plugin.ProviderCollectionProviderGetter;
+import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -42,18 +43,22 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
                     @Override
                     public SpreadsheetFormatter get(final SpreadsheetFormatterProvider provider,
                                                     final SpreadsheetFormatterName name,
-                                                    final List<?> values) {
+                                                    final List<?> values,
+                                                    final ProviderContext context) {
                         return provider.spreadsheetFormatter(
                                 name,
-                                values
+                                values,
+                                context
                         );
                     }
 
                     @Override
                     public SpreadsheetFormatter get(final SpreadsheetFormatterProvider provider,
-                                                    final SpreadsheetFormatterSelector selector) {
+                                                    final SpreadsheetFormatterSelector selector,
+                                                    final ProviderContext context) {
                         return provider.spreadsheetFormatter(
-                                selector
+                                selector,
+                                context
                         );
                     }
                 },
@@ -64,21 +69,29 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     }
 
     @Override
-    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
+                                                     final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
+        Objects.requireNonNull(context, "context");
 
-        return this.providers.get(selector);
+        return this.providers.get(
+                selector,
+                context
+        );
     }
 
     @Override
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
-                                                     final List<?> values) {
+                                                     final List<?> values,
+                                                     final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
+        Objects.requireNonNull(context, "context");
 
         return this.providers.get(
                 name,
-                values
+                values,
+                context
         );
     }
 

@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderCollection;
 import walkingkooka.plugin.ProviderCollectionProviderGetter;
+import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -43,13 +44,18 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
                     @Override
                     public SpreadsheetComparator<?> get(final SpreadsheetComparatorProvider provider,
                                                         final SpreadsheetComparatorName name,
-                                                        final List<?> values) {
-                        return provider.spreadsheetComparator(name);
+                                                        final List<?> values,
+                                                        final ProviderContext context) {
+                        return provider.spreadsheetComparator(
+                                name,
+                                context
+                        );
                     }
 
                     @Override
                     public SpreadsheetComparator<?> get(final SpreadsheetComparatorProvider provider,
-                                                        final PluginSelectorLike<SpreadsheetComparatorName> selector) {
+                                                        final PluginSelectorLike<SpreadsheetComparatorName> selector,
+                                                        final ProviderContext context) {
                         throw new UnsupportedOperationException();
                     }
                 },
@@ -60,12 +66,14 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
     }
 
     @Override
-    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                          final ProviderContext context) {
         Objects.requireNonNull(name, "name");
 
         return this.providers.get(
                 name,
-                Lists.empty()
+                Lists.empty(),
+                context
         );
     }
 

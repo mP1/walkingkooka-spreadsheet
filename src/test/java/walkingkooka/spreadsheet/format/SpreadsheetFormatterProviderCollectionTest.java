@@ -20,12 +20,16 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterProviderCollectionTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatterProviderCollection> {
+
+    private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullProvidersFails() {
@@ -43,7 +47,8 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
                 SpreadsheetFormatterProviderCollection.with(
                         Sets.of(provider)
                 ),
-                SpreadsheetFormatterSelector.parse("text-format-pattern")
+                SpreadsheetFormatterSelector.parse("text-format-pattern"),
+                CONTEXT
         );
     }
 
@@ -56,6 +61,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
                         Sets.of(provider)
                 ),
                 SpreadsheetFormatterSelector.parse("text-format-pattern @@"),
+                CONTEXT,
                 SpreadsheetPattern.parseTextFormatPattern("@@")
                         .formatter()
         );
@@ -70,7 +76,8 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
                         Sets.of(provider)
                 ),
                 SpreadsheetFormatterName.with("text-format-pattern"),
-                Lists.of()
+                Lists.of(),
+                CONTEXT
         );
     }
 
@@ -84,6 +91,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
                 ),
                 SpreadsheetFormatterName.with("text-format-pattern"),
                 Lists.of("@@"),
+                CONTEXT,
                 SpreadsheetPattern.parseTextFormatPattern("@@")
                         .formatter()
         );

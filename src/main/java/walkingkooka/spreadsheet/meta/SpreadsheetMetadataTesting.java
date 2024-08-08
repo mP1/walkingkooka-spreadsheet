@@ -23,7 +23,9 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
@@ -60,6 +62,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -161,12 +164,21 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK), 1)
             .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.WHITE), 2);
 
+    ProviderContext PROVIDER_CONTEXT = new ProviderContext() {
+        @Override
+        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+            return METADATA_EN_AU.environmentContext()
+                    .environmentValue(name);
+        }
+    };
+
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     SpreadsheetConverterContext SPREADSHEET_CONVERTER_CONTEXT = METADATA_EN_AU.converterContext(
             CONVERTER_PROVIDER,
             NOW,
-            SPREADSHEET_LABEL_NAME_RESOLVER
+            SPREADSHEET_LABEL_NAME_RESOLVER,
+            PROVIDER_CONTEXT
     );
 
     SpreadsheetComparatorContext SPREADSHEET_COMPARATOR_CONTEXT = SpreadsheetComparatorContexts.basic(
@@ -177,14 +189,16 @@ public interface SpreadsheetMetadataTesting extends Testing {
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,
             NOW,
-            SPREADSHEET_LABEL_NAME_RESOLVER
+            SPREADSHEET_LABEL_NAME_RESOLVER,
+            PROVIDER_CONTEXT
     );
 
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,
             NOW,
-            SPREADSHEET_LABEL_NAME_RESOLVER
+            SPREADSHEET_LABEL_NAME_RESOLVER,
+            PROVIDER_CONTEXT
     );
 
     JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeMarshallContext();
@@ -196,7 +210,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
     static SpreadsheetFormula parseFormula(final String text) {
         return SpreadsheetFormula.parse(
                 TextCursors.charSequence(text),
-                METADATA_EN_AU.parser(SPREADSHEET_PARSER_PROVIDER),
+                METADATA_EN_AU.parser(
+                        SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT
+                ),
                 SPREADSHEET_PARSER_CONTEXT
         );
     }

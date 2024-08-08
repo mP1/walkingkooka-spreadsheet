@@ -33,7 +33,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testGeneralConverter() {
         METADATA_EN_AU.generalConverter(
                 SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER
+                SPREADSHEET_PARSER_PROVIDER,
+                PROVIDER_CONTEXT
         );
     }
 
@@ -44,7 +45,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 LocalDateTime::now,
                 (label) -> {
                     throw new UnsupportedOperationException();
-                }
+                },
+                PROVIDER_CONTEXT
         );
     }
 
@@ -55,7 +57,10 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testFormatter() {
-        METADATA_EN_AU.formatter(SPREADSHEET_FORMATTER_PROVIDER);
+        METADATA_EN_AU.formatter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+        );
     }
 
     @Test
@@ -66,7 +71,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 LocalDateTime::now,
                 (label) -> {
                     throw new UnsupportedOperationException();
-                }
+                },
+                PROVIDER_CONTEXT
         );
     }
 
@@ -82,7 +88,10 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testParser() {
-        METADATA_EN_AU.parser(SPREADSHEET_PARSER_PROVIDER);
+        METADATA_EN_AU.parser(
+                SPREADSHEET_PARSER_PROVIDER,
+                PROVIDER_CONTEXT
+        );
     }
 
     @Test

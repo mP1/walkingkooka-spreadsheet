@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.text.cursor.TextCursor;
@@ -144,13 +145,15 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     /**
      * Parses the text as an expression that may contain String literals, numbers or {@link SpreadsheetFormatterName}.
      */
-    public SpreadsheetFormatter evaluateText(final SpreadsheetFormatterProvider provider) {
+    public SpreadsheetFormatter evaluateText(final SpreadsheetFormatterProvider provider,
+                                             final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
+        Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateText(
-                (final TextCursor cursor, final ParserContext context) -> SPREADSHEET_FORMATTER_NAME_PARSER.parse(
+                (final TextCursor cursor, final ParserContext c) -> SPREADSHEET_FORMATTER_NAME_PARSER.parse(
                         cursor,
-                        context
+                        c
                 ).map(
                         (final ParserToken token) ->
                                 SpreadsheetFormatterName.with(
@@ -158,7 +161,8 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
                                                 .value()
                                 )
                 ),
-                provider::spreadsheetFormatter
+                provider::spreadsheetFormatter,
+                context
         );
     }
 

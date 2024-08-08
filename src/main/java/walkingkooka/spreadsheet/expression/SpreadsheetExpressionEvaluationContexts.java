@@ -21,6 +21,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -49,6 +50,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetMetadata spreadsheetMetadata,
                                                                final ConverterProvider converterProvider,
                                                                final ExpressionFunctionProvider expressionFunctionProvider,
+                                                               final ProviderContext providerContext,
                                                                final Function<ExpressionReference, Optional<Optional<Object>>> references,
                                                                final SpreadsheetLabelNameResolver labelNameResolver,
                                                                final Supplier<LocalDateTime> now) {
@@ -59,6 +61,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 spreadsheetMetadata,
                 converterProvider,
                 expressionFunctionProvider,
+                providerContext,
                 references,
                 labelNameResolver,
                 now
