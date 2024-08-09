@@ -230,11 +230,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         );
     }
 
-//    @Override
-//    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
-//        return this.expressionFunctionProvider.expressionFunctionInfos();
-//    }
-
     @Override
     public boolean isPure(final FunctionExpressionName name) {
         return this.expressionFunction(name)
