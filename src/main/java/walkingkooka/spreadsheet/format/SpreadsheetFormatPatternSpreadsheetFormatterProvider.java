@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.text.TextNode;
 
@@ -197,7 +198,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
 
     private static EnvironmentValueName<SpreadsheetFormatterSelector> environmentValueName(final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> formatter) {
         return EnvironmentValueName.with(
-                "metadata." + formatter.text()
+                SpreadsheetMetadata.ENVIRONMENT_VALUE_NAME_PREFIX + formatter.text()
         );
     }
 
