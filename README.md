@@ -65,9 +65,8 @@ A wide variety of items are stored for each spreadsheet including but not limite
       - Variable, slower supporting any number of digits of precision, more is slower.
         - [Precision](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNamePrecision.java)
         - [Rounding mode](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameRoundingMode.java)
-- Formatting
-  Some default format pattern(s) for each of the spreadsheet value types. Note cells can have their own format pattern
-  assigned which will be used instead.
+- Formatter
+  Some default format pattern(s) for each of the spreadsheet value types. Note cells can have their own format pattern assigned which will be used instead.
   - [Date](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern.java)
   - [DateTime](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPattern.java)
   - [Number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.java)
@@ -77,7 +76,7 @@ A wide variety of items are stored for each spreadsheet including but not limite
     - Adding support for authoring (and uploading) or selecting from the store custom formatters *SEE BELOW*
   - [General digit count](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount.java)
     Controls the number of digits that can appear when the `General` format pattern is selected.
-- Parsing
+- Parser
   - Some default parsing pattern(s) used to parse text into any of the supported spreadsheet value types.
     - [Date](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetDateParsePattern.java)
     - [DateTime](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePattern.java)
