@@ -18,20 +18,15 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.net.email.EmailAddress;
-import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
@@ -43,15 +38,12 @@ import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 
-import java.time.LocalDateTime;
-import java.util.Locale;
-import java.util.function.Supplier;
-
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepositoryTest implements SpreadsheetStoreRepositoryTesting<SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository> {
+public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepositoryTest implements SpreadsheetStoreRepositoryTesting<SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository>,
+        SpreadsheetMetadataTesting {
 
     private final static SpreadsheetId ID = SpreadsheetId.with(0x1234);
     private final static SpreadsheetStoreRepository REPOSITORY = new FakeSpreadsheetStoreRepository() {
@@ -61,13 +53,9 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         }
     };
 
-    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
-            SpreadsheetFormatterProviders.fake()
+    private final static SpreadsheetMetadata METADATA = METADATA_EN_AU.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID
     );
-
-    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
-
-    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullIdFails() {
@@ -160,9 +148,13 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         final SpreadsheetCellStore cellStore = repository.cells();
         assertSame(cellStore, repository.cells());
 
-        final SpreadsheetMetadata metadata = this.metadata();
         repository.metadatas()
-                .save(metadata);
+                .save(
+                        METADATA.set(
+                                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                                SpreadsheetName.with("different")
+                        )
+                );
 
         assertNotSame(cellStore, repository.cells(), "SpreadsheetCellStore should have been recreated because of metadata save");
         assertSame(repository.cells(), repository.cells(), "SpreadsheetCellStore should have been cached, and not recreated");
@@ -175,9 +167,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         final SpreadsheetCellStore cellStore = repository.cells();
         assertSame(cellStore, repository.cells());
 
-        final SpreadsheetMetadata metadata = this.metadata();
         repository.metadatas()
-                .save(metadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(99999)));
+                .save(METADATA.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(99999)));
 
         assertSame(cellStore, repository.cells(), "SpreadsheetCellStore should have been cached, and not recreated");
     }
@@ -186,15 +177,14 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
     public void testSaveMetadataCellStoreSaveMetadataCellStore() {
         final SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository repository = this.createStoreRepository();
 
-        final SpreadsheetMetadata metadata = this.metadata();
         repository.metadatas()
-                .save(metadata);
+                .save(METADATA);
 
         final SpreadsheetCellStore cellStore = repository.cells();
 
         // addSaveWatcher not fired if same metadata saved twice in a row
         repository.metadatas()
-                .save(metadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Different")));
+                .save(METADATA.set(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Different")));
 
         assertNotSame(cellStore, repository.cells(), "SpreadsheetCellStore should have been recreated because of metadata save");
         assertSame(repository.cells(), repository.cells(), "SpreadsheetCellStore should have been cached, and not recreated");
@@ -204,10 +194,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
     public void testSaveMetadataThenLoadCell() {
         final SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository repository = this.createStoreRepository();
 
-        final SpreadsheetMetadata metadata = this.metadata();
-
         repository.metadatas()
-                .save(metadata);
+                .save(METADATA);
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1
                 .setFormula(
@@ -219,7 +207,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
 
         repository.metadatas()
                 .save(
-                        metadata.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '$')
+                        METADATA.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '$')
                 );
 
         final SpreadsheetCell reloaded = repository.cells().loadOrFail(cell.reference());
@@ -244,7 +232,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
     @Override
     public SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository createStoreRepository() {
         final SpreadsheetMetadataStore metadatas = SpreadsheetMetadataStores.treeMap();
-        metadatas.save(this.metadata());
+        metadatas.save(METADATA);
 
         return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                 ID,
@@ -265,18 +253,6 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 NOW,
                 PROVIDER_CONTEXT
         );
-    }
-
-    private SpreadsheetMetadata metadata() {
-        return SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-                .loadFromLocale()
-                .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID)
-                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
-                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now())
-                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.');
     }
 
     @Override
