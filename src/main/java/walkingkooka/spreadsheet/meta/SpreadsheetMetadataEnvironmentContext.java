@@ -46,14 +46,14 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
         Optional<T> value = Optional.empty();
 
         final String stringName = name.value();
-        if (stringName.startsWith(PREFIX)) {
+        if (stringName.startsWith(SpreadsheetMetadata.ENVIRONMENT_VALUE_NAME_PREFIX)) {
             SpreadsheetMetadataPropertyName<?> propertyName;
 
             // will throw IllegalArgumentException if property is unknown.
             try {
                 propertyName = SpreadsheetMetadataPropertyName.with(
                         stringName.substring(
-                                PREFIX.length()
+                                SpreadsheetMetadata.ENVIRONMENT_VALUE_NAME_PREFIX.length()
                         )
                 );
             } catch (final IllegalArgumentException invalidNameEtc) {
@@ -69,8 +69,6 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
 
         return value;
     }
-
-    private final static String PREFIX = "metadata.";
 
     private final SpreadsheetMetadata metadata;
 
