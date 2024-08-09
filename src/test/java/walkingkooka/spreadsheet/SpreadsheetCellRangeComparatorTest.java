@@ -18,16 +18,12 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting2;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.FakeConverter;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -418,52 +414,6 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
     }
 
     private SpreadsheetCellRangeComparator createComparator(final String comparators) {
-        return this.createComparator(
-                comparators,
-                new FakeConverter<>() {
-
-                    @Override
-                    public <T> Either<T, String> convert(final Object value,
-                                                         final Class<T> target,
-                                                         final SpreadsheetConverterContext context) {
-                        if (value instanceof String && LocalDate.class == target) {
-                            try {
-                                return this.successfulConversion(
-                                        LocalDate.parse((String) value),
-                                        target
-                                );
-                            } catch (final Exception ignore) {
-                                // eventually becomes a failConversion
-                            }
-                        }
-                        if (value instanceof LocalDate && LocalDate.class == target) {
-                            return this.successfulConversion(
-                                    value,
-                                    target
-                            );
-                        }
-                        if (value instanceof String && String.class == target) {
-                            return this.successfulConversion(
-                                    value,
-                                    target
-                            );
-                        }
-                        return this.failConversion(
-                                value,
-                                target
-                        );
-                    }
-
-                    @Override
-                    public String toString() {
-                        return "TestConverter";
-                    }
-                }
-        );
-    }
-
-    private SpreadsheetCellRangeComparator createComparator(final String comparators,
-                                                            final Converter<SpreadsheetConverterContext> converter) {
         return SpreadsheetCellRangeComparator.with(
                 SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         comparators,
