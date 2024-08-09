@@ -20,10 +20,12 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -31,6 +33,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider>,
@@ -40,7 +43,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testSpreadsheetFormatterSelectorAutomatic() {
+    public void testSpreadsheetFormatterSelectorAutomaticFiveParameters() {
         this.spreadsheetFormatterAndCheck(
                 "automatic (date-format-pattern(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
                 CONTEXT,
@@ -50,6 +53,42 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                         SpreadsheetPattern.parseNumberFormatPattern("0.00").formatter(),
                         SpreadsheetPattern.parseTextFormatPattern("@@").formatter(),
                         SpreadsheetPattern.parseTimeFormatPattern("hh:mm").formatter()
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorAutomaticZeroParameters() {
+        this.spreadsheetFormatterAndCheck(
+                "automatic",
+                new ProviderContext() {
+                    @Override
+                    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+                        return METADATA_EN_AU.environmentContext()
+                                .environmentValue(name);
+                    }
+                },
+                SpreadsheetFormatters.automatic(
+                        METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
+                                .spreadsheetFormatPattern()
+                                .get()
+                                .formatter(),
+                        METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER)
+                                .spreadsheetFormatPattern()
+                                .get()
+                                .formatter(),
+                        METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
+                                .spreadsheetFormatPattern()
+                                .get()
+                                .formatter(),
+                        METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TEXT_FORMATTER)
+                                .spreadsheetFormatPattern()
+                                .get()
+                                .formatter(),
+                        METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_FORMATTER)
+                                .spreadsheetFormatPattern()
+                                .get()
+                                .formatter()
                 )
         );
     }

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
@@ -26,6 +27,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.text.TextNode;
 
 import java.text.DateFormat;
@@ -102,6 +104,30 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
                 switch (count) {
+                    case 0:
+                        formatter = SpreadsheetFormatters.automatic(
+                                this.spreadsheetFormatter(
+                                        DATE_FORMATTER,
+                                        context
+                                ),
+                                this.spreadsheetFormatter(
+                                        DATE_TIME_FORMATTER,
+                                        context
+                                ),
+                                this.spreadsheetFormatter(
+                                        NUMBER_FORMATTER,
+                                        context
+                                ),
+                                this.spreadsheetFormatter(
+                                        TEXT_FORMATTER,
+                                        context
+                                ),
+                                this.spreadsheetFormatter(
+                                        TIME_FORMATTER,
+                                        context
+                                )
+                        );
+                        break;
                     case 5:
                         formatter = SpreadsheetFormatters.automatic(
                                 (SpreadsheetFormatter) copy.get(0), // date
@@ -112,7 +138,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                         );
                         break;
                     default:
-                        throw new IllegalArgumentException("Expected 5 value(s) got " + count);
+                        throw new IllegalArgumentException("Expected 0 or 5 value(s) got " + count);
                 }
                 break;
             case SpreadsheetFormatterName.COLLECTION_STRING:
@@ -149,6 +175,30 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         }
 
         return formatter;
+    }
+
+    private SpreadsheetFormatter spreadsheetFormatter(final EnvironmentValueName<SpreadsheetFormatterSelector> value,
+                                                      final ProviderContext context) {
+        return this.spreadsheetFormatter(
+                context.environmentValueOrFail(value),
+                context
+        );
+    }
+
+    private final static EnvironmentValueName<SpreadsheetFormatterSelector> DATE_FORMATTER = environmentValueName(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
+
+    private final static EnvironmentValueName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = environmentValueName(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
+
+    private final static EnvironmentValueName<SpreadsheetFormatterSelector> NUMBER_FORMATTER = environmentValueName(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
+
+    private final static EnvironmentValueName<SpreadsheetFormatterSelector> TEXT_FORMATTER = environmentValueName(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
+
+    private final static EnvironmentValueName<SpreadsheetFormatterSelector> TIME_FORMATTER = environmentValueName(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
+
+    private static EnvironmentValueName<SpreadsheetFormatterSelector> environmentValueName(final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> formatter) {
+        return EnvironmentValueName.with(
+                "metadata." + formatter.text()
+        );
     }
 
     @Override
