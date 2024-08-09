@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store.repo;
 
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -83,12 +84,14 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
     public static SpreadsheetStoreRepository spreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetId id,
                                                                                           final SpreadsheetStoreRepository repository,
                                                                                           final SpreadsheetParserProvider spreadsheetParserProvider,
-                                                                                          final Supplier<LocalDateTime> now) {
+                                                                                          final Supplier<LocalDateTime> now,
+                                                                                          final ProviderContext providerContext) {
         return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                 id,
                 repository,
                 spreadsheetParserProvider,
-                now
+                now,
+                providerContext
         );
     }
 

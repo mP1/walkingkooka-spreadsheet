@@ -39,6 +39,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
@@ -480,8 +481,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * <li>{@link SpreadsheetMetadataPropertyName#EXPRESSION_CONVERTER}</li>
      * </ul>
      */
-    public final Converter<SpreadsheetConverterContext> expressionConverter(final ConverterProvider converterProvider) {
+    public final Converter<SpreadsheetConverterContext> expressionConverter(final ConverterProvider converterProvider,
+                                                                            final ProviderContext context) {
         Objects.requireNonNull(converterProvider, "converterProvider");
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
@@ -489,7 +492,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         components.reportIfMissing();
 
-        return converter.evaluateText(converterProvider);
+        return converter.evaluateText(
+                converterProvider,
+                context
+        );
     }
 
     /**
@@ -508,9 +514,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * </ul>
      */
     public final Converter<SpreadsheetConverterContext> generalConverter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                                         final SpreadsheetParserProvider spreadsheetParserProvider) {
+                                                                         final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                                         final ProviderContext context) {
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
@@ -531,15 +539,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         components.reportIfMissing();
 
         return SpreadsheetConverters.general(
-                spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat),
-                spreadsheetParserProvider.spreadsheetParser(dateParser),
-                spreadsheetFormatterProvider.spreadsheetFormatter(dateTimeFormat),
-                spreadsheetParserProvider.spreadsheetParser(dateTimeParser),
-                spreadsheetFormatterProvider.spreadsheetFormatter(numberFormat),
-                spreadsheetParserProvider.spreadsheetParser(numberParser),
-                spreadsheetFormatterProvider.spreadsheetFormatter(textFormat),
-                spreadsheetFormatterProvider.spreadsheetFormatter(timeFormat),
-                spreadsheetParserProvider.spreadsheetParser(timeParser)
+                spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat, context),
+                spreadsheetParserProvider.spreadsheetParser(dateParser, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(dateTimeFormat, context),
+                spreadsheetParserProvider.spreadsheetParser(dateTimeParser, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(numberFormat, context),
+                spreadsheetParserProvider.spreadsheetParser(numberParser, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(textFormat, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(timeFormat, context),
+                spreadsheetParserProvider.spreadsheetParser(timeParser, context)
         );
     }
 
@@ -548,10 +556,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetConverterContext converterContext(final ConverterProvider converterProvider,
                                                               final Supplier<LocalDateTime> now,
-                                                              final SpreadsheetLabelNameResolver labelNameResolver) {
+                                                              final SpreadsheetLabelNameResolver labelNameResolver,
+                                                              final ProviderContext providerContext) {
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
@@ -562,7 +572,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return SpreadsheetConverterContexts.basic(
                 this.expressionConverter(
-                        converterProvider
+                        converterProvider,
+                        providerContext
                 ),
                 labelNameResolver,
                 ExpressionNumberConverterContexts.basic(
@@ -844,8 +855,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatter} that creates a single formatter that formats values using {@link SpreadsheetFormatters#automatic(SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter)}
      */
-    public final SpreadsheetFormatter formatter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+    public final SpreadsheetFormatter formatter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                final ProviderContext context) {
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
@@ -858,11 +871,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         components.reportIfMissing();
 
         return SpreadsheetFormatters.automatic(
-                spreadsheetFormatterProvider.spreadsheetFormatter(date),
-                spreadsheetFormatterProvider.spreadsheetFormatter(dateTime),
-                spreadsheetFormatterProvider.spreadsheetFormatter(number),
-                spreadsheetFormatterProvider.spreadsheetFormatter(text),
-                spreadsheetFormatterProvider.spreadsheetFormatter(time)
+                spreadsheetFormatterProvider.spreadsheetFormatter(date, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(dateTime, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(number, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(text, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(time, context)
         );
     }
 
@@ -874,11 +887,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetFormatterContext formatterContext(final ConverterProvider converterProvider,
                                                               final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                               final Supplier<LocalDateTime> now,
-                                                              final SpreadsheetLabelNameResolver labelNameResolver) {
+                                                              final SpreadsheetLabelNameResolver labelNameResolver,
+                                                              final ProviderContext providerContext) {
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
@@ -892,11 +907,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 this.nameToColor(),
                 characterWidth,
                 generalNumberFormatDigitCount,
-                this.formatter(spreadsheetFormatterProvider),
+                this.formatter(
+                        spreadsheetFormatterProvider,
+                        providerContext
+                ),
                 this.converterContext(
                         converterProvider,
                         now,
-                        labelNameResolver
+                        labelNameResolver,
+                        providerContext
                 )
         );
     }
@@ -909,13 +928,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final ConverterProvider converterProvider,
                                                                                                        final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                                                                        final Supplier<LocalDateTime> now,
-                                                                                                       final SpreadsheetLabelNameResolver labelNameResolver) {
+                                                                                                       final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                                                       final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
                 this.formatterContext(
                         converterProvider,
                         spreadsheetFormatterProvider,
                         now,
-                        labelNameResolver
+                        labelNameResolver,
+                        providerContext
                 )
         );
     }
@@ -925,7 +946,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link Parser} that can be used to parse formulas.
      */
-    public final SpreadsheetParser parser(final SpreadsheetParserProvider provider) {
+    public final SpreadsheetParser parser(final SpreadsheetParserProvider provider,
+                                          final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
@@ -940,11 +962,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return SpreadsheetParsers.valueOrExpression(
                 Parsers.alternatives(
                         Lists.of(
-                                provider.spreadsheetParser(date),
-                                provider.spreadsheetParser(dateTime),
-                                provider.spreadsheetParser(number)
+                                provider.spreadsheetParser(date, context),
+                                provider.spreadsheetParser(dateTime, context),
+                                provider.spreadsheetParser(number, context)
                                         .andEmptyTextCursor(),
-                                provider.spreadsheetParser(time)
+                                provider.spreadsheetParser(time, context)
                         )
                 )
         );

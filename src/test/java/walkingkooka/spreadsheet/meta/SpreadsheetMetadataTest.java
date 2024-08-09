@@ -32,6 +32,8 @@ import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
@@ -113,6 +115,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         JsonNodeMarshallingTesting<SpreadsheetMetadata>,
         PatchableTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
+
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testSwappablePropertiesConstants() {
@@ -274,7 +278,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
                 .generalConverter(
                         spreadsheetFormatterProvider(),
-                        spreadsheetParserProvider()
+                        spreadsheetParserProvider(),
+                        PROVIDER_CONTEXT
                 );
     }
 
@@ -547,6 +552,18 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.expressionConverter(
+                        null,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testExpressionConverterWithNullProviderContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.expressionConverter(
+                        ConverterProviders.fake(),
                         null
                 )
         );
@@ -557,7 +574,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.expressionConverter(
-                        ConverterProviders.fake()
+                        ConverterProviders.fake(),
+                        PROVIDER_CONTEXT
                 )
         );
         this.checkEquals(
@@ -580,7 +598,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                                 metadata,
                                 spreadsheetFormatterProvider(),
                                 spreadsheetParserProvider()
-                        )
+                        ),
+                        PROVIDER_CONTEXT
                 );
         this.checkNotEquals(
                 null,
@@ -596,7 +615,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.generalConverter(
                         null,
-                        SpreadsheetParserProviders.fake()
+                        SpreadsheetParserProviders.fake(),
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -607,7 +627,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.generalConverter(
                         SpreadsheetFormatterProviders.fake(),
-                        null
+                        null,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -618,7 +639,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.generalConverter(
                         SpreadsheetFormatterProviders.fake(),
-                        SpreadsheetParserProviders.fake()
+                        SpreadsheetParserProviders.fake(),
+                        PROVIDER_CONTEXT
                 )
         );
         this.checkEquals(
@@ -636,7 +658,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 ).loadFromLocale()
                 .generalConverter(
                         spreadsheetFormatterProvider(),
-                        spreadsheetParserProvider()
+                        spreadsheetParserProvider(),
+                        PROVIDER_CONTEXT
                 );
         this.checkNotEquals(
                 null,
@@ -721,7 +744,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 null,
                 provider.converter(
                         ConverterName.with("different"),
-                        Lists.empty()
+                        Lists.empty(),
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -771,7 +795,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkEquals(
                 "Hello",
                 provider.expressionFunction(
-                        FunctionExpressionName.with("sin")
+                        FunctionExpressionName.with("sin"),
+                        PROVIDER_CONTEXT
                 ).apply(
                         ExpressionFunction.NO_PARAMETER_VALUES,
                         ExpressionEvaluationContexts.fake()
@@ -815,7 +840,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkEquals(
                 comparator1,
                 provider.spreadsheetComparator(
-                        SpreadsheetComparatorName.with("xyz")
+                        SpreadsheetComparatorName.with("xyz"),
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -857,7 +883,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkEquals(
                 formatter,
                 provider.spreadsheetFormatter(
-                        SpreadsheetFormatterSelector.parse("xyz @@")
+                        SpreadsheetFormatterSelector.parse("xyz @@"),
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -901,7 +928,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkEquals(
                 parser,
                 provider.spreadsheetParser(
-                        SpreadsheetParserSelector.parse("xyz yyyy/mm/dd")
+                        SpreadsheetParserSelector.parse("xyz yyyy/mm/dd"),
+                        PROVIDER_CONTEXT
                 )
         );
     }

@@ -23,6 +23,8 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderDelegator;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -70,7 +72,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         ConverterProviderDelegator,
         SpreadsheetComparatorProviderDelegator,
         SpreadsheetFormatterProviderDelegator,
-        SpreadsheetParserProviderDelegator {
+        SpreadsheetParserProviderDelegator,
+        ProviderContextDelegator {
 
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
@@ -81,6 +84,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                               final ExpressionFunctionProvider expressionFunctionProvider,
                                               final SpreadsheetParserProvider spreadsheetParserProvider,
+                                              final ProviderContext providerContext,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetStoreRepository storeRepository,
@@ -92,6 +96,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
+        Objects.requireNonNull(providerContext, "providerContext");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(storeRepository, "storeRepository");
@@ -105,6 +110,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 spreadsheetFormatterProvider,
                 expressionFunctionProvider,
                 spreadsheetParserProvider,
+                providerContext,
                 engine,
                 fractioner,
                 storeRepository,
@@ -122,6 +128,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                           final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                           final ExpressionFunctionProvider expressionFunctionProvider,
                                           final SpreadsheetParserProvider spreadsheetParserProvider,
+                                          final ProviderContext providerContext,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetStoreRepository storeRepository,
@@ -145,6 +152,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
         this.spreadsheetParserProvider = spreadsheetParserProvider;
+        this.providerContext = providerContext;
 
         this.fractioner = fractioner;
 
@@ -195,8 +203,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // expressionFunctionProvider.................................................................................................
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
-        return this.expressionFunctionProvider.expressionFunction(name);
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+                                                                                 final ProviderContext context) {
+        return this.expressionFunctionProvider.expressionFunction(
+                name,
+                context
+        );
     }
 
     @Override
@@ -211,7 +223,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public SpreadsheetParserToken parseFormula(final TextCursor formula) {
         return SpreadsheetParsers.valueOrExpression(
-                        this.metadata.parser(this)
+                        this.metadata.parser(
+                                this, // SpreadsheetParserProvider
+                                this // ProviderContext
+                        )
                 )
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(formula, this.parserContext)
@@ -237,8 +252,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public boolean isPure(final FunctionExpressionName function) {
-        return this.expressionFunctionProvider.expressionFunction(function)
-                .isPure(this);
+        return this.expressionFunctionProvider.expressionFunction(
+                function,
+                        this
+                ).isPure(this);
     }
 
     @Override
@@ -268,6 +285,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.spreadsheetMetadata(),
                 this.converterProvider,
                 this.expressionFunctionProvider,
+                this, // ProviderContext
                 this.referenceFunction,
                 this::resolveIfLabel,
                 this.now
@@ -306,7 +324,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                 this.converterProvider,
                                 this.spreadsheetFormatterProvider,
                                 this::now,
-                                this::resolveIfLabel
+                                this::resolveIfLabel,
+                                this // ProviderContext
                         )
         );
     }
@@ -343,7 +362,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                                         value.get(),
                                                         formatter.orElse(
                                                                 this.spreadsheetMetadata()
-                                                                        .formatter(this.spreadsheetFormatterProvider)
+                                                                        .formatter(
+                                                                                this.spreadsheetFormatterProvider,
+                                                                                this // ProviderContext
+                                                                        )
                                                         )
                                                 )
                                                 .map(
@@ -405,6 +427,14 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     private final SpreadsheetParserProvider spreadsheetParserProvider;
+
+    // ProviderContextDelegator.........................................................................................
+
+    public ProviderContext providerContext() {
+        return this.providerContext;
+    }
+
+    private final ProviderContext providerContext;
 
     // Store............................................................................................................
 

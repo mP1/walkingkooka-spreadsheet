@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -27,6 +29,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserProviderCollectionTest implements SpreadsheetParserProviderTesting<SpreadsheetParserProviderCollection> {
+
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullProvidersFails() {
@@ -45,6 +49,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
                         Sets.of(provider)
                 ),
                 SpreadsheetParserSelector.parse("date-parse-pattern yyyy/mm/dd"),
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                         .parser()
         );
@@ -60,6 +65,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
                 ),
                 SpreadsheetParserName.DATE_PARSER_PATTERN,
                 Lists.of("yyyy/mm/dd"),
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                         .parser()
         );

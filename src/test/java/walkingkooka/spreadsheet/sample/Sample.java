@@ -24,6 +24,8 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -94,6 +96,8 @@ public final class Sample {
     private static final Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     public static void main(final String[] args) {
         final SpreadsheetEngine engine = engine();
@@ -221,8 +225,12 @@ public final class Sample {
             }
 
             @Override
-            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
-                return spreadsheetParserProvider.spreadsheetParser(selector);
+            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
+                                                       final ProviderContext context) {
+                return spreadsheetParserProvider.spreadsheetParser(
+                        selector,
+                        context
+                );
             }
 
             @Override
@@ -231,7 +239,11 @@ public final class Sample {
                 return node.toValue(
                         ExpressionEvaluationContexts.basic(
                                 EXPRESSION_NUMBER_KIND,
-                                ExpressionFunctionProviders.fake()::expressionFunction,
+                                n -> ExpressionFunctionProviders.fake()
+                                        .expressionFunction(
+                                                n,
+                                                PROVIDER_CONTEXT
+                                        ),
                                 (r) -> {
                                     throw new UnsupportedOperationException();
                                 },
@@ -241,7 +253,8 @@ public final class Sample {
                                 metadata.converterContext(
                                         converterProvider,
                                         NOW,
-                                        LABEL_NAME_RESOLVER
+                                        LABEL_NAME_RESOLVER,
+                                        PROVIDER_CONTEXT
                                 )
                         )
                 );
@@ -279,7 +292,10 @@ public final class Sample {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter(spreadsheetFormatterProvider)
+                                                        .formatter(
+                                                                spreadsheetFormatterProvider,
+                                                                PROVIDER_CONTEXT
+                                                        )
                                         )
                                 ).map(
                                         f -> cell.style()
@@ -300,7 +316,8 @@ public final class Sample {
                                 converterProvider,
                                 spreadsheetFormatterProvider,
                                 NOW,
-                                LABEL_NAME_RESOLVER
+                                LABEL_NAME_RESOLVER,
+                                PROVIDER_CONTEXT
                         )
                 );
             }

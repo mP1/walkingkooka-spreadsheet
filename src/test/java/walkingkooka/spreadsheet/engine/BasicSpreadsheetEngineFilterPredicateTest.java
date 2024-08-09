@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -145,10 +146,12 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
 
                     @Override
                     public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                                               final List<?> values) {
+                                                                               final List<?> values,
+                                                                               final ProviderContext context) {
                         return CONVERTER_PROVIDER.converter(
                                 name,
-                                values
+                                values,
+                                context
                         );
                     }
 

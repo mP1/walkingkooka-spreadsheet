@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
@@ -33,6 +35,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<SpreadsheetParsePatternSpreadsheetParserProvider>,
         ToStringTesting<SpreadsheetParsePatternSpreadsheetParserProvider> {
 
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
+
     @Test
     public void testWithNullSpreadsheetFormatterProviderFails() {
         assertThrows(
@@ -45,6 +49,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     public void testSpreadsheetParserSelectorDateParsePattern() {
         this.spreadsheetParserAndCheck(
                 "date-parse-pattern dd/mm/yy",
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseDateParsePattern("dd/mm/yy")
                         .parser()
         );
@@ -163,6 +168,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserName.DATE_PARSER_PATTERN,
                 Lists.of("dd/mm/yy"),
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseDateParsePattern("dd/mm/yy")
                         .parser()
         );
@@ -172,6 +178,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     public void testSpreadsheetParserSelectorDateTimeParsePattern() {
         this.spreadsheetParserAndCheck(
                 "date-time-parse-pattern dd/mm/yyyy hh:mm:ss",
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
                         .parser()
         );
@@ -182,6 +189,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserName.DATE_TIME_PARSER_PATTERN,
                 Lists.of("dd/mm/yyyy hh:mm:ss"),
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
                         .parser()
         );
@@ -377,6 +385,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     public void testSpreadsheetParserSelectorNumberParsePattern() {
         this.spreadsheetParserAndCheck(
                 "number-parse-pattern $0.00",
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseNumberParsePattern("$0.00")
                         .parser()
         );
@@ -387,6 +396,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserName.NUMBER_PARSER_PATTERN,
                 Lists.of("$0.00"),
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseNumberParsePattern("$0.00")
                         .parser()
         );
@@ -489,7 +499,8 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserSelectorTextParsePatternFails() {
         this.spreadsheetParserFails(
-                "text-parse-pattern @@\"Hello\""
+                "text-parse-pattern @@\"Hello\"",
+                PROVIDER_CONTEXT
         );
     }
 
@@ -497,7 +508,8 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     public void testSpreadsheetParserNameTextParsePatternFails() {
         this.spreadsheetParserFails(
                 SpreadsheetParserName.with("text"),
-                Lists.of("@@\"Hello\"")
+                Lists.of("@@\"Hello\""),
+                PROVIDER_CONTEXT
         );
     }
 
@@ -505,6 +517,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     public void testSpreadsheetParserSelectorTimeParsePattern() {
         this.spreadsheetParserAndCheck(
                 "time-parse-pattern hh:mm:ss",
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
                         .parser()
         );
@@ -515,6 +528,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserName.TIME_PARSER_PATTERN,
                 Lists.of("hh:mm:ss"),
+                PROVIDER_CONTEXT,
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
                         .parser()
         );

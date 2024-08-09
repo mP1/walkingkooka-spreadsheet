@@ -26,14 +26,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderTesting;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C>,
-        ExpressionFunctionProviderTesting<C>,
         SpreadsheetLabelNameResolverTesting {
 
     // parseExpression......................................................................................................
@@ -102,13 +100,6 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 context.loadCell(cellReference),
                 () -> "loadCell " + cellReference
         );
-    }
-
-    // ExpressionFunctionProvider.......................................................................................
-
-    @Override
-    default C createExpressionFunctionProvider() {
-        return this.createContext();
     }
 
     // SpreadsheetLabelNameResolver.....................................................................................

@@ -23,7 +23,7 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -79,6 +79,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -94,6 +95,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -109,6 +111,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -124,6 +127,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -139,6 +143,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -153,6 +158,23 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 METADATA,
                 CONVERTER_PROVIDER,
+                null,
+                PROVIDER_CONTEXT,
+                REFERENCES,
+                LABEL_NAME_RESOLVER,
+                NOW
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                METADATA,
+                CONVERTER_PROVIDER,
+                EXPRESSION_FUNCTION_PROVIDER,
                 null,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
@@ -169,6 +191,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT,
                 null,
                 LABEL_NAME_RESOLVER,
                 NOW
@@ -184,6 +207,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT,
                 REFERENCES,
                 null,
                 NOW
@@ -199,6 +223,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 null
@@ -211,6 +236,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final SpreadsheetMetadata spreadsheetMetadata,
                            final ConverterProvider converterProvider,
                            final ExpressionFunctionProvider expressionFunctionProvider,
+                           final ProviderContext providerContext,
                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
                            final SpreadsheetLabelNameResolver labelNameResolver,
                            final Supplier<LocalDateTime> now) {
@@ -223,6 +249,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         spreadsheetMetadata,
                         converterProvider,
                         expressionFunctionProvider,
+                        providerContext,
                         references,
                         labelNameResolver,
                         now
@@ -451,17 +478,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT,
                 REFERENCES,
                 LABEL_NAME_RESOLVER,
                 NOW
         );
-    }
-
-    // ExpressionFunctionProviderTesting................................................................................
-
-    @Override
-    public void testFunctionWithNullFails() {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -472,10 +493,5 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Override
     public void testIsPureNullNameFails() {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

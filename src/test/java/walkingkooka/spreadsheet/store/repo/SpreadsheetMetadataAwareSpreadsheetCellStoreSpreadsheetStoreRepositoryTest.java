@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.store.repo;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -65,6 +67,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
 
     private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
+
     @Test
     public void testWithNullIdFails() {
         assertThrows(
@@ -73,7 +77,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         null,
                         REPOSITORY,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW
+                        NOW,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -86,7 +91,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         null,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW
+                        NOW,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -99,7 +105,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         REPOSITORY,
                         null,
-                        NOW
+                        NOW,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -112,6 +119,21 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         REPOSITORY,
                         SPREADSHEET_PARSER_PROVIDER,
+                        null,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                        ID,
+                        REPOSITORY,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        NOW,
                         null
                 )
         );
@@ -212,9 +234,10 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         REPOSITORY,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW
+                        NOW,
+                        PROVIDER_CONTEXT
                 ),
-                ID + " " + REPOSITORY + " " + SPREADSHEET_PARSER_PROVIDER
+                ID + " " + REPOSITORY + " " + SPREADSHEET_PARSER_PROVIDER + " " + NOW + " " + PROVIDER_CONTEXT
         );
     }
 
@@ -239,7 +262,8 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         SpreadsheetUserStores.treeMap()
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW
+                NOW,
+                PROVIDER_CONTEXT
         );
     }
 

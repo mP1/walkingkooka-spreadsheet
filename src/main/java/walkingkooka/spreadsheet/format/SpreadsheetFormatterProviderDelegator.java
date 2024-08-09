@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.plugin.ProviderContext;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -24,16 +26,23 @@ import java.util.Set;
 public interface SpreadsheetFormatterProviderDelegator extends SpreadsheetFormatterProvider {
 
     @Override
-    default SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
-        return this.spreadsheetFormatterProvider().spreadsheetFormatter(selector);
+    default SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
+                                                      final ProviderContext context) {
+        return this.spreadsheetFormatterProvider()
+                .spreadsheetFormatter(
+                        selector,
+                        context
+                );
     }
 
     @Override
     default SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
-                                                      final List<?> values) {
+                                                      final List<?> values,
+                                                      final ProviderContext context) {
         return this.spreadsheetFormatterProvider().spreadsheetFormatter(
                 name,
-                values
+                values,
+                context
         );
     }
 

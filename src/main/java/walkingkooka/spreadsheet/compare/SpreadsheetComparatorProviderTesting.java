@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.ProviderTesting;
 
 import java.util.Set;
@@ -28,44 +30,71 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ProviderTesting<T> {
 
     @Test
-    default void testSpreadsheetComparatorWithNullFails() {
+    default void testSpreadsheetComparatorWithNullNameFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetComparatorProvider()
-                        .spreadsheetComparator(null)
+                        .spreadsheetComparator(
+                                null,
+                                ProviderContexts.fake()
+                        )
         );
     }
 
-    default void spreadsheetComparatorFails(final SpreadsheetComparatorName name) {
+    @Test
+    default void testSpreadsheetComparatorWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetComparatorProvider()
+                        .spreadsheetComparator(
+                                SpreadsheetComparatorName.with("ignored"),
+                                null
+                        )
+        );
+    }
+
+    default void spreadsheetComparatorFails(final SpreadsheetComparatorName name,
+                                            final ProviderContext context) {
         this.spreadsheetComparatorFails(
                 this.createSpreadsheetComparatorProvider(),
-                name
+                name,
+                context
         );
     }
 
     default void spreadsheetComparatorFails(final SpreadsheetComparatorProvider provider,
-                                            final SpreadsheetComparatorName name) {
+                                            final SpreadsheetComparatorName name,
+                                            final ProviderContext context) {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> provider.spreadsheetComparator(name)
+                () -> provider.spreadsheetComparator(
+                        name,
+                        context
+                )
         );
     }
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorName name,
+                                               final ProviderContext context,
                                                final SpreadsheetComparator<?> expected) {
         this.spreadsheetComparatorAndCheck(
                 this.createSpreadsheetComparatorProvider(),
                 name,
+                context,
                 expected
         );
     }
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final SpreadsheetComparatorName name,
+                                               final ProviderContext context,
                                                final SpreadsheetComparator<?> expected) {
         this.checkEquals(
                 expected,
-                provider.spreadsheetComparator(name),
+                provider.spreadsheetComparator(
+                        name,
+                        context
+                ),
                 name::toString
         );
     }

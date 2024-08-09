@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -40,6 +41,7 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
         this.spreadsheetComparatorAndCheck(
                 SpreadsheetComparatorProviderCollection.with(Sets.of(provider)),
                 SpreadsheetComparatorName.with("day-of-month"),
+                ProviderContexts.fake(),
                 SpreadsheetComparators.dayOfMonth()
         );
     }

@@ -516,7 +516,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 text,
                 SpreadsheetParsers.valueOrExpression(
                         SpreadsheetMetadataTesting.METADATA_EN_AU.parser(
-                                SpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER
+                                SpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER,
+                                SpreadsheetMetadataTesting.PROVIDER_CONTEXT
                         )
                 ),
                 SpreadsheetFormula.EMPTY.setText(text)

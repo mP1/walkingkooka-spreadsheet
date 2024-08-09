@@ -22,6 +22,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 
 import java.util.Set;
@@ -38,6 +40,8 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
     private final static SpreadsheetComparatorName ORIGINAL_NAME = SpreadsheetComparatorName.with("original-comparator-123");
 
     private final static SpreadsheetComparator<?> COMPARATOR = SpreadsheetComparators.fake();
+
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullViewFails() {
@@ -65,6 +69,7 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
     public void testSpreadsheetComparator() {
         this.spreadsheetComparatorAndCheck(
                 NAME,
+                PROVIDER_CONTEXT,
                 COMPARATOR
         );
     }
@@ -72,7 +77,8 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
     @Test
     public void testSpreadsheetComparatorUnknownFails() {
         this.spreadsheetComparatorFails(
-                SpreadsheetComparatorName.with("unknown")
+                SpreadsheetComparatorName.with("unknown"),
+                PROVIDER_CONTEXT
         );
     }
 
@@ -106,7 +112,8 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
                 new FakeSpreadsheetComparatorProvider() {
 
                     @Override
-                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                                          final ProviderContext context) {
                         return name.equals(ORIGINAL_NAME) ?
                                 COMPARATOR :
                                 null;

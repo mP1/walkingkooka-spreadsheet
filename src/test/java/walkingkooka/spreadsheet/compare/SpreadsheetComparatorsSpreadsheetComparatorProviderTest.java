@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.UrlPath;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.text.CaseKind;
@@ -42,7 +43,8 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                         ).toString()
                 ).filter(n -> false == "fake".equals(n))
                 .forEach(n -> SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparator(
-                                SpreadsheetComparatorName.with(n)
+                                SpreadsheetComparatorName.with(n),
+                        ProviderContexts.fake()
                         )
                 );
     }

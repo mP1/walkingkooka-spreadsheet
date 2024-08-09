@@ -17,12 +17,18 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.plugin.ProviderContext;
+
 import java.util.Set;
 
 public interface SpreadsheetComparatorProviderDelegator extends SpreadsheetComparatorProvider {
     @Override
-    default SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
-        return this.spreadsheetComparatorProvider().spreadsheetComparator(name);
+    default SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                           final ProviderContext context) {
+        return this.spreadsheetComparatorProvider().spreadsheetComparator(
+                name,
+                context
+        );
     }
 
     @Override

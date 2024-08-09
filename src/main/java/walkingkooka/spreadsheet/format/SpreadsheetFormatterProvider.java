@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.Provider;
+import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,13 +37,15 @@ public interface SpreadsheetFormatterProvider extends Provider {
     /**
      * Resolves the given {@link SpreadsheetFormatterSelector} to a {@link SpreadsheetFormatter}.
      */
-    SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector);
+    SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
+                                              final ProviderContext context);
 
     /**
      * Resolves the given {@link SpreadsheetFormatterName} to a {@link SpreadsheetFormatter}.
      */
     SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
-                                              final List<?> values);
+                                              final List<?> values,
+                                              final ProviderContext context);
 
     /**
      * Constant for {@link #spreadsheetFormatterNextTextComponent(SpreadsheetFormatterSelector)} when there is no next.

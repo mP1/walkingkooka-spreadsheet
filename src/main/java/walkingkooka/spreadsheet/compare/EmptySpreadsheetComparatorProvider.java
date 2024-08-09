@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.ProviderContext;
 
 import java.util.Objects;
 import java.util.Set;
@@ -37,8 +38,10 @@ final class EmptySpreadsheetComparatorProvider implements SpreadsheetComparatorP
     }
 
     @Override
-    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                          final ProviderContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
 
         throw new IllegalArgumentException("Unknown comparator " + name);
     }

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 import java.util.List;
@@ -26,17 +27,25 @@ import java.util.Set;
 public interface SpreadsheetParserProviderDelegator extends SpreadsheetParserProvider {
 
     @Override
-    default SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
-        return this.spreadsheetParserProvider().spreadsheetParser(selector);
+    default SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
+                                                final ProviderContext context) {
+        return this.spreadsheetParserProvider()
+                .spreadsheetParser(
+                        selector,
+                        context
+                );
     }
 
     @Override
     default SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
-                                               final List<?> values) {
-        return this.spreadsheetParserProvider().spreadsheetParser(
-                name, 
-                values
-        );
+                                                final List<?> values,
+                                                final ProviderContext context) {
+        return this.spreadsheetParserProvider()
+                .spreadsheetParser(
+                        name,
+                        values,
+                        context
+                );
     }
 
     @Override

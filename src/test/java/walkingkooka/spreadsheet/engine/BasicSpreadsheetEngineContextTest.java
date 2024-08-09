@@ -31,6 +31,8 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
@@ -92,6 +94,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -150,8 +153,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider() {
 
         @Override
-        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName functionExpressionName) {
-            switch (functionExpressionName.value()) {
+        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+                                                                                     final ProviderContext context) {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(context, "context");
+
+            switch (name.value()) {
                 case "xyz":
                     return Cast.to(
                             new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
@@ -257,7 +264,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                             }
                     );
                 default:
-                    throw new UnsupportedOperationException("Unknown function: " + functionExpressionName);
+                    throw new UnsupportedOperationException("Unknown function: " + name);
             }
         }
 
@@ -283,6 +290,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             );
         }
     };
+
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     private final static SpreadsheetEngine ENGINE = SpreadsheetEngines.fake();
 
@@ -315,6 +324,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
@@ -335,6 +345,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
@@ -355,6 +366,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
@@ -375,6 +387,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         null,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
@@ -395,6 +408,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         null,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
@@ -414,6 +428,28 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        null,
+                        PROVIDER_CONTEXT,
+                        ENGINE,
+                        FRACTIONER,
+                        STORE_REPOSITORY,
+                        SERVER_URL,
+                        NOW
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        METADATA,
+                        CONVERTER_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
                         null,
                         ENGINE,
                         FRACTIONER,
@@ -435,6 +471,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         null,
                         FRACTIONER,
                         STORE_REPOSITORY,
@@ -455,6 +492,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         ENGINE,
                         null,
                         STORE_REPOSITORY,
@@ -475,6 +513,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         null,
@@ -495,6 +534,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
@@ -515,6 +555,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SPREADSHEET_FORMATTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
+                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
@@ -567,6 +608,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.spreadsheetComparatorAndCheck(
                 this.createContext(),
                 comparator.name(),
+                PROVIDER_CONTEXT,
                 comparator
         );
     }
@@ -1613,6 +1655,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SPREADSHEET_FORMATTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
+                PROVIDER_CONTEXT,
                 ENGINE,
                 FRACTIONER,
                 new FakeSpreadsheetStoreRepository() {

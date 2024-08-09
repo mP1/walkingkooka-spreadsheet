@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Context;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
@@ -56,6 +57,7 @@ public interface SpreadsheetEngineContext extends Context,
         SpreadsheetComparatorProvider,
         SpreadsheetFormatterProvider,
         SpreadsheetParserProvider,
+        ProviderContext,
         SpreadsheetLabelNameResolver {
 
     /**
@@ -85,7 +87,8 @@ public interface SpreadsheetEngineContext extends Context,
                 .converterContext(
                         this, // ConverterProvider
                         this::now,
-                        this::resolveIfLabel
+                        this::resolveIfLabel,
+                        this // ProviderContext
                 ).convertOrFail(
                         this.evaluate(
                                 node,

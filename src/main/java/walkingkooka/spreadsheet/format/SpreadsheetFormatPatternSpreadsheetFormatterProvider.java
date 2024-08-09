@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -57,8 +58,10 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     }
 
     @Override
-    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
+                                                     final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetFormatter formatter;
 
@@ -68,7 +71,10 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
             case SpreadsheetFormatterName.COLLECTION_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
-                formatter = selector.evaluateText(this);
+                formatter = selector.evaluateText(
+                        this,
+                        context
+                );
                 break;
             default:
                 formatter = selector.spreadsheetFormatPattern()
@@ -82,9 +88,11 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
 
     @Override
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
-                                                     final List<?> values) {
+                                                     final List<?> values,
+                                                     final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
+        Objects.requireNonNull(context, "context");
 
         final List<?> copy = Lists.immutable(values);
         final int count = copy.size();

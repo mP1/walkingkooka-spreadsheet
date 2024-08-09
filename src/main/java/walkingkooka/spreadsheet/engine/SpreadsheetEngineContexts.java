@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
@@ -44,6 +45,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                  final ExpressionFunctionProvider expressionFunctionProvider,
                                                  final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                 final ProviderContext providerContext,
                                                  final SpreadsheetEngine engine,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetStoreRepository storeRepository,
@@ -56,6 +58,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 spreadsheetFormatterProvider,
                 expressionFunctionProvider,
                 spreadsheetParserProvider,
+                providerContext,
                 engine,
                 fractioner,
                 storeRepository,

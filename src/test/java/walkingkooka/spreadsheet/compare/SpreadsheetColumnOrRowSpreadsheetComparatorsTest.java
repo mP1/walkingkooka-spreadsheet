@@ -25,6 +25,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.compare.Comparators;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -700,7 +701,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     public List<SpreadsheetColumnOrRowSpreadsheetComparators> parseString(final String text) {
         return SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                 text,
-                SpreadsheetComparatorProviders.spreadsheetComparators()
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                ProviderContexts.fake()
         );
     }
 
@@ -948,7 +950,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
 
         final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRowSpreadsheetComparators = SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                 comparators,
-                SpreadsheetComparatorProviders.spreadsheetComparators()
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                ProviderContexts.fake()
         );
 
         final SpreadsheetComparatorContext context = new FakeSpreadsheetComparatorContext() {

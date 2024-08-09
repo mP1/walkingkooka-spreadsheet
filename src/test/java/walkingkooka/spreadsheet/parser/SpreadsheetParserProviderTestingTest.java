@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
@@ -39,10 +41,13 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
             SpreadsheetParserName.DATE_PARSER_PATTERN
     );
 
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
+
     @Test
     public void testSpreadsheetParserAndCheck() {
         this.spreadsheetParserAndCheck(
                 SELECTOR,
+                PROVIDER_CONTEXT,
                 PARSER
         );
     }
@@ -62,8 +67,10 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
 
     class TestSpreadsheetParserProvider implements SpreadsheetParserProvider {
         @Override
-        public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
+        public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
+                                                   final ProviderContext context) {
             Objects.requireNonNull(selector, "selector");
+            Objects.requireNonNull(context, "context");
 
             checkEquals("date-parse-pattern", selector.name().value());
             return PARSER;
@@ -71,9 +78,11 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
 
         @Override
         public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
-                                                   final List<?> values) {
+                                                   final List<?> values,
+                                                   final ProviderContext context) {
             Objects.requireNonNull(name, "name");
             Objects.requireNonNull(values, "values");
+            Objects.requireNonNull(context, "context");
 
             checkEquals("date-parse-pattern", name.value());
             return PARSER;

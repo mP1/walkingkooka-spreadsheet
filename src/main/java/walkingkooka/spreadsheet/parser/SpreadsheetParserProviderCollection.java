@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.plugin.ProviderCollection;
 import walkingkooka.plugin.ProviderCollectionProviderGetter;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 import java.util.List;
@@ -43,18 +44,22 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
                     @Override
                     public SpreadsheetParser get(final SpreadsheetParserProvider provider,
                                                  final SpreadsheetParserName name,
-                                                 final List<?> values) {
+                                                 final List<?> values,
+                                                 final ProviderContext context) {
                         return provider.spreadsheetParser(
                                 name,
-                                values
+                                values,
+                                context
                         );
                     }
 
                     @Override
                     public SpreadsheetParser get(final SpreadsheetParserProvider provider,
-                                                 final SpreadsheetParserSelector selector) {
+                                                 final SpreadsheetParserSelector selector,
+                                                 final ProviderContext context) {
                         return provider.spreadsheetParser(
-                                selector
+                                selector,
+                                context
                         );
                     }
                 },
@@ -65,10 +70,12 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
     }
 
     @Override
-    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
-        Objects.requireNonNull(selector, "selector");
-
-        final SpreadsheetParser parser = this.providers.get(selector);
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
+                                               final ProviderContext context) {
+        final SpreadsheetParser parser = this.providers.get(
+                selector,
+                context
+        );
         if(null == parser) {
             throw new IllegalArgumentException("Unknown parser " + selector.name());
         }
@@ -77,10 +84,12 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
 
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
-                                               final List<?> values) {
+                                               final List<?> values,
+                                               final ProviderContext context) {
         final SpreadsheetParser parser = this.providers.get(
                 name,
-                values
+                values,
+                context
         );
         if (null == parser) {
             throw new IllegalArgumentException("Unknown parser " + name);

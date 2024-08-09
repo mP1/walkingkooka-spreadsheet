@@ -23,6 +23,8 @@ import walkingkooka.convert.FakeConverterContext;
 import walkingkooka.convert.provider.ConverterInfo;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
@@ -61,17 +63,21 @@ import java.util.Set;
 public class FakeSpreadsheetEngineContext extends FakeConverterContext implements SpreadsheetEngineContext, Fake {
 
     @Override
-    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector) {
+    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector,
+                                                               final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
+        Objects.requireNonNull(context, "context");
 
         throw new UnsupportedOperationException();
     }
 
     @Override
     public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                               final List<?> values) {
+                                                               final List<?> values,
+                                                               final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
+        Objects.requireNonNull(context, "context");
 
         throw new UnsupportedOperationException();
     }
@@ -93,7 +99,8 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                          final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         throw new UnsupportedOperationException();
     }
@@ -121,7 +128,8 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+                                                                                 final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         throw new UnsupportedOperationException();
     }
@@ -143,12 +151,14 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
 
     @Override
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
-                                                     final List<?> values) {
+                                                     final List<?> values,
+                                                     final ProviderContext context) {
         throw new IllegalArgumentException("Unknown formatter " + name);
     }
 
     @Override
-    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
+                                                     final ProviderContext context) {
         throw new UnsupportedOperationException();
     }
 
@@ -183,13 +193,15 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     // SpreadsheetParserProvider........................................................................................
 
     @Override
-    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector) {
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
+                                               final ProviderContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
-                                               final List<?> values) {
+                                               final List<?> values,
+                                               final ProviderContext context) {
         throw new UnsupportedOperationException();
     }
 
@@ -207,6 +219,13 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
 
     @Override
     public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
+        throw new UnsupportedOperationException();
+    }
+
+    // ProviderContext..................................................................................................
+
+    @Override
+    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> environmentValueName) {
         throw new UnsupportedOperationException();
     }
 

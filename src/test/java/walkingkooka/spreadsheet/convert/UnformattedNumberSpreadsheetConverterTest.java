@@ -196,7 +196,8 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
         );
 
         final Converter<SpreadsheetConverterContext> converter = metadata.expressionConverter(
-                converterProvider
+                converterProvider,
+                PROVIDER_CONTEXT
         );
 
         return SpreadsheetConverterContexts.basic(
@@ -205,7 +206,8 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 metadata.converterContext(
                         converterProvider,
                         NOW,
-                        LABEL_NAME_RESOLVER
+                        LABEL_NAME_RESOLVER,
+                        PROVIDER_CONTEXT
                 )
         );
     }

@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -31,6 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implements ImmutableListTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
         ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList>,
         HasTextTesting {
+
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testDoesntDoubleWrap() {
@@ -97,14 +101,16 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
                 (SpreadsheetColumnOrRowSpreadsheetComparatorsList)
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "A=day-of-month;B=month-of-year;C=year;D=text",
-                                SpreadsheetComparatorProviders.spreadsheetComparators()
+                                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                                PROVIDER_CONTEXT
                         ),
                 1,
                 3,
                 (SpreadsheetColumnOrRowSpreadsheetComparatorsList)
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 "A=day-of-month;D=text;C=year;B=month-of-year",
-                                SpreadsheetComparatorProviders.spreadsheetComparators()
+                                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                                PROVIDER_CONTEXT
                         )
         );
     }
@@ -136,7 +142,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
                 SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(
                         SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                                 text,
-                                SpreadsheetComparatorProviders.spreadsheetComparators()
+                                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                                PROVIDER_CONTEXT
                         )
                 ),
                 text
@@ -150,7 +157,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
         return Cast.to(
                 SpreadsheetColumnOrRowSpreadsheetComparators.parse(
                         "A=text",
-                        SpreadsheetComparatorProviders.spreadsheetComparators()
+                        SpreadsheetComparatorProviders.spreadsheetComparators(),
+                        PROVIDER_CONTEXT
                 )
         );
     }

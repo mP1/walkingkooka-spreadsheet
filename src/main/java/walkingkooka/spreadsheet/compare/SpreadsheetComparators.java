@@ -22,6 +22,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
 import walkingkooka.datetime.compare.DateTimeComparators;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -215,9 +216,11 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * </pre>
      */
     public static List<SpreadsheetComparator<?>> parse(final String comparators,
-                                                       final SpreadsheetComparatorProvider spreadsheetComparatorProvider) {
+                                                       final SpreadsheetComparatorProvider provider,
+                                                       final ProviderContext context) {
         CharSequences.failIfNullOrEmpty(comparators, "comparators");
-        Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider");
+        Objects.requireNonNull(provider, "provider");
+        Objects.requireNonNull(context, "context");
 
         final List<SpreadsheetComparator<?>> result = Lists.array();
         int pos = 0;
@@ -259,7 +262,10 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
 
             result.add(
                     direction.apply(
-                            spreadsheetComparatorProvider.spreadsheetComparator(spreadsheetComparatorName)
+                            provider.spreadsheetComparator(
+                                    spreadsheetComparatorName,
+                                    context
+                            )
                     )
             );
 

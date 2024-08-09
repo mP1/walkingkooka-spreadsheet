@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.compare;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -35,6 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesting<SpreadsheetComparators>,
         ComparatorTesting {
+
+    private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testDate() {
@@ -278,7 +282,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 NullPointerException.class,
                 () -> SpreadsheetComparators.parse(
                         null,
-                        SpreadsheetComparatorProviders.fake()
+                        SpreadsheetComparatorProviders.fake(),
+                        CONTEXT
                 )
         );
     }
@@ -289,7 +294,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 IllegalArgumentException.class,
                 () -> SpreadsheetComparators.parse(
                         "",
-                        SpreadsheetComparatorProviders.fake()
+                        SpreadsheetComparatorProviders.fake(),
+                        CONTEXT
                 )
         );
     }
@@ -300,6 +306,19 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 NullPointerException.class,
                 () -> SpreadsheetComparators.parse(
                         "hello",
+                        null,
+                        CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testParseNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetComparators.parse(
+                        "hello",
+                        SpreadsheetComparatorProviders.fake(),
                         null
                 )
         );
@@ -311,7 +330,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 IllegalArgumentException.class,
                 () -> SpreadsheetComparators.parse(
                         "text XYZ",
-                        SpreadsheetComparatorProviders.spreadsheetComparators()
+                        SpreadsheetComparatorProviders.spreadsheetComparators(),
+                        CONTEXT
                 )
         );
         this.checkEquals(
@@ -326,7 +346,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 IllegalArgumentException.class,
                 () -> SpreadsheetComparators.parse(
                         "day-of-month,month-of-year XYZ,year",
-                        SpreadsheetComparatorProviders.spreadsheetComparators()
+                        SpreadsheetComparatorProviders.spreadsheetComparators(),
+                        CONTEXT
                 )
         );
         this.checkEquals(
@@ -411,7 +432,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                 expected,
                 SpreadsheetComparators.parse(
                         comparators,
-                        spreadsheetComparatorProvider
+                        spreadsheetComparatorProvider,
+                        CONTEXT
                 )
         );
     }

@@ -22,6 +22,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -31,6 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<MappedSpreadsheetFormatterProvider>,
         SpreadsheetMetadataTesting {
+
+    private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullInfosFails() {
@@ -67,6 +71,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
 
         this.spreadsheetFormatterAndCheck(
                 NEW_FORMATTER_NAME + " " + pattern,
+                CONTEXT,
                 SpreadsheetPattern.parseDateFormatPattern(pattern)
                         .formatter()
         );
@@ -79,6 +84,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
         this.spreadsheetFormatterAndCheck(
                 SpreadsheetFormatterName.with(NEW_FORMATTER_NAME),
                 Lists.of(pattern),
+                CONTEXT,
                 SpreadsheetPattern.parseDateFormatPattern(pattern)
                         .formatter()
         );
