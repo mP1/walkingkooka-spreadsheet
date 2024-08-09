@@ -430,6 +430,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     // ProviderContextDelegator.........................................................................................
 
+    @Override
     public ProviderContext providerContext() {
         return this.providerContext;
     }
