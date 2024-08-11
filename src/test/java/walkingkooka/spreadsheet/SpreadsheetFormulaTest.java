@@ -73,7 +73,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
-        CanBeEmptyTesting<SpreadsheetFormula>,
+        CanBeEmptyTesting,
         CanReplaceReferencesTesting<SpreadsheetFormula>,
         HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
         JsonNodeMarshallingTesting<SpreadsheetFormula>,
@@ -1535,12 +1535,5 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public SpreadsheetFormula unmarshall(final JsonNode jsonNode,
                                          final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormula.unmarshall(jsonNode, context);
-    }
-
-    // CanBeEmptyTesting................................................................................................
-
-    @Override
-    public SpreadsheetFormula createCanBeEmpty() {
-        return this.createObject();
     }
 }

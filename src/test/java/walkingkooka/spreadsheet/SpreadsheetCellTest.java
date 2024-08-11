@@ -67,7 +67,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetCell>,
+public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         ClassTesting2<SpreadsheetCell>,
         CanReplaceReferencesTesting<SpreadsheetCell>,
         ComparableTesting2<SpreadsheetCell>,
@@ -1993,13 +1993,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting<SpreadsheetC
 
     @Override
     public SpreadsheetCell createHateosResource() {
-        return this.createCell();
-    }
-
-    // CanBeEmptyTesting................................................................................................
-
-    @Override
-    public SpreadsheetCell createCanBeEmpty() {
         return this.createCell();
     }
 }

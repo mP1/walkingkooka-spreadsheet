@@ -56,7 +56,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting<SpreadsheetMetadata>,
+public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting,
         ClassTesting2<SpreadsheetMetadata>,
         ConverterTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
@@ -682,13 +682,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Override
     public final SpreadsheetMetadata createHateosResource() {
-        return this.createObject();
-    }
-
-    // CanBeEmptyTesting................................................................................................
-
-    @Override
-    public final SpreadsheetMetadata createCanBeEmpty() {
         return this.createObject();
     }
 }
