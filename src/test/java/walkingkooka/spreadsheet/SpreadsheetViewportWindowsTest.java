@@ -45,7 +45,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<SpreadsheetViewportWindows>,
+public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
         ClassTesting<SpreadsheetViewportWindows>,
         HashCodeEqualsDefinedTesting2<SpreadsheetViewportWindows>,
         JsonNodeMarshallingTesting<SpreadsheetViewportWindows>,
@@ -1116,12 +1116,5 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting<S
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    // CanBeEmptyTesting................................................................................................
-
-    @Override
-    public SpreadsheetViewportWindows createCanBeEmpty() {
-        return SpreadsheetViewportWindows.EMPTY;
     }
 }
