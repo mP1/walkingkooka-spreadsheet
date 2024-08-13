@@ -45,6 +45,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.test.Testing;
@@ -206,6 +208,14 @@ public interface SpreadsheetMetadataTesting extends Testing {
     JsonNodeUnmarshallContext JSON_NODE_UNMARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeUnmarshallContext();
 
     SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.parserContext(NOW);
+
+    SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
+            CONVERTER_PROVIDER,
+            EXPRESSION_FUNCTION_PROVIDER,
+            SPREADSHEET_COMPARATOR_PROVIDER,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            SPREADSHEET_PARSER_PROVIDER
+    );
 
     static SpreadsheetFormula parseFormula(final String text) {
         return SpreadsheetFormula.parse(
