@@ -17,9 +17,31 @@
 
 package walkingkooka.spreadsheet.provider;
 
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 public final class SpreadsheetProviders implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetProvider}
+     */
+    public static SpreadsheetProvider basic(final ConverterProvider converterProvider,
+                                            final ExpressionFunctionProvider expressionFunctionProvider,
+                                            final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+                                            final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                            final SpreadsheetParserProvider spreadsheetParserProvider) {
+        return BasicSpreadsheetProvider.with(
+                converterProvider,
+                expressionFunctionProvider,
+                spreadsheetComparatorProvider,
+                spreadsheetFormatterProvider,
+                spreadsheetParserProvider
+        );
+    }
 
     /**
      * {@see FakeSpreadsheetProvider}
