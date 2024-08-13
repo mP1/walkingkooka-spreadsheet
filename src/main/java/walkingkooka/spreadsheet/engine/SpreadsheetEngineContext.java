@@ -18,23 +18,19 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
-import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Objects;
@@ -49,14 +45,10 @@ import java.util.Optional;
  * mentioned.
  */
 public interface SpreadsheetEngineContext extends Context,
-        ConverterProvider,
-        ExpressionFunctionProvider,
         ExpressionPurityContext,
         HasSpreadsheetMetadata,
         HasNow,
-        SpreadsheetComparatorProvider,
-        SpreadsheetFormatterProvider,
-        SpreadsheetParserProvider,
+        SpreadsheetProvider,
         ProviderContext,
         SpreadsheetLabelNameResolver {
 

@@ -22,12 +22,10 @@ import walkingkooka.ContextTesting;
 import walkingkooka.locale.HasLocaleTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviderTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -35,7 +33,6 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderTesting;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
@@ -45,10 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
         ParserTesting,
         HasLocaleTesting,
-        ExpressionFunctionProviderTesting<C>,
-        SpreadsheetComparatorProviderTesting<C>,
-        SpreadsheetFormatterProviderTesting<C>,
-        SpreadsheetParserProviderTesting<C>,
+        SpreadsheetProviderTesting<C>,
         SpreadsheetLabelNameResolverTesting {
 
     // SpreadsheetLabelNameResolverTesting..............................................................................

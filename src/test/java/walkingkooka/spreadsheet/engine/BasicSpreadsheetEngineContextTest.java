@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -289,11 +290,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         null,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
+                        SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
@@ -305,99 +302,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testWithNullConverterFails() {
+    public void testWithNullSpreadsheetProviderFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
-                        null,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        PROVIDER_CONTEXT,
-                        ENGINE,
-                        FRACTIONER,
-                        STORE_REPOSITORY,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetComparatorProviderFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        METADATA,
-                        CONVERTER_PROVIDER,
-                        null,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        PROVIDER_CONTEXT,
-                        ENGINE,
-                        FRACTIONER,
-                        STORE_REPOSITORY,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetFormatterProviderFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        METADATA,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        null,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        PROVIDER_CONTEXT,
-                        ENGINE,
-                        FRACTIONER,
-                        STORE_REPOSITORY,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullExpressionFunctionProviderFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        METADATA,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        null,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        PROVIDER_CONTEXT,
-                        ENGINE,
-                        FRACTIONER,
-                        STORE_REPOSITORY,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetParserProviderFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        METADATA,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
                         null,
                         PROVIDER_CONTEXT,
                         ENGINE,
@@ -415,11 +324,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
+                        SPREADSHEET_PROVIDER,
                         null,
                         ENGINE,
                         FRACTIONER,
@@ -436,11 +341,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
+                        SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT,
                         null,
                         FRACTIONER,
@@ -457,11 +358,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
+                        SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT,
                         ENGINE,
                         null,
@@ -478,11 +375,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
+                        SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
@@ -499,11 +392,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
+                        SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
@@ -520,11 +409,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         METADATA,
-                        CONVERTER_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
+                        SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
@@ -1620,11 +1505,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         return BasicSpreadsheetEngineContext.with(
                 metadata,
-                CONVERTER_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER
+                ),
                 PROVIDER_CONTEXT,
                 ENGINE,
                 FRACTIONER,
@@ -1684,6 +1571,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE,
                 new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_UP)
         );
+    }
+
+    // SpreadsheetProviderTesting.......................................................................................
+
+    @Override
+    public BasicSpreadsheetEngineContext createSpreadsheetProvider() {
+        return this.createContext();
     }
 
     // ClassTesting.....................................................................................................
