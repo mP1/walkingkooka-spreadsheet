@@ -85,7 +85,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     Locale LOCALE = Locale.forLanguageTag("EN-AU");
 
-    ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.fake();
+    ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.empty();
 
     SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();
 
