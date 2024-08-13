@@ -110,6 +110,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
     /**
      * Parses the text into a single {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
+     * <pre>
+     * A=day-of-month UP,month-of-year DOWN
+     * </pre>
      */
     public static SpreadsheetColumnOrRowSpreadsheetComparatorNames parse(final String text) {
         final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] names = new SpreadsheetColumnOrRowSpreadsheetComparatorNames[1];
@@ -123,6 +126,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
     /**
      * Parses the text into a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
+     * <pre>
+     * A=day-of-month UP,month-of-year DOWN,B=number
+     * </pre>
+     * </pre>
      */
     public static List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> parseList(final String text) {
         final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names = Lists.array();
