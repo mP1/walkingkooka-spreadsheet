@@ -209,12 +209,14 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.parserContext(NOW);
 
-    SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
-            CONVERTER_PROVIDER,
-            EXPRESSION_FUNCTION_PROVIDER,
-            SPREADSHEET_COMPARATOR_PROVIDER,
-            SPREADSHEET_FORMATTER_PROVIDER,
-            SPREADSHEET_PARSER_PROVIDER
+    SpreadsheetProvider SPREADSHEET_PROVIDER = METADATA_EN_AU.spreadsheetProvider(
+            SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER
+            )
     );
 
     static SpreadsheetFormula parseFormula(final String text) {
