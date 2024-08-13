@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConversionException;
-import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
@@ -32,31 +31,24 @@ import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
-import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSample;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -74,7 +66,6 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.ValueExpression;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -91,18 +82,16 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext> {
+public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext>,
+        SpreadsheetMetadataTesting {
 
     private final static String CURRENCY = "CURR";
     private final static char DECIMAL = '.';
@@ -112,8 +101,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static char PERCENT = '#';
     private final static char PLUS = '@';
 
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-    private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
     private final static char VALUE_SEPARATOR = ',';
     private final static int WIDTH = 1;
 
@@ -131,19 +118,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
             .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
-
-    private final static SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();
-
-    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
-
-    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER);
-
-    private final static ConverterProvider CONVERTER_PROVIDER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-            METADATA,
-            SPREADSHEET_FORMATTER_PROVIDER,
-            SPREADSHEET_PARSER_PROVIDER
-    );
-
     private final static String TEST_CONTEXT_LOADCELL = "test-context-loadCell";
 
     private final static String TEST_CONTEXT_SERVER_URL = "test-context-serverUrl";
@@ -291,8 +265,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
     };
 
-    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
-
     private final static SpreadsheetEngine ENGINE = SpreadsheetEngines.fake();
 
     private final Function<BigDecimal, Fraction> FRACTIONER = new Function<>() {
@@ -310,8 +282,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static SpreadsheetStoreRepository STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
-
-    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     @Test
     public void testWithNullMetadataFails() {
@@ -1129,7 +1099,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"exponent-symbol\": \"e\",\n" +
                         "  \"expression-converter\": \"general\",\n" +
                         "  \"expression-functions\": [],\n" +
-                        "  \"expression-number-kind\": \"DOUBLE\",\n" +
+                        "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +
@@ -1433,7 +1403,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"exponent-symbol\": \"e\",\n" +
                         "  \"expression-converter\": \"general\",\n" +
                         "  \"expression-functions\": [],\n" +
-                        "  \"expression-number-kind\": \"DOUBLE\",\n" +
+                        "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +
