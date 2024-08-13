@@ -35,22 +35,27 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
         SpreadsheetFormatterProviderDelegator,
         SpreadsheetParserProviderDelegator {
 
+    @Override
     default ConverterProvider converterProvider() {
         return this.spreadsheetProvider();
     }
 
+    @Override
     default ExpressionFunctionProvider expressionFunctionProvider() {
         return this.spreadsheetProvider();
     }
 
+    @Override
     default SpreadsheetComparatorProvider spreadsheetComparatorProvider() {
         return this.spreadsheetProvider();
     }
 
+    @Override
     default SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
         return this.spreadsheetProvider();
     }
 
+    @Override
     default SpreadsheetParserProvider spreadsheetParserProvider() {
         return this.spreadsheetProvider();
     }
