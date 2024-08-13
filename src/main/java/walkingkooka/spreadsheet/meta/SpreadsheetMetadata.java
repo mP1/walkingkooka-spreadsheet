@@ -69,6 +69,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -753,6 +755,23 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return SpreadsheetParserProviders.mapped(
                 this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS),
                 provider
+        );
+    }
+
+    // SpreadsheetParser................................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetProvider} honouring any provider properties wrapping the given {@link SpreadsheetProvider}.
+     */
+    public final SpreadsheetProvider spreadsheetProvider(final SpreadsheetProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        return SpreadsheetProviders.basic(
+            this.converterProvider(provider),
+            this.expressionFunctionProvider(provider),
+            this.spreadsheetComparatorProvider(provider),
+            this.spreadsheetFormatterProvider(provider),
+            this.spreadsheetParserProvider(provider)
         );
     }
 

@@ -933,7 +933,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 )
         );
     }
-    
+
+    // SpreadsheetProvider..............................................................................................
+
+    @Test
+    public void testSpreadsheetProviderWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetProvider(null)
+        );
+    }
+
     // HasJsonNodeMarshallContext.......................................................................................
 
     @Test
