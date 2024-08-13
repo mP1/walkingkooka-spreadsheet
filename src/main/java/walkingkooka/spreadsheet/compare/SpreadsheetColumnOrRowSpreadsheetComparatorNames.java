@@ -127,7 +127,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     /**
      * Parses the text into a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      * <pre>
-     * A=day-of-month UP,month-of-year DOWN,B=number
+     * A=day-of-month UP,month-of-year DOWN;B=number
      * </pre>
      * </pre>
      */
