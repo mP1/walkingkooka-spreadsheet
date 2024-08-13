@@ -329,32 +329,45 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
         final SpreadsheetMetadataStampingSpreadsheetEngineSaveWatcherDeleteWatcher watcher = SpreadsheetMetadataStampingSpreadsheetEngineSaveWatcherDeleteWatcher.create();
 
         final SpreadsheetCellStore cellStore = repository.cells();
-        final Runnable saveWatcher1 = cellStore.addSaveWatcher(Cast.to(watcher));
+        final Runnable cellSaveWatcher = cellStore.addSaveWatcher(
+                Cast.to(watcher)
+        );
 
         try {
-            final Runnable deleteWatcher1 = cellStore.addDeleteWatcher(Cast.to(watcher));
+            final Runnable cellDeleteWatcher = cellStore.addDeleteWatcher(
+                    Cast.to(watcher)
+            );
             try {
                 final SpreadsheetLabelStore labelStore = repository.labels();
-                final Runnable saveWatcher2 = labelStore.addSaveWatcher(Cast.to(watcher));
+                final Runnable saveWatcher2 = labelStore.addSaveWatcher(
+                        Cast.to(watcher)
+                );
                 try {
-                    final Runnable deleteWatcher2 = labelStore.addDeleteWatcher(Cast.to(watcher));
+                    final Runnable labelDeleteWatcher = labelStore.addDeleteWatcher(
+                            Cast.to(watcher)
+                    );
 
                     try {
                         return supplier.get();
                     } finally {
-                        deleteWatcher2.run();
+                        labelDeleteWatcher.run();
                         if (watcher.saveOrDeletes > 0) {
-                            repository.metadatas().save(this.stamper.apply(context.spreadsheetMetadata()));
+                            repository.metadatas()
+                                    .save(
+                                            this.stamper.apply(
+                                                    context.spreadsheetMetadata()
+                                            )
+                                    );
                         }
                     }
                 } finally {
                     saveWatcher2.run();
                 }
             } finally {
-                deleteWatcher1.run();
+                cellDeleteWatcher.run();
             }
         } finally {
-            saveWatcher1.run();
+            cellSaveWatcher.run();
         }
     }
 
