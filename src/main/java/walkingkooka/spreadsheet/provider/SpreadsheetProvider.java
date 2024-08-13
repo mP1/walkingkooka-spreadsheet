@@ -18,12 +18,11 @@
 package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.plugin.Provider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
-
-import java.security.Provider;
 
 /**
  * Aggregates all the {@link Provider provider(s)} used in a spreadsheet.
