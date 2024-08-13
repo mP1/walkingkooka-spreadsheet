@@ -17,17 +17,13 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -40,11 +36,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetEngineContext}
      */
     public static SpreadsheetEngineContext basic(final SpreadsheetMetadata metadata,
-                                                 final ConverterProvider converterProvider,
-                                                 final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
-                                                 final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                 final ExpressionFunctionProvider expressionFunctionProvider,
-                                                 final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                 final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext,
                                                  final SpreadsheetEngine engine,
                                                  final Function<BigDecimal, Fraction> fractioner,
@@ -53,11 +45,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Supplier<LocalDateTime> now) {
         return BasicSpreadsheetEngineContext.with(
                 metadata,
-                converterProvider,
-                spreadsheetComparatorProvider,
-                spreadsheetFormatterProvider,
-                expressionFunctionProvider,
-                spreadsheetParserProvider,
+                spreadsheetProvider,
                 providerContext,
                 engine,
                 fractioner,
