@@ -248,7 +248,8 @@ public interface SpreadsheetEngine {
 
     /**
      * Performs the given {@link SpreadsheetViewport}, honouring any present {@link SpreadsheetViewport#navigations()},
-     * skipping hidden columns and rows.
+     * skipping hidden columns and rows. Note the enclosing {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} is NOT
+     * updated.
      */
     Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                            final SpreadsheetEngineContext context);
