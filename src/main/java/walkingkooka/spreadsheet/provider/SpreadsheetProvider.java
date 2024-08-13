@@ -1,0 +1,37 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.provider;
+
+import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+
+import java.security.Provider;
+
+/**
+ * Aggregates all the {@link Provider provider(s)} used in a spreadsheet.
+ * This should make it easier to pass instances of each around, as aswell as updates when a {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} is updated.
+ */
+public interface SpreadsheetProvider extends ConverterProvider,
+        ExpressionFunctionProvider,
+        SpreadsheetComparatorProvider,
+        SpreadsheetFormatterProvider,
+        SpreadsheetParserProvider {
+}
