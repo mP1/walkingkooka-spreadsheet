@@ -31,7 +31,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
-import walkingkooka.text.CharSequences;
 
 import java.util.List;
 import java.util.Objects;
@@ -86,7 +85,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         Converter<?> converter;
 
         final List<?> copy = Lists.immutable(values);
-        final int count = copy.size();
 
         switch (name.value()) {
             case BASIC_SPREADSHEET_CONVERTER_STRING:
@@ -157,16 +155,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         if (expected != values.size()) {
             throw new IllegalArgumentException("Expected " + expected + " values got " + values.size() + " " + values);
         }
-    }
-
-    private <C extends ConverterContext> Converter<C> getConverterFromValues(final List<?> values,
-                                                                             final int i) {
-        final Object value = values.get(i);
-        if (false == value instanceof Converter) {
-            throw new IllegalArgumentException("Expected converter in value " + i + " but got " + CharSequences.quoteIfChars(value));
-        }
-
-        return Cast.to(value);
     }
 
     private final static String BASIC_SPREADSHEET_CONVERTER_STRING = "basic-spreadsheet-converter";
