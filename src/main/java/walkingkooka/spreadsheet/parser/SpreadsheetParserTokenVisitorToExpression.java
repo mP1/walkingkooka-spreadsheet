@@ -22,8 +22,8 @@ import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -200,7 +200,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
         final Expression call = Expression.call(
                 Expression.call(
                         Expression.namedFunction(
-                                FunctionExpressionName.with(
+                                ExpressionFunctionName.with(
                                         token.functionName().value()
                                 )
                         ),
@@ -252,7 +252,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetNamedFunctionParserToken token) {
         final Expression callNamedFunction = Expression.call(
                 Expression.namedFunction(
-                        FunctionExpressionName.with(token.functionName().value())
+                        ExpressionFunctionName.with(token.functionName().value())
                 ),
                 this.children
         );

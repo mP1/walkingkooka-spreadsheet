@@ -18,14 +18,14 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionInfoSet}.
  */
-final class SpreadsheetMetadataPropertyNamePluginExpressionFunctions extends SpreadsheetMetadataPropertyNamePlugin<ExpressionFunctionInfoSet, ExpressionFunctionInfo, FunctionExpressionName> {
+final class SpreadsheetMetadataPropertyNamePluginExpressionFunctions extends SpreadsheetMetadataPropertyNamePlugin<ExpressionFunctionInfoSet, ExpressionFunctionInfo, ExpressionFunctionName> {
 
     static {
         ExpressionFunctionInfoSet.with(Sets.empty()); // force registry of json marshaller

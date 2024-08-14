@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionPurityContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
@@ -47,12 +47,12 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
     }
 
     @Override
-    public Optional<FunctionExpressionName> name() {
+    public Optional<ExpressionFunctionName> name() {
         return NAME;
     }
 
-    private final static Optional<FunctionExpressionName> NAME = Optional.of(
-            FunctionExpressionName.with("error")
+    private final static Optional<ExpressionFunctionName> NAME = Optional.of(
+            ExpressionFunctionName.with("error")
     );
 
     @Override

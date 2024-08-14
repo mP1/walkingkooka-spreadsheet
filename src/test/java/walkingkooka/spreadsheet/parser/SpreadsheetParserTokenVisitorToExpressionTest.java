@@ -27,9 +27,9 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
@@ -154,8 +154,8 @@ public final class SpreadsheetParserTokenVisitorToExpressionTest extends Spreads
                         new FakeSpreadsheetExpressionEvaluationContext() {
 
                             @Override
-                            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
-                                Objects.requireNonNull(FunctionExpressionName.with("error"), "name");
+                            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
+                                Objects.requireNonNull(ExpressionFunctionName.with("error"), "name");
                                 return Cast.to(
                                         SpreadsheetExpressionFunctions.error()
                                 );

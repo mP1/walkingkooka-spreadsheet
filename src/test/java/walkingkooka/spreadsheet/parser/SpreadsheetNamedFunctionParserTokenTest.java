@@ -22,7 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -172,7 +172,7 @@ public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetPa
         this.toExpressionAndCheck(
                 Expression.call(
                         Expression.namedFunction(
-                                FunctionExpressionName.with(FUNCTION)
+                                ExpressionFunctionName.with(FUNCTION)
                         ),
                         Lists.of(
                                 Expression.value(

@@ -34,9 +34,9 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
@@ -119,7 +119,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName functionName) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName functionName) {
         this.failIfParameterName(functionName);
 
         return this.context.expressionFunction(functionName);
@@ -198,14 +198,14 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     private final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues;
 
     @Override
-    public boolean isPure(final FunctionExpressionName functionName) {
+    public boolean isPure(final ExpressionFunctionName functionName) {
         this.failIfParameterName(functionName);
 
         // $functionName is not a named parameter let the wrapped context test the namedFunction for purity.
         return this.context.isPure(functionName);
     }
 
-    private void failIfParameterName(final FunctionExpressionName functionName) {
+    private void failIfParameterName(final ExpressionFunctionName functionName) {
         final String text = functionName.value();
         if (SpreadsheetSelection.isLabelText(text) && this.findLocalLabel(SpreadsheetSelection.labelName(text)).isPresent()) {
             throw new IllegalArgumentException("Function name " + functionName + " is a parameter and not an actual function");
