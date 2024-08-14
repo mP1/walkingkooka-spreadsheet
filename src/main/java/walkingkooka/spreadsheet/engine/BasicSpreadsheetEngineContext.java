@@ -43,7 +43,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
@@ -189,7 +189,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     private final SpreadsheetParserContext parserContext;
 
     @Override
-    public boolean isPure(final FunctionExpressionName function) {
+    public boolean isPure(final ExpressionFunctionName function) {
         return this.spreadsheetProvider.expressionFunction(
                 function,
                         this

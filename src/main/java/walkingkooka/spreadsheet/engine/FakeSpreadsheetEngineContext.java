@@ -50,7 +50,7 @@ import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.text.TextNode;
@@ -123,12 +123,12 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public boolean isPure(final FunctionExpressionName function) {
+    public boolean isPure(final ExpressionFunctionName function) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                  final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         throw new UnsupportedOperationException();

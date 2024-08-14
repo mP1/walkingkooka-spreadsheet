@@ -28,10 +28,10 @@ import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceMissingStore
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionNumberContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.math.MathContext;
@@ -284,7 +284,7 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
 
     @Test
     public void testTranslateUnknownExpressionFunctionException() {
-        final FunctionExpressionName badFunction = FunctionExpressionName.with("badFunction");
+        final ExpressionFunctionName badFunction = ExpressionFunctionName.with("badFunction");
 
         this.translateAndCheck(
                 new UnknownExpressionFunctionException(badFunction),

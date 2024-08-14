@@ -66,8 +66,8 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.ValueExpression;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
@@ -128,7 +128,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider() {
 
         @Override
-        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                      final ProviderContext context) {
             Objects.requireNonNull(name, "name");
             Objects.requireNonNull(context, "context");
@@ -248,19 +248,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             return Sets.of(
                     ExpressionFunctionInfo.with(
                             Url.parseAbsolute("https://example.com/test/xyz"),
-                            FunctionExpressionName.with("xyz")
+                            ExpressionFunctionName.with("xyz")
                     ),
                     ExpressionFunctionInfo.with(
                             Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
-                            FunctionExpressionName.with(TEST_CONTEXT_LOADCELL)
+                            ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
                     ),
                     ExpressionFunctionInfo.with(
                             Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
-                            FunctionExpressionName.with(TEST_CONTEXT_SERVER_URL)
+                            ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
                     )
                     , ExpressionFunctionInfo.with(
                             Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
-                            FunctionExpressionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
+                            ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
                     )
             );
         }
@@ -639,7 +639,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.evaluateAndCheck(
                 Expression.call(
                         Expression.namedFunction(
-                                FunctionExpressionName.with("xyz")
+                                ExpressionFunctionName.with("xyz")
                         ),
                         Lists.of(
                                 this.expression(1),
@@ -659,7 +659,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.evaluateAndCheck(
                 Expression.call(
                         Expression.namedFunction(
-                                FunctionExpressionName.with(TEST_CONTEXT_LOADCELL)
+                                ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
                         ),
                         Lists.of(
                                 Expression.reference(
@@ -676,7 +676,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.evaluateAndCheck(
                 Expression.call(
                         Expression.namedFunction(
-                                FunctionExpressionName.with(TEST_CONTEXT_SERVER_URL)
+                                ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
                         ),
                         Lists.empty()
                 ),
@@ -689,7 +689,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.evaluateAndCheck(
                 Expression.call(
                         Expression.namedFunction(
-                                FunctionExpressionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
+                                ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
                         ),
                         Lists.empty()
                 ),

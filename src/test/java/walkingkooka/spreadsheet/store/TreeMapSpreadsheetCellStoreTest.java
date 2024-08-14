@@ -29,8 +29,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -507,7 +507,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         withoutParsedFormula.formula()
                                 .setExpression(
                                         Optional.of(
-                                                Expression.namedFunction(FunctionExpressionName.with("hello"))
+                                                Expression.namedFunction(ExpressionFunctionName.with("hello"))
                                         )
                                 )
                 )
@@ -536,7 +536,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         withoutParsedFormula.formula()
                                 .setExpression(
                                         Optional.of(
-                                                Expression.namedFunction(FunctionExpressionName.with("hello"))
+                                                Expression.namedFunction(ExpressionFunctionName.with("hello"))
                                         )
                                 )
                 )
@@ -579,7 +579,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         SpreadsheetFormula.EMPTY.setText("hello()")
                                 .setExpression(
                                         Optional.of(
-                                                Expression.namedFunction(FunctionExpressionName.with("hello"))
+                                                Expression.namedFunction(ExpressionFunctionName.with("hello"))
                                         )
                                 )
                 );
@@ -610,7 +610,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         SpreadsheetFormula.EMPTY.setText("hello()")
                                 .setExpression(
                                         Optional.of(
-                                                Expression.namedFunction(FunctionExpressionName.with("hello"))
+                                                Expression.namedFunction(ExpressionFunctionName.with("hello"))
                                         )
                                 )
                 );

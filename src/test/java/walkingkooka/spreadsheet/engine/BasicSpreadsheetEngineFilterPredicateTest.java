@@ -31,7 +31,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 
 import java.util.List;
 import java.util.Optional;
@@ -119,7 +119,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
 
     private BasicSpreadsheetEngineFilterPredicate createPredicate(final String valueType) {
         final Expression expression = Expression.call(
-                Expression.namedFunction(FunctionExpressionName.with("Test123")),
+                Expression.namedFunction(ExpressionFunctionName.with("Test123")),
                 Expression.NO_CHILDREN
         );
 

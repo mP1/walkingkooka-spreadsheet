@@ -104,6 +104,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverters;
@@ -111,7 +112,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
@@ -326,7 +326,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellFails(
                 "=unknownFunction()",
                 SpreadsheetError.functionNotFound(
-                        FunctionExpressionName.with("unknownFunction")
+                        ExpressionFunctionName.with("unknownFunction")
                 )
         );
     }
@@ -12447,7 +12447,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetValueType.ANY,
                 Expression.call(
                         Expression.namedFunction(
-                                FunctionExpressionName.with("BasicSpreadsheetEngineTestFilterCellsPredicate")
+                                ExpressionFunctionName.with("BasicSpreadsheetEngineTestFilterCellsPredicate")
                         ),
                         Expression.NO_CHILDREN
                 ),
@@ -13421,7 +13421,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public boolean isPure(final FunctionExpressionName function) {
+            public boolean isPure(final ExpressionFunctionName function) {
                 return this.expressionFunctionProvider()
                         .expressionFunction(
                                 function,
@@ -13432,7 +13432,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             private ExpressionFunctionProvider expressionFunctionProvider() {
                 return new FakeExpressionFunctionProvider() {
                     @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                                  final ProviderContext context) {
                         switch (name.value()) {
                             case "BasicSpreadsheetEngineTestNumberParameter":

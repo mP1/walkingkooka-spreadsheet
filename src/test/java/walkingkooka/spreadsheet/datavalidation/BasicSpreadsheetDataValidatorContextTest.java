@@ -23,9 +23,9 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
@@ -84,7 +84,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
         return new FakeExpressionEvaluationContext() {
 
             @Override
-            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
+            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
                 throw new UnknownExpressionFunctionException(name);
             }
 
@@ -94,7 +94,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
             }
 
             @Override
-            public boolean isPure(final FunctionExpressionName name) {
+            public boolean isPure(final ExpressionFunctionName name) {
                 Objects.requireNonNull(name, "name");
                 throw new UnsupportedOperationException();
             }

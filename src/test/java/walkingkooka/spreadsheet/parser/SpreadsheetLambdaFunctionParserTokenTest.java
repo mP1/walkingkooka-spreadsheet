@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -95,7 +95,7 @@ public final class SpreadsheetLambdaFunctionParserTokenTest extends SpreadsheetP
                 Expression.call(
                         Expression.call(
                                 Expression.namedFunction(
-                                        FunctionExpressionName.with(FUNCTION)
+                                        ExpressionFunctionName.with(FUNCTION)
                                 ),
                                 Lists.of(
                                         Expression.reference(

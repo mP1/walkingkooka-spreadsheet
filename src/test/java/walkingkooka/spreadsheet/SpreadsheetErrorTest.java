@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -116,7 +116,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
     @Test
     public void testFunctionNotFound() {
-        final FunctionExpressionName function = FunctionExpressionName.with("function123");
+        final ExpressionFunctionName function = ExpressionFunctionName.with("function123");
 
         final SpreadsheetError error = SpreadsheetError.functionNotFound(function);
         this.checkKind(error, SpreadsheetErrorKind.NAME);

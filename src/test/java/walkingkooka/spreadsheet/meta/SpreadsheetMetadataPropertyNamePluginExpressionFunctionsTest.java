@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 
-public final class SpreadsheetMetadataPropertyNamePluginExpressionFunctionsTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginExpressionFunctions, ExpressionFunctionInfoSet, ExpressionFunctionInfo, FunctionExpressionName> {
+public final class SpreadsheetMetadataPropertyNamePluginExpressionFunctionsTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginExpressionFunctions, ExpressionFunctionInfoSet, ExpressionFunctionInfo, ExpressionFunctionName> {
 
     @Override
     SpreadsheetMetadataPropertyNamePluginExpressionFunctions createName() {
@@ -36,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNamePluginExpressionFunctionsTest 
                 Sets.of(
                         ExpressionFunctionInfo.with(
                                 Url.parseAbsolute("https://example.com/test-function-111"),
-                                FunctionExpressionName.with("test-function")
+                                ExpressionFunctionName.with("test-function")
                         )
                 )
         );

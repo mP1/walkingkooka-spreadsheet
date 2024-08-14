@@ -65,8 +65,8 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
@@ -756,9 +756,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testExpressionFunctions() {
         final ExpressionFunction<?, ExpressionEvaluationContext> function1 = new FakeExpressionFunction<>() {
             @Override
-            public Optional<FunctionExpressionName> name() {
+            public Optional<ExpressionFunctionName> name() {
                 return Optional.of(
-                        FunctionExpressionName.with("test-function-111")
+                        ExpressionFunctionName.with("test-function-111")
                 );
             }
 
@@ -782,9 +782,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                                 function1,
                                 new FakeExpressionFunction<>() {
                                     @Override
-                                    public Optional<FunctionExpressionName> name() {
+                                    public Optional<ExpressionFunctionName> name() {
                                         return Optional.of(
-                                                FunctionExpressionName.with("test-function-222")
+                                                ExpressionFunctionName.with("test-function-222")
                                         );
                                     }
                                 }
@@ -795,7 +795,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkEquals(
                 "Hello",
                 provider.expressionFunction(
-                        FunctionExpressionName.with("sin"),
+                        ExpressionFunctionName.with("sin"),
                         PROVIDER_CONTEXT
                 ).apply(
                         ExpressionFunction.NO_PARAMETER_VALUES,

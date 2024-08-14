@@ -48,10 +48,10 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
@@ -117,9 +117,9 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         }
 
         @Override
-        public Optional<FunctionExpressionName> name() {
+        public Optional<ExpressionFunctionName> name() {
             return Optional.of(
-                    FunctionExpressionName.with("test-concat-1")
+                    ExpressionFunctionName.with("test-concat-1")
             );
         }
 
@@ -149,9 +149,9 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         }
 
         @Override
-        public Optional<FunctionExpressionName> name() {
+        public Optional<ExpressionFunctionName> name() {
             return Optional.of(
-                    FunctionExpressionName.with("test-echo-2")
+                    ExpressionFunctionName.with("test-echo-2")
             );
         }
 
@@ -172,7 +172,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     private final ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider() {
         @Override
-        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName n,
+        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName n,
                                                                                      final ProviderContext c) {
             Objects.requireNonNull(n, "name");
 
@@ -434,7 +434,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         );
     }
 
-    private <T> void executeNamedFunctionAndCheck(final FunctionExpressionName functionName,
+    private <T> void executeNamedFunctionAndCheck(final ExpressionFunctionName functionName,
                                                   final List<Expression> parameters,
                                                   final T expected) {
         final ConverterSpreadsheetExpressionEvaluationContext context = this.createContext();
