@@ -55,7 +55,7 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
                 targetType,
                 mapping
         );
-        visitor.accept(value); // value = parse
+        visitor.accept(value);
         return visitor.converter;
     }
 
