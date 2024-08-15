@@ -307,10 +307,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         );
     }
 
-    private static LocalDateTime dateTime(final LocalDate date) {
-        return LocalDateTime.of(date, LocalTime.MIDNIGHT);
-    }
-
     private static GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> mapping(
             final Converter<SpreadsheetConverterContext> booleanValue,
             final Converter<SpreadsheetConverterContext> date,
