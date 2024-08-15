@@ -286,7 +286,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     }
 
     /**
-     * Adds support for Character or String to Character or String.
+     * Converters any {@link Character} to {@link String} if necessary before calling the given {@link Converter}.
      */
     private static Converter<SpreadsheetConverterContext> characterOrStringTo(final Converter<SpreadsheetConverterContext> converter) {
         return Converters.characterOrStringToString()
@@ -298,7 +298,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     }
 
     /**
-     * Adds support for converting to String and then maybe Character.
+     * Wraps a {@link Converter} converting any {@link String} to {@link Character} if necessary.
      */
     private static Converter<SpreadsheetConverterContext> toCharacterOrString(final Converter<SpreadsheetConverterContext> converter) {
         return converter.to(
