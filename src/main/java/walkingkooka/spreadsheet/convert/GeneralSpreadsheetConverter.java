@@ -24,6 +24,8 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverters;
@@ -364,6 +366,7 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         return Object.class == type ||
                 Boolean.class == type ||
                 Character.class == type ||
+                HasText.class == type || // might be useful
                 LocalDate.class == type ||
                 LocalDateTime.class == type ||
                 LocalTime.class == type ||
@@ -403,7 +406,9 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         return value.getClass() == targetType ?
                 this.successfulConversion(value, targetType) :
                 convertNonNull0(
-                        value,
+                        false == value instanceof SpreadsheetSelection && value instanceof HasText ?
+                                ((HasText) value).text() :
+                                value,
                         targetType,
                         context
                 );

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
@@ -29,6 +30,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -48,6 +50,7 @@ import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -57,6 +60,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.Temporal;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -706,6 +710,77 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                 DATE_TIME,
                 TIME
         );
+    }
+
+    // HasText..........................................................................................................
+
+    @Test
+    public void testConvertHasTextToBooleanFalse() {
+        this.convertAndCheck(
+                text("false"),
+                Boolean.class,
+                false
+        );
+    }
+
+    @Test
+    public void testConvertHasTextToBooleanTrue() {
+        this.convertAndCheck(
+                text("true"),
+                Boolean.class,
+                true
+        );
+    }
+
+    @Test
+    public void testConvertHasTextToDate() {
+        this.convertAndCheck(
+                text("D 2000-12-31"),
+                LocalDate.class,
+                DATE
+        );
+    }
+
+    @Test
+    public void testConvertHasTextToDateTime() {
+        this.convertAndCheck(
+                text("DT 31 12 2000 12 58 59"),
+                LocalDateTime.class,
+                DATE_TIME
+        );
+    }
+
+    @Test
+    public void testConvertHasTextToExpressionNumber() {
+        this.convertAndCheck(
+                text("N 123"),
+                ExpressionNumber.class,
+                EXPRESSION_NUMBER_KIND.create(123)
+        );
+    }
+
+    @Test
+    public void testConvertHasTextToTime() {
+        this.convertAndCheck(
+                text("T 12 58 59"),
+                LocalTime.class,
+                TIME
+        );
+    }
+
+    @Test
+    public void testConvertHasTextToString() {
+        this.convertAndCheck(
+                text("A"),
+                String.class,
+                "A"
+        );
+    }
+
+    private static TextNode text(final String text) {
+        return SpreadsheetText.with(text)
+                .setColor(Optional.of(Color.BLACK))
+                .toTextNode();
     }
 
     // Number...........................................................................................................
