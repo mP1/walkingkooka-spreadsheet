@@ -41,6 +41,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testConverterContext() {
         METADATA_EN_AU.converterContext(
+                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                 CONVERTER_PROVIDER,
                 LocalDateTime::now,
                 (label) -> {

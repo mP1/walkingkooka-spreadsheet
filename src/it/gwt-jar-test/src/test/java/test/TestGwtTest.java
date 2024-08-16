@@ -254,6 +254,7 @@ public class TestGwtTest extends GWTTestCase {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
+                                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                                         converterProvider,
                                         NOW,
                                         LABEL_NAME_RESOLVER,

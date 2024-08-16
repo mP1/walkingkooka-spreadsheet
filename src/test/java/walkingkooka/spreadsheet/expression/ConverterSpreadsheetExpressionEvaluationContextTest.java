@@ -507,6 +507,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         PROVIDER_CONTEXT,
                         REFERENCES,
                         METADATA.converterContext(
+                                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                                 converterProvider,
                                 LocalDateTime::now,
                                 LABEL_NAME_RESOLVER,

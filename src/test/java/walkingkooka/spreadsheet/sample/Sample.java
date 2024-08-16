@@ -251,6 +251,7 @@ public final class Sample {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.converterContext(
+                                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                                         converterProvider,
                                         NOW,
                                         LABEL_NAME_RESOLVER,
