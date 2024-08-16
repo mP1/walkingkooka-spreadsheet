@@ -938,7 +938,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         providerContext
                 ),
                 this.converterContext(
-                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, // should be FORMATTER_CONVERTER https://github.com/mP1/walkingkooka-spreadsheet/issues/4908
+                        SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                         converterProvider,
                         now,
                         labelNameResolver,

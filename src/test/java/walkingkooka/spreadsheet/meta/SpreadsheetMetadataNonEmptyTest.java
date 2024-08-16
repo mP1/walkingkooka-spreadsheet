@@ -1733,10 +1733,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private void converterConvertAndCheck(final Object value,
                                           final Object expected) {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
+        final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector = SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER;
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(converterSelector);
 
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
-                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                converterSelector,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         metadata,
                         SPREADSHEET_FORMATTER_PROVIDER,
@@ -1771,7 +1772,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
-    private SpreadsheetMetadata createSpreadsheetMetadataWithConverter() {
+    private SpreadsheetMetadata createSpreadsheetMetadataWithConverter(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector) {
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("\"Date\" yyyy mm dd").spreadsheetFormatterSelector())
@@ -1779,7 +1780,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("\"DateTime\" yyyy hh").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, ConverterSelector.parse("general"))
+                .set(converterSelector, ConverterSelector.parse("general"))
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000").spreadsheetFormatterSelector())
@@ -1839,7 +1840,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private final static char VALUE_SEPARATOR = '\'';
 
     private SpreadsheetMetadata createSpreadsheetMetadataWithConverterAndConverterContext() {
-        return this.createSpreadsheetMetadataWithConverter()
+        return this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER)
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
@@ -2154,7 +2155,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testFormatterContext() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter()
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER)
                 .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
@@ -2188,7 +2189,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSpreadsheetFormatterProviderSamplesContext() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter()
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER)
                 .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
