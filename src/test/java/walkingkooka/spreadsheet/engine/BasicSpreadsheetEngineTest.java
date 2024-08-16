@@ -71,8 +71,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -139,7 +137,6 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -158,10 +155,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
     private final static String NUMBER_PATTERN = "#";
     private final static String TEXT_PATTERN = "@";
-
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = METADATA_EN_AU.expressionNumberKind();
-
-    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://server.example.com");
 
@@ -274,8 +267,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static double VIEWPORT_WIDTH = COLUMN_WIDTH * 5;
 
     private final static double VIEWPORT_HEIGHT = ROW_HEIGHT * 5;
-
-    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
 
     // loadCells........................................................................................................
 
@@ -13592,7 +13583,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SPREADSHEET_PARSER_PROVIDER
                         ),
                         NOW,
-                        LABEL_NAME_RESOLVER,
+                        SPREADSHEET_LABEL_NAME_RESOLVER,
                         PROVIDER_CONTEXT
                 );
             }
