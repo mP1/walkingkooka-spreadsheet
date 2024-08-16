@@ -26,6 +26,7 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -40,10 +41,8 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.math.MathContext;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -81,8 +80,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                LABEL_NAME_RESOLVER,
-                NOW
+                SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 
@@ -97,8 +95,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                LABEL_NAME_RESOLVER,
-                NOW
+                SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 
@@ -113,8 +110,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                LABEL_NAME_RESOLVER,
-                NOW
+                SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 
@@ -129,8 +125,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                LABEL_NAME_RESOLVER,
-                NOW
+                SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 
@@ -145,8 +140,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                LABEL_NAME_RESOLVER,
-                NOW
+                SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 
@@ -161,8 +155,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                LABEL_NAME_RESOLVER,
-                NOW
+                SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 
@@ -177,8 +170,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 null,
                 REFERENCES,
-                LABEL_NAME_RESOLVER,
-                NOW
+                SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 
@@ -193,13 +185,12 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 null,
-                LABEL_NAME_RESOLVER,
-                NOW
+                SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 
     @Test
-    public void testWithNullLabelNameResolverFails() {
+    public void testWithNullSpreadsheetConverterContextFails() {
         this.withFails(
                 CELL,
                 CELL_STORE,
@@ -209,23 +200,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                null,
-                NOW
-        );
-    }
-
-    @Test
-    public void testWithNullNowFails() {
-        this.withFails(
-                CELL,
-                CELL_STORE,
-                SERVER_URL,
-                METADATA,
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                REFERENCES,
-                LABEL_NAME_RESOLVER,
                 null
         );
     }
@@ -238,8 +212,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final ExpressionFunctionProvider expressionFunctionProvider,
                            final ProviderContext providerContext,
                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                           final SpreadsheetLabelNameResolver labelNameResolver,
-                           final Supplier<LocalDateTime> now) {
+                           final SpreadsheetConverterContext spreadsheetConverterContext) {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetExpressionEvaluationContext.with(
@@ -251,8 +224,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         expressionFunctionProvider,
                         providerContext,
                         references,
-                        labelNameResolver,
-                        now
+                        spreadsheetConverterContext
                 )
         );
     }
@@ -480,8 +452,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                LABEL_NAME_RESOLVER,
-                NOW
+                SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 

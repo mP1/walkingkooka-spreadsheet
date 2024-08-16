@@ -24,9 +24,9 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -34,10 +34,8 @@ import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public final class SpreadsheetExpressionEvaluationContexts implements PublicStaticHelper {
 
@@ -52,8 +50,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final ExpressionFunctionProvider expressionFunctionProvider,
                                                                final ProviderContext providerContext,
                                                                final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                               final SpreadsheetLabelNameResolver labelNameResolver,
-                                                               final Supplier<LocalDateTime> now) {
+                                                               final SpreadsheetConverterContext spreadsheetConverterContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 cell,
                 cellStore,
@@ -63,8 +60,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 expressionFunctionProvider,
                 providerContext,
                 references,
-                labelNameResolver,
-                now
+                spreadsheetConverterContext
         );
     }
 

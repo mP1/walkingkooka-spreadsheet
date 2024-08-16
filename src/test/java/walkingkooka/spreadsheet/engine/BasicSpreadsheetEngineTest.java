@@ -13366,18 +13366,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetCellStores.fake(),
                                 SERVER_URL,
                                 metadata,
-                                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                                        metadata,
-                                        SPREADSHEET_FORMATTER_PROVIDER,
-                                        SPREADSHEET_PARSER_PROVIDER
-                                ),
+                                CONVERTER_PROVIDER,
                                 this.expressionFunctionProvider(),
                                 PROVIDER_CONTEXT,
                                 (r) -> {
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
-                                this::resolveIfLabel,
-                                this::now
+                                metadata.converterContext(
+                                        CONVERTER_PROVIDER,
+                                        NOW,
+                                        SPREADSHEET_LABEL_NAME_RESOLVER,
+                                        PROVIDER_CONTEXT
+                                )
                         )
                 );
             }
@@ -13401,12 +13401,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.expressionFunctionProvider(),
                                 PROVIDER_CONTEXT,
                                 this.references(), // references
-                                (s) -> {
-                                    throw new UnsupportedOperationException(s.toString()); // resolveLabel
-                                },
-                                () -> {
-                                    throw new UnsupportedOperationException(); // now
-                                }
+                                SPREADSHEET_CONVERTER_CONTEXT
                         )
                 );
             }

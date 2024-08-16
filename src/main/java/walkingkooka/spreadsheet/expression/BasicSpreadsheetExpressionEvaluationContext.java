@@ -18,23 +18,19 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -42,22 +38,18 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
-import java.math.MathContext;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
-final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
+final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
+        SpreadsheetConverterContextDelegator {
 
     static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
                                                             final SpreadsheetCellStore cellStore,
@@ -67,8 +59,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                                             final ProviderContext providerContext,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                            final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
-                                                            final Supplier<LocalDateTime> now) {
+                                                            final SpreadsheetConverterContext spreadsheetConverterContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(serverUrl, "serverUrl");
@@ -77,8 +68,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(providerContext, "providerContext");
         Objects.requireNonNull(references, "references");
-        Objects.requireNonNull(SpreadsheetLabelNameResolver, "SpreadsheetLabelNameResolver");
-        Objects.requireNonNull(now, "now");
+        Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
                 cell,
@@ -89,8 +79,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 expressionFunctionProvider,
                 providerContext,
                 references,
-                SpreadsheetLabelNameResolver,
-                now
+                spreadsheetConverterContext
         );
     }
 
@@ -102,8 +91,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
                                                         final ProviderContext providerContext,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                        final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver,
-                                                        final Supplier<LocalDateTime> now) {
+                                                        final SpreadsheetConverterContext spreadsheetConverterContext) {
         super();
         this.cell = cell;
         this.cellStore = cellStore;
@@ -115,8 +103,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.providerContext = providerContext;
 
         this.references = references;
-        this.SpreadsheetLabelNameResolver = SpreadsheetLabelNameResolver;
-        this.now = now;
+
+        this.spreadsheetConverterContext = spreadsheetConverterContext;
     }
 
     // SpreadsheetExpressionEvaluationContext............................................................................
@@ -158,7 +146,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(expression, "expression");
 
         final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
-                .parserContext(this.now);
+                .parserContext(this.spreadsheetConverterContext::now);
 
         return SpreadsheetParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
@@ -166,13 +154,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .get()
                 .cast(SpreadsheetParserToken.class);
     }
-
-    @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return this.SpreadsheetLabelNameResolver.resolveLabel(labelName);
-    }
-
-    private final SpreadsheetLabelNameResolver SpreadsheetLabelNameResolver;
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
@@ -266,157 +247,14 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     private final Function<ExpressionReference, Optional<Optional<Object>>> references;
 
-    // Convert..........................................................................................................
+    // SpreadsheetConverterContextDelegator.............................................................................
 
     @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> target) {
-        return this.converterContext()
-                .canConvert(value, target);
+    public SpreadsheetConverterContext spreadsheetConverterContext() {
+        return this.spreadsheetConverterContext;
     }
 
-    @Override
-    public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> type) {
-        return this.converterContext()
-                .convert(value, type);
-    }
-
-    @Override
-    public long dateOffset() {
-        return this.converterContext()
-                .dateOffset();
-    }
-
-    // DateTimeContext.................................................................................................
-
-    @Override
-    public List<String> ampms() {
-        return this.converterContext()
-                .ampms();
-    }
-
-    @Override
-    public int defaultYear() {
-        return this.converterContext()
-                .defaultYear();
-    }
-
-    @Override
-    public List<String> monthNames() {
-        return this.converterContext()
-                .monthNames();
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.converterContext()
-                .monthNameAbbreviations();
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.converterContext()
-                .now();
-    }
-
-    @Override
-    public int twoToFourDigitYear(final int year) {
-        return this.converterContext()
-                .twoToFourDigitYear(year);
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.converterContext()
-                .twoDigitYear();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.converterContext()
-                .weekDayNames();
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.converterContext()
-                .weekDayNameAbbreviations();
-    }
-
-    // DecimalNumberContext.............................................................................................
-
-    @Override
-    public String currencySymbol() {
-        return this.converterContext()
-                .currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.converterContext()
-                .decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.converterContext()
-                .exponentSymbol();
-    }
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.spreadsheetMetadata()
-                .expressionNumberKind();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.converterContext()
-                .groupSeparator();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return this.converterContext()
-                .percentageSymbol();
-    }
-
-    @Override
-    public char negativeSign() {
-        return this.converterContext()
-                .negativeSign();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.converterContext()
-                .positiveSign();
-    }
-
-    @Override
-    public Locale locale() {
-        return this.converterContext()
-                .locale();
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return this.converterContext()
-                .mathContext();
-    }
-
-    private ConverterContext converterContext() {
-        return this.spreadsheetMetadata()
-                .converterContext(
-                        this.converterProvider,
-                        this.now,
-                        this.SpreadsheetLabelNameResolver,
-                        this.providerContext
-                );
-    }
-
-    private final Supplier<LocalDateTime> now;
+    private final SpreadsheetConverterContext spreadsheetConverterContext;
 
     /**
      * ProviderContext required by the numerous {@link walkingkooka.plugin.Provider providers}

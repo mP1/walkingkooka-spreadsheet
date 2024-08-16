@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
@@ -463,47 +464,55 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Override
     public ConverterSpreadsheetExpressionEvaluationContext createContext() {
-        return ConverterSpreadsheetExpressionEvaluationContext.with(
-                new Converter<>() {
-                    @Override
-                    public boolean canConvert(final Object value,
-                                              final Class<?> type,
-                                              final SpreadsheetExpressionEvaluationContext context) {
-                        return value instanceof ExpressionNumber && String.class == type;
-                    }
+        final Converter<SpreadsheetExpressionEvaluationContext> converter = new Converter<>() {
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type,
+                                      final SpreadsheetExpressionEvaluationContext context) {
+                return value instanceof ExpressionNumber && String.class == type;
+            }
 
-                    @Override
-                    public <T> Either<T, String> convert(final Object value,
-                                                         final Class<T> type,
-                                                         final SpreadsheetExpressionEvaluationContext context) {
-                        if(this.canConvert(value, type, context)) {
-                            if (type == String.class) {
-                                return this.successfulConversion(
-                                        "!!!" + value,
-                                        type
-                                );
-                            }
-                        }
-                        return this.failConversion(value, type);
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> type,
+                                                 final SpreadsheetExpressionEvaluationContext context) {
+                if(this.canConvert(value, type, context)) {
+                    if (type == String.class) {
+                        return this.successfulConversion(
+                                "!!!" + value,
+                                type
+                        );
                     }
-                },
+                }
+                return this.failConversion(value, type);
+            }
+        };
+
+        final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                METADATA,
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                SpreadsheetParserProviders.spreadsheetParsePattern(
+                        SpreadsheetFormatterProviders.fake()
+                )
+        );
+
+        return ConverterSpreadsheetExpressionEvaluationContext.with(
+                converter,
                 SpreadsheetExpressionEvaluationContexts.basic(
                         CELL,
                         CELL_STORE,
                         SERVER_URL,
                         METADATA,
-                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                                METADATA,
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
-                                SpreadsheetParserProviders.spreadsheetParsePattern(
-                                        SpreadsheetFormatterProviders.fake()
-                                )
-                        ),
+                        converterProvider,
                         EXPRESSION_FUNCTION_PROVIDER,
                         PROVIDER_CONTEXT,
                         REFERENCES,
-                        LABEL_NAME_RESOLVER,
-                        LocalDateTime::now
+                        METADATA.converterContext(
+                                converterProvider,
+                                LocalDateTime::now,
+                                LABEL_NAME_RESOLVER,
+                                PROVIDER_CONTEXT
+                        )
                 )
         );
     }

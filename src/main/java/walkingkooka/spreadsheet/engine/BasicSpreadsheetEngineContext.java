@@ -216,17 +216,24 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+        final SpreadsheetProvider provider = this.spreadsheetProvider;
+        final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+
         return SpreadsheetExpressionEvaluationContexts.basic(
                 cell,
                 this.storeRepository.cells(),
                 this.serverUrl,
-                this.spreadsheetMetadata(),
-                this.spreadsheetProvider, // ConverterProvider,
-                this.spreadsheetProvider, // ExpressionFunctionProvider,
+                metadata,
+                provider, // ConverterProvider,
+                provider, // ExpressionFunctionProvider,
                 this, // ProviderContext
                 this.referenceFunction,
-                this::resolveIfLabel,
-                this.now
+                metadata.converterContext(
+                        provider, // SpreadsheetConverterProvider
+                        this.now,
+                        this::resolveIfLabel,
+                        this.providerContext
+                )
         );
     }
 
