@@ -31,6 +31,7 @@ import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -77,6 +78,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     private final SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
             Converters.objectToString(),
             (label) -> {
+                Objects.requireNonNull(label, "label");
                 throw new UnsupportedOperationException();
             },
             ExpressionNumberConverterContexts.basic(

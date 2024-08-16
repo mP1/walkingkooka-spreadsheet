@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.convert.ConverterContextTesting;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextTesting;
 
-public interface SpreadsheetComparatorContextTesting<C extends SpreadsheetComparatorContext> extends ConverterContextTesting<C> {
+public interface SpreadsheetComparatorContextTesting<C extends SpreadsheetComparatorContext> extends SpreadsheetConverterContextTesting<C> {
 
     @Override
     default String typeNameSuffix() {
