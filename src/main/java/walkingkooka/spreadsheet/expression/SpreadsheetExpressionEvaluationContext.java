@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -42,8 +41,7 @@ import java.util.function.Function;
  */
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
         SpreadsheetConverterContext,
-        HasSpreadsheetMetadata,
-        SpreadsheetLabelNameResolver {
+        HasSpreadsheetMetadata {
 
     @Override
     default SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
