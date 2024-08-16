@@ -2714,6 +2714,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL);
+        properties.put(
+                SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                ConverterSelector.parse("general")
+        );
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"));
         properties.put(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR);

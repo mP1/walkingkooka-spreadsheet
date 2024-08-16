@@ -276,6 +276,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitFormatConverter() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormatConverter(final ConverterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                ConverterSelector.parse("general")
+        );
+    }
+
+    @Test
     public void testVisitFrozenColumns() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
