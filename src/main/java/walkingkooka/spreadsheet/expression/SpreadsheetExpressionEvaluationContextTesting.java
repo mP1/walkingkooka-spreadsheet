@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
@@ -31,8 +29,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C>,
-        SpreadsheetLabelNameResolverTesting {
+public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C> {
 
     // parseExpression......................................................................................................
 
@@ -100,13 +97,5 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 context.loadCell(cellReference),
                 () -> "loadCell " + cellReference
         );
-    }
-
-    // SpreadsheetLabelNameResolver.....................................................................................
-
-
-    @Override
-    default SpreadsheetLabelNameResolver spreadsheetLabelNameResolver() {
-        return this.createContext();
     }
 }
