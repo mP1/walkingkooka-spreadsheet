@@ -13366,7 +13366,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetCellStores.fake(),
                                 SERVER_URL,
                                 metadata,
-                                CONVERTER_PROVIDER,
                                 this.expressionFunctionProvider(),
                                 PROVIDER_CONTEXT,
                                 (r) -> {
@@ -13393,11 +13392,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 storeRepository.cells(),
                                 Url.parseAbsolute("http://server123"), // serverUrl
                                 metadata, // metadata
-                                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                                        metadata,
-                                        SPREADSHEET_FORMATTER_PROVIDER,
-                                        SPREADSHEET_PARSER_PROVIDER
-                                ),
                                 this.expressionFunctionProvider(),
                                 PROVIDER_CONTEXT,
                                 this.references(), // references

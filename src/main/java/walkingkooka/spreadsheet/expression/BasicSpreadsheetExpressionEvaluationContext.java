@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -55,7 +53,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetCellStore cellStore,
                                                             final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
-                                                            final ConverterProvider converterProvider,
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                                             final ProviderContext providerContext,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> references,
@@ -64,7 +61,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
-        Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(providerContext, "providerContext");
         Objects.requireNonNull(references, "references");
@@ -75,7 +71,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 cellStore,
                 serverUrl,
                 spreadsheetMetadata,
-                converterProvider,
                 expressionFunctionProvider,
                 providerContext,
                 references,
@@ -87,7 +82,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetCellStore cellStore,
                                                         final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
-                                                        final ConverterProvider converterProvider,
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
                                                         final ProviderContext providerContext,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> references,
@@ -98,7 +92,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.serverUrl = serverUrl;
 
         this.spreadsheetMetadata = spreadsheetMetadata;
-        this.converterProvider = converterProvider;
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.providerContext = providerContext;
 
@@ -169,19 +162,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     private final AbsoluteUrl serverUrl;
 
-    // HasConverter.....................................................................................................
-
-    @Override
-    public Converter<SpreadsheetConverterContext> converter() {
-        return this.spreadsheetMetadata.expressionConverter(
-                this.converterProvider,
-                this.providerContext
-        );
-    }
-
-    private final ConverterProvider converterProvider;
-
-    // ExpressionEvaluationContext........................................................................................
+    // ExpressionEvaluationContext......................................................................................
 
     @Override
     public CaseSensitivity caseSensitivity() {

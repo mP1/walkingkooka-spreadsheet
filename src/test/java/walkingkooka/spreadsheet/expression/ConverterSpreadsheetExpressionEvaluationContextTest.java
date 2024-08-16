@@ -503,7 +503,6 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         CELL_STORE,
                         SERVER_URL,
                         METADATA,
-                        converterProvider,
                         EXPRESSION_FUNCTION_PROVIDER,
                         PROVIDER_CONTEXT,
                         REFERENCES,
