@@ -215,11 +215,6 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     }
 
     @Override
-    default SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
-        return this.spreadsheetFormatterContext().resolveIfLabel(selection);
-    }
-
-    @Override
     default SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetFormatterContext().resolveLabel(labelName);
     }
