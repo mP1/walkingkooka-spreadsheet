@@ -30,8 +30,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
@@ -59,8 +57,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU;
-
-    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
         throw new UnsupportedOperationException();
