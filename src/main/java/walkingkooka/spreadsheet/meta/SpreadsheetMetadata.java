@@ -483,19 +483,18 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // Converter........................................................................................................
 
     /**
-     * Returns a {@link Converter} using the required properties.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#EXPRESSION_CONVERTER}</li>
-     * </ul>
+     * Creates a {@link Converter} using the {@link SpreadsheetMetadataPropertyName} along with requiring other metadata properties.
      */
-    public final Converter<SpreadsheetConverterContext> expressionConverter(final ConverterProvider converterProvider,
-                                                                            final ProviderContext context) {
+    public final Converter<SpreadsheetConverterContext> converter(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector,
+                                                                  final ConverterProvider converterProvider,
+                                                                  final ProviderContext context) {
+        Objects.requireNonNull(converterSelector, "converterSelector");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(context, "context");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final ConverterSelector converter = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER);
+        final ConverterSelector converter = components.getOrNull(converterSelector);
 
         components.reportIfMissing();
 
@@ -561,10 +560,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link ExpressionNumberConverterContext}
      */
-    public final SpreadsheetConverterContext converterContext(final ConverterProvider converterProvider,
+    public final SpreadsheetConverterContext converterContext(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector,
+                                                              final ConverterProvider converterProvider,
                                                               final Supplier<LocalDateTime> now,
                                                               final SpreadsheetLabelNameResolver labelNameResolver,
                                                               final ProviderContext providerContext) {
+        Objects.requireNonNull(converterSelector, "converterSelector");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
@@ -578,7 +579,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         components.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
-                this.expressionConverter(
+                this.converter(
+                        converterSelector,
                         converterProvider,
                         providerContext
                 ),
@@ -936,6 +938,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         providerContext
                 ),
                 this.converterContext(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, // should be FORMATTER_CONVERTER https://github.com/mP1/walkingkooka-spreadsheet/issues/4908
                         converterProvider,
                         now,
                         labelNameResolver,

@@ -430,11 +430,25 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     // expressionConverter........................................................................................................
 
     @Test
+    public final void testExpressionConverterWithNullConverterSelectorFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .converter(
+                                null,
+                                ConverterProviders.fake(),
+                                PROVIDER_CONTEXT
+                        )
+        );
+    }
+
+    @Test
     public final void testExpressionConverterWithNullConverterProviderFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createObject()
-                        .expressionConverter(
+                        .converter(
+                                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                                 null,
                                 PROVIDER_CONTEXT
                         )
@@ -446,7 +460,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         assertThrows(
                 NullPointerException.class,
                 () -> this.createObject()
-                        .expressionConverter(
+                        .converter(
+                                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                                 ConverterProviders.fake(),
                                 null
                         )
@@ -459,7 +474,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> this.createObject()
-                        .expressionConverter(
+                        .converter(
+                                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                                 ConverterProviders.fake(),
                                 PROVIDER_CONTEXT
                         )

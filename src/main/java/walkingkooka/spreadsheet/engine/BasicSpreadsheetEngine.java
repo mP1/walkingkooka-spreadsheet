@@ -502,6 +502,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     SpreadsheetComparatorContexts.basic(
                             context.spreadsheetMetadata()
                                     .converterContext(
+                                            SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                                             context, // ConverterProvider
                                             context::now, // now supplier
                                             context::resolveIfLabel,

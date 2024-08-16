@@ -545,13 +545,26 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    // ExpressionConverter..............................................................................................
+    // Converter........................................................................................................
 
     @Test
-    public void testExpressionConverterWithNullConverterProviderFails() {
+    public void testConverterWithNullConverterSelectorFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.expressionConverter(
+                () -> SpreadsheetMetadata.EMPTY.converter(
+                        null,
+                        ConverterProviders.fake(),
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testConverterWithNullConverterProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.converter(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                         null,
                         PROVIDER_CONTEXT
                 )
@@ -559,10 +572,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testExpressionConverterWithNullProviderContextFails() {
+    public void testConverterWithNullProviderContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.expressionConverter(
+                () -> SpreadsheetMetadata.EMPTY.converter(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                         ConverterProviders.fake(),
                         null
                 )
@@ -570,10 +584,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testExpressionConverterWithMissingPropertyFails() {
+    public void testConverterWithMissingPropertyFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.expressionConverter(
+                () -> SpreadsheetMetadata.EMPTY.converter(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                         ConverterProviders.fake(),
                         PROVIDER_CONTEXT
                 )
@@ -585,7 +600,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testExpressionConverter() {
+    public void testConverter() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(
                         SpreadsheetMetadataPropertyName.LOCALE,
@@ -593,7 +608,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 ).loadFromLocale();
 
         final Converter<SpreadsheetConverterContext> converter = metadata
-                .expressionConverter(
+                .converter(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
                                 spreadsheetFormatterProvider(),

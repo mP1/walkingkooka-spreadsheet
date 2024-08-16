@@ -195,7 +195,8 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 SPREADSHEET_PARSER_PROVIDER
         );
 
-        final Converter<SpreadsheetConverterContext> converter = metadata.expressionConverter(
+        final Converter<SpreadsheetConverterContext> converter = metadata.converter(
+                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                 converterProvider,
                 PROVIDER_CONTEXT
         );
@@ -204,6 +205,7 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 converter,
                 LABEL_NAME_RESOLVER,
                 metadata.converterContext(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                         converterProvider,
                         NOW,
                         LABEL_NAME_RESOLVER,

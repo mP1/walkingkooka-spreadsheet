@@ -13372,6 +13372,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
                                 metadata.converterContext(
+                                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                                         CONVERTER_PROVIDER,
                                         NOW,
                                         SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -13566,6 +13567,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
                 return metadata.converterContext(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
                                 SPREADSHEET_FORMATTER_PROVIDER,
