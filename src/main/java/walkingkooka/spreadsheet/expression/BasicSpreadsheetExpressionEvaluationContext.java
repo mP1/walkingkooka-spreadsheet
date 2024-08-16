@@ -259,8 +259,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return SpreadsheetErrorKind.translate(exception);
     }
 
-    private final ProviderContext providerContext;
-
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         return this.references.apply(reference);
@@ -419,6 +417,11 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private final Supplier<LocalDateTime> now;
+
+    /**
+     * ProviderContext required by the numerous {@link walkingkooka.plugin.Provider providers}
+     */
+    private final ProviderContext providerContext;
 
     // Object...........................................................................................................
 
