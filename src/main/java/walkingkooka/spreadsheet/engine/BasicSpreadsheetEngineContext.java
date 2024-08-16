@@ -224,7 +224,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.storeRepository.cells(),
                 this.serverUrl,
                 metadata,
-                provider, // ConverterProvider,
                 provider, // ExpressionFunctionProvider,
                 this, // ProviderContext
                 this.referenceFunction,

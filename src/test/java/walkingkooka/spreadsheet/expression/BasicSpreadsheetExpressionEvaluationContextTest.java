@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -76,7 +75,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
@@ -91,7 +89,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 SERVER_URL,
                 METADATA,
-                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
@@ -106,7 +103,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 null,
                 METADATA,
-                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
@@ -120,22 +116,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 SERVER_URL,
-                null,
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                REFERENCES,
-                SPREADSHEET_CONVERTER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testWithNullConverterProviderFails() {
-        this.withFails(
-                CELL,
-                CELL_STORE,
-                SERVER_URL,
-                METADATA,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
@@ -151,7 +131,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                CONVERTER_PROVIDER,
                 null,
                 PROVIDER_CONTEXT,
                 REFERENCES,
@@ -166,7 +145,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 null,
                 REFERENCES,
@@ -181,7 +159,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 null,
@@ -196,7 +173,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL_STORE,
                 SERVER_URL,
                 METADATA,
-                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
@@ -208,7 +184,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final SpreadsheetCellStore cellStore,
                            final AbsoluteUrl serverUrl,
                            final SpreadsheetMetadata spreadsheetMetadata,
-                           final ConverterProvider converterProvider,
                            final ExpressionFunctionProvider expressionFunctionProvider,
                            final ProviderContext providerContext,
                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
@@ -220,7 +195,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         cellStore,
                         serverUrl,
                         spreadsheetMetadata,
-                        converterProvider,
                         expressionFunctionProvider,
                         providerContext,
                         references,
@@ -448,7 +422,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 cellStore,
                 SERVER_URL,
                 METADATA,
-                CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,

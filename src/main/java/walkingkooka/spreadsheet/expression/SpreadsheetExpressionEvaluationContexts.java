@@ -19,7 +19,6 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -46,7 +45,6 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetCellStore cellStore,
                                                                final AbsoluteUrl serverUrl,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
-                                                               final ConverterProvider converterProvider,
                                                                final ExpressionFunctionProvider expressionFunctionProvider,
                                                                final ProviderContext providerContext,
                                                                final Function<ExpressionReference, Optional<Optional<Object>>> references,
@@ -56,7 +54,6 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 cellStore,
                 serverUrl,
                 spreadsheetMetadata,
-                converterProvider,
                 expressionFunctionProvider,
                 providerContext,
                 references,
