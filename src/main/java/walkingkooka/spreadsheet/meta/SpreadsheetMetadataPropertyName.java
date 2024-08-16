@@ -171,6 +171,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
+     */
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMAT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormat.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnRangeReference}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetColumnRangeReference> FROZEN_COLUMNS = registerConstant(SpreadsheetMetadataPropertyNameFrozenColumns.instance());

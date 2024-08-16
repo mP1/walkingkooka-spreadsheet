@@ -153,6 +153,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitFormatConverter(final ConverterSelector selector) {
+        // nop
+    }
+
     protected void visitDateFormatter(final SpreadsheetFormatterSelector selector) {
         // nop
     }

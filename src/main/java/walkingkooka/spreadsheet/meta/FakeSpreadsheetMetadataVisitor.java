@@ -148,6 +148,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitFormatConverter(final ConverterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitFrozenColumns(final SpreadsheetColumnRangeReference range) {
         throw new UnsupportedOperationException();
     }

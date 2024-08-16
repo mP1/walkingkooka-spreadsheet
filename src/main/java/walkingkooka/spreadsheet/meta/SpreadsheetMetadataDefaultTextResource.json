@@ -68,6 +68,7 @@
   "default-year": 1900,
   "expression-converter": "general",
   "expression-number-kind": "BIG_DECIMAL",
+  "format-converter": "general",
   "general-number-format-digit-count": 9,
   "hide-zero-values": false,
   "precision": 10,
