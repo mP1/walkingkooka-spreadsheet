@@ -24,16 +24,10 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextNode;
 
-import java.math.MathContext;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -41,7 +35,8 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetFormatterContext} that basically delegates each of its methods to a dependency given at create time.
  */
-final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterContext {
+final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
+        SpreadsheetConverterContextDelegator {
 
     static BasicSpreadsheetFormatterContext with(final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
@@ -151,12 +146,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     private final Converter<SpreadsheetConverterContext> converter;
 
-    @Override
-    public long dateOffset() {
-        return this.context.dateOffset();
-    }
-
-    // format.................................................................................................
+    // format...........................................................................................................
 
     @Override
     public Optional<TextNode> format(final Object value) {
@@ -175,103 +165,11 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     private final int generalFormatNumberDigitCount;
 
-    // DateTimeContext..................................................................................................
+    // SpreadsheetConverterContextDelegator.............................................................................
 
     @Override
-    public List<String> ampms() {
-        return this.context.ampms();
-    }
-
-    @Override
-    public int defaultYear() {
-        return this.context.defaultYear();
-    }
-
-    @Override
-    public List<String> monthNames() {
-        return this.context.monthNames();
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.context.monthNameAbbreviations();
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.context.now();
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.context.twoDigitYear();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.context.weekDayNames();
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.context.weekDayNameAbbreviations();
-    }
-
-    // DecimalNumberContext.............................................................................................
-
-    @Override
-    public String currencySymbol() {
-        return this.context.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.context.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.context.exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.context.groupSeparator();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return this.context.percentageSymbol();
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return this.context.mathContext();
-    }
-
-    @Override
-    public char negativeSign() {
-        return this.context.negativeSign();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.context.positiveSign();
-    }
-
-    @Override
-    public Locale locale() {
-        return this.context.locale();
-    }
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.context.expressionNumberKind();
-    }
-
-    @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return this.context.resolveLabel(labelName);
+    public SpreadsheetConverterContext spreadsheetConverterContext() {
+        return this.context;
     }
 
     private final SpreadsheetConverterContext context;
