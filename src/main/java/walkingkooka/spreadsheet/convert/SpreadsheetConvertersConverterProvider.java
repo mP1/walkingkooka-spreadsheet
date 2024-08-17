@@ -171,7 +171,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         }
     }
 
-    private final static String BASIC_SPREADSHEET_CONVERTER_STRING = "basic-spreadsheet-converter";
+    private final static String BASIC_SPREADSHEET_CONVERTER_STRING = "basic";
 
     final static ConverterName BASIC_SPREADSHEET_CONVERTER = ConverterName.with(BASIC_SPREADSHEET_CONVERTER_STRING);
 
