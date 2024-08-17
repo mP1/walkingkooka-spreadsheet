@@ -19,13 +19,9 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Objects;
@@ -78,15 +74,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         this.cellCharacterWidth = cellCharacterWidth;
         this.generalFormatNumberDigitCount = generalFormatNumberDigitCount;
 
-        // necessary because TextSpreadsheetFormatter needs SpreadsheetErrors to be converted to String.
-        this.converter = Converters.collection(
-                Lists.of(
-                        SpreadsheetConverters.errorToString()
-                                .cast(SpreadsheetConverterContext.class),
-                        context.converter()
-                )
-        );
-
         this.context = context;
 
         this.formatter = formatter;
@@ -138,13 +125,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                         this
                 );
     }
-
-    @Override
-    public Converter<SpreadsheetConverterContext> converter() {
-        return this.converter;
-    }
-
-    private final Converter<SpreadsheetConverterContext> converter;
 
     // format...........................................................................................................
 

@@ -21,7 +21,6 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -372,7 +371,6 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 LocalTime.class == type ||
                 ExpressionNumber.isClass(type) ||
                 Number.class == type ||
-                SpreadsheetError.class == type ||
                 String.class == type;
     }
 

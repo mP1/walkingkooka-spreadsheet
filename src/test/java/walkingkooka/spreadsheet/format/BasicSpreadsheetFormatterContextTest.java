@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
@@ -248,7 +249,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
         );
     }
 
@@ -324,9 +325,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
                 Converters.collection(
-                        Lists.of(
-                                Converters.numberToBoolean(),
-                                SpreadsheetConverters.errorToNumber()
+                        Cast.to(
+                            Lists.of(
+                                    Converters.numberToBoolean(),
+                                    SpreadsheetConverters.errorToString(),
+                                    SpreadsheetConverters.errorToNumber()
+                            )
                         )
                 ),
                 LABEL_NAME_RESOLVER,
