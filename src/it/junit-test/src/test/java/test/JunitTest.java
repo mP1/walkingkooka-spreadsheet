@@ -162,6 +162,7 @@ public class JunitTest {
                     .set(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, ConverterSelector.parse("general"))
                     .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
+                    .set(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER, ConverterSelector.parse("general"))
                     .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"))
                     .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"))
                     .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, ',')
