@@ -941,8 +941,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-Yellow\": 6,\n" +
                         "  \"converters\": [\n" +
                         "    {\n" +
-                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/basic-spreadsheet-converter\",\n" +
-                        "      \"name\": \"basic-spreadsheet-converter\"\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/basic\",\n" +
+                        "      \"name\": \"basic\"\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/collection\",\n" +
@@ -1254,8 +1254,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-Yellow\": 6,\n" +
                         "  \"converters\": [\n" +
                         "    {\n" +
-                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/basic-spreadsheet-converter\",\n" +
-                        "      \"name\": \"basic-spreadsheet-converter\"\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/basic\",\n" +
+                        "      \"name\": \"basic\"\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/collection\",\n" +
