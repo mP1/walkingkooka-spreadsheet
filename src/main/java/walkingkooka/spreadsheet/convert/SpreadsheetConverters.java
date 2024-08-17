@@ -147,6 +147,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetSelectionToStringConverter}
+     */
+    public static Converter<SpreadsheetConverterContext> selectionToString() {
+        return SpreadsheetSelectionToStringConverter.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetCellToConverter}
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetCellTo() {
