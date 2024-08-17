@@ -969,6 +969,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "      \"name\": \"selection-to-selection\"\n" +
                         "    },\n" +
                         "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/selection-to-string\",\n" +
+                        "      \"name\": \"selection-to-string\"\n" +
+                        "    },\n" +
+                        "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-cell-to\",\n" +
                         "      \"name\": \"spreadsheet-cell-to\"\n" +
                         "    },\n" +
@@ -1276,6 +1280,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/selection-to-selection\",\n" +
                         "      \"name\": \"selection-to-selection\"\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/selection-to-string\",\n" +
+                        "      \"name\": \"selection-to-string\"\n" +
                         "    },\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-cell-to\",\n" +
