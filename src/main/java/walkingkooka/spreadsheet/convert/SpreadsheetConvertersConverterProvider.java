@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfo;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
@@ -35,6 +36,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A {@link ConverterProvider} for {@link Converter} in {@link SpreadsheetConverters}.
@@ -91,6 +93,13 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 parameterCountCheck(copy, 0);
 
                 converter = SpreadsheetConverters.basic();
+                break;
+            case COLLECTION_STRING:
+                converter = Converters.collection(
+                        values.stream()
+                                .map(c -> (Converter<C>) c)
+                                .collect(Collectors.toList())
+                );
                 break;
             case ERROR_THROWING_STRING:
                 parameterCountCheck(copy, 0);
@@ -161,6 +170,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName BASIC_SPREADSHEET_CONVERTER = ConverterName.with(BASIC_SPREADSHEET_CONVERTER_STRING);
 
+    private final static String COLLECTION_STRING = "collection";
+
+    final static ConverterName COLLECTION = ConverterName.COLLECTION;
+
     private final static String ERROR_THROWING_STRING = "error-throwing";
 
     final static ConverterName ERROR_THROWING = ConverterName.with(ERROR_THROWING_STRING);
@@ -196,6 +209,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     private final static Set<ConverterInfo> INFOS = Sets.of(
             converterInfo(BASIC_SPREADSHEET_CONVERTER),
+            converterInfo(COLLECTION),
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),
             converterInfo(ERROR_TO_STRING),

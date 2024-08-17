@@ -39,6 +39,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverters;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -64,6 +65,15 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                     Converters.localTimeToLocalDateTime()
             )
     );
+
+    /**
+     * {@see Converters#collection}
+     */
+    public static <C extends ConverterContext> Converter<C> collection(final List<Converter<C>> converters) {
+        return Converters.collection(
+                converters
+        );
+    }
 
     /**
      * {@see SpreadsheetErrorThrowingConverter}

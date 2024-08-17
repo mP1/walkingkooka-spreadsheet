@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -60,6 +61,26 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterNameWithCollection() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.COLLECTION,
+                Lists.of(
+                        SpreadsheetConverters.errorToNumber(),
+                        SpreadsheetConverters.errorToString()
+                ),
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.collection(
+                        Cast.to(
+                                Lists.of(
+                                        SpreadsheetConverters.errorToNumber(),
+                                        SpreadsheetConverters.errorToString()
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithErrorThrowing() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.ERROR_THROWING + "",
@@ -75,6 +96,22 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 Lists.empty(),
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.errorThrowing()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithCollection() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.COLLECTION + " (error-to-number, error-to-string)",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.collection(
+                        Cast.to(
+                                Lists.of(
+                                        SpreadsheetConverters.errorToNumber(),
+                                        SpreadsheetConverters.errorToString()
+                                )
+                        )
+                )
         );
     }
 
