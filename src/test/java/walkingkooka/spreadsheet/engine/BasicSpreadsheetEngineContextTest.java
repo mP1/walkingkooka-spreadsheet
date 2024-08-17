@@ -986,10 +986,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"decimal-separator\": \".\",\n" +
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
-                        "  \"expression-converter\": \"general\",\n" +
+                        "  \"expression-converter\": \"collection (error-to-number, error-throwing, general)\",\n" +
                         "  \"expression-functions\": [],\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"format-converter\": \"general\",\n" +
+                        "  \"format-converter\": \"collection (error-to-number, error-to-string, general)\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +
@@ -1295,10 +1295,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"decimal-separator\": \".\",\n" +
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
-                        "  \"expression-converter\": \"general\",\n" +
+                        "  \"expression-converter\": \"collection (error-to-number, error-throwing, general)\",\n" +
                         "  \"expression-functions\": [],\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"format-converter\": \"general\",\n" +
+                        "  \"format-converter\": \"collection (error-to-number, error-to-string, general)\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +

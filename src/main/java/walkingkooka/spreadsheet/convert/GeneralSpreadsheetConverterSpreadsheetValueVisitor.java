@@ -18,9 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -158,16 +156,8 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
 
     @Override
     protected void visit(final SpreadsheetError error) {
-        this.converter = ERROR;
+        // fail
     }
-
-    private final static Converter<SpreadsheetConverterContext> ERROR = Converters.collection(
-            Lists.of(
-                    SpreadsheetConverters.errorToNumber(),
-                    SpreadsheetConverters.errorThrowing()
-                            .cast(SpreadsheetConverterContext.class)
-            )
-    );
 
     @Override
     protected void visit(final SpreadsheetLabelName value) {
