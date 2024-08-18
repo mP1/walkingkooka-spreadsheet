@@ -23,9 +23,9 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
@@ -64,7 +64,6 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -167,13 +166,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK), 1)
             .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.WHITE), 2);
 
-    ProviderContext PROVIDER_CONTEXT = new ProviderContext() {
-        @Override
-        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-            return METADATA_EN_AU.environmentContext()
-                    .environmentValue(name);
-        }
-    };
+    ProviderContext PROVIDER_CONTEXT = ProviderContexts.basic(
+            METADATA_EN_AU.environmentContext()
+    );
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
