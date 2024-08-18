@@ -18,20 +18,20 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 /**
  * A {@link SpreadsheetParserContext} without any functionality.
  */
-final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
+final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
+        DateTimeContextDelegator {
 
     /**
      * Creates a new {@link BasicSpreadsheetParserContext}.
@@ -61,46 +61,11 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
         this.valueSeparator = valueSeparator;
     }
 
-    // DateTimeContext..................................................................................................
+    // DateTimeContextDelegator.........................................................................................
 
     @Override
-    public List<String> ampms() {
-        return this.dateTimeContext.ampms();
-    }
-
-    @Override
-    public int defaultYear() {
-        return this.dateTimeContext.defaultYear();
-    }
-
-    @Override
-    public List<String> monthNames() {
-        return this.dateTimeContext.monthNames();
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.dateTimeContext.monthNameAbbreviations();
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.dateTimeContext.now();
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.dateTimeContext.twoDigitYear();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.dateTimeContext.weekDayNames();
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.dateTimeContext.weekDayNameAbbreviations();
+    public DateTimeContext dateTimeContext() {
+        return this.dateTimeContext;
     }
 
     private final DateTimeContext dateTimeContext;
