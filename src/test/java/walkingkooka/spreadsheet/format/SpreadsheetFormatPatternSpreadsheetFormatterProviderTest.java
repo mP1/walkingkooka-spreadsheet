@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
@@ -33,7 +32,6 @@ import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider>,
@@ -61,13 +59,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public void testSpreadsheetFormatterSelectorAutomaticZeroParameters() {
         this.spreadsheetFormatterAndCheck(
                 "automatic",
-                new ProviderContext() {
-                    @Override
-                    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-                        return METADATA_EN_AU.environmentContext()
-                                .environmentValue(name);
-                    }
-                },
+                PROVIDER_CONTEXT,
                 SpreadsheetFormatters.automatic(
                         METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
                                 .spreadsheetFormatPattern()
