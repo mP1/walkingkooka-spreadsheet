@@ -1639,7 +1639,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(
                 value,
                 cell.formula().value().orElse(null),
-                () -> "values parse returned cell=" + cell);
+                () -> "formula values returned cell=" + cell);
     }
 
     default void checkFormattedValue(final SpreadsheetCell cell) {
