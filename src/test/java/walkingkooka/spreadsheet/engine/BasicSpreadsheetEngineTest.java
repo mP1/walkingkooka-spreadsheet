@@ -13406,6 +13406,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return this.expressionFunctionProvider()
                         .expressionFunction(
                                 function,
+                                Lists.empty(),
                                 this // ProviderContext
                         ).isPure(this);
             }
@@ -13414,6 +13415,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return new FakeExpressionFunctionProvider() {
                     @Override
                     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                 final List<?> values,
                                                                                                  final ProviderContext context) {
                         switch (name.value()) {
                             case "BasicSpreadsheetEngineTestNumberParameter":

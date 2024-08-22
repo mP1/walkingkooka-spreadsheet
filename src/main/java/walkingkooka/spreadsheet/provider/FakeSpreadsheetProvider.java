@@ -37,6 +37,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
 import java.util.List;
 import java.util.Optional;
@@ -106,7 +107,14 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
     }
 
     @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                 final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                 final List<?> values,
                                                                                  final ProviderContext context) {
         throw new UnsupportedOperationException();
     }

@@ -812,6 +812,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "Hello",
                 provider.expressionFunction(
                         ExpressionFunctionName.with("sin"),
+                        Lists.empty(),
                         PROVIDER_CONTEXT
                 ).apply(
                         ExpressionFunction.NO_PARAMETER_VALUES,
