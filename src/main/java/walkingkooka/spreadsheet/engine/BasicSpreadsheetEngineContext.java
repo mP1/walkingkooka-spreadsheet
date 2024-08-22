@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
@@ -193,6 +194,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public boolean isPure(final ExpressionFunctionName function) {
         return this.spreadsheetProvider.expressionFunction(
                 function,
+                Lists.empty(),
                         this
                 ).isPure(this);
     }

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.sample;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
@@ -243,6 +244,7 @@ public final class Sample {
                                 n -> ExpressionFunctionProviders.fake()
                                         .expressionFunction(
                                                 n,
+                                                Lists.empty(),
                                                 PROVIDER_CONTEXT
                                         ),
                                 (r) -> {

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -188,6 +189,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
         return this.expressionFunctionProvider.expressionFunction(
                 name,
+                Lists.empty(),
                 this.providerContext
         );
     }

@@ -76,6 +76,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -128,9 +129,23 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider() {
 
         @Override
+        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                     final ProviderContext context) {
+            Objects.requireNonNull(selector, "selector");
+            Objects.requireNonNull(context, "context");
+
+            return selector.evaluateText(
+                    this,
+                    context
+            );
+        }
+
+        @Override
         public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                     final List<?> values,
                                                                                      final ProviderContext context) {
             Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(values, "values");
             Objects.requireNonNull(context, "context");
 
             switch (name.value()) {

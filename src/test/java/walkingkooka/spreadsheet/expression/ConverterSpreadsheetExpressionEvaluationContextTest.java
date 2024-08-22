@@ -61,6 +61,7 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -172,8 +173,22 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     };
 
     private final ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider() {
+
+        @Override
+        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                     final ProviderContext context) {
+            Objects.requireNonNull(selector, "selector");
+            Objects.requireNonNull(context, "context");
+
+            return selector.evaluateText(
+                    this,
+                    context
+            );
+        }
+
         @Override
         public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName n,
+                                                                                     final List<?> v,
                                                                                      final ProviderContext c) {
             Objects.requireNonNull(n, "name");
 
