@@ -21,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
@@ -251,6 +252,7 @@ public class JunitTest {
                                 n -> ExpressionFunctionProviders.fake()
                                         .expressionFunction(
                                                 n,
+                                                Lists.empty(),
                                                 PROVIDER_CONTEXT
                                         ),
                                 (r) -> {

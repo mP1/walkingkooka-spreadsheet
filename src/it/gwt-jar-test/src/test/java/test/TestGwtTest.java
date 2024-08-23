@@ -3,6 +3,7 @@ package test;
 import com.google.gwt.junit.client.GWTTestCase;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
@@ -246,6 +247,7 @@ public class TestGwtTest extends GWTTestCase {
                                 n -> ExpressionFunctionProviders.fake()
                                         .expressionFunction(
                                                 n,
+                                                Lists.empty(),
                                                 PROVIDER_CONTEXT
                                         ),
                                 (r) -> {
