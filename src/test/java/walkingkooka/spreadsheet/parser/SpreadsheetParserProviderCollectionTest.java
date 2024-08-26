@@ -72,10 +72,10 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponent() {
+    public void testSpreadsheetParserNextToken() {
         final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
-        this.spreadsheetParserNextTextComponentAndCheck(
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserProviderCollection.with(
                         Sets.of(provider)
                 ),

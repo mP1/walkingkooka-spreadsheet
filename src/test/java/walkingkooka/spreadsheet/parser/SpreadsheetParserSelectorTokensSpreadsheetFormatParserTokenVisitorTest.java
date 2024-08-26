@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
-public final class SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor> {
     @Override
-    public SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor(null);
+    public SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor(null);
     }
 
     @Override
@@ -33,11 +33,11 @@ public final class SpreadsheetParserSelectorTextComponentTextComponentsSpreadshe
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetParserSelectorTextComponent.class.getSimpleName();
+        return SpreadsheetParserSelectorToken.class.getSimpleName();
     }
 
     @Override
-    public Class<SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor.class;
     }
 }

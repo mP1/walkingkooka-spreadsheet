@@ -49,8 +49,8 @@ public interface SpreadsheetParserProviderDelegator extends SpreadsheetParserPro
     }
 
     @Override
-    default Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
-        return this.spreadsheetParserProvider().spreadsheetParserNextTextComponent(selector);
+    default Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector selector) {
+        return this.spreadsheetParserProvider().spreadsheetParserNextToken(selector);
     }
 
     @Override

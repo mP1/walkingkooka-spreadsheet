@@ -242,83 +242,83 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
         );
     }
 
-    // spreadsheetParserNextTextComponentsAndCheck......................................................................
+    // spreadsheetParserNextTokenAndCheck...............................................................................
 
     @Test
-    default void testSpreadsheetParserNextTextComponentWithNullSelectorFails() {
+    default void testSpreadsheetParserNextTokenWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createSpreadsheetParserProvider().spreadsheetParserNextTextComponent(null)
+                () -> this.createSpreadsheetParserProvider().spreadsheetParserNextToken(null)
         );
     }
 
-    default void spreadsheetParserNextTextComponentFails(final SpreadsheetParserSelector selector) {
-        this.spreadsheetParserNextTextComponentFails(
+    default void spreadsheetParserNextTokenFails(final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserNextTokenFails(
                 this.createSpreadsheetParserProvider(),
                 selector
         );
     }
 
-    default void spreadsheetParserNextTextComponentFails(final SpreadsheetParserProvider provider,
-                                                         final SpreadsheetParserSelector selector) {
+    default void spreadsheetParserNextTokenFails(final SpreadsheetParserProvider provider,
+                                                 final SpreadsheetParserSelector selector) {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> provider.spreadsheetParserNextTextComponent(
+                () -> provider.spreadsheetParserNextToken(
                         selector
                 )
         );
     }
 
-    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserSelector selector) {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserNextTokenAndCheck(
                 this.createSpreadsheetParserProvider(),
                 selector
         );
     }
 
-    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserSelector selector,
-                                                            final SpreadsheetParserSelectorTextComponent expected) {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserSelector selector,
+                                                    final SpreadsheetParserSelectorToken expected) {
+        this.spreadsheetParserNextTokenAndCheck(
                 this.createSpreadsheetParserProvider(),
                 selector,
                 expected
         );
     }
 
-    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserSelector selector,
-                                                            final Optional<SpreadsheetParserSelectorTextComponent> expected) {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserSelector selector,
+                                                    final Optional<SpreadsheetParserSelectorToken> expected) {
+        this.spreadsheetParserNextTokenAndCheck(
                 this.createSpreadsheetParserProvider(),
                 selector,
                 expected
         );
     }
 
-    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserProvider provider,
-                                                            final SpreadsheetParserSelector selector) {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserProvider provider,
+                                                    final SpreadsheetParserSelector selector) {
+        this.spreadsheetParserNextTokenAndCheck(
                 provider,
                 selector,
                 Optional.empty()
         );
     }
 
-    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserProvider provider,
-                                                            final SpreadsheetParserSelector selector,
-                                                            final SpreadsheetParserSelectorTextComponent expected) {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserProvider provider,
+                                                    final SpreadsheetParserSelector selector,
+                                                    final SpreadsheetParserSelectorToken expected) {
+        this.spreadsheetParserNextTokenAndCheck(
                 provider,
                 selector,
                 Optional.of(expected)
         );
     }
 
-    default void spreadsheetParserNextTextComponentAndCheck(final SpreadsheetParserProvider provider,
-                                                            final SpreadsheetParserSelector selector,
-                                                            final Optional<SpreadsheetParserSelectorTextComponent> expected) {
+    default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserProvider provider,
+                                                    final SpreadsheetParserSelector selector,
+                                                    final Optional<SpreadsheetParserSelectorToken> expected) {
         this.checkEquals(
                 expected,
-                provider.spreadsheetParserNextTextComponent(selector),
+                provider.spreadsheetParserNextToken(selector),
                 provider::toString
         );
     }

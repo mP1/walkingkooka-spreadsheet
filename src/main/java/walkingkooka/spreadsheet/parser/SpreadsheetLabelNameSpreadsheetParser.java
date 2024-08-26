@@ -33,7 +33,7 @@ import java.util.Optional;
 
 /**
  * A {@link SpreadsheetParser} that consumes a {@link SpreadsheetLabelNameParserToken} matching a label.
- * Note {@link #textComponents(SpreadsheetParserContext)} has no pattern representation and always returns {@link #NO_TEXT_COMPONENTS}.
+ * Note {@link #tokens(SpreadsheetParserContext)} has no pattern representation and always returns {@link #NO_TOKENS}.
  */
 final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser {
 
@@ -105,10 +105,10 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser {
     private final static Parser<SpreadsheetParserContext> LABEL;
 
     @Override
-    public List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context) {
+    public List<SpreadsheetParserSelectorToken> tokens(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 
-        return NO_TEXT_COMPONENTS;
+        return NO_TOKENS;
     }
 
     @Override

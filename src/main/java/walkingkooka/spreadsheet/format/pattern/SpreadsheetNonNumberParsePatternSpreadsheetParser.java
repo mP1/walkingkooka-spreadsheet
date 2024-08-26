@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorTextComponent;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -30,7 +30,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Wraps a {@link Parser} keeping the original {@link ParserToken}. The former provides the parsing and the token is used to provide the {@link SpreadsheetParserSelectorTextComponent}.
+ * Wraps a {@link Parser} keeping the original {@link ParserToken}. The former provides the parsing and the token is used to provide the {@link SpreadsheetParserSelectorToken}.
  */
 final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements SpreadsheetParser {
 
@@ -60,8 +60,8 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
     private final Parser<SpreadsheetParserContext> parser;
 
     @Override
-    public List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context) {
-        return SpreadsheetParserSelectorTextComponent.textComponents(
+    public List<SpreadsheetParserSelectorToken> tokens(final SpreadsheetParserContext context) {
+        return SpreadsheetParserSelectorToken.tokens(
                 this.token,
                 context
         );

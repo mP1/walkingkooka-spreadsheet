@@ -26,12 +26,12 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
- * A single alternative for a {@link SpreadsheetParserSelectorTextComponent}.
+ * A single alternative for a {@link SpreadsheetParserSelectorToken}.
  */
-public final class SpreadsheetParserSelectorTextComponentAlternative implements PluginSelectorTokenAlternativeLike {
-    public static SpreadsheetParserSelectorTextComponentAlternative with(final String label,
-                                                                         final String text) {
-        return new SpreadsheetParserSelectorTextComponentAlternative(
+public final class SpreadsheetParserSelectorTokenAlternative implements PluginSelectorTokenAlternativeLike {
+    public static SpreadsheetParserSelectorTokenAlternative with(final String label,
+                                                                 final String text) {
+        return new SpreadsheetParserSelectorTokenAlternative(
                 PluginSelectorTokenAlternative.with(
                         label,
                         text
@@ -39,7 +39,7 @@ public final class SpreadsheetParserSelectorTextComponentAlternative implements 
         );
     }
 
-    private SpreadsheetParserSelectorTextComponentAlternative(final PluginSelectorTokenAlternative alternative) {
+    private SpreadsheetParserSelectorTokenAlternative(final PluginSelectorTokenAlternative alternative) {
         this.alternative = alternative;
     }
 
@@ -65,11 +65,11 @@ public final class SpreadsheetParserSelectorTextComponentAlternative implements 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetParserSelectorTextComponentAlternative &&
+                other instanceof SpreadsheetParserSelectorTokenAlternative &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetParserSelectorTextComponentAlternative other) {
+    private boolean equals0(final SpreadsheetParserSelectorTokenAlternative other) {
         return this.alternative.equals(other.alternative);
     }
 
@@ -80,21 +80,21 @@ public final class SpreadsheetParserSelectorTextComponentAlternative implements 
 
     // json.............................................................................................................
 
-    static SpreadsheetParserSelectorTextComponentAlternative unmarshall(final JsonNode node,
-                                                                        final JsonNodeUnmarshallContext context) {
+    static SpreadsheetParserSelectorTokenAlternative unmarshall(final JsonNode node,
+                                                                final JsonNodeUnmarshallContext context) {
         return PluginSelectorTokenAlternativeLike.unmarshall(
                 node,
                 context,
-                SpreadsheetParserSelectorTextComponentAlternative::with
+                SpreadsheetParserSelectorTokenAlternative::with
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTextComponentAlternative.class),
-                SpreadsheetParserSelectorTextComponentAlternative::unmarshall,
-                SpreadsheetParserSelectorTextComponentAlternative::marshall,
-                SpreadsheetParserSelectorTextComponentAlternative.class
+                JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTokenAlternative.class),
+                SpreadsheetParserSelectorTokenAlternative::unmarshall,
+                SpreadsheetParserSelectorTokenAlternative::marshall,
+                SpreadsheetParserSelectorTokenAlternative.class
         );
     }
 }

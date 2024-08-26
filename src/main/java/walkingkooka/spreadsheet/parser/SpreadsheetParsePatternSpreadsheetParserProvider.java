@@ -94,33 +94,33 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     }
 
     @Override
-    public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        SpreadsheetParserSelectorTextComponent next;
+        SpreadsheetParserSelectorToken next;
 
         final SpreadsheetParserName name = selector.name();
         switch(name.value()) {
             case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
-                next = spreadsheetParserNextTextComponent(
+                next = spreadsheetParserNextToken(
                         selector,
                         SpreadsheetFormatParserTokenKind::isDate
                 );
                 break;
             case SpreadsheetParserName.DATE_TIME_PARSER_PATTERN_STRING:
-                next = spreadsheetParserNextTextComponent(
+                next = spreadsheetParserNextToken(
                         selector,
                         SpreadsheetFormatParserTokenKind::isDateTime
                 );
                 break;
             case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
-                next = spreadsheetParserNextTextComponent(
+                next = spreadsheetParserNextToken(
                         selector,
                         SpreadsheetFormatParserTokenKind::isNumber
                 );
                 break;
             case SpreadsheetParserName.TIME_PARSER_PATTERN_STRING:
-                next = spreadsheetParserNextTextComponent(
+                next = spreadsheetParserNextToken(
                         selector,
                         SpreadsheetFormatParserTokenKind::isTime
                 );
@@ -132,16 +132,16 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         return Optional.ofNullable(next);
     }
 
-    private SpreadsheetParserSelectorTextComponent spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector,
-                                                                                      final Predicate<SpreadsheetFormatParserTokenKind> filter) {
-        SpreadsheetParserSelectorTextComponent next;
+    private SpreadsheetParserSelectorToken spreadsheetParserNextToken(final SpreadsheetParserSelector selector,
+                                                                      final Predicate<SpreadsheetFormatParserTokenKind> filter) {
+        SpreadsheetParserSelectorToken next;
 
         final String text = selector.text()
                 .trim();
         final SpreadsheetPatternKind kind = selector.name()
                 .patternKind;
         if (text.isEmpty()) {
-            next = SpreadsheetParserSelectorTextComponent.with(
+            next = SpreadsheetParserSelectorToken.with(
                     "", // label
                     "", // text
                     Arrays.stream(SpreadsheetFormatParserTokenKind.values())
@@ -149,7 +149,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                             .flatMap(k -> k.alternatives().stream())
                             .distinct()
                             .sorted()
-                            .map(t -> SpreadsheetParserSelectorTextComponentAlternative.with(t, t))
+                            .map(t -> SpreadsheetParserSelectorTokenAlternative.with(t, t))
                             .collect(Collectors.toList())
             );
         } else {
@@ -163,9 +163,9 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         return next;
     }
 
-    private static SpreadsheetParserSelectorTextComponent toSpreadsheetParserSelectorTextComponent(final SpreadsheetPatternKind kind,
-                                                                                                   final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
-        return SpreadsheetParserSelectorTextComponent.with(
+    private static SpreadsheetParserSelectorToken toSpreadsheetParserSelectorTextComponent(final SpreadsheetPatternKind kind,
+                                                                                           final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
+        return SpreadsheetParserSelectorToken.with(
                 "", // label
                 "", // text
                 kind.spreadsheetFormatParserTokenKinds()
@@ -175,7 +175,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                         .flatMap(k -> k.alternatives().stream())
                         .distinct()
                         .sorted()
-                        .map(t -> SpreadsheetParserSelectorTextComponentAlternative.with(t, t))
+                        .map(t -> SpreadsheetParserSelectorTokenAlternative.with(t, t))
                         .collect(Collectors.toList())
         );
     }

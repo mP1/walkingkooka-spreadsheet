@@ -21,13 +21,13 @@ import walkingkooka.plugin.PluginSelectorTokenAlternativeLikeTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetParserSelectorTextComponentAlternativeTest implements PluginSelectorTokenAlternativeLikeTesting<SpreadsheetParserSelectorTextComponentAlternative>,
-        ClassTesting2<SpreadsheetParserSelectorTextComponentAlternative> {
+public final class SpreadsheetParserSelectorTokenAlternativeTest implements PluginSelectorTokenAlternativeLikeTesting<SpreadsheetParserSelectorTokenAlternative>,
+        ClassTesting2<SpreadsheetParserSelectorTokenAlternative> {
 
     @Override
-    public SpreadsheetParserSelectorTextComponentAlternative createPluginSelectorTokenAlternativeLike(final String label,
-                                                                                                              final String text) {
-        return SpreadsheetParserSelectorTextComponentAlternative.with(
+    public SpreadsheetParserSelectorTokenAlternative createPluginSelectorTokenAlternativeLike(final String label,
+                                                                                              final String text) {
+        return SpreadsheetParserSelectorTokenAlternative.with(
                 label,
                 text
         );
@@ -36,8 +36,8 @@ public final class SpreadsheetParserSelectorTextComponentAlternativeTest impleme
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetParserSelectorTextComponentAlternative> type() {
-        return SpreadsheetParserSelectorTextComponentAlternative.class;
+    public Class<SpreadsheetParserSelectorTokenAlternative> type() {
+        return SpreadsheetParserSelectorTokenAlternative.class;
     }
 
     @Override

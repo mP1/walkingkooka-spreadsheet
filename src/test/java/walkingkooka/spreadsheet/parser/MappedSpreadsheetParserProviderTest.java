@@ -87,12 +87,12 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponent() {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    public void testSpreadsheetParserNextToken() {
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse(NEW_PARSER_NAME),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        ).spreadsheetParserNextTextComponent(
+                        ).spreadsheetParserNextToken(
                                 SpreadsheetParserName.DATE_PARSER_PATTERN.setText("")
                         )
         );

@@ -44,7 +44,7 @@ public class FakeSpreadsheetParserProvider implements SpreadsheetParserProvider 
     }
 
     @Override
-    public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector selector) {
         throw new UnsupportedOperationException();
     }
 

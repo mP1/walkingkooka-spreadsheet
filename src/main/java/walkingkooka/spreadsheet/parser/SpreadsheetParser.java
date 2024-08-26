@@ -30,11 +30,11 @@ public interface SpreadsheetParser extends Parser<SpreadsheetParserContext> {
     /**
      * Useful constant for {@link SpreadsheetParser} with no text components.
      */
-    List<SpreadsheetParserSelectorTextComponent> NO_TEXT_COMPONENTS = SpreadsheetParserSelectorTextComponentList.with(Lists.empty());
+    List<SpreadsheetParserSelectorToken> NO_TOKENS = SpreadsheetParserSelectorTokenList.with(Lists.empty());
 
     /**
-     * Returns a list of {@link SpreadsheetParserSelectorTextComponent} if this {@link SpreadsheetParser} supports
-     * tokenizing its pattern. A {@link SpreadsheetParserContext} could be useful such as displaying day names in the label for an {@link SpreadsheetParserSelectorTextComponentAlternative}.
+     * Returns a list of {@link SpreadsheetParserSelectorToken} if this {@link SpreadsheetParser} supports
+     * tokenizing its pattern. A {@link SpreadsheetParserContext} could be useful such as displaying day names in the label for an {@link SpreadsheetParserSelectorTokenAlternative}.
      */
-    List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context);
+    List<SpreadsheetParserSelectorToken> tokens(final SpreadsheetParserContext context);
 }

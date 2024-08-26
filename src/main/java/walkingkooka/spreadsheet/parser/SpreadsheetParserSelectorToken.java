@@ -36,31 +36,31 @@ import java.util.List;
  * yyyy / mm / dd
  * </pre>
  */
-public final class SpreadsheetParserSelectorTextComponent implements PluginSelectorTokenLike<SpreadsheetParserSelectorTextComponentAlternative> {
+public final class SpreadsheetParserSelectorToken implements PluginSelectorTokenLike<SpreadsheetParserSelectorTokenAlternative> {
 
     /**
      * A constant representing no alternatives.
      */
-    public final static List<SpreadsheetParserSelectorTextComponentAlternative> NO_ALTERNATIVES = Lists.empty();
+    public final static List<SpreadsheetParserSelectorTokenAlternative> NO_ALTERNATIVES = Lists.empty();
 
     /**
      * This method is intended to only be called by {@link SpreadsheetParser} that contain a {@link SpreadsheetFormatParserToken}.
      */
-    public static List<SpreadsheetParserSelectorTextComponent> textComponents(final ParserToken token,
-                                                                              final SpreadsheetParserContext context) {
-        return SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor.textComponents(
+    public static List<SpreadsheetParserSelectorToken> tokens(final ParserToken token,
+                                                              final SpreadsheetParserContext context) {
+        return SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor.textComponents(
                 token,
                 context
         );
     }
 
     /**
-     * General purpose factory that creates a new {@link SpreadsheetParserSelectorTextComponent}.
+     * General purpose factory that creates a new {@link SpreadsheetParserSelectorToken}.
      */
-    public static SpreadsheetParserSelectorTextComponent with(final String label,
-                                                              final String text,
-                                                              final List<SpreadsheetParserSelectorTextComponentAlternative> alternatives) {
-        return new SpreadsheetParserSelectorTextComponent(
+    public static SpreadsheetParserSelectorToken with(final String label,
+                                                      final String text,
+                                                      final List<SpreadsheetParserSelectorTokenAlternative> alternatives) {
+        return new SpreadsheetParserSelectorToken(
                 PluginSelectorToken.with(
                         label,
                         text,
@@ -69,7 +69,7 @@ public final class SpreadsheetParserSelectorTextComponent implements PluginSelec
         );
     }
 
-    private SpreadsheetParserSelectorTextComponent(final PluginSelectorToken<SpreadsheetParserSelectorTextComponentAlternative> component) {
+    private SpreadsheetParserSelectorToken(final PluginSelectorToken<SpreadsheetParserSelectorTokenAlternative> component) {
         this.component = component;
     }
 
@@ -84,11 +84,11 @@ public final class SpreadsheetParserSelectorTextComponent implements PluginSelec
     }
 
     @Override
-    public List<SpreadsheetParserSelectorTextComponentAlternative> alternatives() {
+    public List<SpreadsheetParserSelectorTokenAlternative> alternatives() {
         return this.component.alternatives();
     }
 
-    private final PluginSelectorToken<SpreadsheetParserSelectorTextComponentAlternative> component;
+    private final PluginSelectorToken<SpreadsheetParserSelectorTokenAlternative> component;
 
     // HashCodeEqualsDefined..........................................................................................
 
@@ -100,11 +100,11 @@ public final class SpreadsheetParserSelectorTextComponent implements PluginSelec
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetParserSelectorTextComponent &&
+                other instanceof SpreadsheetParserSelectorToken &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetParserSelectorTextComponent other) {
+    private boolean equals0(final SpreadsheetParserSelectorToken other) {
         return this.component.equals(other.component);
     }
 
@@ -115,22 +115,22 @@ public final class SpreadsheetParserSelectorTextComponent implements PluginSelec
 
     // json.............................................................................................................
 
-    static SpreadsheetParserSelectorTextComponent unmarshall(final JsonNode node,
-                                                             final JsonNodeUnmarshallContext context) {
+    static SpreadsheetParserSelectorToken unmarshall(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
         return PluginSelectorTokenLike.unmarshall(
                 node,
                 context,
-                SpreadsheetParserSelectorTextComponent::with,
-                SpreadsheetParserSelectorTextComponentAlternative.class
+                SpreadsheetParserSelectorToken::with,
+                SpreadsheetParserSelectorTokenAlternative.class
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTextComponent.class),
-                SpreadsheetParserSelectorTextComponent::unmarshall,
-                SpreadsheetParserSelectorTextComponent::marshall,
-                SpreadsheetParserSelectorTextComponent.class
+                JsonNodeContext.computeTypeName(SpreadsheetParserSelectorToken.class),
+                SpreadsheetParserSelectorToken::unmarshall,
+                SpreadsheetParserSelectorToken::marshall,
+                SpreadsheetParserSelectorToken.class
         );
     }
 }

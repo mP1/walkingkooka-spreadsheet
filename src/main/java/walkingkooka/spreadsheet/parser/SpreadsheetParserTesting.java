@@ -24,24 +24,24 @@ import java.util.List;
 
 public interface SpreadsheetParserTesting extends ParserTesting {
 
-    // tokensAndCheck...........................................................................................
+    // tokensAndCheck...................................................................................................
 
-    default void textComponentsAndCheck(final SpreadsheetParser parser,
-                                        final SpreadsheetParserContext context,
-                                        final SpreadsheetParserSelectorTextComponent... expected) {
-        this.textComponentsAndCheck(
+    default void tokensAndCheck(final SpreadsheetParser parser,
+                                final SpreadsheetParserContext context,
+                                final SpreadsheetParserSelectorToken... expected) {
+        this.tokensAndCheck(
                 parser,
                 context,
                 Lists.of(expected)
         );
     }
 
-    default void textComponentsAndCheck(final SpreadsheetParser parser,
-                                        final SpreadsheetParserContext context,
-                                        final List<SpreadsheetParserSelectorTextComponent> expected) {
+    default void tokensAndCheck(final SpreadsheetParser parser,
+                                final SpreadsheetParserContext context,
+                                final List<SpreadsheetParserSelectorToken> expected) {
         this.checkEquals(
                 expected,
-                parser.textComponents(context),
+                parser.tokens(context),
                 parser::toString
         );
     }

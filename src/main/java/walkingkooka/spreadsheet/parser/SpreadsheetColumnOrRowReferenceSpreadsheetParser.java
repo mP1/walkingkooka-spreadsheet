@@ -124,9 +124,9 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                                 final String text);
 
     @Override
-    public final List<SpreadsheetParserSelectorTextComponent> textComponents(final SpreadsheetParserContext context) {
+    public final List<SpreadsheetParserSelectorToken> tokens(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 
-        return NO_TEXT_COMPONENTS;
+        return NO_TOKENS;
     }
 }
