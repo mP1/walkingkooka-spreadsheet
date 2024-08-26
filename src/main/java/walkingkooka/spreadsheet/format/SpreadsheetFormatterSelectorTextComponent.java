@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.plugin.PluginSelectorTextComponent;
-import walkingkooka.plugin.PluginSelectorTextComponentLike;
+import walkingkooka.plugin.PluginSelectorToken;
+import walkingkooka.plugin.PluginSelectorTokenLike;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -35,7 +35,7 @@ import java.util.List;
  * yyyy / mm / dd
  * </pre>
  */
-public final class SpreadsheetFormatterSelectorTextComponent implements PluginSelectorTextComponentLike<SpreadsheetFormatterSelectorTextComponentAlternative> {
+public final class SpreadsheetFormatterSelectorTextComponent implements PluginSelectorTokenLike<SpreadsheetFormatterSelectorTextComponentAlternative> {
 
     /**
      * A constant representing no alternatives.
@@ -60,7 +60,7 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
                                                                  final String text,
                                                                  final List<SpreadsheetFormatterSelectorTextComponentAlternative> alternatives) {
         return new SpreadsheetFormatterSelectorTextComponent(
-                PluginSelectorTextComponent.with(
+                PluginSelectorToken.with(
                         label,
                         text,
                         alternatives
@@ -68,7 +68,7 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
         );
     }
 
-    private SpreadsheetFormatterSelectorTextComponent(final PluginSelectorTextComponent<SpreadsheetFormatterSelectorTextComponentAlternative> component) {
+    private SpreadsheetFormatterSelectorTextComponent(final PluginSelectorToken<SpreadsheetFormatterSelectorTextComponentAlternative> component) {
         this.component = component;
     }
 
@@ -87,7 +87,7 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
         return this.component.alternatives();
     }
 
-    private final PluginSelectorTextComponent<SpreadsheetFormatterSelectorTextComponentAlternative> component;
+    private final PluginSelectorToken<SpreadsheetFormatterSelectorTextComponentAlternative> component;
 
     // HashCodeEqualsDefined..........................................................................................
 
@@ -116,7 +116,7 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
 
     static SpreadsheetFormatterSelectorTextComponent unmarshall(final JsonNode node,
                                                                 final JsonNodeUnmarshallContext context) {
-        return PluginSelectorTextComponentLike.unmarshall(
+        return PluginSelectorTokenLike.unmarshall(
                 node,
                 context,
                 SpreadsheetFormatterSelectorTextComponent::with,

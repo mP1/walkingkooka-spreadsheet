@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
-import walkingkooka.plugin.PluginSelectorTextComponentAlternative;
-import walkingkooka.plugin.PluginSelectorTextComponentAlternativeLike;
+import walkingkooka.plugin.PluginSelectorTokenAlternative;
+import walkingkooka.plugin.PluginSelectorTokenAlternativeLike;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -28,18 +28,18 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 /**
  * A single alternative for a {@link SpreadsheetParserSelectorTextComponent}.
  */
-public final class SpreadsheetParserSelectorTextComponentAlternative implements PluginSelectorTextComponentAlternativeLike {
+public final class SpreadsheetParserSelectorTextComponentAlternative implements PluginSelectorTokenAlternativeLike {
     public static SpreadsheetParserSelectorTextComponentAlternative with(final String label,
                                                                          final String text) {
         return new SpreadsheetParserSelectorTextComponentAlternative(
-                PluginSelectorTextComponentAlternative.with(
+                PluginSelectorTokenAlternative.with(
                         label,
                         text
                 )
         );
     }
 
-    private SpreadsheetParserSelectorTextComponentAlternative(final PluginSelectorTextComponentAlternative alternative) {
+    private SpreadsheetParserSelectorTextComponentAlternative(final PluginSelectorTokenAlternative alternative) {
         this.alternative = alternative;
     }
 
@@ -53,7 +53,7 @@ public final class SpreadsheetParserSelectorTextComponentAlternative implements 
         return this.alternative.text();
     }
 
-    private final PluginSelectorTextComponentAlternative alternative;
+    private final PluginSelectorTokenAlternative alternative;
 
     // HashCodeEqualsDefined..........................................................................................
 
@@ -82,7 +82,7 @@ public final class SpreadsheetParserSelectorTextComponentAlternative implements 
 
     static SpreadsheetParserSelectorTextComponentAlternative unmarshall(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
-        return PluginSelectorTextComponentAlternativeLike.unmarshall(
+        return PluginSelectorTokenAlternativeLike.unmarshall(
                 node,
                 context,
                 SpreadsheetParserSelectorTextComponentAlternative::with
