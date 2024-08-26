@@ -125,11 +125,11 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
         return SpreadsheetParserContexts.fake();
     }
 
-    // tokens...................................................................................................
+    // tokens...........................................................................................................
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck(
+    public void testTokens() {
+        this.tokensAndCheck(
                 this.createContext()
         );
     }

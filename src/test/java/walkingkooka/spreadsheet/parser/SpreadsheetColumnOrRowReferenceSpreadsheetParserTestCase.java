@@ -44,11 +44,11 @@ public abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<P
         );
     }
 
-    // tokens...................................................................................................
+    // tokens...........................................................................................................
 
     @Test
-    public final void testTextComponents() {
-        this.textComponentsAndCheck(
+    public final void testTokens() {
+        this.tokensAndCheck(
                 this.createContext()
         );
     }

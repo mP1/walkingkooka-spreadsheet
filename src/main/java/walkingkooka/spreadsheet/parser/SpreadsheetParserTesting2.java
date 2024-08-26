@@ -27,25 +27,25 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetParserTesting2<P extends SpreadsheetParser> extends SpreadsheetParserTesting, ParserTesting2<P, SpreadsheetParserContext> {
     @Test
-    default void testTextComponentsWithNullContextFails() {
+    default void testTokensWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createParser().textComponents(null)
+                () -> this.createParser().tokens(null)
         );
     }
 
-    default void textComponentsAndCheck(final SpreadsheetParserContext context,
-                                        final SpreadsheetParserSelectorTextComponent... expected) {
-        this.textComponentsAndCheck(
+    default void tokensAndCheck(final SpreadsheetParserContext context,
+                                final SpreadsheetParserSelectorToken... expected) {
+        this.tokensAndCheck(
                 this.createParser(),
                 context,
                 Lists.of(expected)
         );
     }
 
-    default void textComponentsAndCheck(final SpreadsheetParserContext context,
-                                        final List<SpreadsheetParserSelectorTextComponent> expected) {
-        this.textComponentsAndCheck(
+    default void tokensAndCheck(final SpreadsheetParserContext context,
+                                final List<SpreadsheetParserSelectorToken> expected) {
+        this.tokensAndCheck(
                 this.createParser(),
                 context,
                 expected

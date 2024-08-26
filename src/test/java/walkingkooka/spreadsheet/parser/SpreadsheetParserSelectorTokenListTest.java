@@ -30,42 +30,42 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SpreadsheetParserSelectorTextComponentListTest implements ListTesting2<SpreadsheetParserSelectorTextComponentList, SpreadsheetParserSelectorTextComponent>,
-        ClassTesting<SpreadsheetParserSelectorTextComponentList>,
-        ImmutableListTesting<SpreadsheetParserSelectorTextComponentList, SpreadsheetParserSelectorTextComponent>,
-        JsonNodeMarshallingTesting<SpreadsheetParserSelectorTextComponentList> {
+public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken>,
+        ClassTesting<SpreadsheetParserSelectorTokenList>,
+        ImmutableListTesting<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken>,
+        JsonNodeMarshallingTesting<SpreadsheetParserSelectorTokenList> {
 
-    private final static SpreadsheetParserSelectorTextComponent COMPONENT1 = SpreadsheetParserSelectorTextComponent.with(
+    private final static SpreadsheetParserSelectorToken COMPONENT1 = SpreadsheetParserSelectorToken.with(
             "label1",
             "text1",
             Lists.of(
-                    SpreadsheetParserSelectorTextComponentAlternative.with(
+                    SpreadsheetParserSelectorTokenAlternative.with(
                             "alternative-label-1",
                             "alternative-text-1"
                     )
             )
     );
 
-    private final static SpreadsheetParserSelectorTextComponent COMPONENT2 = SpreadsheetParserSelectorTextComponent.with(
+    private final static SpreadsheetParserSelectorToken COMPONENT2 = SpreadsheetParserSelectorToken.with(
             "label1",
             "text1",
-            SpreadsheetParserSelectorTextComponent.NO_ALTERNATIVES
+            SpreadsheetParserSelectorToken.NO_ALTERNATIVES
     );
 
     @Test
     public void testWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetParserSelectorTextComponentList.with(null)
+                () -> SpreadsheetParserSelectorTokenList.with(null)
         );
     }
 
     @Test
     public void testDoesntDoubleWrap() {
-        final SpreadsheetParserSelectorTextComponentList list = this.createList();
+        final SpreadsheetParserSelectorTokenList list = this.createList();
         assertSame(
                 list,
-                SpreadsheetParserSelectorTextComponentList.with(list)
+                SpreadsheetParserSelectorTokenList.with(list)
         );
     }
 
@@ -98,7 +98,7 @@ public class SpreadsheetParserSelectorTextComponentListTest implements ListTesti
 
     @Test
     public void testRemoveIndexFails() {
-        final SpreadsheetParserSelectorTextComponentList list = this.createList();
+        final SpreadsheetParserSelectorTokenList list = this.createList();
 
         this.removeIndexFails(
                 list,
@@ -108,7 +108,7 @@ public class SpreadsheetParserSelectorTextComponentListTest implements ListTesti
 
     @Test
     public void testRemoveElementFails() {
-        final SpreadsheetParserSelectorTextComponentList list = this.createList();
+        final SpreadsheetParserSelectorTokenList list = this.createList();
 
         this.removeFails(
                 list,
@@ -117,8 +117,8 @@ public class SpreadsheetParserSelectorTextComponentListTest implements ListTesti
     }
 
     @Override
-    public SpreadsheetParserSelectorTextComponentList createList() {
-        return SpreadsheetParserSelectorTextComponentList.with(
+    public SpreadsheetParserSelectorTokenList createList() {
+        return SpreadsheetParserSelectorTokenList.with(
                 Lists.of(
                         COMPONENT1,
                         COMPONENT2
@@ -127,8 +127,8 @@ public class SpreadsheetParserSelectorTextComponentListTest implements ListTesti
     }
 
     @Override
-    public Class<SpreadsheetParserSelectorTextComponentList> type() {
-        return SpreadsheetParserSelectorTextComponentList.class;
+    public Class<SpreadsheetParserSelectorTokenList> type() {
+        return SpreadsheetParserSelectorTokenList.class;
     }
 
     @Override
@@ -185,16 +185,16 @@ public class SpreadsheetParserSelectorTextComponentListTest implements ListTesti
     }
 
     @Override
-    public SpreadsheetParserSelectorTextComponentList unmarshall(final JsonNode json,
-                                                                 final JsonNodeUnmarshallContext context) {
-        return SpreadsheetParserSelectorTextComponentList.unmarshall(
+    public SpreadsheetParserSelectorTokenList unmarshall(final JsonNode json,
+                                                         final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserSelectorTokenList.unmarshall(
                 json,
                 context
         );
     }
 
     @Override
-    public SpreadsheetParserSelectorTextComponentList createJsonNodeMarshallingValue() {
+    public SpreadsheetParserSelectorTokenList createJsonNodeMarshallingValue() {
         return this.createList();
     }
 }

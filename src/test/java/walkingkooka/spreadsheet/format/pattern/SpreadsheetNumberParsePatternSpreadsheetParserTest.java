@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorTextComponent;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPercentSymbolParserToken;
@@ -628,37 +628,37 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
         return SpreadsheetParserToken.whitespace(" ", " ");
     }
 
-    // tokens...................................................................................................
+    // tokens...........................................................................................................
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck(
+    public void testTokens() {
+        this.tokensAndCheck(
                 SpreadsheetParsePattern.parseNumberParsePattern("$0.00").parser(),
                 this.createContext(),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "$",
                         "$",
-                        SpreadsheetParserSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetParserSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         ".",
                         ".",
-                        SpreadsheetParserSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetParserSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetParserSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
                 )
         );
     }

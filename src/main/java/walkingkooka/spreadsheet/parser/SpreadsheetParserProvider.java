@@ -48,14 +48,14 @@ public interface SpreadsheetParserProvider extends Provider {
                                         final ProviderContext context);
 
     /**
-     * Constant for {@link #spreadsheetParserNextTextComponent(SpreadsheetParserSelector)} when there is no next.
+     * Constant for {@link #spreadsheetParserNextToken(SpreadsheetParserSelector)} when there is no next.
      */
-    Optional<SpreadsheetParserSelectorTextComponent> NO_NEXT_TEXT_COMPONENT = Optional.empty();
+    Optional<SpreadsheetParserSelectorToken> NO_NEXT_TOKEN = Optional.empty();
     
     /**
-     * Returns the next {@link SpreadsheetParserSelectorTextComponent} for the given {@link SpreadsheetParserSelector}.
+     * Returns the next {@link SpreadsheetParserSelectorToken} for the given {@link SpreadsheetParserSelector}.
      */
-    Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector);
+    Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector selector);
 
     /**
      * A constant when no equivalent {@link SpreadsheetFormatterSelector} is available for a {@link SpreadsheetFormatterSelector}.

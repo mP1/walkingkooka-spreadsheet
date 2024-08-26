@@ -108,12 +108,12 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
     }
 
     @Override
-    public Optional<SpreadsheetParserSelectorTextComponent> spreadsheetParserNextTextComponent(final SpreadsheetParserSelector selector) {
+    public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
         final SpreadsheetParserName name = selector.name();
 
-        return this.provider.spreadsheetParserNextTextComponent(
+        return this.provider.spreadsheetParserNextToken(
                 selector.setName(this.nameMapper.apply(name)
                         .orElseThrow(
                                 () -> new IllegalArgumentException("Unknown parser " + name)

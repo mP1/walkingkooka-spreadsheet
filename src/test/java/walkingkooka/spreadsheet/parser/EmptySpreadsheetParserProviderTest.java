@@ -45,8 +45,8 @@ public final class EmptySpreadsheetParserProviderTest implements SpreadsheetPars
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponentFails() {
-        this.spreadsheetParserNextTextComponentFails(
+    public void testSpreadsheetParserNextTokenFails() {
+        this.spreadsheetParserNextTokenFails(
                 SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("")
         );
     }

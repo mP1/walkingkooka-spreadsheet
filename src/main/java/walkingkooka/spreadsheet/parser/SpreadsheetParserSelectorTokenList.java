@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * An immutable list of {@link SpreadsheetParserSelectorTextComponent}. This exists primarily to support marshalling/unmarshalling JSON which does
+ * An immutable list of {@link SpreadsheetParserSelectorToken}. This exists primarily to support marshalling/unmarshalling JSON which does
  * not support generic types.
  * <pre>
  * [
@@ -57,25 +57,25 @@ import java.util.Objects;
  * ]
  * </pre>
  */
-public final class SpreadsheetParserSelectorTextComponentList extends AbstractList<SpreadsheetParserSelectorTextComponent>
-        implements ImmutableListDefaults<SpreadsheetParserSelectorTextComponentList, SpreadsheetParserSelectorTextComponent> {
+public final class SpreadsheetParserSelectorTokenList extends AbstractList<SpreadsheetParserSelectorToken>
+        implements ImmutableListDefaults<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken> {
 
-    public static SpreadsheetParserSelectorTextComponentList with(final List<SpreadsheetParserSelectorTextComponent> components) {
+    public static SpreadsheetParserSelectorTokenList with(final List<SpreadsheetParserSelectorToken> components) {
         Objects.requireNonNull(components, "components");
 
-        return components instanceof SpreadsheetParserSelectorTextComponentList ?
-                (SpreadsheetParserSelectorTextComponentList) components :
-                new SpreadsheetParserSelectorTextComponentList(
+        return components instanceof SpreadsheetParserSelectorTokenList ?
+                (SpreadsheetParserSelectorTokenList) components :
+                new SpreadsheetParserSelectorTokenList(
                         Lists.immutable(components)
                 );
     }
 
-    private SpreadsheetParserSelectorTextComponentList(final List<SpreadsheetParserSelectorTextComponent> components) {
+    private SpreadsheetParserSelectorTokenList(final List<SpreadsheetParserSelectorToken> components) {
         this.components = components;
     }
 
     @Override
-    public SpreadsheetParserSelectorTextComponent get(int index) {
+    public SpreadsheetParserSelectorToken get(int index) {
         return this.components.get(index);
     }
 
@@ -84,11 +84,11 @@ public final class SpreadsheetParserSelectorTextComponentList extends AbstractLi
         return this.components.size();
     }
 
-    private final List<SpreadsheetParserSelectorTextComponent> components;
+    private final List<SpreadsheetParserSelectorToken> components;
 
     @Override
-    public SpreadsheetParserSelectorTextComponentList setElements(final List<SpreadsheetParserSelectorTextComponent> components) {
-        final SpreadsheetParserSelectorTextComponentList copy = with(components);
+    public SpreadsheetParserSelectorTokenList setElements(final List<SpreadsheetParserSelectorToken> components) {
+        final SpreadsheetParserSelectorTokenList copy = with(components);
         return this.equals(copy) ?
                 this :
                 copy;
@@ -96,12 +96,12 @@ public final class SpreadsheetParserSelectorTextComponentList extends AbstractLi
 
     // json.............................................................................................................
 
-    static SpreadsheetParserSelectorTextComponentList unmarshall(final JsonNode node,
-                                                                 final JsonNodeUnmarshallContext context) {
+    static SpreadsheetParserSelectorTokenList unmarshall(final JsonNode node,
+                                                         final JsonNodeUnmarshallContext context) {
         return with(
                 context.unmarshallList(
                         node,
-                        SpreadsheetParserSelectorTextComponent.class
+                        SpreadsheetParserSelectorToken.class
                 )
         );
     }
@@ -111,17 +111,17 @@ public final class SpreadsheetParserSelectorTextComponentList extends AbstractLi
     }
 
     static {
-        SpreadsheetParserSelectorTextComponent.with(
+        SpreadsheetParserSelectorToken.with(
                 "", // label
                 "", // text
-                SpreadsheetParserSelectorTextComponent.NO_ALTERNATIVES
+                SpreadsheetParserSelectorToken.NO_ALTERNATIVES
         );
         
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTextComponentList.class),
-                SpreadsheetParserSelectorTextComponentList::unmarshall,
-                SpreadsheetParserSelectorTextComponentList::marshall,
-                SpreadsheetParserSelectorTextComponentList.class
+                JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTokenList.class),
+                SpreadsheetParserSelectorTokenList::unmarshall,
+                SpreadsheetParserSelectorTokenList::marshall,
+                SpreadsheetParserSelectorTokenList.class
         );
     }
 }

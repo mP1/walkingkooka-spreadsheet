@@ -56,56 +56,56 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserSelectorNextTextComponentDateParsePatternEmpty() {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    public void testSpreadsheetParserSelectorNextTokenDateParsePatternEmpty() {
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse(
                         "date-parse-pattern"
                 ),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "d",
                                         "d"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "dd",
                                         "dd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "ddd",
                                         "ddd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "dddd",
                                         "dddd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "m",
                                         "m"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mm",
                                         "mm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmm",
                                         "mmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmmm",
                                         "mmmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmmmm",
                                         "mmmmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "yy",
                                         "yy"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "yyyy",
                                         "yyyy"
                                 )
@@ -115,46 +115,46 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponentDateParsePatternNotEmpty() {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    public void testSpreadsheetParserNextTokenDateParsePatternNotEmpty() {
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse("date-parse-pattern yyyy"),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "d",
                                         "d"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "dd",
                                         "dd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "ddd",
                                         "ddd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "dddd",
                                         "dddd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "m",
                                         "m"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mm",
                                         "mm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmm",
                                         "mmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmmm",
                                         "mmmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmmmm",
                                         "mmmmm"
                                 )
@@ -196,94 +196,94 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponentDateTimeParsePatternEmpty() {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    public void testSpreadsheetParserNextTokenDateTimeParsePatternEmpty() {
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse("date-time-parse-pattern"),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         ".",
                                         "."
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "0",
                                         "0"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "A/P",
                                         "A/P"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "AM/PM",
                                         "AM/PM"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "a/p",
                                         "a/p"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "am/pm",
                                         "am/pm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "d",
                                         "d"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "dd",
                                         "dd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "ddd",
                                         "ddd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "dddd",
                                         "dddd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "h",
                                         "h"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "hh",
                                         "hh"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "m",
                                         "m"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mm",
                                         "mm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmm",
                                         "mmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmmm",
                                         "mmmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmmmm",
                                         "mmmmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "s",
                                         "s"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "ss",
                                         "ss"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "yy",
                                         "yy"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "yyyy",
                                         "yyyy"
                                 )
@@ -293,86 +293,86 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponentDateTimeParsePatternNotEmpty() {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    public void testSpreadsheetParserNextTokenDateTimeParsePatternNotEmpty() {
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse("date-time-parse-pattern yyyy"),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         ".",
                                         "."
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "0",
                                         "0"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "A/P",
                                         "A/P"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "AM/PM",
                                         "AM/PM"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "a/p",
                                         "a/p"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "am/pm",
                                         "am/pm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "d",
                                         "d"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "dd",
                                         "dd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "ddd",
                                         "ddd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "dddd",
                                         "dddd"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "h",
                                         "h"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "hh",
                                         "hh"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "m",
                                         "m"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mm",
                                         "mm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmm",
                                         "mmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmmm",
                                         "mmmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mmmmm",
                                         "mmmmm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "s",
                                         "s"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "ss",
                                         "ss"
                                 )
@@ -403,46 +403,46 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponentNumberParsePatternEmpty() {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    public void testSpreadsheetParserNextTokenNumberParsePatternEmpty() {
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse("number-parse-pattern"),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "#",
                                         "#"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "$",
                                         "$"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "%",
                                         "%"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         ",",
                                         ","
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         ".",
                                         "."
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "/",
                                         "/"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "0",
                                         "0"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "?",
                                         "?"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "E",
                                         "E"
                                 )
@@ -452,42 +452,42 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponentNumberParsePatternNotEmpty() {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    public void testSpreadsheetParserNextTokenNumberParsePatternNotEmpty() {
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse("number-parse-pattern $0.00"),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "#",
                                         "#"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "$",
                                         "$"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "%",
                                         "%"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         ",",
                                         ","
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         ".",
                                         "."
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "/",
                                         "/"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "?",
                                         "?"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "E",
                                         "E"
                                 )
@@ -535,58 +535,58 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponentTimeParsePatternEmpty() {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    public void testSpreadsheetParserNextTokenTimeParsePatternEmpty() {
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse("time-parse-pattern"),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         ".",
                                         "."
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "0",
                                         "0"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "A/P",
                                         "A/P"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "AM/PM",
                                         "AM/PM"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "a/p",
                                         "a/p"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "am/pm",
                                         "am/pm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "h",
                                         "h"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "hh",
                                         "hh"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "m",
                                         "m"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "mm",
                                         "mm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "s",
                                         "s"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "ss",
                                         "ss"
                                 )
@@ -596,50 +596,50 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTextComponentTimeParsePatternNotEmpty() {
-        this.spreadsheetParserNextTextComponentAndCheck(
+    public void testSpreadsheetParserNextTokenTimeParsePatternNotEmpty() {
+        this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse("time-parse-pattern hh:mm"),
-                SpreadsheetParserSelectorTextComponent.with(
+                SpreadsheetParserSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         ".",
                                         "."
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "0",
                                         "0"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "A/P",
                                         "A/P"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "AM/PM",
                                         "AM/PM"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "a/p",
                                         "a/p"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "am/pm",
                                         "am/pm"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "h",
                                         "h"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "hh",
                                         "hh"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "s",
                                         "s"
                                 ),
-                                SpreadsheetParserSelectorTextComponentAlternative.with(
+                                SpreadsheetParserSelectorTokenAlternative.with(
                                         "ss",
                                         "ss"
                                 )
