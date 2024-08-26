@@ -17,15 +17,15 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.plugin.PluginSelectorTextComponentAlternativeLikeTesting;
+import walkingkooka.plugin.PluginSelectorTokenAlternativeLikeTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetParserSelectorTextComponentAlternativeTest implements PluginSelectorTextComponentAlternativeLikeTesting<SpreadsheetParserSelectorTextComponentAlternative>,
+public final class SpreadsheetParserSelectorTextComponentAlternativeTest implements PluginSelectorTokenAlternativeLikeTesting<SpreadsheetParserSelectorTextComponentAlternative>,
         ClassTesting2<SpreadsheetParserSelectorTextComponentAlternative> {
 
     @Override
-    public SpreadsheetParserSelectorTextComponentAlternative createPluginSelectorTextComponentAlternativeLike(final String label,
+    public SpreadsheetParserSelectorTextComponentAlternative createPluginSelectorTokenAlternativeLike(final String label,
                                                                                                               final String text) {
         return SpreadsheetParserSelectorTextComponentAlternative.with(
                 label,

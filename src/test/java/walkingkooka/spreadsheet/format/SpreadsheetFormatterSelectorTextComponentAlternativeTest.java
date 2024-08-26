@@ -17,16 +17,16 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.plugin.PluginSelectorTextComponentAlternativeLikeTesting;
+import walkingkooka.plugin.PluginSelectorTokenAlternativeLikeTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetFormatterSelectorTextComponentAlternativeTest implements PluginSelectorTextComponentAlternativeLikeTesting<SpreadsheetFormatterSelectorTextComponentAlternative>,
+public final class SpreadsheetFormatterSelectorTextComponentAlternativeTest implements PluginSelectorTokenAlternativeLikeTesting<SpreadsheetFormatterSelectorTextComponentAlternative>,
         ClassTesting2<SpreadsheetFormatterSelectorTextComponentAlternative> {
 
     @Override
-    public SpreadsheetFormatterSelectorTextComponentAlternative createPluginSelectorTextComponentAlternativeLike(final String label,
-                                                                                                                 final String text) {
+    public SpreadsheetFormatterSelectorTextComponentAlternative createPluginSelectorTokenAlternativeLike(final String label,
+                                                                                                         final String text) {
         return SpreadsheetFormatterSelectorTextComponentAlternative.with(
                 label,
                 text

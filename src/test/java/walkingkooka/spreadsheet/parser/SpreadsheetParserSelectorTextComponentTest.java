@@ -17,18 +17,18 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.plugin.PluginSelectorTextComponentLike;
-import walkingkooka.plugin.PluginSelectorTextComponentLikeTesting;
+import walkingkooka.plugin.PluginSelectorTokenLike;
+import walkingkooka.plugin.PluginSelectorTokenLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
-public final class SpreadsheetParserSelectorTextComponentTest implements PluginSelectorTextComponentLikeTesting<SpreadsheetParserSelectorTextComponent, SpreadsheetParserSelectorTextComponentAlternative> {
+public final class SpreadsheetParserSelectorTextComponentTest implements PluginSelectorTokenLikeTesting<SpreadsheetParserSelectorTextComponent, SpreadsheetParserSelectorTextComponentAlternative> {
     @Override
-    public SpreadsheetParserSelectorTextComponent createPluginSelectorTextComponentLike(final String label,
-                                                                                        final String text,
-                                                                                        final List<SpreadsheetParserSelectorTextComponentAlternative> alternatives) {
+    public SpreadsheetParserSelectorTextComponent createPluginSelectorTokenLike(final String label,
+                                                                                final String text,
+                                                                                final List<SpreadsheetParserSelectorTextComponentAlternative> alternatives) {
         return SpreadsheetParserSelectorTextComponent.with(
                 label,
                 text,
@@ -37,8 +37,8 @@ public final class SpreadsheetParserSelectorTextComponentTest implements PluginS
     }
 
     @Override
-    public SpreadsheetParserSelectorTextComponentAlternative createPluginSelectorTextComponentAlternativesLike(final String label,
-                                                                                                               final String text) {
+    public SpreadsheetParserSelectorTextComponentAlternative createPluginSelectorTokenAlternativesLike(final String label,
+                                                                                                       final String text) {
         return SpreadsheetParserSelectorTextComponentAlternative.with(
                 label,
                 text
@@ -48,7 +48,7 @@ public final class SpreadsheetParserSelectorTextComponentTest implements PluginS
     @Override
     public SpreadsheetParserSelectorTextComponent unmarshall(final JsonNode json,
                                                              final JsonNodeUnmarshallContext context) {
-        return PluginSelectorTextComponentLike.unmarshall(
+        return PluginSelectorTokenLike.unmarshall(
                 json,
                 context,
                 SpreadsheetParserSelectorTextComponent::with,

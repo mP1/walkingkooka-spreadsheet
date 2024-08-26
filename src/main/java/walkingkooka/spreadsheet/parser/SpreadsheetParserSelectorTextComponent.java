@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.plugin.PluginSelectorTextComponent;
-import walkingkooka.plugin.PluginSelectorTextComponentLike;
+import walkingkooka.plugin.PluginSelectorToken;
+import walkingkooka.plugin.PluginSelectorTokenLike;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
@@ -36,7 +36,7 @@ import java.util.List;
  * yyyy / mm / dd
  * </pre>
  */
-public final class SpreadsheetParserSelectorTextComponent implements PluginSelectorTextComponentLike<SpreadsheetParserSelectorTextComponentAlternative> {
+public final class SpreadsheetParserSelectorTextComponent implements PluginSelectorTokenLike<SpreadsheetParserSelectorTextComponentAlternative> {
 
     /**
      * A constant representing no alternatives.
@@ -61,7 +61,7 @@ public final class SpreadsheetParserSelectorTextComponent implements PluginSelec
                                                               final String text,
                                                               final List<SpreadsheetParserSelectorTextComponentAlternative> alternatives) {
         return new SpreadsheetParserSelectorTextComponent(
-                PluginSelectorTextComponent.with(
+                PluginSelectorToken.with(
                         label,
                         text,
                         alternatives
@@ -69,7 +69,7 @@ public final class SpreadsheetParserSelectorTextComponent implements PluginSelec
         );
     }
 
-    private SpreadsheetParserSelectorTextComponent(final PluginSelectorTextComponent<SpreadsheetParserSelectorTextComponentAlternative> component) {
+    private SpreadsheetParserSelectorTextComponent(final PluginSelectorToken<SpreadsheetParserSelectorTextComponentAlternative> component) {
         this.component = component;
     }
 
@@ -88,7 +88,7 @@ public final class SpreadsheetParserSelectorTextComponent implements PluginSelec
         return this.component.alternatives();
     }
 
-    private final PluginSelectorTextComponent<SpreadsheetParserSelectorTextComponentAlternative> component;
+    private final PluginSelectorToken<SpreadsheetParserSelectorTextComponentAlternative> component;
 
     // HashCodeEqualsDefined..........................................................................................
 
@@ -117,7 +117,7 @@ public final class SpreadsheetParserSelectorTextComponent implements PluginSelec
 
     static SpreadsheetParserSelectorTextComponent unmarshall(final JsonNode node,
                                                              final JsonNodeUnmarshallContext context) {
-        return PluginSelectorTextComponentLike.unmarshall(
+        return PluginSelectorTokenLike.unmarshall(
                 node,
                 context,
                 SpreadsheetParserSelectorTextComponent::with,
