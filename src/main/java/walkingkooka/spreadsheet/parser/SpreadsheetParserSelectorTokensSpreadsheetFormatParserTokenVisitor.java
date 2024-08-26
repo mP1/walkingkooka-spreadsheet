@@ -36,18 +36,18 @@ import java.util.stream.Collectors;
 final class SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     // only called by SpreadsheetParserSelectorToken#tokens
-    static List<SpreadsheetParserSelectorToken> textComponents(final ParserToken token,
+    static List<SpreadsheetParserSelectorToken> tokens(final ParserToken token,
                                                                final SpreadsheetParserContext context) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(context, "context");
 
         final SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor(context);
         visitor.accept(token);
-        return visitor.textComponents;
+        return visitor.tokens;
     }
 
     SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor(final SpreadsheetParserContext context) {
-        this.textComponents = Lists.array();
+        this.tokens = Lists.array();
         this.context = context;
     }
 
@@ -61,7 +61,7 @@ final class SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor e
             // maybe later use a real label like hour rather than its pattern symbol character(s).
             final String text = token.text();
 
-            this.textComponents.add(
+            this.tokens.add(
                     SpreadsheetParserSelectorToken.with(
                             text, // label
                             text, // text,
@@ -88,12 +88,12 @@ final class SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor e
                 .collect(Collectors.toList());
     }
 
-    private final List<SpreadsheetParserSelectorToken> textComponents;
+    private final List<SpreadsheetParserSelectorToken> tokens;
 
     private final SpreadsheetParserContext context;
 
     @Override
     public String toString() {
-        return this.textComponents.toString();
+        return this.tokens.toString();
     }
 }

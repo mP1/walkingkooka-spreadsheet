@@ -547,7 +547,7 @@ public enum SpreadsheetFormatParserTokenKind {
     /**
      * Some {@link SpreadsheetFormatParserTokenKind} should be ignored and not present in next alternatives.
      */
-    public boolean isNextTextComponentIgnored() {
+    public boolean isNextTokenIgnored() {
         return this.isColor() ||
                 this.isCondition() ||
                 this.isGeneral() ||
