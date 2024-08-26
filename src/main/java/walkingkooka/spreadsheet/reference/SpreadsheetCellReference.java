@@ -119,7 +119,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     /**
-     * Adds the given deltas to the relative textComponents of this {@link SpreadsheetCellReference}.
+     * Adds the given deltas to the relative tokens of this {@link SpreadsheetCellReference}.
      */
     @Override
     public SpreadsheetCellReference addIfRelative(final int columnDelta,

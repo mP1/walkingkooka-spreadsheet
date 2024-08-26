@@ -44,7 +44,7 @@ public abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<P
         );
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
     public final void testTextComponents() {

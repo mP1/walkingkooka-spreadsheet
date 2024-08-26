@@ -204,83 +204,83 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         );
     }
 
-    // spreadsheetFormatterNextTextComponentsAndCheck...................................................................
+    // spreadsheetFormatterNextTokensAndCheck...................................................................
 
     @Test
     default void testSpreadsheetFormatterNextTextComponentWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createSpreadsheetFormatterProvider().spreadsheetFormatterNextTextComponent(null)
+                () -> this.createSpreadsheetFormatterProvider().spreadsheetFormatterNextToken(null)
         );
     }
 
-    default void spreadsheetFormatterNextTextComponentFails(final SpreadsheetFormatterSelector selector) {
-        this.spreadsheetFormatterNextTextComponentFails(
+    default void spreadsheetFormatterNextTokenFails(final SpreadsheetFormatterSelector selector) {
+        this.spreadsheetFormatterNextTokenFails(
                 this.createSpreadsheetFormatterProvider(),
                 selector
         );
     }
 
-    default void spreadsheetFormatterNextTextComponentFails(final SpreadsheetFormatterProvider provider,
+    default void spreadsheetFormatterNextTokenFails(final SpreadsheetFormatterProvider provider,
                                                             final SpreadsheetFormatterSelector selector) {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> provider.spreadsheetFormatterNextTextComponent(
+                () -> provider.spreadsheetFormatterNextToken(
                         selector
                 )
         );
     }
 
-    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterSelector selector) {
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+    default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterSelector selector) {
+        this.spreadsheetFormatterNextTokenAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 selector
         );
     }
 
-    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterSelector selector,
-                                                               final SpreadsheetFormatterSelectorTextComponent expected) {
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+    default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterSelector selector,
+                                                               final SpreadsheetFormatterSelectorToken expected) {
+        this.spreadsheetFormatterNextTokenAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 selector,
                 expected
         );
     }
 
-    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterSelector selector,
-                                                               final Optional<SpreadsheetFormatterSelectorTextComponent> expected) {
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+    default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterSelector selector,
+                                                               final Optional<SpreadsheetFormatterSelectorToken> expected) {
+        this.spreadsheetFormatterNextTokenAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 selector,
                 expected
         );
     }
 
-    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterProvider provider,
+    default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterProvider provider,
                                                                final SpreadsheetFormatterSelector selector) {
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+        this.spreadsheetFormatterNextTokenAndCheck(
                 provider,
                 selector,
                 Optional.empty()
         );
     }
 
-    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterProvider provider,
+    default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterProvider provider,
                                                                final SpreadsheetFormatterSelector selector,
-                                                               final SpreadsheetFormatterSelectorTextComponent expected) {
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+                                                               final SpreadsheetFormatterSelectorToken expected) {
+        this.spreadsheetFormatterNextTokenAndCheck(
                 provider,
                 selector,
                 Optional.of(expected)
         );
     }
 
-    default void spreadsheetFormatterNextTextComponentAndCheck(final SpreadsheetFormatterProvider provider,
+    default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterProvider provider,
                                                                final SpreadsheetFormatterSelector selector,
-                                                               final Optional<SpreadsheetFormatterSelectorTextComponent> expected) {
+                                                               final Optional<SpreadsheetFormatterSelectorToken> expected) {
         this.checkEquals(
                 expected,
-                provider.spreadsheetFormatterNextTextComponent(selector),
+                provider.spreadsheetFormatterNextToken(selector),
                 provider::toString
         );
     }

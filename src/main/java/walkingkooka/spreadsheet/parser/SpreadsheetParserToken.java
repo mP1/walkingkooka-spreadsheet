@@ -1104,7 +1104,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
 
     /**
      * Converts this token to its {@link Expression} equivalent. Token sub-classes that represent a complete value
-     * typically have a {@link Expression} equivalent, while those holding symbols or textComponents such as a decimal-point
+     * typically have a {@link Expression} equivalent, while those holding symbols or tokens such as a decimal-point
      * are not.
      */
     public final Optional<Expression> toExpression(final ExpressionEvaluationContext context) {

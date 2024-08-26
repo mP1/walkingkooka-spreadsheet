@@ -51,8 +51,8 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
     }
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck();
+    public void testTokens() {
+        this.tokensAndCheck();
     }
 
     @Test

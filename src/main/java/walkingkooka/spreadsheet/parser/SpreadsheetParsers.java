@@ -48,7 +48,7 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
- * Numerous {@link Parser parsers} that parse individual textComponents of a formula or an entire formula.
+ * Numerous {@link Parser parsers} that parse individual tokens of a formula or an entire formula.
  */
 public final class SpreadsheetParsers implements PublicStaticHelper {
 

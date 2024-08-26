@@ -30,8 +30,8 @@ public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatter
     }
 
     @Test
-    public void testTextComponent() {
-        this.textComponentsAndCheck(
+    public void testToken() {
+        this.tokensAndCheck(
                 this.createContext(),
                 Lists.empty()
         );

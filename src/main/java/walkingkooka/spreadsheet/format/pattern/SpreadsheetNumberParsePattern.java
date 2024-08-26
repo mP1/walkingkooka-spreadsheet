@@ -126,7 +126,7 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
     }
 
     /**
-     * The outer {@link List} contains an element for each pattern, with the inner {@link List} containing the textComponents.
+     * The outer {@link List} contains an element for each pattern, with the inner {@link List} containing the tokens.
      */
     final List<List<SpreadsheetNumberParsePatternComponent>> patternComponents;
 

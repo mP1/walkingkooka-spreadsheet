@@ -307,14 +307,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         }
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
-    public void testTextComponentsColorNumber() {
-        this.textComponentsAndCheck(
+    public void testTokensColorNumber() {
+        this.tokensAndCheck(
                 this.createFormatter("[Color 1]"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "[Color 1]",
                         "[Color 1]",
                         alternatives(
@@ -329,11 +329,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     }
 
     @Test
-    public void testTextComponentsColorName() {
-        this.textComponentsAndCheck(
+    public void testTokensColorName() {
+        this.tokensAndCheck(
                 this.createFormatter("[Red]"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "[Red]",
                         "[Red]",
                         alternatives(
@@ -346,10 +346,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         );
     }
 
-    private List<SpreadsheetFormatterSelectorTextComponentAlternative> alternatives(final String csv) {
+    private List<SpreadsheetFormatterSelectorTokenAlternative> alternatives(final String csv) {
         return Arrays.stream(csv.split(","))
                 .map(t -> "[" + t + "]")
-                .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(
                                 t,
                                 t
                         )

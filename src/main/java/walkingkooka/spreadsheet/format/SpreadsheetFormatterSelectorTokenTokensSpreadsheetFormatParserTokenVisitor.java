@@ -29,23 +29,23 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * A {@link SpreadsheetFormatParserTokenVisitor} that is used to visit tokens and produce {@link SpreadsheetFormatterSelectorTextComponent} including alternatives.
+ * A {@link SpreadsheetFormatParserTokenVisitor} that is used to visit tokens and produce {@link SpreadsheetFormatterSelectorToken} including alternatives.
  * Note currently labels in all cases are pattern text not actual labels such as DAY but pattern symbols such as D or DD.
  */
-final class SpreadsheetFormatterSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    // only called by SpreadsheetFormatterSelectorTextComponent#textComponents
-    static List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatParserToken token,
-                                                                          final SpreadsheetFormatterContext context) {
+    // only called by SpreadsheetFormatterSelectorToken#tokens
+    static List<SpreadsheetFormatterSelectorToken> textComponents(final SpreadsheetFormatParserToken token,
+                                                                  final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetFormatterSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatterSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor(context);
+        final SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenVisitor(context);
         visitor.accept(token);
         return visitor.textComponents;
     }
 
-    SpreadsheetFormatterSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor(final SpreadsheetFormatterContext context) {
+    SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenVisitor(final SpreadsheetFormatterContext context) {
         this.textComponents = Lists.array();
         this.context = context;
     }
@@ -61,7 +61,7 @@ final class SpreadsheetFormatterSelectorTextComponentTextComponentsSpreadsheetFo
             final String text = token.text();
 
             this.textComponents.add(
-                    SpreadsheetFormatterSelectorTextComponent.with(
+                    SpreadsheetFormatterSelectorToken.with(
                             text, // label
                             text, // text,
                             this.alternatives(
@@ -78,16 +78,16 @@ final class SpreadsheetFormatterSelectorTextComponentTextComponentsSpreadsheetFo
                 Visiting.CONTINUE;
     }
 
-    private List<SpreadsheetFormatterSelectorTextComponentAlternative> alternatives(final SpreadsheetFormatParserTokenKind kind,
-                                                                                    final String text) {
+    private List<SpreadsheetFormatterSelectorTokenAlternative> alternatives(final SpreadsheetFormatParserTokenKind kind,
+                                                                            final String text) {
         return kind.alternatives()
                 .stream()
                 .filter(t -> false == t.equals(text))
-                .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t))
                 .collect(Collectors.toList());
     }
 
-    private final List<SpreadsheetFormatterSelectorTextComponent> textComponents;
+    private final List<SpreadsheetFormatterSelectorToken> textComponents;
 
     private final SpreadsheetFormatterContext context;
 

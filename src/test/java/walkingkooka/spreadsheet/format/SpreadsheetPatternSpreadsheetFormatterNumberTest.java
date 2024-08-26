@@ -2550,84 +2550,84 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         };
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck(
+    public void testTokens() {
+        this.tokensAndCheck(
                 this.createFormatter("$#0.00"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "$",
                         "$",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "#",
                         "#",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         ".",
                         ".",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 )
         );
     }
 
     @Test
-    public void testTextComponentsWithColor() {
-        this.textComponentsAndCheck(
+    public void testTokensWithColor() {
+        this.tokensAndCheck(
                 this.createFormatter("[RED]0.00"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "[RED]",
                         "[RED]",
                         Stream.concat(
                                 SpreadsheetColorName.DEFAULTS.stream()
                                         .map(n -> "[" + n.text() + "]")
-                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t)),
+                                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t)),
                                 IntStream.rangeClosed(
                                                 SpreadsheetColors.MIN,
                                                 SpreadsheetColors.MAX
                                         ).mapToObj(n -> "[Color " + n + "]")
-                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t))
                         ).collect(Collectors.toList())
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         ".",
                         ".",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 )
         );
     }

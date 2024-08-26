@@ -35,31 +35,31 @@ import java.util.List;
  * yyyy / mm / dd
  * </pre>
  */
-public final class SpreadsheetFormatterSelectorTextComponent implements PluginSelectorTokenLike<SpreadsheetFormatterSelectorTextComponentAlternative> {
+public final class SpreadsheetFormatterSelectorToken implements PluginSelectorTokenLike<SpreadsheetFormatterSelectorTokenAlternative> {
 
     /**
      * A constant representing no alternatives.
      */
-    public final static List<SpreadsheetFormatterSelectorTextComponentAlternative> NO_ALTERNATIVES = Lists.empty();
+    public final static List<SpreadsheetFormatterSelectorTokenAlternative> NO_ALTERNATIVES = Lists.empty();
 
     /**
      * This method is intended to only be called by {@link SpreadsheetFormatter} that contain a {@link SpreadsheetFormatParserToken}.
      */
-    static List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatParserToken token,
-                                                                          final SpreadsheetFormatterContext context) {
-        return SpreadsheetFormatterSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor.textComponents(
+    static List<SpreadsheetFormatterSelectorToken> textComponents(final SpreadsheetFormatParserToken token,
+                                                                  final SpreadsheetFormatterContext context) {
+        return SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenVisitor.textComponents(
                 token,
                 context
         );
     }
 
     /**
-     * General purpose factory that creates a new {@link SpreadsheetFormatterSelectorTextComponent}.
+     * General purpose factory that creates a new {@link SpreadsheetFormatterSelectorToken}.
      */
-    public static SpreadsheetFormatterSelectorTextComponent with(final String label,
-                                                                 final String text,
-                                                                 final List<SpreadsheetFormatterSelectorTextComponentAlternative> alternatives) {
-        return new SpreadsheetFormatterSelectorTextComponent(
+    public static SpreadsheetFormatterSelectorToken with(final String label,
+                                                         final String text,
+                                                         final List<SpreadsheetFormatterSelectorTokenAlternative> alternatives) {
+        return new SpreadsheetFormatterSelectorToken(
                 PluginSelectorToken.with(
                         label,
                         text,
@@ -68,7 +68,7 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
         );
     }
 
-    private SpreadsheetFormatterSelectorTextComponent(final PluginSelectorToken<SpreadsheetFormatterSelectorTextComponentAlternative> component) {
+    private SpreadsheetFormatterSelectorToken(final PluginSelectorToken<SpreadsheetFormatterSelectorTokenAlternative> component) {
         this.component = component;
     }
 
@@ -83,11 +83,11 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
     }
 
     @Override
-    public List<SpreadsheetFormatterSelectorTextComponentAlternative> alternatives() {
+    public List<SpreadsheetFormatterSelectorTokenAlternative> alternatives() {
         return this.component.alternatives();
     }
 
-    private final PluginSelectorToken<SpreadsheetFormatterSelectorTextComponentAlternative> component;
+    private final PluginSelectorToken<SpreadsheetFormatterSelectorTokenAlternative> component;
 
     // HashCodeEqualsDefined..........................................................................................
 
@@ -99,11 +99,11 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterSelectorTextComponent &&
+                other instanceof SpreadsheetFormatterSelectorToken &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetFormatterSelectorTextComponent other) {
+    private boolean equals0(final SpreadsheetFormatterSelectorToken other) {
         return this.component.equals(other.component);
     }
 
@@ -114,22 +114,22 @@ public final class SpreadsheetFormatterSelectorTextComponent implements PluginSe
 
     // json.............................................................................................................
 
-    static SpreadsheetFormatterSelectorTextComponent unmarshall(final JsonNode node,
-                                                                final JsonNodeUnmarshallContext context) {
+    static SpreadsheetFormatterSelectorToken unmarshall(final JsonNode node,
+                                                        final JsonNodeUnmarshallContext context) {
         return PluginSelectorTokenLike.unmarshall(
                 node,
                 context,
-                SpreadsheetFormatterSelectorTextComponent::with,
-                SpreadsheetFormatterSelectorTextComponentAlternative.class
+                SpreadsheetFormatterSelectorToken::with,
+                SpreadsheetFormatterSelectorTokenAlternative.class
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorTextComponent.class),
-                SpreadsheetFormatterSelectorTextComponent::unmarshall,
-                SpreadsheetFormatterSelectorTextComponent::marshall,
-                SpreadsheetFormatterSelectorTextComponent.class
+                JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorToken.class),
+                SpreadsheetFormatterSelectorToken::unmarshall,
+                SpreadsheetFormatterSelectorToken::marshall,
+                SpreadsheetFormatterSelectorToken.class
         );
     }
 }

@@ -88,24 +88,24 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
         );
     }
 
-    // textComponentsAndCheck...........................................................................................
+    // tokensAndCheck...................................................................................................
 
-    default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
-                                        final SpreadsheetFormatterContext context,
-                                        final SpreadsheetFormatterSelectorTextComponent... expected) {
-        this.textComponentsAndCheck(
+    default void tokensAndCheck(final SpreadsheetFormatter formatter,
+                                final SpreadsheetFormatterContext context,
+                                final SpreadsheetFormatterSelectorToken... expected) {
+        this.tokensAndCheck(
                 formatter,
                 context,
                 Lists.of(expected)
         );
     }
 
-    default void textComponentsAndCheck(final SpreadsheetFormatter formatter,
-                                        final SpreadsheetFormatterContext context,
-                                        final List<SpreadsheetFormatterSelectorTextComponent> expected) {
+    default void tokensAndCheck(final SpreadsheetFormatter formatter,
+                                final SpreadsheetFormatterContext context,
+                                final List<SpreadsheetFormatterSelectorToken> expected) {
         this.checkEquals(
                 expected,
-                formatter.textComponents(context),
+                formatter.tokens(context),
                 formatter::toString
         );
     }

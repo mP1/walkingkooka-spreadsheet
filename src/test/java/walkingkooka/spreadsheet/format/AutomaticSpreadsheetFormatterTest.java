@@ -358,11 +358,11 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         return SpreadsheetFormatterContexts.fake();
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck();
+    public void testTokens() {
+        this.tokensAndCheck();
     }
 
     // class............................................................................................................

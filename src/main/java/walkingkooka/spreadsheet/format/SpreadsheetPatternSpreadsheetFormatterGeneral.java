@@ -211,14 +211,14 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     }
 
     @Override
-    public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
+    public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
         return TEXT_COMPONENTS;
     }
 
-    private final static List<SpreadsheetFormatterSelectorTextComponent> TEXT_COMPONENTS = Lists.of(
-            SpreadsheetFormatterSelectorTextComponent.with(
+    private final static List<SpreadsheetFormatterSelectorToken> TEXT_COMPONENTS = Lists.of(
+            SpreadsheetFormatterSelectorToken.with(
                     "General",
                     "General",
                     Lists.empty()

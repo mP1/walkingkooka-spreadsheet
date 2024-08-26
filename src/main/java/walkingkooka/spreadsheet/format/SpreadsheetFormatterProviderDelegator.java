@@ -47,8 +47,8 @@ public interface SpreadsheetFormatterProviderDelegator extends SpreadsheetFormat
     }
 
     @Override
-    default Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
-        return this.spreadsheetFormatterProvider().spreadsheetFormatterNextTextComponent(selector);
+    default Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector selector) {
+        return this.spreadsheetFormatterProvider().spreadsheetFormatterNextToken(selector);
     }
 
     @Override

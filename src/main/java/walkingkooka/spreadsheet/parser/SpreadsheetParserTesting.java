@@ -24,7 +24,7 @@ import java.util.List;
 
 public interface SpreadsheetParserTesting extends ParserTesting {
 
-    // textComponentsAndCheck...........................................................................................
+    // tokensAndCheck...........................................................................................
 
     default void textComponentsAndCheck(final SpreadsheetParser parser,
                                         final SpreadsheetParserContext context,

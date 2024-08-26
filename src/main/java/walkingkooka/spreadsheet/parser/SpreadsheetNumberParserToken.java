@@ -24,7 +24,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * Holds a {@link walkingkooka.tree.expression.ExpressionNumber} value along with the textComponents and original text.
+ * Holds a {@link walkingkooka.tree.expression.ExpressionNumber} value along with the tokens and original text.
  */
 public final class SpreadsheetNumberParserToken extends SpreadsheetParentParserToken {
 
@@ -37,7 +37,7 @@ public final class SpreadsheetNumberParserToken extends SpreadsheetParentParserT
     }
 
     /**
-     * Creates a {@link ExpressionNumber} parse the textComponents in this {@link SpreadsheetNumberParserToken}.
+     * Creates a {@link ExpressionNumber} parse the tokens in this {@link SpreadsheetNumberParserToken}.
      */
     public ExpressionNumber toNumber(final ExpressionNumberContext context) {
         return SpreadsheetParserTokenVisitorExpressionNumber.toExpressionNumber(
