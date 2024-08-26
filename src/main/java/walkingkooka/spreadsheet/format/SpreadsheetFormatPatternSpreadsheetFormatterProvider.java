@@ -298,7 +298,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                 "", // text
                 kind.spreadsheetFormatParserTokenKinds()
                         .stream()
-                        .filter(k -> false == k.isNextTextComponentIgnored())
+                        .filter(k -> false == k.isNextTokenIgnored())
                         .filter(k -> null == k || false == spreadsheetFormatParserTokenKind.isDuplicate(k))
                         .flatMap(k -> k.alternatives().stream())
                         .distinct()
