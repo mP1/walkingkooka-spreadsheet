@@ -156,21 +156,21 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
             final SpreadsheetParsePattern pattern = (SpreadsheetParsePattern)kind.parse(text);
             next = SpreadsheetFormatParserTokenKind.last(
                             pattern.value()
-                    ).map(k -> toSpreadsheetParserSelectorTextComponent(kind, k))
+                    ).map(k -> toSpreadsheetParserSelectorToken(kind, k))
                     .orElse(null);
         }
 
         return next;
     }
 
-    private static SpreadsheetParserSelectorToken toSpreadsheetParserSelectorTextComponent(final SpreadsheetPatternKind kind,
+    private static SpreadsheetParserSelectorToken toSpreadsheetParserSelectorToken(final SpreadsheetPatternKind kind,
                                                                                            final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
         return SpreadsheetParserSelectorToken.with(
                 "", // label
                 "", // text
                 kind.spreadsheetFormatParserTokenKinds()
                         .stream()
-                        .filter(k -> false == k.isNextTextComponentIgnored())
+                        .filter(k -> false == k.isNextTokenIgnored())
                         .filter(k -> null == k || false == spreadsheetFormatParserTokenKind.isDuplicate(k))
                         .flatMap(k -> k.alternatives().stream())
                         .distinct()

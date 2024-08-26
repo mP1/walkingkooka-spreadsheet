@@ -28,7 +28,7 @@ import java.util.Optional;
  */
 final class SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    // only called by SpreadsheetFormatterSelectorToken#nextTextComponent
+    // only called by SpreadsheetFormatterSelectorToken#nextToken
     static Optional<SpreadsheetFormatParserTokenKind> last(final ParserToken token) {
         Objects.requireNonNull(token, "token");
 

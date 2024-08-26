@@ -48,7 +48,7 @@ public final class SpreadsheetParserSelectorToken implements PluginSelectorToken
      */
     public static List<SpreadsheetParserSelectorToken> tokens(final ParserToken token,
                                                               final SpreadsheetParserContext context) {
-        return SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor.textComponents(
+        return SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor.tokens(
                 token,
                 context
         );

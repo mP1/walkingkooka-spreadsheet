@@ -35,18 +35,18 @@ import java.util.stream.Collectors;
 final class SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     // only called by SpreadsheetFormatterSelectorToken#tokens
-    static List<SpreadsheetFormatterSelectorToken> textComponents(final SpreadsheetFormatParserToken token,
+    static List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatParserToken token,
                                                                   final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(context, "context");
 
         final SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenVisitor(context);
         visitor.accept(token);
-        return visitor.textComponents;
+        return visitor.tokens;
     }
 
     SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenVisitor(final SpreadsheetFormatterContext context) {
-        this.textComponents = Lists.array();
+        this.tokens = Lists.array();
         this.context = context;
     }
 
@@ -60,7 +60,7 @@ final class SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenV
             // maybe later use a real label like hour rather than its pattern symbol character(s).
             final String text = token.text();
 
-            this.textComponents.add(
+            this.tokens.add(
                     SpreadsheetFormatterSelectorToken.with(
                             text, // label
                             text, // text,
@@ -87,12 +87,12 @@ final class SpreadsheetFormatterSelectorTokenTokensSpreadsheetFormatParserTokenV
                 .collect(Collectors.toList());
     }
 
-    private final List<SpreadsheetFormatterSelectorToken> textComponents;
+    private final List<SpreadsheetFormatterSelectorToken> tokens;
 
     private final SpreadsheetFormatterContext context;
 
     @Override
     public String toString() {
-        return this.textComponents.toString();
+        return this.tokens.toString();
     }
 }
