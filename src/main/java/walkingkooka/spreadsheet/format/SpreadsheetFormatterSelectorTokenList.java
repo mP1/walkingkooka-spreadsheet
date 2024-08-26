@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * An immutable list of {@link SpreadsheetFormatterSelectorTextComponent}. This exists primarily to support marshalling/unmarshalling JSON which does
+ * An immutable list of {@link SpreadsheetFormatterSelectorToken}. This exists primarily to support marshalling/unmarshalling JSON which does
  * not support generic types.
  * <pre>
  * [
@@ -58,25 +58,25 @@ import java.util.Objects;
  * ]
  * </pre>
  */
-public final class SpreadsheetFormatterSelectorTextComponentList extends AbstractList<SpreadsheetFormatterSelectorTextComponent>
-        implements ImmutableListDefaults<SpreadsheetFormatterSelectorTextComponentList, SpreadsheetFormatterSelectorTextComponent> {
+public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<SpreadsheetFormatterSelectorToken>
+        implements ImmutableListDefaults<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken> {
 
-    public static SpreadsheetFormatterSelectorTextComponentList with(final List<SpreadsheetFormatterSelectorTextComponent> components) {
+    public static SpreadsheetFormatterSelectorTokenList with(final List<SpreadsheetFormatterSelectorToken> components) {
         Objects.requireNonNull(components, "components");
 
-        return components instanceof SpreadsheetFormatterSelectorTextComponentList ?
-                (SpreadsheetFormatterSelectorTextComponentList) components :
-                new SpreadsheetFormatterSelectorTextComponentList(
+        return components instanceof SpreadsheetFormatterSelectorTokenList ?
+                (SpreadsheetFormatterSelectorTokenList) components :
+                new SpreadsheetFormatterSelectorTokenList(
                         Lists.immutable(components)
                 );
     }
 
-    private SpreadsheetFormatterSelectorTextComponentList(final List<SpreadsheetFormatterSelectorTextComponent> components) {
+    private SpreadsheetFormatterSelectorTokenList(final List<SpreadsheetFormatterSelectorToken> components) {
         this.components = components;
     }
 
     @Override
-    public SpreadsheetFormatterSelectorTextComponent get(int index) {
+    public SpreadsheetFormatterSelectorToken get(int index) {
         return this.components.get(index);
     }
 
@@ -85,11 +85,11 @@ public final class SpreadsheetFormatterSelectorTextComponentList extends Abstrac
         return this.components.size();
     }
 
-    private final List<SpreadsheetFormatterSelectorTextComponent> components;
+    private final List<SpreadsheetFormatterSelectorToken> components;
 
     @Override
-    public SpreadsheetFormatterSelectorTextComponentList setElements(final List<SpreadsheetFormatterSelectorTextComponent> components) {
-        final SpreadsheetFormatterSelectorTextComponentList copy = with(components);
+    public SpreadsheetFormatterSelectorTokenList setElements(final List<SpreadsheetFormatterSelectorToken> components) {
+        final SpreadsheetFormatterSelectorTokenList copy = with(components);
         return this.equals(copy) ?
                 this :
                 copy;
@@ -97,13 +97,13 @@ public final class SpreadsheetFormatterSelectorTextComponentList extends Abstrac
 
     // json.............................................................................................................
 
-    static SpreadsheetFormatterSelectorTextComponentList unmarshall(final JsonNode node,
-                                                                    final JsonNodeUnmarshallContext context) {
+    static SpreadsheetFormatterSelectorTokenList unmarshall(final JsonNode node,
+                                                            final JsonNodeUnmarshallContext context) {
         return with(
                 Cast.to(
                         context.unmarshallList(
                                 node,
-                                SpreadsheetFormatterSelectorTextComponent.class
+                                SpreadsheetFormatterSelectorToken.class
                         )
                 )
         );
@@ -114,17 +114,17 @@ public final class SpreadsheetFormatterSelectorTextComponentList extends Abstrac
     }
 
     static {
-        SpreadsheetFormatterSelectorTextComponent.with(
+        SpreadsheetFormatterSelectorToken.with(
                 "", // label
                 "", // text
-                SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
         );
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorTextComponentList.class),
-                SpreadsheetFormatterSelectorTextComponentList::unmarshall,
-                SpreadsheetFormatterSelectorTextComponentList::marshall,
-                SpreadsheetFormatterSelectorTextComponentList.class
+                JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorTokenList.class),
+                SpreadsheetFormatterSelectorTokenList::unmarshall,
+                SpreadsheetFormatterSelectorTokenList::marshall,
+                SpreadsheetFormatterSelectorTokenList.class
         );
     }
 }

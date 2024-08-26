@@ -91,61 +91,61 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     }
 
     @Test
-    public void testSpreadsheetFormatterNextTextComponentAutomatic() {
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+    public void testSpreadsheetFormatterNextTokenAutomatic() {
+        this.spreadsheetFormatterNextTokenAndCheck(
                 SpreadsheetFormatterSelector.parse("automatic")
         );
     }
 
     @Test
-    public void testSpreadsheetFormatterNextTextComponentDifferentFormatterName() {
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+    public void testSpreadsheetFormatterNextTokenDifferentFormatterName() {
+        this.spreadsheetFormatterNextTokenAndCheck(
                 SpreadsheetFormatterSelector.parse("" + NEW_FORMATTER_NAME),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "d",
                                         "d"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "dd",
                                         "dd"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "ddd",
                                         "ddd"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "dddd",
                                         "dddd"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "m",
                                         "m"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mm",
                                         "mm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmm",
                                         "mmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmmm",
                                         "mmmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmmmm",
                                         "mmmmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "yy",
                                         "yy"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "yyyy",
                                         "yyyy"
                                 )
@@ -155,38 +155,38 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     }
 
     @Test
-    public void testSpreadsheetFormatterNextTextComponentDifferentFormatterNameNotEmptyText() {
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+    public void testSpreadsheetFormatterNextTokenDifferentFormatterNameNotEmptyText() {
+        this.spreadsheetFormatterNextTokenAndCheck(
                 SpreadsheetFormatterSelector.parse("" + NEW_FORMATTER_NAME + " dd"),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "",
                         "",
                         Lists.of(
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "m",
                                         "m"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mm",
                                         "mm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmm",
                                         "mmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmmm",
                                         "mmmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmmmm",
                                         "mmmmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "yy",
                                         "yy"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "yyyy",
                                         "yyyy"
                                 )

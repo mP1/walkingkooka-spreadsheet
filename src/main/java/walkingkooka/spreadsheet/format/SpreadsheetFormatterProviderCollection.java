@@ -96,10 +96,10 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     }
 
     @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
+    public Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        return NO_NEXT_TEXT_COMPONENT;
+        return NO_NEXT_TOKEN;
     }
 
     @Override

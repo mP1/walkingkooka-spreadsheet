@@ -116,7 +116,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     private final Object color;
 
     /**
-     * Executes each of the format textComponents eventually resulting in a {@link String}.
+     * Executes each of the format tokens eventually resulting in a {@link String}.
      */
     private String format1(final SpreadsheetPatternSpreadsheetFormatterNumberContext context) {
         this.components.forEach(c -> c.append(context));
@@ -124,8 +124,8 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     }
 
     @Override
-    public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
-        return SpreadsheetFormatterSelectorTextComponent.textComponents(
+    public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
+        return SpreadsheetFormatterSelectorToken.textComponents(
                 this.token,
                 context
         );

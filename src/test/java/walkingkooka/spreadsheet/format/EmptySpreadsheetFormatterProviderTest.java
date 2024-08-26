@@ -47,8 +47,8 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     }
 
     @Test
-    public void testSpreadsheetFormatterNextTextComponentFails() {
-        this.spreadsheetFormatterNextTextComponentFails(
+    public void testSpreadsheetFormatterNextTokenFails() {
+        this.spreadsheetFormatterNextTokenFails(
                 SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + "")
         );
     }

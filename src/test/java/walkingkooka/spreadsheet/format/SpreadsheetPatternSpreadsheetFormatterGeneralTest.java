@@ -376,13 +376,13 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
         };
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck(
+    public void testTokens() {
+        this.tokensAndCheck(
                 SpreadsheetFormatterContexts.fake(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "General",
                         "General",
                         Lists.empty()

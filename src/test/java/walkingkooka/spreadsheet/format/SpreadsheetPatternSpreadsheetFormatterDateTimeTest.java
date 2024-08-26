@@ -729,68 +729,68 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                 .transform((v, c) -> v.cast(SequenceParserToken.class).value().get(0));
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck(
+    public void testTokens() {
+        this.tokensAndCheck(
                 this.createFormatter("d/mm/yyyy"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "d",
                         "d",
                         Lists.of(
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "dd",
                                         "dd"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "ddd",
                                         "ddd"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "dddd",
                                         "dddd"
                                 )
                         )
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "/",
                         "/",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "mm",
                         "mm",
                         Lists.of(
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "m",
                                         "m"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmm",
                                         "mmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmmm",
                                         "mmmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmmmm",
                                         "mmmmm"
                                 )
                         )
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "/",
                         "/",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "yyyy",
                         "yyyy",
                         Lists.of(
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "yy",
                                         "yy"
                                 )
@@ -800,79 +800,79 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testTextComponentsWithColor() {
-        this.textComponentsAndCheck(
+    public void testTokensWithColor() {
+        this.tokensAndCheck(
                 this.createFormatter("[RED]d/mm/yyyy"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "[RED]",
                         "[RED]",
                         Stream.concat(
                                 SpreadsheetColorName.DEFAULTS.stream()
                                         .map(n -> "[" + n.text() + "]")
-                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t)),
+                                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t)),
                                 IntStream.rangeClosed(
                                                 SpreadsheetColors.MIN,
                                                 SpreadsheetColors.MAX
                                         ).mapToObj(n -> "[Color " + n + "]")
-                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t))
                         ).collect(Collectors.toList())
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "d",
                         "d",
                         Lists.of(
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "dd",
                                         "dd"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "ddd",
                                         "ddd"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "dddd",
                                         "dddd"
                                 )
                         )
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "/",
                         "/",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "mm",
                         "mm",
                         Lists.of(
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "m",
                                         "m"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmm",
                                         "mmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmmm",
                                         "mmmm"
                                 ),
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "mmmmm",
                                         "mmmmm"
                                 )
                         )
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "/",
                         "/",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "yyyy",
                         "yyyy",
                         Lists.of(
-                                SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                                SpreadsheetFormatterSelectorTokenAlternative.with(
                                         "yy",
                                         "yy"
                                 )

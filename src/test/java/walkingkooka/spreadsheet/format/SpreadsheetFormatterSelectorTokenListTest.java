@@ -30,42 +30,42 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SpreadsheetFormatterSelectorTextComponentListTest implements ListTesting2<SpreadsheetFormatterSelectorTextComponentList, SpreadsheetFormatterSelectorTextComponent>,
-        ClassTesting<SpreadsheetFormatterSelectorTextComponentList>,
-        ImmutableListTesting<SpreadsheetFormatterSelectorTextComponentList, SpreadsheetFormatterSelectorTextComponent>,
-        JsonNodeMarshallingTesting<SpreadsheetFormatterSelectorTextComponentList> {
+public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken>,
+        ClassTesting<SpreadsheetFormatterSelectorTokenList>,
+        ImmutableListTesting<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken>,
+        JsonNodeMarshallingTesting<SpreadsheetFormatterSelectorTokenList> {
 
-    private final static SpreadsheetFormatterSelectorTextComponent COMPONENT1 = SpreadsheetFormatterSelectorTextComponent.with(
+    private final static SpreadsheetFormatterSelectorToken COMPONENT1 = SpreadsheetFormatterSelectorToken.with(
             "label1",
             "text1",
             Lists.of(
-                    SpreadsheetFormatterSelectorTextComponentAlternative.with(
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
                             "alternative-label-1",
                             "alternative-text-1"
                     )
             )
     );
 
-    private final static SpreadsheetFormatterSelectorTextComponent COMPONENT2 = SpreadsheetFormatterSelectorTextComponent.with(
+    private final static SpreadsheetFormatterSelectorToken COMPONENT2 = SpreadsheetFormatterSelectorToken.with(
             "label1",
             "text1",
-            SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+            SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
     );
 
     @Test
     public void testWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetFormatterSelectorTextComponentList.with(null)
+                () -> SpreadsheetFormatterSelectorTokenList.with(null)
         );
     }
 
     @Test
     public void testDoesntDoubleWrap() {
-        final SpreadsheetFormatterSelectorTextComponentList list = this.createList();
+        final SpreadsheetFormatterSelectorTokenList list = this.createList();
         assertSame(
                 list,
-                SpreadsheetFormatterSelectorTextComponentList.with(list)
+                SpreadsheetFormatterSelectorTokenList.with(list)
         );
     }
 
@@ -98,7 +98,7 @@ public class SpreadsheetFormatterSelectorTextComponentListTest implements ListTe
 
     @Test
     public void testRemoveIndexFails() {
-        final SpreadsheetFormatterSelectorTextComponentList list = this.createList();
+        final SpreadsheetFormatterSelectorTokenList list = this.createList();
 
         this.removeIndexFails(
                 list,
@@ -108,7 +108,7 @@ public class SpreadsheetFormatterSelectorTextComponentListTest implements ListTe
 
     @Test
     public void testRemoveElementFails() {
-        final SpreadsheetFormatterSelectorTextComponentList list = this.createList();
+        final SpreadsheetFormatterSelectorTokenList list = this.createList();
 
         this.removeFails(
                 list,
@@ -117,8 +117,8 @@ public class SpreadsheetFormatterSelectorTextComponentListTest implements ListTe
     }
 
     @Override
-    public SpreadsheetFormatterSelectorTextComponentList createList() {
-        return SpreadsheetFormatterSelectorTextComponentList.with(
+    public SpreadsheetFormatterSelectorTokenList createList() {
+        return SpreadsheetFormatterSelectorTokenList.with(
                 Lists.of(
                         COMPONENT1,
                         COMPONENT2
@@ -127,8 +127,8 @@ public class SpreadsheetFormatterSelectorTextComponentListTest implements ListTe
     }
 
     @Override
-    public Class<SpreadsheetFormatterSelectorTextComponentList> type() {
-        return SpreadsheetFormatterSelectorTextComponentList.class;
+    public Class<SpreadsheetFormatterSelectorTokenList> type() {
+        return SpreadsheetFormatterSelectorTokenList.class;
     }
 
     @Override
@@ -185,16 +185,16 @@ public class SpreadsheetFormatterSelectorTextComponentListTest implements ListTe
     }
 
     @Override
-    public SpreadsheetFormatterSelectorTextComponentList unmarshall(final JsonNode json,
-                                                                    final JsonNodeUnmarshallContext context) {
-        return SpreadsheetFormatterSelectorTextComponentList.unmarshall(
+    public SpreadsheetFormatterSelectorTokenList unmarshall(final JsonNode json,
+                                                            final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatterSelectorTokenList.unmarshall(
                 json,
                 context
         );
     }
 
     @Override
-    public SpreadsheetFormatterSelectorTextComponentList createJsonNodeMarshallingValue() {
+    public SpreadsheetFormatterSelectorTokenList createJsonNodeMarshallingValue() {
         return this.createList();
     }
 }

@@ -160,33 +160,33 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         );
     }
 
-    // textComponentsAndCheck...........................................................................................
+    // tokensAndCheck...........................................................................................
 
     @Test
-    default void testTextComponentWithNullContextFails() {
+    default void testTokenWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createFormatter().textComponents(null)
+                () -> this.createFormatter().tokens(null)
         );
     }
 
-    default void textComponentsAndCheck() {
-        this.textComponentsAndCheck(
+    default void tokensAndCheck() {
+        this.tokensAndCheck(
                 this.createContext()
         );
     }
 
-    default void textComponentsAndCheck(final SpreadsheetFormatterContext context,
-                                        final SpreadsheetFormatterSelectorTextComponent... expected) {
-        this.textComponentsAndCheck(
+    default void tokensAndCheck(final SpreadsheetFormatterContext context,
+                                final SpreadsheetFormatterSelectorToken... expected) {
+        this.tokensAndCheck(
                 context,
                 Lists.of(expected)
         );
     }
 
-    default void textComponentsAndCheck(final SpreadsheetFormatterContext context,
-                                        final List<SpreadsheetFormatterSelectorTextComponent> expected) {
-        this.textComponentsAndCheck(
+    default void tokensAndCheck(final SpreadsheetFormatterContext context,
+                                final List<SpreadsheetFormatterSelectorToken> expected) {
+        this.tokensAndCheck(
                 this.createFormatter(),
                 context,
                 expected

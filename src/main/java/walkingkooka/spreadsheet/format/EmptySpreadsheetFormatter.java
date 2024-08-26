@@ -46,7 +46,7 @@ final class EmptySpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
-    public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
+    public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
         return NO_TEXT_COMPONENTS;

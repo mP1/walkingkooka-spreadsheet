@@ -628,7 +628,7 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
         return SpreadsheetParserToken.whitespace(" ", " ");
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
     public void testTextComponents() {

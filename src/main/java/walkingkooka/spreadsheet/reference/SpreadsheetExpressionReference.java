@@ -43,7 +43,7 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     }
 
     /**
-     * Adds the given deltas to the relative textComponents of this {@link SpreadsheetExpressionReference} returning
+     * Adds the given deltas to the relative tokens of this {@link SpreadsheetExpressionReference} returning
      * the result.
      */
     public abstract SpreadsheetExpressionReference addIfRelative(final int column,

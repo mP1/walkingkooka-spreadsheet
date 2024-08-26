@@ -217,62 +217,62 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
         }
     }
 
-    // textComponents ..................................................................................................
+    // tokens ..................................................................................................
 
     @Test
-    public void testTextComponentsTextWithPlaceholder() {
-        this.textComponentsAndCheck(
+    public void testTokensTextWithPlaceholder() {
+        this.tokensAndCheck(
                 this.createFormatter("@"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "@",
                         "@",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 )
         );
     }
 
     @Test
-    public void testTextComponentsTextWithPlaceholderTextLiteral() {
-        this.textComponentsAndCheck(
+    public void testTokensTextWithPlaceholderTextLiteral() {
+        this.tokensAndCheck(
                 this.createFormatter("@\"Hello\""),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "@",
                         "@",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "\"Hello\"",
                         "\"Hello\"",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 )
         );
     }
 
     @Test
-    public void testTextComponentsTextWithColor() {
-        this.textComponentsAndCheck(
+    public void testTokensTextWithColor() {
+        this.tokensAndCheck(
                 this.createFormatter("[RED]@"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "[RED]",
                         "[RED]",
                         Stream.concat(
                                 SpreadsheetColorName.DEFAULTS.stream()
                                         .map(n -> "[" + n.text() + "]")
-                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t)),
+                                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t)),
                                 IntStream.rangeClosed(
                                                 SpreadsheetColors.MIN,
                                                 SpreadsheetColors.MAX
                                         ).mapToObj(n -> "[Color " + n + "]")
-                                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t))
                         ).collect(Collectors.toList())
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "@",
                         "@",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 )
         );
     }

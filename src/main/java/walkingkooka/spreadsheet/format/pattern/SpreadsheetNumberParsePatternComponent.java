@@ -126,7 +126,7 @@ abstract class SpreadsheetNumberParsePatternComponent {
     }
 
     /**
-     * Some textComponents (group separator) are not valid within an expression but are valid as a number literal.
+     * Some tokens (group separator) are not valid within an expression but are valid as a number literal.
      */
     abstract boolean isExpressionCompatible();
 

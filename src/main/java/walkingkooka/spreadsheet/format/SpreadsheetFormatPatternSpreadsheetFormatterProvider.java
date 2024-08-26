@@ -203,10 +203,10 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     }
 
     @Override
-    public Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
+    public Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector selector) {
         Objects.requireNonNull(selector, "selector");
 
-        SpreadsheetFormatterSelectorTextComponent next;
+        SpreadsheetFormatterSelectorToken next;
 
         final SpreadsheetFormatterName name = selector.name();
         switch(name.value()) {
@@ -259,16 +259,16 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         return Optional.ofNullable(next);
     }
 
-    private SpreadsheetFormatterSelectorTextComponent formatPatternNextTextComponent(final SpreadsheetFormatterSelector selector,
-                                                                                     final Predicate<SpreadsheetFormatParserTokenKind> filter) {
-        SpreadsheetFormatterSelectorTextComponent next;
+    private SpreadsheetFormatterSelectorToken formatPatternNextTextComponent(final SpreadsheetFormatterSelector selector,
+                                                                             final Predicate<SpreadsheetFormatParserTokenKind> filter) {
+        SpreadsheetFormatterSelectorToken next;
 
         final String text = selector.text()
                 .trim();
         final SpreadsheetPatternKind kind = selector.name()
                 .patternKind;
         if (text.isEmpty()) {
-            next = SpreadsheetFormatterSelectorTextComponent.with(
+            next = SpreadsheetFormatterSelectorToken.with(
                     "", // label
                     "", // text
                     Arrays.stream(SpreadsheetFormatParserTokenKind.values())
@@ -276,7 +276,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                             .flatMap(k -> k.alternatives().stream())
                             .distinct()
                             .sorted()
-                            .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                            .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t))
                             .collect(Collectors.toList())
             );
         } else {
@@ -291,9 +291,9 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         return next;
     }
 
-    private static SpreadsheetFormatterSelectorTextComponent toSpreadsheetFormatterSelectorTextComponent(final SpreadsheetPatternKind kind,
-                                                                                                         final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
-        return SpreadsheetFormatterSelectorTextComponent.with(
+    private static SpreadsheetFormatterSelectorToken toSpreadsheetFormatterSelectorTextComponent(final SpreadsheetPatternKind kind,
+                                                                                                 final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
+        return SpreadsheetFormatterSelectorToken.with(
                 "", // label
                 "", // text
                 kind.spreadsheetFormatParserTokenKinds()
@@ -303,7 +303,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                         .flatMap(k -> k.alternatives().stream())
                         .distinct()
                         .sorted()
-                        .map(t -> SpreadsheetFormatterSelectorTextComponentAlternative.with(t, t))
+                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t))
                         .collect(Collectors.toList())
         );
     }

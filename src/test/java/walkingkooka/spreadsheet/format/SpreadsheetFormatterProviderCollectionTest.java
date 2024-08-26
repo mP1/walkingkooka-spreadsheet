@@ -98,10 +98,10 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     }
 
     @Test
-    public void testSpreadsheetFormatterNextTextComponent() {
+    public void testSpreadsheetFormatterNextToken() {
         final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
-        this.spreadsheetFormatterNextTextComponentAndCheck(
+        this.spreadsheetFormatterNextTokenAndCheck(
                 SpreadsheetFormatterProviderCollection.with(
                         Sets.of(provider)
                 ),

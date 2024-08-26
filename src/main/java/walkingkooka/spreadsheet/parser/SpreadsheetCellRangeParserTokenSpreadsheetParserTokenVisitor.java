@@ -23,7 +23,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * Used to collect the begin and end textComponents for a {@link SpreadsheetCellRangeParserToken}.
+ * Used to collect the begin and end tokens for a {@link SpreadsheetCellRangeParserToken}.
  */
 final class SpreadsheetCellRangeParserTokenSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
 

@@ -83,7 +83,7 @@ final class SpreadsheetPatternSpreadsheetFormatterCollection implements Spreadsh
     final List<SpreadsheetPatternSpreadsheetFormatter> formatters;
 
     @Override
-    public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
+    public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
         return SpreadsheetFormatter.NO_TEXT_COMPONENTS;

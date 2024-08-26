@@ -48,17 +48,17 @@ public interface SpreadsheetFormatterProvider extends Provider {
                                               final ProviderContext context);
 
     /**
-     * Constant for {@link #spreadsheetFormatterNextTextComponent(SpreadsheetFormatterSelector)} when there is no next.
+     * Constant for {@link #spreadsheetFormatterNextToken(SpreadsheetFormatterSelector)} when there is no next.
      */
-    Optional<SpreadsheetFormatterSelectorTextComponent> NO_NEXT_TEXT_COMPONENT = Optional.empty();
+    Optional<SpreadsheetFormatterSelectorToken> NO_NEXT_TOKEN = Optional.empty();
 
     /**
-     * Returns the next {@link SpreadsheetFormatterSelectorTextComponent} for the given {@link SpreadsheetFormatterSelector}.
+     * Returns the next {@link SpreadsheetFormatterSelectorToken} for the given {@link SpreadsheetFormatterSelector}.
      */
-    Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector);
+    Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector selector);
 
     /**
-     * Constant for {@link #spreadsheetFormatterNextTextComponent(SpreadsheetFormatterSelector)} when there is no next.
+     * Constant for {@link #spreadsheetFormatterNextToken(SpreadsheetFormatterSelector)} when there is no next.
      */
     List<SpreadsheetFormatterSample> NO_SPREADSHEET_FORMATTER_SAMPLES = Lists.empty();
 

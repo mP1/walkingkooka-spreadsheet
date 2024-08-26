@@ -339,7 +339,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     /**
      * Aggregates all the patterns for each and every {@link DateFormat}. The flags date and time may be used
-     * to filter or control which pattern textComponents in each {@link DateFormat} are actually recorded in the final
+     * to filter or control which pattern tokens in each {@link DateFormat} are actually recorded in the final
      * pattern and then used to create a {@link SpreadsheetFormatPattern} sub-class.
      */
     private static <P extends SpreadsheetPattern> P javaTextDateFormat(final Iterable<DateFormat> dateFormats,

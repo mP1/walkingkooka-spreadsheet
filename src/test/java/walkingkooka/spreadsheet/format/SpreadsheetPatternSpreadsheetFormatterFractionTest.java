@@ -461,37 +461,37 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
 
     private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck(
+    public void testTokens() {
+        this.tokensAndCheck(
                 this.createFormatter("00/00"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "/",
                         "/",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 ),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "0",
                         "0",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 )
         );
     }

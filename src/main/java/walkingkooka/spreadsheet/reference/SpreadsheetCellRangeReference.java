@@ -760,7 +760,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     }
 
     /**
-     * Adds the given deltas to the relative textComponents of this {@link SpreadsheetCellRangeReference}.
+     * Adds the given deltas to the relative tokens of this {@link SpreadsheetCellRangeReference}.
      */
     @Override
     public SpreadsheetCellRangeReference addIfRelative(final int columnDelta,

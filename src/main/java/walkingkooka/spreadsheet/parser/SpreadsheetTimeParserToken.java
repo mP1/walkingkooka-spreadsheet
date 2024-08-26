@@ -23,7 +23,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 /**
- * Holds a time value along with the textComponents and original text.
+ * Holds a time value along with the tokens and original text.
  */
 public final class SpreadsheetTimeParserToken extends SpreadsheetParentParserToken {
 
@@ -36,7 +36,7 @@ public final class SpreadsheetTimeParserToken extends SpreadsheetParentParserTok
     }
 
     /**
-     * Creates a {@link LocalTime} parse the textComponents in this {@link SpreadsheetTimeParserToken}.
+     * Creates a {@link LocalTime} parse the tokens in this {@link SpreadsheetTimeParserToken}.
      */
     public LocalTime toLocalTime() {
         return SpreadsheetParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(this, Integer.MAX_VALUE)

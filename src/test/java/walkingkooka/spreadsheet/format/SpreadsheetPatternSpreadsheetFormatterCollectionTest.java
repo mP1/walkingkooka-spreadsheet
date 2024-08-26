@@ -144,11 +144,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
         return SpreadsheetFormatterContexts.fake();
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck();
+    public void testTokens() {
+        this.tokensAndCheck();
     }
 
     // equals...........................................................................................................

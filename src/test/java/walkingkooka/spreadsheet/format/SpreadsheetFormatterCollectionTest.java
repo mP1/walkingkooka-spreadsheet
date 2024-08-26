@@ -113,11 +113,11 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
         return SpreadsheetFormatterContexts.fake();
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
-    public void testTextComponents() {
-        this.textComponentsAndCheck();
+    public void testTokens() {
+        this.tokensAndCheck();
     }
 
     // equals...........................................................................................................

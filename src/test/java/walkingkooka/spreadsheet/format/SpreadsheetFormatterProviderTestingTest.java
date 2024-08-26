@@ -124,7 +124,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         }
 
         @Override
-        public Optional<SpreadsheetFormatterSelectorTextComponent> spreadsheetFormatterNextTextComponent(final SpreadsheetFormatterSelector selector) {
+        public Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector selector) {
             Objects.requireNonNull(selector, "selector");
 
             return Optional.empty();

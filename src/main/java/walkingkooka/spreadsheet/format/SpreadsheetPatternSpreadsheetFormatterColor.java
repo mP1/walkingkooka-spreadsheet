@@ -80,8 +80,8 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     }
 
     @Override
-    public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
-        return SpreadsheetFormatterSelectorTextComponent.textComponents(
+    public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
+        return SpreadsheetFormatterSelectorToken.textComponents(
                 this.token,
                 context
         );

@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  */
 final class SpreadsheetParserSelectorTextComponentTextComponentsSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    // only called by SpreadsheetParserSelectorTextComponent#textComponents
+    // only called by SpreadsheetParserSelectorTextComponent#tokens
     static List<SpreadsheetParserSelectorTextComponent> textComponents(final ParserToken token,
                                                                        final SpreadsheetParserContext context) {
         Objects.requireNonNull(token, "token");

@@ -55,7 +55,7 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
-    public List<SpreadsheetFormatterSelectorTextComponent> textComponents(final SpreadsheetFormatterContext context) {
+    public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
         throw new UnsupportedOperationException();
     }

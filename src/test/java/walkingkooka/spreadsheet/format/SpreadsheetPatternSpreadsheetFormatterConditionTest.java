@@ -335,30 +335,30 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         };
     }
 
-    // textComponents...................................................................................................
+    // tokens...................................................................................................
 
     @Test
-    public void testTextComponentsEquals() {
-        this.textComponentsAndCheck(
+    public void testTokensEquals() {
+        this.tokensAndCheck(
                 this.createFormatter("[=0]"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "[=0]",
                         "[=0]",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 )
         );
     }
 
     @Test
-    public void testTextComponentsLessThan() {
-        this.textComponentsAndCheck(
+    public void testTokensLessThan() {
+        this.tokensAndCheck(
                 this.createFormatter("[<1]"),
                 this.createContext(),
-                SpreadsheetFormatterSelectorTextComponent.with(
+                SpreadsheetFormatterSelectorToken.with(
                         "[<1]",
                         "[<1]",
-                        SpreadsheetFormatterSelectorTextComponent.NO_ALTERNATIVES
+                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
                 )
         );
     }

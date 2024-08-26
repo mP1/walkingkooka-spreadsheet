@@ -105,7 +105,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     }
 
     /**
-     * Accumulates all the textComponents for each and every pattern.
+     * Accumulates all the tokens for each and every pattern.
      */
     private final List<List<SpreadsheetNumberParsePatternComponent>> patterns = Lists.array();
 
@@ -256,7 +256,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     private int lastDigit;
 
     /**
-     * Takes all the textComponents for the pattern being visited.
+     * Takes all the tokens for the pattern being visited.
      */
     private List<SpreadsheetNumberParsePatternComponent> components;
 }
