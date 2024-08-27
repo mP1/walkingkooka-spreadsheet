@@ -17,24 +17,5 @@
 
 package walkingkooka.spreadsheet.importer;
 
-import walkingkooka.reflect.PublicStaticHelper;
-
-/**
- * A collection of {@link SpreadsheetCellImporterContext}.
- */
-public final class SpreadsheetCellImporterContexts implements PublicStaticHelper {
-
-    /**
-     * {@see FakeSpreadsheetCellImporterContext}
-     */
-    public static SpreadsheetCellImporterContext fake() {
-        return new FakeSpreadsheetCellImporterContext();
-    }
-
-    /**
-     * Stop creation
-     */
-    private SpreadsheetCellImporterContexts() {
-        throw new UnsupportedOperationException();
-    }
+public class FakeSpreadsheetCellImporterContext implements SpreadsheetCellImporterContext {
 }
