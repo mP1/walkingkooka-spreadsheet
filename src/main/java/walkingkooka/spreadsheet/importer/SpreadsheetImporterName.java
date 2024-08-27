@@ -29,9 +29,9 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Objects;
 
 /**
- * The {@link Name} of a {@link SpreadsheetCellImporter}. Note names are case-sensitive.
+ * The {@link Name} of a {@link SpreadsheetImporter}. Note names are case-sensitive.
  */
-final public class SpreadsheetCellImporterName implements PluginNameLike<SpreadsheetCellImporterName> {
+final public class SpreadsheetImporterName implements PluginNameLike<SpreadsheetImporterName> {
 
     public static boolean isChar(final int pos,
                                  final char c) {
@@ -43,29 +43,29 @@ final public class SpreadsheetCellImporterName implements PluginNameLike<Spreads
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
-    // SpreadsheetCellImporterName instances............................................................................
+    // SpreadsheetImporterName instances............................................................................
 
     /**
-     * Factory that creates a {@link SpreadsheetCellImporterName}
+     * Factory that creates a {@link SpreadsheetImporterName}
      */
-    public static SpreadsheetCellImporterName with(final String name) {
+    public static SpreadsheetImporterName with(final String name) {
         Objects.requireNonNull(name, "name");
 
-        final SpreadsheetCellImporterName SpreadsheetCellImporterName;
+        final SpreadsheetImporterName SpreadsheetImporterName;
 
         switch (name) {
             default:
-                SpreadsheetCellImporterName = new SpreadsheetCellImporterName(name);
+                SpreadsheetImporterName = new SpreadsheetImporterName(name);
                 break;
         }
 
-        return SpreadsheetCellImporterName;
+        return SpreadsheetImporterName;
     }
 
     /**
      * Private constructor
      */
-    private SpreadsheetCellImporterName(final String name) {
+    private SpreadsheetImporterName(final String name) {
         super();
         this.name = PluginName.with(name);
     }
@@ -87,11 +87,11 @@ final public class SpreadsheetCellImporterName implements PluginNameLike<Spreads
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetCellImporterName &&
+                other instanceof SpreadsheetImporterName &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetCellImporterName other) {
+    private boolean equals0(final SpreadsheetImporterName other) {
         return this.compareTo(other) == 0;
     }
 
@@ -102,8 +102,8 @@ final public class SpreadsheetCellImporterName implements PluginNameLike<Spreads
 
     // Json.............................................................................................................
 
-    static SpreadsheetCellImporterName unmarshall(final JsonNode node,
-                                                  final JsonNodeUnmarshallContext context) {
+    static SpreadsheetImporterName unmarshall(final JsonNode node,
+                                              final JsonNodeUnmarshallContext context) {
         return with(node.stringOrFail());
     }
 
@@ -113,10 +113,10 @@ final public class SpreadsheetCellImporterName implements PluginNameLike<Spreads
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCellImporterName.class),
-                SpreadsheetCellImporterName::unmarshall,
-                SpreadsheetCellImporterName::marshall,
-                SpreadsheetCellImporterName.class
+                JsonNodeContext.computeTypeName(SpreadsheetImporterName.class),
+                SpreadsheetImporterName::unmarshall,
+                SpreadsheetImporterName::marshall,
+                SpreadsheetImporterName.class
         );
     }
 }

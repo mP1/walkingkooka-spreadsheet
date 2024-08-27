@@ -27,29 +27,29 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Objects;
 
 /**
- * Provides a few bits of info describing a {@link SpreadsheetCellImporter}. The {@link AbsoluteUrl} must be a unique identifier,
- * with the {@link SpreadsheetCellImporterName} being a shorter human friendly reference.
+ * Provides a few bits of info describing a {@link SpreadsheetImporter}. The {@link AbsoluteUrl} must be a unique identifier,
+ * with the {@link SpreadsheetImporterName} being a shorter human friendly reference.
  */
-public final class SpreadsheetCellImporterInfo implements PluginInfoLike<SpreadsheetCellImporterInfo, SpreadsheetCellImporterName> {
+public final class SpreadsheetImporterInfo implements PluginInfoLike<SpreadsheetImporterInfo, SpreadsheetImporterName> {
 
-    public static SpreadsheetCellImporterInfo parse(final String text) {
+    public static SpreadsheetImporterInfo parse(final String text) {
         return PluginInfoLike.parse(
                 text,
-                SpreadsheetCellImporterName::with,
-                SpreadsheetCellImporterInfo::with
+                SpreadsheetImporterName::with,
+                SpreadsheetImporterInfo::with
         );
     }
 
-    public static SpreadsheetCellImporterInfo with(final AbsoluteUrl url,
-                                                   final SpreadsheetCellImporterName name) {
-        return new SpreadsheetCellImporterInfo(
+    public static SpreadsheetImporterInfo with(final AbsoluteUrl url,
+                                               final SpreadsheetImporterName name) {
+        return new SpreadsheetImporterInfo(
                 Objects.requireNonNull(url, "url"),
                 Objects.requireNonNull(name, "name")
         );
     }
 
-    private SpreadsheetCellImporterInfo(final AbsoluteUrl url,
-                                        final SpreadsheetCellImporterName name) {
+    private SpreadsheetImporterInfo(final AbsoluteUrl url,
+                                    final SpreadsheetImporterName name) {
         this.url = url;
         this.name = name;
     }
@@ -66,11 +66,11 @@ public final class SpreadsheetCellImporterInfo implements PluginInfoLike<Spreads
     // HasName..........................................................................................................
 
     @Override
-    public SpreadsheetCellImporterName name() {
+    public SpreadsheetImporterName name() {
         return this.name;
     }
 
-    private final SpreadsheetCellImporterName name;
+    private final SpreadsheetImporterName name;
 
     // Object...........................................................................................................
 
@@ -85,11 +85,11 @@ public final class SpreadsheetCellImporterInfo implements PluginInfoLike<Spreads
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetCellImporterInfo &&
+                other instanceof SpreadsheetImporterInfo &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetCellImporterInfo other) {
+    private boolean equals0(final SpreadsheetImporterInfo other) {
         return this.url.equals(other.url) &&
                 this.name.equals(other.name);
     }
@@ -105,22 +105,22 @@ public final class SpreadsheetCellImporterInfo implements PluginInfoLike<Spreads
         // required to FORCE json register
     }
 
-    static SpreadsheetCellImporterInfo unmarshall(final JsonNode node,
-                                                  final JsonNodeUnmarshallContext context) {
+    static SpreadsheetImporterInfo unmarshall(final JsonNode node,
+                                              final JsonNodeUnmarshallContext context) {
         return PluginInfoLike.unmarshall(
                 node,
                 context,
-                SpreadsheetCellImporterName.class,
-                SpreadsheetCellImporterInfo::with
+                SpreadsheetImporterName.class,
+                SpreadsheetImporterInfo::with
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCellImporterInfo.class),
-                SpreadsheetCellImporterInfo::unmarshall,
-                SpreadsheetCellImporterInfo::marshall,
-                SpreadsheetCellImporterInfo.class
+                JsonNodeContext.computeTypeName(SpreadsheetImporterInfo.class),
+                SpreadsheetImporterInfo::unmarshall,
+                SpreadsheetImporterInfo::marshall,
+                SpreadsheetImporterInfo.class
         );
     }
 }

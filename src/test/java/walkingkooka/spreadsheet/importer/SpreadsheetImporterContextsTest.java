@@ -17,14 +17,25 @@
 
 package walkingkooka.spreadsheet.importer;
 
-import walkingkooka.net.WebEntity;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicStaticHelperTesting;
 
-/**
- * Imports a range of cells from the given {@link WebEntity} which may hold JSON, HTML or more.
- */
-public interface SpreadsheetCellImporter {
+import java.lang.reflect.Method;
 
-    SpreadsheetCellRange importCells(final WebEntity cells,
-                                     final SpreadsheetCellImporterContext context);
+public final class SpreadsheetImporterContextsTest implements PublicStaticHelperTesting<SpreadsheetImporterContexts> {
+
+    @Override
+    public Class<SpreadsheetImporterContexts> type() {
+        return SpreadsheetImporterContexts.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
+    }
+
+    @Override
+    public boolean canHavePublicTypes(final Method method) {
+        return false;
+    }
 }

@@ -17,5 +17,7 @@
 
 package walkingkooka.spreadsheet.importer;
 
-public class FakeSpreadsheetCellImporterContext implements SpreadsheetCellImporterContext {
+import walkingkooka.Context;
+
+public interface SpreadsheetImporterContext extends Context {
 }

@@ -20,21 +20,21 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.reflect.PublicStaticHelper;
 
 /**
- * A collection of {@link SpreadsheetCellImporterContext}.
+ * A collection of {@link SpreadsheetImporterContext}.
  */
-public final class SpreadsheetCellImporterContexts implements PublicStaticHelper {
+public final class SpreadsheetImporterContexts implements PublicStaticHelper {
 
     /**
-     * {@see FakeSpreadsheetCellImporterContext}
+     * {@see FakeSpreadsheetImporterContext}
      */
-    public static SpreadsheetCellImporterContext fake() {
-        return new FakeSpreadsheetCellImporterContext();
+    public static SpreadsheetImporterContext fake() {
+        return new FakeSpreadsheetImporterContext();
     }
 
     /**
      * Stop creation
      */
-    private SpreadsheetCellImporterContexts() {
+    private SpreadsheetImporterContexts() {
         throw new UnsupportedOperationException();
     }
 }
