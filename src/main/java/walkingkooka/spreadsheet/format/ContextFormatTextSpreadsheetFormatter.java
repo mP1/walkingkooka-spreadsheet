@@ -52,7 +52,7 @@ final class ContextFormatTextSpreadsheetFormatter implements SpreadsheetFormatte
     public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
-        return NO_TEXT_COMPONENTS;
+        return NO_TOKENS;
     }
 
     @Override
