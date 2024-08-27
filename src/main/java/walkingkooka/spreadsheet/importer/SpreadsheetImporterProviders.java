@@ -25,6 +25,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetImporterProviders implements PublicStaticHelper {
 
     /**
+     * {@see FakeSpreadsheetImporterProvider}
+     */
+    public static SpreadsheetImporterProvider fake() {
+        return new FakeSpreadsheetImporterProvider();
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetImporterProviders() {
