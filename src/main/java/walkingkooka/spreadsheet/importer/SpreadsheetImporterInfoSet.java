@@ -32,45 +32,45 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * A read only {@link Set} of {@link SpreadsheetCellImporterInfo} sorted by {@link SpreadsheetCellImporterName}.
+ * A read only {@link Set} of {@link SpreadsheetImporterInfo} sorted by {@link SpreadsheetImporterName}.
  */
-public final class SpreadsheetCellImporterInfoSet extends AbstractSet<SpreadsheetCellImporterInfo>
-        implements PluginInfoSetLike<SpreadsheetCellImporterInfo, SpreadsheetCellImporterName> {
+public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImporterInfo>
+        implements PluginInfoSetLike<SpreadsheetImporterInfo, SpreadsheetImporterName> {
 
     static {
-        Sets.registerImmutableType(SpreadsheetCellImporterInfoSet.class);
+        Sets.registerImmutableType(SpreadsheetImporterInfoSet.class);
     }
 
     /**
-     * Parses the CSV text into a {@link SpreadsheetCellImporterInfoSet}.
+     * Parses the CSV text into a {@link SpreadsheetImporterInfoSet}.
      */
-    public static SpreadsheetCellImporterInfoSet parse(final String text) {
+    public static SpreadsheetImporterInfoSet parse(final String text) {
         return PluginInfoSetLike.parse(
                 text,
-                SpreadsheetCellImporterInfo::parse,
-                SpreadsheetCellImporterInfoSet::with
+                SpreadsheetImporterInfo::parse,
+                SpreadsheetImporterInfoSet::with
         );
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetCellImporterInfoSet} with the provided {@link SpreadsheetCellImporterInfo}.
+     * Factory that creates a {@link SpreadsheetImporterInfoSet} with the provided {@link SpreadsheetImporterInfo}.
      */
-    public static SpreadsheetCellImporterInfoSet with(final Set<SpreadsheetCellImporterInfo> infos) {
+    public static SpreadsheetImporterInfoSet with(final Set<SpreadsheetImporterInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
-        final Set<SpreadsheetCellImporterInfo> copy = Sets.sorted(HateosResource.comparator());
+        final Set<SpreadsheetImporterInfo> copy = Sets.sorted(HateosResource.comparator());
         copy.addAll(infos);
-        return new SpreadsheetCellImporterInfoSet(copy);
+        return new SpreadsheetImporterInfoSet(copy);
     }
 
-    private SpreadsheetCellImporterInfoSet(final Set<SpreadsheetCellImporterInfo> infos) {
+    private SpreadsheetImporterInfoSet(final Set<SpreadsheetImporterInfo> infos) {
         this.infos = infos;
     }
 
     // AbstractSet......................................................................................................
 
     @Override
-    public Iterator<SpreadsheetCellImporterInfo> iterator() {
+    public Iterator<SpreadsheetImporterInfo> iterator() {
         return Iterators.readOnly(
                 this.infos.iterator()
         );
@@ -81,18 +81,18 @@ public final class SpreadsheetCellImporterInfoSet extends AbstractSet<Spreadshee
         return this.infos.size();
     }
 
-    private final Set<SpreadsheetCellImporterInfo> infos;
+    private final Set<SpreadsheetImporterInfo> infos;
 
     // json.............................................................................................................
 
     static {
-        SpreadsheetCellImporterInfo.register(); // force registry of json marshaller
+        SpreadsheetImporterInfo.register(); // force registry of json marshaller
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCellImporterInfoSet.class),
-                SpreadsheetCellImporterInfoSet::unmarshall,
-                SpreadsheetCellImporterInfoSet::marshall,
-                SpreadsheetCellImporterInfoSet.class
+                JsonNodeContext.computeTypeName(SpreadsheetImporterInfoSet.class),
+                SpreadsheetImporterInfoSet::unmarshall,
+                SpreadsheetImporterInfoSet::marshall,
+                SpreadsheetImporterInfoSet.class
         );
     }
 
@@ -101,13 +101,13 @@ public final class SpreadsheetCellImporterInfoSet extends AbstractSet<Spreadshee
     }
 
     // @VisibleForTesting
-    static SpreadsheetCellImporterInfoSet unmarshall(final JsonNode node,
-                                                     final JsonNodeUnmarshallContext context) {
+    static SpreadsheetImporterInfoSet unmarshall(final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
 
         return with(
                 context.unmarshallSet(
                         node,
-                        SpreadsheetCellImporterInfo.class
+                        SpreadsheetImporterInfo.class
                 ));
     }
 }

@@ -22,11 +22,11 @@ import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
 
-public final class SpreadsheetCellImporterContextsTest implements PublicStaticHelperTesting<SpreadsheetCellImporterContexts> {
+public final class SpreadsheetImportersTest implements PublicStaticHelperTesting<SpreadsheetImporters> {
 
     @Override
-    public Class<SpreadsheetCellImporterContexts> type() {
-        return SpreadsheetCellImporterContexts.class;
+    public Class<SpreadsheetImporters> type() {
+        return SpreadsheetImporters.class;
     }
 
     @Override

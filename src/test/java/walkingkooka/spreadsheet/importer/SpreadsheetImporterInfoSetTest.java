@@ -28,14 +28,14 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetCellImporterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetCellImporterInfoSet, SpreadsheetCellImporterInfo, SpreadsheetCellImporterName>,
-        ClassTesting<SpreadsheetCellImporterInfoSet> {
+public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetImporterInfoSet, SpreadsheetImporterInfo, SpreadsheetImporterName>,
+        ClassTesting<SpreadsheetImporterInfoSet> {
 
     // immutable set....................................................................................................
 
     @Test
     public void testImmutableSet() {
-        final SpreadsheetCellImporterInfoSet set = this.createSet();
+        final SpreadsheetImporterInfoSet set = this.createSet();
 
         assertSame(
                 set,
@@ -51,19 +51,19 @@ public final class SpreadsheetCellImporterInfoSetTest implements PluginInfoSetLi
     }
 
     @Override
-    public SpreadsheetCellImporterInfoSet parseString(final String text) {
-        return SpreadsheetCellImporterInfoSet.parse(text);
+    public SpreadsheetImporterInfoSet parseString(final String text) {
+        return SpreadsheetImporterInfoSet.parse(text);
     }
 
     // Set..............................................................................................................
 
     @Override
-    public SpreadsheetCellImporterInfoSet createSet() {
-        return SpreadsheetCellImporterInfoSet.with(
+    public SpreadsheetImporterInfoSet createSet() {
+        return SpreadsheetImporterInfoSet.with(
                 Sets.of(
-                        SpreadsheetCellImporterInfo.with(
+                        SpreadsheetImporterInfo.with(
                                 Url.parseAbsolute("https://example.com/SpreadsheetCellImporter1"),
-                                SpreadsheetCellImporterName.with("test123")
+                                SpreadsheetImporterName.with("test123")
                         )
                 )
         );
@@ -74,18 +74,18 @@ public final class SpreadsheetCellImporterInfoSetTest implements PluginInfoSetLi
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetCellImporterInfoSet.with(Sets.empty()),
+                SpreadsheetImporterInfoSet.with(Sets.empty()),
                 JsonNode.array()
         );
     }
 
     @Test
     public void testMarshallNotEmpty2() {
-        final SpreadsheetCellImporterInfoSet set = SpreadsheetCellImporterInfoSet.with(
+        final SpreadsheetImporterInfoSet set = SpreadsheetImporterInfoSet.with(
                 Sets.of(
-                        SpreadsheetCellImporterInfo.with(
+                        SpreadsheetImporterInfo.with(
                                 Url.parseAbsolute("https://example.com/test123"),
-                                SpreadsheetCellImporterName.with("test123")
+                                SpreadsheetImporterName.with("test123")
                         )
                 )
         );
@@ -104,25 +104,25 @@ public final class SpreadsheetCellImporterInfoSetTest implements PluginInfoSetLi
     // json.............................................................................................................
 
     @Override
-    public SpreadsheetCellImporterInfoSet unmarshall(final JsonNode node,
-                                                     final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellImporterInfoSet.unmarshall(
+    public SpreadsheetImporterInfoSet unmarshall(final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
+        return SpreadsheetImporterInfoSet.unmarshall(
                 node,
                 context
         );
     }
 
     @Override
-    public SpreadsheetCellImporterInfoSet createJsonNodeMarshallingValue() {
-        return SpreadsheetCellImporterInfoSet.with(
+    public SpreadsheetImporterInfoSet createJsonNodeMarshallingValue() {
+        return SpreadsheetImporterInfoSet.with(
                 Sets.of(
-                        SpreadsheetCellImporterInfo.with(
+                        SpreadsheetImporterInfo.with(
                                 Url.parseAbsolute("https://example.com/test111"),
-                                SpreadsheetCellImporterName.with("test111")
+                                SpreadsheetImporterName.with("test111")
                         ),
-                        SpreadsheetCellImporterInfo.with(
+                        SpreadsheetImporterInfo.with(
                                 Url.parseAbsolute("https://example.com/test222"),
-                                SpreadsheetCellImporterName.with("test222")
+                                SpreadsheetImporterName.with("test222")
                         )
                 )
         );
@@ -131,8 +131,8 @@ public final class SpreadsheetCellImporterInfoSetTest implements PluginInfoSetLi
     // Class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellImporterInfoSet> type() {
-        return SpreadsheetCellImporterInfoSet.class;
+    public Class<SpreadsheetImporterInfoSet> type() {
+        return SpreadsheetImporterInfoSet.class;
     }
 
     @Override

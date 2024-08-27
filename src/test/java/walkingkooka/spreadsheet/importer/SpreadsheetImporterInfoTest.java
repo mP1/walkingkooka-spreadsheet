@@ -22,26 +22,26 @@ import walkingkooka.plugin.PluginInfoLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetCellImporterInfoTest implements PluginInfoLikeTesting<SpreadsheetCellImporterInfo, SpreadsheetCellImporterName> {
+public final class SpreadsheetImporterInfoTest implements PluginInfoLikeTesting<SpreadsheetImporterInfo, SpreadsheetImporterName> {
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetCellImporterInfo> type() {
-        return SpreadsheetCellImporterInfo.class;
+    public Class<SpreadsheetImporterInfo> type() {
+        return SpreadsheetImporterInfo.class;
     }
 
     // PluginInfoLikeTesting..............................................................................
 
     @Override
-    public SpreadsheetCellImporterName createName(final String value) {
-        return SpreadsheetCellImporterName.with(value);
+    public SpreadsheetImporterName createName(final String value) {
+        return SpreadsheetImporterName.with(value);
     }
 
     @Override
-    public SpreadsheetCellImporterInfo createPluginInfoLike(final AbsoluteUrl url,
-                                                            final SpreadsheetCellImporterName name) {
-        return SpreadsheetCellImporterInfo.with(
+    public SpreadsheetImporterInfo createPluginInfoLike(final AbsoluteUrl url,
+                                                        final SpreadsheetImporterName name) {
+        return SpreadsheetImporterInfo.with(
                 url,
                 name
         );
@@ -50,9 +50,9 @@ public final class SpreadsheetCellImporterInfoTest implements PluginInfoLikeTest
     // json.............................................................................................................
 
     @Override
-    public SpreadsheetCellImporterInfo unmarshall(final JsonNode json,
-                                                  final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellImporterInfo.unmarshall(
+    public SpreadsheetImporterInfo unmarshall(final JsonNode json,
+                                              final JsonNodeUnmarshallContext context) {
+        return SpreadsheetImporterInfo.unmarshall(
                 json,
                 context
         );
@@ -61,7 +61,7 @@ public final class SpreadsheetCellImporterInfoTest implements PluginInfoLikeTest
     // parse............................................................................................................
 
     @Override
-    public SpreadsheetCellImporterInfo parseString(final String text) {
-        return SpreadsheetCellImporterInfo.parse(text);
+    public SpreadsheetImporterInfo parseString(final String text) {
+        return SpreadsheetImporterInfo.parse(text);
     }
 }

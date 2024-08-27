@@ -20,14 +20,14 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.reflect.PublicStaticHelper;
 
 /**
- * A collection of {@link SpreadsheetCellImporter}.
+ * A collection of {@link SpreadsheetImporter}.
  */
-public final class SpreadsheetCellImporters implements PublicStaticHelper {
+public final class SpreadsheetImporters implements PublicStaticHelper {
 
     /**
      * Stop creation
      */
-    private SpreadsheetCellImporters() {
+    private SpreadsheetImporters() {
         throw new UnsupportedOperationException();
     }
 }

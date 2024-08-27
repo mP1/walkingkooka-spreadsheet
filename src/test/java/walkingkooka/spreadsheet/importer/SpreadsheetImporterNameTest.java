@@ -26,29 +26,29 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Set;
 
-final public class SpreadsheetCellImporterNameTest implements PluginNameTesting<SpreadsheetCellImporterName>,
-        ConstantsTesting<SpreadsheetCellImporterName> {
+final public class SpreadsheetImporterNameTest implements PluginNameTesting<SpreadsheetImporterName>,
+        ConstantsTesting<SpreadsheetImporterName> {
 
     @Override
-    public Set<SpreadsheetCellImporterName> intentionalDuplicateConstants() {
+    public Set<SpreadsheetImporterName> intentionalDuplicateConstants() {
         return Sets.empty();
     }
 
     // name.............................................................................................................
 
     @Override
-    public SpreadsheetCellImporterName createName(final String name) {
-        return SpreadsheetCellImporterName.with(name);
+    public SpreadsheetImporterName createName(final String name) {
+        return SpreadsheetImporterName.with(name);
     }
 
     @Override
-    public Class<SpreadsheetCellImporterName> type() {
-        return SpreadsheetCellImporterName.class;
+    public Class<SpreadsheetImporterName> type() {
+        return SpreadsheetImporterName.class;
     }
 
     @Override
-    public SpreadsheetCellImporterName unmarshall(final JsonNode from,
-                                                  final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellImporterName.unmarshall(from, context);
+    public SpreadsheetImporterName unmarshall(final JsonNode from,
+                                              final JsonNodeUnmarshallContext context) {
+        return SpreadsheetImporterName.unmarshall(from, context);
     }
 }

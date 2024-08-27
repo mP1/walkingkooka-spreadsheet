@@ -23,20 +23,20 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetCellImporterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetCellImporterSelector, SpreadsheetCellImporterName> {
+public final class SpreadsheetImporterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetImporterSelector, SpreadsheetImporterName> {
 
     @Override
-    public SpreadsheetCellImporterSelector createPluginSelectorLike(final SpreadsheetCellImporterName name,
-                                                                    final String text) {
-        return SpreadsheetCellImporterSelector.with(
+    public SpreadsheetImporterSelector createPluginSelectorLike(final SpreadsheetImporterName name,
+                                                                final String text) {
+        return SpreadsheetImporterSelector.with(
                 name,
                 text
         );
     }
 
     @Override
-    public SpreadsheetCellImporterName createName(final String value) {
-        return SpreadsheetCellImporterName.with(value);
+    public SpreadsheetImporterName createName(final String value) {
+        return SpreadsheetImporterName.with(value);
     }
 
     @Test
@@ -46,23 +46,23 @@ public final class SpreadsheetCellImporterSelectorTest implements PluginSelector
 
         this.parseStringAndCheck(
                 name + " " + text,
-                SpreadsheetCellImporterSelector.with(
-                        SpreadsheetCellImporterName.with(name),
+                SpreadsheetImporterSelector.with(
+                        SpreadsheetImporterName.with(name),
                         text
                 )
         );
     }
 
     @Override
-    public SpreadsheetCellImporterSelector parseString(final String text) {
-        return SpreadsheetCellImporterSelector.parse(text);
+    public SpreadsheetImporterSelector parseString(final String text) {
+        return SpreadsheetImporterSelector.parse(text);
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetCellImporterSelector> type() {
-        return SpreadsheetCellImporterSelector.class;
+    public Class<SpreadsheetImporterSelector> type() {
+        return SpreadsheetImporterSelector.class;
     }
 
     @Override
@@ -89,18 +89,18 @@ public final class SpreadsheetCellImporterSelectorTest implements PluginSelector
     }
 
     @Override
-    public SpreadsheetCellImporterSelector unmarshall(final JsonNode json,
-                                                      final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellImporterSelector.unmarshall(
+    public SpreadsheetImporterSelector unmarshall(final JsonNode json,
+                                                  final JsonNodeUnmarshallContext context) {
+        return SpreadsheetImporterSelector.unmarshall(
                 json,
                 context
         );
     }
 
     @Override
-    public SpreadsheetCellImporterSelector createJsonNodeMarshallingValue() {
-        return SpreadsheetCellImporterSelector.with(
-                SpreadsheetCellImporterName.with("test-sample-123"),
+    public SpreadsheetImporterSelector createJsonNodeMarshallingValue() {
+        return SpreadsheetImporterSelector.with(
+                SpreadsheetImporterName.with("test-sample-123"),
                 "@@"
         );
     }
@@ -109,6 +109,6 @@ public final class SpreadsheetCellImporterSelectorTest implements PluginSelector
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetCellImporter.class.getSimpleName();
+        return SpreadsheetImporter.class.getSimpleName();
     }
 }

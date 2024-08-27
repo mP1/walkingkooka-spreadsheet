@@ -36,45 +36,45 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Selects a {@link SpreadsheetCellImporter}.
+ * Selects a {@link SpreadsheetImporter}.
  */
-public final class SpreadsheetCellImporterSelector implements PluginSelectorLike<SpreadsheetCellImporterName> {
+public final class SpreadsheetImporterSelector implements PluginSelectorLike<SpreadsheetImporterName> {
 
     /**
-     * A parser that returns a {@link SpreadsheetCellImporterName}.
+     * A parser that returns a {@link SpreadsheetImporterName}.
      */
     private final static Parser<ParserContext> NAME_PARSER = Parsers.stringInitialAndPartCharPredicate(
-            (c) -> SpreadsheetCellImporterName.isChar(0, c),
-            (c) -> SpreadsheetCellImporterName.isChar(1, c),
+            (c) -> SpreadsheetImporterName.isChar(0, c),
+            (c) -> SpreadsheetImporterName.isChar(1, c),
             1,
-            SpreadsheetCellImporterName.MAX_LENGTH
+            SpreadsheetImporterName.MAX_LENGTH
     );
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCellImporterSelector.class),
-                SpreadsheetCellImporterSelector::unmarshall,
-                SpreadsheetCellImporterSelector::marshall,
-                SpreadsheetCellImporterSelector.class
+                JsonNodeContext.computeTypeName(SpreadsheetImporterSelector.class),
+                SpreadsheetImporterSelector::unmarshall,
+                SpreadsheetImporterSelector::marshall,
+                SpreadsheetImporterSelector.class
         );
     }
 
-    private final PluginSelector<SpreadsheetCellImporterName> selector;
+    private final PluginSelector<SpreadsheetImporterName> selector;
 
     // HasName..........................................................................................................
 
-    private SpreadsheetCellImporterSelector(final PluginSelector<SpreadsheetCellImporterName> selector) {
+    private SpreadsheetImporterSelector(final PluginSelector<SpreadsheetImporterName> selector) {
         this.selector = selector;
     }
 
     /**
-     * Parses the given text into a {@link SpreadsheetCellImporterSelector}.
+     * Parses the given text into a {@link SpreadsheetImporterSelector}.
      */
-    public static SpreadsheetCellImporterSelector parse(final String text) {
-        return new SpreadsheetCellImporterSelector(
+    public static SpreadsheetImporterSelector parse(final String text) {
+        return new SpreadsheetImporterSelector(
                 PluginSelector.parse(
                         text,
-                        SpreadsheetCellImporterName::with
+                        SpreadsheetImporterName::with
                 )
         );
     }
@@ -82,11 +82,11 @@ public final class SpreadsheetCellImporterSelector implements PluginSelectorLike
     // HasText..........................................................................................................
 
     /**
-     * Factory that creates a new {@link SpreadsheetCellImporterSelector}.
+     * Factory that creates a new {@link SpreadsheetImporterSelector}.
      */
-    public static SpreadsheetCellImporterSelector with(final SpreadsheetCellImporterName name,
-                                                       final String text) {
-        return new SpreadsheetCellImporterSelector(
+    public static SpreadsheetImporterSelector with(final SpreadsheetImporterName name,
+                                                   final String text) {
+        return new SpreadsheetImporterSelector(
                 PluginSelector.with(
                         name,
                         text
@@ -95,30 +95,30 @@ public final class SpreadsheetCellImporterSelector implements PluginSelectorLike
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetCellImporterSelector} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetImporterSelector} from a {@link JsonNode}.
      */
-    static SpreadsheetCellImporterSelector unmarshall(final JsonNode node,
-                                                      final JsonNodeUnmarshallContext context) {
+    static SpreadsheetImporterSelector unmarshall(final JsonNode node,
+                                                  final JsonNodeUnmarshallContext context) {
         return parse(node.stringOrFail());
     }
 
     @Override
-    public SpreadsheetCellImporterName name() {
+    public SpreadsheetImporterName name() {
         return this.selector.name();
     }
 
     // setValue.........................................................................................................
 
     /**
-     * Would be setter that returns a {@link SpreadsheetCellImporterSelector} with the given {@link SpreadsheetCellImporterName},
+     * Would be setter that returns a {@link SpreadsheetImporterSelector} with the given {@link SpreadsheetImporterName},
      * creating a new instance if necessary.
      */
-    public SpreadsheetCellImporterSelector setName(final SpreadsheetCellImporterName name) {
+    public SpreadsheetImporterSelector setName(final SpreadsheetImporterName name) {
         Objects.requireNonNull(name, "name");
 
         return this.name().equals(name) ?
                 this :
-                new SpreadsheetCellImporterSelector(
+                new SpreadsheetImporterSelector(
                         PluginSelector.with(
                                 name,
                                 this.text()
@@ -127,7 +127,7 @@ public final class SpreadsheetCellImporterSelector implements PluginSelectorLike
     }
 
     /**
-     * If the {@link SpreadsheetCellImporterName} identifies a {@link SpreadsheetCellImporter}
+     * If the {@link SpreadsheetImporterName} identifies a {@link SpreadsheetImporter}
      */
     @Override
     public String text() {
@@ -135,28 +135,28 @@ public final class SpreadsheetCellImporterSelector implements PluginSelectorLike
     }
 
     @Override
-    public SpreadsheetCellImporterSelector setText(final String text) {
-        final PluginSelector<SpreadsheetCellImporterName> different = this.selector.setText(text);
+    public SpreadsheetImporterSelector setText(final String text) {
+        final PluginSelector<SpreadsheetImporterName> different = this.selector.setText(text);
         return this.selector.equals(different) ?
                 this :
-                new SpreadsheetCellImporterSelector(different);
+                new SpreadsheetImporterSelector(different);
     }
 
     // Object...........................................................................................................
 
     @Override
-    public SpreadsheetCellImporterSelector setValues(final List<?> values) {
-        final PluginSelector<SpreadsheetCellImporterName> different = this.selector.setValues(values);
+    public SpreadsheetImporterSelector setValues(final List<?> values) {
+        final PluginSelector<SpreadsheetImporterName> different = this.selector.setValues(values);
         return this.selector.equals(different) ?
                 this :
-                new SpreadsheetCellImporterSelector(different);
+                new SpreadsheetImporterSelector(different);
     }
 
     /**
-     * Parses the text as an expression that may contain String literals, numbers or {@link SpreadsheetCellImporterName}.
+     * Parses the text as an expression that may contain String literals, numbers or {@link SpreadsheetImporterName}.
      */
-    public SpreadsheetCellImporter evaluateText(final SpreadsheetCellImporterProvider provider,
-                                                final ProviderContext context) {
+    public SpreadsheetImporter evaluateText(final SpreadsheetImporterProvider provider,
+                                            final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(context, "context");
 
@@ -166,12 +166,12 @@ public final class SpreadsheetCellImporterSelector implements PluginSelectorLike
                         c
                 ).map(
                         (final ParserToken token) ->
-                                SpreadsheetCellImporterName.with(
+                                SpreadsheetImporterName.with(
                                         token.cast(StringParserToken.class)
                                                 .value()
                                 )
                 ),
-                provider::spreadsheetCellImporter,
+                provider::spreadsheetImporter,
                 context
         );
     }
@@ -184,12 +184,12 @@ public final class SpreadsheetCellImporterSelector implements PluginSelectorLike
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetCellImporterSelector && this.equals0((SpreadsheetCellImporterSelector) other);
+                other instanceof SpreadsheetImporterSelector && this.equals0((SpreadsheetImporterSelector) other);
     }
 
     // JsonNodeContext..................................................................................................
 
-    private boolean equals0(final SpreadsheetCellImporterSelector other) {
+    private boolean equals0(final SpreadsheetImporterSelector other) {
         return this.selector.equals(other.selector);
     }
 
