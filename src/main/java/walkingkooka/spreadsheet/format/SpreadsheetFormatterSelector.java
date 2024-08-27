@@ -98,6 +98,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
      * Would be setter that returns a {@link SpreadsheetFormatterSelector} with the given {@link SpreadsheetFormatterName},
      * creating a new instance if necessary.
      */
+    @Override
     public SpreadsheetFormatterSelector setName(final SpreadsheetFormatterName name) {
         Objects.requireNonNull(name, "name");
 
