@@ -90,6 +90,7 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
      * Would be setter that returns a {@link SpreadsheetParserSelector} with the given {@link SpreadsheetParserName},
      * creating a new instance if necessary.
      */
+    @Override
     public SpreadsheetParserSelector setName(final SpreadsheetParserName name) {
         Objects.requireNonNull(name, "name");
 
