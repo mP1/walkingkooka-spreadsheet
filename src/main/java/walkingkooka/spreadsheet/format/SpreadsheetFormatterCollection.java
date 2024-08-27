@@ -85,7 +85,7 @@ final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
     public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
-        return SpreadsheetFormatter.NO_TEXT_COMPONENTS;
+        return SpreadsheetFormatter.NO_TOKENS;
     }
 
     // Object...........................................................................................................

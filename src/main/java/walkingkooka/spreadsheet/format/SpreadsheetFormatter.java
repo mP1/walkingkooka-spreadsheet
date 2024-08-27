@@ -46,7 +46,7 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
     /**
      * Useful constant for {@link SpreadsheetFormatter} with no text components.
      */
-    List<SpreadsheetFormatterSelectorToken> NO_TEXT_COMPONENTS = Lists.empty();
+    List<SpreadsheetFormatterSelectorToken> NO_TOKENS = Lists.empty();
 
     /**
      * Accepts a value and returns a {@link TextNode} if it could format the value.
