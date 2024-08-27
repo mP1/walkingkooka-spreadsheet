@@ -113,6 +113,7 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
      * Would be setter that returns a {@link SpreadsheetImporterSelector} with the given {@link SpreadsheetImporterName},
      * creating a new instance if necessary.
      */
+    @Override
     public SpreadsheetImporterSelector setName(final SpreadsheetImporterName name) {
         Objects.requireNonNull(name, "name");
 
