@@ -17,24 +17,13 @@
 
 package walkingkooka.spreadsheet.importer;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.net.WebEntity;
+import walkingkooka.spreadsheet.SpreadsheetCellRange;
 
-/**
- * A collection of {@link SpreadsheetImporter}.
- */
-public final class SpreadsheetImporters implements PublicStaticHelper {
-
-    /**
-     * {@see FakeSpreadsheetImporter}
-     */
-    public static SpreadsheetImporter fake() {
-        return new FakeSpreadsheetImporter();
-    }
-    
-    /**
-     * Stop creation
-     */
-    private SpreadsheetImporters() {
+public class FakeSpreadsheetImporter implements SpreadsheetImporter {
+    @Override
+    public SpreadsheetCellRange importCells(final WebEntity cells,
+                                            final SpreadsheetImporterContext context) {
         throw new UnsupportedOperationException();
     }
 }
