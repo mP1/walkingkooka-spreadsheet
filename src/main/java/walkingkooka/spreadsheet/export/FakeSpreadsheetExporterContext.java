@@ -17,25 +17,5 @@
 
 package walkingkooka.spreadsheet.export;
 
-
-import walkingkooka.reflect.PublicStaticHelper;
-
-/**
- * A collection of {@link SpreadsheetExporterContext}.
- */
-public final class SpreadsheetExporterContexts implements PublicStaticHelper {
-
-    /**
-     * {@see FakeSpreadsheetExporterContext}
-     */
-    public static SpreadsheetExporterContext fake() {
-        return new FakeSpreadsheetExporterContext();
-    }
-    
-    /**
-     * Stop creation
-     */
-    private SpreadsheetExporterContexts() {
-        throw new UnsupportedOperationException();
-    }
+public class FakeSpreadsheetExporterContext implements SpreadsheetExporterContext {
 }
