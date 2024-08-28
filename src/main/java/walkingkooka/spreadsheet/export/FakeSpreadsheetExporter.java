@@ -17,24 +17,19 @@
 
 package walkingkooka.spreadsheet.export;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.net.WebEntity;
+import walkingkooka.spreadsheet.SpreadsheetCellRange;
 
-/**
- * A collection of {@link SpreadsheetExporter}.
- */
-public final class SpreadsheetExporters implements PublicStaticHelper {
-
-    /**
-     * {@see FakeSpreadsheetExporter}
-     */
-    public static SpreadsheetExporter fake() {
-        return new FakeSpreadsheetExporter();
+public class FakeSpreadsheetExporter implements SpreadsheetExporter {
+    @Override
+    public boolean canExport(final SpreadsheetCellRange cells,
+                             final SpreadsheetExporterContext context) {
+        return false;
     }
 
-    /**
-     * Stop creation
-     */
-    private SpreadsheetExporters() {
-        throw new UnsupportedOperationException();
+    @Override
+    public WebEntity export(final SpreadsheetCellRange cells,
+                            final SpreadsheetExporterContext context) {
+        return null;
     }
 }
