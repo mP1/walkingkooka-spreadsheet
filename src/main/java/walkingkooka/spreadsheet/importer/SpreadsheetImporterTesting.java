@@ -26,6 +26,67 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> extends TreePrintableTesting {
 
+    // canImport........................................................................................................
+
+    @Test
+    default void testCanImportWithNullCellsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetImporter()
+                        .canImport(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testCanImportWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetImporter()
+                        .canImport(
+                                WebEntity.empty(),
+                                null
+                        )
+        );
+    }
+
+    default void canImportAndCheck(final WebEntity cells,
+                                   final boolean expected) {
+        this.canImportAndCheck(
+                cells,
+                this.createContext(),
+                expected
+        );
+    }
+
+    default void canImportAndCheck(final WebEntity cells,
+                                   final SpreadsheetImporterContext context,
+                                   final boolean expected) {
+        this.canImportAndCheck(
+                this.createSpreadsheetImporter(),
+                cells,
+                context,
+                expected
+        );
+    }
+
+    default void canImportAndCheck(final I importer,
+                                   final WebEntity cells,
+                                   final SpreadsheetImporterContext context,
+                                   final boolean expected) {
+        this.checkEquals(
+                expected,
+                importer.canImport(
+                        cells,
+                        context
+                )
+        );
+    }
+    
+    // importCells......................................................................................................
+    
     @Test
     default void testImportCellsWithNullCellsFails() {
         assertThrows(

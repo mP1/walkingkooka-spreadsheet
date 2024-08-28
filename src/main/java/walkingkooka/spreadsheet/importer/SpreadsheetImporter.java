@@ -25,6 +25,9 @@ import walkingkooka.spreadsheet.SpreadsheetCellRange;
  */
 public interface SpreadsheetImporter {
 
+    boolean canImport(final WebEntity cells,
+                      final SpreadsheetImporterContext context);
+
     SpreadsheetCellRange importCells(final WebEntity cells,
                                      final SpreadsheetImporterContext context);
 }

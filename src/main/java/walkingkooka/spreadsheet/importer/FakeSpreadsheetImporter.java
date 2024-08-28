@@ -21,6 +21,13 @@ import walkingkooka.net.WebEntity;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 
 public class FakeSpreadsheetImporter implements SpreadsheetImporter {
+
+    @Override
+    public boolean canImport(final WebEntity cells,
+                             final SpreadsheetImporterContext context) {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public SpreadsheetCellRange importCells(final WebEntity cells,
                                             final SpreadsheetImporterContext context) {
