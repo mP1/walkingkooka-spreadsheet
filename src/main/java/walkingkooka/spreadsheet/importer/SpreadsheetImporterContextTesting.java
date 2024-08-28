@@ -17,7 +17,10 @@
 
 package walkingkooka.spreadsheet.importer;
 
+import walkingkooka.Context;
+import walkingkooka.ContextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 
-public interface SpreadsheetImporterContextTesting extends TreePrintableTesting {
+public interface SpreadsheetImporterContextTesting<C extends Context> extends ContextTesting<C>,
+        TreePrintableTesting {
 }
