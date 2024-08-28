@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.export;
 
 import walkingkooka.net.WebEntity;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterContext;
 
 /**
  * Exports a range of cells returning a {@link WebEntity} which may hold JSON, HTML or more.
@@ -27,8 +26,8 @@ import walkingkooka.spreadsheet.importer.SpreadsheetImporterContext;
 public interface SpreadsheetExporter {
 
     boolean canExport(final SpreadsheetCellRange cells,
-                      final SpreadsheetImporterContext context);
+                      final SpreadsheetExporterContext context);
 
     WebEntity export(final SpreadsheetCellRange cells,
-                     final SpreadsheetImporterContext context);
+                     final SpreadsheetExporterContext context);
 }
