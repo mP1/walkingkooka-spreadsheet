@@ -32,6 +32,13 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     public static SpreadsheetExporterProvider collection(final Set<SpreadsheetExporterProvider> providers) {
         return SpreadsheetExporterProviderCollection.with(providers);
     }
+
+    /**
+     * {@see EmptySpreadsheetExporterProvider}
+     */
+    public static SpreadsheetExporterProvider empty() {
+        return EmptySpreadsheetExporterProvider.INSTANCE;
+    }
     
     /**
      * {@see FakeSpreadsheetExporterProvider}
