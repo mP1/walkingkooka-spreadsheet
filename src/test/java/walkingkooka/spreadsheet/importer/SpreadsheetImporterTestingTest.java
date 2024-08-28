@@ -45,6 +45,16 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
     }
 
     static class TestSpreadsheetImporter implements SpreadsheetImporter {
+
+        @Override
+        public boolean canImport(final WebEntity cells,
+                                 final SpreadsheetImporterContext context) {
+            Objects.requireNonNull(cells, "cells");
+            Objects.requireNonNull(context, "context");
+
+            return true;
+        }
+
         @Override
         public SpreadsheetCellRange importCells(final WebEntity cells,
                                                 final SpreadsheetImporterContext context) {
