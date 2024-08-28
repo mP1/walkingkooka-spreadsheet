@@ -18,10 +18,20 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.reflect.PublicStaticHelper;
+
+import java.util.Set;
+
 /**
  * A collection of {@link SpreadsheetExporterContext}.
  */
 public final class SpreadsheetExporterProviders implements PublicStaticHelper {
+
+    /**
+     * {@see SpreadsheetExporterProviderCollection}
+     */
+    public static SpreadsheetExporterProvider collection(final Set<SpreadsheetExporterProvider> providers) {
+        return SpreadsheetExporterProviderCollection.with(providers);
+    }
     
     /**
      * {@see FakeSpreadsheetExporterProvider}
