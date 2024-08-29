@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.importer;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
@@ -33,6 +34,23 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
                     SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             )
     );
+
+    @Test
+    public void testImportCellsFails() {
+        final String message = "Fail message 123";
+
+        this.importCellsFails(
+                new TestSpreadsheetImporter() {
+                    @Override
+                    public SpreadsheetCellRange importCells(final WebEntity cells,
+                                                            final SpreadsheetImporterContext context) {
+                        throw new IllegalArgumentException(message);
+                    }
+                },
+                WebEntity.empty(),
+                new IllegalArgumentException(message)
+        );
+    }
 
     @Override
     public TestSpreadsheetImporter createSpreadsheetImporter() {
