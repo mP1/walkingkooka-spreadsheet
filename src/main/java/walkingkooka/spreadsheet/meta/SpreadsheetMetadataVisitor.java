@@ -118,6 +118,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitDateFormatter(final SpreadsheetFormatterSelector selector) {
+        // nop
+    }
+
     protected void visitDateParser(final SpreadsheetParserSelector selector) {
         // nop
     }
@@ -127,6 +131,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitDateTimeParser(final SpreadsheetParserSelector selector) {
+        // nop
+    }
+
+    protected void visitDateTimeFormatter(final SpreadsheetFormatterSelector selector) {
         // nop
     }
 
@@ -155,14 +163,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitFormatConverter(final ConverterSelector selector) {
-        // nop
-    }
-
-    protected void visitDateFormatter(final SpreadsheetFormatterSelector selector) {
-        // nop
-    }
-
-    protected void visitDateTimeFormatter(final SpreadsheetFormatterSelector selector) {
         // nop
     }
 
@@ -247,15 +247,15 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitSpreadsheetParsers(final SpreadsheetParserInfoSet infos) {
-        // nop
-    }
-
     protected void visitSpreadsheetId(final SpreadsheetId id) {
         // nop
     }
 
     protected void visitSpreadsheetName(final SpreadsheetName name) {
+        // nop
+    }
+
+    protected void visitSpreadsheetParsers(final SpreadsheetParserInfoSet infos) {
         // nop
     }
 
