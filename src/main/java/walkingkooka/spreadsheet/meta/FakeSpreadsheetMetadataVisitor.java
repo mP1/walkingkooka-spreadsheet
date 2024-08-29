@@ -241,7 +241,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitSpreadsheetComparators(final SpreadsheetComparatorInfoSet value) {
-        // nop
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -251,7 +251,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitSpreadsheetFormatters(final SpreadsheetFormatterInfoSet value) {
-        // nop
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -266,7 +266,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitSpreadsheetParsers(final SpreadsheetParserInfoSet infos) {
-        // nop
+        throw new UnsupportedOperationException();
     }
 
     @Override
