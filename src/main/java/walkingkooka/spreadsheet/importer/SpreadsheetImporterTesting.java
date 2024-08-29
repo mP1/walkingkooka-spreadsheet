@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.importer;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.WebEntity;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -84,44 +83,33 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                 )
         );
     }
-    
-    // importCells......................................................................................................
-    
-    @Test
-    default void testImportCellsWithNullCellsFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetImporter().importCells(
-                        null,
-                        this.createContext()
-                )
-        );
-    }
 
-    @Test
-    default void testImportCellsWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetImporter().importCells(
-                        WebEntity.empty(),
-                        null
-                )
-        );
-    }
+    // importCellsFails.................................................................................................
 
-    default void importCellsAndCheck(final WebEntity cells,
-                                     final SpreadsheetCellRange expected) {
-        this.importCellsAndCheck(
+    default void importCellsFails(final WebEntity cells,
+                                  final RuntimeException expected) {
+        this.importCellsFails(
                 cells,
                 this.createContext(),
                 expected
         );
     }
 
-    default void importCellsAndCheck(final WebEntity cells,
-                                     final SpreadsheetImporterContext context,
-                                     final SpreadsheetCellRange expected) {
-        this.importCellsAndCheck(
+    default void importCellsFails(final I importer,
+                                  final WebEntity cells,
+                                  final RuntimeException expected) {
+        this.importCellsFails(
+                importer,
+                cells,
+                this.createContext(),
+                expected
+        );
+    }
+
+    default void importCellsFails(final WebEntity cells,
+                                  final SpreadsheetImporterContext context,
+                                  final RuntimeException expected) {
+        this.importCellsFails(
                 this.createSpreadsheetImporter(),
                 cells,
                 context,
@@ -129,16 +117,21 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
         );
     }
 
-    default void importCellsAndCheck(final I importer,
-                                     final WebEntity cells,
-                                     final SpreadsheetImporterContext context,
-                                     final SpreadsheetCellRange expected) {
-        this.checkEquals(
-                expected,
-                importer.importCells(
+    default void importCellsFails(final I importer,
+                                  final WebEntity cells,
+                                  final SpreadsheetImporterContext context,
+                                  final RuntimeException expected) {
+        final RuntimeException thrown = assertThrows(
+                expected.getClass(),
+                () -> importer.importCells(
                         cells,
                         context
                 )
+        );
+        this.checkEquals(
+                expected.getMessage(),
+                thrown.getMessage(),
+                "message"
         );
     }
 
