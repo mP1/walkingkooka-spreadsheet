@@ -58,6 +58,17 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see MappedSpreadsheetImporterProvider}
+     */
+    public static SpreadsheetImporterProvider mapped(final Set<SpreadsheetImporterInfo> infos,
+                                                     final SpreadsheetImporterProvider provider) {
+        return MappedSpreadsheetImporterProvider.with(
+                infos,
+                provider
+        );
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetImporterProviders() {
