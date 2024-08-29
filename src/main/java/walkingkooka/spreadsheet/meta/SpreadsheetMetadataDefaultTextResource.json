@@ -73,6 +73,7 @@
   "hide-zero-values": false,
   "precision": 10,
   "rounding-mode": "HALF_UP",
+  "spreadsheet-exporters": "",
   "style": {
     "background-color": "#ffffff",
     "border-left-color": "#000000",

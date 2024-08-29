@@ -29,6 +29,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
@@ -254,6 +255,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetComparatorInfoSet}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorInfoSet> SPREADSHEET_COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetExporterInfoSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterInfoSet> SPREADSHEET_EXPORTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>
