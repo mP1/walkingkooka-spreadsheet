@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -270,6 +271,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetId.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetImporterInfoSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterInfoSet> SPREADSHEET_IMPORTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetImporters.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-name {@link SpreadsheetName}</code>

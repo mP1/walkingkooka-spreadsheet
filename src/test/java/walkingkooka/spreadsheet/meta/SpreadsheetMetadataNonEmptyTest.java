@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
@@ -2754,6 +2755,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 )
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
+        properties.put(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
+                SpreadsheetImporterInfoSet.with(
+                        Sets.empty()
+                )
+        );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));
         properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
