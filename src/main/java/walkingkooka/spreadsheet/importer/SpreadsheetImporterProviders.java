@@ -24,7 +24,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import java.util.Set;
 
 /**
- * A collection of {@link SpreadsheetImporterContext}.
+ * A collection of {@link SpreadsheetImporterProvider}.
  */
 public final class SpreadsheetImporterProviders implements PublicStaticHelper {
 
