@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.export;
 
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.reflect.PublicStaticHelper;
 
 import java.util.Set;
@@ -25,6 +27,14 @@ import java.util.Set;
  * A collection of {@link SpreadsheetExporterContext}.
  */
 public final class SpreadsheetExporterProviders implements PublicStaticHelper {
+
+    /**
+     * This is the base {@link AbsoluteUrl} for all {@link SpreadsheetExporter} in this package. The name of each
+     * exporter will be appended to this base.
+     */
+    public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
+            "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetExporter.class.getSimpleName()
+    );
 
     /**
      * {@see SpreadsheetExporterProviderCollection}
