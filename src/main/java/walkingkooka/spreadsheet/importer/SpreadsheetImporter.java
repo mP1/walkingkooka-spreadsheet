@@ -22,6 +22,8 @@ import walkingkooka.spreadsheet.SpreadsheetCellRange;
 
 /**
  * Imports a range of cells from the given {@link WebEntity} which may hold JSON, HTML or more.
+ * This could be used to import a file or receive a paste in the browser with new content such as cells or parts of cells
+ * such as formulas, formatting etc.
  */
 public interface SpreadsheetImporter {
 
