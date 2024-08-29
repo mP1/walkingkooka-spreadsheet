@@ -1082,6 +1082,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "      \"name\": \"year\"\n" +
                         "    }\n" +
                         "  ],\n" +
+                        "  \"spreadsheet-exporters\": [],\n" +
                         "  \"spreadsheet-formatters\": [\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic\",\n" +
@@ -1395,6 +1396,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "      \"name\": \"year\"\n" +
                         "    }\n" +
                         "  ],\n" +
+                        "  \"spreadsheet-exporters\": [],\n" +
                         "  \"spreadsheet-formatters\": [\n" +
                         "    {\n" +
                         "      \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic\",\n" +
