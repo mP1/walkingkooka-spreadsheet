@@ -152,6 +152,57 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
         );
     }
 
+    // exportFails......................................................................................................
+
+    default void exportFails(final SpreadsheetCellRange cells,
+                             final RuntimeException expected) {
+        this.exportFails(
+                cells,
+                this.createContext(),
+                expected
+        );
+    }
+
+    default void exportFails(final E exporter,
+                             final SpreadsheetCellRange cells,
+                             final RuntimeException expected) {
+        this.exportFails(
+                exporter,
+                cells,
+                this.createContext(),
+                expected
+        );
+    }
+
+    default void exportFails(final SpreadsheetCellRange cells,
+                             final SpreadsheetExporterContext context,
+                             final RuntimeException expected) {
+        this.exportFails(
+                this.createSpreadsheetExporter(),
+                cells,
+                context,
+                expected
+        );
+    }
+
+    default void exportFails(final E exporter,
+                             final SpreadsheetCellRange cells,
+                             final SpreadsheetExporterContext context,
+                             final RuntimeException expected) {
+        final RuntimeException thrown = assertThrows(
+                expected.getClass(),
+                () -> exporter.export(
+                        cells,
+                        context
+                )
+        );
+        this.checkEquals(
+                expected.getMessage(),
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
     E createSpreadsheetExporter();
 
     SpreadsheetExporterContext createContext();

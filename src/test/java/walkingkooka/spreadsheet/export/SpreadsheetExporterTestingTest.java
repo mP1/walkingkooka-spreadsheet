@@ -17,9 +17,12 @@
 
 package walkingkooka.spreadsheet.export;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -29,6 +32,26 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
     private final static WebEntity WEB_ENTITY = WebEntity.empty()
             .setContentType(Optional.of(MediaType.TEXT_PLAIN))
             .setText("Hello");
+
+    @Test
+    public void testExportFails() {
+        final String message = "Fail message 123";
+
+        this.exportFails(
+                new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
+                    @Override
+                    public WebEntity export(final SpreadsheetCellRange cells,
+                                            final SpreadsheetExporterContext context) {
+                        throw new IllegalArgumentException(message);
+                    }
+                },
+                SpreadsheetCellRange.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        Sets.empty()
+                ),
+                new IllegalArgumentException(message)
+        );
+    }
 
     @Override
     public TestSpreadsheetExporter createSpreadsheetExporter() {
