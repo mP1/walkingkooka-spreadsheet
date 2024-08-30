@@ -69,6 +69,13 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetExportSpreadsheetExporterProvider}
+     */
+    public static SpreadsheetExporterProvider spreadsheetExport() {
+        return SpreadsheetExportSpreadsheetExporterProvider.INSTANCE;
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetExporterProviders() {
