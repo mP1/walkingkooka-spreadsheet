@@ -64,6 +64,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContex
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -759,6 +762,27 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return SpreadsheetFormatterProviders.mapped(
                 this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS),
+                provider
+        );
+    }
+
+    // SpreadsheetImporterProvider......................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetImporterProvider} that only contains the selected {@link SpreadsheetImporter}
+     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_IMPORTERS}
+     */
+    public final SpreadsheetImporterProvider spreadsheetImporterProvider(final SpreadsheetImporterProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS);
+
+        components.reportIfMissing();
+
+        return SpreadsheetImporterProviders.mapped(
+                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS),
                 provider
         );
     }
