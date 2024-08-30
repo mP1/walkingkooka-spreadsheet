@@ -61,6 +61,12 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporters;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
@@ -949,6 +955,48 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 formatter,
                 provider.spreadsheetFormatter(
                         SpreadsheetFormatterSelector.parse("xyz @@"),
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    // SpreadsheetImporters.............................................................................................
+
+    @Test
+    public void testSpreadsheetImportersWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetImporterProvider(null)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetImportersWithMissingPropertyFails() {
+        assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetImporterProvider(
+                        SpreadsheetImporterProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetImporters() {
+        final SpreadsheetImporter importer = SpreadsheetImporters.empty();
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
+                SpreadsheetImporterInfoSet.parse(SpreadsheetImporterProviders.BASE_URL + "/empty empty")
+        );
+
+        final SpreadsheetImporterProvider provider = metadata.spreadsheetImporterProvider(
+                SpreadsheetImporterProviders.spreadsheetImport()
+        );
+
+        this.checkEquals(
+                importer,
+                provider.spreadsheetImporter(
+                        SpreadsheetImporterSelector.parse("empty"),
                         PROVIDER_CONTEXT
                 )
         );
