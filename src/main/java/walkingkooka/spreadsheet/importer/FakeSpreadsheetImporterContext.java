@@ -17,5 +17,8 @@
 
 package walkingkooka.spreadsheet.importer;
 
-public class FakeSpreadsheetImporterContext implements SpreadsheetImporterContext {
+import walkingkooka.tree.json.marshall.FakeJsonNodeUnmarshallContext;
+
+public class FakeSpreadsheetImporterContext extends FakeJsonNodeUnmarshallContext
+        implements SpreadsheetImporterContext {
 }

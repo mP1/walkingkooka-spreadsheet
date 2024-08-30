@@ -17,10 +17,16 @@
 
 package walkingkooka.spreadsheet.importer;
 
-import walkingkooka.Context;
 import walkingkooka.ContextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 
-public interface SpreadsheetImporterContextTesting<C extends Context> extends ContextTesting<C>,
+public interface SpreadsheetImporterContextTesting<C extends SpreadsheetImporterContext> extends ContextTesting<C>,
+        JsonNodeUnmarshallContextTesting<C>,
         TreePrintableTesting {
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetImporterContext.class.getSimpleName();
+    }
 }
