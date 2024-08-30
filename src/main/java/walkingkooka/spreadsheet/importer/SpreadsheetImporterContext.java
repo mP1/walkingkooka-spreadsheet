@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.Context;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public interface SpreadsheetImporterContext extends Context {
+public interface SpreadsheetImporterContext extends Context,
+        JsonNodeUnmarshallContext {
 }
