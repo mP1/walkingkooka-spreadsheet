@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.importer;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.WebEntity;
+import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -78,6 +79,52 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
         this.checkEquals(
                 expected,
                 importer.canImport(
+                        cells,
+                        context
+                )
+        );
+    }
+
+    // importCellsAndCheck..............................................................................................
+
+    default void importCellsAndCheck(final WebEntity cells,
+                                     final SpreadsheetCellRange expected) {
+        this.importCellsAndCheck(
+                cells,
+                this.createContext(),
+                expected
+        );
+    }
+
+    default void importCellsAndCheck(final WebEntity cells,
+                                     final SpreadsheetImporterContext context,
+                                     final SpreadsheetCellRange expected) {
+        this.importCellsAndCheck(
+                this.createSpreadsheetImporter(),
+                cells,
+                context,
+                expected
+        );
+    }
+
+    default void importCellsAndCheck(final I importer,
+                                     final WebEntity cells,
+                                     final SpreadsheetCellRange expected) {
+        this.importCellsAndCheck(
+                importer,
+                cells,
+                this.createContext(),
+                expected
+        );
+    }
+
+    default void importCellsAndCheck(final I importer,
+                                     final WebEntity cells,
+                                     final SpreadsheetImporterContext context,
+                                     final SpreadsheetCellRange expected) {
+        this.checkEquals(
+                expected,
+                importer.importCells(
                         cells,
                         context
                 )
