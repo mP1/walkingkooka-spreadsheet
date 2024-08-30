@@ -141,6 +141,17 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
 
     default void exportAndCheck(final E exporter,
                                 final SpreadsheetCellRange cells,
+                                final WebEntity expected) {
+        this.exportAndCheck(
+                exporter,
+                cells,
+                this.createContext(),
+                expected
+        );
+    }
+
+    default void exportAndCheck(final E exporter,
+                                final SpreadsheetCellRange cells,
                                 final SpreadsheetExporterContext context,
                                 final WebEntity expected) {
         this.checkEquals(

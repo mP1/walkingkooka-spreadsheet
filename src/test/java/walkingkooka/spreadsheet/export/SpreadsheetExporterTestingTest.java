@@ -53,6 +53,33 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
         );
     }
 
+    @Test
+    public void testExportAndCheck() {
+        final WebEntity webEntity = WebEntity.empty()
+                .setContentType(
+                        Optional.of(
+                                MediaType.TEXT_PLAIN
+                        )
+                );
+        final SpreadsheetCellRange cells = SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.empty()
+        );
+
+        this.exportAndCheck(
+                new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
+                    @Override
+                    public WebEntity export(final SpreadsheetCellRange r,
+                                            final SpreadsheetExporterContext context) {
+                        checkEquals(cells, r);
+                        return webEntity;
+                    }
+                },
+                cells,
+                webEntity
+        );
+    }
+    
     @Override
     public TestSpreadsheetExporter createSpreadsheetExporter() {
         return new TestSpreadsheetExporter();
