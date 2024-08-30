@@ -19,11 +19,20 @@ package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
+import java.util.List;
+
 /**
  * A collection of {@link SpreadsheetImporter}.
  */
 public final class SpreadsheetImporters implements PublicStaticHelper {
 
+    /**
+     * {@see SpreadsheetImporterCollection}
+     */
+    public static SpreadsheetImporter collection(final List<SpreadsheetImporter> importers) {
+        return SpreadsheetImporterCollection.with(importers);
+    }
+    
     /**
      * {@see EmptySpreadsheetImporter}
      */
