@@ -69,6 +69,13 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetImportSpreadsheetImporterProvider}
+     */
+    public static SpreadsheetImporterProvider spreadsheetImport() {
+        return SpreadsheetImportSpreadsheetImporterProvider.INSTANCE;
+    }
+    
+    /**
      * Stop creation
      */
     private SpreadsheetImporterProviders() {
