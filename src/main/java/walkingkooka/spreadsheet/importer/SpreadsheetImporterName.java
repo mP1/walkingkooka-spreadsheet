@@ -43,7 +43,27 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
-    // SpreadsheetImporterName instances............................................................................
+    // constants........................................................................................................
+
+    final static String COLLECTION_STRING = "collection";
+
+    /**
+     * The name of the date {@link SpreadsheetImporter}
+     */
+    public final static SpreadsheetImporterName COLLECTION = new SpreadsheetImporterName(
+            COLLECTION_STRING
+    );
+
+    final static String EMPTY_STRING = "empty";
+
+    /**
+     * The name of the date {@link SpreadsheetImporter}
+     */
+    public final static SpreadsheetImporterName EMPTY = new SpreadsheetImporterName(
+            EMPTY_STRING
+    );
+
+    // SpreadsheetImporterName instances................................................................................
 
     /**
      * Factory that creates a {@link SpreadsheetImporterName}
@@ -51,15 +71,21 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
     public static SpreadsheetImporterName with(final String name) {
         Objects.requireNonNull(name, "name");
 
-        final SpreadsheetImporterName SpreadsheetImporterName;
+        final SpreadsheetImporterName spreadsheetImporterName;
 
         switch (name) {
+            case COLLECTION_STRING:
+                spreadsheetImporterName = COLLECTION;
+                break;
+            case EMPTY_STRING:
+                spreadsheetImporterName = EMPTY;
+                break;
             default:
-                SpreadsheetImporterName = new SpreadsheetImporterName(name);
+                spreadsheetImporterName = new SpreadsheetImporterName(name);
                 break;
         }
 
-        return SpreadsheetImporterName;
+        return spreadsheetImporterName;
     }
 
     /**
