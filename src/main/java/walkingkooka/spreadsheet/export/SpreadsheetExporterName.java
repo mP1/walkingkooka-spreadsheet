@@ -43,7 +43,27 @@ final public class SpreadsheetExporterName implements PluginNameLike<Spreadsheet
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
-    // SpreadsheetExporterName instances............................................................................
+    // constants........................................................................................................
+    
+    final static String COLLECTION_STRING = "collection";
+
+    /**
+     * The name of the date {@link SpreadsheetExporter}
+     */
+    public final static SpreadsheetExporterName COLLECTION = new SpreadsheetExporterName(
+            COLLECTION_STRING
+    );
+
+    final static String EMPTY_STRING = "empty";
+
+    /**
+     * The name of the date {@link SpreadsheetExporter}
+     */
+    public final static SpreadsheetExporterName EMPTY = new SpreadsheetExporterName(
+            EMPTY_STRING
+    );
+
+    // SpreadsheetExporterName instances................................................................................
 
     /**
      * Factory that creates a {@link SpreadsheetExporterName}
@@ -51,15 +71,21 @@ final public class SpreadsheetExporterName implements PluginNameLike<Spreadsheet
     public static SpreadsheetExporterName with(final String name) {
         Objects.requireNonNull(name, "name");
 
-        final SpreadsheetExporterName SpreadsheetExporterName;
+        final SpreadsheetExporterName spreadsheetExporterName;
 
         switch (name) {
+            case COLLECTION_STRING:
+                spreadsheetExporterName = COLLECTION;
+                break;
+            case EMPTY_STRING:
+                spreadsheetExporterName = EMPTY;
+                break;
             default:
-                SpreadsheetExporterName = new SpreadsheetExporterName(name);
+                spreadsheetExporterName = new SpreadsheetExporterName(name);
                 break;
         }
 
-        return SpreadsheetExporterName;
+        return spreadsheetExporterName;
     }
 
     /**
