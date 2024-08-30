@@ -18,12 +18,20 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * A collection of {@link SpreadsheetImporterContext}.
  */
 public final class SpreadsheetImporterContexts implements PublicStaticHelper {
 
+    /**
+     * {@see BasicSpreadsheetImporterContext}
+     */
+    public static SpreadsheetImporterContext basic(final JsonNodeUnmarshallContext context) {
+        return BasicSpreadsheetImporterContext.with(context);
+    }
+    
     /**
      * {@see FakeSpreadsheetImporterContext}
      */
