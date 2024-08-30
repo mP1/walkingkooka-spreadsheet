@@ -20,11 +20,13 @@ package walkingkooka.spreadsheet.importer;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public final class SpreadsheetImporterTestingTest implements SpreadsheetImporterTesting<SpreadsheetImporterTestingTest.TestSpreadsheetImporter> {
 
@@ -34,6 +36,33 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
                     SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             )
     );
+
+    @Test
+    public void testImportCellsAndCheck() {
+        final WebEntity webEntity = WebEntity.empty()
+                .setContentType(
+                        Optional.of(
+                                MediaType.TEXT_PLAIN
+                        )
+                );
+        final SpreadsheetCellRange cells = SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.empty()
+        );
+
+        this.importCellsAndCheck(
+                new TestSpreadsheetImporter() {
+                    @Override
+                    public SpreadsheetCellRange importCells(final WebEntity w,
+                                                            final SpreadsheetImporterContext context) {
+                        checkEquals(webEntity, w);
+                        return cells;
+                    }
+                },
+                webEntity,
+                cells
+        );
+    }
 
     @Test
     public void testImportCellsFails() {
