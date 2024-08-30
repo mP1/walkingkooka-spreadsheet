@@ -19,11 +19,19 @@ package walkingkooka.spreadsheet.export;
 
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 /**
  * A collection of {@link SpreadsheetExporterContext}.
  */
 public final class SpreadsheetExporterContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetExporterContext}
+     */
+    public static SpreadsheetExporterContext basic(final JsonNodeMarshallContext context) {
+        return BasicSpreadsheetExporterContext.with(context);
+    }
 
     /**
      * {@see FakeSpreadsheetExporterContext}
