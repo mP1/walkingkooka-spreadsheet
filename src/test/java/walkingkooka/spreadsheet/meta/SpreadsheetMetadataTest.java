@@ -47,6 +47,12 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.export.SpreadsheetExporter;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
+import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -858,6 +864,48 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 comparator1,
                 provider.spreadsheetComparator(
                         SpreadsheetComparatorName.with("xyz"),
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    // SpreadsheetExporters.............................................................................................
+
+    @Test
+    public void testSpreadsheetExportersWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetExporterProvider(null)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetExportersWithMissingPropertyFails() {
+        assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetExporterProvider(
+                        SpreadsheetExporterProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetExporters() {
+        final SpreadsheetExporter exporter = SpreadsheetExporters.empty();
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,
+                SpreadsheetExporterInfoSet.parse(SpreadsheetExporterProviders.BASE_URL + "/empty empty")
+        );
+
+        final SpreadsheetExporterProvider provider = metadata.spreadsheetExporterProvider(
+                SpreadsheetExporterProviders.spreadsheetExport()
+        );
+
+        this.checkEquals(
+                exporter,
+                provider.spreadsheetExporter(
+                        SpreadsheetExporterSelector.parse("empty"),
                         PROVIDER_CONTEXT
                 )
         );

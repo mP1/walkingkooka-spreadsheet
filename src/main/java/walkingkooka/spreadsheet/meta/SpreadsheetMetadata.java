@@ -50,6 +50,9 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.export.SpreadsheetExporter;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -718,6 +721,27 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
+    // SpreadsheetExporterProvider.........................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetExporterProvider} that only contains the selected {@link SpreadsheetExporter}
+     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_EXPORTERS}
+     */
+    public final SpreadsheetExporterProvider spreadsheetExporterProvider(final SpreadsheetExporterProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS);
+
+        components.reportIfMissing();
+
+        return SpreadsheetExporterProviders.mapped(
+                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS),
+                provider
+        );
+    }
+    
     // SpreadsheetFormatterProvider.........................................................................................
 
     /**
