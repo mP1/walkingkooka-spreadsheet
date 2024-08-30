@@ -122,6 +122,13 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                      final WebEntity cells,
                                      final SpreadsheetImporterContext context,
                                      final SpreadsheetCellRange expected) {
+        this.canImportAndCheck(
+                importer,
+                cells,
+                context,
+                true
+        );
+
         this.checkEquals(
                 expected,
                 importer.importCells(
