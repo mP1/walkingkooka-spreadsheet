@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -32,7 +34,8 @@ import java.util.Optional;
  * A typed Optional {@link TextNode}. This is especially necessary because generics are erased and it is not possible
  * to test and distinguish between empty Optionals of different values.
  */
-public final class OptionalTextNode implements Value<Optional<TextNode>> {
+public final class OptionalTextNode implements Value<Optional<TextNode>>,
+        TreePrintable {
 
     public final static OptionalTextNode EMPTY = new OptionalTextNode(Optional.empty());
 
@@ -104,5 +107,21 @@ public final class OptionalTextNode implements Value<Optional<TextNode>> {
         return context.marshallWithType(
                 this.value.orElse(null)
         );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            final Optional<TextNode> value = this.value;
+            if(value.isPresent()) {
+                value.get()
+                        .printTree(printer);
+            }
+        }
+        printer.outdent();
     }
 }

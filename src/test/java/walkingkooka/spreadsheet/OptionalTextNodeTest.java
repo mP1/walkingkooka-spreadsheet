@@ -23,6 +23,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -36,7 +37,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class OptionalTextNodeTest implements ClassTesting<OptionalTextNode>,
         HashCodeEqualsDefinedTesting2<OptionalTextNode>,
         ToStringTesting<OptionalTextNode>,
-        JsonNodeMarshallingTesting<OptionalTextNode> {
+        JsonNodeMarshallingTesting<OptionalTextNode>,
+        TreePrintableTesting {
+
     // with.............................................................................................................
 
     @Test
@@ -146,6 +149,29 @@ public final class OptionalTextNodeTest implements ClassTesting<OptionalTextNode
                 Optional.of(
                         TextNode.text("Hello123")
                 )
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintableEmpty() {
+        this.treePrintAndCheck(
+                OptionalTextNode.EMPTY,
+                "OptionalTextNode\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+                OptionalTextNode.with(
+                        Optional.of(
+                                TextNode.text("Hello123")
+                        )
+                ),
+                "OptionalTextNode\n" +
+                        "  Text \"Hello123\"\n"
         );
     }
 
