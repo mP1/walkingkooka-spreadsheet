@@ -18,17 +18,20 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.net.WebEntity;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 
 public class FakeSpreadsheetExporter implements SpreadsheetExporter {
     @Override
     public boolean canExport(final SpreadsheetCellRange cells,
+                             final MediaType contentType,
                              final SpreadsheetExporterContext context) {
         return false;
     }
 
     @Override
     public WebEntity export(final SpreadsheetCellRange cells,
+                            final MediaType contentType,
                             final SpreadsheetExporterContext context) {
         return null;
     }

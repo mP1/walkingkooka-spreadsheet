@@ -77,6 +77,7 @@ public final class SpreadsheetExporterCollectionTest implements SpreadsheetExpor
     public void testExport() {
         this.exportAndCheck(
                 CELL_RANGE,
+                MediaType.ALL,
                 WEB_ENTITY
         );
     }
@@ -90,6 +91,7 @@ public final class SpreadsheetExporterCollectionTest implements SpreadsheetExpor
                                 new SpreadsheetExporter() {
                                     @Override
                                     public boolean canExport(final SpreadsheetCellRange cells,
+                                                             final MediaType contentType,
                                                              final SpreadsheetExporterContext context) {
                                         checkEquals(CELL_RANGE, cells, "cells");
                                         return true;
@@ -97,6 +99,7 @@ public final class SpreadsheetExporterCollectionTest implements SpreadsheetExpor
 
                                     @Override
                                     public WebEntity export(final SpreadsheetCellRange cells,
+                                                            final MediaType contentType,
                                                             final SpreadsheetExporterContext context) {
                                         checkEquals(CELL_RANGE, cells, "cells");
                                         return WEB_ENTITY;
