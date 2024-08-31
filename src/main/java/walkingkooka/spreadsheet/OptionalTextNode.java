@@ -41,19 +41,6 @@ public final class OptionalTextNode implements Value<Optional<TextNode>>,
 
     public final static OptionalTextNode EMPTY = new OptionalTextNode(Optional.empty());
 
-    static {
-        SpreadsheetValueType.DATE.isEmpty();
-
-        JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(OptionalTextNode.class),
-                OptionalTextNode::unmarshall,
-                OptionalTextNode::marshall,
-                OptionalTextNode.class
-        );
-    }
-
-    private final Optional<TextNode> value;
-
     private OptionalTextNode(final Optional<TextNode> value) {
         this.value = value;
     }
@@ -66,21 +53,16 @@ public final class OptionalTextNode implements Value<Optional<TextNode>>,
                 Cast.to(EMPTY);
     }
 
-    // TextNode...........................................................................................................
-
-    static OptionalTextNode unmarshall(final JsonNode node,
-                                       final JsonNodeUnmarshallContext context) {
-        return with(
-                Optional.ofNullable(
-                        context.unmarshallWithType(node)
-                )
-        );
-    }
+    // value............................................................................................................
 
     @Override
     public Optional<TextNode> value() {
         return this.value;
     }
+
+    private final Optional<TextNode> value;
+
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {
@@ -94,8 +76,6 @@ public final class OptionalTextNode implements Value<Optional<TextNode>>,
                         this.equals0(Cast.to(other));
     }
 
-    // json.............................................................................................................
-
     private boolean equals0(final OptionalTextNode other) {
         return this.value.equals(other.value);
     }
@@ -105,9 +85,29 @@ public final class OptionalTextNode implements Value<Optional<TextNode>>,
         return this.value.toString();
     }
 
+    // json.............................................................................................................
+
+    static OptionalTextNode unmarshall(final JsonNode node,
+                                       final JsonNodeUnmarshallContext context) {
+        return with(
+                Optional.ofNullable(
+                        context.unmarshallWithType(node)
+                )
+        );
+    }
+
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return context.marshallWithType(
                 this.value.orElse(null)
+        );
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(OptionalTextNode.class),
+                OptionalTextNode::unmarshall,
+                OptionalTextNode::marshall,
+                OptionalTextNode.class
         );
     }
 
@@ -126,7 +126,7 @@ public final class OptionalTextNode implements Value<Optional<TextNode>>,
         printer.indent();
         {
             final Optional<TextNode> value = this.value;
-            if(value.isPresent()) {
+            if (value.isPresent()) {
                 value.get()
                         .printTree(printer);
             }
