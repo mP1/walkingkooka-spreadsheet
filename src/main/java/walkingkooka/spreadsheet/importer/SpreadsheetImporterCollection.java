@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.WebEntity;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.text.CharacterConstant;
 
 import java.util.List;
@@ -77,8 +76,8 @@ final class SpreadsheetImporterCollection implements SpreadsheetImporter {
     }
 
     @Override
-    public SpreadsheetCellRange importCells(final WebEntity cells,
-                                            final SpreadsheetImporterContext context) {
+    public List<ImportCellValue> importCells(final WebEntity cells,
+                                             final SpreadsheetImporterContext context) {
         return this.importers.stream()
                 .filter(e -> e.canImport(cells, context))
                 .map(e -> e.importCells(cells, context))
