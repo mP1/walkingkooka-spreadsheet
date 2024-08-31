@@ -18,7 +18,8 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.net.WebEntity;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
+
+import java.util.List;
 
 /**
  * Imports a range of cells from the given {@link WebEntity} which may hold JSON, HTML or more.
@@ -30,6 +31,6 @@ public interface SpreadsheetImporter {
     boolean canImport(final WebEntity cells,
                       final SpreadsheetImporterContext context);
 
-    SpreadsheetCellRange importCells(final WebEntity cells,
-                                     final SpreadsheetImporterContext context);
+    List<ImportCellValue> importCells(final WebEntity cells,
+                                      final SpreadsheetImporterContext context);
 }

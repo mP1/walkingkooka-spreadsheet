@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -44,8 +44,8 @@ final class EmptySpreadsheetImporter implements SpreadsheetImporter {
     }
 
     @Override
-    public SpreadsheetCellRange importCells(final WebEntity cells,
-                                            final SpreadsheetImporterContext context) {
+    public List<ImportCellValue> importCells(final WebEntity cells,
+                                             final SpreadsheetImporterContext context) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(context, "context");
 

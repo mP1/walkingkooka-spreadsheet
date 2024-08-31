@@ -18,21 +18,20 @@
 package walkingkooka.spreadsheet.importer;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetImporterTestingTest implements SpreadsheetImporterTesting<SpreadsheetImporterTestingTest.TestSpreadsheetImporter> {
 
-    private final static SpreadsheetCellRange CELL_RANGE = SpreadsheetCellRange.with(
-            SpreadsheetSelection.ALL_CELLS,
-            Sets.of(
+    private final static List<ImportCellValue> IMPORTED = Lists.of(
+            ImportCellValue.cell(
                     SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             )
     );
@@ -45,22 +44,17 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
                                 MediaType.TEXT_PLAIN
                         )
                 );
-        final SpreadsheetCellRange cells = SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.empty()
-        );
-
         this.importCellsAndCheck(
                 new TestSpreadsheetImporter() {
                     @Override
-                    public SpreadsheetCellRange importCells(final WebEntity w,
-                                                            final SpreadsheetImporterContext context) {
+                    public List<ImportCellValue> importCells(final WebEntity w,
+                                                             final SpreadsheetImporterContext context) {
                         checkEquals(webEntity, w);
-                        return cells;
+                        return IMPORTED;
                     }
                 },
                 webEntity,
-                cells
+                IMPORTED
         );
     }
 
@@ -71,8 +65,8 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
         this.importCellsFails(
                 new TestSpreadsheetImporter() {
                     @Override
-                    public SpreadsheetCellRange importCells(final WebEntity cells,
-                                                            final SpreadsheetImporterContext context) {
+                    public List<ImportCellValue> importCells(final WebEntity cells,
+                                                             final SpreadsheetImporterContext context) {
                         throw new IllegalArgumentException(message);
                     }
                 },
@@ -103,12 +97,12 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
         }
 
         @Override
-        public SpreadsheetCellRange importCells(final WebEntity cells,
-                                                final SpreadsheetImporterContext context) {
+        public List<ImportCellValue> importCells(final WebEntity cells,
+                                                 final SpreadsheetImporterContext context) {
             Objects.requireNonNull(cells, "cells");
             Objects.requireNonNull(context, "context");
 
-            return CELL_RANGE;
+            return IMPORTED;
         }
     }
 }

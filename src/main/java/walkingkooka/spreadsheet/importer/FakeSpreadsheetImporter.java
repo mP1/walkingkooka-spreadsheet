@@ -18,7 +18,8 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.net.WebEntity;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
+
+import java.util.List;
 
 public class FakeSpreadsheetImporter implements SpreadsheetImporter {
 
@@ -29,8 +30,8 @@ public class FakeSpreadsheetImporter implements SpreadsheetImporter {
     }
 
     @Override
-    public SpreadsheetCellRange importCells(final WebEntity cells,
-                                            final SpreadsheetImporterContext context) {
+    public List<ImportCellValue> importCells(final WebEntity cells,
+                                             final SpreadsheetImporterContext context) {
         throw new UnsupportedOperationException();
     }
 }

@@ -21,12 +21,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -63,9 +63,10 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
         );
     }
 
-    private final static SpreadsheetCellRange CELL_RANGE = SpreadsheetCellRange.with(
-            SpreadsheetSelection.parseCellRange("A1:C3"),
-            Sets.empty()
+    private final static List<ImportCellValue> IMPORTED = Lists.of(
+            ImportCellValue.cell(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            )
     );
 
     private final static WebEntity WEB_ENTITY = WebEntity.empty()
@@ -77,7 +78,7 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
     public void testImportCells() {
         this.importCellsAndCheck(
                 WEB_ENTITY,
-                CELL_RANGE
+                IMPORTED
         );
     }
 
@@ -96,10 +97,10 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
                                     }
 
                                     @Override
-                                    public SpreadsheetCellRange importCells(final WebEntity cells,
-                                                                            final SpreadsheetImporterContext context) {
+                                    public List<ImportCellValue> importCells(final WebEntity cells,
+                                                                             final SpreadsheetImporterContext context) {
                                         checkEquals(WEB_ENTITY, cells, "cells");
-                                        return CELL_RANGE;
+                                        return IMPORTED;
                                     }
                                 }
                         )

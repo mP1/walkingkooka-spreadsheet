@@ -18,9 +18,11 @@
 package walkingkooka.spreadsheet.importer;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.WebEntity;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.text.printer.TreePrintableTesting;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -88,7 +90,15 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
     // importCellsAndCheck..............................................................................................
 
     default void importCellsAndCheck(final WebEntity cells,
-                                     final SpreadsheetCellRange expected) {
+                                     final ImportCellValue... expected) {
+        this.importCellsAndCheck(
+                cells,
+                Lists.of(expected)
+        );
+    }
+
+    default void importCellsAndCheck(final WebEntity cells,
+                                     final List<ImportCellValue> expected) {
         this.importCellsAndCheck(
                 cells,
                 this.createContext(),
@@ -98,7 +108,17 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
 
     default void importCellsAndCheck(final WebEntity cells,
                                      final SpreadsheetImporterContext context,
-                                     final SpreadsheetCellRange expected) {
+                                     final ImportCellValue... expected) {
+        this.importCellsAndCheck(
+                cells,
+                context,
+                Lists.of(expected)
+        );
+    }
+
+    default void importCellsAndCheck(final WebEntity cells,
+                                     final SpreadsheetImporterContext context,
+                                     final List<ImportCellValue> expected) {
         this.importCellsAndCheck(
                 this.createSpreadsheetImporter(),
                 cells,
@@ -109,7 +129,17 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
 
     default void importCellsAndCheck(final I importer,
                                      final WebEntity cells,
-                                     final SpreadsheetCellRange expected) {
+                                     final ImportCellValue... expected) {
+        this.importCellsAndCheck(
+                importer,
+                cells,
+                Lists.of(expected)
+        );
+    }
+
+    default void importCellsAndCheck(final I importer,
+                                     final WebEntity cells,
+                                     final List<ImportCellValue> expected) {
         this.importCellsAndCheck(
                 importer,
                 cells,
@@ -121,7 +151,21 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
     default void importCellsAndCheck(final I importer,
                                      final WebEntity cells,
                                      final SpreadsheetImporterContext context,
-                                     final SpreadsheetCellRange expected) {
+                                     final ImportCellValue... expected) {
+        this.importCellsAndCheck(
+                importer,
+                cells,
+                context,
+                Lists.of(
+                        expected
+                )
+        );
+    }
+
+    default void importCellsAndCheck(final I importer,
+                                     final WebEntity cells,
+                                     final SpreadsheetImporterContext context,
+                                     final List<ImportCellValue> expected) {
         this.canImportAndCheck(
                 importer,
                 cells,
