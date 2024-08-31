@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -35,6 +36,7 @@ import java.util.Optional;
  * to test and distinguish between empty Optionals of different values.
  */
 public final class OptionalTextNode implements Value<Optional<TextNode>>,
+        CanBeEmpty,
         TreePrintable {
 
     public final static OptionalTextNode EMPTY = new OptionalTextNode(Optional.empty());
@@ -107,6 +109,13 @@ public final class OptionalTextNode implements Value<Optional<TextNode>>,
         return context.marshallWithType(
                 this.value.orElse(null)
         );
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Override
+    public boolean isEmpty() {
+        return !this.value.isPresent();
     }
 
     // TreePrintable....................................................................................................
