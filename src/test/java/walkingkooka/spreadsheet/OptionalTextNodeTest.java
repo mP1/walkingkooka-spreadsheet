@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
@@ -35,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class OptionalTextNodeTest implements ClassTesting<OptionalTextNode>,
+        CanBeEmptyTesting,
         HashCodeEqualsDefinedTesting2<OptionalTextNode>,
         ToStringTesting<OptionalTextNode>,
         JsonNodeMarshallingTesting<OptionalTextNode>,
@@ -103,6 +105,28 @@ public final class OptionalTextNodeTest implements ClassTesting<OptionalTextNode
         this.toStringAndCheck(
                 OptionalTextNode.with(value),
                 value.toString()
+        );
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Test
+    public void testCanBeEmptyWhenEmpty() {
+        this.isEmptyAndCheck(
+                OptionalTextNode.EMPTY,
+                true
+        );
+    }
+
+    @Test
+    public void testCanBeEmptyWhenNotEmpty() {
+        this.isEmptyAndCheck(
+                OptionalTextNode.with(
+                        Optional.of(
+                                TextNode.EMPTY_TEXT
+                        )
+                ),
+                false
         );
     }
 
