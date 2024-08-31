@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.export;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.WebEntity;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.text.CharacterConstant;
 
@@ -67,18 +68,33 @@ final class SpreadsheetExporterCollection implements SpreadsheetExporter {
 
     @Override
     public boolean canExport(final SpreadsheetCellRange cells,
+                             final MediaType contentType,
                              final SpreadsheetExporterContext context) {
         return this.exporters.stream()
-                .anyMatch(e -> e.canExport(cells, context));
+                .anyMatch(e -> e.canExport(
+                                cells,
+                                contentType,
+                                context
+                        )
+                );
     }
 
     @Override
     public WebEntity export(final SpreadsheetCellRange cells,
+                            final MediaType contentType,
                             final SpreadsheetExporterContext context) {
         return this.exporters.stream()
-                .filter(e -> e.canExport(cells, context))
-                .map(e -> e.export(cells, context))
-                .findFirst()
+                .filter(e -> e.canExport(
+                                cells,
+                                contentType,
+                                context
+                        )
+                ).map(e -> e.export(
+                                cells,
+                                contentType,
+                                context
+                        )
+                ).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No exporter found"));
     }
 

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.export;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -33,6 +34,7 @@ public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTe
                         SpreadsheetSelection.ALL_CELLS,
                         Sets.empty()
                 ),
+                MediaType.TEXT_PLAIN,
                 false
         );
     }
@@ -44,7 +46,8 @@ public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTe
                         SpreadsheetSelection.parseCellRange("A1:B2"),
                         Sets.empty()
                 ),
-                new IllegalArgumentException("Cannot export A1:B2")
+                MediaType.TEXT_PLAIN,
+                new IllegalArgumentException("Cannot export A1:B2 as text/plain")
         );
     }
 

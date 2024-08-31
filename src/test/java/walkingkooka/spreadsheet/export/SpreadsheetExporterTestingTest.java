@@ -41,6 +41,7 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
                 new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
                     @Override
                     public WebEntity export(final SpreadsheetCellRange cells,
+                                            final MediaType contentType,
                                             final SpreadsheetExporterContext context) {
                         throw new IllegalArgumentException(message);
                     }
@@ -49,17 +50,18 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
                         SpreadsheetSelection.ALL_CELLS,
                         Sets.empty()
                 ),
+                MediaType.ALL,
                 new IllegalArgumentException(message)
         );
     }
 
     @Test
     public void testExportAndCheck() {
+        final MediaType contentType = MediaType.TEXT_PLAIN;
+
         final WebEntity webEntity = WebEntity.empty()
                 .setContentType(
-                        Optional.of(
-                                MediaType.TEXT_PLAIN
-                        )
+                        Optional.of(contentType)
                 );
         final SpreadsheetCellRange cells = SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
@@ -70,12 +72,16 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
                 new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
                     @Override
                     public WebEntity export(final SpreadsheetCellRange r,
+                                            final MediaType c,
                                             final SpreadsheetExporterContext context) {
                         checkEquals(cells, r);
+                        checkEquals(contentType, c);
+
                         return webEntity;
                     }
                 },
                 cells,
+                contentType,
                 webEntity
         );
     }
@@ -94,8 +100,10 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
 
         @Override
         public boolean canExport(final SpreadsheetCellRange cells,
+                                 final MediaType contentType,
                                  final SpreadsheetExporterContext context) {
             Objects.requireNonNull(cells, "cells");
+            Objects.requireNonNull(contentType, "contentType");
             Objects.requireNonNull(context, "context");
 
             return true;
@@ -103,8 +111,10 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
 
         @Override
         public WebEntity export(final SpreadsheetCellRange cells,
+                                final MediaType contentType,
                                 final SpreadsheetExporterContext context) {
             Objects.requireNonNull(cells, "cells");
+            Objects.requireNonNull(contentType, "contentType");
             Objects.requireNonNull(context, "context");
 
             return WEB_ENTITY;
