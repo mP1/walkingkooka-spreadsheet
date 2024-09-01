@@ -70,14 +70,14 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
         final SpreadsheetExporter exporter;
 
         switch (name.value()) {
-            case "collection":
+            case SpreadsheetExporterName.COLLECTION_STRING:
                 exporter = SpreadsheetExporters.collection(
                         values.stream()
                                 .map(e -> (SpreadsheetExporter) e)
                                 .collect(Collectors.toList())
                 );
                 break;
-            case "empty":
+            case SpreadsheetExporterName.EMPTY_STRING:
                 if (0 != count) {
                     throw new IllegalArgumentException("Got " + count + " expected 0 values");
                 }
