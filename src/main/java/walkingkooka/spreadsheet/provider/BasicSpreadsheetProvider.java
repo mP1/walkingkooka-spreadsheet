@@ -140,6 +140,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 this.spreadsheetComparatorProvider,
                 this.spreadsheetExporterProvider,
                 this.spreadsheetFormatterProvider,
+                this.spreadsheetImporterProvider,
                 this.spreadsheetParserProvider
         );
     }
