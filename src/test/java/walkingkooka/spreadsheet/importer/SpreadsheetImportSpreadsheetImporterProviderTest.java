@@ -50,6 +50,15 @@ public final class SpreadsheetImportSpreadsheetImporterProviderTest implements S
     }
 
     @Test
+    public void testSpreadsheetImporterSelectorJson() {
+        this.spreadsheetImporterAndCheck(
+                "json",
+                ProviderContexts.fake(),
+                SpreadsheetImporters.json()
+        );
+    }
+
+    @Test
     public void testSpreadsheetImporterInfo() {
         this.treePrintAndCheck(
                 SpreadsheetImporterInfoSet.with(
@@ -57,7 +66,8 @@ public final class SpreadsheetImportSpreadsheetImporterProviderTest implements S
                 ),
                 "SpreadsheetImporterInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\n"
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\n"
         );
     }
 

@@ -63,6 +63,15 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
             EMPTY_STRING
     );
 
+    final static String JSON_STRING = "json";
+
+    /**
+     * The name of the json {@link SpreadsheetImporter}
+     */
+    public final static SpreadsheetImporterName JSON = new SpreadsheetImporterName(
+            JSON_STRING
+    );
+
     // SpreadsheetImporterName instances................................................................................
 
     /**
@@ -79,6 +88,9 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
                 break;
             case EMPTY_STRING:
                 spreadsheetImporterName = EMPTY;
+                break;
+            case JSON_STRING:
+                spreadsheetImporterName = JSON;
                 break;
             default:
                 spreadsheetImporterName = new SpreadsheetImporterName(name);
