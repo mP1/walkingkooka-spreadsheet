@@ -41,6 +41,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
@@ -90,6 +93,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
 
     SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
+    SpreadsheetImporterProvider SPREADSHEET_IMPORTER_PROVIDER = SpreadsheetImporterProviders.spreadsheetImport();
 
     SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
             SPREADSHEET_FORMATTER_PROVIDER
@@ -149,6 +154,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
                     SpreadsheetFormatterInfoSet.with(
                             SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
+                    )
+            ).set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
+                    SpreadsheetImporterInfoSet.with(
+                            SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
                     )
             ).set(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
                     SpreadsheetParserInfoSet.with(
