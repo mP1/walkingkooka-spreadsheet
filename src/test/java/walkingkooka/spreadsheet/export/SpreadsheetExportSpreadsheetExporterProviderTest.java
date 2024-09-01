@@ -57,7 +57,8 @@ public final class SpreadsheetExportSpreadsheetExporterProviderTest implements S
                 ),
                 "SpreadsheetExporterInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/collection collection\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/empty empty\n"
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/empty empty\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\n"
         );
     }
 
