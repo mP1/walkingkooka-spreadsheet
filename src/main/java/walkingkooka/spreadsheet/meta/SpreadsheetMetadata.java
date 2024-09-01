@@ -820,6 +820,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             this.converterProvider(provider),
             this.expressionFunctionProvider(provider),
             this.spreadsheetComparatorProvider(provider),
+            this.spreadsheetExporterProvider(provider),
             this.spreadsheetFormatterProvider(provider),
             this.spreadsheetImporterProvider(provider),
             this.spreadsheetParserProvider(provider)

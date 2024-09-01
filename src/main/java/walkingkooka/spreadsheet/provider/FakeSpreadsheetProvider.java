@@ -26,6 +26,10 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.export.SpreadsheetExporter;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterInfo;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
@@ -82,6 +86,24 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
+                                                   final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterName name,
+                                                   final List<?> values,
+                                                   final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
+        throw new UnsupportedOperationException();
+    }
+    
     @Override
     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                    final ProviderContext context) {
