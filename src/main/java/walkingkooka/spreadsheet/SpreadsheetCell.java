@@ -86,21 +86,106 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     public static SpreadsheetCell with(final SpreadsheetCellReference reference,
                                        final SpreadsheetFormula formula) {
-        checkReference(reference);
-
         return new SpreadsheetCell(
-                reference,
+                checkReference(reference),
                 checkFormula(formula),
-                NO_STYLE,
-                NO_PARSER,
                 NO_FORMATTER,
+                NO_PARSER,
+                NO_STYLE,
                 NO_FORMATTED_VALUE_CELL
         );
     }
 
-    private static void checkReference(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
+    /**
+     * Private ctor
+     */
+    private SpreadsheetCell(final SpreadsheetCellReference reference,
+                            final SpreadsheetFormula formula,
+                            final Optional<SpreadsheetFormatterSelector> formatter,
+                            final Optional<SpreadsheetParserSelector> parser,
+                            final TextStyle style,
+                            final Optional<TextNode> formattedValue) {
+        super();
+
+        this.reference = reference.toRelative();
+        this.formula = formula;
+        this.formatter = formatter;
+        this.parser = parser;
+        this.style = style;
+        this.formattedValue = formattedValue;
     }
+
+    // HasId ...........................................................................................................
+
+    public Optional<SpreadsheetCellReference> id() {
+        return Optional.of(this.reference());
+    }
+
+    @Override
+    public String hateosLinkId() {
+        return this.reference().hateosLinkId();
+    }
+
+    // HasSpreadsheetReference..........................................................................................
+
+    @Override
+    public SpreadsheetCellReference reference() {
+        return this.reference;
+    }
+
+    public SpreadsheetCell setReference(final SpreadsheetCellReference reference) {
+        checkReference(reference);
+
+        return this.reference.equals(reference) ?
+                this :
+                this.replace(
+                        reference,
+                        this.formula,
+                        this.formatter,
+                        this.parser,
+                        this.style,
+                        NO_FORMATTED_VALUE_CELL
+                );
+    }
+
+    /**
+     * The reference that identifies this cell.
+     */
+    private final SpreadsheetCellReference reference;
+
+    private static SpreadsheetCellReference checkReference(final SpreadsheetCellReference reference) {
+        return Objects.requireNonNull(reference, "reference");
+    }
+
+    // formula .........................................................................................................
+
+    public SpreadsheetFormula formula() {
+        return this.formula;
+    }
+
+    public SpreadsheetCell setFormula(final SpreadsheetFormula formula) {
+        return this.setFormula0(
+                checkFormula(formula)
+        );
+    }
+
+    private SpreadsheetCell setFormula0(final SpreadsheetFormula formula) {
+        return this.formula.equals(formula) ?
+                this :
+                this.replace(
+                        this.reference,
+                        formula,
+                        this.formatter,
+                        this.parser,
+                        this.style,
+                        NO_FORMATTED_VALUE_CELL
+                );
+    }
+
+    /**
+     * The formula that appears in this cell.
+     */
+    private final SpreadsheetFormula formula;
 
     /**
      * If a formula has a Collection value, return the value with {@link SpreadsheetErrorKind#VALUE}.
@@ -117,103 +202,33 @@ public final class SpreadsheetCell implements CanBeEmpty,
         // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/2205
     }
 
-    private static void checkTextStyle(final TextStyle style) {
-        Objects.requireNonNull(style, "style");
+    // formatter........................................................................................................
+
+    public Optional<SpreadsheetFormatterSelector> formatter() {
+        return this.formatter;
     }
 
-    /**
-     * Private ctor
-     */
-    private SpreadsheetCell(final SpreadsheetCellReference reference,
-                            final SpreadsheetFormula formula,
-                            final TextStyle style,
-                            final Optional<SpreadsheetParserSelector> parser,
-                            final Optional<SpreadsheetFormatterSelector> formatter,
-                            final Optional<TextNode> formattedValue) {
-        super();
+    public SpreadsheetCell setFormatter(final Optional<SpreadsheetFormatterSelector> formatter) {
+        Objects.requireNonNull(formatter, "formatter");
 
-        this.reference = reference.toRelative();
-        this.formula = formula;
-        this.style = style;
-        this.parser = parser;
-        this.formatter = formatter;
-        this.formattedValue = formattedValue;
-    }
-
-    // HasId .......................................................................................
-
-    public Optional<SpreadsheetCellReference> id() {
-        return Optional.of(this.reference());
-    }
-
-    @Override
-    public String hateosLinkId() {
-        return this.reference().hateosLinkId();
-    }
-
-    // reference .............................................................................................
-
-    @Override
-    public SpreadsheetCellReference reference() {
-        return this.reference;
-    }
-
-    public SpreadsheetCell setReference(final SpreadsheetCellReference reference) {
-        checkReference(reference);
-
-        return this.reference.equals(reference) ?
+        return this.formatter.equals(formatter) ?
                 this :
-                this.replace(reference, this.formula, this.style, this.parser, this.formatter, NO_FORMATTED_VALUE_CELL);
+                this.replace(
+                        this.reference,
+                        this.formula,
+                        formatter,
+                        this.parser,
+                        this.style,
+                        NO_FORMATTED_VALUE_CELL
+                );
     }
 
     /**
-     * The reference that identifies this cell.
+     * Used to format the output of the cell's formula.
      */
-    private final SpreadsheetCellReference reference;
+    private final Optional<SpreadsheetFormatterSelector> formatter;
 
-    // formula .............................................................................................
-
-    public SpreadsheetFormula formula() {
-        return this.formula;
-    }
-
-    public SpreadsheetCell setFormula(final SpreadsheetFormula formula) {
-        return this.setFormula0(
-                checkFormula(formula)
-        );
-    }
-
-    private SpreadsheetCell setFormula0(final SpreadsheetFormula formula) {
-        return this.formula.equals(formula) ?
-                this :
-                this.replace(this.reference, formula, this.style, this.parser, this.formatter, NO_FORMATTED_VALUE_CELL);
-    }
-
-    /**
-     * The formula that appears in this cell.
-     */
-    private final SpreadsheetFormula formula;
-
-    // style .............................................................................................
-
-    public TextStyle style() {
-        return this.style;
-    }
-
-    public SpreadsheetCell setStyle(final TextStyle style) {
-        checkTextStyle(style);
-
-        return this.style.equals(style) ?
-                this :
-                this.replace(this.reference, this.formula, style, this.parser, this.formatter, NO_FORMATTED_VALUE_CELL);
-    }
-
-    /**
-     * The cell style that is used to format the output of the formula.
-     */
-    private final TextStyle style;
-
-    // parser..... .............................................................................................
+    // parser...........................................................................................................
 
     public Optional<SpreadsheetParserSelector> parser() {
         return this.parser;
@@ -228,19 +243,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         return this.parser.equals(parser) ?
                 this :
-                this.setParsePattern0(parser);
+                this.replaceParser(parser);
     }
 
-    private SpreadsheetCell setParsePattern0(final Optional<SpreadsheetParserSelector> parser) {
+    private SpreadsheetCell replaceParser(final Optional<SpreadsheetParserSelector> parser) {
         final SpreadsheetFormula formula = this.formula;
 
         return this.replace(
                 this.reference,
                 formula.setToken(SpreadsheetFormula.NO_TOKEN)
                         .setText(formula.text()),
-                this.style,
-                parser,
                 this.formatter,
+                parser,
+                this.style,
                 NO_FORMATTED_VALUE_CELL
         );
     }
@@ -250,26 +265,37 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private final Optional<SpreadsheetParserSelector> parser;
 
-    // formatter..... .............................................................................................
+    // style ...........................................................................................................
 
-    public Optional<SpreadsheetFormatterSelector> formatter() {
-        return this.formatter;
+    public TextStyle style() {
+        return this.style;
     }
 
-    public SpreadsheetCell setFormatter(final Optional<SpreadsheetFormatterSelector> formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+    public SpreadsheetCell setStyle(final TextStyle style) {
+        checkTextStyle(style);
 
-        return this.formatter.equals(formatter) ?
+        return this.style.equals(style) ?
                 this :
-                this.replace(this.reference, this.formula, this.style, this.parser, formatter, NO_FORMATTED_VALUE_CELL);
+                this.replace(
+                        this.reference,
+                        this.formula,
+                        this.formatter,
+                        this.parser,
+                        style,
+                        NO_FORMATTED_VALUE_CELL
+                );
     }
 
     /**
-     * Used to format the output of the cell's formula.
+     * The cell style that is used to format the output of the formula.
      */
-    private final Optional<SpreadsheetFormatterSelector> formatter;
+    private final TextStyle style;
 
-    // formatted .............................................................................................
+    private static TextStyle checkTextStyle(final TextStyle style) {
+        return Objects.requireNonNull(style, "style");
+    }
+
+    // formatted .......................................................................................................
 
     public Optional<TextNode> formattedValue() {
         return this.formattedValue;
@@ -281,7 +307,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
         final Optional<TextNode> formatted2 = formattedValue.map(TextNode::root);
         return this.formattedValue.equals(formatted2) ?
                 this :
-                this.replace(this.reference, this.formula, this.style, this.parser, this.formatter, formatted2);
+                this.replace(
+                        this.reference,
+                        this.formula,
+                        this.formatter,
+                        this.parser,
+                        this.style,
+                        formatted2
+                );
     }
 
     /**
@@ -296,16 +329,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private SpreadsheetCell replace(final SpreadsheetCellReference reference,
                                     final SpreadsheetFormula formula,
-                                    final TextStyle style,
-                                    final Optional<SpreadsheetParserSelector> parser,
                                     final Optional<SpreadsheetFormatterSelector> formatter,
+                                    final Optional<SpreadsheetParserSelector> parser,
+                                    final TextStyle style,
                                     final Optional<TextNode> formatted) {
         return new SpreadsheetCell(
                 reference,
                 formula,
-                style,
-                parser,
                 formatter,
+                parser,
+                style,
                 formatted
         );
     }
@@ -574,9 +607,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                                final JsonNode node,
                                                final JsonNodeUnmarshallContext context) {
         SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
+        SpreadsheetFormatterSelector formatter = null;
         TextStyle style = TextStyle.EMPTY;
         SpreadsheetParserSelector parser = null;
-        SpreadsheetFormatterSelector formatter = null;
         TextNode formatted = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
@@ -585,8 +618,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 case FORMULA_PROPERTY_STRING:
                     formula = context.unmarshall(child, SpreadsheetFormula.class);
                     break;
-                case STYLE_PROPERTY_STRING:
-                    style = context.unmarshall(child, TextStyle.class);
+                case FORMATTER_PROPERTY_STRING:
+                    formatter = context.unmarshall(
+                            child,
+                            SpreadsheetFormatterSelector.class
+                    );
                     break;
                 case PARSER_PROPERTY_STRING:
                     parser = context.unmarshall(
@@ -594,11 +630,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                             SpreadsheetParserSelector.class
                     );
                     break;
-                case FORMATTER_PROPERTY_STRING:
-                    formatter = context.unmarshall(
-                            child,
-                            SpreadsheetFormatterSelector.class
-                    );
+                case STYLE_PROPERTY_STRING:
+                    style = context.unmarshall(child, TextStyle.class);
                     break;
                 case FORMATTED_VALUE_PROPERTY_STRING:
                     formatted = context.unmarshallWithType(child);
@@ -612,9 +645,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return new SpreadsheetCell(
                 reference,
                 formula,
-                style,
-                Optional.ofNullable(parser),
                 Optional.ofNullable(formatter),
+                Optional.ofNullable(parser),
+                style,
                 Optional.ofNullable(formatted)
         );
     }
