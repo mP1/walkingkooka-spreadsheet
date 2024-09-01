@@ -21,6 +21,7 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
@@ -33,12 +34,14 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                             final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                             final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                            final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                             final SpreadsheetParserProvider spreadsheetParserProvider) {
         return BasicSpreadsheetProvider.with(
                 converterProvider,
                 expressionFunctionProvider,
                 spreadsheetComparatorProvider,
                 spreadsheetFormatterProvider,
+                spreadsheetImporterProvider,
                 spreadsheetParserProvider
         );
     }

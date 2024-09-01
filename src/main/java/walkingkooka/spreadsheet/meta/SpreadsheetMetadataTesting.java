@@ -44,6 +44,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
@@ -222,6 +224,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_IMPORTER_PROVIDER,
                     SPREADSHEET_PARSER_PROVIDER
             )
     );
