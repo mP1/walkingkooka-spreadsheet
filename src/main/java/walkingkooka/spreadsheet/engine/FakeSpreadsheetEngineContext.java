@@ -29,6 +29,10 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.export.SpreadsheetExporter;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterInfo;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfo;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
@@ -115,6 +119,28 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
         throw new UnsupportedOperationException();
     }
 
+    // SpreadsheetExporterProvider......................................................................................
+
+    @Override
+    public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
+                                                   final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterName name,
+                                                   final List<?> values,
+                                                   final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
+        throw new UnsupportedOperationException();
+    }
+    
+    // formula..........................................................................................................
+    
     @Override
     public SpreadsheetParserToken parseFormula(final TextCursor formula) {
         Objects.requireNonNull(formula, "formula");

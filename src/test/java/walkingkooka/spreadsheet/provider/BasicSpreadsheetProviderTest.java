@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -56,6 +57,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         null,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
@@ -71,6 +73,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         CONVERTER_PROVIDER,
                         null,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
@@ -85,6 +88,23 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 () -> BasicSpreadsheetProvider.with(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        null,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetExporterProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetProvider.with(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
                         null,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
@@ -101,6 +121,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         null,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
@@ -116,6 +137,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         null,
                         SPREADSHEET_PARSER_PROVIDER
@@ -131,6 +153,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         null
@@ -144,6 +167,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_COMPARATOR_PROVIDER,
+                SPREADSHEET_EXPORTER_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER
@@ -158,6 +182,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         ConverterProviders.fake(),
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
@@ -172,6 +197,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         CONVERTER_PROVIDER,
                         ExpressionFunctionProviders.fake(),
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
@@ -186,6 +212,22 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SpreadsheetComparatorProviders.fake(),
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetExporterProvider() {
+        this.checkNotEquals(
+                BasicSpreadsheetProvider.with(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SpreadsheetExporterProviders.fake(),
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
@@ -200,6 +242,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SpreadsheetFormatterProviders.fake(),
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
@@ -214,6 +257,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SpreadsheetImporterProviders.fake(),
                         SPREADSHEET_PARSER_PROVIDER
@@ -228,6 +272,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SpreadsheetParserProviders.fake()

@@ -21,6 +21,8 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderDelegator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviderDelegator;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProviderDelegator;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderDelegator;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
@@ -34,6 +36,7 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
         ConverterProviderDelegator,
         ExpressionFunctionProviderDelegator,
         SpreadsheetComparatorProviderDelegator,
+        SpreadsheetExporterProviderDelegator,
         SpreadsheetFormatterProviderDelegator,
         SpreadsheetImporterProviderDelegator,
         SpreadsheetParserProviderDelegator {
@@ -53,6 +56,11 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
         return this.spreadsheetProvider();
     }
 
+    @Override
+    default SpreadsheetExporterProvider spreadsheetExporterProvider() {
+        return this.spreadsheetProvider();
+    }
+    
     @Override
     default SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
         return this.spreadsheetProvider();

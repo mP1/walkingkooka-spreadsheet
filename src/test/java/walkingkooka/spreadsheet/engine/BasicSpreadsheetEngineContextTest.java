@@ -1546,6 +1546,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER

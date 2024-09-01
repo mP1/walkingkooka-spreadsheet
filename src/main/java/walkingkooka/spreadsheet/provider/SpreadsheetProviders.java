@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.provider;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
@@ -33,6 +34,7 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
     public static SpreadsheetProvider basic(final ConverterProvider converterProvider,
                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                             final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+                                            final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                             final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                             final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                             final SpreadsheetParserProvider spreadsheetParserProvider) {
@@ -40,6 +42,7 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
                 converterProvider,
                 expressionFunctionProvider,
                 spreadsheetComparatorProvider,
+                spreadsheetExporterProvider,
                 spreadsheetFormatterProvider,
                 spreadsheetImporterProvider,
                 spreadsheetParserProvider

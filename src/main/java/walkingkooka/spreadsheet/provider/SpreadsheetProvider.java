@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.provider;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.plugin.Provider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
@@ -32,6 +33,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 public interface SpreadsheetProvider extends ConverterProvider,
         ExpressionFunctionProvider,
         SpreadsheetComparatorProvider,
+        SpreadsheetExporterProvider,
         SpreadsheetFormatterProvider,
         SpreadsheetParserProvider,
         SpreadsheetImporterProvider {
