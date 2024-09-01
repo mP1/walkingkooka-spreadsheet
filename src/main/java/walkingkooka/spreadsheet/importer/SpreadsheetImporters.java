@@ -46,7 +46,14 @@ public final class SpreadsheetImporters implements PublicStaticHelper {
     public static SpreadsheetImporter fake() {
         return new FakeSpreadsheetImporter();
     }
-    
+
+    /**
+     * {@see JsonSpreadsheetImporter}
+     */
+    public static SpreadsheetImporter json() {
+        return JsonSpreadsheetImporter.INSTANCE;
+    }
+
     /**
      * Stop creation
      */

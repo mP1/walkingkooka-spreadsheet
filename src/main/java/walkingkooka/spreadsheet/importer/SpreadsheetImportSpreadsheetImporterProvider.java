@@ -83,6 +83,12 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
                 }
                 importer = SpreadsheetImporters.empty();
                 break;
+            case SpreadsheetImporterName.JSON_STRING:
+                if (0 != count) {
+                    throw new IllegalArgumentException("Got " + count + " expected 0 values");
+                }
+                importer = SpreadsheetImporters.json();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown importer " + name);
         }
@@ -99,7 +105,8 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
 
     private final static Set<SpreadsheetImporterInfo> INFOS = Sets.of(
             spreadsheetImporterInfo(SpreadsheetImporterName.COLLECTION),
-            spreadsheetImporterInfo(SpreadsheetImporterName.EMPTY)
+            spreadsheetImporterInfo(SpreadsheetImporterName.EMPTY),
+            spreadsheetImporterInfo(SpreadsheetImporterName.JSON)
     );
 
 
