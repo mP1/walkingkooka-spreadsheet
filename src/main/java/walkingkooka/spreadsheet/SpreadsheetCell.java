@@ -653,8 +653,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
         JsonObject object = JsonNode.object()
                 .set(FORMULA_PROPERTY, context.marshall(this.formula));
 
-        if (false == this.style.isEmpty()) {
-            object = object.set(STYLE_PROPERTY, context.marshall(this.style));
+        if (this.formatter.isPresent()) {
+            object = object.set(
+                    FORMATTER_PROPERTY,
+                    context.marshall(
+                            this.formatter.get()
+                    )
+            );
         }
 
         final Optional<SpreadsheetParserSelector> parser = this.parser;
@@ -667,14 +672,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
         }
 
-        if (this.formatter.isPresent()) {
-            object = object.set(
-                    FORMATTER_PROPERTY,
-                    context.marshall(
-                            this.formatter.get()
-                    )
-            );
+        if (false == this.style.isEmpty()) {
+            object = object.set(STYLE_PROPERTY, context.marshall(this.style));
         }
+
         if (this.formattedValue.isPresent()) {
             object = object.set(FORMATTED_VALUE_PROPERTY, context.marshallWithType(this.formattedValue.get()));
         }
@@ -683,17 +684,27 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     private final static String REFERENCE_PROPERTY_STRING = "reference";
+
     private final static String FORMULA_PROPERTY_STRING = "formula";
-    private final static String STYLE_PROPERTY_STRING = "style";
-    private final static String PARSER_PROPERTY_STRING = "parser";
+
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
+
+    private final static String PARSER_PROPERTY_STRING = "parser";
+
+    private final static String STYLE_PROPERTY_STRING = "style";
+
     private final static String FORMATTED_VALUE_PROPERTY_STRING = "formatted-value";
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
+
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
-    final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
-    final static JsonPropertyName PARSER_PROPERTY = JsonPropertyName.with(PARSER_PROPERTY_STRING);
+
     final static JsonPropertyName FORMATTER_PROPERTY = JsonPropertyName.with(FORMATTER_PROPERTY_STRING);
+
+    final static JsonPropertyName PARSER_PROPERTY = JsonPropertyName.with(PARSER_PROPERTY_STRING);
+
+    final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
+
     final static JsonPropertyName FORMATTED_VALUE_PROPERTY = JsonPropertyName.with(FORMATTED_VALUE_PROPERTY_STRING);
 
     static {
