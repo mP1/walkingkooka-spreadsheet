@@ -34,6 +34,9 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
@@ -42,8 +45,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContex
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -93,6 +94,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();
 
+    SpreadsheetExporterProvider SPREADSHEET_EXPORTER_PROVIDER = SpreadsheetExporterProviders.spreadsheetExport();
 
     SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
@@ -151,6 +153,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
                     SpreadsheetComparatorInfoSet.with(
                             SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
+                    )
+            ).set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,
+                    SpreadsheetExporterInfoSet.with(
+                            SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
                     )
             ).set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
