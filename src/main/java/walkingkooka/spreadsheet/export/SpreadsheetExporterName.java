@@ -48,7 +48,7 @@ final public class SpreadsheetExporterName implements PluginNameLike<Spreadsheet
     final static String COLLECTION_STRING = "collection";
 
     /**
-     * The name of the date {@link SpreadsheetExporter}
+     * The name of the collection {@link SpreadsheetExporter}
      */
     public final static SpreadsheetExporterName COLLECTION = new SpreadsheetExporterName(
             COLLECTION_STRING
@@ -57,7 +57,7 @@ final public class SpreadsheetExporterName implements PluginNameLike<Spreadsheet
     final static String EMPTY_STRING = "empty";
 
     /**
-     * The name of the date {@link SpreadsheetExporter}
+     * The name of the empty {@link SpreadsheetExporter}
      */
     public final static SpreadsheetExporterName EMPTY = new SpreadsheetExporterName(
             EMPTY_STRING
