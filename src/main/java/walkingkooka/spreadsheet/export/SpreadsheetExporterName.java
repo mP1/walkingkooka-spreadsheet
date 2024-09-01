@@ -63,6 +63,15 @@ final public class SpreadsheetExporterName implements PluginNameLike<Spreadsheet
             EMPTY_STRING
     );
 
+    final static String JSON_STRING = "json";
+
+    /**
+     * The name of the JSON {@link SpreadsheetExporter}
+     */
+    public final static SpreadsheetExporterName JSON = new SpreadsheetExporterName(
+            JSON_STRING
+    );
+
     // SpreadsheetExporterName instances................................................................................
 
     /**

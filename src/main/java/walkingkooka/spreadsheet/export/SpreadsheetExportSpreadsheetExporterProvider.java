@@ -83,6 +83,12 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
                 }
                 exporter = SpreadsheetExporters.empty();
                 break;
+            case SpreadsheetExporterName.JSON_STRING:
+                if (0 != count) {
+                    throw new IllegalArgumentException("Got " + count + " expected 0 values");
+                }
+                exporter = SpreadsheetExporters.json();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown exporter " + name);
         }
@@ -99,7 +105,8 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
 
     private final static Set<SpreadsheetExporterInfo> INFOS = Sets.of(
             spreadsheetExporterInfo(SpreadsheetExporterName.COLLECTION),
-            spreadsheetExporterInfo(SpreadsheetExporterName.EMPTY)
+            spreadsheetExporterInfo(SpreadsheetExporterName.EMPTY),
+            spreadsheetExporterInfo(SpreadsheetExporterName.JSON)
     );
 
 
