@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -52,7 +53,8 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         checkRange(range);
         Objects.requireNonNull(value, "value");
 
-        final Set<SpreadsheetCell> copy = Sets.immutable(value);
+        final Set<SpreadsheetCell> copy = SortedSets.tree();
+        copy.addAll(value);
         checkValues(range, copy);
 
         return new SpreadsheetCellRange(
@@ -109,7 +111,9 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
     public SpreadsheetCellRange setValue(final Set<SpreadsheetCell> value) {
         Objects.requireNonNull(value, "value");
 
-        final Set<SpreadsheetCell> copy = Sets.immutable(value);
+        final Set<SpreadsheetCell> copy = SortedSets.immutable(
+                new TreeSet<>(value)
+        );
         checkValues(this.range, copy);
 
         return this.value.equals(copy) ?
@@ -127,7 +131,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         final Set<SpreadsheetCellReference> outOfBounds = value.stream()
                 .map(SpreadsheetCell::reference)
                 .filter(c -> false == range.testCell(c))
-                .collect(Collectors.toCollection(Sets::sorted));
+                .collect(Collectors.toCollection(SortedSets::tree));
 
         if (false == outOfBounds.isEmpty()) {
             throw new IllegalArgumentException(
@@ -164,7 +168,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
 
     private SpreadsheetCellRange move0(final SpreadsheetCellRangeReference to,
                                        final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
-        final Set<SpreadsheetCell> movedCells = Sets.sorted();
+        final Set<SpreadsheetCell> movedCells = SortedSets.tree();
 
         for (final SpreadsheetCell cell : this.value) {
             final Optional<SpreadsheetCellReference> maybeMoved = mapper.apply(cell.reference());
@@ -275,7 +279,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
                 )
         );
 
-        final Set<SpreadsheetCell> newCells = Sets.sorted();
+        final Set<SpreadsheetCell> newCells = SortedSets.tree();
         SpreadsheetColumnOrRowReference actualY = heightKind.columnOrRow(home);
 
         for (final SpreadsheetCellRangeSortList yCells : allCells) {

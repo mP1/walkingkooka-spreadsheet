@@ -18,23 +18,21 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.ImmutableSetDefaults;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 
 import java.util.AbstractSet;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * An immutable {@link java.util.Set} holding the {@link SpreadsheetCellRangeReference} of a {@link SpreadsheetDelta#window()}.
  * It also includes logic to verify that the window ranges do not overlap.
  */
-final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeReference> {
-
-    static {
-        Sets.registerImmutableType(SpreadsheetDeltaWindowSet.class);
-    }
+final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeReference>
+        implements ImmutableSetDefaults<SpreadsheetDeltaWindowSet, SpreadsheetCellRangeReference> {
 
     @SuppressWarnings("lgtm[java/abstract-to-concrete-cast]")
     static SpreadsheetDeltaWindowSet with(final Set<SpreadsheetCellRangeReference> window) {
@@ -102,5 +100,22 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeRe
     @Override
     public String toString() {
         return Arrays.toString(this.ranges);
+    }
+
+    // ImmutableSet.....................................................................................................
+
+    @Override
+    public SpreadsheetDeltaWindowSet setElements(final Set<SpreadsheetCellRangeReference> elements) {
+        final SpreadsheetDeltaWindowSet copy = with(elements);
+        return this.equals(copy) ?
+                this :
+                copy;
+    }
+
+    @Override
+    public Set<SpreadsheetCellRangeReference> toSet() {
+        return new TreeSet<>(
+                Arrays.asList(this.ranges)
+        );
     }
 }

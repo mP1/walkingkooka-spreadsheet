@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -135,7 +136,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetStoreRepository repository = context.storeRepository();
 
             // load and evaluate cells
-            final Set<SpreadsheetCell> loaded = Sets.sorted();
+            final Set<SpreadsheetCell> loaded = SortedSets.tree();
 
             for (final SpreadsheetCell cell : context.storeRepository()
                     .cells()
@@ -165,10 +166,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 final Set<SpreadsheetCellReference> deleted = delta.deletedCells();
                 loadedOrDeleted.addAll(deleted);
 
-                final Set<SpreadsheetCellReference> allDeleted = Sets.sorted();
+                final Set<SpreadsheetCellReference> allDeleted = SortedSets.tree();
                 allDeleted.addAll(deleted);
 
-                final Set<SpreadsheetLabelMapping> labels = Sets.sorted();
+                final Set<SpreadsheetLabelMapping> labels = SortedSets.tree();
                 labels.addAll(delta.labels());
 
                 final SpreadsheetLabelStore labelStore = repository.labels();
@@ -385,7 +386,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkExpression(expression);
         checkContext(context);
 
-        final Set<SpreadsheetCell> found = Sets.sorted(
+        final Set<SpreadsheetCell> found = SortedSets.tree(
                 SpreadsheetCellReference.cellComparator(
                         path.comparator()
                 )
@@ -478,7 +479,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         final Set<SpreadsheetDeltaProperties> deltaProperties,
                                         final SpreadsheetEngineContext context) {
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
-            final Set<SpreadsheetCell> loaded = Sets.sorted();
+            final Set<SpreadsheetCell> loaded = SortedSets.tree();
 
             for (final SpreadsheetCell cell : context.storeRepository()
                     .cells()
@@ -790,7 +791,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             );
         }
 
-        final Set<SpreadsheetLabelMapping> labels = Sets.sorted();
+        final Set<SpreadsheetLabelMapping> labels = SortedSets.tree();
         final SpreadsheetLabelStore labelStore = repo.labels();
 
         // record columns and rows for updated cells...
@@ -1027,7 +1028,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     private static <T> Set<T> sortedSet(final Map<?, T> columnsOrRows) {
-        final Set<T> set = Sets.sorted();
+        final Set<T> set = SortedSets.tree();
 
         for (final T value : columnsOrRows.values()) {
             // not all columns or rows have a SpreadsheetColumn or SpreadsheetRow with values.

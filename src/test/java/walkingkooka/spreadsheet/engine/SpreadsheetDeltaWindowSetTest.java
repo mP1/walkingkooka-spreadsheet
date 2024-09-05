@@ -18,14 +18,14 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.set.SetTesting2;
+import walkingkooka.collect.set.ImmutableSetTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<SpreadsheetDeltaWindowSet, SpreadsheetCellRangeReference> {
+public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<SpreadsheetDeltaWindowSet, SpreadsheetCellRangeReference> {
 
     @Test
     public void testWithOverlapFails() {
@@ -154,6 +154,26 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
         );
     }
 
+    @Test
+    public void testDelete() {
+        final SpreadsheetCellRangeReference a1b2 = this.a1b2();
+        final SpreadsheetCellRangeReference c1e2 = this.c1e2();
+        final SpreadsheetCellRangeReference a3b5 = this.a3b5();
+        final SpreadsheetCellRangeReference c3e5 = this.c3e5();
+
+        final SpreadsheetDeltaWindowSet set = SpreadsheetDeltaWindowSet.with(
+                Sets.of(a1b2, c1e2, a3b5, c3e5)
+        );
+
+        this.deleteAndCheck(
+                set,
+                a1b2,
+                SpreadsheetDeltaWindowSet.with(
+                        Sets.of(c1e2, a3b5, c3e5)
+                )
+        );
+    }
+
     private SpreadsheetCellRangeReference a1b2() {
         return SpreadsheetSelection.parseCellRange("a1:b2");
     }
@@ -169,6 +189,8 @@ public final class SpreadsheetDeltaWindowSetTest implements SetTesting2<Spreadsh
     private SpreadsheetCellRangeReference c3e5() {
         return SpreadsheetSelection.parseCellRange("c3:e5");
     }
+
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetDeltaWindowSet> type() {

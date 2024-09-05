@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.ConstantsTesting;
@@ -161,7 +162,7 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
                     } catch (final Exception cause) {
                         throw new Error(cause);
                     }
-                }).collect(Collectors.toCollection(Sets::sorted));
+                }).collect(Collectors.toCollection(SortedSets::tree));
 
         for (final SpreadsheetColorName color : constants) {
             assertSame(

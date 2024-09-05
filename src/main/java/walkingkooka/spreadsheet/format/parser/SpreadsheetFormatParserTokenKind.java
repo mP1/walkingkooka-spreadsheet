@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -265,7 +266,7 @@ public enum SpreadsheetFormatParserTokenKind {
                             .flatMap(k -> k.patterns.stream())
                             .collect(
                                     Collectors.toCollection(
-                                            this.isColor() ? Sets::ordered : Sets::sorted
+                                            this.isColor() ? Sets::ordered : SortedSets::tree
                                     )
                             )
             );

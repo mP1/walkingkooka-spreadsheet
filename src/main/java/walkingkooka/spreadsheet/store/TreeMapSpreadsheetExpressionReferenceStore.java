@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.Store;
@@ -31,6 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -187,18 +189,18 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         final SpreadsheetCellReference reference = targetAndReference.reference()
                 .toRelative();
 
-        Set<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
+        SortedSet<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
         //noinspection Java8MapApi
         if (null == referrers) {
-            referrers = Sets.sorted();
+            referrers = SortedSets.tree();
             this.targetToReferences.put(id, referrers);
         }
         referrers.add(reference);
 
-        Set<T> targets = this.referenceToTargets.get(reference);
+        SortedSet<T> targets = this.referenceToTargets.get(reference);
         //noinspection Java8MapApi
         if (null == targets) {
-            targets = Sets.sorted();
+            targets = SortedSets.tree();
             this.referenceToTargets.put(reference, targets);
         }
         targets.add(id);
@@ -258,10 +260,10 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     public Set<T> loadReferred(final SpreadsheetCellReference referrer) {
         checkReferrer(referrer);
 
-        final Set<T> targets = this.referenceToTargets.get(referrer);
+        final SortedSet<T> targets = this.referenceToTargets.get(referrer);
         return null != targets ?
-                Sets.immutable(targets) :
-                Sets.empty();
+                SortedSets.immutable(targets) :
+                SortedSets.empty();
     }
 
     // helpers..........................................................................................
@@ -282,13 +284,13 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
      * Something like labels and the cell references expressions containing the label.
      */
     // VisibleForTesting
-    final Map<T, Set<SpreadsheetCellReference>> targetToReferences = Maps.sorted();
+    final Map<T, SortedSet<SpreadsheetCellReference>> targetToReferences = Maps.sorted();
 
     /**
      * The inverse of {@link #targetToReferences}
      */
     // VisibleForTesting
-    final Map<SpreadsheetCellReference, Set<T>> referenceToTargets = Maps.sorted();
+    final Map<SpreadsheetCellReference, SortedSet<T>> referenceToTargets = Maps.sorted();
 
     @Override
     public String toString() {

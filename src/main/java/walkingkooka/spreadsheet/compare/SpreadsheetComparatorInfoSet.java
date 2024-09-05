@@ -18,7 +18,8 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.ImmutableSetDefaults;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.tree.json.JsonNode;
@@ -30,15 +31,13 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetComparatorInfo} sorted by {@link SpreadsheetComparatorName}.
  */
-public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
-
-    static {
-        Sets.registerImmutableType(SpreadsheetComparatorInfoSet.class);
-    }
+public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorInfo, SpreadsheetComparatorName>,
+        ImmutableSetDefaults<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo> {
 
     /**
      * Parses the CSV text into a {@link SpreadsheetComparatorInfoSet}.
@@ -57,7 +56,7 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     public static SpreadsheetComparatorInfoSet with(final Set<SpreadsheetComparatorInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
-        final Set<SpreadsheetComparatorInfo> copy = Sets.sorted(HateosResource.comparator());
+        final Set<SpreadsheetComparatorInfo> copy = SortedSets.tree(HateosResource.comparator());
         copy.addAll(infos);
         return new SpreadsheetComparatorInfoSet(copy);
     }
@@ -82,6 +81,23 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
 
     private final Set<SpreadsheetComparatorInfo> infos;
 
+    // ImmutableSet.....................................................................................................
+
+    @Override
+    public SpreadsheetComparatorInfoSet setElements(final Set<SpreadsheetComparatorInfo> elements) {
+        final SpreadsheetComparatorInfoSet copy = with(elements);
+        return this.equals(copy) ?
+                this :
+                copy;
+    }
+
+    @Override
+    public Set<SpreadsheetComparatorInfo> toSet() {
+        return new TreeSet<>(
+                this.infos
+        );
+    }
+    
     // json.............................................................................................................
 
     static {

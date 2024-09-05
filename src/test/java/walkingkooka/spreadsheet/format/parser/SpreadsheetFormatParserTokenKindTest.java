@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
@@ -749,7 +750,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     private Set<SpreadsheetFormatParserTokenKind> collect(final Predicate<SpreadsheetFormatParserTokenKind> predicate) {
         return Arrays.stream(SpreadsheetFormatParserTokenKind.values())
                 .filter(predicate)
-                .collect(Collectors.toCollection(Sets::sorted));
+                .collect(Collectors.toCollection(SortedSets::tree));
     }
 
     private void checkNoOverlapOrFail(final Set<SpreadsheetFormatParserTokenKind> left,

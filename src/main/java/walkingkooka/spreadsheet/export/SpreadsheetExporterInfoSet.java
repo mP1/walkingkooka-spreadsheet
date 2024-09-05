@@ -18,7 +18,8 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.ImmutableSetDefaults;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.tree.json.JsonNode;
@@ -30,16 +31,14 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetExporterInfo} sorted by {@link SpreadsheetExporterName}.
  */
 public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExporterInfo>
-        implements PluginInfoSetLike<SpreadsheetExporterInfo, SpreadsheetExporterName> {
-
-    static {
-        Sets.registerImmutableType(SpreadsheetExporterInfoSet.class);
-    }
+        implements PluginInfoSetLike<SpreadsheetExporterInfo, SpreadsheetExporterName>,
+        ImmutableSetDefaults<SpreadsheetExporterInfoSet, SpreadsheetExporterInfo> {
 
     /**
      * Parses the CSV text into a {@link SpreadsheetExporterInfoSet}.
@@ -58,7 +57,7 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     public static SpreadsheetExporterInfoSet with(final Set<SpreadsheetExporterInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
-        final Set<SpreadsheetExporterInfo> copy = Sets.sorted(HateosResource.comparator());
+        final Set<SpreadsheetExporterInfo> copy = SortedSets.tree(HateosResource.comparator());
         copy.addAll(infos);
         return new SpreadsheetExporterInfoSet(copy);
     }
@@ -82,6 +81,23 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     }
 
     private final Set<SpreadsheetExporterInfo> infos;
+
+    // ImmutableSet.....................................................................................................
+
+    @Override
+    public SpreadsheetExporterInfoSet setElements(final Set<SpreadsheetExporterInfo> elements) {
+        final SpreadsheetExporterInfoSet copy = with(elements);
+        return this.equals(copy) ?
+                this :
+                copy;
+    }
+
+    @Override
+    public Set<SpreadsheetExporterInfo> toSet() {
+        return new TreeSet<>(
+                this.infos
+        );
+    }
 
     // json.............................................................................................................
 

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -245,14 +246,14 @@ public final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator
                 SpreadsheetSelection.parseCellRange(range),
                 cells.stream()
                         .map(c -> SpreadsheetSelection.parseCell(c).setFormula(SpreadsheetFormula.EMPTY))
-                        .collect(Collectors.toCollection(Sets::sorted))
+                        .collect(Collectors.toCollection(SortedSets::tree))
         );
     }
 
     private void iteratorCheck(final SpreadsheetCellRangeReference range,
                                final Set<SpreadsheetCell> cells) {
         final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cellMap = Maps.sorted();
-        final Set<SpreadsheetCell> iterated = Sets.sorted();
+        final Set<SpreadsheetCell> iterated = SortedSets.tree();
 
         cells.forEach(
                 (c) -> {

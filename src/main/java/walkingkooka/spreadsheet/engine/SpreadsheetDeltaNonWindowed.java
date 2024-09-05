@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
+import walkingkooka.collect.set.ImmutableSortedSet;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -35,6 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A {@link SpreadsheetDelta} without any window/filtering.
@@ -372,12 +375,20 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
 
     @Override
     Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns) {
-        return copyAndImmutable(columns);
+        return columns instanceof ImmutableSortedSet ?
+                columns :
+                SortedSets.immutable(
+                        new TreeSet<>(columns)
+                );
     }
 
     @Override
     Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows) {
-        return copyAndImmutable(rows);
+        return rows instanceof ImmutableSortedSet ?
+                rows :
+                SortedSets.immutable(
+                        new TreeSet<>(rows)
+                );
     }
 
     @Override

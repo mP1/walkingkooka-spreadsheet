@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -37,7 +38,7 @@ public interface SpreadsheetColumnStore extends SpreadsheetColumnOrRowStore<Spre
     default Set<SpreadsheetColumn> loadColumns(final SpreadsheetColumnRangeReference range) {
         Objects.requireNonNull(range, "ranges");
 
-        final Set<SpreadsheetColumn> columns = Sets.sorted();
+        final Set<SpreadsheetColumn> columns = SortedSets.tree();
 
         for (final SpreadsheetColumnReference columnReference : range) {
             final Optional<SpreadsheetColumn> column = this.load(columnReference);

@@ -23,6 +23,7 @@ import org.junit.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
@@ -132,7 +133,7 @@ public class JunitTest {
         final Set<String> saved = delta.cells()
                 .stream()
                 .map(c -> c.formula().value().get().toString())
-                .collect(Collectors.toCollection(Sets::sorted));
+                .collect(Collectors.toCollection(SortedSets::tree));
 
         // a1=12+b2
         // a1=12+34

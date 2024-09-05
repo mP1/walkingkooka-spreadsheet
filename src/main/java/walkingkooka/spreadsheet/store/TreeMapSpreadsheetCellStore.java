@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.NeverError;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -147,7 +148,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                                                      final SpreadsheetCellRangeReferencePath path,
                                                      final int offset,
                                                      final int max) {
-        final Set<SpreadsheetCell> loaded = Sets.sorted(
+        final Set<SpreadsheetCell> loaded = SortedSets.tree(
                 SpreadsheetCellReference.cellComparator(
                         path.comparator()
                 )
@@ -330,7 +331,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         return this.all()
                 .stream()
                 .filter(filter)
-                .collect(Collectors.toCollection(Sets::sorted));
+                .collect(Collectors.toCollection(SortedSets::tree));
     }
 
     /**
@@ -380,7 +381,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                         range,
                         valueTypeName
                 ).limit(max)
-                .collect(Collectors.toCollection(Sets::sorted));
+                .collect(Collectors.toCollection(SortedSets::tree));
     }
 
     @Override

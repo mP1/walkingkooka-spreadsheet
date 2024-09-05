@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.naming.HasName;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
@@ -68,7 +68,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                         ),
                                 n
                         )
-                ).collect(Collectors.toCollection(Sets::sorted));
+                ).collect(Collectors.toCollection(SortedSets::tree));
     }
 
     private final static Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = Maps.readOnly(

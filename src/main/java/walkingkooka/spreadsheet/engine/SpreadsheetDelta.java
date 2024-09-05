@@ -22,7 +22,9 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -68,6 +70,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -706,7 +709,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         if (columnCount + rowCount > 0) {
             // Any columns or rows within this Set are hidden and matches by a cell will be removed.
-            final Set<SpreadsheetColumnOrRowReference> hidden = Sets.sorted(SpreadsheetColumnOrRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+            final Set<SpreadsheetColumnOrRowReference> hidden = SortedSets.tree(
+                    SpreadsheetColumnOrRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR
+            );
 
             if (columnCount > 0) {
                 for (final SpreadsheetColumn column : columns) {
@@ -749,13 +754,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                         cells,
                         predicate
                 ) :
-                copyAndImmutable(cells);
-    }
-
-    static <T> Set<T> copyAndImmutable(final Set<T> cells) {
-        final Set<T> copy = Sets.sorted();
-        copy.addAll(cells);
-        return Sets.immutable(copy);
+                cells instanceof ImmutableSortedSet ?
+                        cells :
+                        SortedSets.immutable(
+                                new TreeSet<>(cells)
+                        );
     }
 
     static Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns,
@@ -895,11 +898,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     static <T> Set<T> filter(final Set<T> values,
                              final Predicate<T> windowTester,
                              final Function<T, T> mapper) {
-        return Sets.immutable(
+        return SortedSets.immutable(
                 values.stream()
                         .filter(windowTester)
                         .map(mapper)
-                        .collect(Collectors.toCollection(Sets::sorted))
+                        .collect(
+                                Collectors.toCollection(SortedSets::tree)
+                        )
         );
     }
 
@@ -1769,8 +1774,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                       final Set<SpreadsheetCell> cells,
                                                       final Function<SpreadsheetCell, SpreadsheetCell> patcher,
                                                       final Function<SpreadsheetCellReference, SpreadsheetCell> creator) {
-        final Set<SpreadsheetCell> patched = Sets.sorted();
-        final Set<SpreadsheetCellReference> patchedCellReferences = Sets.sorted();
+        final Set<SpreadsheetCell> patched = SortedSets.tree();
+        final Set<SpreadsheetCellReference> patchedCellReferences = SortedSets.tree();
 
         for (final SpreadsheetCell cell : cells) {
             patched.add(

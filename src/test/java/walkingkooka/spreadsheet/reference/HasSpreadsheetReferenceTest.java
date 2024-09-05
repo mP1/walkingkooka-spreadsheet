@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -34,7 +34,7 @@ public final class HasSpreadsheetReferenceTest implements ClassTesting<HasSpread
 
     @Test
     public void testComparatorSpreadsheetCell() {
-        final SortedSet<SpreadsheetCell> sorted = Sets.sorted(
+        final SortedSet<SpreadsheetCell> sorted = SortedSets.tree(
                 HasSpreadsheetReference.hasSpreadsheetReferenceComparator()
         );
 
@@ -65,7 +65,7 @@ public final class HasSpreadsheetReferenceTest implements ClassTesting<HasSpread
 
     @Test
     public void testComparatorSpreadsheetColumnReference() {
-        final SortedSet<SpreadsheetColumn> sorted = Sets.sorted(HasSpreadsheetReference.hasSpreadsheetReferenceComparator());
+        final SortedSet<SpreadsheetColumn> sorted = SortedSets.tree(HasSpreadsheetReference.hasSpreadsheetReferenceComparator());
 
         final SpreadsheetColumn a = SpreadsheetSelection.parseColumn("A").column();
         final SpreadsheetColumn b = SpreadsheetSelection.parseColumn("B").column();

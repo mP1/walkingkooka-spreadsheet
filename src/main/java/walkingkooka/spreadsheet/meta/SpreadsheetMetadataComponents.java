@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.text.CharSequences;
 
 import java.util.Collection;
@@ -61,7 +61,7 @@ final class SpreadsheetMetadataComponents {
         }
     }
 
-    final Set<SpreadsheetMetadataPropertyName<?>> missing = Sets.sorted();
+    final Set<SpreadsheetMetadataPropertyName<?>> missing = SortedSets.tree();
 
     @Override
     public String toString() {
