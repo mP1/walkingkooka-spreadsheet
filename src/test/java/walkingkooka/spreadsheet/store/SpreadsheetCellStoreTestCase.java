@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -361,10 +361,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     private void checkCells(final String message,
                             final Collection<SpreadsheetCell> cells,
                             final SpreadsheetCell... expected) {
-        final Set<SpreadsheetCell> actual = Sets.sorted();
+        final Set<SpreadsheetCell> actual = SortedSets.tree();
         actual.addAll(cells);
 
-        final Set<SpreadsheetCell> expectedSets = Sets.sorted();
+        final Set<SpreadsheetCell> expectedSets = SortedSets.tree();
         expectedSets.addAll(Lists.of(expected));
 
         this.checkEquals(expectedSets, actual, message);

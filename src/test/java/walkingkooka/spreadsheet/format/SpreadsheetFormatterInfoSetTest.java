@@ -65,6 +65,18 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
         );
     }
 
+    // ImmutableSetTesting..............................................................................................
+
+    @Override
+    public void testSetElementsNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetElementsSame() {
+        throw new UnsupportedOperationException();
+    }
+
     // json.............................................................................................................
 
     @Test

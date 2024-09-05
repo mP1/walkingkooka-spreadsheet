@@ -23,6 +23,7 @@ import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -160,7 +161,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns all the missing required properties. NOTE the defaults are also checked.
      */
     public final Set<SpreadsheetMetadataPropertyName<?>> missingRequiredProperties() {
-        final Set<SpreadsheetMetadataPropertyName<?>> missing = Sets.sorted();
+        final Set<SpreadsheetMetadataPropertyName<?>> missing = SortedSets.tree();
 
         addIfMissing(SpreadsheetMetadataPropertyName.CREATOR, missing);
         addIfMissing(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, missing);

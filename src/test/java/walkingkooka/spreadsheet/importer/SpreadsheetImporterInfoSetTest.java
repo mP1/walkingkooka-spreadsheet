@@ -69,6 +69,18 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
         );
     }
 
+    // ImmutableSetTesting..............................................................................................
+
+    @Override
+    public void testSetElementsNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetElementsSame() {
+        throw new UnsupportedOperationException();
+    }
+
     // json.............................................................................................................
 
     @Test

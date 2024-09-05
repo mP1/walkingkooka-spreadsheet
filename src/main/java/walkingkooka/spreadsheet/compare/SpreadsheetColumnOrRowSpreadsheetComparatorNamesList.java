@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.list.ImmutableListDefaults;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
@@ -64,7 +64,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
             throw new IllegalArgumentException("Expected several sorted column/rows got 0");
         }
 
-        final Set<SpreadsheetColumnOrRowReference> duplicates = Sets.sorted();
+        final Set<SpreadsheetColumnOrRowReference> duplicates = SortedSets.tree();
 
         for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
             final SpreadsheetColumnOrRowReference columnOrRow = columnOrRowComparators.columnOrRow();

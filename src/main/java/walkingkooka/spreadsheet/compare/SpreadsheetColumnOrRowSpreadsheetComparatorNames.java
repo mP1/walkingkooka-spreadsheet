@@ -21,7 +21,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.NeverError;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -160,7 +160,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
         final int length = text.length();
 
-        final Set<SpreadsheetColumnOrRowReference> duplicates = Sets.sorted();
+        final Set<SpreadsheetColumnOrRowReference> duplicates = SortedSets.tree();
         int mode = 0;
         int tokenStart = 0;
         SpreadsheetColumnOrRowReference columnOrRow = null;

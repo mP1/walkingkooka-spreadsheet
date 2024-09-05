@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -110,7 +110,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
 
     private void checkMissing(final SpreadsheetMetadataComponents components,
                               final SpreadsheetMetadataPropertyName<?>... missings) {
-        final Set<SpreadsheetMetadataPropertyName<?>> set = Sets.sorted();
+        final Set<SpreadsheetMetadataPropertyName<?>> set = SortedSets.tree();
         set.addAll(Arrays.asList(missings));
         this.checkEquals(set, components.missing, "missing");
     }

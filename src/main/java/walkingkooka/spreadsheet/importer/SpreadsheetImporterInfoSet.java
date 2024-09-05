@@ -18,7 +18,8 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.ImmutableSetDefaults;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.tree.json.JsonNode;
@@ -30,17 +31,15 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetImporterInfo} sorted by {@link SpreadsheetImporterName}.
  */
 public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImporterInfo>
-        implements PluginInfoSetLike<SpreadsheetImporterInfo, SpreadsheetImporterName> {
-
-    static {
-        Sets.registerImmutableType(SpreadsheetImporterInfoSet.class);
-    }
-
+        implements PluginInfoSetLike<SpreadsheetImporterInfo, SpreadsheetImporterName>,
+        ImmutableSetDefaults<SpreadsheetImporterInfoSet, SpreadsheetImporterInfo> {
+    
     /**
      * Parses the CSV text into a {@link SpreadsheetImporterInfoSet}.
      */
@@ -58,7 +57,7 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
     public static SpreadsheetImporterInfoSet with(final Set<SpreadsheetImporterInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
-        final Set<SpreadsheetImporterInfo> copy = Sets.sorted(HateosResource.comparator());
+        final Set<SpreadsheetImporterInfo> copy = SortedSets.tree(HateosResource.comparator());
         copy.addAll(infos);
         return new SpreadsheetImporterInfoSet(copy);
     }
@@ -83,6 +82,23 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
 
     private final Set<SpreadsheetImporterInfo> infos;
 
+    // ImmutableSet.....................................................................................................
+
+    @Override
+    public SpreadsheetImporterInfoSet setElements(final Set<SpreadsheetImporterInfo> elements) {
+        final SpreadsheetImporterInfoSet copy = with(elements);
+        return this.equals(copy) ?
+                this :
+                copy;
+    }
+
+    @Override
+    public Set<SpreadsheetImporterInfo> toSet() {
+        return new TreeSet<>(
+                this.infos
+        );
+    }
+    
     // json.............................................................................................................
 
     static {

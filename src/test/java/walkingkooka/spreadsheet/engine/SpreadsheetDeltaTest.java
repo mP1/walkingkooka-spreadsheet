@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -571,8 +572,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 patch
         );
 
-        final Set<SpreadsheetCell> beforePatchCells = Sets.sorted();
-        final Set<SpreadsheetCell> patchedCells = Sets.sorted();
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree();
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree();
         final TextStyle style = TextStyle.EMPTY.set(
                 TextStylePropertyName.COLOR,
                 Color.BLACK
@@ -748,8 +749,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 patch
         );
 
-        final Set<SpreadsheetCell> beforePatchCells = Sets.sorted();
-        final Set<SpreadsheetCell> patchedCells = Sets.sorted();
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree();
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree();
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
 
@@ -926,8 +927,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 patch
         );
 
-        final Set<SpreadsheetCell> beforePatchCells = Sets.sorted();
-        final Set<SpreadsheetCell> patchedCells = Sets.sorted();
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree();
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree();
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
 
@@ -1078,8 +1079,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 patch
         );
 
-        final Set<SpreadsheetCell> beforePatchCells = Sets.sorted();
-        final Set<SpreadsheetCell> patchedCells = Sets.sorted();
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree();
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree();
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
 
         for (final Map.Entry<SpreadsheetCellReference, TextStyle> cellAndStyle : cellToStyles.entrySet()) {

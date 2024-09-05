@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.CanBeEmpty;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -261,7 +262,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     private Set<SpreadsheetRowReference> rows;
 
     private <T extends SpreadsheetSelection> Set<T> extract(final Function<SpreadsheetCellReference, T> mapper) {
-        final Set<T> selections = Sets.sorted();
+        final Set<T> selections = SortedSets.tree();
 
         for (final SpreadsheetCellRangeReference range : this.cellRanges()) {
             for (final SpreadsheetCellReference cell : range) {

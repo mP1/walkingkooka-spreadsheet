@@ -18,7 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.ImmutableSetDefaults;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.tree.json.JsonNode;
@@ -30,16 +31,14 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetFormatterInfo} sorted by {@link SpreadsheetFormatterName}.
  */
 public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFormatterInfo>
-        implements PluginInfoSetLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
-
-    static {
-        Sets.registerImmutableType(SpreadsheetFormatterInfoSet.class);
-    }
+        implements PluginInfoSetLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName>,
+        ImmutableSetDefaults<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo> {
 
     /**
      * Parses the CSV text into a {@link SpreadsheetFormatterInfoSet}.
@@ -58,7 +57,7 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     public static SpreadsheetFormatterInfoSet with(final Set<SpreadsheetFormatterInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
-        final Set<SpreadsheetFormatterInfo> copy = Sets.sorted(HateosResource.comparator());
+        final Set<SpreadsheetFormatterInfo> copy = SortedSets.tree(HateosResource.comparator());
         copy.addAll(infos);
         return new SpreadsheetFormatterInfoSet(copy);
     }
@@ -82,6 +81,23 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     }
 
     private final Set<SpreadsheetFormatterInfo> infos;
+
+    // ImmutableSet.....................................................................................................
+
+    @Override
+    public SpreadsheetFormatterInfoSet setElements(final Set<SpreadsheetFormatterInfo> elements) {
+        final SpreadsheetFormatterInfoSet copy = with(elements);
+        return this.equals(copy) ?
+                this :
+                copy;
+    }
+
+    @Override
+    public Set<SpreadsheetFormatterInfo> toSet() {
+        return new TreeSet<>(
+                this.infos
+        );
+    }
 
     // json.............................................................................................................
 
