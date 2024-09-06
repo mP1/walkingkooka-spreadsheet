@@ -163,7 +163,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
             text = has.urlFragment().value();
         } else {
             if (value instanceof PluginInfoSetLike) {
-                final PluginInfoSetLike<?, ?> set = (PluginInfoSetLike<?, ?>) value;
+                final PluginInfoSetLike<?, ?, ?> set = (PluginInfoSetLike<?, ?, ?>) value;
                 text = set.text();
             } else {
                 text = String.valueOf(value);

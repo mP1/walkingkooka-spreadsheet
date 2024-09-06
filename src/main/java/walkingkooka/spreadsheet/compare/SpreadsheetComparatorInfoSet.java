@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.ImmutableSetDefaults;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
@@ -36,8 +35,7 @@ import java.util.TreeSet;
 /**
  * A read only {@link Set} of {@link SpreadsheetComparatorInfo} sorted by {@link SpreadsheetComparatorName}.
  */
-public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorInfo, SpreadsheetComparatorName>,
-        ImmutableSetDefaults<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo> {
+public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
     /**
      * Parses the CSV text into a {@link SpreadsheetComparatorInfoSet}.
