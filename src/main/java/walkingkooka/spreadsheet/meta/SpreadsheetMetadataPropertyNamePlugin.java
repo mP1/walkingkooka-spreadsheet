@@ -27,7 +27,7 @@ import java.util.Optional;
 /**
  * Base class for a few {@link SpreadsheetMetadataPropertyName} that have a {@link PluginInfoSetLike} as the value.
  */
-abstract class SpreadsheetMetadataPropertyNamePlugin<S extends PluginInfoSetLike<I, N>, I extends PluginInfoLike<I, N>, N extends Name & Comparable<N>> extends SpreadsheetMetadataPropertyName<S> {
+abstract class SpreadsheetMetadataPropertyNamePlugin<S extends PluginInfoSetLike<S, I, N>, I extends PluginInfoLike<I, N>, N extends Name & Comparable<N>> extends SpreadsheetMetadataPropertyName<S> {
 
     SpreadsheetMetadataPropertyNamePlugin(final String name) {
         super(name);

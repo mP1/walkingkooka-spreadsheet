@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.ImmutableSetDefaults;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
@@ -37,8 +36,7 @@ import java.util.TreeSet;
  * A read only {@link Set} of {@link SpreadsheetImporterInfo} sorted by {@link SpreadsheetImporterName}.
  */
 public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImporterInfo>
-        implements PluginInfoSetLike<SpreadsheetImporterInfo, SpreadsheetImporterName>,
-        ImmutableSetDefaults<SpreadsheetImporterInfoSet, SpreadsheetImporterInfo> {
+        implements PluginInfoSetLike<SpreadsheetImporterInfoSet, SpreadsheetImporterInfo, SpreadsheetImporterName> {
     
     /**
      * Parses the CSV text into a {@link SpreadsheetImporterInfoSet}.
