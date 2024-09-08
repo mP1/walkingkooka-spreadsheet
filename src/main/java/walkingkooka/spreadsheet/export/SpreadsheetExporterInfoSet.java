@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
@@ -38,6 +39,10 @@ import java.util.TreeSet;
 public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExporterInfo>
         implements PluginInfoSetLike<SpreadsheetExporterInfoSet, SpreadsheetExporterInfo, SpreadsheetExporterName> {
 
+    public final static SpreadsheetExporterInfoSet EMPTY = new SpreadsheetExporterInfoSet(
+            Sets.empty()
+    );
+
     /**
      * Parses the CSV text into a {@link SpreadsheetExporterInfoSet}.
      */
@@ -57,7 +62,9 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
 
         final Set<SpreadsheetExporterInfo> copy = SortedSets.tree(HateosResource.comparator());
         copy.addAll(infos);
-        return new SpreadsheetExporterInfoSet(copy);
+        return copy.isEmpty() ?
+                EMPTY :
+                new SpreadsheetExporterInfoSet(copy);
     }
 
     private SpreadsheetExporterInfoSet(final Set<SpreadsheetExporterInfo> infos) {

@@ -61,11 +61,16 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
     public SpreadsheetExporterInfoSet createSet() {
         return SpreadsheetExporterInfoSet.with(
                 Sets.of(
-                        SpreadsheetExporterInfo.with(
-                                Url.parseAbsolute("https://example.com/SpreadsheetCellExporter1"),
-                                SpreadsheetExporterName.with("test123")
-                        )
+                        this.info()
                 )
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterInfo info() {
+        return SpreadsheetExporterInfo.with(
+                Url.parseAbsolute("https://example.com/SpreadsheetCellExporter1"),
+                SpreadsheetExporterName.with("test123")
         );
     }
 

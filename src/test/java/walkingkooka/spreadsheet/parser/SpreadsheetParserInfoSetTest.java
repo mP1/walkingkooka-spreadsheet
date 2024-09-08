@@ -62,10 +62,15 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
     public SpreadsheetParserInfoSet createSet() {
         return SpreadsheetParserInfoSet.with(
                 Sets.of(
-                        SpreadsheetParserInfo.parse("https://example.com/parser-111 parser-111"),
+                        this.info(),
                         SpreadsheetParserInfo.parse("https://example.com/parser-222 parser-222")
                 )
         );
+    }
+
+    @Override
+    public SpreadsheetParserInfo info() {
+        return SpreadsheetParserInfo.parse("https://example.com/parser-111 parser-111");
     }
 
     // ImmutableSetTesting..............................................................................................

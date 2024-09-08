@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
@@ -37,7 +38,11 @@ import java.util.TreeSet;
  */
 public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImporterInfo>
         implements PluginInfoSetLike<SpreadsheetImporterInfoSet, SpreadsheetImporterInfo, SpreadsheetImporterName> {
-    
+
+    public final static SpreadsheetImporterInfoSet EMPTY = new SpreadsheetImporterInfoSet(
+            Sets.empty()
+    );
+
     /**
      * Parses the CSV text into a {@link SpreadsheetImporterInfoSet}.
      */
@@ -57,7 +62,9 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
 
         final Set<SpreadsheetImporterInfo> copy = SortedSets.tree(HateosResource.comparator());
         copy.addAll(infos);
-        return new SpreadsheetImporterInfoSet(copy);
+        return copy.isEmpty() ?
+                EMPTY :
+                new SpreadsheetImporterInfoSet(copy);
     }
 
     private SpreadsheetImporterInfoSet(final Set<SpreadsheetImporterInfo> infos) {
