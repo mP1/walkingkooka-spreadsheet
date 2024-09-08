@@ -61,11 +61,16 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
     public SpreadsheetImporterInfoSet createSet() {
         return SpreadsheetImporterInfoSet.with(
                 Sets.of(
-                        SpreadsheetImporterInfo.with(
-                                Url.parseAbsolute("https://example.com/SpreadsheetCellImporter1"),
-                                SpreadsheetImporterName.with("test123")
-                        )
+                        this.info()
                 )
+        );
+    }
+
+    @Override
+    public SpreadsheetImporterInfo info() {
+        return SpreadsheetImporterInfo.with(
+                Url.parseAbsolute("https://example.com/SpreadsheetCellImporter1"),
+                SpreadsheetImporterName.with("test123")
         );
     }
 

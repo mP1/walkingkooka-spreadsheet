@@ -63,6 +63,14 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
         );
     }
 
+    @Override
+    public SpreadsheetComparatorInfo info() {
+        return SpreadsheetComparatorInfo.with(
+                Url.parseAbsolute("https://example.com/test123"),
+                SpreadsheetComparatorName.with("Test123")
+        );
+    }
+
     // json.............................................................................................................
 
     @Test

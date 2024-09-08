@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
@@ -37,6 +38,10 @@ import java.util.TreeSet;
  */
 public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParserInfo>
         implements PluginInfoSetLike<SpreadsheetParserInfoSet, SpreadsheetParserInfo, SpreadsheetParserName> {
+
+    public final static SpreadsheetParserInfoSet EMPTY = new SpreadsheetParserInfoSet(
+            Sets.empty()
+    );
 
     /**
      * Parses the CSV text into a {@link SpreadsheetParserInfoSet}.
