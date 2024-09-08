@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
@@ -38,6 +39,11 @@ import java.util.TreeSet;
 public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
     /**
+     * Empty {@link SpreadsheetComparatorInfoSet}.
+     */
+    public final static SpreadsheetComparatorInfoSet EMPTY = new SpreadsheetComparatorInfoSet(Sets.empty());
+
+    /**
      * Parses the CSV text into a {@link SpreadsheetComparatorInfoSet}.
      */
     public static SpreadsheetComparatorInfoSet parse(final String text) {
@@ -56,7 +62,9 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
 
         final Set<SpreadsheetComparatorInfo> copy = SortedSets.tree(HateosResource.comparator());
         copy.addAll(infos);
-        return new SpreadsheetComparatorInfoSet(copy);
+        return copy.isEmpty() ?
+                EMPTY :
+                new SpreadsheetComparatorInfoSet(copy);
     }
 
     private SpreadsheetComparatorInfoSet(final Set<SpreadsheetComparatorInfo> infos) {
