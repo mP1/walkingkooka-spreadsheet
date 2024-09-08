@@ -52,6 +52,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporter;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -66,6 +67,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
@@ -694,12 +696,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS);
+        final ExpressionFunctionInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS);
 
         components.reportIfMissing();
 
         return ExpressionFunctionProviders.mapped(
-                this.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS),
+                set,
                 provider
         );
     }
@@ -715,12 +717,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS);
+        final SpreadsheetComparatorInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS);
 
         components.reportIfMissing();
 
         return SpreadsheetComparatorProviders.mapped(
-                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS),
+                set,
                 provider
         );
     }
@@ -736,12 +738,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS);
+        final SpreadsheetExporterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS);
 
         components.reportIfMissing();
 
         return SpreadsheetExporterProviders.mapped(
-                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS),
+                set,
                 provider
         );
     }
@@ -757,12 +759,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS);
+        final SpreadsheetFormatterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS);
 
         components.reportIfMissing();
 
         return SpreadsheetFormatterProviders.mapped(
-                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS),
+                set,
                 provider
         );
     }
@@ -778,12 +780,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS);
+        final SpreadsheetImporterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS);
 
         components.reportIfMissing();
 
         return SpreadsheetImporterProviders.mapped(
-                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS),
+                set,
                 provider
         );
     }
@@ -799,12 +801,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS);
+        final SpreadsheetParserInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS);
 
         components.reportIfMissing();
 
         return SpreadsheetParserProviders.mapped(
-                this.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS),
+                set,
                 provider
         );
     }
