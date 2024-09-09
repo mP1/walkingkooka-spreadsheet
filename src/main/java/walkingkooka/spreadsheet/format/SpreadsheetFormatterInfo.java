@@ -103,6 +103,7 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
 
     static void register() {
         // required to FORCE json register
+        SpreadsheetFormatterName.CASE_SENSITIVITY.toString();
     }
 
     static SpreadsheetFormatterInfo unmarshall(final JsonNode node,
