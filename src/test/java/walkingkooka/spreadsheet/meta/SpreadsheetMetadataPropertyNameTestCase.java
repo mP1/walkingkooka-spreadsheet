@@ -211,6 +211,19 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         );
     }
 
+    // isPlugin.........................................................................................................
+
+    @Test
+    public final void testIsPlugin() {
+        final N propertyName = this.createName();
+
+        this.checkEquals(
+                this.propertyValue() instanceof PluginInfoSetLike,
+                propertyName.isPlugin(),
+                propertyName::toString
+        );
+    }
+
     // NameTesting......................................................................................................
 
     abstract N createName();

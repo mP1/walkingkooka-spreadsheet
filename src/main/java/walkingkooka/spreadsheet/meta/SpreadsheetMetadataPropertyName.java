@@ -633,6 +633,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         return this instanceof SpreadsheetMetadataPropertyNameParser;
     }
 
+    /**
+     * Returns true if this property name is a plugin {@link walkingkooka.plugin.PluginInfoSetLike}.
+     */
+    public final boolean isPlugin() {
+        return this instanceof SpreadsheetMetadataPropertyNamePlugin;
+    }
+
     // Object...........................................................................................................
 
     @Override
