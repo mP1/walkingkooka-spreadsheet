@@ -101,7 +101,7 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
     // Json.............................................................................................................
 
     static void register() {
-        SpreadsheetComparatorName.CASE_SENSITIVITY.toString();
+        SpreadsheetComparatorName.with("Hello");
     }
 
     static SpreadsheetComparatorInfo unmarshall(final JsonNode node,
