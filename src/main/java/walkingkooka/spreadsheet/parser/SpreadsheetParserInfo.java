@@ -104,7 +104,7 @@ public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetPa
 
     static void register() {
         // required to FORCE json register
-        SpreadsheetParserName.CASE_SENSITIVITY.toString();
+        SpreadsheetParserName.DATE_PARSER_PATTERN.value();
     }
 
     static SpreadsheetParserInfo unmarshall(final JsonNode node,

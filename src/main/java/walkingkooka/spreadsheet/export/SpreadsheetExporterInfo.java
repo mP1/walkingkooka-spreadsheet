@@ -103,7 +103,7 @@ public final class SpreadsheetExporterInfo implements PluginInfoLike<Spreadsheet
 
     static void register() {
         // required to FORCE json register
-        SpreadsheetExporterName.CASE_SENSITIVITY.toString();
+        SpreadsheetExporterName.COLLECTION.value();
     }
 
     static SpreadsheetExporterInfo unmarshall(final JsonNode node,
