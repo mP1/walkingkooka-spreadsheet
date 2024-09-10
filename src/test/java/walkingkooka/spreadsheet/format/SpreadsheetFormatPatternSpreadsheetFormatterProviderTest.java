@@ -1169,42 +1169,15 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
         this.checkEquals(
                 JsonNode.parse(
                         "[\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic\",\n" +
-                                "    \"name\": \"automatic\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection\",\n" +
-                                "    \"name\": \"collection\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern\",\n" +
-                                "    \"name\": \"date-format-pattern\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern\",\n" +
-                                "    \"name\": \"date-time-format-pattern\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general\",\n" +
-                                "    \"name\": \"general\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern\",\n" +
-                                "    \"name\": \"number-format-pattern\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection\",\n" +
-                                "    \"name\": \"spreadsheet-pattern-collection\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern\",\n" +
-                                "    \"name\": \"text-format-pattern\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern\",\n" +
-                                "    \"name\": \"time-format-pattern\"\n" +
-                                "  }\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern date-format-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern date-time-format-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern number-format-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\"\n" +
                                 "]"
                 ),
                 JsonNodeMarshallContexts.basic()

@@ -112,7 +112,7 @@ public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetPa
         return PluginInfoLike.unmarshall(
                 node,
                 context,
-                SpreadsheetParserName.class,
+                SpreadsheetParserName::with,
                 SpreadsheetParserInfo::with
         );
     }

@@ -111,7 +111,7 @@ public final class SpreadsheetImporterInfo implements PluginInfoLike<Spreadsheet
         return PluginInfoLike.unmarshall(
                 node,
                 context,
-                SpreadsheetImporterName.class,
+                SpreadsheetImporterName::with,
                 SpreadsheetImporterInfo::with
         );
     }

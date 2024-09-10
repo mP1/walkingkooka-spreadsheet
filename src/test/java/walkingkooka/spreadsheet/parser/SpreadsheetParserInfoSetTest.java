@@ -109,10 +109,7 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
         this.marshallAndCheck(
                 set,
                 "[\n" +
-                        "  {\n" +
-                        "    \"url\": \"https://example.com/test123\",\n" +
-                        "    \"name\": \"test123\"\n" +
-                        "  }\n" +
+                        "  \"https://example.com/test123 test123\"\n" +
                         "]"
         );
     }
