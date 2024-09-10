@@ -109,7 +109,7 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
         return PluginInfoLike.unmarshall(
                 node,
                 context,
-                SpreadsheetComparatorName.class,
+                SpreadsheetComparatorName::with,
                 SpreadsheetComparatorInfo::with
         );
     }

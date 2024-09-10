@@ -758,22 +758,10 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         this.checkEquals(
                 JsonNode.parse(
                         "[\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern\",\n" +
-                                "    \"name\": \"date-parse-pattern\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern\",\n" +
-                                "    \"name\": \"date-time-parse-pattern\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/number-parse-pattern\",\n" +
-                                "    \"name\": \"number-parse-pattern\"\n" +
-                                "  },\n" +
-                                "  {\n" +
-                                "    \"url\": \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/time-parse-pattern\",\n" +
-                                "    \"name\": \"time-parse-pattern\"\n" +
-                                "  }\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern date-parse-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern date-time-parse-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/number-parse-pattern number-parse-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/time-parse-pattern time-parse-pattern\"\n" +
                                 "]"
                 ),
                 JsonNodeMarshallContexts.basic()

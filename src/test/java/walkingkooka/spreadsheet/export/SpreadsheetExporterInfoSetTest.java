@@ -86,22 +86,17 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
 
     @Test
     public void testMarshallNotEmpty2() {
-        final SpreadsheetExporterInfoSet set = SpreadsheetExporterInfoSet.with(
-                Sets.of(
-                        SpreadsheetExporterInfo.with(
-                                Url.parseAbsolute("https://example.com/test123"),
-                                SpreadsheetExporterName.with("test123")
-                        )
-                )
-        );
-
         this.marshallAndCheck(
-                set,
+                SpreadsheetExporterInfoSet.with(
+                        Sets.of(
+                                SpreadsheetExporterInfo.with(
+                                        Url.parseAbsolute("https://example.com/test123"),
+                                        SpreadsheetExporterName.with("test123")
+                                )
+                        )
+                ),
                 "[\n" +
-                        "  {\n" +
-                        "    \"url\": \"https://example.com/test123\",\n" +
-                        "    \"name\": \"test123\"\n" +
-                        "  }\n" +
+                        "  \"https://example.com/test123 test123\"\n" +
                         "]"
         );
     }

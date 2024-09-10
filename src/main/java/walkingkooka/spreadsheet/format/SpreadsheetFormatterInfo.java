@@ -111,7 +111,7 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
         return PluginInfoLike.unmarshall(
                 node,
                 context,
-                SpreadsheetFormatterName.class,
+                SpreadsheetFormatterName::with,
                 SpreadsheetFormatterInfo::with
         );
     }
