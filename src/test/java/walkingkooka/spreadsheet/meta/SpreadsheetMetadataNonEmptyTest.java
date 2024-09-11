@@ -42,7 +42,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -2738,9 +2737,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
-                SpreadsheetComparatorInfoSet.with(
-                        SpreadsheetComparatorProviders.spreadsheetComparators().spreadsheetComparatorInfos()
-                )
+                SpreadsheetComparatorProviders.spreadsheetComparators().spreadsheetComparatorInfos()
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,

@@ -26,7 +26,6 @@ import walkingkooka.plugin.ProviderContext;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -57,18 +56,20 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
     }
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
-        return NAME_TO_COMPARATOR.keySet()
-                .stream()
-                .map(n -> SpreadsheetComparatorInfo.with(
-                        SpreadsheetComparatorProviders.BASE_URL.appendPath(
-                                UrlPath.parse(
-                                        n.value()
+    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
+        return SpreadsheetComparatorInfoSet.with(
+                NAME_TO_COMPARATOR.keySet()
+                        .stream()
+                        .map(n -> SpreadsheetComparatorInfo.with(
+                                        SpreadsheetComparatorProviders.BASE_URL.appendPath(
+                                                UrlPath.parse(
+                                                        n.value()
+                                                )
+                                        ),
+                                        n
                                 )
-                        ),
-                                n
-                        )
-                ).collect(Collectors.toCollection(SortedSets::tree));
+                        ).collect(Collectors.toCollection(SortedSets::tree))
+        );
     }
 
     private final static Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = Maps.readOnly(

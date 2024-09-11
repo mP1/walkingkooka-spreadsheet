@@ -78,8 +78,10 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
     }
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
-        return this.providers.infos();
+    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
+        return SpreadsheetComparatorInfoSet.with(
+                this.providers.infos()
+        );
     }
 
     private final ProviderCollection<SpreadsheetComparatorProvider, SpreadsheetComparatorName, SpreadsheetComparatorInfo, PluginSelectorLike<SpreadsheetComparatorName>, SpreadsheetComparator<?>> providers;

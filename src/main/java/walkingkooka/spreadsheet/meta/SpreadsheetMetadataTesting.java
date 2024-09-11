@@ -28,7 +28,6 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -147,10 +146,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("0.#").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
-            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
-                    SpreadsheetComparatorInfoSet.with(
-                            SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
-                    )
+            .set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
+                    SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
             ).set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,
                     SpreadsheetExporterInfoSet.with(

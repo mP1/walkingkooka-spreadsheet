@@ -57,10 +57,8 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
 
     @Override
     public SpreadsheetComparatorInfoSet createSet() {
-        return SpreadsheetComparatorInfoSet.with(
-                SpreadsheetComparatorProviders.spreadsheetComparators()
-                        .spreadsheetComparatorInfos()
-        );
+        return SpreadsheetComparatorProviders.spreadsheetComparators()
+                        .spreadsheetComparatorInfos();
     }
 
     @Override
@@ -76,7 +74,7 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetComparatorInfoSet.with(Sets.empty()),
+                SpreadsheetComparatorInfoSet.EMPTY,
                 JsonNode.array()
         );
     }

@@ -31,10 +31,8 @@ public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetComparatorsTe
 
     @Override
     SpreadsheetComparatorInfoSet propertyValue() {
-        return SpreadsheetComparatorInfoSet.with(
-                SpreadsheetComparatorProviders.spreadsheetComparators()
-                        .spreadsheetComparatorInfos()
-        );
+        return SpreadsheetComparatorProviders.spreadsheetComparators()
+                .spreadsheetComparatorInfos();
     }
 
     @Override
