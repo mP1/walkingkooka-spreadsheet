@@ -21,7 +21,6 @@ import walkingkooka.plugin.Provider;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * A provider supports listing available {@link SpreadsheetImporterInfo} and fetching implementations using a {@link SpreadsheetImporterSelector}.
@@ -44,5 +43,5 @@ public interface SpreadsheetImporterProvider extends Provider {
     /**
      * Returns all available {@link SpreadsheetImporterInfo}
      */
-    Set<SpreadsheetImporterInfo> spreadsheetImporterInfos();
+    SpreadsheetImporterInfoSet spreadsheetImporterInfos();
 }

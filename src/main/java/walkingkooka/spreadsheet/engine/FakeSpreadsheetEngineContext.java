@@ -41,7 +41,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSample;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelectorToken;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfo;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterName;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -244,7 +244,7 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public Set<SpreadsheetImporterInfo> spreadsheetImporterInfos() {
+    public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
         throw new UnsupportedOperationException();
     }
 

@@ -18,12 +18,10 @@
 
 package walkingkooka.spreadsheet.importer;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * A {@link SpreadsheetImporterProvider} that is always empty and never returns any {@link SpreadsheetImporter} or {@link SpreadsheetImporterInfo}.
@@ -60,8 +58,8 @@ final class EmptySpreadsheetImporterProvider implements SpreadsheetImporterProvi
     }
 
     @Override
-    public Set<SpreadsheetImporterInfo> spreadsheetImporterInfos() {
-        return Sets.empty();
+    public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
+        return SpreadsheetImporterInfoSet.EMPTY;
     }
 
     @Override

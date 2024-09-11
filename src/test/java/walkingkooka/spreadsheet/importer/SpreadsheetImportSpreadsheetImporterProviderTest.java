@@ -61,9 +61,7 @@ public final class SpreadsheetImportSpreadsheetImporterProviderTest implements S
     @Test
     public void testSpreadsheetImporterInfo() {
         this.treePrintAndCheck(
-                SpreadsheetImporterInfoSet.with(
-                        SpreadsheetImportSpreadsheetImporterProvider.INSTANCE.spreadsheetImporterInfos()
-                ),
+                SpreadsheetImportSpreadsheetImporterProvider.INSTANCE.spreadsheetImporterInfos(),
                 "SpreadsheetImporterInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\n" +

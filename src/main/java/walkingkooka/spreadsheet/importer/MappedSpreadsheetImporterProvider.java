@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.text.CharacterConstant;
 
 import java.util.List;
 import java.util.Objects;
@@ -40,7 +39,6 @@ final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProv
      * The original wrapped {@link SpreadsheetImporterProvider}.
      */
     private final SpreadsheetImporterProvider provider;
-    private final Set<SpreadsheetImporterInfo> infos;
 
     private MappedSpreadsheetImporterProvider(final Set<SpreadsheetImporterInfo> infos,
                                               final SpreadsheetImporterProvider provider) {
@@ -49,9 +47,11 @@ final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProv
                 provider.spreadsheetImporterInfos()
         );
         this.provider = provider;
-        this.infos = PluginInfoSetLike.merge(
-                infos,
-                provider.spreadsheetImporterInfos()
+        this.infos = SpreadsheetImporterInfoSet.with(
+                PluginInfoSetLike.merge(
+                        infos,
+                        provider.spreadsheetImporterInfos()
+                )
         );
     }
 
@@ -98,15 +98,14 @@ final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProv
     }
 
     @Override
-    public Set<SpreadsheetImporterInfo> spreadsheetImporterInfos() {
+    public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
         return this.infos;
     }
 
+    private final SpreadsheetImporterInfoSet infos;
+
     @Override
     public String toString() {
-        return CharacterConstant.COMMA.toSeparatedString(
-                this.infos,
-                SpreadsheetImporterInfo::toString
-        );
+        return this.infos.text();
     }
 }
