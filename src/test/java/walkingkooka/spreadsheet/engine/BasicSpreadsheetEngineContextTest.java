@@ -75,6 +75,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 import walkingkooka.tree.text.TextNode;
@@ -87,7 +88,6 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -259,23 +259,25 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         @Override
-        public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
-            return Sets.of(
-                    ExpressionFunctionInfo.with(
-                            Url.parseAbsolute("https://example.com/test/xyz"),
-                            ExpressionFunctionName.with("xyz")
-                    ),
-                    ExpressionFunctionInfo.with(
-                            Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
-                            ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
-                    ),
-                    ExpressionFunctionInfo.with(
-                            Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
-                            ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
-                    )
-                    , ExpressionFunctionInfo.with(
-                            Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
-                            ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
+        public ExpressionFunctionInfoSet expressionFunctionInfos() {
+            return ExpressionFunctionInfoSet.with(
+                    Sets.of(
+                            ExpressionFunctionInfo.with(
+                                    Url.parseAbsolute("https://example.com/test/xyz"),
+                                    ExpressionFunctionName.with("xyz")
+                            ),
+                            ExpressionFunctionInfo.with(
+                                    Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
+                                    ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
+                            ),
+                            ExpressionFunctionInfo.with(
+                                    Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
+                                    ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
+                            ),
+                            ExpressionFunctionInfo.with(
+                                    Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
+                                    ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
+                            )
                     )
             );
         }
