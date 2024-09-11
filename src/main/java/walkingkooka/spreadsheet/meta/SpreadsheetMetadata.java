@@ -1314,9 +1314,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 )
         ).set(
                 SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS,
-                ExpressionFunctionInfoSet.with(
-                        Sets.empty()
-                )
+                ExpressionFunctionInfoSet.EMPTY
         ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
                 SpreadsheetComparatorInfoSet.with(
