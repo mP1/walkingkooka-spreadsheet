@@ -60,6 +60,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
@@ -69,7 +70,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -204,15 +204,17 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         }
 
         @Override
-        public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
-            return Sets.of(
-                    ExpressionFunctionInfo.with(
-                            Url.parseAbsolute("https://example.com/test/" + CONCAT),
-                            CONCAT.name().get()
-                    ),
-                    ExpressionFunctionInfo.with(
-                            Url.parseAbsolute("https://example.com/test/" + ECHO),
-                            ECHO.name().get()
+        public ExpressionFunctionInfoSet expressionFunctionInfos() {
+            return ExpressionFunctionInfoSet.with(
+                    Sets.of(
+                            ExpressionFunctionInfo.with(
+                                    Url.parseAbsolute("https://example.com/test/" + CONCAT),
+                                    CONCAT.name().get()
+                            ),
+                            ExpressionFunctionInfo.with(
+                                    Url.parseAbsolute("https://example.com/test/" + ECHO),
+                                    ECHO.name().get()
+                            )
                     )
             );
         }
