@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.meta;
 import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
-import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
@@ -128,9 +127,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 1)
             .set(
                     SpreadsheetMetadataPropertyName.CONVERTERS,
-                    ConverterInfoSet.with(
-                            CONVERTER_PROVIDER.converterInfos()
-                    )
+                    CONVERTER_PROVIDER.converterInfos()
             ).set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
             .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, NOW.get())
             .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector())

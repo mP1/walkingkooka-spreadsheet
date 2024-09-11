@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.provider.ConverterInfo;
+import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.plugin.ProviderContext;
@@ -71,7 +71,7 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
     }
 
     @Override
-    public Set<ConverterInfo> converterInfos() {
+    public ConverterInfoSet converterInfos() {
         throw new UnsupportedOperationException();
     }
 

@@ -1305,13 +1305,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetMetadata.class
         ).set(
                 SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterInfoSet.with(
-                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                                SpreadsheetMetadata.EMPTY,
-                                SpreadsheetFormatterProviders.fake(),
-                                SpreadsheetParserProviders.fake()
-                        ).converterInfos()
-                )
+                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                        SpreadsheetMetadata.EMPTY,
+                        SpreadsheetFormatterProviders.fake(),
+                        SpreadsheetParserProviders.fake()
+                ).converterInfos()
         ).set(
                 SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS,
                 ExpressionFunctionInfoSet.EMPTY
