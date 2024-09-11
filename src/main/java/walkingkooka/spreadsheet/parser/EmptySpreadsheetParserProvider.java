@@ -17,14 +17,12 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * A {@link SpreadsheetParserProvider} that is empty and always returns nothing when queried.
@@ -75,7 +73,7 @@ final class EmptySpreadsheetParserProvider implements SpreadsheetParserProvider 
     }
 
     @Override
-    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
-        return Sets.empty();
+    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+        return SpreadsheetParserInfoSet.EMPTY;
     }
 }

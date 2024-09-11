@@ -35,7 +35,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -245,17 +244,18 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
 
     @Override
-    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
+    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
         return INFOS;
     }
 
-    private final static Set<SpreadsheetParserInfo> INFOS = Sets.of(
-            spreadsheetParserInfo(SpreadsheetParserName.DATE_PARSER_PATTERN),
-            spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN),
-            spreadsheetParserInfo(SpreadsheetParserName.NUMBER_PARSER_PATTERN),
-            spreadsheetParserInfo(SpreadsheetParserName.TIME_PARSER_PATTERN)
+    private final static SpreadsheetParserInfoSet INFOS = SpreadsheetParserInfoSet.with(
+            Sets.of(
+                    spreadsheetParserInfo(SpreadsheetParserName.DATE_PARSER_PATTERN),
+                    spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN),
+                    spreadsheetParserInfo(SpreadsheetParserName.NUMBER_PARSER_PATTERN),
+                    spreadsheetParserInfo(SpreadsheetParserName.TIME_PARSER_PATTERN)
+            )
     );
-
 
     private static SpreadsheetParserInfo spreadsheetParserInfo(final SpreadsheetParserName name) {
         return SpreadsheetParserInfo.with(

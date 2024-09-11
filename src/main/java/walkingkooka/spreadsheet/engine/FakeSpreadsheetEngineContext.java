@@ -46,7 +46,7 @@ import walkingkooka.spreadsheet.importer.SpreadsheetImporterName;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
@@ -67,7 +67,6 @@ import walkingkooka.tree.text.TextNode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 public class FakeSpreadsheetEngineContext extends FakeConverterContext implements SpreadsheetEngineContext, Fake {
 
@@ -276,7 +275,7 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
+    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
         throw new UnsupportedOperationException();
     }
 

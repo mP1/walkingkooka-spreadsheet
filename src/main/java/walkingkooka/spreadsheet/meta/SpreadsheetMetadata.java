@@ -1322,11 +1322,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 spreadsheetFormatterProvider.spreadsheetFormatterInfos()
         ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
-                SpreadsheetParserInfoSet.with(
-                        SpreadsheetParserProviders.spreadsheetParsePattern(
-                                        spreadsheetFormatterProvider
-                                ).spreadsheetParserInfos()
-                )
+                SpreadsheetParserProviders.spreadsheetParsePattern(
+                        spreadsheetFormatterProvider
+                ).spreadsheetParserInfos()
         ).set(
                 SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                 SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT

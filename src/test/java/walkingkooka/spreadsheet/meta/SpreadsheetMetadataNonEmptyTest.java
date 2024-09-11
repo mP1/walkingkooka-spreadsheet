@@ -58,7 +58,6 @@ import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
@@ -2755,9 +2754,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));
         properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
-                SpreadsheetParserInfoSet.with(
-                        SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
-                )
+                SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
         );
         properties.put(SpreadsheetMetadataPropertyName.STYLE,
                 TextStyle.EMPTY
