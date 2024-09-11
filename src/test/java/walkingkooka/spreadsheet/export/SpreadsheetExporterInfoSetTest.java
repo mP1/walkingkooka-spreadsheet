@@ -79,7 +79,7 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetExporterInfoSet.with(Sets.empty()),
+                SpreadsheetExporterInfoSet.EMPTY,
                 JsonNode.array()
         );
     }

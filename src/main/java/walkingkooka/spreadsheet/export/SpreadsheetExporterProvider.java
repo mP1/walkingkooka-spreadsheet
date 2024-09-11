@@ -21,7 +21,6 @@ import walkingkooka.plugin.Provider;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -45,5 +44,5 @@ public interface SpreadsheetExporterProvider extends Provider {
     /**
      * Returns all available {@link SpreadsheetExporterInfo}
      */
-    Set<SpreadsheetExporterInfo> spreadsheetExporterInfos();
+    SpreadsheetExporterInfoSet spreadsheetExporterInfos();
 }

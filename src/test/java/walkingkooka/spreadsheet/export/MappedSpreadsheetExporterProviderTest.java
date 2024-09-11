@@ -28,7 +28,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -129,8 +128,8 @@ public final class MappedSpreadsheetExporterProviderTest implements SpreadsheetE
             }
 
             @Override
-            public Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
-                return Sets.of(
+            public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
+                return SpreadsheetExporterInfoSet.EMPTY.concat(
                         SpreadsheetExporterInfo.with(
                                 url(NAME),
                                 SpreadsheetExporterName.with(NAME)

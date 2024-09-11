@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfo;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
@@ -32,13 +31,11 @@ public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetExportersTest
 
     @Override
     SpreadsheetExporterInfoSet propertyValue() {
-        return SpreadsheetExporterInfoSet.with(
-                Sets.of(
-                        SpreadsheetExporterInfo.with(
-                                Url.parseAbsolute("https://example.com/exporter/1"),
-                                SpreadsheetExporterName.with("Test123")
-                        )
-                )
+        return SpreadsheetExporterInfoSet.EMPTY.concat(
+            SpreadsheetExporterInfo.with(
+                    Url.parseAbsolute("https://example.com/exporter/1"),
+                    SpreadsheetExporterName.with("Test123")
+            )
         );
     }
 

@@ -52,9 +52,7 @@ public final class SpreadsheetExportSpreadsheetExporterProviderTest implements S
     @Test
     public void testSpreadsheetExporterInfo() {
         this.treePrintAndCheck(
-                SpreadsheetExporterInfoSet.with(
-                        SpreadsheetExportSpreadsheetExporterProvider.INSTANCE.spreadsheetExporterInfos()
-                ),
+                SpreadsheetExportSpreadsheetExporterProvider.INSTANCE.spreadsheetExporterInfos(),
                 "SpreadsheetExporterInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/collection collection\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/empty empty\n" +

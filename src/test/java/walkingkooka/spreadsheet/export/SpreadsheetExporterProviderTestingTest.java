@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.export;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -27,7 +26,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public final class SpreadsheetExporterProviderTestingTest implements SpreadsheetExporterProviderTesting<SpreadsheetExporterProviderTestingTest.TestSpreadsheetExporterProvider>,
         SpreadsheetMetadataTesting {
@@ -89,8 +87,8 @@ public final class SpreadsheetExporterProviderTestingTest implements Spreadsheet
         }
 
         @Override
-        public Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
-            return Sets.of(INFO);
+        public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
+            return SpreadsheetExporterInfoSet.EMPTY.concat(INFO);
         }
     }
 

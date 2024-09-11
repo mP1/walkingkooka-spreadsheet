@@ -95,8 +95,10 @@ final class SpreadsheetExporterProviderCollection implements SpreadsheetExporter
     }
 
     @Override
-    public Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
-        return this.providers.infos();
+    public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
+        return SpreadsheetExporterInfoSet.with(
+                this.providers.infos()
+        );
     }
 
     private final ProviderCollection<SpreadsheetExporterProvider, SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterSelector, SpreadsheetExporter> providers;
