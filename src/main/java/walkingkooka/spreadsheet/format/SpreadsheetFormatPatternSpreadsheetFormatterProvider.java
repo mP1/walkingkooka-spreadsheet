@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -591,22 +590,23 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
     // spreadsheetFormatterInfos........................................................................................
 
     @Override
-    public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
+    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
         return INFOS;
     }
 
-    private final static Set<SpreadsheetFormatterInfo> INFOS = Sets.of(
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.AUTOMATIC),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT_PATTERN),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT_FORMAT_PATTERN),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME_FORMAT_PATTERN)
+    private final static SpreadsheetFormatterInfoSet INFOS = SpreadsheetFormatterInfoSet.with(
+            Sets.of(
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.AUTOMATIC),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT_PATTERN),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT_FORMAT_PATTERN),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME_FORMAT_PATTERN)
+            )
     );
-
 
     private static SpreadsheetFormatterInfo spreadsheetFormatterInfo(final SpreadsheetFormatterName name) {
         return SpreadsheetFormatterInfo.with(

@@ -1145,10 +1145,8 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     @Test
     public void testTreePrintable() {
         this.treePrintAndCheck(
-                SpreadsheetFormatterInfoSet.with(
-                        this.createSpreadsheetFormatterProvider()
-                                .spreadsheetFormatterInfos()
-                ),
+                this.createSpreadsheetFormatterProvider()
+                        .spreadsheetFormatterInfos(),
                 "SpreadsheetFormatterInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\n" +
@@ -1182,10 +1180,8 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                 ),
                 JsonNodeMarshallContexts.basic()
                         .marshall(
-                                SpreadsheetFormatterInfoSet.with(
-                                        this.createSpreadsheetFormatterProvider()
-                                                .spreadsheetFormatterInfos()
-                                )
+                                this.createSpreadsheetFormatterProvider()
+                                        .spreadsheetFormatterInfos()
                         )
         );
     }

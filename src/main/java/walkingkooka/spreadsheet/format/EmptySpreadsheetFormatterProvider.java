@@ -18,13 +18,11 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * A {@link SpreadsheetFormatterProvider} that is always empty and never returns any {@link SpreadsheetFormatter} or {@link SpreadsheetFormatterInfo}.
@@ -77,8 +75,8 @@ final class EmptySpreadsheetFormatterProvider implements SpreadsheetFormatterPro
     }
 
     @Override
-    public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
-        return Sets.empty();
+    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+        return SpreadsheetFormatterInfoSet.EMPTY;
     }
 
     @Override

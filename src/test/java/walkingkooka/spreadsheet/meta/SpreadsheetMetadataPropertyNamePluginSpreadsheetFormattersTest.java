@@ -33,10 +33,8 @@ public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetFormattersTes
 
     @Override
     SpreadsheetFormatterInfoSet propertyValue() {
-        return SpreadsheetFormatterInfoSet.with(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        .spreadsheetFormatterInfos()
-        );
+        return SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                .spreadsheetFormatterInfos();
     }
 
     @Override

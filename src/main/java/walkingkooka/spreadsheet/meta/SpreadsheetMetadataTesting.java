@@ -36,7 +36,6 @@ import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
@@ -153,9 +152,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
             ).set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
-                    SpreadsheetFormatterInfoSet.with(
-                            SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
-                    )
+                    SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
             ).set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
                     SpreadsheetImporterInfoSet.with(

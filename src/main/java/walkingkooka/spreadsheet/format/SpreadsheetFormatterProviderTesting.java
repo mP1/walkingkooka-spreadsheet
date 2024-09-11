@@ -26,7 +26,6 @@ import walkingkooka.plugin.ProviderTesting;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -376,9 +375,10 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
     default void spreadsheetFormatterInfosAndCheck(final SpreadsheetFormatterInfo... expected) {
         this.spreadsheetFormatterInfosAndCheck(
-                this.createSpreadsheetFormatterProvider(),
-                Sets.of(
-                        expected
+                SpreadsheetFormatterInfoSet.with(
+                        Sets.of(
+                                expected
+                        )
                 )
         );
     }
@@ -387,13 +387,15 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                                                    final SpreadsheetFormatterInfo... expected) {
         this.spreadsheetFormatterInfosAndCheck(
                 provider,
-                Sets.of(
-                        expected
+                SpreadsheetFormatterInfoSet.with(
+                        Sets.of(
+                                expected
+                        )
                 )
         );
     }
 
-    default void spreadsheetFormatterInfosAndCheck(final Set<SpreadsheetFormatterInfo> expected) {
+    default void spreadsheetFormatterInfosAndCheck(final SpreadsheetFormatterInfoSet expected) {
         this.spreadsheetFormatterInfosAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 expected
@@ -401,7 +403,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     default void spreadsheetFormatterInfosAndCheck(final SpreadsheetFormatterProvider provider,
-                                                   final Set<SpreadsheetFormatterInfo> expected) {
+                                                   final SpreadsheetFormatterInfoSet expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetFormatterInfos(),

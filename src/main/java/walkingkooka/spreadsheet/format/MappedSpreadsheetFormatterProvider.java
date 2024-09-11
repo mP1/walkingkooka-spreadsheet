@@ -51,9 +51,11 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
                 provider.spreadsheetFormatterInfos()
         );
         this.provider = provider;
-        this.infos = PluginInfoSetLike.merge(
-                infos,
-                provider.spreadsheetFormatterInfos()
+        this.infos = SpreadsheetFormatterInfoSet.with(
+                PluginInfoSetLike.merge(
+                        infos,
+                        provider.spreadsheetFormatterInfos()
+                )
         );
     }
 
@@ -131,11 +133,11 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
     private final SpreadsheetFormatterProvider provider;
 
     @Override
-    public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
+    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
         return this.infos;
     }
 
-    private final Set<SpreadsheetFormatterInfo> infos;
+    private final SpreadsheetFormatterInfoSet infos;
 
     @Override
     public String toString() {
