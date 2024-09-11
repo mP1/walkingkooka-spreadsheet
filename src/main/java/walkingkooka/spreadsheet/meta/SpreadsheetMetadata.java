@@ -1319,9 +1319,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                 .spreadsheetComparatorInfos()
         ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
-                SpreadsheetFormatterInfoSet.with(
-                        spreadsheetFormatterProvider.spreadsheetFormatterInfos()
-                )
+                spreadsheetFormatterProvider.spreadsheetFormatterInfos()
         ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
                 SpreadsheetParserInfoSet.with(

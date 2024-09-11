@@ -59,10 +59,8 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
 
     @Override
     public SpreadsheetFormatterInfoSet createSet() {
-        return SpreadsheetFormatterInfoSet.with(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        .spreadsheetFormatterInfos()
-        );
+        return SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                .spreadsheetFormatterInfos();
     }
 
     @Override
@@ -90,7 +88,7 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetFormatterInfoSet.with(Sets.empty()),
+                SpreadsheetFormatterInfoSet.EMPTY,
                 JsonNode.array()
         );
     }

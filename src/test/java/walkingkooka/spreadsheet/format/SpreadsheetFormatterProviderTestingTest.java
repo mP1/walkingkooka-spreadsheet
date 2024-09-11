@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -30,7 +29,6 @@ import walkingkooka.tree.text.TextNode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 public final class SpreadsheetFormatterProviderTestingTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatterProviderTestingTest.TestSpreadsheetFormatterProvider>,
         SpreadsheetMetadataTesting {
@@ -140,8 +138,8 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         }
 
         @Override
-        public Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
-            return Sets.of(INFO);
+        public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+            return SpreadsheetFormatterInfoSet.EMPTY.concat(INFO);
         }
     }
 

@@ -21,7 +21,6 @@ import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface SpreadsheetFormatterProviderDelegator extends SpreadsheetFormatterProvider {
 
@@ -61,7 +60,7 @@ public interface SpreadsheetFormatterProviderDelegator extends SpreadsheetFormat
     }
 
     @Override
-    default Set<SpreadsheetFormatterInfo> spreadsheetFormatterInfos() {
+    default SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
         return this.spreadsheetFormatterProvider().spreadsheetFormatterInfos();
     }
 
