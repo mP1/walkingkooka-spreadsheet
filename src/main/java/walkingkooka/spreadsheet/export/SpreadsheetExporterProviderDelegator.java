@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.export;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
-import java.util.Set;
 
 public interface SpreadsheetExporterProviderDelegator extends SpreadsheetExporterProvider {
 
@@ -46,7 +45,7 @@ public interface SpreadsheetExporterProviderDelegator extends SpreadsheetExporte
     }
 
     @Override
-    default Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
+    default SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
         return this.spreadsheetExporterProvider()
                 .spreadsheetExporterInfos();
     }

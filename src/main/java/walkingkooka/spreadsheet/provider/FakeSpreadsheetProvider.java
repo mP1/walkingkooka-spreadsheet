@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporter;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterInfo;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterProvider;
@@ -100,7 +100,7 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
     }
 
     @Override
-    public Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
+    public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
         throw new UnsupportedOperationException();
     }
     

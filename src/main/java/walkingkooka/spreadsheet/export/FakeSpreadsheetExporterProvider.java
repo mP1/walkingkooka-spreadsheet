@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.export;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
-import java.util.Set;
 
 public class FakeSpreadsheetExporterProvider implements SpreadsheetExporterProvider {
     @Override
@@ -37,7 +36,7 @@ public class FakeSpreadsheetExporterProvider implements SpreadsheetExporterProvi
     }
 
     @Override
-    public Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
+    public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
         throw new UnsupportedOperationException();
     }
 }

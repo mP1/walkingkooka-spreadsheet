@@ -24,7 +24,6 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.ProviderTesting;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -210,9 +209,7 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
     default void spreadsheetExporterInfosAndCheck(final SpreadsheetExporterInfo... expected) {
         this.spreadsheetExporterInfosAndCheck(
                 this.createSpreadsheetExporterProvider(),
-                Sets.of(
-                        expected
-                )
+                expected
         );
     }
 
@@ -220,13 +217,15 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                                   final SpreadsheetExporterInfo... expected) {
         this.spreadsheetExporterInfosAndCheck(
                 provider,
-                Sets.of(
-                        expected
+                SpreadsheetExporterInfoSet.with(
+                        Sets.of(
+                                expected
+                        )
                 )
         );
     }
 
-    default void spreadsheetExporterInfosAndCheck(final Set<SpreadsheetExporterInfo> expected) {
+    default void spreadsheetExporterInfosAndCheck(final SpreadsheetExporterInfoSet expected) {
         this.spreadsheetExporterInfosAndCheck(
                 this.createSpreadsheetExporterProvider(),
                 expected
@@ -234,7 +233,7 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
     }
 
     default void spreadsheetExporterInfosAndCheck(final SpreadsheetExporterProvider provider,
-                                                  final Set<SpreadsheetExporterInfo> expected) {
+                                                  final SpreadsheetExporterInfoSet expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetExporterInfos(),

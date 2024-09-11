@@ -24,7 +24,6 @@ import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetExporterProvider {
@@ -99,16 +98,17 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
     // spreadsheetExporterInfos........................................................................................
 
     @Override
-    public Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
+    public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
         return INFOS;
     }
 
-    private final static Set<SpreadsheetExporterInfo> INFOS = Sets.of(
-            spreadsheetExporterInfo(SpreadsheetExporterName.COLLECTION),
-            spreadsheetExporterInfo(SpreadsheetExporterName.EMPTY),
-            spreadsheetExporterInfo(SpreadsheetExporterName.JSON)
+    private final static SpreadsheetExporterInfoSet INFOS = SpreadsheetExporterInfoSet.with(
+            Sets.of(
+                    spreadsheetExporterInfo(SpreadsheetExporterName.COLLECTION),
+                    spreadsheetExporterInfo(SpreadsheetExporterName.EMPTY),
+                    spreadsheetExporterInfo(SpreadsheetExporterName.JSON)
+            )
     );
-
 
     private static SpreadsheetExporterInfo spreadsheetExporterInfo(final SpreadsheetExporterName name) {
         return SpreadsheetExporterInfo.with(

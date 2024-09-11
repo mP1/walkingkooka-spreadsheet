@@ -18,12 +18,10 @@
 
 package walkingkooka.spreadsheet.export;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 
 /**
@@ -61,8 +59,8 @@ final class EmptySpreadsheetExporterProvider implements SpreadsheetExporterProvi
     }
 
     @Override
-    public Set<SpreadsheetExporterInfo> spreadsheetExporterInfos() {
-        return Sets.empty();
+    public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
+        return SpreadsheetExporterInfoSet.EMPTY;
     }
 
     @Override

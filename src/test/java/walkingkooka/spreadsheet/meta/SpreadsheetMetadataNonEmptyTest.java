@@ -2741,9 +2741,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,
-                SpreadsheetExporterInfoSet.with(
-                        Sets.empty()
-                )
+                SpreadsheetExporterInfoSet.EMPTY
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
