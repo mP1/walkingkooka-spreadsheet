@@ -24,6 +24,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfo;
+import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -35,7 +36,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -212,21 +212,23 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     final static ConverterName STRING_TO_SELECTION = ConverterName.with(STRING_TO_SELECTION_STRING);
 
     @Override
-    public Set<ConverterInfo> converterInfos() {
+    public ConverterInfoSet converterInfos() {
         return INFOS;
     }
 
-    private final static Set<ConverterInfo> INFOS = Sets.of(
-            converterInfo(BASIC_SPREADSHEET_CONVERTER),
-            converterInfo(COLLECTION),
-            converterInfo(ERROR_THROWING),
-            converterInfo(ERROR_TO_NUMBER),
-            converterInfo(ERROR_TO_STRING),
-            converterInfo(GENERAL),
-            converterInfo(SPREADSHEET_CELL_TO),
-            converterInfo(SELECTION_TO_SELECTION),
-            converterInfo(SELECTION_TO_STRING),
-            converterInfo(STRING_TO_SELECTION)
+    private final static ConverterInfoSet INFOS = ConverterInfoSet.with(
+            Sets.of(
+                    converterInfo(BASIC_SPREADSHEET_CONVERTER),
+                    converterInfo(COLLECTION),
+                    converterInfo(ERROR_THROWING),
+                    converterInfo(ERROR_TO_NUMBER),
+                    converterInfo(ERROR_TO_STRING),
+                    converterInfo(GENERAL),
+                    converterInfo(SPREADSHEET_CELL_TO),
+                    converterInfo(SELECTION_TO_SELECTION),
+                    converterInfo(SELECTION_TO_STRING),
+                    converterInfo(STRING_TO_SELECTION)
+            )
     );
 
     /**

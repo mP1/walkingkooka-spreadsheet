@@ -132,10 +132,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterInfoSet.with(
-                        ConverterProviders.converters()
+                ConverterProviders.converters()
                                 .converterInfos()
-                )
         );
     }
 
