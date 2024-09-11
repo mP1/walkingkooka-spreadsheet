@@ -112,8 +112,10 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
     }
 
     @Override
-    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
-        return this.providers.infos();
+    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+        return SpreadsheetParserInfoSet.with(
+                this.providers.infos()
+        );
     }
 
     private final ProviderCollection<SpreadsheetParserProvider, SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserSelector, SpreadsheetParser> providers;

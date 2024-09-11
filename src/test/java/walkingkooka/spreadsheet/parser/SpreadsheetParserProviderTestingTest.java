@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -28,7 +27,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 public final class SpreadsheetParserProviderTestingTest implements SpreadsheetParserProviderTesting<SpreadsheetParserProviderTestingTest.TestSpreadsheetParserProvider> {
 
@@ -103,8 +101,8 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
         }
 
         @Override
-        public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
-            return Sets.of(INFO);
+        public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+            return SpreadsheetParserInfoSet.EMPTY.concat(INFO);
         }
     }
 

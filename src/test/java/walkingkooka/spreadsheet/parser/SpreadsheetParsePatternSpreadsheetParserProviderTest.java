@@ -739,10 +739,8 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserSelectorTreePrintable() {
         this.treePrintAndCheck(
-                SpreadsheetParserInfoSet.with(
-                        this.createSpreadsheetParserProvider()
-                                .spreadsheetParserInfos()
-                ),
+                this.createSpreadsheetParserProvider()
+                        .spreadsheetParserInfos(),
                 "SpreadsheetParserInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern date-parse-pattern\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern date-time-parse-pattern\n" +
@@ -766,10 +764,8 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
                 ),
                 JsonNodeMarshallContexts.basic()
                         .marshall(
-                                SpreadsheetParserInfoSet.with(
-                                        this.createSpreadsheetParserProvider()
-                                                .spreadsheetParserInfos()
-                                )
+                                this.createSpreadsheetParserProvider()
+                                        .spreadsheetParserInfos()
                         )
         );
     }

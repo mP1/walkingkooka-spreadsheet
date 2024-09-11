@@ -68,9 +68,11 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
                 provider.spreadsheetParserInfos()
         );
         this.provider = provider;
-        this.infos = PluginInfoSetLike.merge(
-                infos,
-                provider.spreadsheetParserInfos()
+        this.infos = SpreadsheetParserInfoSet.with(
+                PluginInfoSetLike.merge(
+                        infos,
+                        provider.spreadsheetParserInfos()
+                )
         );
     }
 
@@ -149,11 +151,11 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
     private final SpreadsheetParserProvider provider;
 
     @Override
-    public Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
+    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
         return this.infos;
     }
 
-    private final Set<SpreadsheetParserInfo> infos;
+    private final SpreadsheetParserInfoSet infos;
 
     @Override
     public String toString() {

@@ -90,7 +90,7 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetParserInfoSet.with(Sets.empty()),
+                SpreadsheetParserInfoSet.EMPTY,
                 JsonNode.array()
         );
     }

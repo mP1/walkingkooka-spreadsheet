@@ -22,7 +22,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface SpreadsheetParserProviderDelegator extends SpreadsheetParserProvider {
 
@@ -59,7 +58,7 @@ public interface SpreadsheetParserProviderDelegator extends SpreadsheetParserPro
     }
 
     @Override
-    default Set<SpreadsheetParserInfo> spreadsheetParserInfos() {
+    default SpreadsheetParserInfoSet spreadsheetParserInfos() {
         return this.spreadsheetParserProvider().spreadsheetParserInfos();
     }
 

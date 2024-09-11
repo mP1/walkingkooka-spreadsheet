@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * A provider supports listing available {@link SpreadsheetParserInfo} and fetching implementations using a
@@ -73,5 +72,5 @@ public interface SpreadsheetParserProvider extends Provider {
     /**
      * Returns all available {@link SpreadsheetParserInfo}
      */
-    Set<SpreadsheetParserInfo> spreadsheetParserInfos();
+    SpreadsheetParserInfoSet spreadsheetParserInfos();
 }

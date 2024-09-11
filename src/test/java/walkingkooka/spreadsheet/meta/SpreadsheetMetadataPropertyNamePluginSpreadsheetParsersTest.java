@@ -34,11 +34,9 @@ public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsersTest e
 
     @Override
     SpreadsheetParserInfoSet propertyValue() {
-        return SpreadsheetParserInfoSet.with(
-                SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        ).spreadsheetParserInfos()
-        );
+        return SpreadsheetParserProviders.spreadsheetParsePattern(
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        ).spreadsheetParserInfos();
     }
 
     @Override
