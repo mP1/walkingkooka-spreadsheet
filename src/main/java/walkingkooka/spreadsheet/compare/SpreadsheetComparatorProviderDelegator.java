@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.plugin.ProviderContext;
 
-import java.util.Set;
-
 public interface SpreadsheetComparatorProviderDelegator extends SpreadsheetComparatorProvider {
     @Override
     default SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
@@ -32,7 +30,7 @@ public interface SpreadsheetComparatorProviderDelegator extends SpreadsheetCompa
     }
 
     @Override
-    default Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
+    default SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
         return this.spreadsheetComparatorProvider().spreadsheetComparatorInfos();
     }
 

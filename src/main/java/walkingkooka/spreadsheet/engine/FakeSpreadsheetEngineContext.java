@@ -27,7 +27,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporter;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfo;
@@ -115,7 +115,7 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     }
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
+    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
         throw new UnsupportedOperationException();
     }
 

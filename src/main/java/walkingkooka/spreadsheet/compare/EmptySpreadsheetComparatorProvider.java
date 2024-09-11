@@ -17,11 +17,9 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * A {@link SpreadsheetComparatorProvider} that is empty with no {@link SpreadsheetComparator} or {@link SpreadsheetComparatorInfo}.
@@ -47,8 +45,8 @@ final class EmptySpreadsheetComparatorProvider implements SpreadsheetComparatorP
     }
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
-        return Sets.empty();
+    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
+        return SpreadsheetComparatorInfoSet.EMPTY;
     }
 
     @Override

@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.plugin.ProviderContext;
 
-import java.util.Set;
-
 public class FakeSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
     @Override
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
@@ -29,7 +27,7 @@ public class FakeSpreadsheetComparatorProvider implements SpreadsheetComparatorP
     }
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
+    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
         throw new UnsupportedOperationException();
     }
 }

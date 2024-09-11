@@ -49,9 +49,11 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
                 provider.spreadsheetComparatorInfos()
         );
         this.provider = provider;
-        this.infos = PluginInfoSetLike.merge(
-                infos,
-                provider.spreadsheetComparatorInfos()
+        this.infos = SpreadsheetComparatorInfoSet.with(
+                PluginInfoSetLike.merge(
+                        infos,
+                        provider.spreadsheetComparatorInfos()
+                )
         );
     }
 
@@ -79,11 +81,11 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
     private final SpreadsheetComparatorProvider provider;
 
     @Override
-    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
+    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
         return this.infos;
     }
 
-    private final Set<SpreadsheetComparatorInfo> infos;
+    private final SpreadsheetComparatorInfoSet infos;
 
     @Override
     public String toString() {

@@ -26,8 +26,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MappedSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<MappedSpreadsheetComparatorProvider>,
@@ -120,8 +118,8 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
                     }
 
                     @Override
-                    public Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos() {
-                        return Sets.of(
+                    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
+                        return SpreadsheetComparatorInfoSet.EMPTY.concat(
                                 SpreadsheetComparatorInfo.with(
                                         URL,
                                         ORIGINAL_NAME

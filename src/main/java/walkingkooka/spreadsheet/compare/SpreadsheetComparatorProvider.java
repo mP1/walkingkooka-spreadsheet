@@ -22,7 +22,6 @@ import walkingkooka.plugin.ProviderContext;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +38,7 @@ public interface SpreadsheetComparatorProvider extends Provider {
     /**
      * Returns all available {@link SpreadsheetComparatorInfo}
      */
-    Set<SpreadsheetComparatorInfo> spreadsheetComparatorInfos();
+    SpreadsheetComparatorInfoSet spreadsheetComparatorInfos();
 
     /**
      * Helper that maps a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} into a {@link List} of

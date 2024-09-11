@@ -75,9 +75,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                SpreadsheetComparatorInfoSet.with(
-                        SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos()
-                ),
+                SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos(),
                 "SpreadsheetComparatorInfoSet\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\n" +
@@ -121,9 +119,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                 ),
                 JsonNodeMarshallContexts.basic()
                         .marshall(
-                                SpreadsheetComparatorInfoSet.with(
-                                        SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos()
-                                )
+                                SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos()
                         )
         );
     }
