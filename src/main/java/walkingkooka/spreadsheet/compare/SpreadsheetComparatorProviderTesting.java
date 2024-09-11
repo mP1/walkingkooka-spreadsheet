@@ -23,8 +23,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.ProviderTesting;
 
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ProviderTesting<T> {
@@ -110,13 +108,15 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
                                                     final SpreadsheetComparatorInfo... expected) {
         this.spreadsheetComparatorInfosAndCheck(
                 provider,
-                Sets.of(
-                        expected
+                SpreadsheetComparatorInfoSet.with(
+                        Sets.of(
+                                expected
+                        )
                 )
         );
     }
 
-    default void spreadsheetComparatorInfosAndCheck(final Set<SpreadsheetComparatorInfo> expected) {
+    default void spreadsheetComparatorInfosAndCheck(final SpreadsheetComparatorInfoSet expected) {
         this.spreadsheetComparatorInfosAndCheck(
                 this.createSpreadsheetComparatorProvider(),
                 expected
@@ -124,7 +124,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
     }
 
     default void spreadsheetComparatorInfosAndCheck(final SpreadsheetComparatorProvider provider,
-                                                    final Set<SpreadsheetComparatorInfo> expected) {
+                                                    final SpreadsheetComparatorInfoSet expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetComparatorInfos(),

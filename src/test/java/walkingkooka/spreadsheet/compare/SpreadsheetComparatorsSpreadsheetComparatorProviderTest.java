@@ -27,7 +27,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<SpreadsheetComparatorsSpreadsheetComparatorProvider> {
 
@@ -68,7 +67,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                                 ),
                                         SpreadsheetComparatorName.with(n)
                                 )
-                        ).collect(Collectors.toSet())
+                        ).toArray(SpreadsheetComparatorInfo[]::new)
         );
     }
 
