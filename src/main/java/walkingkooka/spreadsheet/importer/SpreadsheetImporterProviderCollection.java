@@ -95,8 +95,10 @@ final class SpreadsheetImporterProviderCollection implements SpreadsheetImporter
     }
 
     @Override
-    public Set<SpreadsheetImporterInfo> spreadsheetImporterInfos() {
-        return this.providers.infos();
+    public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
+        return SpreadsheetImporterInfoSet.with(
+                this.providers.infos()
+        );
     }
 
     private final ProviderCollection<SpreadsheetImporterProvider, SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterSelector, SpreadsheetImporter> providers;

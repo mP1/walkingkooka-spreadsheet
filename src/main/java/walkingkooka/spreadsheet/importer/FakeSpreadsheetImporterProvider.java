@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
-import java.util.Set;
 
 public class FakeSpreadsheetImporterProvider implements SpreadsheetImporterProvider{
     @Override
@@ -37,7 +36,7 @@ public class FakeSpreadsheetImporterProvider implements SpreadsheetImporterProvi
     }
 
     @Override
-    public Set<SpreadsheetImporterInfo> spreadsheetImporterInfos() {
+    public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
         throw new UnsupportedOperationException();
     }
 }

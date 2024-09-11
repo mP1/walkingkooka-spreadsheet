@@ -59,10 +59,8 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
 
     @Override
     public SpreadsheetImporterInfoSet createSet() {
-        return SpreadsheetImporterInfoSet.with(
-                Sets.of(
-                        this.info()
-                )
+        return SpreadsheetImporterInfoSet.EMPTY.concat(
+                this.info()
         );
     }
 
@@ -91,7 +89,7 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetImporterInfoSet.with(Sets.empty()),
+                SpreadsheetImporterInfoSet.EMPTY,
                 JsonNode.array()
         );
     }

@@ -27,7 +27,6 @@ import walkingkooka.reflect.JavaVisibility;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -74,8 +73,8 @@ public final class SpreadsheetImporterProviderCollectionTest implements Spreadsh
         }
 
         @Override
-        public Set<SpreadsheetImporterInfo> spreadsheetImporterInfos() {
-            return Sets.of(INFO);
+        public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
+            return SpreadsheetImporterInfoSet.EMPTY.concat(INFO);
         }
     };
 

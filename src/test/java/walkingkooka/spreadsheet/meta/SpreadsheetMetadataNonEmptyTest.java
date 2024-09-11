@@ -2750,9 +2750,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
-                SpreadsheetImporterInfoSet.with(
-                        Sets.empty()
-                )
+                SpreadsheetImporterInfoSet.EMPTY
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));
         properties.put(

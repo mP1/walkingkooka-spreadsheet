@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfoSet;
@@ -491,9 +490,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
-                SpreadsheetImporterInfoSet.with(
-                        Sets.empty()
-                )
+                SpreadsheetImporterInfoSet.EMPTY
         );
     }
 
