@@ -33,7 +33,7 @@ public final class FilteredSpreadsheetExporterProviderTest implements Spreadshee
 
     @Test
     public void testSpreadsheetExporter() {
-        final SpreadsheetExporterName name = SpreadsheetExporterName.with("json");
+        final SpreadsheetExporterName name = SpreadsheetExporterName.JSON;
         final List<?> values = Lists.empty();
 
         this.spreadsheetExporterAndCheck(
@@ -73,7 +73,7 @@ public final class FilteredSpreadsheetExporterProviderTest implements Spreadshee
     public void testSpreadsheetExporterInfos() {
         this.spreadsheetExporterInfosAndCheck(
                 SpreadsheetExporterInfoSet.EMPTY.concat(
-                        SpreadsheetExporterInfo.parse("https://github.com/mP1/walkingkooka-tree-expression-function-provider/SpreadsheetExporter/json json")
+                        SpreadsheetExporterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json")
                 )
         );
     }
@@ -83,7 +83,7 @@ public final class FilteredSpreadsheetExporterProviderTest implements Spreadshee
         return FilteredSpreadsheetExporterProvider.with(
                 SpreadsheetExporterProviders.spreadsheetExport(),
                 SpreadsheetExporterInfoSet.EMPTY.concat(
-                        SpreadsheetExporterInfo.parse("https://github.com/mP1/walkingkooka-tree-expression-function-provider/SpreadsheetExporter/json json")
+                        SpreadsheetExporterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json")
                 )
         );
     }
