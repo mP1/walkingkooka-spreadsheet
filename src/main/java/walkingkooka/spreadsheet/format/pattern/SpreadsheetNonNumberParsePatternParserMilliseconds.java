@@ -85,6 +85,22 @@ final class SpreadsheetNonNumberParsePatternParserMilliseconds extends Spreadshe
         );
     }
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.pattern.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other || other instanceof SpreadsheetNonNumberParsePatternParserMilliseconds && this.equals0((SpreadsheetNonNumberParsePatternParserMilliseconds) other);
+    }
+
+    private boolean equals0(final SpreadsheetNonNumberParsePatternParserMilliseconds other) {
+        return this.pattern.equals(other.pattern);
+    }
+
     @Override
     public String toString() {
         return this.pattern;
