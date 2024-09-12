@@ -147,6 +147,22 @@ final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonN
      */
     private final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.pattern.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other || other instanceof SpreadsheetNonNumberParsePatternParserString && this.equals0((SpreadsheetNonNumberParsePatternParserString) other);
+    }
+
+    private boolean equals0(final SpreadsheetNonNumberParsePatternParserString other) {
+        return this.pattern.equals(other.pattern);
+    }
+
     @Override
     public String toString() {
         return this.pattern;
