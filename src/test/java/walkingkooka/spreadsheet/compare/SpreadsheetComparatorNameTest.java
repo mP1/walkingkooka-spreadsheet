@@ -17,11 +17,40 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginNameTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 final public class SpreadsheetComparatorNameTest implements PluginNameTesting<SpreadsheetComparatorName> {
+
+    @Test
+    public void testConstants() {
+        final Set<String> constants = Arrays.stream(
+                        SpreadsheetComparatorName.class.getDeclaredFields()
+                ).filter(field -> String.class == field.getType() && field.getName().endsWith("_STRING"))
+                .map(f -> {
+                    try {
+                        f.setAccessible(true);
+                        return (String) f.get(null);
+                    } catch (final Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }).collect(Collectors.toCollection(SortedSets::tree));
+
+        this.checkEquals(
+                Sets.empty(),
+                constants.stream()
+                        .filter(f -> SpreadsheetComparatorName.with(f) != SpreadsheetComparatorName.with(f))
+                        .collect(Collectors.toCollection(SortedSets::tree))
+        );
+    }
 
     @Override
     public SpreadsheetComparatorName createName(final String name) {

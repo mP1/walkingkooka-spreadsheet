@@ -26,6 +26,8 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Objects;
+
 /**
  * The {@link Name} of a {@link SpreadsheetComparator}. Note comparator names are case-sensitive.
  */
@@ -41,13 +43,136 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
+    // constants........................................................................................................
+
+    private final static String DATE_STRING = "date";
+    
+    public final static SpreadsheetComparatorName DATE = registerConstant(DATE_STRING);
+
+    private final static String DATE_TIME_STRING = "date-time";
+
+    public final static SpreadsheetComparatorName DATE_TIME = registerConstant(DATE_TIME_STRING);
+
+    private final static String DAY_OF_MONTH_STRING = "day-of-month";
+
+    public final static SpreadsheetComparatorName DAY_OF_MONTH = registerConstant(DAY_OF_MONTH_STRING);
+
+    private final static String DAY_OF_WEEK_STRING = "day-of-week";
+
+    public final static SpreadsheetComparatorName DAY_OF_WEEK = registerConstant(DAY_OF_WEEK_STRING);
+
+    private final static String HOUR_OF_AMPM_STRING = "hour-of-am-pm";
+
+    public final static SpreadsheetComparatorName HOUR_OF_AMPM = registerConstant(HOUR_OF_AMPM_STRING);
+
+    private final static String HOUR_OF_DAY_STRING = "hour-of-day";
+
+    public final static SpreadsheetComparatorName HOUR_OF_DAY = registerConstant(HOUR_OF_DAY_STRING);
+
+    private final static String MINUTE_OF_HOUR_STRING = "minute-of-hour";
+
+    public final static SpreadsheetComparatorName MINUTE_OF_HOUR = registerConstant(MINUTE_OF_HOUR_STRING);
+
+    private final static String MONTH_OF_YEAR_STRING = "month-of-year";
+
+    public final static SpreadsheetComparatorName MONTH_OF_YEAR = registerConstant(MONTH_OF_YEAR_STRING);
+
+    private final static String NANO_OF_SECOND_STRING = "nano-of-second";
+
+    public final static SpreadsheetComparatorName NANO_OF_SECOND = registerConstant(NANO_OF_SECOND_STRING);
+
+    private final static String NUMBER_STRING = "number";
+
+    public final static SpreadsheetComparatorName NUMBER = registerConstant(NUMBER_STRING);
+
+    private final static String SECONDS_OF_MINUTE_STRING = "seconds-of-minute";
+
+    public final static SpreadsheetComparatorName SECONDS_OF_MINUTE = registerConstant(SECONDS_OF_MINUTE_STRING);
+
+    private final static String TEXT_STRING = "text";
+
+    public final static SpreadsheetComparatorName TEXT = registerConstant(TEXT_STRING);
+
+    private final static String TEXT_CASE_INSENSITIVE_STRING = "text-case-insensitive";
+
+    public final static SpreadsheetComparatorName TEXT_CASE_INSENSITIVE = registerConstant(TEXT_CASE_INSENSITIVE_STRING);
+
+    private final static String TIME_STRING = "time";
+
+    public final static SpreadsheetComparatorName TIME = registerConstant(TIME_STRING);
+
+    private final static String YEAR_STRING = "year";
+
+    public final static SpreadsheetComparatorName YEAR = registerConstant(YEAR_STRING);
+
+    private static SpreadsheetComparatorName registerConstant(final String name) {
+        return new SpreadsheetComparatorName(
+                PluginName.with(name)
+        );
+    }
+
     /**
      * Factory that creates a {@link SpreadsheetComparatorName}
      */
     public static SpreadsheetComparatorName with(final String name) {
-        return new SpreadsheetComparatorName(
-                PluginName.with(name)
-        );
+        Objects.requireNonNull(name, "name");
+
+        final SpreadsheetComparatorName spreadsheetComparatorName;
+
+        switch (name) {
+            case DATE_STRING:
+                spreadsheetComparatorName = DATE;
+                break;
+            case DATE_TIME_STRING:
+                spreadsheetComparatorName = DATE_TIME;
+                break;
+            case DAY_OF_MONTH_STRING:
+                spreadsheetComparatorName = DAY_OF_MONTH;
+                break;
+            case DAY_OF_WEEK_STRING:
+                spreadsheetComparatorName = DAY_OF_WEEK;
+                break;
+            case HOUR_OF_AMPM_STRING:
+                spreadsheetComparatorName = HOUR_OF_AMPM;
+                break;
+            case HOUR_OF_DAY_STRING:
+                spreadsheetComparatorName = HOUR_OF_DAY;
+                break;
+            case MINUTE_OF_HOUR_STRING:
+                spreadsheetComparatorName = MINUTE_OF_HOUR;
+                break;
+            case MONTH_OF_YEAR_STRING:
+                spreadsheetComparatorName = MONTH_OF_YEAR;
+                break;
+            case NANO_OF_SECOND_STRING:
+                spreadsheetComparatorName = NANO_OF_SECOND;
+                break;
+            case NUMBER_STRING:
+                spreadsheetComparatorName = NUMBER;
+                break;
+            case SECONDS_OF_MINUTE_STRING:
+                spreadsheetComparatorName = SECONDS_OF_MINUTE;
+                break;
+            case TEXT_STRING:
+                spreadsheetComparatorName = TEXT;
+                break;
+            case TEXT_CASE_INSENSITIVE_STRING:
+                spreadsheetComparatorName = TEXT_CASE_INSENSITIVE;
+                break;
+            case TIME_STRING:
+                spreadsheetComparatorName = TIME;
+                break;
+            case YEAR_STRING:
+                spreadsheetComparatorName = YEAR;
+                break;
+            default:
+                spreadsheetComparatorName = new SpreadsheetComparatorName(
+                        PluginName.with(name)
+                );
+                break;
+        }
+
+        return spreadsheetComparatorName;
     }
 
     /**

@@ -59,7 +59,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             LocalDate.class,
             Comparator.naturalOrder(),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("date")
+            SpreadsheetComparatorName.DATE
     );
 
     public static SpreadsheetComparator<LocalDateTime> dateTime() {
@@ -70,7 +70,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             LocalDateTime.class,
             Comparator.naturalOrder(),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("date-time")
+            SpreadsheetComparatorName.DATE_TIME
     );
 
 
@@ -84,7 +84,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.dayOfMonth()
             ),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("day-of-month")
+            SpreadsheetComparatorName.DAY_OF_MONTH
     );
 
     public static SpreadsheetComparator<LocalDate> dayOfWeek() {
@@ -97,7 +97,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.dayOfWeek()
             ),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("day-of-week")
+            SpreadsheetComparatorName.DAY_OF_WEEK
     );
 
     /**
@@ -117,7 +117,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.hourOfAmPm()
             ),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("hour-of-am-pm")
+            SpreadsheetComparatorName.HOUR_OF_AMPM
     );
 
     public static SpreadsheetComparator<LocalTime> hourOfDay() {
@@ -130,7 +130,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.hourOfDay()
             ),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("hour-of-day")
+            SpreadsheetComparatorName.HOUR_OF_DAY
     );
 
     public static SpreadsheetComparator<LocalTime> minuteOfHour() {
@@ -143,7 +143,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.minuteOfHour()
             ),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("minute-of-hour")
+            SpreadsheetComparatorName.MINUTE_OF_HOUR
     );
 
     public static SpreadsheetComparator<LocalDate> monthOfYear() {
@@ -156,7 +156,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.monthOfYear()
             ),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("month-of-year")
+            SpreadsheetComparatorName.MONTH_OF_YEAR
     );
 
     public static SpreadsheetComparator<LocalTime> nanoOfSecond() {
@@ -169,7 +169,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.nanoOfSecond()
             ),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("nano-of-second")
+            SpreadsheetComparatorName.NANO_OF_SECOND
     );
 
     public static <T> SpreadsheetComparator<T> nullAfter(final Class<T> type,
@@ -204,7 +204,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             ExpressionNumber.class,
             Comparator.naturalOrder(),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("number")
+            SpreadsheetComparatorName.NUMBER
     );
 
     /**
@@ -292,7 +292,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.secondOfMinute()
             ),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("seconds-of-minute")
+            SpreadsheetComparatorName.SECONDS_OF_MINUTE
     );
 
     public static SpreadsheetComparator<String> text() {
@@ -303,7 +303,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             String.class,
             Comparator.naturalOrder(),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("text")
+            SpreadsheetComparatorName.TEXT
     );
 
     public static SpreadsheetComparator<String> textCaseInsensitive() {
@@ -314,7 +314,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             String.class,
             String.CASE_INSENSITIVE_ORDER,
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("text-case-insensitive")
+            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
     );
 
     public static SpreadsheetComparator<LocalTime> time() {
@@ -325,7 +325,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             LocalTime.class,
             Comparator.naturalOrder(),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("time")
+            SpreadsheetComparatorName.TIME
     );
 
     public static SpreadsheetComparator<LocalDate> year() {
@@ -338,7 +338,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     DateTimeComparators.year()
             ),
             SpreadsheetComparatorDirection.DEFAULT,
-            SpreadsheetComparatorName.with("year")
+            SpreadsheetComparatorName.YEAR
     );
 
     /**
