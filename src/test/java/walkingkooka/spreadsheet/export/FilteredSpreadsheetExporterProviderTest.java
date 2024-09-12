@@ -51,11 +51,19 @@ public final class FilteredSpreadsheetExporterProviderTest implements Spreadshee
 
     @Test
     public void testSpreadsheetExporterWithFilteredFails() {
-        final SpreadsheetExporterName name = SpreadsheetExporterName.with("json");
+        final SpreadsheetExporterName name = SpreadsheetExporterName.EMPTY;
         final List<?> values = Lists.empty();
 
+        this.spreadsheetExporterAndCheck(
+                SpreadsheetExporterProviders.spreadsheetExport(),
+                name,
+                values,
+                CONTEXT,
+                SpreadsheetExporters.empty()
+        );
+
         this.spreadsheetExporterFails(
-                SpreadsheetExporterName.with("jsonName"),
+                name,
                 values,
                 CONTEXT
         );
