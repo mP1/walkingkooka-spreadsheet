@@ -29,9 +29,10 @@ import walkingkooka.text.cursor.parser.Parser;
  */
 final class SpreadsheetNonNumberParsePatternParserDecimalSeparator extends SpreadsheetNonNumberParsePatternParser {
 
-    static SpreadsheetNonNumberParsePatternParserDecimalSeparator instance() {
-        return new SpreadsheetNonNumberParsePatternParserDecimalSeparator();
-    }
+    /**
+     * Singleton
+     */
+    final static SpreadsheetNonNumberParsePatternParserDecimalSeparator INSTANCE = new SpreadsheetNonNumberParsePatternParserDecimalSeparator();
 
     private SpreadsheetNonNumberParsePatternParserDecimalSeparator() {
         super();

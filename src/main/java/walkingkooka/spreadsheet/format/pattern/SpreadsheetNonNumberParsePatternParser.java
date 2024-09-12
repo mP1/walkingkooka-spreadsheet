@@ -38,7 +38,7 @@ abstract class SpreadsheetNonNumberParsePatternParser implements Parser<Spreadsh
      * @see SpreadsheetNonNumberParsePatternParserDecimalSeparator
      */
     static SpreadsheetNonNumberParsePatternParserDecimalSeparator decimalSeparator() {
-        return SpreadsheetNonNumberParsePatternParserDecimalSeparator.instance();
+        return SpreadsheetNonNumberParsePatternParserDecimalSeparator.INSTANCE;
     }
 
     /**
