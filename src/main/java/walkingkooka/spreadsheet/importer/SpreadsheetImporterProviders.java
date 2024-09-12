@@ -49,12 +49,23 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     public static SpreadsheetImporterProvider empty() {
         return EmptySpreadsheetImporterProvider.INSTANCE;
     }
-    
+
     /**
      * {@see FakeSpreadsheetImporterProvider}
      */
     public static SpreadsheetImporterProvider fake() {
         return new FakeSpreadsheetImporterProvider();
+    }
+
+    /**
+     * {@see FilteredSpreadsheetImporterProvider}
+     */
+    public static SpreadsheetImporterProvider filtered(final SpreadsheetImporterProvider provider,
+                                                       final SpreadsheetImporterInfoSet infos) {
+        return FilteredSpreadsheetImporterProvider.with(
+                provider,
+                infos
+        );
     }
 
     /**
@@ -74,7 +85,7 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     public static SpreadsheetImporterProvider spreadsheetImport() {
         return SpreadsheetImportSpreadsheetImporterProvider.INSTANCE;
     }
-    
+
     /**
      * Stop creation
      */
