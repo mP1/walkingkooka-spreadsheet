@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.export;
 
+import walkingkooka.plugin.FilteredProviderGuard;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
@@ -37,6 +38,11 @@ final class FilteredSpreadsheetExporterProvider implements SpreadsheetExporterPr
 
     private FilteredSpreadsheetExporterProvider(final SpreadsheetExporterProvider provider,
                                                 final SpreadsheetExporterInfoSet infos) {
+        this.guard = FilteredProviderGuard.with(
+                infos.names(),
+                (n) -> new IllegalArgumentException("Unknown exporter " + n)
+        );
+
         this.provider = provider;
         this.infos = infos;
     }
@@ -44,8 +50,11 @@ final class FilteredSpreadsheetExporterProvider implements SpreadsheetExporterPr
     @Override
     public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
                                                    final ProviderContext context) {
+        Objects.requireNonNull(selector, "selector");
+        Objects.requireNonNull(context, "context");
+
         return this.provider.spreadsheetExporter(
-                selector,
+                this.guard.selector(selector),
                 context
         );
     }
@@ -54,12 +63,18 @@ final class FilteredSpreadsheetExporterProvider implements SpreadsheetExporterPr
     public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterName name,
                                                    final List<?> values,
                                                    final ProviderContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
+        Objects.requireNonNull(context, "context");
+
         return this.provider.spreadsheetExporter(
-                name,
+                this.guard.name(name),
                 values,
                 context
         );
     }
+
+    private final FilteredProviderGuard<SpreadsheetExporterName, SpreadsheetExporterSelector> guard;
 
     private final SpreadsheetExporterProvider provider;
 
