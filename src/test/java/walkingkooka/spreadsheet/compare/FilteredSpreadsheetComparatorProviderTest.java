@@ -45,8 +45,17 @@ public final class FilteredSpreadsheetComparatorProviderTest implements Spreadsh
 
     @Test
     public void testSpreadsheetComparatorWithFilteredFails() {
+        final SpreadsheetComparatorName name = SpreadsheetComparatorName.YEAR;
+
+        this.spreadsheetComparatorAndCheck(
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                name,
+                CONTEXT,
+                SpreadsheetComparators.year()
+        );
+
         this.spreadsheetComparatorFails(
-                SpreadsheetComparatorName.with("unknown123"),
+                name,
                 CONTEXT
         );
     }

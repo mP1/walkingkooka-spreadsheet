@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.plugin.FilteredProviderGuard;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.Objects;
@@ -36,6 +37,11 @@ final class FilteredSpreadsheetComparatorProvider implements SpreadsheetComparat
 
     private FilteredSpreadsheetComparatorProvider(final SpreadsheetComparatorProvider provider,
                                                   final SpreadsheetComparatorInfoSet infos) {
+        this.guard = FilteredProviderGuard.with(
+                infos.names(),
+                (n) -> new IllegalArgumentException("Unknown comparator " + n)
+        );
+
         this.provider = provider;
         this.infos = infos;
     }
@@ -43,11 +49,16 @@ final class FilteredSpreadsheetComparatorProvider implements SpreadsheetComparat
     @Override
     public SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorName name,
                                                        final ProviderContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
+
         return this.provider.spreadsheetComparator(
-                name,
+                this.guard.name(name),
                 context
         );
     }
+
+    private final FilteredProviderGuard<SpreadsheetComparatorName, ?> guard;
 
     private final SpreadsheetComparatorProvider provider;
 
