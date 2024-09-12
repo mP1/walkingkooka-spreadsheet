@@ -64,7 +64,7 @@ public final class FilteredSpreadsheetComparatorProviderTest implements Spreadsh
     public void testSpreadsheetComparatorInfos() {
         this.spreadsheetComparatorInfosAndCheck(
                 SpreadsheetComparatorInfoSet.EMPTY.concat(
-                        SpreadsheetComparatorInfo.parse("https://github.com/mP1/walkingkooka-convert-provider/SpreadsheetComparator/day-of-month day-of-month")
+                        SpreadsheetComparatorInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month")
                 )
         );
     }
@@ -74,7 +74,7 @@ public final class FilteredSpreadsheetComparatorProviderTest implements Spreadsh
         return FilteredSpreadsheetComparatorProvider.with(
                 SpreadsheetComparatorProviders.spreadsheetComparators(),
                 SpreadsheetComparatorInfoSet.EMPTY.concat(
-                        SpreadsheetComparatorInfo.parse("https://github.com/mP1/walkingkooka-convert-provider/SpreadsheetComparator/day-of-month day-of-month")
+                        SpreadsheetComparatorInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month")
                 )
         );
     }
