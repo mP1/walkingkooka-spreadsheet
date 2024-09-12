@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
-public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserMilliseconds> {
+public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserMilliseconds>
+        implements HashCodeEqualsDefinedTesting2<SpreadsheetNonNumberParsePatternParserMilliseconds> {
 
     @Test
     public void testParseFails() {
@@ -164,6 +166,22 @@ public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extend
     public SpreadsheetParserContext createContext() {
         return SpreadsheetParserContexts.fake();
     }
+
+    // hashcode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentPattern() {
+        this.checkNotEquals(
+                SpreadsheetNonNumberParsePatternParserMilliseconds.with("sssss")
+        );
+    }
+
+    @Override
+    public SpreadsheetNonNumberParsePatternParserMilliseconds createObject() {
+        return SpreadsheetNonNumberParsePatternParserMilliseconds.with("sss");
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetNonNumberParsePatternParserMilliseconds> type() {
