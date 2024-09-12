@@ -58,6 +58,17 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     }
 
     /**
+     * {@see FilteredSpreadsheetComparatorProvider}
+     */
+    public static SpreadsheetComparatorProvider filtered(final SpreadsheetComparatorProvider provider,
+                                                         final SpreadsheetComparatorInfoSet infos) {
+        return FilteredSpreadsheetComparatorProvider.with(
+                provider,
+                infos
+        );
+    }
+
+    /**
      * {@see MappedSpreadsheetComparatorProvider}
      */
     public static SpreadsheetComparatorProvider mapped(final Set<SpreadsheetComparatorInfo> infos,
