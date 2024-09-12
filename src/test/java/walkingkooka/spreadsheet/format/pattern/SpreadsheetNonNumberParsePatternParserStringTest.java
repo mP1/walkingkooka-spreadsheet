@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
@@ -30,7 +32,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
-public final class SpreadsheetNonNumberParsePatternParserStringTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserString> {
+public final class SpreadsheetNonNumberParsePatternParserStringTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserString>
+        implements HashCodeEqualsDefinedTesting2<SpreadsheetNonNumberParsePatternParserString> {
 
     private final static String PATTERN = "Pattern-123";
 
@@ -191,6 +194,30 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
                         LocalDateTime::now)
                 .monthNames();
     }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentPattern() {
+        this.checkNotEquals(
+                SpreadsheetNonNumberParsePatternParserString.with(
+                        (c) -> Lists.of("AM/PM"),
+                        (i, s) -> SpreadsheetParserToken.amPm(i, s),
+                        "AM/PM"
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetNonNumberParsePatternParserString createObject() {
+        return SpreadsheetNonNumberParsePatternParserString.with(
+                (c) -> Lists.of("am/pm"),
+                (i, s) -> SpreadsheetParserToken.amPm(i, s),
+                "am/pm"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetNonNumberParsePatternParserString> type() {

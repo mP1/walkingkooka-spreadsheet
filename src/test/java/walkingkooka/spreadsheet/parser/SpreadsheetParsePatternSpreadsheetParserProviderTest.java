@@ -516,9 +516,9 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserSelectorTimeParsePattern() {
         this.spreadsheetParserAndCheck(
-                "time-parse-pattern hh:mm:ss.SSS",
+                "time-parse-pattern hh:mm:ss.SSS AM/PM",
                 PROVIDER_CONTEXT,
-                SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss.SSS")
+                SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss.SSS AM/PM")
                         .parser()
         );
     }
