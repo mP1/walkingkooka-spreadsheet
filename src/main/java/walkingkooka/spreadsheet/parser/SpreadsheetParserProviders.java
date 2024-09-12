@@ -60,6 +60,17 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see FilteredSpreadsheetParserProvider}
+     */
+    public static SpreadsheetParserProvider filtered(final SpreadsheetParserProvider provider,
+                                                     final SpreadsheetParserInfoSet infos) {
+        return FilteredSpreadsheetParserProvider.with(
+                provider,
+                infos
+        );
+    }
+
+    /**
      * {@see MappedSpreadsheetParserProvider}
      */
     public static SpreadsheetParserProvider mapped(final Set<SpreadsheetParserInfo> infos,
