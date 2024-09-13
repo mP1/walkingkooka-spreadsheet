@@ -17,15 +17,12 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.text.CharacterConstant;
+import walkingkooka.plugin.ProviderMapper;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +30,7 @@ import java.util.stream.Collectors;
  */
 final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
 
-    static MappedSpreadsheetFormatterProvider with(final Set<SpreadsheetFormatterInfo> infos,
+    static MappedSpreadsheetFormatterProvider with(final SpreadsheetFormatterInfoSet infos,
                                                    final SpreadsheetFormatterProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
@@ -44,18 +41,13 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
         );
     }
 
-    private MappedSpreadsheetFormatterProvider(final Set<SpreadsheetFormatterInfo> infos,
+    private MappedSpreadsheetFormatterProvider(final SpreadsheetFormatterInfoSet infos,
                                                final SpreadsheetFormatterProvider provider) {
-        this.nameMapper = PluginInfoSetLike.nameMapper(
-                infos,
-                provider.spreadsheetFormatterInfos()
-        );
         this.provider = provider;
-        this.infos = SpreadsheetFormatterInfoSet.with(
-                PluginInfoSetLike.merge(
-                        infos,
-                        provider.spreadsheetFormatterInfos()
-                )
+        this.mapper = ProviderMapper.with(
+                infos,
+                provider.spreadsheetFormatterInfos(),
+                (n) -> new IllegalArgumentException("Unknown formatter " + n)
         );
     }
 
@@ -66,10 +58,7 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatter(
-                selector.setName(
-                        this.nameMapper.apply(selector.name())
-                                .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + selector.name()))
-                ),
+                this.mapper.selector(selector),
                 context
         );
     }
@@ -83,8 +72,7 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatter(
-                this.nameMapper.apply(name)
-                        .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name)),
+                this.mapper.name(name),
                 values,
                 context
         );
@@ -97,10 +85,7 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
         final SpreadsheetFormatterName name = selector.name();
 
         return this.provider.spreadsheetFormatterNextToken(
-                selector.setName(
-                        this.nameMapper.apply(name)
-                                .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name))
-                )
+                this.mapper.selector(selector)
         );
     }
 
@@ -111,21 +96,15 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatterSamples(
-                this.nameMapper.apply(name)
-                        .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name)),
-                context
-        ).stream()
+                        this.mapper.name(name),
+                        context
+                ).stream()
                 .map(s -> s.setSelector(
-                        s.selector()
-                                .setName(name)
+                                s.selector()
+                                        .setName(name)
                         )
                 ).collect(Collectors.toList());
     }
-
-    /**
-     * A function that maps incoming {@link SpreadsheetFormatterName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
-     */
-    private final Function<SpreadsheetFormatterName, Optional<SpreadsheetFormatterName>> nameMapper;
 
     /**
      * The original wrapped {@link SpreadsheetFormatterProvider}.
@@ -134,16 +113,13 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
 
     @Override
     public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-        return this.infos;
+        return this.mapper.infos();
     }
-
-    private final SpreadsheetFormatterInfoSet infos;
 
     @Override
     public String toString() {
-        return CharacterConstant.COMMA.toSeparatedString(
-                this.infos,
-                SpreadsheetFormatterInfo::toString
-        );
+        return this.mapper.toString();
     }
+
+    private final ProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet> mapper;
 }
