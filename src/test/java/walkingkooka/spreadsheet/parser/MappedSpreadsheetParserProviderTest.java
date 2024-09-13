@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
@@ -50,7 +49,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
         assertThrows(
                 NullPointerException.class,
                 () -> MappedSpreadsheetParserProvider.with(
-                        Sets.of(
+                        SpreadsheetParserInfoSet.EMPTY.concat(
                                 SpreadsheetParserInfo.with(
                                         url("date-parse-pattern"),
                                         SpreadsheetParserName.with("new-date-parse-pattern")
@@ -139,7 +138,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
         );
 
         return MappedSpreadsheetParserProvider.with(
-                Sets.of(
+                SpreadsheetParserInfoSet.EMPTY.concat(
                         SpreadsheetParserInfo.with(
                                 url("date-parse-pattern"),
                                 SpreadsheetParserName.with(NEW_PARSER_NAME)

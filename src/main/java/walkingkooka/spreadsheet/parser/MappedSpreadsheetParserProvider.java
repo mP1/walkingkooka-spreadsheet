@@ -34,23 +34,20 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderMapper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.text.CharacterConstant;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetParserProvider} that wraps a view of new {@link SpreadsheetParserName} to a wrapped {@link SpreadsheetParserProvider}.
  */
 final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider {
 
-    static MappedSpreadsheetParserProvider with(final Set<SpreadsheetParserInfo> infos,
+    static MappedSpreadsheetParserProvider with(final SpreadsheetParserInfoSet infos,
                                                 final SpreadsheetParserProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
@@ -61,18 +58,13 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
         );
     }
 
-    private MappedSpreadsheetParserProvider(final Set<SpreadsheetParserInfo> infos,
+    private MappedSpreadsheetParserProvider(final SpreadsheetParserInfoSet infos,
                                             final SpreadsheetParserProvider provider) {
-        this.nameMapper = PluginInfoSetLike.nameMapper(
-                infos,
-                provider.spreadsheetParserInfos()
-        );
         this.provider = provider;
-        this.infos = SpreadsheetParserInfoSet.with(
-                PluginInfoSetLike.merge(
-                        infos,
-                        provider.spreadsheetParserInfos()
-                )
+        this.mapper = ProviderMapper.with(
+                infos,
+                provider.spreadsheetParserInfos(),
+                (n) -> new IllegalArgumentException("Unknown parser " + n)
         );
     }
 
@@ -83,12 +75,7 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetParser(
-                selector.setName(
-                        this.nameMapper.apply(selector.name())
-                                .orElseThrow(
-                                        () -> new IllegalArgumentException("Unknown parser " + selector.name())
-                                )
-                ),
+                this.mapper.selector(selector),
                 context
         );
     }
@@ -100,10 +87,7 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
         Objects.requireNonNull(name, "name");
 
         return this.provider.spreadsheetParser(
-                this.nameMapper.apply(name)
-                        .orElseThrow(
-                                () -> new IllegalArgumentException("Unknown parser " + name)
-                        ),
+                this.mapper.name(name),
                 values,
                 context
         );
@@ -111,39 +95,17 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
 
     @Override
     public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector selector) {
-        Objects.requireNonNull(selector, "selector");
-
-        final SpreadsheetParserName name = selector.name();
-
         return this.provider.spreadsheetParserNextToken(
-                selector.setName(this.nameMapper.apply(name)
-                        .orElseThrow(
-                                () -> new IllegalArgumentException("Unknown parser " + name)
-                        )
-                )
+                this.mapper.selector(selector)
         );
     }
 
     @Override
     public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
-        Objects.requireNonNull(selector, "selector");
-
-        final SpreadsheetParserName name = selector.name();
-
         return this.provider.spreadsheetFormatterSelector(
-                selector.setName(
-                        this.nameMapper.apply(selector.name())
-                                .orElseThrow(
-                                        () -> new IllegalArgumentException("Unknown parser " + name)
-                                )
-                )
+                this.mapper.selector(selector)
         );
     }
-
-    /**
-     * A function that maps incoming {@link SpreadsheetParserName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
-     */
-    private final Function<SpreadsheetParserName, Optional<SpreadsheetParserName>> nameMapper;
 
     /**
      * The original wrapped {@link SpreadsheetParserProvider}.
@@ -152,16 +114,13 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
 
     @Override
     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-        return this.infos;
+        return this.mapper.infos();
     }
-
-    private final SpreadsheetParserInfoSet infos;
 
     @Override
     public String toString() {
-        return CharacterConstant.COMMA.toSeparatedString(
-                this.infos,
-                SpreadsheetParserInfo::toString
-        );
+        return this.mapper.toString();
     }
+
+    private final ProviderMapper<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserInfo, SpreadsheetParserInfoSet> mapper;
 }
