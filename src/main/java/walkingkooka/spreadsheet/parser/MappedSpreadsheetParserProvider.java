@@ -85,6 +85,8 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
                                                final List<?> values,
                                                final ProviderContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
+        Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetParser(
                 this.mapper.name(name),
