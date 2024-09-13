@@ -17,45 +17,18 @@
 
 package walkingkooka.spreadsheet.importer;
 
-import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderMapper;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetImporterProvider} that wraps a view of new {@link SpreadsheetImporterName} to a wrapped {@link SpreadsheetImporterProvider}.
  */
 final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProvider {
 
-    /**
-     * A function that maps incoming {@link SpreadsheetImporterName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
-     */
-    private final Function<SpreadsheetImporterName, Optional<SpreadsheetImporterName>> nameMapper;
-    /**
-     * The original wrapped {@link SpreadsheetImporterProvider}.
-     */
-    private final SpreadsheetImporterProvider provider;
-
-    private MappedSpreadsheetImporterProvider(final Set<SpreadsheetImporterInfo> infos,
-                                              final SpreadsheetImporterProvider provider) {
-        this.nameMapper = PluginInfoSetLike.nameMapper(
-                infos,
-                provider.spreadsheetImporterInfos()
-        );
-        this.provider = provider;
-        this.infos = SpreadsheetImporterInfoSet.with(
-                PluginInfoSetLike.merge(
-                        infos,
-                        provider.spreadsheetImporterInfos()
-                )
-        );
-    }
-
-    static MappedSpreadsheetImporterProvider with(final Set<SpreadsheetImporterInfo> infos,
+    static MappedSpreadsheetImporterProvider with(final SpreadsheetImporterInfoSet infos,
                                                   final SpreadsheetImporterProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
@@ -66,6 +39,16 @@ final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProv
         );
     }
 
+    private MappedSpreadsheetImporterProvider(final SpreadsheetImporterInfoSet infos,
+                                              final SpreadsheetImporterProvider provider) {
+        this.provider = provider;
+        this.mapper = ProviderMapper.with(
+                infos,
+                provider.spreadsheetImporterInfos(),
+                (n) -> new IllegalArgumentException("Unknown importer " + n)
+        );
+    }
+
     @Override
     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                    final ProviderContext context) {
@@ -73,10 +56,7 @@ final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProv
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetImporter(
-                selector.setName(
-                        this.nameMapper.apply(selector.name())
-                                .orElseThrow(() -> new IllegalArgumentException("Unknown importer " + selector.name()))
-                ),
+                this.mapper.selector(selector),
                 context
         );
     }
@@ -90,22 +70,26 @@ final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProv
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetImporter(
-                this.nameMapper.apply(name)
-                        .orElseThrow(() -> new IllegalArgumentException("Unknown importer " + name)),
+                this.mapper.name(name),
                 values,
                 context
         );
     }
 
+    /**
+     * The original wrapped {@link SpreadsheetImporterProvider}.
+     */
+    private final SpreadsheetImporterProvider provider;
+
     @Override
     public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
-        return this.infos;
+        return this.mapper.infos();
     }
 
-    private final SpreadsheetImporterInfoSet infos;
+    private final ProviderMapper<SpreadsheetImporterName, SpreadsheetImporterSelector, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet> mapper;
 
     @Override
     public String toString() {
-        return this.infos.text();
+        return this.mapper.toString();
     }
 }
