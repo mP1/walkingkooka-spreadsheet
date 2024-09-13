@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
@@ -243,6 +244,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
         );
     }
 
+    // https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern new-date-format-pattern
     @Test
     public void testSpreadsheetInfos() {
         this.spreadsheetFormatterInfosAndCheck(
@@ -251,36 +253,8 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
                         SpreadsheetFormatterName.AUTOMATIC
                 ),
                 SpreadsheetFormatterInfo.with(
-                        url("collection"),
-                        SpreadsheetFormatterName.COLLECTION
-                ),
-                SpreadsheetFormatterInfo.with(
                         url("date-format-pattern"),
                         SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
-                ),
-                SpreadsheetFormatterInfo.with(
-                        url("date-time-format-pattern"),
-                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN
-                ),
-                SpreadsheetFormatterInfo.with(
-                        url("general"),
-                        SpreadsheetFormatterName.GENERAL
-                ),
-                SpreadsheetFormatterInfo.with(
-                        url("number-format-pattern"),
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN
-                ),
-                SpreadsheetFormatterInfo.with(
-                        url("spreadsheet-pattern-collection"),
-                        SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION
-                ),
-                SpreadsheetFormatterInfo.with(
-                        url("text-format-pattern"),
-                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
-                ),
-                SpreadsheetFormatterInfo.with(
-                        url("time-format-pattern"),
-                        SpreadsheetFormatterName.TIME_FORMAT_PATTERN
                 )
         );
     }
@@ -290,10 +264,16 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
         return MappedSpreadsheetFormatterProvider.with(
-                SpreadsheetFormatterInfoSet.EMPTY.concat(
-                        SpreadsheetFormatterInfo.with(
-                                url("date-format-pattern"),
-                                SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
+                SpreadsheetFormatterInfoSet.with(
+                        Sets.of(
+                                SpreadsheetFormatterInfo.with(
+                                        url("automatic"),
+                                        SpreadsheetFormatterName.AUTOMATIC
+                                ),
+                                SpreadsheetFormatterInfo.with(
+                                        url("date-format-pattern"),
+                                        SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
+                                )
                         )
                 ),
                 provider
