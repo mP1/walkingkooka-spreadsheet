@@ -17,21 +17,17 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.text.CharacterConstant;
+import walkingkooka.plugin.ProviderMapper;
 
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetComparatorProvider} that wraps a view of new {@link SpreadsheetComparatorName} to a wrapped {@link SpreadsheetComparatorProvider}.
  */
 final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
 
-    static MappedSpreadsheetComparatorProvider with(final Set<SpreadsheetComparatorInfo> infos,
+    static MappedSpreadsheetComparatorProvider with(final SpreadsheetComparatorInfoSet infos,
                                                     final SpreadsheetComparatorProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
@@ -42,19 +38,14 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
         );
     }
 
-    private MappedSpreadsheetComparatorProvider(final Set<SpreadsheetComparatorInfo> infos,
+    private MappedSpreadsheetComparatorProvider(final SpreadsheetComparatorInfoSet infos,
                                                 final SpreadsheetComparatorProvider provider) {
-        this.nameMapper = PluginInfoSetLike.nameMapper(
+        this.mapper = ProviderMapper.with(
                 infos,
-                provider.spreadsheetComparatorInfos()
+                provider.spreadsheetComparatorInfos(),
+                (n) -> new IllegalArgumentException("Unknown comparator " + n)
         );
         this.provider = provider;
-        this.infos = SpreadsheetComparatorInfoSet.with(
-                PluginInfoSetLike.merge(
-                        infos,
-                        provider.spreadsheetComparatorInfos()
-                )
-        );
     }
 
     @Override
@@ -64,16 +55,10 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetComparator(
-                this.nameMapper.apply(name)
-                        .orElseThrow(() -> new IllegalArgumentException("Unknown comparator " + name)),
+                this.mapper.name(name),
                 context
         );
     }
-
-    /**
-     * A function that maps incoming {@link SpreadsheetComparatorName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
-     */
-    private final Function<SpreadsheetComparatorName, Optional<SpreadsheetComparatorName>> nameMapper;
 
     /**
      * The original wrapped {@link SpreadsheetComparatorProvider}.
@@ -82,16 +67,13 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
 
     @Override
     public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
-        return this.infos;
+        return this.mapper.infos();
     }
-
-    private final SpreadsheetComparatorInfoSet infos;
 
     @Override
     public String toString() {
-        return CharacterConstant.COMMA.toSeparatedString(
-                this.infos,
-                SpreadsheetComparatorInfo::toString
-        );
+        return this.mapper.toString();
     }
+
+    private final ProviderMapper<SpreadsheetComparatorName, ?, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet> mapper;
 }
