@@ -64,24 +64,24 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
 
     @Test
     public void testSpreadsheetParserSelector() {
-        final String pattern = "yyyy/mm/dd";
+        final String pattern = "hh/mm";
 
         this.spreadsheetParserAndCheck(
                 NEW_PARSER_NAME + " " + pattern,
                 PROVIDER_CONTEXT,
-                SpreadsheetPattern.parseDateParsePattern(pattern).parser()
+                SpreadsheetPattern.parseTimeParsePattern(pattern).parser()
         );
     }
 
     @Test
     public void testSpreadsheetParserNameAndValues() {
-        final String pattern = "yyyy/mm/dd";
+        final String pattern = "hh/mm/ss";
 
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserName.with(NEW_PARSER_NAME),
                 Lists.of(pattern),
                 PROVIDER_CONTEXT,
-                SpreadsheetPattern.parseDateParsePattern(pattern).parser()
+                SpreadsheetPattern.parseTimeParsePattern(pattern).parser()
         );
     }
 
@@ -92,7 +92,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                         ).spreadsheetParserNextToken(
-                                SpreadsheetParserName.DATE_PARSER_PATTERN.setText("")
+                                SpreadsheetParserName.TIME_PARSER_PATTERN.setText("")
                         )
         );
     }
@@ -104,7 +104,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                 ).spreadsheetFormatterSelector(
-                        SpreadsheetParserName.DATE_PARSER_PATTERN.setText("")
+                        SpreadsheetParserName.TIME_PARSER_PATTERN.setText("")
                 )
         );
     }
@@ -113,20 +113,8 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     public void testSpreadsheetInfos() {
         this.spreadsheetParserInfosAndCheck(
                 SpreadsheetParserInfo.with(
-                        url("date-parse-pattern"),
-                        SpreadsheetParserName.with(NEW_PARSER_NAME) // only this parser has a new name the others remain unchanged.
-                ),
-                SpreadsheetParserInfo.with(
-                        url("date-time-parse-pattern"),
-                        SpreadsheetParserName.DATE_TIME_PARSER_PATTERN
-                ),
-                SpreadsheetParserInfo.with(
-                        url("number-parse-pattern"),
-                        SpreadsheetParserName.NUMBER_PARSER_PATTERN
-                ),
-                SpreadsheetParserInfo.with(
                         url("time-parse-pattern"),
-                        SpreadsheetParserName.TIME_PARSER_PATTERN
+                        SpreadsheetParserName.with(NEW_PARSER_NAME) // only this parser has a new name the others remain unchanged.
                 )
         );
     }
@@ -140,7 +128,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
         return MappedSpreadsheetParserProvider.with(
                 SpreadsheetParserInfoSet.EMPTY.concat(
                         SpreadsheetParserInfo.with(
-                                url("date-parse-pattern"),
+                                url("time-parse-pattern"),
                                 SpreadsheetParserName.with(NEW_PARSER_NAME)
                         )
                 ),
