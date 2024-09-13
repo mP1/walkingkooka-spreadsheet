@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
@@ -57,7 +56,7 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
         assertThrows(
                 NullPointerException.class,
                 () -> MappedSpreadsheetComparatorProvider.with(
-                        Sets.empty(),
+                        SpreadsheetComparatorInfoSet.EMPTY,
                         null
                 )
         );
@@ -101,7 +100,7 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
     @Override
     public MappedSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
         return MappedSpreadsheetComparatorProvider.with(
-                Sets.of(
+                SpreadsheetComparatorInfoSet.EMPTY.concat(
                         SpreadsheetComparatorInfo.with(
                                 URL,
                                 NAME
