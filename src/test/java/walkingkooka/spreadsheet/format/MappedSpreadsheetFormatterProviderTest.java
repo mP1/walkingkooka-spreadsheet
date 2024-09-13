@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
@@ -52,7 +51,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
         assertThrows(
                 NullPointerException.class,
                 () -> MappedSpreadsheetFormatterProvider.with(
-                        Sets.of(
+                        SpreadsheetFormatterInfoSet.EMPTY.concat(
                                 SpreadsheetFormatterInfo.with(
                                         SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse("date-format-pattern")),
                                         SpreadsheetFormatterName.with("new-date-format-pattern")
@@ -291,7 +290,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
         return MappedSpreadsheetFormatterProvider.with(
-                Sets.of(
+                SpreadsheetFormatterInfoSet.EMPTY.concat(
                         SpreadsheetFormatterInfo.with(
                                 url("date-format-pattern"),
                                 SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
