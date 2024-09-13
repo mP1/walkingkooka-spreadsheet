@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.export;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
@@ -52,7 +51,7 @@ public final class MappedSpreadsheetExporterProviderTest implements SpreadsheetE
         assertThrows(
                 NullPointerException.class,
                 () -> MappedSpreadsheetExporterProvider.with(
-                        Sets.of(
+                        SpreadsheetExporterInfoSet.EMPTY.concat(
                                 SpreadsheetExporterInfo.with(
                                         SpreadsheetExporterProviders.BASE_URL.appendPath(
                                                 UrlPath.parse("test-123")
@@ -139,7 +138,7 @@ public final class MappedSpreadsheetExporterProviderTest implements SpreadsheetE
         };
 
         return MappedSpreadsheetExporterProvider.with(
-                Sets.of(
+                SpreadsheetExporterInfoSet.EMPTY.concat(
                         SpreadsheetExporterInfo.with(
                                 url(NAME),
                                 SpreadsheetExporterName.with(NAME)

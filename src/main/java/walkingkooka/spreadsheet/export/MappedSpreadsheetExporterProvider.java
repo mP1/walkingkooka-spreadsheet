@@ -17,45 +17,28 @@
 
 package walkingkooka.spreadsheet.export;
 
-import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderMapper;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetExporterProvider} that wraps a view of new {@link SpreadsheetExporterName} to a wrapped {@link SpreadsheetExporterProvider}.
  */
 final class MappedSpreadsheetExporterProvider implements SpreadsheetExporterProvider {
 
-    /**
-     * A function that maps incoming {@link SpreadsheetExporterName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
-     */
-    private final Function<SpreadsheetExporterName, Optional<SpreadsheetExporterName>> nameMapper;
-    /**
-     * The original wrapped {@link SpreadsheetExporterProvider}.
-     */
-    private final SpreadsheetExporterProvider provider;
-
-    private MappedSpreadsheetExporterProvider(final Set<SpreadsheetExporterInfo> infos,
+    private MappedSpreadsheetExporterProvider(final SpreadsheetExporterInfoSet infos,
                                               final SpreadsheetExporterProvider provider) {
-        this.nameMapper = PluginInfoSetLike.nameMapper(
+        this.mapper = ProviderMapper.with(
                 infos,
-                provider.spreadsheetExporterInfos()
+                provider.spreadsheetExporterInfos(),
+                (n) -> new IllegalArgumentException("Unknown exporter " + n)
         );
         this.provider = provider;
-        this.infos = SpreadsheetExporterInfoSet.with(
-                PluginInfoSetLike.merge(
-                        infos,
-                        provider.spreadsheetExporterInfos()
-                )
-        );
     }
 
-    static MappedSpreadsheetExporterProvider with(final Set<SpreadsheetExporterInfo> infos,
+    static MappedSpreadsheetExporterProvider with(final SpreadsheetExporterInfoSet infos,
                                                   final SpreadsheetExporterProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
@@ -73,10 +56,7 @@ final class MappedSpreadsheetExporterProvider implements SpreadsheetExporterProv
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetExporter(
-                selector.setName(
-                        this.nameMapper.apply(selector.name())
-                                .orElseThrow(() -> new IllegalArgumentException("Unknown exporter " + selector.name()))
-                ),
+                this.mapper.selector(selector),
                 context
         );
     }
@@ -90,22 +70,26 @@ final class MappedSpreadsheetExporterProvider implements SpreadsheetExporterProv
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetExporter(
-                this.nameMapper.apply(name)
-                        .orElseThrow(() -> new IllegalArgumentException("Unknown exporter " + name)),
+                this.mapper.name(name),
                 values,
                 context
         );
     }
 
+    /**
+     * The original wrapped {@link SpreadsheetExporterProvider}.
+     */
+    private final SpreadsheetExporterProvider provider;
+
     @Override
     public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
-        return this.infos;
+        return this.mapper.infos();
     }
 
     @Override
     public String toString() {
-        return this.infos.text();
+        return this.mapper.toString();
     }
 
-    private final SpreadsheetExporterInfoSet infos;
+    private final ProviderMapper<SpreadsheetExporterName, SpreadsheetExporterSelector, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet> mapper;
 }

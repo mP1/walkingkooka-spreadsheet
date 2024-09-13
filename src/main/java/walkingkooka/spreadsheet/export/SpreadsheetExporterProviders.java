@@ -71,7 +71,7 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     /**
      * {@see MappedSpreadsheetExporterProvider}
      */
-    public static SpreadsheetExporterProvider mapped(final Set<SpreadsheetExporterInfo> infos,
+    public static SpreadsheetExporterProvider mapped(final SpreadsheetExporterInfoSet infos,
                                                      final SpreadsheetExporterProvider provider) {
         return MappedSpreadsheetExporterProvider.with(
                 infos,
