@@ -124,8 +124,6 @@ Converter(s) are part of many core features, some are listed below and the more 
 
 - Within a formula expression converting a date to a number within an addition and other places containing math with non
   number values.
-- Converting the clipboard contents to match a PASTE, eg copying a `SpreadsheetCell` and then PASTING only
-  the `TextStyle` (style) to a new target.
 
 ### [SpreadsheetComparators](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java)
 
