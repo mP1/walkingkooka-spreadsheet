@@ -760,6 +760,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Set<SpreadsheetCell> updatedCells = addCells ? changes.updatedCells() : SpreadsheetDelta.NO_CELLS;
         final Set<SpreadsheetColumn> updatedColumns = addColumns ? changes.updatedColumns() : SpreadsheetDelta.NO_COLUMNS;
         final Set<SpreadsheetRow> updatedRows = addRows ? changes.updatedRows() : SpreadsheetDelta.NO_ROWS;
+        final Set<SpreadsheetLabelMapping> updatedLabels = addLabels ? changes.updatedLabels() : SpreadsheetDelta.NO_LABELS;
 
         final SpreadsheetStoreRepository repo = context.storeRepository();
 
@@ -797,6 +798,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         // record columns and rows for updated cells...
 
         if (addColumns || addRows || addLabels) {
+            labels.addAll(updatedLabels);
+
             for (final SpreadsheetCell cell : updatedCells) {
                 final SpreadsheetCellReference cellReference = cell.reference();
 
@@ -1049,11 +1052,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
-            context.storeRepository()
+            final SpreadsheetLabelMapping saved = context.storeRepository()
                     .labels()
                     .save(mapping);
 
-            return this.prepareResponse(changes, context);
+            changes.onLabelSavedImmediate(saved);
+
+            return this.prepareResponse(
+                    changes,
+                    context
+            );
         }
     }
 

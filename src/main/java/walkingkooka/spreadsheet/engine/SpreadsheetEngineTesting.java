@@ -482,11 +482,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         OptionalInt.of(
                                 engine.columnCount(context)
                         )
-                )
-                .setRowCount(
+                ).setRowCount(
                         OptionalInt.of(
                                 engine.rowCount(context)
                         )
+                ).setLabels(
+                        Sets.of(label)
                 );
         this.checkEquals(
                 expected,
