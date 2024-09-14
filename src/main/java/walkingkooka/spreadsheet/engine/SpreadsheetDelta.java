@@ -181,8 +181,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Optional<SpreadsheetViewport> viewport;
 
-    private static void checkViewport(final Optional<SpreadsheetViewport> viewport) {
-        Objects.requireNonNull(viewport, "viewport");
+    private static Optional<SpreadsheetViewport> checkViewport(final Optional<SpreadsheetViewport> viewport) {
+        return Objects.requireNonNull(viewport, "viewport");
     }
 
     // cells............................................................................................................
@@ -221,8 +221,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Set<SpreadsheetCell> cells;
 
-    private static void checkCells(final Set<SpreadsheetCell> cells) {
-        Objects.requireNonNull(cells, "cells");
+    private static Set<SpreadsheetCell> checkCells(final Set<SpreadsheetCell> cells) {
+        return Objects.requireNonNull(cells, "cells");
     }
 
     /**
@@ -265,8 +265,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Set<SpreadsheetColumn> columns;
 
-    private static void checkColumns(final Set<SpreadsheetColumn> columns) {
-        Objects.requireNonNull(columns, "columns");
+    private static Set<SpreadsheetColumn> checkColumns(final Set<SpreadsheetColumn> columns) {
+        return Objects.requireNonNull(columns, "columns");
     }
 
     /**
@@ -307,8 +307,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Set<SpreadsheetLabelMapping> labels;
 
-    private static void checkLabels(final Set<SpreadsheetLabelMapping> labels) {
-        Objects.requireNonNull(labels, "labels");
+    private static Set<SpreadsheetLabelMapping> checkLabels(final Set<SpreadsheetLabelMapping> labels) {
+        return Objects.requireNonNull(labels, "labels");
     }
 
     // rows............................................................................................................
@@ -339,8 +339,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Set<SpreadsheetRow> rows;
 
-    private static void checkRows(final Set<SpreadsheetRow> rows) {
-        Objects.requireNonNull(rows, "rows");
+    private static Set<SpreadsheetRow> checkRows(final Set<SpreadsheetRow> rows) {
+        return Objects.requireNonNull(rows, "rows");
     }
 
     /**
@@ -407,8 +407,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Set<SpreadsheetCellReference> deletedCells;
 
-    private static void checkDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
-        Objects.requireNonNull(deletedCells, "deletedCells");
+    private static Set<SpreadsheetCellReference> checkDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
+        return Objects.requireNonNull(deletedCells, "deletedCells");
     }
 
     // deletedColumns............................................................................................................
@@ -439,8 +439,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Set<SpreadsheetColumnReference> deletedColumns;
 
-    private static void checkDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
-        Objects.requireNonNull(deletedColumns, "deletedColumns");
+    private static Set<SpreadsheetColumnReference> checkDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
+        return Objects.requireNonNull(deletedColumns, "deletedColumns");
     }
 
     // deletedRows............................................................................................................
@@ -471,8 +471,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Set<SpreadsheetRowReference> deletedRows;
 
-    private static void checkDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
-        Objects.requireNonNull(deletedRows, "deletedRows");
+    private static Set<SpreadsheetRowReference> checkDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
+        return Objects.requireNonNull(deletedRows, "deletedRows");
     }
 
     // matchedCells............................................................................................................
@@ -503,8 +503,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Set<SpreadsheetCellReference> matchedCells;
 
-    private static void checkMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
-        Objects.requireNonNull(matchedCells, "matchedCells");
+    private static Set<SpreadsheetCellReference> checkMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
+        return Objects.requireNonNull(matchedCells, "matchedCells");
     }
 
     // columnWidths..................................................................................................
@@ -598,15 +598,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     abstract SpreadsheetDelta replaceRowCount(final OptionalInt rowCount);
 
-    private void checkCount(final OptionalInt maybeValue,
-                            final String label) {
-        Objects.requireNonNull(maybeValue, label);
-        if (maybeValue.isPresent()) {
-            final int value = maybeValue.getAsInt();
-            if (value < 0) {
-                throw new IllegalArgumentException("Invalid " + label + " = " + value + " < 0");
+    private OptionalInt checkCount(final OptionalInt value,
+                                   final String label) {
+        Objects.requireNonNull(value, label);
+
+        if (value.isPresent()) {
+            final int intValue = value.getAsInt();
+            if (intValue < 0) {
+                throw new IllegalArgumentException("Invalid " + label + " = " + intValue + " < 0");
             }
         }
+
+        return value;
     }
 
     // window............................................................................................................
@@ -1278,7 +1281,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                     final JsonNode json,
                                     final Predicate<String> patchableProperties,
                                     final JsonNodeUnmarshallContext context) {
-        checkPatch(json, context);
+        Objects.requireNonNull(json, "json");
+        Objects.requireNonNull(context, "context");
+
         patchValidate(
                 selection,
                 json,
@@ -1798,12 +1803,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         return patched;
-    }
-
-    private static void checkPatch(final JsonNode json,
-                                   final JsonNodeUnmarshallContext context) {
-        Objects.requireNonNull(json, "json");
-        Objects.requireNonNull(context, "context");
     }
 
     // patching cells can only patch individual cells or a style for all selected cells but not both.
