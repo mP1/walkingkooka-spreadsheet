@@ -113,6 +113,8 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         this.name = name;
     }
 
+    // Name.............................................................................................................
+
     @Override
     public String value() {
         return this.name;
@@ -130,6 +132,8 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     public String hateosLinkId() {
         return this.name;
     }
+
+    // SpreadsheetSelection............................................................................................
 
     @Override
     public boolean isAll() {
