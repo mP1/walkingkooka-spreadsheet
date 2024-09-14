@@ -189,7 +189,7 @@ public interface SpreadsheetEngine {
     /**
      * Removes the given {@link SpreadsheetLabelName} if it exists which may also cause cells to be updated, due a now missing label.
      */
-    SpreadsheetDelta removeLabel(final SpreadsheetLabelName label,
+    SpreadsheetDelta deleteLabel(final SpreadsheetLabelName label,
                                  final SpreadsheetEngineContext context);
 
     /**

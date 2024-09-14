@@ -1058,7 +1058,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta removeLabel(final SpreadsheetLabelName label,
+    public SpreadsheetDelta deleteLabel(final SpreadsheetLabelName label,
                                         final SpreadsheetEngineContext context) {
         checkLabel(label);
         checkContext(context);
