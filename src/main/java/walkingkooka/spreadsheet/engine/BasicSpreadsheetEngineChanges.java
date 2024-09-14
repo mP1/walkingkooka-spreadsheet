@@ -245,7 +245,20 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     }
 
     void onLabelSavedImmediate(final SpreadsheetLabelMapping mapping) {
-        this.batchLabel(mapping.label());
+        final SpreadsheetLabelName label = mapping.label();
+
+        final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> updatedAndDeleted = this.updatedAndDeletedLabels;
+        final SpreadsheetLabelMapping previous = updatedAndDeleted.get(label);
+
+        // save replaces deletes
+        if (null == previous) {
+            updatedAndDeleted.put(
+                    label,
+                    mapping
+            );
+        } else {
+            this.batchReferences(label);
+        }
     }
 
     void onLabelDeletedImmediate(final SpreadsheetLabelName label) {
@@ -571,6 +584,49 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         this.deletedRows = deletedRows;
     }
 
+    // labels............................................................................................................
+
+    /**
+     * Returns all the updated {@link SpreadsheetLabelMapping}.
+     */
+    Set<SpreadsheetLabelMapping> updatedLabels() {
+        if (null == this.updatedLabels) {
+            this.extractUpdatedLabelsDeletedLabels();
+        }
+        return Sets.readOnly(this.updatedLabels);
+    }
+
+    private Set<SpreadsheetLabelMapping> updatedLabels;
+
+    /**
+     * Returns all labels that were deleted for any reason.
+     */
+    Set<SpreadsheetLabelName> deletedLabels() {
+        if (null == this.deletedLabels) {
+            this.extractUpdatedLabelsDeletedLabels();
+        }
+        return Sets.readOnly(this.deletedLabels);
+    }
+
+    private Set<SpreadsheetLabelName> deletedLabels;
+
+    private void extractUpdatedLabelsDeletedLabels() {
+        final Set<SpreadsheetLabelMapping> updatedLabels = Sets.ordered();
+        final Set<SpreadsheetLabelName> deletedLabels = Sets.ordered();
+
+        for (final Map.Entry<SpreadsheetLabelName, SpreadsheetLabelMapping> labelAndMapping : this.updatedAndDeletedLabels.entrySet()) {
+            final SpreadsheetLabelMapping mapping = labelAndMapping.getValue();
+            if (null != mapping) {
+                updatedLabels.add(mapping);
+            } else {
+                deletedLabels.add(labelAndMapping.getKey());
+            }
+        }
+
+        this.updatedLabels = updatedLabels;
+        this.deletedLabels = deletedLabels;
+    }
+
     // batch...........................................................................................................
 
     private void batchCell(final SpreadsheetCellReference reference) {
@@ -582,15 +638,23 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     }
 
     private void batchLabel(final SpreadsheetLabelName label) {
-        this.repository.labelReferences()
-                .load(label)
-                .ifPresent(r -> r.forEach(this::batchCell));
+        // saves replace delete, but dont replace a previous save
+        if (null == this.updatedAndDeletedLabels.get(label)) {
+            this.unsavedLabels.add(label);
+            this.batchReferences(label);
+        }
     }
 
     private void batchRange(final SpreadsheetCellRangeReference range) {
         this.repository.rangeToCells()
                 .load(range)
                 .ifPresent(c -> c.forEach(this::batchCell));
+    }
+
+    private void batchReferences(final SpreadsheetLabelName label) {
+        this.repository.labelReferences()
+                .load(label)
+                .ifPresent(r -> r.forEach(this::batchCell));
     }
 
     private void batchReferrers(final SpreadsheetCellReference reference) {
@@ -636,6 +700,17 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
      * A null value indicates the row was deleted.
      */
     private final Map<SpreadsheetRowReference, SpreadsheetRow> updatedAndDeletedRows = Maps.sorted();
+
+    /**
+     * Holds a queue of labels that need to be updated.
+     */
+    private final Queue<SpreadsheetLabelName> unsavedLabels = new ConcurrentLinkedQueue<>();
+
+    /**
+     * Records all updated and deleted labels. This can then be returned by the {@link BasicSpreadsheetEngine} method.
+     * A null value indicates the label was deleted.
+     */
+    private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> updatedAndDeletedLabels = Maps.sorted();
 
     // VisibleFor BasicSpreadsheetEngine
     final Set<SpreadsheetDeltaProperties> deltaProperties;

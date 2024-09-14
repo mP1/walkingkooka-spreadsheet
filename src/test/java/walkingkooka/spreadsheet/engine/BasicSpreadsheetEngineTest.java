@@ -9476,9 +9476,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
-        this.saveLabelAndCheck(engine,
+        this.saveLabelAndCheck(
+                engine,
                 mapping,
-                context);
+                context
+        );
 
         this.loadLabelAndFailCheck(
                 engine,
@@ -9569,6 +9571,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 OptionalInt.of(2)
                         ).setRowCount(
                                 OptionalInt.of(2)
+                        ).setLabels(
+                                Sets.of(mapping)
                         )
                 );
     }
@@ -9615,6 +9619,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 OptionalInt.of(2)
                         ).setRowCount(
                                 OptionalInt.of(2)
+                        ).setLabels(
+                                Sets.of(mapping)
                         )
         );
     }
@@ -9661,6 +9667,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 OptionalInt.of(2)
                         ).setRowCount(
                                 OptionalInt.of(2)
+                        ).setLabels(
+                                Sets.of(mapping)
                         )
         );
     }
