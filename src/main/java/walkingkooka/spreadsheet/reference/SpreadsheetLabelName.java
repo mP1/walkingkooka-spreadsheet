@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.InvalidTextLengthException;
 import walkingkooka.compare.Comparators;
 import walkingkooka.naming.Name;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.parser.SpreadsheetLabelNameParserToken;
@@ -45,7 +46,8 @@ import java.util.function.Predicate;
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         implements Comparable<SpreadsheetLabelName>,
-        Name {
+        Name,
+        HateosResource<String> {
 
     private final static CharPredicate LETTER = CharPredicates.letter();
 
@@ -129,8 +131,18 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         return SpreadsheetLabelMapping.with(this, reference);
     }
 
+    // HateosResource...................................................................................................
+
+    @Override
     public String hateosLinkId() {
         return this.name;
+    }
+
+    @Override
+    public Optional<String> id() {
+        return Optional.of(
+                this.hateosLinkId()
+        );
     }
 
     // SpreadsheetSelection............................................................................................
