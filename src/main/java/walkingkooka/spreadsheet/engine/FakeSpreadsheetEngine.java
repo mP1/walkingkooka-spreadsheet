@@ -168,7 +168,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta removeLabel(final SpreadsheetLabelName label,
+    public SpreadsheetDelta deleteLabel(final SpreadsheetLabelName label,
                                         final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }

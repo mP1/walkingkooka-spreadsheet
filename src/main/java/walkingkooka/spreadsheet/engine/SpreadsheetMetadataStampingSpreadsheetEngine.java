@@ -273,10 +273,10 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta removeLabel(final SpreadsheetLabelName label,
+    public SpreadsheetDelta deleteLabel(final SpreadsheetLabelName label,
                                         final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.removeLabel(label, context),
+                () -> this.engine.deleteLabel(label, context),
                 context
         );
     }

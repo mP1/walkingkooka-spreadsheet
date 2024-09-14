@@ -9665,10 +9665,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    //  removeLabel.......................................................................................................
+    //  deleteLabel.......................................................................................................
 
     @Test
-    public void testRemoveLabelAndLoadFromLabelStore() {
+    public void testDeleteLabelAndLoadFromLabelStore() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9679,15 +9679,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 mapping,
                 context);
 
-        this.removeLabelAndCheck(engine,
+        this.deleteLabelAndCheck(
+                engine,
                 label,
-                context);
+                context
+        );
 
         this.loadLabelFailCheck(context.storeRepository().labels(), label);
     }
 
     @Test
-    public void testRemoveLabelRefreshesCell() {
+    public void testDeleteLabelRefreshesCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9699,7 +9701,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveLabel(mapping, context);
 
-        this.removeLabelAndCheck(
+        this.deleteLabelAndCheck(
                 engine,
                 label,
                 context,
@@ -9727,7 +9729,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRemoveLabelRefreshesCellAndColumns() {
+    public void testDeleteLabelRefreshesCellAndColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9756,7 +9758,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveLabel(mapping, context);
 
-        this.removeLabelAndCheck(
+        this.deleteLabelAndCheck(
                 engine,
                 label,
                 context,
@@ -9789,7 +9791,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testRemoveLabelRefreshesCellAndRows() {
+    public void testDeleteLabelRefreshesCellAndRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9818,7 +9820,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveLabel(mapping, context);
 
-        this.removeLabelAndCheck(
+        this.deleteLabelAndCheck(
                 engine,
                 label,
                 context,

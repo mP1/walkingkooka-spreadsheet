@@ -505,27 +505,39 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testRemoveLabelNullMappingFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().removeLabel(null, this.createContext()));
+    default void testDeleteLabelNullMappingFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteLabel(null, this.createContext()));
     }
 
     @Test
-    default void testRemoveLabelNullContextFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().removeLabel(SpreadsheetSelection.labelName("label"), null));
+    default void testDeleteLabelNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteLabel(
+                                SpreadsheetSelection.labelName("label"),
+                                null
+                        )
+        );
     }
 
-    default void removeLabelAndCheck(final SpreadsheetEngine engine,
+    default void deleteLabelAndCheck(final SpreadsheetEngine engine,
                                      final SpreadsheetLabelName label,
                                      final SpreadsheetEngineContext context,
                                      final SpreadsheetCell... cells) {
-        this.removeLabelAndCheck(engine, label, context, Sets.of(cells));
+        this.deleteLabelAndCheck(
+                engine,
+                label,
+                context,
+                Sets.of(cells)
+        );
     }
 
-    default void removeLabelAndCheck(final SpreadsheetEngine engine,
+    default void deleteLabelAndCheck(final SpreadsheetEngine engine,
                                      final SpreadsheetLabelName label,
                                      final SpreadsheetEngineContext context,
                                      final Set<SpreadsheetCell> cells) {
-        final SpreadsheetDelta result = engine.removeLabel(
+        final SpreadsheetDelta result = engine.deleteLabel(
                 label,
                 context
         );
@@ -545,17 +557,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(
                 expected,
                 result,
-                () -> "removeLabel " + label
+                () -> "deleteLabel " + label
         );
     }
 
-    default void removeLabelAndCheck(final SpreadsheetEngine engine,
+    default void deleteLabelAndCheck(final SpreadsheetEngine engine,
                                      final SpreadsheetLabelName label,
                                      final SpreadsheetEngineContext context,
                                      final SpreadsheetDelta delta) {
         this.checkEquals(delta,
-                engine.removeLabel(label, context),
-                () -> "removeLabel " + label);
+                engine.deleteLabel(label, context),
+                () -> "deleteLabel " + label);
     }
 
     @Test
