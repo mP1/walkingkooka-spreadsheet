@@ -545,12 +545,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
 
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(cells)
                 .setColumnCount(
                         OptionalInt.of(
                                 engine.columnCount(context)
                         )
-                )
-                .setRowCount(
+                ).setRowCount(
                         OptionalInt.of(
                                 engine.rowCount(context)
                         )
