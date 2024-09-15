@@ -2318,110 +2318,140 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
 
-        final Optional<SpreadsheetViewport> viewport = this.viewport;
-        if (viewport.isPresent()) {
-            children.add(
-                    context.marshall(viewport.get())
-                            .setName(VIEWPORT_SELECTION_PROPERTY)
-            );
+        {
+            final Optional<SpreadsheetViewport> viewport = this.viewport;
+            if (viewport.isPresent()) {
+                children.add(
+                        context.marshall(viewport.get())
+                                .setName(VIEWPORT_SELECTION_PROPERTY)
+                );
+            }
         }
 
-        final Set<SpreadsheetCell> cells = this.cells;
-        if (false == cells.isEmpty()) {
-            children.add(marshallCellOrColumnsOrRow(cells, context).setName(CELLS_PROPERTY));
+        {
+            final Set<SpreadsheetCell> cells = this.cells;
+            if (false == cells.isEmpty()) {
+                children.add(marshallCellOrColumnsOrRow(cells, context).setName(CELLS_PROPERTY));
+            }
         }
 
-        final Set<SpreadsheetColumn> columns = this.columns;
-        if (false == columns.isEmpty()) {
-            children.add(marshallCellOrColumnsOrRow(columns, context).setName(COLUMNS_PROPERTY));
+        {
+            final Set<SpreadsheetColumn> columns = this.columns;
+            if (false == columns.isEmpty()) {
+                children.add(marshallCellOrColumnsOrRow(columns, context).setName(COLUMNS_PROPERTY));
+            }
         }
 
-        final Set<SpreadsheetLabelMapping> labels = this.labels;
-        if (false == labels.isEmpty()) {
-            children.add(
-                    context.marshallCollection(labels)
-                            .setName(LABELS_PROPERTY)
-            );
+        {
+            final Set<SpreadsheetLabelMapping> labels = this.labels;
+            if (false == labels.isEmpty()) {
+                children.add(
+                        context.marshallCollection(labels)
+                                .setName(LABELS_PROPERTY)
+                );
+            }
         }
 
-        final Set<SpreadsheetRow> rows = this.rows;
-        if (false == rows.isEmpty()) {
-            children.add(marshallCellOrColumnsOrRow(rows, context).setName(ROWS_PROPERTY));
+        {
+            final Set<SpreadsheetRow> rows = this.rows;
+            if (false == rows.isEmpty()) {
+                children.add(marshallCellOrColumnsOrRow(rows, context).setName(ROWS_PROPERTY));
+            }
         }
 
-        final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
-        if (false == deletedCells.isEmpty()) {
-            children.add(
-                    marshallSelection(deletedCells, DELETED_CELLS_PROPERTY)
-            );
+        {
+            final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
+            if (false == deletedCells.isEmpty()) {
+                children.add(
+                        marshallSelection(deletedCells, DELETED_CELLS_PROPERTY)
+                );
+            }
         }
 
-        final Set<SpreadsheetColumnReference> deletedColumns = this.deletedColumns;
-        if (false == deletedColumns.isEmpty()) {
-            children.add(
-                    marshallSelection(deletedColumns, DELETED_COLUMNS_PROPERTY)
-            );
+        {
+            final Set<SpreadsheetColumnReference> deletedColumns = this.deletedColumns;
+            if (false == deletedColumns.isEmpty()) {
+                children.add(
+                        marshallSelection(deletedColumns, DELETED_COLUMNS_PROPERTY)
+                );
+            }
         }
 
-        final Set<SpreadsheetRowReference> deletedRows = this.deletedRows;
-        if (false == deletedRows.isEmpty()) {
-            children.add(
-                    marshallSelection(deletedRows, DELETED_ROWS_PROPERTY)
-            );
+        {
+            final Set<SpreadsheetRowReference> deletedRows = this.deletedRows;
+            if (false == deletedRows.isEmpty()) {
+                children.add(
+                        marshallSelection(deletedRows, DELETED_ROWS_PROPERTY)
+                );
+            }
         }
 
-        final Set<SpreadsheetLabelName> deletedLabels = this.deletedLabels;
-        if (false == deletedLabels.isEmpty()) {
-            children.add(
-                    marshallSelection(deletedLabels, DELETED_LABELS_PROPERTY)
-            );
+        {
+            final Set<SpreadsheetLabelName> deletedLabels = this.deletedLabels;
+            if (false == deletedLabels.isEmpty()) {
+                children.add(
+                        marshallSelection(deletedLabels, DELETED_LABELS_PROPERTY)
+                );
+            }
         }
 
-        final Set<SpreadsheetCellReference> matchedCells = this.matchedCells;
-        if (false == matchedCells.isEmpty()) {
-            children.add(
-                    marshallSelection(matchedCells, MATCHED_CELLS_PROPERTY)
-            );
+        {
+            final Set<SpreadsheetCellReference> matchedCells = this.matchedCells;
+            if (false == matchedCells.isEmpty()) {
+                children.add(
+                        marshallSelection(matchedCells, MATCHED_CELLS_PROPERTY)
+                );
+            }
         }
 
-        final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
-        if (false == columnWidths.isEmpty()) {
-            children.add(
-                    context.marshallMap(columnWidths)
-                            .setName(COLUMN_WIDTHS_PROPERTY)
-            );
+        {
+            final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
+            if (false == columnWidths.isEmpty()) {
+                children.add(
+                        context.marshallMap(columnWidths)
+                                .setName(COLUMN_WIDTHS_PROPERTY)
+                );
+            }
         }
 
-        final Map<SpreadsheetRowReference, Double> rowsHeights = this.rowHeights;
-        if (false == rowsHeights.isEmpty()) {
-            children.add(
-                    context.marshallMap(rowsHeights)
-                            .setName(ROW_HEIGHTS_PROPERTY)
-            );
+        {
+            final Map<SpreadsheetRowReference, Double> rowsHeights = this.rowHeights;
+            if (false == rowsHeights.isEmpty()) {
+                children.add(
+                        context.marshallMap(rowsHeights)
+                                .setName(ROW_HEIGHTS_PROPERTY)
+                );
+            }
         }
 
-        final OptionalInt columnCount = this.columnCount;
-        if (columnCount.isPresent()) {
-            children.add(
-                    context.marshall(columnCount.getAsInt())
-                            .setName(COLUMN_COUNT_PROPERTY)
-            );
+        {
+            final OptionalInt columnCount = this.columnCount;
+            if (columnCount.isPresent()) {
+                children.add(
+                        context.marshall(columnCount.getAsInt())
+                                .setName(COLUMN_COUNT_PROPERTY)
+                );
+            }
         }
 
-        final OptionalInt rowCount = this.rowCount;
-        if (rowCount.isPresent()) {
-            children.add(
-                    context.marshall(rowCount.getAsInt())
-                            .setName(ROW_COUNT_PROPERTY)
-            );
+        {
+            final OptionalInt rowCount = this.rowCount;
+            if (rowCount.isPresent()) {
+                children.add(
+                        context.marshall(rowCount.getAsInt())
+                                .setName(ROW_COUNT_PROPERTY)
+                );
+            }
         }
 
-        final SpreadsheetViewportWindows window = this.window();
-        if (false == window.isEmpty()) {
-            children.add(
-                    context.marshall(window)
-                            .setName(WINDOW_PROPERTY)
-            );
+        {
+            final SpreadsheetViewportWindows window = this.window();
+            if (false == window.isEmpty()) {
+                children.add(
+                        context.marshall(window)
+                                .setName(WINDOW_PROPERTY)
+                );
+            }
         }
 
         return JsonNode.object().setChildren(children);
