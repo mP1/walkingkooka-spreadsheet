@@ -661,6 +661,58 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
+    // deletedLabels.....................................................................................................
+
+    @Test
+    public final void testDeletedLabelsReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Set<SpreadsheetLabelName> deletedLabels = delta.deletedLabels();
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> deletedLabels.add(SpreadsheetSelection.labelName("AddShouldFail")));
+
+        this.checkDeletedLabels(delta, this.deletedLabels());
+    }
+
+    @Test
+    public final void testSetDeletedLabelsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(
+                delta,
+                delta.setDeletedLabels(this.deletedLabels())
+        );
+    }
+
+    @Test
+    public final void testSetDeletedLabelsDifferent() {
+        final D before = this.createSpreadsheetDelta();
+
+        final Set<SpreadsheetLabelName> different = this.differentDeletedLabels();
+
+        final SpreadsheetDelta after = before.setDeletedLabels(different);
+        assertNotSame(before, after);
+
+        this.checkDeletedLabels(after, different);
+
+        this.checkLabels(after);
+        this.checkColumns(after);
+        this.checkLabels(after, before.labels());
+        this.checkRows(after);
+
+        this.checkDeletedColumns(after);
+        this.checkDeletedRows(after);
+        this.checkDeletedLabels(after, different);
+
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
+
+        this.checkNotEquals(
+                before,
+                after
+        );
+    }
+    
     // matchedCells.....................................................................................................
 
     @Test
@@ -1012,10 +1064,17 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     @Test
     public final void testEqualsDifferentDeletedLabels() {
-        final Set<SpreadsheetCellReference> deletedCells = this.differentDeletedCells();
-        this.checkNotEquals(this.labels(), deletedCells, "deletedCells() and differentDeletedCells() must be un equal");
+        final Set<SpreadsheetLabelName> deletedLabels = this.differentDeletedLabels();
+        this.checkNotEquals(
+                this.labels(),
+                deletedLabels,
+                "deletedLabels() and differentDeletedLabels() must be un equal"
+        );
 
-        this.checkNotEquals(this.createSpreadsheetDelta().setDeletedCells(deletedCells));
+        this.checkNotEquals(
+                this.createSpreadsheetDelta()
+                        .setDeletedLabels(deletedLabels)
+        );
     }
 
     @Test
@@ -1423,6 +1482,37 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
+    // deletedLabels....................................................................................................
+
+    final Set<SpreadsheetLabelName> deletedLabels() {
+        return Sets.of(
+                SpreadsheetSelection.labelName("DeletedLabel111"),
+                SpreadsheetSelection.labelName("DeletedLabel222")
+        );
+    }
+
+    final Set<SpreadsheetLabelName> differentDeletedLabels() {
+        return Set.of(
+                SpreadsheetSelection.labelName("DifferentLabel333")
+        );
+    }
+
+    final void checkDeletedLabels(final SpreadsheetDelta delta) {
+        this.checkDeletedLabels(delta, this.deletedLabels());
+    }
+
+    final void checkDeletedLabels(final SpreadsheetDelta delta,
+                                final Set<SpreadsheetLabelName> labels) {
+        this.checkEquals(labels,
+                delta.deletedLabels(),
+                "deletedLabels");
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.deletedLabels()
+                        .add(null)
+        );
+    }
+
     // matchedCells.....................................................................................................
 
     final Set<SpreadsheetCellReference> matchedCells() {
@@ -1720,6 +1810,10 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final JsonNode deletedRowsJson() {
         return JsonNode.string("3,4");
+    }
+
+    final JsonNode deletedLabelsJson() {
+        return JsonNode.string("DeletedLabel111,DeletedLabel222");
     }
 
     final JsonNode matchedCellsJson() {
