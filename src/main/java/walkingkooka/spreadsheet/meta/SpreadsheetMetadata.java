@@ -1318,6 +1318,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetComparatorProviders.spreadsheetComparators()
                                 .spreadsheetComparatorInfos()
         ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,
+                SpreadsheetExporterProviders.spreadsheetExport()
+                        .spreadsheetExporterInfos()
+        ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
                 spreadsheetFormatterProvider.spreadsheetFormatterInfos()
         ).set(
