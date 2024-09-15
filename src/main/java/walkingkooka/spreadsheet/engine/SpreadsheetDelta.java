@@ -77,8 +77,11 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * Captures changes following an operation. A window when non empty is applied to any given cells and label mappings returned as a filter.
- * Note all {@link Set} are sorted by their {@link SpreadsheetSelection} and ignore all other properties.
+ * Captures changes following an operation on a spreadsheet, such as performing CRUD operations on a CELL or LABEL.
+ * Note it is possible to select which {@link SpreadsheetDeltaProperties properties} to return for an operation.
+ * Eg only return related {@link SpreadsheetCell} but not labels following a cell save/update ignoring. It is also
+ * possible to include a window parameter and only select cells within the window, not cells outside will still be updated
+ * but not returned, this is useful to update a viewport.
  */
 public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         TreePrintable {
@@ -191,6 +194,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // cells............................................................................................................
 
+    /**
+     * Return interesting cells, such as cells referencing an update cell or loading all cells within a viewport (window).
+     */
     public final Set<SpreadsheetCell> cells() {
         return this.cells;
     }
@@ -241,8 +247,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .findFirst();
     }
 
-    // columns............................................................................................................
+    // columns..........................................................................................................
 
+    /**
+     * Returns columns (if selected) following an operation which are related to selected cells.
+     */
     public final Set<SpreadsheetColumn> columns() {
         return this.columns;
     }
@@ -287,6 +296,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // labels............................................................................................................
 
+    /**
+     * Returns labels (if selected) following an operation which are related to selected cells.
+     */
     public final Set<SpreadsheetLabelMapping> labels() {
         return this.labels;
     }
@@ -317,6 +329,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // rows............................................................................................................
 
+    /**
+     * Returns rows (if selected) following an operation which are related to selected cells.
+     */
     public final Set<SpreadsheetRow> rows() {
         return this.rows;
     }
@@ -383,8 +398,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return equals;
     }
 
-    // deletedCells............................................................................................................
+    // deletedCells.....................................................................................................
 
+    /**
+     * Returns deleted cells (if selected) following an operation which are related to selected cells.
+     */
     public final Set<SpreadsheetCellReference> deletedCells() {
         return this.deletedCells;
     }
@@ -449,6 +467,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // deletedRows............................................................................................................
 
+    /**
+     * Returns deleted rows (if selected) following an operation which are related to selected cells.
+     */
     public final Set<SpreadsheetRowReference> deletedRows() {
         return this.deletedRows;
     }
@@ -521,6 +542,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     
     // matchedCells............................................................................................................
 
+    /**
+     * Returns matched cells (if selected) for a given find parameters
+     */
     public final Set<SpreadsheetCellReference> matchedCells() {
         return this.matchedCells;
     }
@@ -551,11 +575,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return Objects.requireNonNull(matchedCells, "matchedCells");
     }
 
-    // columnWidths..................................................................................................
+    // columnWidths.....................................................................................................
 
     /**
-     * Returns a map of columns with the column width for each. The included columns should appear within one of the cells.
-     * Note that keys will always be relative, absolute column are not present.
+     * Returns column widths (if selected) following an operation which are related to selected cells.
      */
     public final Map<SpreadsheetColumnReference, Double> columnWidths() {
         return this.columnWidths;
@@ -580,11 +603,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final Map<SpreadsheetColumnReference, Double> columnWidths;
 
-    // rowHeights..................................................................................................
+    // rowHeights.......................................................................................................
 
     /**
-     * Returns a map of rows to the row height for each. The included rows should appear within one of the cells.
-     * Note that keys will always be relative, absolute rows are not present.
+     * Returns row heights (if selected) following an operation which are related to selected cells.
      */
     public final Map<SpreadsheetRowReference, Double> rowHeights() {
         return this.rowHeights;
@@ -610,6 +632,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // max..............................................................................................................
 
+    /**
+     * Returns the total number or columns in this spreadsheet (if selected).
+     */
     public final OptionalInt columnCount() {
         return this.columnCount;
     }
@@ -626,6 +651,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final OptionalInt columnCount;
 
+    /**
+     * Returns the total number of rows in this spreadsheet (if selected).
+     */
     public final OptionalInt rowCount() {
         return this.rowCount;
     }
