@@ -174,8 +174,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name,
-                                                       final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta loadLabel(final SpreadsheetLabelName name,
+                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

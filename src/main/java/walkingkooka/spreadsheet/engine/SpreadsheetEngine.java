@@ -195,8 +195,8 @@ public interface SpreadsheetEngine {
     /**
      * Loads the given label if it exists.
      */
-    Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name,
-                                                final SpreadsheetEngineContext context);
+    SpreadsheetDelta loadLabel(final SpreadsheetLabelName name,
+                               final SpreadsheetEngineContext context);
 
     /**
      * Returns the column width for the given {@link SpreadsheetColumnReference}, if none is present,
