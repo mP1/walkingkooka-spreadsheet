@@ -1325,6 +1325,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
                 spreadsheetFormatterProvider.spreadsheetFormatterInfos()
         ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
+                SpreadsheetImporterProviders.spreadsheetImport()
+                        .spreadsheetImporterInfos()
+        ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         spreadsheetFormatterProvider

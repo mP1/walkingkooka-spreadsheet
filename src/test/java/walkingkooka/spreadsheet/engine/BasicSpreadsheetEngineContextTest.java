@@ -1025,7 +1025,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\"\n" +
                         "  ],\n" +
-                        "  \"spreadsheet-importers\": [],\n" +
+                        "  \"spreadsheet-importers\": [\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\"\n" +
+                        "  ],\n" +
                         "  \"spreadsheet-parsers\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern date-parse-pattern\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern date-time-parse-pattern\",\n" +
@@ -1230,7 +1234,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\"\n" +
                         "  ],\n" +
-                        "  \"spreadsheet-importers\": [],\n" +
+                        "  \"spreadsheet-importers\": [\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\"\n" +
+                        "  ],\n" +
                         "  \"spreadsheet-parsers\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern date-parse-pattern\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern date-time-parse-pattern\",\n" +
