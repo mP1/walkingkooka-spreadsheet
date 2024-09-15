@@ -44,8 +44,9 @@ public enum SpreadsheetDeltaProperties {
 
     DELETED_CELLS,
     DELETED_COLUMNS,
-    DELETED_LABELS,
     DELETED_ROWS,
+
+    DELETED_LABELS,
 
     COLUMN_WIDTHS,
 
