@@ -585,17 +585,35 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetLabelName label,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetLabelMapping mapping) {
-        this.checkEquals(Optional.of(mapping),
+        this.loadLabelAndCheck(
+                engine,
+                label,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                )
+        );
+    }
+
+    default void loadLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelName label,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
                 engine.loadLabel(label, context),
-                () -> "loadLabel " + label);
+                () -> "loadLabel " + label
+        );
     }
 
     default void loadLabelAndFailCheck(final SpreadsheetEngine engine,
                                        final SpreadsheetLabelName label,
                                        final SpreadsheetEngineContext context) {
-        this.checkEquals(Optional.empty(),
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY,
                 engine.loadLabel(label, context),
-                () -> "loadLabel " + label);
+                () -> "loadLabel " + label
+        );
     }
 
     @Test

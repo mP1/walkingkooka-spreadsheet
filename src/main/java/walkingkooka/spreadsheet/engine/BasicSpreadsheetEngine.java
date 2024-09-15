@@ -1087,14 +1087,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName label,
-                                                       final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta loadLabel(final SpreadsheetLabelName label,
+                                      final SpreadsheetEngineContext context) {
         checkLabel(label);
         checkContext(context);
 
-        return context.storeRepository()
-                .labels()
-                .load(label);
+        return SpreadsheetDelta.EMPTY.setLabels(
+                context.storeRepository()
+                        .labels()
+                        .load(label)
+                        .map(Sets::of)
+                        .orElse(Sets.empty())
+        );
     }
 
     // cell eval........................................................................................................

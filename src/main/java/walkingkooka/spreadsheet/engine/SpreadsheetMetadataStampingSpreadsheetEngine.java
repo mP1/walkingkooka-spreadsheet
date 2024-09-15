@@ -258,8 +258,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name,
-                                                       final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta loadLabel(final SpreadsheetLabelName name,
+                                      final SpreadsheetEngineContext context) {
         return this.engine.loadLabel(name, context);
     }
 
