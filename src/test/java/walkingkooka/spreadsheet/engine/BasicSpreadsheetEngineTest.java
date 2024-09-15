@@ -9722,6 +9722,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetError.selectionNotFound(label)
                                         )
                                 )
+                        ).setDeletedLabels(
+                                Sets.of(label)
                         ).setColumnWidths(
                                 columnWidths("A")
                         ).setRowHeights(
@@ -9779,6 +9781,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetError.selectionNotFound(label)
                                         )
                                 )
+                        ).setDeletedLabels(
+                                Sets.of(label)
                         ).setColumns(
                                 Sets.of(a)
                         ).setColumnWidths(
@@ -9841,6 +9845,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetError.selectionNotFound(label)
                                         )
                                 )
+                        ).setDeletedLabels(
+                                Sets.of(label)
                         ).setRows(
                                 Sets.of(row1)
                         ).setColumnWidths(
