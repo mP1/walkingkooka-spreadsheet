@@ -756,6 +756,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final boolean addDeletedCells = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS);
         final boolean addDeletedColumns = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_COLUMNS);
         final boolean addDeletedRows = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_ROWS);
+        final boolean addDeletedLabels = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_LABELS);
 
         final Set<SpreadsheetCell> updatedCells = addCells ? changes.updatedCells() : SpreadsheetDelta.NO_CELLS;
         final Set<SpreadsheetColumn> updatedColumns = addColumns ? changes.updatedColumns() : SpreadsheetDelta.NO_COLUMNS;
@@ -918,6 +919,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (addDeletedRows) {
             delta = delta.setDeletedRows(changes.deletedRows());
         }
+        if (addDeletedLabels) {
+            delta = delta.setDeletedLabels(changes.deletedLabels());
+        }
         if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS)) {
             final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
 
@@ -1075,6 +1079,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context.storeRepository()
                     .labels()
                     .delete(label);
+
+            changes.onLabelDeletedImmediate(label);
 
             return this.prepareResponse(changes, context);
         }

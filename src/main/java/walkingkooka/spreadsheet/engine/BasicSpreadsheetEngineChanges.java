@@ -262,6 +262,10 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     }
 
     void onLabelDeletedImmediate(final SpreadsheetLabelName label) {
+        this.updatedAndDeletedLabels.put(
+                label,
+                null
+        );
         this.batchLabel(label);
     }
 

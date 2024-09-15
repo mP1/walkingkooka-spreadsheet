@@ -546,6 +546,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
                 .setCells(cells)
+                .setDeletedLabels(
+                        Sets.of(label)
+                )
                 .setColumnCount(
                         OptionalInt.of(
                                 engine.columnCount(context)
@@ -566,9 +569,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                      final SpreadsheetLabelName label,
                                      final SpreadsheetEngineContext context,
                                      final SpreadsheetDelta delta) {
-        this.checkEquals(delta,
+        this.checkEquals(
+                delta,
                 engine.deleteLabel(label, context),
-                () -> "deleteLabel " + label);
+                () -> "deleteLabel " + label
+        );
     }
 
     @Test
