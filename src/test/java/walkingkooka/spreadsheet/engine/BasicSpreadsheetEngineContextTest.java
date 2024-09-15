@@ -1009,7 +1009,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\"\n" +
                         "  ],\n" +
-                        "  \"spreadsheet-exporters\": [],\n" +
+                        "  \"spreadsheet-exporters\": [\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/collection collection\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/empty empty\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\"\n" +
+                        "  ],\n" +
                         "  \"spreadsheet-formatters\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\",\n" +
@@ -1210,7 +1214,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\"\n" +
                         "  ],\n" +
-                        "  \"spreadsheet-exporters\": [],\n" +
+                        "  \"spreadsheet-exporters\": [\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/collection collection\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/empty empty\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\"\n" +
+                        "  ],\n" +
                         "  \"spreadsheet-formatters\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\",\n" +
