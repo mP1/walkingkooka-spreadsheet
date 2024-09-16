@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.importer;
 
+import walkingkooka.plugin.FilteredProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderMapper;
 
 import java.util.List;
 import java.util.Objects;
@@ -42,7 +42,7 @@ final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProv
     private MappedSpreadsheetImporterProvider(final SpreadsheetImporterInfoSet infos,
                                               final SpreadsheetImporterProvider provider) {
         this.provider = provider;
-        this.mapper = ProviderMapper.with(
+        this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetImporterInfos(),
                 (n) -> new IllegalArgumentException("Unknown importer " + n)
@@ -86,7 +86,7 @@ final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProv
         return this.mapper.infos();
     }
 
-    private final ProviderMapper<SpreadsheetImporterName, SpreadsheetImporterSelector, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet> mapper;
+    private final FilteredProviderMapper<SpreadsheetImporterName, SpreadsheetImporterSelector, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet> mapper;
 
     @Override
     public String toString() {
