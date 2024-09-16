@@ -69,11 +69,11 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
     }
 
     /**
-     * {@see MappedSpreadsheetFormatterProvider}
+     * {@see FilteredMappedSpreadsheetFormatterProvider}
      */
-    public static SpreadsheetFormatterProvider mapped(final SpreadsheetFormatterInfoSet infos,
-                                                      final SpreadsheetFormatterProvider provider) {
-        return MappedSpreadsheetFormatterProvider.with(
+    public static SpreadsheetFormatterProvider filteredMapped(final SpreadsheetFormatterInfoSet infos,
+                                                              final SpreadsheetFormatterProvider provider) {
+        return FilteredMappedSpreadsheetFormatterProvider.with(
                 infos,
                 provider
         );

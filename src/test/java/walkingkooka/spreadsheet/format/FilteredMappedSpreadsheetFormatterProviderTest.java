@@ -31,7 +31,7 @@ import walkingkooka.tree.text.TextNode;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<MappedSpreadsheetFormatterProvider>,
+public final class FilteredMappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<FilteredMappedSpreadsheetFormatterProvider>,
         SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
@@ -40,7 +40,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     public void testWithNullInfosFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedSpreadsheetFormatterProvider.with(
+                () -> FilteredMappedSpreadsheetFormatterProvider.with(
                         null,
                         SpreadsheetFormatterProviders.fake()
                 )
@@ -51,7 +51,7 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedSpreadsheetFormatterProvider.with(
+                () -> FilteredMappedSpreadsheetFormatterProvider.with(
                         SpreadsheetFormatterInfoSet.EMPTY.concat(
                                 SpreadsheetFormatterInfo.with(
                                         SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse("date-format-pattern")),
@@ -260,10 +260,10 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     }
 
     @Override
-    public MappedSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
+    public FilteredMappedSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
-        return MappedSpreadsheetFormatterProvider.with(
+        return FilteredMappedSpreadsheetFormatterProvider.with(
                 SpreadsheetFormatterInfoSet.with(
                         Sets.of(
                                 SpreadsheetFormatterInfo.with(
@@ -285,8 +285,8 @@ public final class MappedSpreadsheetFormatterProviderTest implements Spreadsheet
     }
 
     @Override
-    public Class<MappedSpreadsheetFormatterProvider> type() {
-        return MappedSpreadsheetFormatterProvider.class;
+    public Class<FilteredMappedSpreadsheetFormatterProvider> type() {
+        return FilteredMappedSpreadsheetFormatterProvider.class;
     }
 
     @Override

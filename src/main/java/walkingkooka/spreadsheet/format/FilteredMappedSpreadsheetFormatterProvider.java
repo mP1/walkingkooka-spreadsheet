@@ -28,21 +28,21 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetFormatterProvider} that wraps a view of new {@link SpreadsheetFormatterName} to a wrapped {@link SpreadsheetFormatterProvider}.
  */
-final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
+final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
 
-    static MappedSpreadsheetFormatterProvider with(final SpreadsheetFormatterInfoSet infos,
-                                                   final SpreadsheetFormatterProvider provider) {
+    static FilteredMappedSpreadsheetFormatterProvider with(final SpreadsheetFormatterInfoSet infos,
+                                                           final SpreadsheetFormatterProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new MappedSpreadsheetFormatterProvider(
+        return new FilteredMappedSpreadsheetFormatterProvider(
                 infos,
                 provider
         );
     }
 
-    private MappedSpreadsheetFormatterProvider(final SpreadsheetFormatterInfoSet infos,
-                                               final SpreadsheetFormatterProvider provider) {
+    private FilteredMappedSpreadsheetFormatterProvider(final SpreadsheetFormatterInfoSet infos,
+                                                       final SpreadsheetFormatterProvider provider) {
         this.provider = provider;
         this.mapper = FilteredProviderMapper.with(
                 infos,
