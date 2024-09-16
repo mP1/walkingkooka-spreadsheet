@@ -700,7 +700,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         components.reportIfMissing();
 
-        return ExpressionFunctionProviders.mapped(
+        return ExpressionFunctionProviders.filteredMapped(
                 set,
                 provider
         );
