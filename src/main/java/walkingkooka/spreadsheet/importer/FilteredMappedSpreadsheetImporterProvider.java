@@ -26,21 +26,21 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetImporterProvider} that wraps a view of new {@link SpreadsheetImporterName} to a wrapped {@link SpreadsheetImporterProvider}.
  */
-final class MappedSpreadsheetImporterProvider implements SpreadsheetImporterProvider {
+final class FilteredMappedSpreadsheetImporterProvider implements SpreadsheetImporterProvider {
 
-    static MappedSpreadsheetImporterProvider with(final SpreadsheetImporterInfoSet infos,
-                                                  final SpreadsheetImporterProvider provider) {
+    static FilteredMappedSpreadsheetImporterProvider with(final SpreadsheetImporterInfoSet infos,
+                                                          final SpreadsheetImporterProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new MappedSpreadsheetImporterProvider(
+        return new FilteredMappedSpreadsheetImporterProvider(
                 infos,
                 provider
         );
     }
 
-    private MappedSpreadsheetImporterProvider(final SpreadsheetImporterInfoSet infos,
-                                              final SpreadsheetImporterProvider provider) {
+    private FilteredMappedSpreadsheetImporterProvider(final SpreadsheetImporterInfoSet infos,
+                                                      final SpreadsheetImporterProvider provider) {
         this.provider = provider;
         this.mapper = FilteredProviderMapper.with(
                 infos,
