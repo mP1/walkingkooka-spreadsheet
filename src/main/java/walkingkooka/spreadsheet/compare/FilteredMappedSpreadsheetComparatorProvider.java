@@ -25,21 +25,21 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetComparatorProvider} that wraps a view of new {@link SpreadsheetComparatorName} to a wrapped {@link SpreadsheetComparatorProvider}.
  */
-final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
+final class FilteredMappedSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
 
-    static MappedSpreadsheetComparatorProvider with(final SpreadsheetComparatorInfoSet infos,
-                                                    final SpreadsheetComparatorProvider provider) {
+    static FilteredMappedSpreadsheetComparatorProvider with(final SpreadsheetComparatorInfoSet infos,
+                                                            final SpreadsheetComparatorProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new MappedSpreadsheetComparatorProvider(
+        return new FilteredMappedSpreadsheetComparatorProvider(
                 infos,
                 provider
         );
     }
 
-    private MappedSpreadsheetComparatorProvider(final SpreadsheetComparatorInfoSet infos,
-                                                final SpreadsheetComparatorProvider provider) {
+    private FilteredMappedSpreadsheetComparatorProvider(final SpreadsheetComparatorInfoSet infos,
+                                                        final SpreadsheetComparatorProvider provider) {
         this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetComparatorInfos(),
