@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.plugin.FilteredProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderMapper;
 
 import java.util.Objects;
 
@@ -40,7 +40,7 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
 
     private MappedSpreadsheetComparatorProvider(final SpreadsheetComparatorInfoSet infos,
                                                 final SpreadsheetComparatorProvider provider) {
-        this.mapper = ProviderMapper.with(
+        this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetComparatorInfos(),
                 (n) -> new IllegalArgumentException("Unknown comparator " + n)
@@ -75,5 +75,5 @@ final class MappedSpreadsheetComparatorProvider implements SpreadsheetComparator
         return this.mapper.toString();
     }
 
-    private final ProviderMapper<SpreadsheetComparatorName, ?, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet> mapper;
+    private final FilteredProviderMapper<SpreadsheetComparatorName, ?, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet> mapper;
 }

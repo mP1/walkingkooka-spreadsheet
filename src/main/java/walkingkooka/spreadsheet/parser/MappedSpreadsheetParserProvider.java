@@ -34,8 +34,8 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.plugin.FilteredProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderMapper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 import java.util.List;
@@ -61,7 +61,7 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
     private MappedSpreadsheetParserProvider(final SpreadsheetParserInfoSet infos,
                                             final SpreadsheetParserProvider provider) {
         this.provider = provider;
-        this.mapper = ProviderMapper.with(
+        this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetParserInfos(),
                 (n) -> new IllegalArgumentException("Unknown parser " + n)
@@ -124,5 +124,5 @@ final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider
         return this.mapper.toString();
     }
 
-    private final ProviderMapper<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserInfo, SpreadsheetParserInfoSet> mapper;
+    private final FilteredProviderMapper<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserInfo, SpreadsheetParserInfoSet> mapper;
 }

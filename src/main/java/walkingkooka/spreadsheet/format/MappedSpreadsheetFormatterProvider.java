@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.plugin.FilteredProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderMapper;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,7 +44,7 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
     private MappedSpreadsheetFormatterProvider(final SpreadsheetFormatterInfoSet infos,
                                                final SpreadsheetFormatterProvider provider) {
         this.provider = provider;
-        this.mapper = ProviderMapper.with(
+        this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetFormatterInfos(),
                 (n) -> new IllegalArgumentException("Unknown formatter " + n)
@@ -121,5 +121,5 @@ final class MappedSpreadsheetFormatterProvider implements SpreadsheetFormatterPr
         return this.mapper.toString();
     }
 
-    private final ProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet> mapper;
+    private final FilteredProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet> mapper;
 }
