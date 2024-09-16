@@ -45,21 +45,21 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetParserProvider} that wraps a view of new {@link SpreadsheetParserName} to a wrapped {@link SpreadsheetParserProvider}.
  */
-final class MappedSpreadsheetParserProvider implements SpreadsheetParserProvider {
+final class FilteredMappedSpreadsheetParserProvider implements SpreadsheetParserProvider {
 
-    static MappedSpreadsheetParserProvider with(final SpreadsheetParserInfoSet infos,
-                                                final SpreadsheetParserProvider provider) {
+    static FilteredMappedSpreadsheetParserProvider with(final SpreadsheetParserInfoSet infos,
+                                                        final SpreadsheetParserProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new MappedSpreadsheetParserProvider(
+        return new FilteredMappedSpreadsheetParserProvider(
                 infos,
                 provider
         );
     }
 
-    private MappedSpreadsheetParserProvider(final SpreadsheetParserInfoSet infos,
-                                            final SpreadsheetParserProvider provider) {
+    private FilteredMappedSpreadsheetParserProvider(final SpreadsheetParserInfoSet infos,
+                                                    final SpreadsheetParserProvider provider) {
         this.provider = provider;
         this.mapper = FilteredProviderMapper.with(
                 infos,
