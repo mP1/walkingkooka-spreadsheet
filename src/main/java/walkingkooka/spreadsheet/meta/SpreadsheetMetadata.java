@@ -622,7 +622,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         components.reportIfMissing();
 
-        return ConverterProviders.mapped(
+        return ConverterProviders.filteredMapped(
                 converterInfos,
                 provider
         );
