@@ -27,8 +27,8 @@ import walkingkooka.reflect.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MappedSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<MappedSpreadsheetComparatorProvider>,
-        ToStringTesting<MappedSpreadsheetComparatorProvider> {
+public final class FilteredMappedSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<FilteredMappedSpreadsheetComparatorProvider>,
+        ToStringTesting<FilteredMappedSpreadsheetComparatorProvider> {
 
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://example.com/comparator123");
 
@@ -44,7 +44,7 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
     public void testWithNullViewFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedSpreadsheetComparatorProvider.with(
+                () -> FilteredMappedSpreadsheetComparatorProvider.with(
                         null,
                         SpreadsheetComparatorProviders.fake()
                 )
@@ -55,7 +55,7 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedSpreadsheetComparatorProvider.with(
+                () -> FilteredMappedSpreadsheetComparatorProvider.with(
                         SpreadsheetComparatorInfoSet.EMPTY,
                         null
                 )
@@ -98,8 +98,8 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
     }
 
     @Override
-    public MappedSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
-        return MappedSpreadsheetComparatorProvider.with(
+    public FilteredMappedSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
+        return FilteredMappedSpreadsheetComparatorProvider.with(
                 SpreadsheetComparatorInfoSet.EMPTY.concat(
                         SpreadsheetComparatorInfo.with(
                                 URL,
@@ -130,8 +130,8 @@ public final class MappedSpreadsheetComparatorProviderTest implements Spreadshee
     }
 
     @Override
-    public Class<MappedSpreadsheetComparatorProvider> type() {
-        return MappedSpreadsheetComparatorProvider.class;
+    public Class<FilteredMappedSpreadsheetComparatorProvider> type() {
+        return FilteredMappedSpreadsheetComparatorProvider.class;
     }
 
     @Override
