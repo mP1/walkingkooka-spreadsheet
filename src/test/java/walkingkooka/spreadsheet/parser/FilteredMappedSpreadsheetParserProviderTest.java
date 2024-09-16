@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MappedSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<MappedSpreadsheetParserProvider> {
+public final class FilteredMappedSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<FilteredMappedSpreadsheetParserProvider> {
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
@@ -37,7 +37,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     public void testWithNullInfosFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedSpreadsheetParserProvider.with(
+                () -> FilteredMappedSpreadsheetParserProvider.with(
                         null,
                         SpreadsheetParserProviders.fake()
                 )
@@ -48,7 +48,7 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedSpreadsheetParserProvider.with(
+                () -> FilteredMappedSpreadsheetParserProvider.with(
                         SpreadsheetParserInfoSet.EMPTY.concat(
                                 SpreadsheetParserInfo.with(
                                         url("date-parse-pattern"),
@@ -120,12 +120,12 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     }
 
     @Override
-    public MappedSpreadsheetParserProvider createSpreadsheetParserProvider() {
+    public FilteredMappedSpreadsheetParserProvider createSpreadsheetParserProvider() {
         final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
         );
 
-        return MappedSpreadsheetParserProvider.with(
+        return FilteredMappedSpreadsheetParserProvider.with(
                 SpreadsheetParserInfoSet.EMPTY.concat(
                         SpreadsheetParserInfo.with(
                                 url("time-parse-pattern"),
@@ -141,8 +141,8 @@ public final class MappedSpreadsheetParserProviderTest implements SpreadsheetPar
     }
 
     @Override
-    public Class<MappedSpreadsheetParserProvider> type() {
-        return MappedSpreadsheetParserProvider.class;
+    public Class<FilteredMappedSpreadsheetParserProvider> type() {
+        return FilteredMappedSpreadsheetParserProvider.class;
     }
 
     @Override

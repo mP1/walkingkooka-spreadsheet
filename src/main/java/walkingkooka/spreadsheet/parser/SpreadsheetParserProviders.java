@@ -71,11 +71,11 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     }
 
     /**
-     * {@see MappedSpreadsheetParserProvider}
+     * {@see FilteredMappedSpreadsheetParserProvider}
      */
-    public static SpreadsheetParserProvider mapped(final SpreadsheetParserInfoSet infos,
-                                                   final SpreadsheetParserProvider provider) {
-        return MappedSpreadsheetParserProvider.with(
+    public static SpreadsheetParserProvider filteredMapped(final SpreadsheetParserInfoSet infos,
+                                                           final SpreadsheetParserProvider provider) {
+        return FilteredMappedSpreadsheetParserProvider.with(
                 infos,
                 provider
         );
