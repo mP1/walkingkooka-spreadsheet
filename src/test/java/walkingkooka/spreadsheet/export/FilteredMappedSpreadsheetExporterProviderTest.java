@@ -30,7 +30,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MappedSpreadsheetExporterProviderTest implements SpreadsheetExporterProviderTesting<MappedSpreadsheetExporterProvider>,
+public final class FilteredMappedSpreadsheetExporterProviderTest implements SpreadsheetExporterProviderTesting<FilteredMappedSpreadsheetExporterProvider>,
         SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
@@ -39,7 +39,7 @@ public final class MappedSpreadsheetExporterProviderTest implements SpreadsheetE
     public void testWithNullInfosFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedSpreadsheetExporterProvider.with(
+                () -> FilteredMappedSpreadsheetExporterProvider.with(
                         null,
                         SpreadsheetExporterProviders.fake()
                 )
@@ -50,7 +50,7 @@ public final class MappedSpreadsheetExporterProviderTest implements SpreadsheetE
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedSpreadsheetExporterProvider.with(
+                () -> FilteredMappedSpreadsheetExporterProvider.with(
                         SpreadsheetExporterInfoSet.EMPTY.concat(
                                 SpreadsheetExporterInfo.with(
                                         SpreadsheetExporterProviders.BASE_URL.appendPath(
@@ -105,7 +105,7 @@ public final class MappedSpreadsheetExporterProviderTest implements SpreadsheetE
     }
 
     @Override
-    public MappedSpreadsheetExporterProvider createSpreadsheetExporterProvider() {
+    public FilteredMappedSpreadsheetExporterProvider createSpreadsheetExporterProvider() {
         final SpreadsheetExporterProvider provider = new SpreadsheetExporterProvider() {
             @Override
             public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
@@ -137,7 +137,7 @@ public final class MappedSpreadsheetExporterProviderTest implements SpreadsheetE
             }
         };
 
-        return MappedSpreadsheetExporterProvider.with(
+        return FilteredMappedSpreadsheetExporterProvider.with(
                 SpreadsheetExporterInfoSet.EMPTY.concat(
                         SpreadsheetExporterInfo.with(
                                 url(NAME),
@@ -157,8 +157,8 @@ public final class MappedSpreadsheetExporterProviderTest implements SpreadsheetE
     // class............................................................................................................
 
     @Override
-    public Class<MappedSpreadsheetExporterProvider> type() {
-        return MappedSpreadsheetExporterProvider.class;
+    public Class<FilteredMappedSpreadsheetExporterProvider> type() {
+        return FilteredMappedSpreadsheetExporterProvider.class;
     }
 
     @Override

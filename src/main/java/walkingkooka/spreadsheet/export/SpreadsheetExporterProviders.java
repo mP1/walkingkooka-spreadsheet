@@ -69,11 +69,11 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     }
 
     /**
-     * {@see MappedSpreadsheetExporterProvider}
+     * {@see FilteredMappedSpreadsheetExporterProvider}
      */
-    public static SpreadsheetExporterProvider mapped(final SpreadsheetExporterInfoSet infos,
-                                                     final SpreadsheetExporterProvider provider) {
-        return MappedSpreadsheetExporterProvider.with(
+    public static SpreadsheetExporterProvider filteredMapped(final SpreadsheetExporterInfoSet infos,
+                                                             final SpreadsheetExporterProvider provider) {
+        return FilteredMappedSpreadsheetExporterProvider.with(
                 infos,
                 provider
         );
