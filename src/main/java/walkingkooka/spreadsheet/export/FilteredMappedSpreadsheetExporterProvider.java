@@ -26,27 +26,27 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetExporterProvider} that wraps a view of new {@link SpreadsheetExporterName} to a wrapped {@link SpreadsheetExporterProvider}.
  */
-final class MappedSpreadsheetExporterProvider implements SpreadsheetExporterProvider {
+final class FilteredMappedSpreadsheetExporterProvider implements SpreadsheetExporterProvider {
 
-    private MappedSpreadsheetExporterProvider(final SpreadsheetExporterInfoSet infos,
-                                              final SpreadsheetExporterProvider provider) {
+    static FilteredMappedSpreadsheetExporterProvider with(final SpreadsheetExporterInfoSet infos,
+                                                          final SpreadsheetExporterProvider provider) {
+        Objects.requireNonNull(infos, "infos");
+        Objects.requireNonNull(provider, "provider");
+
+        return new FilteredMappedSpreadsheetExporterProvider(
+                infos,
+                provider
+        );
+    }
+
+    private FilteredMappedSpreadsheetExporterProvider(final SpreadsheetExporterInfoSet infos,
+                                                      final SpreadsheetExporterProvider provider) {
         this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetExporterInfos(),
                 (n) -> new IllegalArgumentException("Unknown exporter " + n)
         );
         this.provider = provider;
-    }
-
-    static MappedSpreadsheetExporterProvider with(final SpreadsheetExporterInfoSet infos,
-                                                  final SpreadsheetExporterProvider provider) {
-        Objects.requireNonNull(infos, "infos");
-        Objects.requireNonNull(provider, "provider");
-
-        return new MappedSpreadsheetExporterProvider(
-                infos,
-                provider
-        );
     }
 
     @Override
