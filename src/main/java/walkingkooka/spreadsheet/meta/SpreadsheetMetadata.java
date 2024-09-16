@@ -784,7 +784,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         components.reportIfMissing();
 
-        return SpreadsheetImporterProviders.mapped(
+        return SpreadsheetImporterProviders.filteredMapped(
                 set,
                 provider
         );
