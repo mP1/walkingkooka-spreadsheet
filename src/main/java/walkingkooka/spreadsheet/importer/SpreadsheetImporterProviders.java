@@ -80,6 +80,17 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see RenamedMappedSpreadsheetImporterProvider}
+     */
+    public static SpreadsheetImporterProvider renamedMapped(final SpreadsheetImporterInfoSet infos,
+                                                            final SpreadsheetImporterProvider provider) {
+        return RenamedMappedSpreadsheetImporterProvider.with(
+                infos,
+                provider
+        );
+    }
+
+    /**
      * {@see SpreadsheetImportSpreadsheetImporterProvider}
      */
     public static SpreadsheetImporterProvider spreadsheetImport() {
