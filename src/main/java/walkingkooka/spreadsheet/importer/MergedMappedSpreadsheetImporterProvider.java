@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.importer;
 
+import walkingkooka.plugin.MergedProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.RenamingProviderMapper;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,23 +26,23 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetImporterProvider} that supports renaming {@link SpreadsheetImporterName} before invoking a wrapped {@link SpreadsheetImporterProvider}.
  */
-final class RenamedMappedSpreadsheetImporterProvider implements SpreadsheetImporterProvider {
+final class MergedMappedSpreadsheetImporterProvider implements SpreadsheetImporterProvider {
 
-    static RenamedMappedSpreadsheetImporterProvider with(final SpreadsheetImporterInfoSet infos,
-                                                         final SpreadsheetImporterProvider provider) {
+    static MergedMappedSpreadsheetImporterProvider with(final SpreadsheetImporterInfoSet infos,
+                                                        final SpreadsheetImporterProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new RenamedMappedSpreadsheetImporterProvider(
+        return new MergedMappedSpreadsheetImporterProvider(
                 infos,
                 provider
         );
     }
 
-    private RenamedMappedSpreadsheetImporterProvider(final SpreadsheetImporterInfoSet infos,
-                                                     final SpreadsheetImporterProvider provider) {
+    private MergedMappedSpreadsheetImporterProvider(final SpreadsheetImporterInfoSet infos,
+                                                    final SpreadsheetImporterProvider provider) {
         this.provider = provider;
-        this.mapper = RenamingProviderMapper.with(
+        this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetImporterInfos(),
                 (n) -> new IllegalArgumentException("Unknown importer " + n)
@@ -86,7 +86,7 @@ final class RenamedMappedSpreadsheetImporterProvider implements SpreadsheetImpor
         return this.mapper.infos();
     }
 
-    private final RenamingProviderMapper<SpreadsheetImporterName, SpreadsheetImporterSelector, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet> mapper;
+    private final MergedProviderMapper<SpreadsheetImporterName, SpreadsheetImporterSelector, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet> mapper;
 
     @Override
     public String toString() {

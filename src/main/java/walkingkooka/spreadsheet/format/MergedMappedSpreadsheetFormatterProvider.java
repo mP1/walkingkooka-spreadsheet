@@ -18,8 +18,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.plugin.MergedProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.RenamingProviderMapper;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,23 +29,23 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetFormatterProvider} that supports renaming {@link SpreadsheetFormatterName} before invoking a wrapped {@link SpreadsheetFormatterProvider}.
  */
-final class RenamedMappedSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
+final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
 
-    static RenamedMappedSpreadsheetFormatterProvider with(final SpreadsheetFormatterInfoSet infos,
-                                                          final SpreadsheetFormatterProvider provider) {
+    static MergedMappedSpreadsheetFormatterProvider with(final SpreadsheetFormatterInfoSet infos,
+                                                         final SpreadsheetFormatterProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new RenamedMappedSpreadsheetFormatterProvider(
+        return new MergedMappedSpreadsheetFormatterProvider(
                 infos,
                 provider
         );
     }
 
-    private RenamedMappedSpreadsheetFormatterProvider(final SpreadsheetFormatterInfoSet infos,
-                                                      final SpreadsheetFormatterProvider provider) {
+    private MergedMappedSpreadsheetFormatterProvider(final SpreadsheetFormatterInfoSet infos,
+                                                     final SpreadsheetFormatterProvider provider) {
         this.provider = provider;
-        this.mapper = RenamingProviderMapper.with(
+        this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetFormatterInfos(),
                 (n) -> new IllegalArgumentException("Unknown formatter " + n)
@@ -122,5 +122,5 @@ final class RenamedMappedSpreadsheetFormatterProvider implements SpreadsheetForm
         return this.mapper.toString();
     }
 
-    private final RenamingProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet> mapper;
+    private final MergedProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet> mapper;
 }

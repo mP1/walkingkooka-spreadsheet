@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class RenamedMappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<RenamedMappedSpreadsheetFormatterProvider>,
+public final class MergedMappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<MergedMappedSpreadsheetFormatterProvider>,
         SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
@@ -42,7 +42,7 @@ public final class RenamedMappedSpreadsheetFormatterProviderTest implements Spre
     public void testWithNullInfosFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedSpreadsheetFormatterProvider.with(
+                () -> MergedMappedSpreadsheetFormatterProvider.with(
                         null,
                         SpreadsheetFormatterProviders.fake()
                 )
@@ -53,7 +53,7 @@ public final class RenamedMappedSpreadsheetFormatterProviderTest implements Spre
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedSpreadsheetFormatterProvider.with(
+                () -> MergedMappedSpreadsheetFormatterProvider.with(
                         SpreadsheetFormatterInfoSet.EMPTY.concat(
                                 SpreadsheetFormatterInfo.with(
                                         SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse("date-format-pattern")),
@@ -275,10 +275,10 @@ public final class RenamedMappedSpreadsheetFormatterProviderTest implements Spre
     }
 
     @Override
-    public RenamedMappedSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
+    public MergedMappedSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
-        return RenamedMappedSpreadsheetFormatterProvider.with(
+        return MergedMappedSpreadsheetFormatterProvider.with(
                 SpreadsheetFormatterInfoSet.with(
                         Sets.of(
                                 SpreadsheetFormatterInfo.with(
@@ -298,8 +298,8 @@ public final class RenamedMappedSpreadsheetFormatterProviderTest implements Spre
     // class............................................................................................................
 
     @Override
-    public Class<RenamedMappedSpreadsheetFormatterProvider> type() {
-        return RenamedMappedSpreadsheetFormatterProvider.class;
+    public Class<MergedMappedSpreadsheetFormatterProvider> type() {
+        return MergedMappedSpreadsheetFormatterProvider.class;
     }
 
     @Override

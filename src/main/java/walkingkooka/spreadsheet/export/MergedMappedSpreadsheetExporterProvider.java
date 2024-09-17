@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.export;
 
+import walkingkooka.plugin.MergedProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.RenamingProviderMapper;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,22 +26,22 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetExporterProvider} that supports renaming {@link SpreadsheetExporterName} before invoking a wrapped {@link SpreadsheetExporterProvider}.
  */
-final class RenamedMappedSpreadsheetExporterProvider implements SpreadsheetExporterProvider {
+final class MergedMappedSpreadsheetExporterProvider implements SpreadsheetExporterProvider {
 
-    static RenamedMappedSpreadsheetExporterProvider with(final SpreadsheetExporterInfoSet infos,
-                                                         final SpreadsheetExporterProvider provider) {
+    static MergedMappedSpreadsheetExporterProvider with(final SpreadsheetExporterInfoSet infos,
+                                                        final SpreadsheetExporterProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new RenamedMappedSpreadsheetExporterProvider(
+        return new MergedMappedSpreadsheetExporterProvider(
                 infos,
                 provider
         );
     }
 
-    private RenamedMappedSpreadsheetExporterProvider(final SpreadsheetExporterInfoSet infos,
-                                                     final SpreadsheetExporterProvider provider) {
-        this.mapper = RenamingProviderMapper.with(
+    private MergedMappedSpreadsheetExporterProvider(final SpreadsheetExporterInfoSet infos,
+                                                    final SpreadsheetExporterProvider provider) {
+        this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetExporterInfos(),
                 (n) -> new IllegalArgumentException("Unknown exporter " + n)
@@ -91,5 +91,5 @@ final class RenamedMappedSpreadsheetExporterProvider implements SpreadsheetExpor
         return this.mapper.toString();
     }
 
-    private final RenamingProviderMapper<SpreadsheetExporterName, SpreadsheetExporterSelector, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet> mapper;
+    private final MergedProviderMapper<SpreadsheetExporterName, SpreadsheetExporterSelector, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet> mapper;
 }

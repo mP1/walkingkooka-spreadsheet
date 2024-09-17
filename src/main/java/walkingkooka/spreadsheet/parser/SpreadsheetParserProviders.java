@@ -82,11 +82,11 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     }
 
     /**
-     * {@see RenamedMappedSpreadsheetParserProvider}
+     * {@see MergedMappedSpreadsheetParserProvider}
      */
-    public static SpreadsheetParserProvider renamedMapped(final SpreadsheetParserInfoSet infos,
-                                                          final SpreadsheetParserProvider provider) {
-        return RenamedMappedSpreadsheetParserProvider.with(
+    public static SpreadsheetParserProvider mergedMapped(final SpreadsheetParserInfoSet infos,
+                                                         final SpreadsheetParserProvider provider) {
+        return MergedMappedSpreadsheetParserProvider.with(
                 infos,
                 provider
         );

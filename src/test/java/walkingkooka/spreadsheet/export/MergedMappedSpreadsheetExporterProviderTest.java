@@ -32,7 +32,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class RenamedMappedSpreadsheetExporterProviderTest implements SpreadsheetExporterProviderTesting<RenamedMappedSpreadsheetExporterProvider>,
+public final class MergedMappedSpreadsheetExporterProviderTest implements SpreadsheetExporterProviderTesting<MergedMappedSpreadsheetExporterProvider>,
         SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
@@ -41,7 +41,7 @@ public final class RenamedMappedSpreadsheetExporterProviderTest implements Sprea
     public void testWithNullInfosFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedSpreadsheetExporterProvider.with(
+                () -> MergedMappedSpreadsheetExporterProvider.with(
                         null,
                         SpreadsheetExporterProviders.fake()
                 )
@@ -52,7 +52,7 @@ public final class RenamedMappedSpreadsheetExporterProviderTest implements Sprea
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedSpreadsheetExporterProvider.with(
+                () -> MergedMappedSpreadsheetExporterProvider.with(
                         SpreadsheetExporterInfoSet.EMPTY.concat(
                                 SpreadsheetExporterInfo.with(
                                         SpreadsheetExporterProviders.BASE_URL.appendPath(
@@ -136,7 +136,7 @@ public final class RenamedMappedSpreadsheetExporterProviderTest implements Sprea
     }
 
     @Override
-    public RenamedMappedSpreadsheetExporterProvider createSpreadsheetExporterProvider() {
+    public MergedMappedSpreadsheetExporterProvider createSpreadsheetExporterProvider() {
         final SpreadsheetExporterProvider provider = new SpreadsheetExporterProvider() {
             @Override
             public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
@@ -178,7 +178,7 @@ public final class RenamedMappedSpreadsheetExporterProviderTest implements Sprea
             }
         };
 
-        return RenamedMappedSpreadsheetExporterProvider.with(
+        return MergedMappedSpreadsheetExporterProvider.with(
                 SpreadsheetExporterInfoSet.EMPTY.concat(
                         SpreadsheetExporterInfo.with(
                                 RENAMED_URL,
@@ -192,8 +192,8 @@ public final class RenamedMappedSpreadsheetExporterProviderTest implements Sprea
     // class............................................................................................................
 
     @Override
-    public Class<RenamedMappedSpreadsheetExporterProvider> type() {
-        return RenamedMappedSpreadsheetExporterProvider.class;
+    public Class<MergedMappedSpreadsheetExporterProvider> type() {
+        return MergedMappedSpreadsheetExporterProvider.class;
     }
 
     @Override

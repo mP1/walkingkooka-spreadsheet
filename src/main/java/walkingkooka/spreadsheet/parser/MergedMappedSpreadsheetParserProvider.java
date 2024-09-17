@@ -34,8 +34,8 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.plugin.MergedProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.RenamingProviderMapper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
 import java.util.List;
@@ -45,23 +45,23 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetParserProvider} that wraps a view of new {@link SpreadsheetParserName} to a wrapped {@link SpreadsheetParserProvider}.
  */
-final class RenamedMappedSpreadsheetParserProvider implements SpreadsheetParserProvider {
+final class MergedMappedSpreadsheetParserProvider implements SpreadsheetParserProvider {
 
-    static RenamedMappedSpreadsheetParserProvider with(final SpreadsheetParserInfoSet infos,
-                                                       final SpreadsheetParserProvider provider) {
+    static MergedMappedSpreadsheetParserProvider with(final SpreadsheetParserInfoSet infos,
+                                                      final SpreadsheetParserProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new RenamedMappedSpreadsheetParserProvider(
+        return new MergedMappedSpreadsheetParserProvider(
                 infos,
                 provider
         );
     }
 
-    private RenamedMappedSpreadsheetParserProvider(final SpreadsheetParserInfoSet infos,
-                                                   final SpreadsheetParserProvider provider) {
+    private MergedMappedSpreadsheetParserProvider(final SpreadsheetParserInfoSet infos,
+                                                  final SpreadsheetParserProvider provider) {
         this.provider = provider;
-        this.mapper = RenamingProviderMapper.with(
+        this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetParserInfos(),
                 (n) -> new IllegalArgumentException("Unknown parser " + n)
@@ -124,5 +124,5 @@ final class RenamedMappedSpreadsheetParserProvider implements SpreadsheetParserP
         return this.mapper.toString();
     }
 
-    private final RenamingProviderMapper<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserInfo, SpreadsheetParserInfoSet> mapper;
+    private final MergedProviderMapper<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserInfo, SpreadsheetParserInfoSet> mapper;
 }

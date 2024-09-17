@@ -17,30 +17,30 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.plugin.MergedProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.RenamingProviderMapper;
 
 import java.util.Objects;
 
 /**
  * A {@link SpreadsheetComparatorProvider} that supports renaming {@link SpreadsheetComparatorName} before invoking a wrapped {@link SpreadsheetComparatorProvider}.
  */
-final class RenamedMappedSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
+final class MergedMappedSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
 
-    static RenamedMappedSpreadsheetComparatorProvider with(final SpreadsheetComparatorInfoSet infos,
-                                                           final SpreadsheetComparatorProvider provider) {
+    static MergedMappedSpreadsheetComparatorProvider with(final SpreadsheetComparatorInfoSet infos,
+                                                          final SpreadsheetComparatorProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new RenamedMappedSpreadsheetComparatorProvider(
+        return new MergedMappedSpreadsheetComparatorProvider(
                 infos,
                 provider
         );
     }
 
-    private RenamedMappedSpreadsheetComparatorProvider(final SpreadsheetComparatorInfoSet infos,
-                                                       final SpreadsheetComparatorProvider provider) {
-        this.mapper = RenamingProviderMapper.with(
+    private MergedMappedSpreadsheetComparatorProvider(final SpreadsheetComparatorInfoSet infos,
+                                                      final SpreadsheetComparatorProvider provider) {
+        this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetComparatorInfos(),
                 (n) -> new IllegalArgumentException("Unknown comparator " + n)
@@ -75,5 +75,5 @@ final class RenamedMappedSpreadsheetComparatorProvider implements SpreadsheetCom
         return this.mapper.toString();
     }
 
-    private final RenamingProviderMapper<SpreadsheetComparatorName, ?, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet> mapper;
+    private final MergedProviderMapper<SpreadsheetComparatorName, ?, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet> mapper;
 }
