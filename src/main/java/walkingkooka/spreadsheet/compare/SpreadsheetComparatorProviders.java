@@ -80,11 +80,11 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     }
 
     /**
-     * {@see RenamedMappedSpreadsheetComparatorProvider}
+     * {@see MergedMappedSpreadsheetComparatorProvider}
      */
-    public static SpreadsheetComparatorProvider renamedMapped(final SpreadsheetComparatorInfoSet infos,
-                                                              final SpreadsheetComparatorProvider provider) {
-        return RenamedMappedSpreadsheetComparatorProvider.with(
+    public static SpreadsheetComparatorProvider mergedMapped(final SpreadsheetComparatorInfoSet infos,
+                                                             final SpreadsheetComparatorProvider provider) {
+        return MergedMappedSpreadsheetComparatorProvider.with(
                 infos,
                 provider
         );

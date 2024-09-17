@@ -28,8 +28,8 @@ import walkingkooka.reflect.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class RenamedMappedSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<RenamedMappedSpreadsheetComparatorProvider>,
-        ToStringTesting<RenamedMappedSpreadsheetComparatorProvider> {
+public final class MergedMappedSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<MergedMappedSpreadsheetComparatorProvider>,
+        ToStringTesting<MergedMappedSpreadsheetComparatorProvider> {
 
     private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/rename-comparator111");
 
@@ -51,7 +51,7 @@ public final class RenamedMappedSpreadsheetComparatorProviderTest implements Spr
     public void testWithNullInfosFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedSpreadsheetComparatorProvider.with(
+                () -> MergedMappedSpreadsheetComparatorProvider.with(
                         null,
                         SpreadsheetComparatorProviders.fake()
                 )
@@ -62,7 +62,7 @@ public final class RenamedMappedSpreadsheetComparatorProviderTest implements Spr
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedSpreadsheetComparatorProvider.with(
+                () -> MergedMappedSpreadsheetComparatorProvider.with(
                         SpreadsheetComparatorInfoSet.EMPTY,
                         null
                 )
@@ -118,8 +118,8 @@ public final class RenamedMappedSpreadsheetComparatorProviderTest implements Spr
     }
 
     @Override
-    public RenamedMappedSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
-        return RenamedMappedSpreadsheetComparatorProvider.with(
+    public MergedMappedSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
+        return MergedMappedSpreadsheetComparatorProvider.with(
                 SpreadsheetComparatorInfoSet.EMPTY.concat(
                         SpreadsheetComparatorInfo.with(
                                 RENAMED_URL,
@@ -162,8 +162,8 @@ public final class RenamedMappedSpreadsheetComparatorProviderTest implements Spr
     // class............................................................................................................
 
     @Override
-    public Class<RenamedMappedSpreadsheetComparatorProvider> type() {
-        return RenamedMappedSpreadsheetComparatorProvider.class;
+    public Class<MergedMappedSpreadsheetComparatorProvider> type() {
+        return MergedMappedSpreadsheetComparatorProvider.class;
     }
 
     @Override

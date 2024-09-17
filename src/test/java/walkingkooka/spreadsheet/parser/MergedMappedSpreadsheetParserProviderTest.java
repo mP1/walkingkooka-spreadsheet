@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class RenamedMappedSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<RenamedMappedSpreadsheetParserProvider>,
+public final class MergedMappedSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<MergedMappedSpreadsheetParserProvider>,
         SpreadsheetMetadataTesting {
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
@@ -41,7 +41,7 @@ public final class RenamedMappedSpreadsheetParserProviderTest implements Spreads
     public void testWithNullInfosFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedSpreadsheetParserProvider.with(
+                () -> MergedMappedSpreadsheetParserProvider.with(
                         null,
                         SpreadsheetParserProviders.fake()
                 )
@@ -52,7 +52,7 @@ public final class RenamedMappedSpreadsheetParserProviderTest implements Spreads
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedSpreadsheetParserProvider.with(
+                () -> MergedMappedSpreadsheetParserProvider.with(
                         SpreadsheetParserInfoSet.EMPTY.concat(
                                 SpreadsheetParserInfo.with(
                                         url("time-parse-pattern"),
@@ -165,10 +165,10 @@ public final class RenamedMappedSpreadsheetParserProviderTest implements Spreads
     }
 
     @Override
-    public RenamedMappedSpreadsheetParserProvider createSpreadsheetParserProvider() {
+    public MergedMappedSpreadsheetParserProvider createSpreadsheetParserProvider() {
         final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER);
 
-        return RenamedMappedSpreadsheetParserProvider.with(
+        return MergedMappedSpreadsheetParserProvider.with(
                 SpreadsheetParserInfoSet.EMPTY.concat(
                         SpreadsheetParserInfo.with(
                                 url("time-parse-pattern"),
@@ -186,8 +186,8 @@ public final class RenamedMappedSpreadsheetParserProviderTest implements Spreads
     // class............................................................................................................
 
     @Override
-    public Class<RenamedMappedSpreadsheetParserProvider> type() {
-        return RenamedMappedSpreadsheetParserProvider.class;
+    public Class<MergedMappedSpreadsheetParserProvider> type() {
+        return MergedMappedSpreadsheetParserProvider.class;
     }
 
     @Override
