@@ -80,6 +80,17 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see RenamedMappedSpreadsheetExporterProvider}
+     */
+    public static SpreadsheetExporterProvider renamedMapped(final SpreadsheetExporterInfoSet infos,
+                                                            final SpreadsheetExporterProvider provider) {
+        return RenamedMappedSpreadsheetExporterProvider.with(
+                infos,
+                provider
+        );
+    }
+
+    /**
      * {@see SpreadsheetExportSpreadsheetExporterProvider}
      */
     public static SpreadsheetExporterProvider spreadsheetExport() {
