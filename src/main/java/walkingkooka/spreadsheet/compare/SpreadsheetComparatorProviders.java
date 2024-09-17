@@ -80,6 +80,17 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     }
 
     /**
+     * {@see RenamedMappedSpreadsheetComparatorProvider}
+     */
+    public static SpreadsheetComparatorProvider renamedMapped(final SpreadsheetComparatorInfoSet infos,
+                                                              final SpreadsheetComparatorProvider provider) {
+        return RenamedMappedSpreadsheetComparatorProvider.with(
+                infos,
+                provider
+        );
+    }
+
+    /**
      * {@see SpreadsheetComparatorsSpreadsheetComparatorProvider}
      */
     public static SpreadsheetComparatorProvider spreadsheetComparators() {
