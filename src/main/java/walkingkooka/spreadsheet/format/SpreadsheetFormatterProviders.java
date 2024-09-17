@@ -80,6 +80,17 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see RenamedMappedSpreadsheetFormatterProvider}
+     */
+    public static SpreadsheetFormatterProvider renamedMapped(final SpreadsheetFormatterInfoSet infos,
+                                                             final SpreadsheetFormatterProvider provider) {
+        return RenamedMappedSpreadsheetFormatterProvider.with(
+                infos,
+                provider
+        );
+    }
+
+    /**
      * {@see SpreadsheetFormatPatternSpreadsheetFormatterProvider}
      */
     public static SpreadsheetFormatterProvider spreadsheetFormatPattern() {
