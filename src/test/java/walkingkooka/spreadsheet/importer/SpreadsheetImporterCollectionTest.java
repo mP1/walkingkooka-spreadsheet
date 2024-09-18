@@ -75,8 +75,8 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
             );
 
     @Test
-    public void testImportCells() {
-        this.importCellsAndCheck(
+    public void testDoImport() {
+        this.doImportAndCheck(
                 WEB_ENTITY,
                 IMPORTED
         );
@@ -97,8 +97,8 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
                                     }
 
                                     @Override
-                                    public List<ImportCellValue> importCells(final WebEntity cells,
-                                                                             final SpreadsheetImporterContext context) {
+                                    public List<ImportCellValue> doImport(final WebEntity cells,
+                                                                          final SpreadsheetImporterContext context) {
                                         checkEquals(WEB_ENTITY, cells, "cells");
                                         return IMPORTED;
                                     }

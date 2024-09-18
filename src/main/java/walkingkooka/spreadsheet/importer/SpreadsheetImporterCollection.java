@@ -76,11 +76,11 @@ final class SpreadsheetImporterCollection implements SpreadsheetImporter {
     }
 
     @Override
-    public List<ImportCellValue> importCells(final WebEntity cells,
-                                             final SpreadsheetImporterContext context) {
+    public List<ImportCellValue> doImport(final WebEntity cells,
+                                          final SpreadsheetImporterContext context) {
         return this.importers.stream()
                 .filter(e -> e.canImport(cells, context))
-                .map(e -> e.importCells(cells, context))
+                .map(e -> e.doImport(cells, context))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No importer found"));
     }

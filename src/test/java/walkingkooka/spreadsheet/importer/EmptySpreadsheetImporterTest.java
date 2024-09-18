@@ -36,16 +36,16 @@ public final class EmptySpreadsheetImporterTest implements SpreadsheetImporterTe
     }
 
     @Test
-    public void testImportContentTypeMissingFails() {
-        this.importCellsFails(
+    public void testDoImportContentTypeMissingFails() {
+        this.doImportFails(
                 WebEntity.empty(),
                 new IllegalArgumentException("Cannot import contentType missing")
         );
     }
 
     @Test
-    public void testImportFails() {
-        this.importCellsFails(
+    public void testDoImportFails() {
+        this.doImportFails(
                 WebEntity.empty()
                         .setContentType(Optional.of(MediaType.TEXT_PLAIN)),
                 new IllegalArgumentException("Cannot import contentType text/plain")
