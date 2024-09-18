@@ -742,10 +742,10 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
                 this.createSpreadsheetParserProvider()
                         .spreadsheetParserInfos(),
                 "SpreadsheetParserInfoSet\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern date-parse-pattern\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern date-time-parse-pattern\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/Parser/number-parse-pattern number-parse-pattern\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/Parser/time-parse-pattern time-parse-pattern\n"
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time-parse-pattern date-time-parse-pattern\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number-parse-pattern number-parse-pattern\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time-parse-pattern time-parse-pattern\n"
         );
     }
 
@@ -756,10 +756,10 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         this.checkEquals(
                 JsonNode.parse(
                         "[\n" +
-                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-parse-pattern date-parse-pattern\",\n" +
-                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/date-time-parse-pattern date-time-parse-pattern\",\n" +
-                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/number-parse-pattern number-parse-pattern\",\n" +
-                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/Parser/time-parse-pattern time-parse-pattern\"\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time-parse-pattern date-time-parse-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number-parse-pattern number-parse-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time-parse-pattern time-parse-pattern\"\n" +
                                 "]"
                 ),
                 JsonNodeMarshallContexts.basic()

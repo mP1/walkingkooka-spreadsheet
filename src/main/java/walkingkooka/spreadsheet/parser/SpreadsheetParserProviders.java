@@ -31,11 +31,11 @@ import java.util.Set;
 public final class SpreadsheetParserProviders implements PublicStaticHelper {
 
     /**
-     * This is the base {@link AbsoluteUrl} for all {@link Parser} in this package. The name of each
-     * formatter will be appended to this base.
+     * This is the base {@link AbsoluteUrl} for all {@link SpreadsheetParser} in this package.
+     * The name of each parser will be appended to this base.
      */
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
-            "https://github.com/mP1/walkingkooka-spreadsheet/" + Parser.class.getSimpleName()
+            "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetParser.class.getSimpleName()
     );
 
     /**
