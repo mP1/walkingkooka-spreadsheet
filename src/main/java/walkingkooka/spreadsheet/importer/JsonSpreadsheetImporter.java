@@ -72,8 +72,8 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
     }
 
     @Override
-    public List<ImportCellValue> importCells(final WebEntity cells,
-                                             final SpreadsheetImporterContext context) {
+    public List<ImportCellValue> doImport(final WebEntity cells,
+                                          final SpreadsheetImporterContext context) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(context, "context");
 

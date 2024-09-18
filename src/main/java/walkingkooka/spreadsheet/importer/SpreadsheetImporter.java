@@ -31,6 +31,6 @@ public interface SpreadsheetImporter {
     boolean canImport(final WebEntity cells,
                       final SpreadsheetImporterContext context);
 
-    List<ImportCellValue> importCells(final WebEntity cells,
-                                      final SpreadsheetImporterContext context);
+    List<ImportCellValue> doImport(final WebEntity cells,
+                                   final SpreadsheetImporterContext context);
 }

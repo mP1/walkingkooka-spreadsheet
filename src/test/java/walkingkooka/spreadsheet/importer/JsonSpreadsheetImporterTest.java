@@ -51,7 +51,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
         ClassTesting2<JsonSpreadsheetImporter> {
 
     @Test
-    public void testImportCellsWithCells() {
+    public void testDoImportWithCells() {
         final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=1+2")
         ).setFormatter(
@@ -74,7 +74,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         SpreadsheetFormula.EMPTY.setText("=333")
                 );
 
-        this.importAndCheck(
+        this.doImportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
                         Sets.of(
@@ -93,7 +93,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     }
 
     @Test
-    public void testImportCellsWithFormula() {
+    public void testDoImportWithFormula() {
         final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=1+2")
         ).setFormatter(
@@ -105,7 +105,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         SpreadsheetFormula.EMPTY.setText("=333")
                 );
 
-        this.importAndCheck(
+        this.doImportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
                         Sets.of(
@@ -126,7 +126,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     }
 
     @Test
-    public void testImportCellsWithFormatter() {
+    public void testDoImportWithFormatter() {
         final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=1+2")
         ).setFormatter(
@@ -138,7 +138,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         SpreadsheetFormula.EMPTY.setText("=333")
                 );
 
-        this.importAndCheck(
+        this.doImportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
                         Sets.of(
@@ -163,7 +163,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     }
 
     @Test
-    public void testImportCellsWithParser() {
+    public void testDoImportWithParser() {
         final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=1+2")
         ).setParser(
@@ -175,7 +175,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         SpreadsheetFormula.EMPTY.setText("=333")
                 );
 
-        this.importAndCheck(
+        this.doImportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
                         Sets.of(
@@ -200,7 +200,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     }
 
     @Test
-    public void testImportCellsWithStyle() {
+    public void testDoImportWithStyle() {
         final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=1+2")
         ).setParser(
@@ -212,7 +212,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         SpreadsheetFormula.EMPTY.setText("=333")
                 );
 
-        this.importAndCheck(
+        this.doImportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
                         Sets.of(
@@ -233,7 +233,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     }
 
     @Test
-    public void testImportCellsWithFormattedValue() {
+    public void testDoImportWithFormattedValue() {
         final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=1+2")
         ).setFormattedValue(
@@ -247,7 +247,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         SpreadsheetFormula.EMPTY.setText("=333")
                 );
 
-        this.importAndCheck(
+        this.doImportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
                         Sets.of(
@@ -271,20 +271,20 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
         );
     }
     
-    private void importAndCheck(final SpreadsheetCellRange cells,
-                                final MediaType contentType,
-                                final ImportCellValue... values) {
-        this.importCellsAndCheck(
+    private void doImportAndCheck(final SpreadsheetCellRange cells,
+                                  final MediaType contentType,
+                                  final ImportCellValue... values) {
+        this.doImportAndCheck(
                 cells,
                 contentType,
                 Lists.of(values)
         );
     }
 
-    private void importCellsAndCheck(final SpreadsheetCellRange cells,
-                                final MediaType contentType,
-                                final List<ImportCellValue> values) {
-        this.importCellsAndCheck(
+    private void doImportAndCheck(final SpreadsheetCellRange cells,
+                                  final MediaType contentType,
+                                  final List<ImportCellValue> values) {
+        this.doImportAndCheck(
                 SpreadsheetExporters.json()
                         .export(
                                 cells,

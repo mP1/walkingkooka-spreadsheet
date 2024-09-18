@@ -30,8 +30,8 @@ public class FakeSpreadsheetImporter implements SpreadsheetImporter {
     }
 
     @Override
-    public List<ImportCellValue> importCells(final WebEntity cells,
-                                             final SpreadsheetImporterContext context) {
+    public List<ImportCellValue> doImport(final WebEntity cells,
+                                          final SpreadsheetImporterContext context) {
         throw new UnsupportedOperationException();
     }
 }
