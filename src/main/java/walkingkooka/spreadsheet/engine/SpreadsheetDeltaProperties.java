@@ -80,15 +80,13 @@ public enum SpreadsheetDeltaProperties {
     }
 
     /**
-     * Accepts a {@link String selection} csv of {@link SpreadsheetDeltaProperties} in kebab-case returning the equivalent
-     * {@link Set}.
-     * <br>
-     * If the selection is null or empty string all of them are returned.
+     * Accepts a {@link String selection} which may be an empty string, wildcard <code>*</code> or csv of {@link SpreadsheetDeltaProperties}
+     * return a {@link Set}. Note that null or empty will is equivalent to wildcard which returns ALL.
      */
-    public static Set<SpreadsheetDeltaProperties> csv(final String selection) {
+    public static Set<SpreadsheetDeltaProperties> parse(final String selection) {
         return CharSequences.isNullOrEmpty(selection) || "*".equals(selection) ?
                 ALL :
-                csv0(selection);
+                parseCsv(selection);
     }
 
     // J2cl EnumSet.allOf not implemented.
@@ -102,7 +100,7 @@ public enum SpreadsheetDeltaProperties {
 
     public final static Set<SpreadsheetDeltaProperties> ALL;
 
-    private static Set<SpreadsheetDeltaProperties> csv0(final String values) {
+    private static Set<SpreadsheetDeltaProperties> parseCsv(final String values) {
         return Arrays.stream(values.split(","))
                 .map(SpreadsheetDeltaProperties::with)
                 .collect(Collectors.toCollection(() -> EnumSet.noneOf(SpreadsheetDeltaProperties.class)));

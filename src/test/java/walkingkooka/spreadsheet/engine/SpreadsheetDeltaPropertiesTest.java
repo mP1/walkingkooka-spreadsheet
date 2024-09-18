@@ -20,11 +20,13 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.test.ParseStringTesting;
 
 import java.util.EnumSet;
 import java.util.Set;
 
-public final class SpreadsheetDeltaPropertiesTest implements ClassTesting<SpreadsheetDeltaProperties> {
+public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<Set<SpreadsheetDeltaProperties>>,
+        ClassTesting<SpreadsheetDeltaProperties> {
 
     // with...................................................................................................
 
@@ -53,43 +55,53 @@ public final class SpreadsheetDeltaPropertiesTest implements ClassTesting<Spread
         );
     }
 
-    // csv.............................................................................................................
+    // parse............................................................................................................
+
+    @Override
+    public void testParseStringNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
 
     @Test
-    public void testCsvWithNull() {
-        this.csvAndCheck(
+    public void testParseWithNull() {
+        this.parseStringAndCheck(
                 null,
                 EnumSet.allOf(SpreadsheetDeltaProperties.class)
         );
     }
 
     @Test
-    public void testCsvWithEmptyString() {
-        this.csvAndCheck(
+    public void testParseWithEmptyString() {
+        this.parseStringAndCheck(
                 "",
                 EnumSet.allOf(SpreadsheetDeltaProperties.class)
         );
     }
 
     @Test
-    public void testCsvWithCells() {
-        this.csvAndCheck(
+    public void testParseWithCells() {
+        this.parseStringAndCheck(
                 "cells",
                 EnumSet.of(SpreadsheetDeltaProperties.CELLS)
         );
     }
 
     @Test
-    public void testCsvWithDeletedCells() {
-        this.csvAndCheck(
+    public void testParseWithDeletedCells() {
+        this.parseStringAndCheck(
                 "deleted-cells",
                 EnumSet.of(SpreadsheetDeltaProperties.DELETED_CELLS)
         );
     }
 
     @Test
-    public void testCsvWithSeveral() {
-        this.csvAndCheck(
+    public void testParseWithSeveral() {
+        this.parseStringAndCheck(
                 "cells,columns,deleted-cells",
                 EnumSet.of(
                         SpreadsheetDeltaProperties.CELLS,
@@ -100,21 +112,28 @@ public final class SpreadsheetDeltaPropertiesTest implements ClassTesting<Spread
     }
 
     @Test
-    public void testCsvWithStar() {
-        this.csvAndCheck(
+    public void testParseWithStar() {
+        this.parseStringAndCheck(
                 "*",
                 EnumSet.allOf(SpreadsheetDeltaProperties.class)
         );
     }
 
-    private void csvAndCheck(final String csv,
-                             final Set<SpreadsheetDeltaProperties> properties) {
-        this.checkEquals(
-                SpreadsheetDeltaProperties.csv(csv),
-                properties,
-                () -> "csv " + csv
-        );
+    @Override
+    public Set<SpreadsheetDeltaProperties> parseString(final String text) {
+        return SpreadsheetDeltaProperties.parse(text);
     }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
+    }
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetDeltaProperties> type() {
