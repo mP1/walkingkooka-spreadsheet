@@ -26,30 +26,30 @@ import java.util.Set;
 
 public final class SpreadsheetDeltaPropertiesTest implements ClassTesting<SpreadsheetDeltaProperties> {
 
-    // withCamelCase...................................................................................................
+    // with...................................................................................................
 
     @Test
-    public void testWithCamelCaseWithCells() {
-        this.withCamelCaseAndCheck(
+    public void testWithCells() {
+        this.withAndCheck(
                 "cells",
                 SpreadsheetDeltaProperties.CELLS
         );
     }
 
     @Test
-    public void testWithCamelCaseWithDeleted_Cells() {
-        this.withCamelCaseAndCheck(
+    public void testWithDeleted_Cells() {
+        this.withAndCheck(
                 "deleted-cells",
                 SpreadsheetDeltaProperties.DELETED_CELLS
         );
     }
 
-    private void withCamelCaseAndCheck(final String camelCase,
-                                       final SpreadsheetDeltaProperties properties) {
+    private void withAndCheck(final String kebabCase,
+                              final SpreadsheetDeltaProperties properties) {
         this.checkEquals(
                 properties,
-                SpreadsheetDeltaProperties.withCamelCase(camelCase),
-                () -> "withCamelCase " + camelCase
+                SpreadsheetDeltaProperties.with(kebabCase),
+                () -> "with " + kebabCase
         );
     }
 

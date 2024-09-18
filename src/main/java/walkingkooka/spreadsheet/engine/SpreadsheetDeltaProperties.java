@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
@@ -60,21 +61,22 @@ public enum SpreadsheetDeltaProperties {
     ROW_COUNT;
 
     SpreadsheetDeltaProperties() {
-        this.camelCase = this.name()
-                .toLowerCase()
-                .replace('_', '-');
+        this.kebabCase = CaseKind.SNAKE.change(
+                this.name(),
+                CaseKind.KEBAB
+        );
     }
 
-    private final String camelCase;
+    private final String kebabCase;
 
     /**
      * Factory that finds the {@link SpreadsheetDeltaProperties} with the given {@link String camel case name}.
      */
-    static SpreadsheetDeltaProperties withCamelCase(final String camelCase) {
+    static SpreadsheetDeltaProperties with(final String kebabCase) {
         return Arrays.stream(values())
-                .filter(v -> camelCase.equals(v.camelCase))
+                .filter(v -> kebabCase.equals(v.kebabCase))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown property \"" + camelCase + "\"."));
+                .orElseThrow(() -> new IllegalArgumentException("Unknown property \"" + kebabCase + "\"."));
     }
 
     /**
@@ -102,7 +104,7 @@ public enum SpreadsheetDeltaProperties {
 
     private static Set<SpreadsheetDeltaProperties> csv0(final String values) {
         return Arrays.stream(values.split(","))
-                .map(SpreadsheetDeltaProperties::withCamelCase)
+                .map(SpreadsheetDeltaProperties::with)
                 .collect(Collectors.toCollection(() -> EnumSet.noneOf(SpreadsheetDeltaProperties.class)));
     }
 }
