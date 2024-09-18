@@ -70,7 +70,7 @@ public enum SpreadsheetDeltaProperties {
     private final String kebabCase;
 
     /**
-     * Factory that finds the {@link SpreadsheetDeltaProperties} with the given {@link String camel case name}.
+     * Factory that finds the {@link SpreadsheetDeltaProperties} with the given {@link String kebab-case name}.
      */
     static SpreadsheetDeltaProperties with(final String kebabCase) {
         return Arrays.stream(values())
@@ -80,7 +80,7 @@ public enum SpreadsheetDeltaProperties {
     }
 
     /**
-     * Accepts a {@link String selection} csv of {@link SpreadsheetDeltaProperties} in camel case returning the equivalent
+     * Accepts a {@link String selection} csv of {@link SpreadsheetDeltaProperties} in kebab-case returning the equivalent
      * {@link Set}.
      * <br>
      * If the selection is null or empty string all of them are returned.
