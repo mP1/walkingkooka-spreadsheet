@@ -27,7 +27,7 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameFrozenColumns, SpreadsheetColumnRangeReference> {
 
     @Test
-    public void testInvalidSpreadsheetColumnRangeReferenceFails() {
+    public void testCheckValueWithInvalidSpreadsheetColumnRangeReferenceFails() {
         this.checkValueFails(
                 SpreadsheetSelection.parseColumnRange("C:D"),
                 "Range must begin at 'A', but got C:D for \"frozen-columns\""

@@ -28,7 +28,7 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameFrozenRows, SpreadsheetRowRangeReference> {
 
     @Test
-    public void testInvalidSpreadsheetRowRangeReferenceFails() {
+    public void testCheckValueWithInvalidSpreadsheetRowRangeReferenceFails() {
         this.checkValueFails(
                 SpreadsheetSelection.parseRowRange("2:3"),
                 "Range must begin at '1', but got 2:3 for \"frozen-rows\""

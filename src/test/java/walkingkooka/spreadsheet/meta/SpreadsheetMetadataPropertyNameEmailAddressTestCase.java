@@ -29,7 +29,7 @@ public abstract class SpreadsheetMetadataPropertyNameEmailAddressTestCase<N exte
     }
 
     @Test
-    public final void testInvalidEmailFails() {
+    public final void testCheckValueWithInvalidEmailFails() {
         this.checkValueFails("invalid email", "Expected EmailAddress, but got \"invalid email\" for \"" + this.createName().name + "\"");
     }
 

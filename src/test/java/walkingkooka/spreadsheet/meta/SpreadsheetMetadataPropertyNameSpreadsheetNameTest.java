@@ -26,8 +26,11 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameSpreadsheetNameTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetName, SpreadsheetName> {
 
     @Test
-    public void testInvalidSpreadsheetNameFails() {
-        this.checkValueFails("\r", "Expected SpreadsheetName, but got \"\\r\" for \"spreadsheet-name\"");
+    public void testCheckValueWithInvalidSpreadsheetNameFails() {
+        this.checkValueFails(
+                "\r",
+                "Expected SpreadsheetName, but got \"\\r\" for \"spreadsheet-name\""
+        );
     }
 
     @Test

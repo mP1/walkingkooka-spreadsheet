@@ -26,8 +26,11 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameExpressionNumberKindTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameExpressionNumberKind, ExpressionNumberKind> {
 
     @Test
-    public void testInvalidExpressionNumberKindFails() {
-        this.checkValueFails("invalid", "Expected ExpressionNumberKind, but got \"invalid\" for \"expression-number-kind\"");
+    public void testCheckValueWithInvalidExpressionNumberKindFails() {
+        this.checkValueFails(
+                "invalid",
+                "Expected ExpressionNumberKind, but got \"invalid\" for \"expression-number-kind\""
+        );
     }
 
     @Test
