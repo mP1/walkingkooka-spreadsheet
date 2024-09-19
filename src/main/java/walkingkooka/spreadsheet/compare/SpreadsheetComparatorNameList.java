@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.PluginNameLike;
@@ -89,7 +88,7 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
 
     // HasText..........................................................................................................
 
-    @Test
+    @Override
     public String text() {
         return CharacterConstant.COMMA.toSeparatedString(
                 this,
