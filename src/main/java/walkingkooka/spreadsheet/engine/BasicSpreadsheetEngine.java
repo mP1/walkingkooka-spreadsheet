@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -500,16 +499,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetCellRange sorted = range.sort(
                     comparators,
                     movedFromTo::put, // moved cells
-                    SpreadsheetComparatorContexts.basic(
-                            context.spreadsheetMetadata()
-                                    .converterContext(
-                                            SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
-                                            context, // ConverterProvider
-                                            context::now, // now supplier
-                                            context::resolveIfLabel,
-                                            context // ProviderContext
-                                    )
-                    )
+                    context.spreadsheetMetadata()
+                            .spreadsheetComparatorContext(
+                                    context, // ConverterProvider
+                                    context::now, // now supplier
+                                    context::resolveIfLabel,
+                                    context // ProviderContext
+                            )
             );
 
             // delete old cells...

@@ -44,6 +44,8 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
@@ -703,6 +705,26 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return ExpressionFunctionProviders.filteredMapped(
                 set,
                 provider
+        );
+    }
+
+    // SpreadsheetComparatorContext.....................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetComparatorContext} which may be used for sorting.
+     */
+    public final SpreadsheetComparatorContext spreadsheetComparatorContext(final SpreadsheetProvider spreadsheetProvider,
+                                                                           final Supplier<LocalDateTime> now,
+                                                                           final SpreadsheetLabelNameResolver resolveIfLabel,
+                                                                           final ProviderContext providerContext) {
+        return SpreadsheetComparatorContexts.basic(
+                this.converterContext(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                        spreadsheetProvider, // ConverterProvider
+                        now, // now supplier
+                        resolveIfLabel,
+                        providerContext // ProviderContext
+                )
         );
     }
 
