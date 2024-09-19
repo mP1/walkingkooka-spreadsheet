@@ -31,8 +31,8 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameCharacter() {
-        super();
+    SpreadsheetMetadataPropertyNameCharacter(final String name) {
+        super(name);
     }
 
     @Override

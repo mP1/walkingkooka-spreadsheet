@@ -21,27 +21,27 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNamePositiveSignTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNamePositiveSign> {
+public final class SpreadsheetMetadataPropertyNameCharacterNegativeSignTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameCharacterNegativeSign> {
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, '+');
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, '-');
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNamePositiveSign.instance(), "positive-sign");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterNegativeSign.instance(), "negative-sign");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNamePositiveSign createName() {
-        return SpreadsheetMetadataPropertyNamePositiveSign.instance();
+    SpreadsheetMetadataPropertyNameCharacterNegativeSign createName() {
+        return SpreadsheetMetadataPropertyNameCharacterNegativeSign.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNamePositiveSign> type() {
-        return SpreadsheetMetadataPropertyNamePositiveSign.class;
+    public Class<SpreadsheetMetadataPropertyNameCharacterNegativeSign> type() {
+        return SpreadsheetMetadataPropertyNameCharacterNegativeSign.class;
     }
 }
