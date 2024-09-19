@@ -28,8 +28,8 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameBoolean() {
-        super();
+    SpreadsheetMetadataPropertyNameBoolean(final String name) {
+        super(name);
     }
 
     @Override
