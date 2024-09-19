@@ -143,6 +143,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
             .set(
+                    SpreadsheetMetadataPropertyName.SORT_CONVERTER,
+                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)")
+            ).set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
                     SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
             ).set(
