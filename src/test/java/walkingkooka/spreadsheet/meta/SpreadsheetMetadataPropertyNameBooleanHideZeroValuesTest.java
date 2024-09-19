@@ -20,25 +20,25 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameHideZeroValuesTest extends SpreadsheetMetadataPropertyNameBooleanTestCase<SpreadsheetMetadataPropertyNameHideZeroValues> {
+public final class SpreadsheetMetadataPropertyNameBooleanHideZeroValuesTest extends SpreadsheetMetadataPropertyNameBooleanTestCase<SpreadsheetMetadataPropertyNameBooleanHideZeroValues> {
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameHideZeroValues.instance(),
+                SpreadsheetMetadataPropertyNameBooleanHideZeroValues.instance(),
                 "hide-zero-values"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameHideZeroValues createName() {
-        return SpreadsheetMetadataPropertyNameHideZeroValues.instance();
+    SpreadsheetMetadataPropertyNameBooleanHideZeroValues createName() {
+        return SpreadsheetMetadataPropertyNameBooleanHideZeroValues.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameHideZeroValues> type() {
-        return SpreadsheetMetadataPropertyNameHideZeroValues.class;
+    public Class<SpreadsheetMetadataPropertyNameBooleanHideZeroValues> type() {
+        return SpreadsheetMetadataPropertyNameBooleanHideZeroValues.class;
     }
 }

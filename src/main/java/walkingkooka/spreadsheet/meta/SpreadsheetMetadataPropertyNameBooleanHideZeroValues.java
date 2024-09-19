@@ -22,16 +22,16 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 /**
  * When true the UI will hide rather than display zero values. The {@link SpreadsheetCell#formattedValue()} will still contain the zero value formatted as text.
  */
-final class SpreadsheetMetadataPropertyNameHideZeroValues extends SpreadsheetMetadataPropertyNameBoolean {
+final class SpreadsheetMetadataPropertyNameBooleanHideZeroValues extends SpreadsheetMetadataPropertyNameBoolean {
 
     /**
      * Getter rather than field to allow lazily creation.
      */
-    static SpreadsheetMetadataPropertyNameHideZeroValues instance() {
-        return new SpreadsheetMetadataPropertyNameHideZeroValues();
+    static SpreadsheetMetadataPropertyNameBooleanHideZeroValues instance() {
+        return new SpreadsheetMetadataPropertyNameBooleanHideZeroValues();
     }
 
-    private SpreadsheetMetadataPropertyNameHideZeroValues() {
+    private SpreadsheetMetadataPropertyNameBooleanHideZeroValues() {
     }
 
     @Override
