@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -100,6 +101,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     // properties..........................................................................................................
 
     protected void visitCellCharacterWidth(final int value) {
+        // nop
+    }
+
+    protected void visitClipboardImporter(final SpreadsheetImporterSelector selector) {
         // nop
     }
 
