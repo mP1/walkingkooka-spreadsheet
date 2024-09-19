@@ -110,7 +110,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creation {@link LocalDateTime}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<LocalDateTime> CREATE_DATE_TIME = registerConstant(SpreadsheetMetadataPropertyNameCreateDateTime.instance());
+    public static final SpreadsheetMetadataPropertyName<LocalDateTime> CREATE_DATE_TIME = registerConstant(SpreadsheetMetadataPropertyNameLocalDateTimeCreateDateTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency {@link String}</code>
@@ -215,7 +215,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>modified {@link LocalDateTime}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerConstant(SpreadsheetMetadataPropertyNameModifiedDateTime.instance());
+    public static final SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerConstant(SpreadsheetMetadataPropertyNameLocalDateTimeModifiedDateTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>negative-sign {@link Character}</code>
