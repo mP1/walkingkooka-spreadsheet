@@ -892,6 +892,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.createContext(),
                 "metadata={\n" +
                         "  \"cell-character-width\": 1,\n" +
+                        "  \"clipboard-importer\": \"json\",\n" +
                         "  \"color-1\": \"#000000\",\n" +
                         "  \"color-2\": \"#ffffff\",\n" +
                         "  \"color-3\": \"#ff0000\",\n" +
@@ -1101,6 +1102,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 ),
                 "metadata={\n" +
                         "  \"cell-character-width\": 1,\n" +
+                        "  \"clipboard-importer\": \"json\",\n" +
                         "  \"color-1\": \"#000001\",\n" +
                         "  \"color-2\": \"#000002\",\n" +
                         "  \"color-3\": \"#000003\",\n" +

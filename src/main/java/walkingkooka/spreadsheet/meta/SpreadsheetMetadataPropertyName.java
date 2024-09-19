@@ -38,6 +38,8 @@ import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterName;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -96,6 +98,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> CELL_CHARACTER_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetImporterSelector}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterSelector> CLIPBOARD_IMPORTER = registerConstant(SpreadsheetMetadataPropertyNameClipboardImporter.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterInfoSet}</code>
@@ -722,6 +729,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         SpreadsheetFormatterSelector.with(
                 SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
                 "dd/mm/yyyy"
+        );
+        SpreadsheetImporterSelector.with(
+                SpreadsheetImporterName.EMPTY,
+                ""
         );
         SpreadsheetParserSelector.with(
                 SpreadsheetParserName.DATE_PARSER_PATTERN,
