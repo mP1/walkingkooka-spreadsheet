@@ -19,22 +19,22 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameCreatorTest extends SpreadsheetMetadataPropertyNameEmailAddressTestCase<SpreadsheetMetadataPropertyNameCreator> {
+public final class SpreadsheetMetadataPropertyNameEmailAddressModifiedByTest extends SpreadsheetMetadataPropertyNameEmailAddressTestCase<SpreadsheetMetadataPropertyNameEmailAddressModifiedBy> {
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCreator.instance(), "creator");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameEmailAddressModifiedBy.instance(), "modified-by");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameCreator createName() {
-        return SpreadsheetMetadataPropertyNameCreator.instance();
+    SpreadsheetMetadataPropertyNameEmailAddressModifiedBy createName() {
+        return SpreadsheetMetadataPropertyNameEmailAddressModifiedBy.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameCreator> type() {
-        return SpreadsheetMetadataPropertyNameCreator.class;
+    public Class<SpreadsheetMetadataPropertyNameEmailAddressModifiedBy> type() {
+        return SpreadsheetMetadataPropertyNameEmailAddressModifiedBy.class;
     }
 }
