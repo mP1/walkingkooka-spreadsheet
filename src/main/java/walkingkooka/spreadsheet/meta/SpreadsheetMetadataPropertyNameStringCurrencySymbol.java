@@ -19,19 +19,19 @@ package walkingkooka.spreadsheet.meta;
 
 import java.text.DecimalFormatSymbols;
 
-final class SpreadsheetMetadataPropertyNameCurrencySymbol extends SpreadsheetMetadataPropertyNameString {
+final class SpreadsheetMetadataPropertyNameStringCurrencySymbol extends SpreadsheetMetadataPropertyNameString {
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameCurrencySymbol instance() {
-        return new SpreadsheetMetadataPropertyNameCurrencySymbol();
+    static SpreadsheetMetadataPropertyNameStringCurrencySymbol instance() {
+        return new SpreadsheetMetadataPropertyNameStringCurrencySymbol();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameCurrencySymbol() {
-        super();
+    private SpreadsheetMetadataPropertyNameStringCurrencySymbol() {
+        super("currency-symbol");
     }
 
     @Override
