@@ -19,25 +19,25 @@ package walkingkooka.spreadsheet.meta;
 
 import java.time.LocalDateTime;
 
-final class SpreadsheetMetadataPropertyNameCreateDateTime extends SpreadsheetMetadataPropertyNameLocalDateTime {
+final class SpreadsheetMetadataPropertyNameLocalDateTimeModifiedDateTime extends SpreadsheetMetadataPropertyNameLocalDateTime {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameCreateDateTime instance() {
-        return new SpreadsheetMetadataPropertyNameCreateDateTime();
+    static SpreadsheetMetadataPropertyNameLocalDateTimeModifiedDateTime instance() {
+        return new SpreadsheetMetadataPropertyNameLocalDateTimeModifiedDateTime();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameCreateDateTime() {
-        super();
+    private SpreadsheetMetadataPropertyNameLocalDateTimeModifiedDateTime() {
+        super("modified-date-time");
     }
 
     @Override
     void accept(final LocalDateTime value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitCreateDateTime(value);
+        visitor.visitModifiedDateTime(value);
     }
 }
