@@ -19,40 +19,42 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCountTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount> {
+public final class SpreadsheetMetadataPropertyNameIntegerTwoDigitYearTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerTwoDigitYear> {
 
     @Test
     public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected value >= 0, but got -1 for \"general-number-format-digit-count\"");
+        this.checkValueFails(-1, "Expected int between 0 and including 99, but got -1 for \"two-digit-year\"");
     }
 
     @Test
-    public void testZeroValue() {
+    public void test100ValueFails() {
+        this.checkValueFails(100, "Expected int between 0 and including 99, but got 100 for \"two-digit-year\"");
+    }
+
+    @Test
+    public void testZero() {
         this.checkValue(0);
     }
 
     @Test
-    public void testEightValue() {
-        this.checkValue(8);
+    public void test99() {
+        this.checkValue(99);
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount.instance(),
-                "general-number-format-digit-count"
-        );
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.instance(), "two-digit-year");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount createName() {
-        return SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount.instance();
+    SpreadsheetMetadataPropertyNameIntegerTwoDigitYear createName() {
+        return SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount> type() {
-        return SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount.class;
+    public Class<SpreadsheetMetadataPropertyNameIntegerTwoDigitYear> type() {
+        return SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.class;
     }
 }

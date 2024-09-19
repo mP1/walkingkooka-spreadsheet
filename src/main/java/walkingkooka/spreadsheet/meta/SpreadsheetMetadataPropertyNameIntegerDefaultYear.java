@@ -17,34 +17,30 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameIntegerDefaultYear extends SpreadsheetMetadataPropertyNameInteger {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount instance() {
-        return new SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount();
+    static SpreadsheetMetadataPropertyNameIntegerDefaultYear instance() {
+        return new SpreadsheetMetadataPropertyNameIntegerDefaultYear();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount() {
-        super();
+    private SpreadsheetMetadataPropertyNameIntegerDefaultYear() {
+        super("default-year");
     }
 
     @Override
     Integer checkValue0(final Object value) {
-        final Integer integerValue = this.checkValueTypeInteger(value);
-        if (integerValue < 0) {
-            throw new SpreadsheetMetadataPropertyValueException("Expected value >= 0", this, integerValue);
-        }
-        return integerValue;
+        return this.checkValueTypeInteger(value);
     }
 
     @Override
     void accept(final Integer value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitGeneralNumberFormatDigitCount(value);
+        visitor.visitDefaultYear(value);
     }
 }

@@ -19,7 +19,12 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameDefaultYearTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameDefaultYear> {
+public final class SpreadsheetMetadataPropertyNameIntegerPrecisionTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerPrecision> {
+
+    @Test
+    public void testNegativeValueFails() {
+        this.checkValueFails(-1, "Expected value >= 0, but got -1 for \"precision\"");
+    }
 
     @Test
     public void testZeroValue() {
@@ -27,29 +32,19 @@ public final class SpreadsheetMetadataPropertyNameDefaultYearTest extends Spread
     }
 
     @Test
-    public void test1900() {
-        this.checkValue(1900);
-    }
-
-    @Test
-    public void test2000() {
-        this.checkValue(2000);
-    }
-
-    @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameDefaultYear.instance(), "default-year");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameIntegerPrecision.instance(), "precision");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameDefaultYear createName() {
-        return SpreadsheetMetadataPropertyNameDefaultYear.instance();
+    SpreadsheetMetadataPropertyNameIntegerPrecision createName() {
+        return SpreadsheetMetadataPropertyNameIntegerPrecision.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameDefaultYear> type() {
-        return SpreadsheetMetadataPropertyNameDefaultYear.class;
+    public Class<SpreadsheetMetadataPropertyNameIntegerPrecision> type() {
+        return SpreadsheetMetadataPropertyNameIntegerPrecision.class;
     }
 }

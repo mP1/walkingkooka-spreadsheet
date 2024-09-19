@@ -17,20 +17,20 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNamePrecision extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameIntegerPrecision extends SpreadsheetMetadataPropertyNameInteger {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNamePrecision instance() {
-        return new SpreadsheetMetadataPropertyNamePrecision();
+    static SpreadsheetMetadataPropertyNameIntegerPrecision instance() {
+        return new SpreadsheetMetadataPropertyNameIntegerPrecision();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNamePrecision() {
-        super();
+    private SpreadsheetMetadataPropertyNameIntegerPrecision() {
+        super("precision");
     }
 
     @Override

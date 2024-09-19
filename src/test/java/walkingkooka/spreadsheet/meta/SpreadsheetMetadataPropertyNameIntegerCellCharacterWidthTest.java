@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNamePrecisionTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNamePrecision> {
+public final class SpreadsheetMetadataPropertyNameIntegerCellCharacterWidthTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth> {
 
     @Test
     public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected value >= 0, but got -1 for \"precision\"");
+        this.checkValueFails(-1, "Expected int > 0, but got -1 for \"cell-character-width\"");
     }
 
     @Test
@@ -33,18 +33,18 @@ public final class SpreadsheetMetadataPropertyNamePrecisionTest extends Spreadsh
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNamePrecision.instance(), "precision");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance(), "cell-character-width");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNamePrecision createName() {
-        return SpreadsheetMetadataPropertyNamePrecision.instance();
+    SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth createName() {
+        return SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNamePrecision> type() {
-        return SpreadsheetMetadataPropertyNamePrecision.class;
+    public Class<SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth> type() {
+        return SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.class;
     }
 }
