@@ -23,19 +23,19 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 /**
  * The {@link Name} of metadata property, with a custom handler and visitor to handle dispatching to a {@link SpreadsheetMetadataVisitor} method.
  */
-final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameIntegerNamedColor extends SpreadsheetMetadataPropertyNameInteger {
 
     /**
-     * Factory used to create a new {@link SpreadsheetMetadataPropertyNameNamedColor} constant.
+     * Factory used to create a new {@link SpreadsheetMetadataPropertyNameIntegerNamedColor} constant.
      */
-    static SpreadsheetMetadataPropertyNameNamedColor withColorName(final SpreadsheetColorName name) {
-        return new SpreadsheetMetadataPropertyNameNamedColor(name);
+    static SpreadsheetMetadataPropertyNameIntegerNamedColor withColorName(final SpreadsheetColorName name) {
+        return new SpreadsheetMetadataPropertyNameIntegerNamedColor(name);
     }
 
     /**
      * Private constructor use factory.
      */
-    private SpreadsheetMetadataPropertyNameNamedColor(final SpreadsheetColorName name) {
+    private SpreadsheetMetadataPropertyNameIntegerNamedColor(final SpreadsheetColorName name) {
         super(COLOR_PREFIX + name.value());
         this.name = name;
     }

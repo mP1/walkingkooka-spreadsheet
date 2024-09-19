@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameCellCharacterWidthTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameCellCharacterWidth> {
+public final class SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCountTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount> {
 
     @Test
     public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected int > 0, but got -1 for \"cell-character-width\"");
+        this.checkValueFails(-1, "Expected value >= 0, but got -1 for \"general-number-format-digit-count\"");
     }
 
     @Test
@@ -32,19 +32,27 @@ public final class SpreadsheetMetadataPropertyNameCellCharacterWidthTest extends
     }
 
     @Test
+    public void testEightValue() {
+        this.checkValue(8);
+    }
+
+    @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCellCharacterWidth.instance(), "cell-character-width");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance(),
+                "general-number-format-digit-count"
+        );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameCellCharacterWidth createName() {
-        return SpreadsheetMetadataPropertyNameCellCharacterWidth.instance();
+    SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount createName() {
+        return SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameCellCharacterWidth> type() {
-        return SpreadsheetMetadataPropertyNameCellCharacterWidth.class;
+    public Class<SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount> type() {
+        return SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.class;
     }
 }

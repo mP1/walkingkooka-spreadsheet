@@ -23,17 +23,17 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataPropertyNameNamedColorTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameNamedColor> {
+public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerNamedColor> {
 
     @Test
     public void testWithNullFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyNameNamedColor.withColorName(null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(null));
     }
 
     @Test
     public void testWith() {
         final SpreadsheetColorName colorName = this.colorName();
-        final SpreadsheetMetadataPropertyNameNamedColor property = SpreadsheetMetadataPropertyNameNamedColor.withColorName(colorName);
+        final SpreadsheetMetadataPropertyNameIntegerNamedColor property = SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(colorName);
         assertSame(colorName, property.name, "colorName");
     }
 
@@ -47,7 +47,7 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameNamedColor.withColorName(this.colorName()), "color-dull");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(this.colorName()), "color-dull");
     }
 
     private SpreadsheetColorName colorName() {
@@ -55,14 +55,14 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameNamedColor createName() {
-        return SpreadsheetMetadataPropertyNameNamedColor.withColorName(SpreadsheetColorName.with("dull"));
+    SpreadsheetMetadataPropertyNameIntegerNamedColor createName() {
+        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(SpreadsheetColorName.with("dull"));
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameNamedColor> type() {
-        return SpreadsheetMetadataPropertyNameNamedColor.class;
+    public Class<SpreadsheetMetadataPropertyNameIntegerNamedColor> type() {
+        return SpreadsheetMetadataPropertyNameIntegerNamedColor.class;
     }
 }

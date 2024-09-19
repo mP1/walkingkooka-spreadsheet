@@ -25,13 +25,6 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameInteger() {
-        super();
-    }
-
-    /**
-     * Package private to limit sub classing.
-     */
     SpreadsheetMetadataPropertyNameInteger(final String name) {
         super(name);
     }

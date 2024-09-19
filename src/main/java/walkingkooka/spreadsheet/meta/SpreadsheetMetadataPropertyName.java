@@ -95,7 +95,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Integer> CELL_CHARACTER_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameCellCharacterWidth.instance());
+    public static final SpreadsheetMetadataPropertyName<Integer> CELL_CHARACTER_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterInfoSet}</code>
@@ -150,7 +150,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the {@link Integer} <code>default-year</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Integer> DEFAULT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameDefaultYear.instance());
+    public static final SpreadsheetMetadataPropertyName<Integer> DEFAULT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerDefaultYear.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
@@ -190,7 +190,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>general-number-format-digit-count {@link Integer}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Integer> GENERAL_NUMBER_FORMAT_DIGIT_COUNT = registerConstant(SpreadsheetMetadataPropertyNameGeneralNumberFormatDigitCount.instance());
+    public static final SpreadsheetMetadataPropertyName<Integer> GENERAL_NUMBER_FORMAT_DIGIT_COUNT = registerConstant(SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>group-separator {@link Character}</code>
@@ -245,7 +245,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>precision {@link Integer}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Integer> PRECISION = registerConstant(SpreadsheetMetadataPropertyNamePrecision.instance());
+    public static final SpreadsheetMetadataPropertyName<Integer> PRECISION = registerConstant(SpreadsheetMetadataPropertyNameIntegerPrecision.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>rounding-mode {@link RoundingMode}</code>
@@ -310,7 +310,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year {@link SpreadsheetFormatPattern}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameTwoDigitYear.instance());
+    public static final SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>value-separator</code> {@link Character}
@@ -356,7 +356,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * Retrieves a {@link SpreadsheetMetadataPropertyName} for a {@link SpreadsheetColorName named}.
      */
     public static SpreadsheetMetadataPropertyName<Integer> namedColor(final SpreadsheetColorName name) {
-        return SpreadsheetMetadataPropertyNameNamedColor.withColorName(name);
+        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(name);
     }
 
     /**

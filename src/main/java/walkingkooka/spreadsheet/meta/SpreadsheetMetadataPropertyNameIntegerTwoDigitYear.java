@@ -17,27 +17,27 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameCellCharacterWidth extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameIntegerTwoDigitYear extends SpreadsheetMetadataPropertyNameInteger {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameCellCharacterWidth instance() {
-        return new SpreadsheetMetadataPropertyNameCellCharacterWidth();
+    static SpreadsheetMetadataPropertyNameIntegerTwoDigitYear instance() {
+        return new SpreadsheetMetadataPropertyNameIntegerTwoDigitYear();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameCellCharacterWidth() {
-        super();
+    private SpreadsheetMetadataPropertyNameIntegerTwoDigitYear() {
+        super("two-digit-year");
     }
 
     @Override
     Integer checkValue0(final Object value) {
         final Integer integerValue = this.checkValueTypeInteger(value);
-        if (integerValue < 0) {
-            throw new SpreadsheetMetadataPropertyValueException("Expected int > 0", this, integerValue);
+        if (integerValue < 0 || integerValue > 99) {
+            throw new SpreadsheetMetadataPropertyValueException("Expected int between 0 and including 99", this, integerValue);
         }
         return integerValue;
     }
@@ -45,6 +45,6 @@ final class SpreadsheetMetadataPropertyNameCellCharacterWidth extends Spreadshee
     @Override
     void accept(final Integer value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitCellCharacterWidth(value);
+        visitor.visitTwoDigitYear(value);
     }
 }
