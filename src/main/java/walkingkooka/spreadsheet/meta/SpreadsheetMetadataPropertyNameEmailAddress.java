@@ -27,8 +27,8 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     /**
      * Package private constructor to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameEmailAddress() {
-        super();
+    SpreadsheetMetadataPropertyNameEmailAddress(final String name) {
+        super(name);
     }
 
     @Override

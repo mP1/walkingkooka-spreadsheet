@@ -19,25 +19,25 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
 
-final class SpreadsheetMetadataPropertyNameCreator extends SpreadsheetMetadataPropertyNameEmailAddress {
+final class SpreadsheetMetadataPropertyNameEmailAddressModifiedBy extends SpreadsheetMetadataPropertyNameEmailAddress {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameCreator instance() {
-        return new SpreadsheetMetadataPropertyNameCreator();
+    static SpreadsheetMetadataPropertyNameEmailAddressModifiedBy instance() {
+        return new SpreadsheetMetadataPropertyNameEmailAddressModifiedBy();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameCreator() {
-        super();
+    private SpreadsheetMetadataPropertyNameEmailAddressModifiedBy() {
+        super("modified-by");
     }
 
     @Override
     void accept(final EmailAddress value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitCreator(value);
+        visitor.visitModifiedBy(value);
     }
 }
