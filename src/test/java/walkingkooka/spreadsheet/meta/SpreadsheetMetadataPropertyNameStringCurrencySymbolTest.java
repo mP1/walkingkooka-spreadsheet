@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameCurrencySymbolTest extends SpreadsheetMetadataPropertyNameStringTestCase<SpreadsheetMetadataPropertyNameCurrencySymbol> {
+public final class SpreadsheetMetadataPropertyNameStringCurrencySymbolTest extends SpreadsheetMetadataPropertyNameStringTestCase<SpreadsheetMetadataPropertyNameStringCurrencySymbol> {
 
     @Test
     public void testExtractLocaleAwareValue() {
@@ -30,18 +30,18 @@ public final class SpreadsheetMetadataPropertyNameCurrencySymbolTest extends Spr
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCurrencySymbol.instance(), "currency-symbol");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameStringCurrencySymbol.instance(), "currency-symbol");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameCurrencySymbol createName() {
-        return SpreadsheetMetadataPropertyNameCurrencySymbol.instance();
+    SpreadsheetMetadataPropertyNameStringCurrencySymbol createName() {
+        return SpreadsheetMetadataPropertyNameStringCurrencySymbol.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameCurrencySymbol> type() {
-        return SpreadsheetMetadataPropertyNameCurrencySymbol.class;
+    public Class<SpreadsheetMetadataPropertyNameStringCurrencySymbol> type() {
+        return SpreadsheetMetadataPropertyNameStringCurrencySymbol.class;
     }
 }

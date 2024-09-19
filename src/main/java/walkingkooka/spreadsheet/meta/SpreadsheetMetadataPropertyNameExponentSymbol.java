@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameExponentSymbol extends SpreadsheetMet
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameExponentSymbol() {
-        super();
+        super("exponent-symbol");
     }
 
     @Override

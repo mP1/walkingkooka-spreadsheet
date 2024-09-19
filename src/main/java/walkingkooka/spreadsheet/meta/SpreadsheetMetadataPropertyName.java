@@ -115,7 +115,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency {@link String}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameCurrencySymbol.instance());
+    public static final SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameStringCurrencySymbol.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the default {@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector} for {@link java.time.LocalDate} values.

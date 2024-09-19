@@ -26,8 +26,8 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameString() {
-        super();
+    SpreadsheetMetadataPropertyNameString(final String name) {
+        super(name);
     }
 
     @Override
