@@ -30,6 +30,8 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
@@ -99,6 +101,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     public static final SpreadsheetMetadataPropertyName<Integer> CELL_CHARACTER_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance());
 
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetExporterSelector}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterSelector> CLIPBOARD_EXPORTER = registerConstant(SpreadsheetMetadataPropertyNameClipboardExporter.instance());
+    
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetImporterSelector}</code>
      */
@@ -726,6 +733,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         ExpressionNumberKind.DEFAULT.name();
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
+        SpreadsheetExporterSelector.with(
+                SpreadsheetExporterName.EMPTY,
+                ""
+        );
         SpreadsheetFormatterSelector.with(
                 SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
                 "dd/mm/yyyy"

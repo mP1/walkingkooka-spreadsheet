@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
@@ -2691,6 +2692,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
         properties.put(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 0);
+        properties.put(
+                SpreadsheetMetadataPropertyName.CLIPBOARD_EXPORTER,
+                SpreadsheetExporterSelector.parse("json")
+        );
         properties.put(
                 SpreadsheetMetadataPropertyName.CLIPBOARD_IMPORTER,
                 SpreadsheetImporterSelector.parse("json")
