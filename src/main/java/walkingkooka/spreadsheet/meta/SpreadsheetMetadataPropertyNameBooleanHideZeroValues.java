@@ -32,6 +32,7 @@ final class SpreadsheetMetadataPropertyNameBooleanHideZeroValues extends Spreads
     }
 
     private SpreadsheetMetadataPropertyNameBooleanHideZeroValues() {
+        super("hide-zero-values");
     }
 
     @Override
