@@ -27,7 +27,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameStyle, TextStyle> {
 
     @Test
-    public void testCheckEmptyTextStyle() {
+    public void testCheckValueEmptyTextStyle() {
         this.checkValue(TextStyle.EMPTY);
     }
 

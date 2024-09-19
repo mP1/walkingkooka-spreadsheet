@@ -32,7 +32,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
         SpreadsheetViewport> {
 
     @Test
-    public void testCheckCellRange() {
+    public void testCheckValueWithCellRange() {
         this.checkValue(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
@@ -46,7 +46,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
     }
 
     @Test
-    public void testCheckColumn() {
+    public void testCheckValueWithColumn() {
         this.checkValue(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
@@ -60,7 +60,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
     }
 
     @Test
-    public void testCheckLabel() {
+    public void testCheckValueWithLabel() {
         this.checkValue(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
@@ -74,7 +74,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
     }
 
     @Test
-    public void testCheckRow() {
+    public void testCheckValueWithRow() {
         this.checkValue(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
@@ -88,7 +88,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
     }
 
     @Test
-    public void testInvalidValueFails() {
+    public void testCheckValueWithInvalidFails3() {
         this.checkValueFails(
                 "invalid",
                 "Expected SpreadsheetViewport, but got \"invalid\" for \"viewport\""

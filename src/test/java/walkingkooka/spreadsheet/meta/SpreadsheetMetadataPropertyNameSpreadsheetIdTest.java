@@ -26,8 +26,11 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetId, SpreadsheetId> {
 
     @Test
-    public void testInvalidSpreadsheetIdFails() {
-        this.checkValueFails("123-invalid", "Expected SpreadsheetId, but got \"123-invalid\" for \"spreadsheet-id\"");
+    public void testCheckValueWithInvalidSpreadsheetIdFails() {
+        this.checkValueFails(
+                "123-invalid",
+                "Expected SpreadsheetId, but got \"123-invalid\" for \"spreadsheet-id\""
+        );
     }
 
     @Test

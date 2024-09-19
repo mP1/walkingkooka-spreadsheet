@@ -26,7 +26,7 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameRoundingModeTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameRoundingMode, RoundingMode> {
 
     @Test
-    public void testInvalidRoundingModeFails() {
+    public void testCheckValueWithInvalidRoundingModeFails() {
         this.checkValueFails("invalid", "Expected RoundingMode, but got \"invalid\" for \"rounding-mode\"");
     }
 

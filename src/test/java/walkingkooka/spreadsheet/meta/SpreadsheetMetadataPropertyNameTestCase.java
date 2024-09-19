@@ -89,19 +89,19 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     }
 
     @Test
-    public final void testCheckValueNullFails() {
+    public final void testCheckValueWithNullFails() {
         this.checkValueFails(null,
                 "Missing value, but got null for " + CharSequences.quote(this.createName().value()));
     }
 
     @Test
-    public final void testCheckValueInvalidFails() {
+    public final void testCheckValueWithInvalidFails() {
         this.checkValueFails(this,
                 "Expected " + this.propertyValueType() + ", but got " + this + " for " + CharSequences.quote(this.createName().value()));
     }
 
     @Test
-    public final void testCheckInvalidValueFails2() {
+    public final void testCheckValueWithInvalidValueFails2() {
         final StringBuilder value = new StringBuilder("123abc");
         this.checkValueFails(value,
                 "Expected " + this.propertyValueType() + ", but got \"123abc\" for " + CharSequences.quote(this.createName().value()));
