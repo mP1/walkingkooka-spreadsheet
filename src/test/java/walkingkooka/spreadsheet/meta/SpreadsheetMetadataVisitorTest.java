@@ -26,6 +26,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
@@ -120,6 +121,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 0);
+    }
+
+    @Test
+    public void testVisitClipboardExporter() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitClipboardExporter(final SpreadsheetExporterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.CLIPBOARD_EXPORTER,
+                SpreadsheetExporterSelector.parse("json")
+        );
     }
 
     @Test
