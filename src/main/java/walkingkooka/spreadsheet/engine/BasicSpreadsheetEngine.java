@@ -503,7 +503,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             .spreadsheetComparatorContext(
                                     context, // ConverterProvider
                                     context::now, // now supplier
-                                    context::resolveIfLabel,
+                                    context, // SpreadsheetLabelNameResolver
                                     context // ProviderContext
                             )
             );

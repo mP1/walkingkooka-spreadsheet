@@ -246,6 +246,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitSortConverter(final ConverterSelector selector) {
+        // nop
+    }
+
     protected void visitSpreadsheetComparators(final SpreadsheetComparatorInfoSet value) {
         // nop
     }

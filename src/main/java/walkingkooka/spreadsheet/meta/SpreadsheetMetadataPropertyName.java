@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
@@ -265,6 +266,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>rounding-mode {@link RoundingMode}</code>
      */
     public static final SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerConstant(SpreadsheetMetadataPropertyNameRoundingMode.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a sort.
+     */
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> SORT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSort.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetComparatorInfoSet}</code>
@@ -733,6 +739,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         ExpressionNumberKind.DEFAULT.name();
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
+        ConverterSelector.with(
+                ConverterName.NEVER,
+                ""
+        );
         SpreadsheetExporterSelector.with(
                 SpreadsheetExporterName.EMPTY,
                 ""

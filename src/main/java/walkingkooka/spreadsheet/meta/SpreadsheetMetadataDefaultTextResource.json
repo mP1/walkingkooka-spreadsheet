@@ -75,6 +75,7 @@
   "hide-zero-values": false,
   "precision": 10,
   "rounding-mode": "HALF_UP",
+  "sort-converter": "collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)",
   "spreadsheet-exporters": "",
   "spreadsheet-importers": "",
   "style": {
