@@ -486,6 +486,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitSortConverter() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitSortConverter(final ConverterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.SORT_CONVERTER,
+                ConverterSelector.parse("hello")
+        );
+    }
+
+    @Test
     public void testVisitSpreadsheetId() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

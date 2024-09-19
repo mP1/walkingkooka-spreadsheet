@@ -994,6 +994,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
+                        "  \"sort-converter\": \"collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"spreadsheet-comparators\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\",\n" +
@@ -1205,6 +1206,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
+                        "  \"sort-converter\": \"collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"spreadsheet-comparators\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\",\n" +
