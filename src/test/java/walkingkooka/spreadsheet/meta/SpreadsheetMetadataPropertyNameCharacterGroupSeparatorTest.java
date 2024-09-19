@@ -21,27 +21,27 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameNegativeSignTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameNegativeSign> {
+public final class SpreadsheetMetadataPropertyNameCharacterGroupSeparatorTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameCharacterGroupSeparator> {
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, '-');
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, ',');
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameNegativeSign.instance(), "negative-sign");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterGroupSeparator.instance(), "group-separator");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameNegativeSign createName() {
-        return SpreadsheetMetadataPropertyNameNegativeSign.instance();
+    SpreadsheetMetadataPropertyNameCharacterGroupSeparator createName() {
+        return SpreadsheetMetadataPropertyNameCharacterGroupSeparator.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameNegativeSign> type() {
-        return SpreadsheetMetadataPropertyNameNegativeSign.class;
+    public Class<SpreadsheetMetadataPropertyNameCharacterGroupSeparator> type() {
+        return SpreadsheetMetadataPropertyNameCharacterGroupSeparator.class;
     }
 }

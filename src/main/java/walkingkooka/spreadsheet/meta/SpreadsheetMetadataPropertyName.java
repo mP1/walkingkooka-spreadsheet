@@ -145,7 +145,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-separator {@link Character}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Character> DECIMAL_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameDecimalSeparator.instance());
+    public static final SpreadsheetMetadataPropertyName<Character> DECIMAL_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameCharacterDecimalSeparator.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the {@link Integer} <code>default-year</code>
@@ -195,7 +195,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>group-separator {@link Character}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Character> GROUP_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameGroupSeparator.instance());
+    public static final SpreadsheetMetadataPropertyName<Character> GROUP_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameCharacterGroupSeparator.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>group-separator {@link Character}</code>
@@ -220,7 +220,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>negative-sign {@link Character}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Character> NEGATIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNameNegativeSign.instance());
+    public static final SpreadsheetMetadataPropertyName<Character> NEGATIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNameCharacterNegativeSign.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link ExpressionNumber} values.
@@ -235,12 +235,12 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Character> PERCENTAGE_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNamePercentageSymbol.instance());
+    public static final SpreadsheetMetadataPropertyName<Character> PERCENTAGE_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameCharacterPercentageSymbol.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>positive-sign {@link Character}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Character> POSITIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNamePositiveSign.instance());
+    public static final SpreadsheetMetadataPropertyName<Character> POSITIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNameCharacterPositiveSign.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>precision {@link Integer}</code>
@@ -315,7 +315,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>value-separator</code> {@link Character}
      */
-    public static final SpreadsheetMetadataPropertyName<Character> VALUE_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameValueSeparator.instance());
+    public static final SpreadsheetMetadataPropertyName<Character> VALUE_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameCharacterValueSeparator.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the current <code>viewport</code> {@link SpreadsheetViewport}.
@@ -422,7 +422,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     final boolean isGroupSeparatorOrValueSeparator() {
-        return this instanceof SpreadsheetMetadataPropertyNameGroupSeparator || this instanceof SpreadsheetMetadataPropertyNameValueSeparator;
+        return this instanceof SpreadsheetMetadataPropertyNameCharacterGroupSeparator || this instanceof SpreadsheetMetadataPropertyNameCharacterValueSeparator;
     }
 
     @Override

@@ -21,27 +21,27 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameGroupSeparatorTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameGroupSeparator> {
+public final class SpreadsheetMetadataPropertyNameCharacterPositiveSignTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameCharacterPositiveSign> {
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, ',');
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, '+');
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameGroupSeparator.instance(), "group-separator");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterPositiveSign.instance(), "positive-sign");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameGroupSeparator createName() {
-        return SpreadsheetMetadataPropertyNameGroupSeparator.instance();
+    SpreadsheetMetadataPropertyNameCharacterPositiveSign createName() {
+        return SpreadsheetMetadataPropertyNameCharacterPositiveSign.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameGroupSeparator> type() {
-        return SpreadsheetMetadataPropertyNameGroupSeparator.class;
+    public Class<SpreadsheetMetadataPropertyNameCharacterPositiveSign> type() {
+        return SpreadsheetMetadataPropertyNameCharacterPositiveSign.class;
     }
 }

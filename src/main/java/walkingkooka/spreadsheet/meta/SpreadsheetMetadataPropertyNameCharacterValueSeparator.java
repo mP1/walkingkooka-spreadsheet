@@ -19,30 +19,33 @@ package walkingkooka.spreadsheet.meta;
 
 import java.text.DecimalFormatSymbols;
 
-final class SpreadsheetMetadataPropertyNamePositiveSign extends SpreadsheetMetadataPropertyNameCharacter {
+final class SpreadsheetMetadataPropertyNameCharacterValueSeparator extends SpreadsheetMetadataPropertyNameCharacter {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNamePositiveSign instance() {
-        return new SpreadsheetMetadataPropertyNamePositiveSign();
+    static SpreadsheetMetadataPropertyNameCharacterValueSeparator instance() {
+        return new SpreadsheetMetadataPropertyNameCharacterValueSeparator();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNamePositiveSign() {
-        super();
+    private SpreadsheetMetadataPropertyNameCharacterValueSeparator() {
+        super("value-separator");
     }
 
     @Override
     void accept(final Character value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitPositiveSign(value);
+        visitor.visitValueSeparator(value);
     }
 
     @Override
     Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols) {
-        return '+'; // TODO Find propery WAY.
+        final char decimal = symbols.getDecimalSeparator();
+        return '.' == decimal ?
+                ',' :
+                ';';
     }
 }

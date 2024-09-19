@@ -21,27 +21,27 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameValueSeparatorTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameValueSeparator> {
+public final class SpreadsheetMetadataPropertyNameCharacterDecimalSeparatorTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameCharacterDecimalSeparator> {
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(Locale.forLanguageTag("EN-AU"), ',');
+        this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, '.');
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameValueSeparator.instance(), "value-separator");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterDecimalSeparator.instance(), "decimal-separator");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameValueSeparator createName() {
-        return SpreadsheetMetadataPropertyNameValueSeparator.instance();
+    SpreadsheetMetadataPropertyNameCharacterDecimalSeparator createName() {
+        return SpreadsheetMetadataPropertyNameCharacterDecimalSeparator.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameValueSeparator> type() {
-        return SpreadsheetMetadataPropertyNameValueSeparator.class;
+    public Class<SpreadsheetMetadataPropertyNameCharacterDecimalSeparator> type() {
+        return SpreadsheetMetadataPropertyNameCharacterDecimalSeparator.class;
     }
 }

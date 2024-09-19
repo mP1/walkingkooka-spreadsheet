@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNamePercentageSymbolTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNamePercentageSymbol> {
+public final class SpreadsheetMetadataPropertyNameCharacterPercentageSymbolTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameCharacterPercentageSymbol> {
 
     @Test
     public void testExtractLocaleAwareValue() {
@@ -30,18 +30,18 @@ public final class SpreadsheetMetadataPropertyNamePercentageSymbolTest extends S
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNamePercentageSymbol.instance(), "percentage-symbol");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterPercentageSymbol.instance(), "percentage-symbol");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNamePercentageSymbol createName() {
-        return SpreadsheetMetadataPropertyNamePercentageSymbol.instance();
+    SpreadsheetMetadataPropertyNameCharacterPercentageSymbol createName() {
+        return SpreadsheetMetadataPropertyNameCharacterPercentageSymbol.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNamePercentageSymbol> type() {
-        return SpreadsheetMetadataPropertyNamePercentageSymbol.class;
+    public Class<SpreadsheetMetadataPropertyNameCharacterPercentageSymbol> type() {
+        return SpreadsheetMetadataPropertyNameCharacterPercentageSymbol.class;
     }
 }

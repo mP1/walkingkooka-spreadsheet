@@ -19,30 +19,30 @@ package walkingkooka.spreadsheet.meta;
 
 import java.text.DecimalFormatSymbols;
 
-final class SpreadsheetMetadataPropertyNamePercentageSymbol extends SpreadsheetMetadataPropertyNameCharacter {
+final class SpreadsheetMetadataPropertyNameCharacterPositiveSign extends SpreadsheetMetadataPropertyNameCharacter {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNamePercentageSymbol instance() {
-        return new SpreadsheetMetadataPropertyNamePercentageSymbol();
+    static SpreadsheetMetadataPropertyNameCharacterPositiveSign instance() {
+        return new SpreadsheetMetadataPropertyNameCharacterPositiveSign();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNamePercentageSymbol() {
-        super();
+    private SpreadsheetMetadataPropertyNameCharacterPositiveSign() {
+        super("positive-sign");
     }
 
     @Override
     void accept(final Character value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitPercentageSymbol(value);
+        visitor.visitPositiveSign(value);
     }
 
     @Override
     Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols) {
-        return symbols.getPercent();
+        return '+'; // TODO Find propery WAY.
     }
 }
