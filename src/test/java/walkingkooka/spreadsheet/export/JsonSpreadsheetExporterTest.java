@@ -247,6 +247,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     @Override
     public SpreadsheetExporterContext createContext() {
         return SpreadsheetExporterContexts.basic(
+                SpreadsheetMetadataTesting.METADATA_EN_AU,
                 SpreadsheetMetadataTesting.JSON_NODE_MARSHALL_CONTEXT
         );
     }

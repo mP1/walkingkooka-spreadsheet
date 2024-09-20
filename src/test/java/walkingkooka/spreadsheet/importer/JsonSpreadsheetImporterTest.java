@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.export.SpreadsheetExporterContexts;
 import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 import walkingkooka.spreadsheet.format.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.OptionalSpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -290,6 +291,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                                 cells,
                                 contentType,
                                 SpreadsheetExporterContexts.basic(
+                                        SpreadsheetMetadata.EMPTY,
                                         JSON_NODE_MARSHALL_CONTEXT
                                 )
                         ),

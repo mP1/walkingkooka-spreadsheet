@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.export;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,16 +28,31 @@ public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExp
         ToStringTesting<BasicSpreadsheetExporterContext> {
 
     @Test
+    public void testWithNullSpreadsheetMetadataFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExporterContext.with(
+                        null,
+                        JsonNodeMarshallContexts.fake()
+                )
+        );
+    }
+
+    @Test
     public void testWithNullJsonNodeMarshallContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> BasicSpreadsheetExporterContext.with(null)
+                () -> BasicSpreadsheetExporterContext.with(
+                        SpreadsheetMetadata.EMPTY,
+                        null
+                )
         );
     }
 
     @Override
     public BasicSpreadsheetExporterContext createContext() {
         return BasicSpreadsheetExporterContext.with(
+                SpreadsheetMetadata.EMPTY,
                 JsonNodeMarshallContexts.basic()
         );
     }
@@ -47,6 +63,8 @@ public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExp
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
+                SpreadsheetMetadata.EMPTY +
+                        " " +
                 JsonNodeMarshallContexts.basic()
                         .toString()
         );

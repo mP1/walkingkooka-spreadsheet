@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.export;
 
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 /**
@@ -29,8 +30,12 @@ public final class SpreadsheetExporterContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetExporterContext}
      */
-    public static SpreadsheetExporterContext basic(final JsonNodeMarshallContext context) {
-        return BasicSpreadsheetExporterContext.with(context);
+    public static SpreadsheetExporterContext basic(final SpreadsheetMetadata spreadsheetMetadata,
+                                                   final JsonNodeMarshallContext context) {
+        return BasicSpreadsheetExporterContext.with(
+                spreadsheetMetadata,
+                context
+        );
     }
 
     /**
