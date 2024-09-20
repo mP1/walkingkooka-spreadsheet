@@ -496,9 +496,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link Converter} using the {@link SpreadsheetMetadataPropertyName} along with requiring other metadata properties.
      */
-    public final Converter<SpreadsheetConverterContext> converter(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector,
-                                                                  final ConverterProvider converterProvider,
-                                                                  final ProviderContext context) {
+    // @VisibleForTesting
+    final Converter<SpreadsheetConverterContext> converter(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector,
+                                                           final ConverterProvider converterProvider,
+                                                           final ProviderContext context) {
         Objects.requireNonNull(converterSelector, "converterSelector");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(context, "context");
