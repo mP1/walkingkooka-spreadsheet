@@ -39,14 +39,25 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testConverterContext() {
-        METADATA_EN_AU.converterContext(
-                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
-                CONVERTER_PROVIDER,
+    public void testExpressionConverterContext() {
+        METADATA_EN_AU.expressionSpreadsheetConverterContext(
                 LocalDateTime::now,
                 (label) -> {
                     throw new UnsupportedOperationException();
                 },
+                CONVERTER_PROVIDER,
+                PROVIDER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSortConverterContext() {
+        METADATA_EN_AU.sortSpreadsheetConverterContext(
+                LocalDateTime::now,
+                (label) -> {
+                    throw new UnsupportedOperationException();
+                },
+                CONVERTER_PROVIDER,
                 PROVIDER_CONTEXT
         );
     }

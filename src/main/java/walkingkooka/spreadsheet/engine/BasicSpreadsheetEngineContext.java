@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -230,11 +229,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 provider, // ExpressionFunctionProvider,
                 this, // ProviderContext
                 this.referenceFunction,
-                metadata.converterContext(
-                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
-                        provider, // SpreadsheetConverterProvider
+                metadata.expressionSpreadsheetConverterContext(
                         this.now,
                         this, // SpreadsheetLabelNameResolver,
+                        provider, // SpreadsheetConverterProvider
                         this.providerContext
                 )
         );

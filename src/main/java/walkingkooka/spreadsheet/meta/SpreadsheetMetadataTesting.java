@@ -178,16 +178,15 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
-    SpreadsheetConverterContext SPREADSHEET_CONVERTER_CONTEXT = METADATA_EN_AU.converterContext(
-            SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
-            CONVERTER_PROVIDER,
+    SpreadsheetConverterContext SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT = METADATA_EN_AU.expressionSpreadsheetConverterContext(
             NOW,
             SPREADSHEET_LABEL_NAME_RESOLVER,
+            CONVERTER_PROVIDER,
             PROVIDER_CONTEXT
     );
 
     SpreadsheetComparatorContext SPREADSHEET_COMPARATOR_CONTEXT = SpreadsheetComparatorContexts.basic(
-            SPREADSHEET_CONVERTER_CONTEXT
+            SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
     );
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.formatterContext(

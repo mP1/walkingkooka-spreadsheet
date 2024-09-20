@@ -254,11 +254,10 @@ public final class Sample {
                                 this.references(),
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
-                                metadata.converterContext(
-                                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
-                                        converterProvider,
+                                metadata.expressionSpreadsheetConverterContext(
                                         NOW,
                                         LABEL_NAME_RESOLVER,
+                                        converterProvider,
                                         PROVIDER_CONTEXT
                                 )
                         )

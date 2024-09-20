@@ -187,15 +187,14 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
                 SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss").spreadsheetFormatterSelector()
         );
 
-        return metadata.converterContext(
-                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+        return metadata.expressionSpreadsheetConverterContext(
+                NOW,
+                LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         metadata,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
                 ),
-                NOW,
-                LABEL_NAME_RESOLVER,
                 PROVIDER_CONTEXT
         );
     }
