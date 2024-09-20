@@ -234,7 +234,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
                         provider, // SpreadsheetConverterProvider
                         this.now,
-                        this::resolveIfLabel,
+                        this, // SpreadsheetLabelNameResolver,
                         this.providerContext
                 )
         );
@@ -272,7 +272,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                 this.spreadsheetProvider, // ConverterProvider,
                                 this.spreadsheetProvider, // SpreadsheetFormatterProvider,
                                 this::now,
-                                this::resolveIfLabel,
+                                this, // SpreadsheetLabelNameResolver,
                                 this // ProviderContext
                         )
         );
