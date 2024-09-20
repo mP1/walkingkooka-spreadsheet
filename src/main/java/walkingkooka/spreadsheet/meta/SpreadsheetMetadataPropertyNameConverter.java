@@ -23,7 +23,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Base class for any property that holds a {@link walkingkooka.convert.provider.ConverterSelector}.
+ * Base class for any property that holds a {@link ConverterSelector}.
  */
 abstract class SpreadsheetMetadataPropertyNameConverter extends SpreadsheetMetadataPropertyName<ConverterSelector> {
 
