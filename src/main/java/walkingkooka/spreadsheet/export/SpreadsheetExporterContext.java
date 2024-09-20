@@ -17,7 +17,9 @@
 
 package walkingkooka.spreadsheet.export;
 
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
-public interface SpreadsheetExporterContext extends JsonNodeMarshallContext {
+public interface SpreadsheetExporterContext extends JsonNodeMarshallContext,
+        HasSpreadsheetMetadata {
 }

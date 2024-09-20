@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.export;
 
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
 
@@ -25,15 +26,28 @@ import java.util.Objects;
 final class BasicSpreadsheetExporterContext implements SpreadsheetExporterContext,
         JsonNodeMarshallContextDelegator {
 
-    static BasicSpreadsheetExporterContext with(final JsonNodeMarshallContext context) {
+    static BasicSpreadsheetExporterContext with(final SpreadsheetMetadata spreadsheetMetadata,
+                                                final JsonNodeMarshallContext context) {
         return new BasicSpreadsheetExporterContext(
+                Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata"),
                 Objects.requireNonNull(context, "context")
         );
     }
 
-    private BasicSpreadsheetExporterContext(final JsonNodeMarshallContext context) {
+    private BasicSpreadsheetExporterContext(final SpreadsheetMetadata spreadsheetMetadata,
+                                            final JsonNodeMarshallContext context) {
+        this.spreadsheetMetadata = spreadsheetMetadata;
         this.context = context;
     }
+
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        return this.spreadsheetMetadata;
+    }
+
+    private final SpreadsheetMetadata spreadsheetMetadata;
+
+    // JsonNodeMarshallContext..........................................................................................
 
     @Override
     public JsonNodeMarshallContext jsonNodeMarshallContext() {
@@ -44,6 +58,6 @@ final class BasicSpreadsheetExporterContext implements SpreadsheetExporterContex
 
     @Override
     public String toString() {
-        return this.context.toString();
+        return this.spreadsheetMetadata + " " + this.context;
     }
 }

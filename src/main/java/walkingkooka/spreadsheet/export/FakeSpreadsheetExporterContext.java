@@ -17,7 +17,12 @@
 
 package walkingkooka.spreadsheet.export;
 
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.FakeJsonNodeMarshallContext;
 
 public class FakeSpreadsheetExporterContext extends FakeJsonNodeMarshallContext implements SpreadsheetExporterContext {
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        throw new UnsupportedOperationException();
+    }
 }
