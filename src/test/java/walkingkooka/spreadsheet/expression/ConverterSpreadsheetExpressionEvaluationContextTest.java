@@ -523,11 +523,10 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         EXPRESSION_FUNCTION_PROVIDER,
                         PROVIDER_CONTEXT,
                         REFERENCES,
-                        METADATA.converterContext(
-                                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
-                                converterProvider,
+                        METADATA.expressionSpreadsheetConverterContext(
                                 LocalDateTime::now,
                                 LABEL_NAME_RESOLVER,
+                                converterProvider,
                                 PROVIDER_CONTEXT
                         )
                 )

@@ -13387,11 +13387,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 (r) -> {
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
-                                metadata.converterContext(
-                                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
-                                        CONVERTER_PROVIDER,
+                                metadata.expressionSpreadsheetConverterContext(
                                         NOW,
                                         SPREADSHEET_LABEL_NAME_RESOLVER,
+                                        CONVERTER_PROVIDER,
                                         PROVIDER_CONTEXT
                                 )
                         )
@@ -13412,7 +13411,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.expressionFunctionProvider(),
                                 PROVIDER_CONTEXT,
                                 this.references(), // references
-                                SPREADSHEET_CONVERTER_CONTEXT
+                                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
                         )
                 );
             }
@@ -13584,15 +13583,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             private ConverterContext converterContext() {
                 final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
-                return metadata.converterContext(
-                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                return metadata.expressionSpreadsheetConverterContext(
+                        NOW,
+                        SPREADSHEET_LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
                                 SPREADSHEET_FORMATTER_PROVIDER,
                                 SPREADSHEET_PARSER_PROVIDER
                         ),
-                        NOW,
-                        SPREADSHEET_LABEL_NAME_RESOLVER,
                         PROVIDER_CONTEXT
                 );
             }

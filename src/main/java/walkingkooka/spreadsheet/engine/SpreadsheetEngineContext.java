@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -77,11 +76,10 @@ public interface SpreadsheetEngineContext extends Context,
     default boolean evaluateAsBoolean(final Expression node,
                                       final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetMetadata()
-                .converterContext(
-                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
-                        this, // ConverterProvider
+                .expressionSpreadsheetConverterContext(
                         this::now,
                         this::resolveIfLabel,
+                        this, // ConverterProvider
                         this // ProviderContext
                 ).convertOrFail(
                         this.evaluate(

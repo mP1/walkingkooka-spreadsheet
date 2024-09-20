@@ -74,7 +74,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                SPREADSHEET_CONVERTER_CONTEXT
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
         );
     }
 
@@ -88,7 +88,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                SPREADSHEET_CONVERTER_CONTEXT
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
         );
     }
 
@@ -102,7 +102,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                SPREADSHEET_CONVERTER_CONTEXT
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
         );
     }
 
@@ -116,7 +116,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                SPREADSHEET_CONVERTER_CONTEXT
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
         );
     }
 
@@ -130,7 +130,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                SPREADSHEET_CONVERTER_CONTEXT
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
         );
     }
 
@@ -144,7 +144,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 null,
                 REFERENCES,
-                SPREADSHEET_CONVERTER_CONTEXT
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
         );
     }
 
@@ -158,7 +158,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 null,
-                SPREADSHEET_CONVERTER_CONTEXT
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
         );
     }
 
@@ -421,7 +421,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT,
                 REFERENCES,
-                SPREADSHEET_CONVERTER_CONTEXT
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
         );
     }
 
