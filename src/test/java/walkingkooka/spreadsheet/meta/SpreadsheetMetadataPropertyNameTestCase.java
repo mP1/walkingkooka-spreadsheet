@@ -162,12 +162,8 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
             final HasUrlFragment has = (HasUrlFragment) value;
             text = has.urlFragment().value();
         } else {
-            if (value instanceof PluginInfoSetLike) {
-                final PluginInfoSetLike<?, ?, ?> set = (PluginInfoSetLike<?, ?, ?>) value;
-                text = set.text();
-            } else {
-                text = String.valueOf(value);
-            }
+
+            text = String.valueOf(value);
         }
 
         if (propertyName.isParseUrlFragmentSaveValueSupported()) {
