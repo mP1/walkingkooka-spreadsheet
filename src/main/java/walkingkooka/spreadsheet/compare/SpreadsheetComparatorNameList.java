@@ -41,7 +41,7 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     /**
      * An empty {@link SpreadsheetComparatorNameList}.
      */
-    public final static SpreadsheetComparatorNameList EMPTY = SpreadsheetComparatorNameList.with(
+    public final static SpreadsheetComparatorNameList EMPTY = new SpreadsheetComparatorNameList(
             Lists.empty()
     );
 
