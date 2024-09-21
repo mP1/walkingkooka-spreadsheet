@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SpreadsheetComparatorNameListTest implements ListTesting2<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
         ClassTesting<SpreadsheetComparatorNameList>,
         ImmutableListTesting<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
+        HasUrlFragmentTesting,
         JsonNodeMarshallingTesting<SpreadsheetComparatorNameList> {
 
     private final static SpreadsheetComparatorName DATE1 = SpreadsheetComparatorName.DATE;
@@ -122,6 +124,16 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
                         DATE1,
                         NUMBER2
                 )
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testHasUrlFragment() {
+        this.urlFragmentAndCheck(
+                this.createList(),
+                "date,number"
         );
     }
 
