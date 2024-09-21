@@ -501,8 +501,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     movedFromTo::put, // moved cells
                     context.spreadsheetMetadata()
                             .sortSpreadsheetComparatorContext(
-                                    context, // ConverterProvider
                                     context::now, // now supplier
+                                    context, // ConverterProvider
                                     context, // SpreadsheetLabelNameResolver
                                     context // ProviderContext
                             )

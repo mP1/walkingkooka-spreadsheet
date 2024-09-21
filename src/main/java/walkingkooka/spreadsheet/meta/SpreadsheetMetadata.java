@@ -764,9 +764,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link SpreadsheetComparatorContext} which may be used for sorting.
      */
-    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final SpreadsheetProvider spreadsheetProvider,
-                                                                               final Supplier<LocalDateTime> now,
+    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final Supplier<LocalDateTime> now,
                                                                                final SpreadsheetLabelNameResolver resolveIfLabel,
+                                                                               final SpreadsheetProvider spreadsheetProvider,
                                                                                final ProviderContext providerContext) {
         return this.spreadsheetComparatorContext(
                 now, // now supplier
