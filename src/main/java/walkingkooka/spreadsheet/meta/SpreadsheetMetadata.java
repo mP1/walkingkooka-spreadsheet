@@ -220,9 +220,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * require creating a new {@link SpreadsheetMetadata}.
      */
     public final <V> Optional<V> get(final SpreadsheetMetadataPropertyName<V> propertyName) {
-        checkPropertyName(propertyName);
-
-        return this.getOrGetDefaults(propertyName);
+        return this.getOrGetDefaults(
+                checkPropertyName(propertyName)
+        );
     }
 
     /**
@@ -324,9 +324,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final <V> SpreadsheetMetadata set(final SpreadsheetMetadataPropertyName<V> propertyName,
                                              final V value) {
-        checkPropertyName(propertyName);
         return this.set0(
-                propertyName,
+                checkPropertyName(propertyName),
                 propertyName.checkValue(value) // necessary because absolute references values are made relative
         );
     }
@@ -418,15 +417,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Removes a possibly existing property returning a {@link SpreadsheetMetadata} without.
      */
     public final SpreadsheetMetadata remove(final SpreadsheetMetadataPropertyName<?> propertyName) {
-        checkPropertyName(propertyName);
-
-        return this.remove0(propertyName);
+        return this.remove0(
+                checkPropertyName(propertyName)
+        );
     }
 
     abstract SpreadsheetMetadata remove0(final SpreadsheetMetadataPropertyName<?> propertyName);
 
-    private static void checkPropertyName(final SpreadsheetMetadataPropertyName<?> propertyName) {
-        Objects.requireNonNull(propertyName, "propertyName");
+    private static <T> SpreadsheetMetadataPropertyName<T> checkPropertyName(final SpreadsheetMetadataPropertyName<T> propertyName) {
+        return Objects.requireNonNull(propertyName, "propertyName");
     }
 
     // setOrRemove......................................................................................................
