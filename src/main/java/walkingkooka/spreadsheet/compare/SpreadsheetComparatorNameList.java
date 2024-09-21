@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
@@ -36,7 +38,8 @@ import java.util.Objects;
  */
 public final class SpreadsheetComparatorNameList extends AbstractList<SpreadsheetComparatorName>
         implements ImmutableListDefaults<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
-        HasText {
+        HasText,
+        HasUrlFragment {
 
     /**
      * An empty {@link SpreadsheetComparatorNameList}.
@@ -106,6 +109,15 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
         return this.equals(copy) ?
                 this :
                 copy;
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.with(
+                this.text()
+        );
     }
 
     // HasText..........................................................................................................
