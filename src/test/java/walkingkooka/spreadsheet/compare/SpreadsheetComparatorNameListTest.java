@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -35,6 +36,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         ClassTesting<SpreadsheetComparatorNameList>,
         ImmutableListTesting<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
         HasUrlFragmentTesting,
+        ParseStringTesting<SpreadsheetComparatorNameList>,
         JsonNodeMarshallingTesting<SpreadsheetComparatorNameList> {
 
     private final static SpreadsheetComparatorName DATE1 = SpreadsheetComparatorName.DATE;
@@ -135,6 +137,74 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
                 this.createList(),
                 "date,number"
         );
+    }
+
+    // parseString......................................................................................................
+
+    @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Test
+    public void testParseEmpty() {
+        this.parseStringAndCheck(
+                "",
+                SpreadsheetComparatorNameList.EMPTY
+        );
+    }
+
+    @Test
+    public void testParseName() {
+        this.parseStringAndCheck(
+                "day-of-month",
+                SpreadsheetComparatorNameList.with(
+                        Lists.of(
+                                SpreadsheetComparatorName.DAY_OF_MONTH
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseNameCommaName() {
+        this.parseStringAndCheck(
+                "day-of-month,year",
+                SpreadsheetComparatorNameList.with(
+                        Lists.of(
+                                SpreadsheetComparatorName.DAY_OF_MONTH,
+                                SpreadsheetComparatorName.YEAR
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseSpaceNameSpaceCommaName() {
+        this.parseStringAndCheck(
+                " day-of-month ,year",
+                SpreadsheetComparatorNameList.with(
+                        Lists.of(
+                                SpreadsheetComparatorName.DAY_OF_MONTH,
+                                SpreadsheetComparatorName.YEAR
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorNameList parseString(final String text) {
+        return SpreadsheetComparatorNameList.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
     }
 
     // class............................................................................................................
