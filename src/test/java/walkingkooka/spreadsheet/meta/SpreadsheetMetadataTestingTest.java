@@ -78,12 +78,12 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testFormatterContext() {
         METADATA_EN_AU.formatterContext(
-                CONVERTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
                 LocalDateTime::now,
                 (label) -> {
                     throw new UnsupportedOperationException();
                 },
+                CONVERTER_PROVIDER,
+                SPREADSHEET_FORMATTER_PROVIDER,
                 PROVIDER_CONTEXT
         );
     }

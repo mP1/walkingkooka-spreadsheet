@@ -320,10 +320,10 @@ public class TestGwtTest extends GWTTestCase {
                 return formatter.format(
                         value,
                         metadata.formatterContext(
-                                converterProvider,
-                                spreadsheetFormatterProvider,
                                 NOW,
                                 LABEL_NAME_RESOLVER,
+                                converterProvider,
+                                spreadsheetFormatterProvider,
                                 PROVIDER_CONTEXT
                         )
                 );
