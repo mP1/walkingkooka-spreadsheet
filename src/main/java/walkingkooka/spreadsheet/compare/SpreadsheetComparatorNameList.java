@@ -39,6 +39,13 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
         HasText {
 
     /**
+     * An empty {@link SpreadsheetComparatorNameList}.
+     */
+    public final static SpreadsheetComparatorNameList EMPTY = SpreadsheetComparatorNameList.with(
+            Lists.empty()
+    );
+
+    /**
      * Parses a CSV string of {@link SpreadsheetComparatorName names} into a {@link SpreadsheetComparatorNameList}.
      */
     public static SpreadsheetComparatorNameList parse(final String text) {
@@ -57,9 +64,24 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
 
         return names instanceof SpreadsheetComparatorNameList ?
                 (SpreadsheetComparatorNameList) names :
-                new SpreadsheetComparatorNameList(
+                with0(
                         Lists.immutable(names)
                 );
+    }
+
+    private static SpreadsheetComparatorNameList with0(final List<SpreadsheetComparatorName> names) {
+        final SpreadsheetComparatorNameList list;
+
+        switch(names.size()) {
+            case 0:
+              list = EMPTY;
+              break;
+            default:
+                list = new SpreadsheetComparatorNameList(names);
+                break;
+        }
+
+        return list;
     }
 
     private SpreadsheetComparatorNameList(final List<SpreadsheetComparatorName> names) {

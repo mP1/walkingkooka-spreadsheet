@@ -57,6 +57,18 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     }
 
     @Test
+    public void testWithEmpty() {
+        assertSame(
+                SpreadsheetComparatorNameList.EMPTY,
+                SpreadsheetComparatorNameList.with(
+                        Lists.empty()
+                )
+        );
+    }
+
+    // list.............................................................................................................
+
+    @Test
     public void testGet() {
         this.getAndCheck(
                 this.createList(),
