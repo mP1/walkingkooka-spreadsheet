@@ -35,6 +35,8 @@ import java.util.Objects;
 
 /**
  * An immutable list of {@link SpreadsheetComparatorName}. This can be used to hold a list of names for sorting.
+ * This list will be used to build the items of possible sort comparators within the SORT menu when the user selects a range of cells.
+ * It will also be used to validate active comparators for sorting operations.
  */
 public final class SpreadsheetComparatorNameList extends AbstractList<SpreadsheetComparatorName>
         implements ImmutableListDefaults<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
