@@ -1053,15 +1053,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public final SpreadsheetFormatterContext formatterContext(final ConverterProvider converterProvider,
-                                                              final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                              final Supplier<LocalDateTime> now,
+    public final SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now,
                                                               final SpreadsheetLabelNameResolver labelNameResolver,
+                                                              final ConverterProvider converterProvider,
+                                                              final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                               final ProviderContext providerContext) {
-        Objects.requireNonNull(converterProvider, "converterProvider");
-        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(converterProvider, "converterProvider");
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
@@ -1094,17 +1094,17 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final ConverterProvider converterProvider,
-                                                                                                       final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                                                                       final Supplier<LocalDateTime> now,
+    public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final Supplier<LocalDateTime> now,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                                                       final ConverterProvider converterProvider,
+                                                                                                       final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
                 this.formatterContext(
-                        converterProvider,
-                        spreadsheetFormatterProvider,
                         now,
                         labelNameResolver,
+                        converterProvider,
+                        spreadsheetFormatterProvider,
                         providerContext
                 )
         );

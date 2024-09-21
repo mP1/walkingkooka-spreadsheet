@@ -2172,14 +2172,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
                 null,
                 metadata.formatterContext(
+                        NOW,
+                        LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
                                 SPREADSHEET_FORMATTER_PROVIDER,
                                 SPREADSHEET_PARSER_PROVIDER
                         ),
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        NOW,
-                        LABEL_NAME_RESOLVER,
                         PROVIDER_CONTEXT
                 )
         );
@@ -2206,14 +2206,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
                 null,
                 metadata.spreadsheetFormatterProviderSamplesContext(
+                        NOW,
+                        LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
                                 SPREADSHEET_FORMATTER_PROVIDER,
                                 SPREADSHEET_PARSER_PROVIDER
                         ),
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        NOW,
-                        LABEL_NAME_RESOLVER,
                         PROVIDER_CONTEXT
                 )
         );
