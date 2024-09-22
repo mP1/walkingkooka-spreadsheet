@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
-import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -441,40 +441,24 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
-                                      final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames,
+                                      final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         checkCellRange(cellRange);
-        Objects.requireNonNull(comparatorNames, "comparatorNames");
+        Objects.requireNonNull(comparators, "comparators");
         checkDeltaProperties(deltaProperties);
-
-        final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators = comparatorNames.stream()
-                .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                        n.columnOrRow(),
-                        n.comparatorNameAndDirections()
-                                .stream()
-                                .map(
-                                        nad -> nad.direction()
-                                                .apply(
-                                                        context.spreadsheetComparator(
-                                                                nad.name(),
-                                                                context // ProviderContext
-                                                        )
-                                                )
-                                ).collect(Collectors.toList())
-                )).collect(Collectors.toList());
         checkContext(context);
 
         return this.sortCells0(
                 cellRange,
-                SpreadsheetColumnOrRowSpreadsheetComparators.list(comparators),
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparators),
                 deltaProperties,
                 context
         );
     }
 
     private SpreadsheetDelta sortCells0(final SpreadsheetCellRangeReference cellRange,
-                                        final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
+                                        final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparators,
                                         final Set<SpreadsheetDeltaProperties> deltaProperties,
                                         final SpreadsheetEngineContext context) {
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
@@ -496,16 +480,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             final Map<SpreadsheetCell, SpreadsheetCell> movedFromTo = Maps.sorted();
 
-            final SpreadsheetCellRange sorted = range.sort(
+            final SpreadsheetCellRange sorted = context.sortCells(
+                    range,
                     comparators,
-                    movedFromTo::put, // moved cells
-                    context.spreadsheetMetadata()
-                            .sortSpreadsheetComparatorContext(
-                                    context::now, // now supplier
-                                    context, // ConverterProvider
-                                    context, // SpreadsheetLabelNameResolver
-                                    context // ProviderContext
-                            )
+                    movedFromTo::put
             );
 
             // delete old cells...

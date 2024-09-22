@@ -26,6 +26,8 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
@@ -67,6 +69,7 @@ import walkingkooka.tree.text.TextNode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 public class FakeSpreadsheetEngineContext extends FakeConverterContext implements SpreadsheetEngineContext, Fake {
 
@@ -224,6 +227,15 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
     @Override
     public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
                                                final Optional<SpreadsheetFormatter> formatter) {
+        throw new UnsupportedOperationException();
+    }
+
+    // sort.............................................................................................................
+
+    @Override
+    public SpreadsheetCellRange sortCells(final SpreadsheetCellRange cells,
+                                          final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
+                                          final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells) {
         throw new UnsupportedOperationException();
     }
 
