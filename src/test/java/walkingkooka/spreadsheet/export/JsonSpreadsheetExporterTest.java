@@ -39,7 +39,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
         SpreadsheetMetadataTesting {
 
     @Test
-    public void testExportCellsWithCells() {
+    public void testExportWithCells() {
         this.exportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
@@ -92,7 +92,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     }
 
     @Test
-    public void testExportCellsWithFormula() {
+    public void testExportWithFormula() {
         this.exportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
@@ -117,7 +117,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     }
 
     @Test
-    public void testExportCellsWithFormatter() {
+    public void testExportWithFormatter() {
         this.exportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
@@ -142,7 +142,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     }
 
     @Test
-    public void testExportCellsWithParser() {
+    public void testExportWithParser() {
         this.exportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
@@ -167,7 +167,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     }
 
     @Test
-    public void testExportCellsWithStyle() {
+    public void testExportWithStyle() {
         this.exportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
@@ -197,7 +197,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     }
 
     @Test
-    public void testExportCellsWithFormattedValue() {
+    public void testExportWithFormattedValue() {
         this.exportAndCheck(
                 SpreadsheetCellRange.with(
                         SpreadsheetSelection.ALL_CELLS,
